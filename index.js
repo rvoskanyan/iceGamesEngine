@@ -21,7 +21,7 @@ app.set('views', 'views');
 app.use('/admin', adminRoutes);
 app.use('/', clientRoutes);
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 80;
 
 const start = async () => {
   try {
