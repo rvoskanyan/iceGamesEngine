@@ -1,10 +1,10 @@
 const express = require('express');
 const exphbs = require('express-handlebars');
 const path = require('path');
-const sequelize = require('./utils/database');
+//const sequelize = require('./utils/database');
 const adminRoutes = require('./routes/admin');
 const clientRoutes = require('./routes/client');
-const models = require('./models1/connections');
+//const models = require('./models1/connections');
 const app = express();
 
 const hbs = exphbs.create({
@@ -25,8 +25,8 @@ const PORT = process.env.PORT || 3000;
 
 const start = async () => {
   try {
-    await sequelize.authenticate();
-    await sequelize.sync();
+    //await sequelize.authenticate();
+    //await sequelize.sync();
     
     app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
   } catch (e) {
