@@ -1,2 +1,2 @@
-PORT=443
-API=12345
+export PORT=443
+export API=12345
