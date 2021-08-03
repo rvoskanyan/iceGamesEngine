@@ -45,28 +45,25 @@ input
   color: #000
   height: max-content
 
+  &.border
+    border: 2px solid #FFFFFF
 
-.btn.border
-  border: 2px solid #FFFFFF
+  &.round
+    border-radius: 100px
+    color: #fff
+    font-size: 16px
+    font-weight: bold
 
+    @include for-desktop-up
+      padding: 10px 20px
 
-.btn.round
-  border-radius: 100px
-  color: #fff
-  font-size: 16px
-  font-weight: bold
+    @include for-big-desktop-up
+      padding: 11px 28px
 
-  @include for-desktop-up
-    padding: 10px 20px
-
-  @include for-big-desktop-up
-    padding: 11px 28px
-
-
-.btn.transparent:hover, .btn.transparent.active
-  border-color: #FF00F5
-  color: #FF00F5
-
+  &.transparent
+    &:hover, &.active
+      border-color: #FF00F5
+      color: #FF00F5
 
 .searchIcon
   mask-image: url("./../img/searchBtnIcon.svg")

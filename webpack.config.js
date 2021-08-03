@@ -29,22 +29,17 @@ module.exports = {
         test: /\.sass$/,
         use: [
           MiniCssExtractPlugin.loader,
-          'css-loader',
-          'sass-loader'
-        ],
-      },
-      {
-        test: /\.(png|jpg|svg|gif)$/,
-        use: [
           {
-            loader: 'file-loader',
+            loader: "css-loader",
             options: {
-              name: '[path][name].[ext]',
-              context: path.resolve(__dirname, "layout", "img"),
-              outputPath: 'img'
-            }
-          }
-        ]
+              url: false
+            },
+          },
+          {
+            loader: "sass-loader",
+            options: {},
+          },
+        ],
       },
     ]
   }

@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "socketPath": "/tmp/mysql.sock",
+  "private": true,
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js"
