@@ -1,0 +1,344 @@
+@import './breakPoints'
+@import './colors'
+
+* 
+  font-family: Arial
+  box-sizing: border-box
+  margin: 0
+  padding: 0
+
+::-webkit-scrollbar
+  width: 12px
+  height: 12px
+  background-color: #241767
+
+::-webkit-scrollbar-thumb
+  background-color: #ff6aec
+  border-radius: 10px
+
+::-webkit-scrollbar-thumb:hover
+  background-color: #9b0787
+
+
+body.openMenu
+  overflow: hidden
+
+
+input
+  background: none
+  border: none
+  outline: none
+  padding: 0
+  margin: 0
+
+
+.btn
+  display: flex
+  justify-content: center
+  align-items: center
+  border: none
+  cursor: pointer
+  line-height: 1
+  background: none
+  font-size: 12px
+  text-decoration: none
+  color: #000
+  height: max-content
+
+
+.btn.border
+  border: 2px solid #FFFFFF
+
+
+.btn.round
+  border-radius: 100px
+  color: #fff
+  font-size: 16px
+  font-weight: bold
+
+  @include for-desktop-up
+    padding: 10px 20px
+
+  @include for-big-desktop-up
+    padding: 11px 28px
+
+
+.btn.transparent:hover, .btn.transparent.active
+  border-color: #FF00F5
+  color: #FF00F5
+
+
+.searchIcon
+  mask-image: url("./../img/searchBtnIcon.svg")
+  mask-position: center
+  mask-size: cover
+  -webkit-mask-image: url("./../img/searchBtnIcon.svg")
+  -webkit-mask-position: center
+  -webkit-mask-size: cover
+  background-color: #fff
+  transform: rotateY(180deg)
+
+  @include for-desktop-up
+    width: 30px
+    height: 30px
+
+  @include for-big-desktop-up
+    width: 35px
+    height: 35px
+
+
+.profileIcon
+  background-image: url("./../img/profileIcon.svg")
+  background-size: cover
+  background-position: center
+  width: 35px
+  height: 35px
+
+
+.cartIcon
+  background-image: url("./../img/cartIcon.svg")
+  background-size: cover
+  background-position: center
+  width: 35px
+  height: 35px
+
+
+.header
+  display: flex
+  position: fixed
+  width: 100%
+  z-index: 100
+  justify-content: center
+
+
+.header-wrapper
+  display: flex
+  justify-content: space-between
+  width: 100%
+  max-width: 1650px
+  padding-top: 25px
+
+  @include for-desktop-up
+    margin: 0 70px
+
+
+.header-wrapper > div
+  display: flex
+  align-items: center
+
+.logo > img
+  @include for-desktop-up
+    width: 80px
+
+  @include for-big-desktop-up
+    width: 100px
+
+.logo > .logo_name
+  color: #fff
+  text-transform: uppercase
+  font-size: 39px
+  font-weight: bold
+  line-height: 1
+  margin-top: 10px
+  margin-left: 5px
+  display: none
+
+
+.navigation
+  width: 80%
+  max-width: 1250px
+  justify-content: space-between
+
+  @include for-desktop-up
+    margin: 0 40px
+
+
+.navigationWrapper
+  position: relative
+  z-index: 1
+
+
+.navigationOpen
+  z-index: 1
+
+
+.navigationContainer
+  position: absolute
+  background-color: rgba(0, 0, 0, 0.9)
+  top: -55px
+  height: calc(100vh + 20px)
+  width: 100vw
+  z-index: -1
+
+  @include for-desktop-up
+    left: -35px
+    padding: 130px 0 100px 40px
+
+  @include for-big-desktop-up
+    left: -50px
+    padding: 150px 0 100px 60px
+
+
+.navigationMenu
+  color: rgba(255, 105, 249, 0.5)
+  display: grid
+  grid-template-columns: repeat(4, 1fr)
+  max-width: 1300px
+  font-size: 36px
+  height: 100%
+  overflow: auto
+
+
+.navigationMenu::-webkit-scrollbar
+  width: 10px
+  border-radius: 10px
+
+
+.navigationMenu a
+  text-decoration: none
+
+
+.navigationMenu a:hover
+  text-decoration: underline
+
+
+.navigationMenu > ul
+  list-style: none
+
+
+.categoryMenu li:not(:last-child)
+  margin-bottom: 20px
+
+
+.categoryMenu li:first-child
+  margin-bottom: 35px
+
+
+.categoryMenu a
+  color: #FF00F5
+  font-size: 36px
+  text-shadow: 0 0 50px rgba(0, 0, 0, 0.5)
+
+
+.categoryMenu li:last-child a
+  color: #fff
+
+
+.navigationMenu ul:not(:first-child) a
+  color: #fff
+  font-size: 30px
+
+
+.navigationMenu ul:not(:first-child) li:not(:last-child)
+  margin-bottom: 15px
+
+
+.navigationMenu ul:not(:first-child) li:first-child
+  margin-bottom: 35px
+  text-shadow: 0 0 60px #004C5C
+
+
+.searchBar
+  display: flex
+  background-color: rgba(0, 190, 255, 0.4)
+  border-radius: 100px
+  box-shadow: 0 0 60px #000000
+  align-items: center
+  width: 100%
+  height: 42px
+  z-index: 1
+
+  @include for-desktop-up
+    margin: 0 30px
+    height: 40px
+
+  @include for-big-desktop-up
+    height: 42px
+    margin: 0 50px
+
+
+.searchBar.active
+  background-color: rgba(235, 0, 255, 0.4)
+
+
+.fieldSearch
+  background-color: transparent
+  border: none
+  color: #fff
+  padding: 12px 10px 12px 20px
+  font-size: 16px
+  outline: none
+  width: 100%
+
+
+.fieldSearch::-webkit-input-placeholder
+  color: #fff
+  font-size: 16px
+
+.fieldSearch::-moz-placeholder
+  color: #fff
+  font-size: 16px
+
+.fieldSearch:-moz-placeholder
+  color: #fff
+  font-size: 16px
+
+.fieldSearch:-ms-input-placeholder
+  color: #fff
+  font-size: 16px
+
+
+.fieldSearch:focus
+  background-color: #fff
+  border-radius: 100px 0 0 100px
+  color: #000
+
+
+.fieldSearch:focus::-webkit-input-placeholder
+  color: #000
+  font-size: 16px
+
+.fieldSearch:focus::-moz-placeholder
+  color: #000
+  font-size: 16px
+
+.fieldSearch:focus:-moz-placeholder
+  color: #000
+  font-size: 16px
+
+.fieldSearch:focus:-ms-input-placeholder
+  color: #000
+  font-size: 16px
+
+
+.goSearch
+  border-radius: 0 100px 100px 0
+  padding-right: 10px
+  height: 100%
+
+
+.fieldSearch:focus + .goSearch
+  background-color: #fff!important
+
+
+.fieldSearch:focus + .goSearch .searchIcon
+  background-color: #000
+
+
+.headerProfile
+  justify-content: space-between
+  width: 80px
+
+.cover
+  background-image: url("./../img/mainBacground.png")
+  background-size: cover
+  height: 100vh
+  position: relative
+
+
+.fide
+  position: absolute
+  top: 0
+  bottom: 0
+  width: 100%
+  background: linear-gradient(90deg, #1B0055 0%, rgba(62, 0, 194, 0) 100%)
