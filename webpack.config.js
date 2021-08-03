@@ -8,16 +8,21 @@ module.exports = {
   mode: 'development',
   entry: './js/index.js',
   output: {
-    filename: 'bundle.js',
+    filename: 'js/bundle.js',
     path: path.resolve(__dirname, 'layout'),
   },
   optimization: {
-    minimize: true,
+    minimize: false,
     minimizer: [
       new OptimizeCssAssetWebpackPlugin(),
       new TerserWebpackPlugin()
     ],
   },
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: 'styles/bundle.css'
+    })
+  ],
   module: {
     rules: [
       {
@@ -35,7 +40,7 @@ module.exports = {
             loader: 'file-loader',
             options: {
               name: '[path][name].[ext]',
-              context: path.resolve(__dirname, "layout"),
+              context: path.resolve(__dirname, "layout", "img"),
               outputPath: 'img'
             }
           }
