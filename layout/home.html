@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="./styles/bundle.css">
     <title>ICE Games -- Магазин Ключей Steam</title>
 </head>
-<body class="openMenu">
+<body>
     <header class="header">
         <div class="header-wrapper">
             <div class="logo">
@@ -126,9 +126,9 @@
                             </ul>
                         </nav>
                     </div>
-                    <button title="Открыть каталог игр" class="btn round border transparent navigationOpen active">Каталог</button>
+                    <button title="Открыть каталог игр" class="btn round border transparent navigationOpen">Каталог</button>
                 </div>
-                <div class="searchBar active">
+                <div class="searchBar">
                     <input type="text" placeholder="Поиск..." class="fieldSearch">
                     <button class="btn goSearch" title="Выполнить поиск">
                         <span class="searchIcon"></span>
@@ -144,14 +144,88 @@
                     <span class="cartIcon"></span>
                 </a>
             </div>
+            <div class="mobileNav">
+                <button title="Открыть поиск" class="btn searchButton">
+                    <span class="searchIcon"></span>
+                </button>
+                <button title="Открыть меню" class="btn toggleMenu">
+                    <span class="mobileNavToggle"></span>
+                </button>
+                <div class="searchContainer">
+                    <div class="searchBar">
+                        <input type="text" placeholder="Поиск..." class="fieldSearch">
+                        <button class="btn goSearch" title="Выполнить поиск">
+                            <span class="searchIcon"></span>
+                        </button>
+                    </div>
+                </div>
+                <nav class="nav">
+                    <ul class="staticLink">
+                        <li>
+                            <a href="#" title="Открыть рейтинг пользователей ICE Games">Рейтинг</a>
+                        </li>
+                        <li>
+                            <a href="#" title="Открыть каталог игр ICE Games">Каталог</a>
+                        </li>
+                    </ul>
+                    <ul class="staticLink right">
+                        <li>
+                            <a href="#" title="Открыть корзину с играми">Корзина</a>
+                        </li>
+                        <li>
+                            <a href="#" title="Откруть авторизацию/профиль">Профиль</a>
+                        </li>
+                    </ul>
+                    <ul>
+                        <li>
+                            <a href="#" title="Новинки">Новинки</a>
+                        </li>
+                        <li>
+                            <a href="#" title="Предзаказы">Предзаказы</a>
+                        </li>
+                        <li>
+                            <a href="#" title="Топ продаж">Топ продаж</a>
+                        </li>
+                        <li>
+                            <a href="#" title="Скидки">Скидки</a>
+                        </li>
+                        <li>
+                            <a href="#" title="Топ 2020">Топ 2020</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
         </div>
     </header>
-    <main>
-        <div class="cover">
-            <div class="fide"></div>
+    <main class="mainContent">
+        <div class="headCover blackout horizontal vertical maxHeight">
+            <video class="video" autoplay muted loop>
+                <source type="video/mp4" src="https://icegames.store/wp-content/uploads/2021/07/cut.mp4">
+            </video>
+            <div class="offer">
+                <div class="name">
+                    PHOENIX POINT: YEAR ONE EDITION
+                </div>
+                <div class="description">
+                    Phoenix Point: Year One Edition — самое полное издание знаменитой стратегии от создателя X-COM.
+                </div>
+                <div class="price">
+                    <div class="toPrice">
+                        <span class="value">999</span>
+                    </div>
+                    <div class="fromPrice">
+                        <span class="value">1300</span>
+                    </div>
+                    <div class="discount">30</div>
+                </div>
+                <div class="actions">
+                    <a href="#" title="Перейти к покупке" class="btn rounded increase backlight">Купить</a>
+                    <a href="#" title="Перейти к странице игры" class="btn rounded secondary">Подробнее</a>
+                </div>
+            </div>
         </div>
-        <div class="cover">
-            <div class="fide"></div>
+        <div class="navigateHomeSlide">
+
         </div>
     </main>
     <footer>

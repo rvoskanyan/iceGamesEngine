@@ -1,5 +1,9 @@
 @mixin for-phone-only
-  @media (max-width: 599px)
+  @media (max-width: 425px)
+    @content
+
+@mixin for-big-phone-up
+  @media (min-width: 426px)
     @content
 
 @mixin for-tablet-portrait-up
@@ -16,4 +20,8 @@
 
 @mixin for-big-desktop-up
   @media (min-width: 1800px)
+    @content
+
+@mixin for-very-big-desktop-up
+  @media (min-width: 1921px)
     @content
