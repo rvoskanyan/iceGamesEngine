@@ -38,6 +38,53 @@ input
   margin: 0
   transition: 0.25s ease-in
 
+label
+  color: #fff
+  z-index: 1
+
+  &.inField
+    position: relative
+    border-bottom: 2px solid #fff
+    display: block
+    height: 42px
+    padding-top: 15px
+    transition: 0.3s ease-in
+
+    &.hide
+      height: 0
+      padding-top: 0
+      border-bottom: none
+      overflow: hidden
+      margin-bottom: 0!important
+
+      & .label
+        opacity: 0
+
+    & .label
+      opacity: 1
+      position: absolute
+      left: 2px
+      top: 18px
+      z-index: -1
+      transition: 0.3s ease-in
+
+    & input
+      color: #fff
+      font-size: 18px
+      padding: 3px 2px
+      width: 100%
+
+      &:focus + .label
+        top: 0
+        left: 50%
+        transform: translate(-50%)
+        font-size: 14px
+
+    &.active .label
+      top: 0
+      left: 50%
+      transform: translate(-50%)
+      font-size: 14px
 
 .btn
   display: flex
@@ -85,6 +132,7 @@ input
     color: #fff
     font-size: 16px
     font-weight: bold
+    padding: 10px 20px
 
     @include for-desktop-up
       padding: 10px 20px
@@ -96,6 +144,28 @@ input
     &:hover, &.active
       border-color: #FF00F5
       color: #FF00F5
+
+    &.hoverFill
+      position: relative
+      z-index: 1
+
+      &:before
+        content: ''
+        position: absolute
+        width: 0
+        height: 0
+        border-radius: 100px
+        background-color: #280063
+        transition: 0.3s ease-in
+        z-index: -1
+
+      &:hover, &.active, &:focus
+        border-color: #fff
+        color: #fff
+
+        &:before
+          width: 100%
+          height: 100%
 
 .searchIcon
   mask-image: url("./../img/searchBtnIcon.svg")
@@ -584,6 +654,119 @@ input
           @include for-tablet-portrait-up
             font-size: 42px
 
+.containerProfileForms
+  position: absolute
+  right: 0
+  top: 0
+  height: 100vh
+  overflow: hidden
+  background-color: rgba(20, 0, 46, 0.9)
+  box-shadow: 0 0 50px #000000
+  width: 0
+  transition: 0.3s ease-in
+  opacity: 0
+
+  &.active
+    opacity: 1
+    width: 100%
+
+    @include for-tablet-portrait-up
+      width: 325px
+
+    @include for-big-desktop-up
+      width: 450px
+
+  & .formWrapper
+    position: absolute
+    top: 45px
+    right: 35px
+    left: 35px
+    opacity: 1
+    transition: 0.3s ease-in
+    overflow: hidden
+
+    @include for-big-desktop-up
+      top: 53px
+
+    &.loginForm.hide
+      opacity: 0
+
+    &.restoreForm.hide
+      opacity: 0
+
+  & .switches
+    display: flex
+
+    & button:not(:last-child)
+      margin-right: 20px
+
+  & form
+    margin-top: 55px
+    transition: 0.3s ease-in
+
+    & label:not(:last-child)
+      margin-bottom: 20px
+
+    & button[type="submit"]
+      margin: 40px auto 0 auto
+
+  & .restore
+    display: flex
+    flex-direction: column
+    align-items: center
+    margin-top: 30px
+
+    & .forgot
+      color: rgba(255, 255, 255, 0.5)
+      font-size: 18px
+      margin-bottom: 5px
+
+    & a
+      text-decoration: none
+      color: #fff
+      font-size: 18px
+
+      &:hover
+        text-decoration: underline
+
+  & .restoreForm
+    & .forgot
+      @include for-big-desktop-up
+        padding: 0 30px
+
+      & > div
+        text-align: center
+
+      & .title
+        color: #fff
+        font-size: 24px
+        font-weight: bold
+
+        @include for-tablet-portrait-up
+          font-size: 25px
+
+      & .description
+        margin: 10px 0 30px 0
+        color: rgba(255, 255, 255, 0.5)
+        font-size: 15px
+
+        @include for-tablet-portrait-up
+          font-size: 16px
+
+    & .back
+      display: flex
+      flex-direction: column
+      align-items: center
+      margin-top: 15px
+
+      & a
+        text-decoration: none
+        color: rgba(255, 255, 255, 0.5)
+        font-size: 16px
+
+        &:hover
+          text-decoration: underline
+
 .mainContent
   display: flex
   align-items: center
@@ -602,6 +785,9 @@ input
 
   @include for-desktop-up
     height: max-content
+
+  &.maxHeight
+    height: 100vh
 
   &.blackout
     &.horizontal:before, &.vertical:after

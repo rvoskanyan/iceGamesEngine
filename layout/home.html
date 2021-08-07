@@ -195,13 +195,56 @@
                     </ul>
                 </nav>
             </div>
+            <div class="containerProfileForms active" id="container">
+                <div id="auth" class="formWrapper loginForm">
+                    <div class="switches">
+                        <button class="btn round border transparent hoverFill active">Вход</button>
+                        <button class="btn round border transparent hoverFill">Регистрация</button>
+                    </div>
+                    <form action="#" method="post" class="">
+                        <label class="inField active hide">
+                            <input type="text" name="nickname">
+                            <span class="label">Ник</span>
+                        </label>
+                        <label class="inField">
+                            <input type="text" name="email">
+                            <span class="label">E-mail</span>
+                        </label>
+                        <label class="inField">
+                            <input type="password" name="password">
+                            <span class="label">Пароль</span>
+                        </label>
+                        <button type="submit" class="btn round border transparent hoverFill">Войти</button>
+                        <div class="restore">
+                            <div class="forgot">Забыли пароль?</div>
+                            <a href="#" title="Открыть форму восстановления пароля">Восстановить</a>
+                        </div>
+                    </form>
+                </div>
+                <div id="restore" class="formWrapper restoreForm hide">
+                    <form action="#" method="post">
+                        <div class="forgot">
+                            <div class="title">Вы забыли пароль?</div>
+                            <div class="description">Мы пришлем вам новый на ящик, указанный при регистрации</div>
+                        </div>
+                        <label class="inField">
+                            <input type="text" name="email">
+                            <span class="label">E-mail</span>
+                        </label>
+                        <button type="submit" class="btn round border transparent hoverFill">Восстановить</button>
+                        <div class="back">
+                            <a href="#" title="Вернуться к авторизации">Назад</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </header>
     <main class="mainContent">
         <div class="headCover blackout horizontal vertical maxHeight">
-            <video class="video" autoplay muted loop>
+            <!--<video class="video" autoplay muted loop>
                 <source type="video/mp4" src="https://icegames.store/wp-content/uploads/2021/07/cut.mp4">
-            </video>
+            </video>-->
             <div class="offer">
                 <div class="name">
                     PHOENIX POINT: YEAR ONE EDITION
@@ -231,5 +274,7 @@
     <footer>
 
     </footer>
+
+    <script src="./js/bundle.js"></script>
 </body>
 </html>
