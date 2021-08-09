@@ -1,0 +1,86 @@
+@import './breakPoints'
+
+.btn
+  display: flex
+  justify-content: center
+  align-items: center
+  text-align: center
+  width: max-content
+  border: none
+  cursor: pointer
+  line-height: 1
+  background: none
+  font-size: 16px
+  text-decoration: none
+  color: #fff
+  height: max-content
+  transition: 0.25s ease-in
+  font-weight: bold
+  overflow: hidden
+
+  &.increase:hover
+    transform: scale(1.1, 1.1)
+
+  &.border
+    border: 2px solid #FFFFFF
+
+  &.translucent
+    opacity: 0.6
+
+    &:hover
+      opacity: 1
+
+  &.round
+    border-radius: 100px
+    padding: 10px 20px
+
+    @include for-desktop-up
+      padding: 10px 20px
+
+    @include for-big-desktop-up
+      padding: 11px 28px
+
+  &.rounded
+    border-radius: 12px
+    padding: 12px 15px
+
+    @include for-tablet-portrait-up
+      padding: 15px 20px
+
+  &.fillFromCenter
+    position: relative
+    z-index: 1
+
+    &:before
+      content: ''
+      position: absolute
+      width: 0
+      height: 0
+      border-radius: 100px
+      z-index: -1
+      transition: 0.3s ease-in
+
+    &:hover:before, &.active:before
+      width: 100%
+      height: 100%
+      border-radius: 0px
+
+    &-darkLilac:before
+      background-color: #280063
+
+  &.bg
+    &-pink
+      background-color: #FF00F5
+
+  &.hover
+    &-color
+      &-pink:hover, &.active
+        color: #FF00F5
+
+    &-border
+      &-pink:hover, &.active
+        border-color: #FF00F5
+
+    &-backlight
+      &-blue:hover, &.active
+        box-shadow: 0 0 25px rgba(0, 224, 255, 0.8)

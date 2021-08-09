@@ -3,6 +3,7 @@
 @import './colors'
 @import './variables'
 @import './mixins'
+@import './btn'
 
 * 
   font-family: 'Arial'
@@ -29,6 +30,10 @@ body
   &.openMenu
    overflow: hidden
 
+.mainWrapper
+  width: 100%
+  max-width: 1790px
+  padding: 0 60px
 
 input
   background: none
@@ -86,86 +91,248 @@ label
       transform: translate(-50%)
       font-size: 14px
 
-.btn
+.slideControls
+  &.brand
+    display: flex
+    align-items: center
+
+  &.vertical
+    transform: rotate(90deg)
+
+  & .progress
+    width: calc(100% - 80px)
+    height: 5px
+    background-color: rgba(255, 255, 255, 0.6)
+    position: relative
+    margin: 0 15px
+
+    &:before
+      content: ''
+      position: absolute
+      left: 0px
+      width: 10%
+      height: 100%
+      background-color: #fff
+      transition: 0.3s ease-in
+
+.slideControl
+  &.brand
+    width: 48px
+    height: 40px
+    position: relative
+
+    &:after, &:before
+      content: ''
+      position: absolute
+      background-size: cover
+      background-position: center
+
+    &:after
+      background-image: url("./../img/slideControlBorder.svg")
+      width: 100%
+      height: 100%
+
+    &:before
+      background-image: url("./../img/slideControlArrow.svg")
+      width: 20px
+      height: 12px
+      top: 12px
+      transition: 0.3s ease-in
+
+    &:hover:before
+      top: 18px
+
+    &.left, &.right
+      width: 40px
+      height: 48px
+
+      &:after
+        width: 48px
+        height: 40px
+
+    &.left
+      &:after, &:before
+        transform: rotate(90deg)
+
+      &:before
+        top: initial
+        right: 8px
+
+      &:hover:before
+        right: 14px
+
+    &.right
+      &:after, &:before
+        transform: rotate(-90deg)
+
+      &:before
+        top: initial
+        left: 8px
+
+      &:hover:before
+        left: 14px
+
+    &.top
+      transform: rotate(180deg)
+
+.cardUsp
+  border-radius: 20px
+  background-image: linear-gradient(180.13deg, #DB00FF 0.11%, rgba(205, 120, 219, 0.3875) 45.24%, rgba(196, 196, 196, 0) 94.7%)
+  min-width: 230px
+  min-height: 161px
+  max-width: 260px
+  max-height: 182px
+  width: 15vw
+  height: 10vw
+  color: #fff
+  font-size: 18px
+  text-transform: uppercase
   display: flex
   justify-content: center
   align-items: center
-  width: max-content
-  border: none
-  cursor: pointer
-  line-height: 1
-  background: none
-  font-size: 12px
-  text-decoration: none
-  color: #000
-  height: max-content
-  transition: 0.25s ease-in
+  padding: 0 15px
+  text-align: center
+  font-weight: bold
+  transition: 0.3s ease-in
 
-  &.border
-    border: 2px solid #FFFFFF
+  @include for-big-desktop-up
+    font-size: 20px
+    padding: 0 20px
 
-  &.increase:hover
+  &:hover
     transform: scale(1.1, 1.1)
 
-  &.backlight:hover
-    box-shadow: 0 0 25px rgba(0, 224, 255, 0.8)
+.cardGame
+  width: 220px
+  height: 340px
+  border: 2px solid #fff
+  box-shadow: 0 0 10px #FA00FF
+  border-radius: 20px
+  background-color: #460B6E
+  position: relative
+  overflow: hidden
+  transition: 0.3s ease-in
+  cursor: pointer
 
-  &.secondary
-    opacity: 0.6
+  @include for-big-desktop-up
+    width: 250px
+    height: 385px
 
-    &:hover
+  &:hover, &.active
+    transform: scale(1.1, 1.1)
+    box-shadow: 0 0 50px #00A3FF
+
+    & .actions, & > .actions .inCart, & > .actions .like
       opacity: 1
 
-  &.rounded
-    border-radius: 12px
+    & > .actions
+      height: 100%
+      padding: 20px
+
+  & .actions
+    position: absolute
+    width: 100%
+    height: 0%
+    z-index: 1
+    background-color: rgba(70, 11, 110, 0.8)
+    padding: 0 20px
+    opacity: 0
+    overflow: hidden
+    transition: inherit
+
+    & .inCart
+      position: absolute
+      bottom: 30%
+      left: 20px
+      right: 20px
+      width: calc(100% - 40px)
+      opacity: 0
+      transition: inherit
+      background: #620064
+      text-transform: uppercase
+
+    & .like
+      position: absolute
+      right: 20px
+      opacity: 0
+      transition: inherit
+
+  & .cover
+    position: relative
+
+    & img
+      width: 100%
+
+    & .name
+      position: absolute
+      bottom: 0
+      background-image: linear-gradient(180deg, rgba(70, 11, 110, 0) 0%, #460B6E 95%)
+      width: 100%
+      text-align: center
+      color: #fff
+      font-size: 21px
+      font-weight: bold
+      padding: 50px 15px 0 15px
+
+      @include for-big-desktop-up
+        font-size: 25px
+
+  & .price
+    position: absolute
+    bottom: 0
+    font-size: 20px
     color: #fff
-    font-size: 13px
-    font-weight: bold
-    padding: 12px 15px
-
-    @include for-tablet-portrait-up
-      padding: 15px 20px
-      font-size: 16px
-
-  &.round
-    border-radius: 100px
-    color: #fff
-    font-size: 16px
-    font-weight: bold
-    padding: 10px 20px
-
-    @include for-desktop-up
-      padding: 10px 20px
+    justify-content: space-between
+    width: 100%
+    padding: 0 10px 15px 10px
 
     @include for-big-desktop-up
-      padding: 11px 28px
+      font-size: 25px
+      padding: 0 15px 20px 15px
 
-  &.transparent
-    &:hover, &.active
-      border-color: #FF00F5
-      color: #FF00F5
+    & .toPrice, & .fromPrice
+      & .value
+        margin-right: 36px
 
-    &.hoverFill
-      position: relative
-      z-index: 1
+        @include for-big-desktop-up
+          margin-right: 40px
 
-      &:before
-        content: ''
-        position: absolute
-        width: 0
-        height: 0
-        border-radius: 100px
-        background-color: #280063
-        transition: 0.3s ease-in
-        z-index: -1
+        &:after
+          font-size: 16px
+          padding-left: 3px
 
-      &:hover, &.active, &:focus
-        border-color: #fff
-        color: #fff
+          @include for-big-desktop-up
+            font-size: 18px
 
+    & .fromPrice
+      & .value
+        color: #9200AA
         &:before
-          width: 100%
-          height: 100%
+          height: 2px
+          color: #9200AA
+          background-color: #9200AA
+
+.gameGrid
+  display: grid
+  grid-template-columns: repeat(5, 220px)
+  justify-content: space-between
+  grid-row-gap: 50px
+  margin: 0 auto
+  max-width: 1360px
+
+  @include for-big-desktop-up
+    max-width: initial
+    grid-template-columns: repeat(5, 250px)
+
+.likeIcon
+  background-image: url("./../img/like.svg")
+  background-size: cover
+  background-position: center
+  width: 30px
+  height: 25px
+
+  &.active
+    background-image: url("./../img/likeActive.svg")
 
 .searchIcon
   mask-image: url("./../img/searchBtnIcon.svg")
@@ -1003,8 +1170,32 @@ label
       @include for-big-desktop-up
         margin-top: 35px
 
-      & .btn
-        background-color: #FF00F5
+      & .btn:not(:last-child)
+        margin-right: 20px
 
-        &:not(:last-child)
-          margin-right: 20px
+.navigateHomeSlide
+  padding: 0 20px
+  margin-top: -160px
+
+  @include for-big-desktop-up
+    padding: 0 55px
+
+  & .slideControls
+    position: relative
+    max-width: 600px
+    left: calc(100% - 600px)
+
+  & .items
+    margin-top: 50px
+
+.uspRow
+  display: flex
+  justify-content: space-between
+  margin-top: 100px
+
+.homeCatalog
+  margin-top: 120px
+  padding: 0 55px
+
+  & .categories
+    display: flex
