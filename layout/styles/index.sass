@@ -43,6 +43,48 @@ input
   margin: 0
   transition: 0.25s ease-in
 
+.newsPreview
+  max-width: 380px
+  display: flex
+  flex-direction: column
+
+  & .imgContainer
+    width: 380px
+    height: 200px
+    border-radius: 30px
+    overflow: hidden
+    box-shadow: 0 0 50px rgba(235, 0, 255, 0.57)
+
+    &:hover
+      transform: scale(1.1, 1.1) translate(18px, -9px)
+
+    & img
+      width: 100%
+      height: 100%
+      object-fit: cover
+
+  & .attributes
+    margin-top: 20px
+    display: flex
+    align-items: center
+
+    & .date
+      margin-left: 20px
+      color: rgba(255, 255, 255, 0.7)
+      font-weight: bold
+      font-size: 17px
+
+  & .description
+    margin-top: 20px
+
+    & .title
+      color: #fff
+      font-weight: bold
+
+    & .text
+      color: rgba(255, 255, 255, 0.7)
+      margin-top: 7px
+
 label
   color: #fff
   z-index: 1
@@ -91,13 +133,30 @@ label
       transform: translate(-50%)
       font-size: 14px
 
+.homeTitle
+  color: #fff
+  text-shadow: 0 0 50px #DB00FF
+  font-size: 60px
+  font-weight: bold
+  text-align: center
+
 .slideControls
   &.brand
     display: flex
     align-items: center
 
   &.vertical
-    transform: rotate(90deg)
+    flex-direction: column
+
+    & .progress
+      height: calc(100% - 110px)
+      width: 5px
+      margin: 15px 0
+
+      &:before
+        top: 0px
+        height: 10%
+        width: 100%
 
   & .progress
     width: calc(100% - 80px)
@@ -201,6 +260,7 @@ label
 
   &:hover
     transform: scale(1.1, 1.1)
+    cursor: default
 
 .cardGame
   width: 220px
@@ -242,14 +302,11 @@ label
 
     & .inCart
       position: absolute
-      bottom: 30%
+      bottom: 25%
       left: 20px
       right: 20px
       width: calc(100% - 40px)
       opacity: 0
-      transition: inherit
-      background: #620064
-      text-transform: uppercase
 
     & .like
       position: absolute
@@ -1199,3 +1256,123 @@ label
 
   & .categories
     display: flex
+
+    & button:not(:last-child)
+      margin-right: 20px
+
+  & .products
+    margin-top: 35px
+
+  & .more
+    margin: 35px auto 0 auto
+
+.homeGenresSlider
+  padding: 0 150px
+  max-width: 1490px
+  margin: 100px auto 0 auto
+  position: relative
+
+  & .items
+    margin-top: 30px
+
+    & .slide
+      display: flex
+
+      &:nth-child(even)
+        flex-direction: row-reverse
+
+        & .genre:first-child:hover
+            transform: translate(-37px, -11px) scale(1.15, 1.15)
+
+        & .genre:last-child:hover
+            transform: translate(18px, -11px) scale(1.15, 1.15)
+
+      & .genre
+        background-position: center
+        background-size: cover
+        display: flex
+        align-items: center
+        justify-content: center
+        text-align: center
+        font-size: 60px
+        font-weight: bold
+        color: #fff
+        padding: 30px
+        margin: 15px
+        border-radius: 30px
+        box-shadow: 0 0 100px rgba(235, 0, 255, 0.57)
+        cursor: pointer
+        height: 350px
+        transition: 0.3s ease-in
+
+        &:first-child
+          width: 690px
+
+          &:hover
+            transform: translate(37px, 11px) scale(1.15, 1.15)
+
+        &:last-child
+          width: 440px
+
+          &:hover
+            transform: translate(-18px, 11px) scale(1.15, 1.15)
+
+  & .controls
+    position: absolute
+    top: 225px
+    right: 0
+    height: 60%
+
+.homeNewsTape
+  margin-top: 100px
+  position: relative
+
+  & .slider
+    display: flex
+    margin: 50px auto 0 auto
+    max-width: 1290px
+
+    & .slide
+      margin: 0 25px
+
+  & .prev, & .next
+    background-image: url("./../img/slideControlArrowBig.svg")
+    background-size: cover
+    background-position: center
+    width: 175px
+    height: 200px
+    position: absolute
+    top: 115px
+
+  & .prev
+    left: 40px
+
+    &:hover
+      transform: scale(1.1, 1.1)
+
+  & .next
+    right: 40px
+    transform: rotate(180deg)
+
+    &:hover
+      transform: rotate(180deg) scale(1.1, 1.1)
+
+.mediaHome
+  margin-top: 100px
+
+  & .homeTitle
+    text-shadow: 0 0 50px #8000FF
+
+  & .items
+    display: flex
+    height: 200px
+    justify-content: space-between
+
+    & .item
+      height: 100%
+
+      & img
+        height: 100%
+
+.footer
+  margin-top: 100px

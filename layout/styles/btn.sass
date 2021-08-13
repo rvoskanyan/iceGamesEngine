@@ -22,23 +22,29 @@
     transform: scale(1.1, 1.1)
 
   &.border
-    border: 2px solid #FFFFFF
+    border: 2px solid #fff
+
+  &.uppercase
+    text-transform: uppercase
 
   &.translucent
     opacity: 0.6
 
-    &:hover
+    &:hover, &.active
       opacity: 1
 
   &.round
     border-radius: 100px
     padding: 10px 20px
 
-    @include for-desktop-up
-      padding: 10px 20px
-
     @include for-big-desktop-up
       padding: 11px 28px
+
+    &.small
+      padding: 8px 18px
+
+      @include for-big-desktop-up
+        padding: 9px 22px
 
   &.rounded
     border-radius: 12px
@@ -46,6 +52,12 @@
 
     @include for-tablet-portrait-up
       padding: 15px 20px
+
+    &.small
+      padding: 10px 12px
+
+      @include for-big-desktop-up
+        padding: 12px 18px
 
   &.fillFromCenter
     position: relative
@@ -72,15 +84,29 @@
     &-pink
       background-color: #FF00F5
 
+    &-darkPink
+      background-color: #620064
+
+    &-darkLilac
+      background-color: #410074
+
   &.hover
     &-color
-      &-pink:hover, &.active
-        color: #FF00F5
+      &-pink
+        &:hover, &.active
+          color: #FF00F5
 
     &-border
-      &-pink:hover, &.active
-        border-color: #FF00F5
+      &-pink
+        &:hover, &.active
+          border-color: #FF00F5
+
+    &-bg
+      &-pink
+        &:hover, &.active
+          background-color: #FF00F5
 
     &-backlight
-      &-blue:hover, &.active
-        box-shadow: 0 0 25px rgba(0, 224, 255, 0.8)
+      &-blue
+        &:hover, &.active
+          box-shadow: 0 0 25px rgba(0, 224, 255, 0.8)
