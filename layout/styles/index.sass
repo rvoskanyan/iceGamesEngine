@@ -4,12 +4,21 @@
 @import './variables'
 @import './mixins'
 @import './btn'
+@import './breadcrumbs'
 
-* 
-  font-family: 'Arial'
+*
+  font-family: 'Montserrat', sans-serif
   box-sizing: border-box
   margin: 0
   padding: 0
+
+img
+  pointer-events: none
+  -moz-user-select: none
+  -webkit-user-select: none
+  -ms-user-select: none
+  user-select: none
+  -webkit-user-drag: none
 
 ::-webkit-scrollbar
   width: 12px
@@ -26,6 +35,7 @@
 
 body
   background: #01033C
+  min-width: 320px
 
   &.openMenu
    overflow: hidden
@@ -33,7 +43,17 @@ body
 .mainWrapper
   width: 100%
   max-width: 1790px
-  padding: 0 60px
+  padding: 0 15px
+  z-index: 1
+
+  @include for-tablet-portrait-up
+    padding: 0 30px
+
+  @include for-desktop-up
+    padding: 0 60px
+
+  &.withoutHeadCover
+    padding-top: 200px
 
 input
   background: none
@@ -71,7 +91,7 @@ input
     & .date
       margin-left: 20px
       color: rgba(255, 255, 255, 0.7)
-      font-weight: bold
+      font-weight: 600
       font-size: 17px
 
   & .description
@@ -79,11 +99,31 @@ input
 
     & .title
       color: #fff
-      font-weight: bold
+      font-weight: 600
 
     & .text
       color: rgba(255, 255, 255, 0.7)
       margin-top: 7px
+
+.tabs
+  & .nav
+    display: flex
+    justify-content: space-between
+
+  & .blocks
+    display: grid
+    grid-template-columns: 1fr
+
+    & > .item
+      visibility: hidden
+      opacity: 0
+      transition: 0.3s ease-in
+      grid-row: 1/2
+      grid-column: 1/2
+
+      &.active
+        visibility: visible
+        opacity: 1
 
 label
   color: #fff
@@ -137,8 +177,46 @@ label
   color: #fff
   text-shadow: 0 0 50px #DB00FF
   font-size: 60px
-  font-weight: bold
+  font-weight: 600
   text-align: center
+
+
+.checkbox
+  display: flex
+  align-items: center
+  cursor: pointer
+
+  & .mask
+    content: ''
+    min-width: 18px
+    max-width: 18px
+    min-height: 18px
+    max-height: 18px
+    background-color: rgba(155, 0, 173, 0.7)
+    display: block
+    box-shadow: inset 0 0 5px 1px rgba(219, 0, 255, 0.7)
+    border-radius: 5px
+    background-size: cover
+    background-position: center
+
+  & .label
+    margin-left: 7px
+    color: rgba(255, 255, 255, 0.5)
+    font-weight: 600
+    font-size: 15px
+
+  & .input
+    display: none
+
+    &:checked
+      & + .mask
+        background-image: url("./../img/checkboxDecoration.png")
+
+      & ~ .label
+        color: rgba(255, 255, 255, 0.8)
+
+  &:hover > .label
+    color: rgba(255, 255, 255, 0.8)
 
 .slideControls
   &.brand
@@ -159,7 +237,7 @@ label
         width: 100%
 
   & .progress
-    width: calc(100% - 80px)
+    width: calc(100% - 110px)
     height: 5px
     background-color: rgba(255, 255, 255, 0.6)
     position: relative
@@ -234,6 +312,28 @@ label
     &.top
       transform: rotate(180deg)
 
+.arrowBlue
+  background-image: url("./../img/arrowBlue.svg")
+  background-position: center
+  background-size: cover
+  width: 30px
+  height: 57px
+  cursor: pointer
+  --scaler: 1
+  transform: scale(var(--scaler))
+
+  @include for-big-desktop-up
+    width: 48px
+    height: 90px
+
+  &:hover
+    -webkit-filter: drop-shadow(0 0 10px #00E0FF)
+    filter: drop-shadow(0 0 10px #00E0FF)
+    --scaler: 0.9
+
+  &.next
+    transform: scale(var(--scaler)) rotate(180deg)
+
 .cardUsp
   border-radius: 20px
   background-image: linear-gradient(180.13deg, #DB00FF 0.11%, rgba(205, 120, 219, 0.3875) 45.24%, rgba(196, 196, 196, 0) 94.7%)
@@ -251,7 +351,7 @@ label
   align-items: center
   padding: 0 15px
   text-align: center
-  font-weight: bold
+  font-weight: 600
   transition: 0.3s ease-in
 
   @include for-big-desktop-up
@@ -275,12 +375,51 @@ label
   cursor: pointer
 
   @include for-big-desktop-up
-    width: 250px
-    height: 385px
+    width: 230px
+    height: 365px
+
+  &.small
+    width: 140px
+    height: 240px
+
+    @include for-big-phone-up
+      width: 190px
+      height: 304px
+
+    @include for-big-desktop-up
+      width: 210px
+      height: 330px
+
+    &:hover, &.active
+      box-shadow: 0 0 20px #00A3FF
+
+    & .cover
+      height: 172px
+
+      @include for-big-phone-up
+        height: 236px
+
+      @include for-big-desktop-up
+        height: 262px
+
+      & .name
+        font-size: 22px
+
+    & .price
+      font-size: 22px
+
+      & .toPrice, & .fromPrice
+        & .value
+          margin-right: 36px
+          padding: 0
+
+          &:after
+            font-size: 16px
+            padding-left: 3px
 
   &:hover, &.active
     transform: scale(1.1, 1.1)
-    box-shadow: 0 0 50px #00A3FF
+    box-shadow: 0 0 35px #00A3FF
 
     & .actions, & > .actions .inCart, & > .actions .like
       opacity: 1
@@ -316,9 +455,12 @@ label
 
   & .cover
     position: relative
+    height: 292px
 
     & img
+      object-fit: cover
       width: 100%
+      height: 99%
 
     & .name
       position: absolute
@@ -328,7 +470,7 @@ label
       text-align: center
       color: #fff
       font-size: 21px
-      font-weight: bold
+      font-weight: 600
       padding: 50px 15px 0 15px
 
       @include for-big-desktop-up
@@ -371,15 +513,101 @@ label
 
 .gameGrid
   display: grid
-  grid-template-columns: repeat(5, 220px)
-  justify-content: space-between
-  grid-row-gap: 50px
-  margin: 0 auto
-  max-width: 1360px
+  grid-template-columns: repeat(2, max-content)
+  justify-content: center
+  row-gap: 20px
+  column-gap: 15px
+
+  @include for-tablet-portrait-up
+    column-gap: 30px
+    row-gap: 30px
+
+  @include for-tablet-landscape-up
+    grid-template-columns: repeat(4, max-content)
+    justify-content: space-between
+    column-gap: initial
 
   @include for-big-desktop-up
-    max-width: initial
-    grid-template-columns: repeat(5, 250px)
+    row-gap: 50px
+    grid-template-columns: repeat(5, max-content)
+
+
+.articleBlock
+  display: flex
+  min-height: min-content
+  overflow: hidden
+  border-radius: 20px
+
+  &.link
+    transition: 0.3s ease-in
+
+    &:not(:last-child)
+      margin-bottom: 50px
+
+    &:hover
+      transform: scale(1.01, 1.01)
+      cursor: pointer
+      box-shadow: 0 0 35px rgba(219, 0, 255, 0.5)
+
+  & .poster
+    object-fit: cover
+    max-height: 250px
+    max-width: 50%
+
+  & .content
+    padding: 20px 50px
+    flex-grow: 1
+    color: #fff
+    text-shadow: 0 0 15px #0F1339
+    display: flex
+    flex-direction: column
+    justify-content: space-between
+
+    & .title
+      font-size: 50px
+      font-weight: 600
+      text-transform: uppercase
+
+    & .text
+      display: -webkit-box
+      -webkit-line-clamp: 3
+      -webkit-box-orient: vertical
+      overflow: hidden
+      font-size: 20px
+
+    & .statistics
+      display: flex
+
+      & .views
+        margin-left: 20px
+
+.likes, .views
+  font-size: 20px
+  font-weight: 600
+  display: flex
+  padding: 0 3px
+
+  &:before
+    content: ''
+    mask-position: center
+    mask-size: cover
+    -webkit-mask-position: center
+    -webkit-mask-size: cover
+    display: block
+    margin-right: 8px
+    background-color: rgba(255, 255, 255, 0.7)
+
+.likes:before
+    width: 26px
+    height: 25px
+    mask-image: url("./../img/favorite.svg")
+    -webkit-mask-image: url("./../img/favorite.svg")
+
+.views:before
+    width: 34px
+    height: 25px
+    mask-image: url("./../img/views.svg")
+    -webkit-mask-image: url("./../img/views.svg")
 
 .likeIcon
   background-image: url("./../img/like.svg")
@@ -411,6 +639,175 @@ label
   width: 35px
   height: 35px
 
+
+.mobileParamsFilter
+  position: fixed
+  display: flex
+  flex-direction: column
+  top: 0
+  left: 0
+  height: 0
+  width: 100%
+  min-width: 320px
+  overflow: auto
+  background: linear-gradient(180deg, rgba(1, 0, 48, 0.8) 0%, #010030 100%)
+  z-index: 101
+  align-items: center
+  justify-content: space-between
+  padding: 0
+  opacity: 0
+  transition: 0.3s ease-in
+
+  &.active
+    padding: 30px 0
+    height: 100vh
+    opacity: 1
+
+
+  @include for-big-phone-up
+    padding: 50px 30px
+
+  & .close
+    width: 60px
+    min-width: 60px
+    min-height: 60px
+    height: 60px
+    position: relative
+
+    &:before, &:after
+      content: ''
+      position: absolute
+      top: calc(50% - 3px)
+      height: 4px
+      background-color: #7000FF
+      box-shadow: 0 0 10px #AD00FF
+      width: 100%
+
+    &:before
+      transform: rotate(40deg)
+
+    &:after
+      transform: rotate(-40deg)
+
+  & .blocks
+    grid-template-columns: 1fr
+    width: 100%
+    max-width: 500px
+    height: max-content
+    min-height: 150px
+    margin-top: 30px
+    padding: 10px 30px
+    overflow: auto
+
+    & .block
+      width: 100%
+      overflow: hidden
+      opacity: 0
+      height: 0
+      transition: 0.3s ease-in
+      transition-property: opacity
+
+      &.active
+        opacity: 1
+        height: max-content
+
+      &.main
+        & .btn
+          width: 100%
+          font-size: 18px
+          position: relative
+
+          &:not(:last-child)
+            margin-bottom: 15px
+
+          &.active:before
+            content: ''
+            position: absolute
+            top: 50%
+            transform: translateY(-50%)
+            left: 10px
+            height: 35px
+            width: 35px
+            background-image: url("./../img/listDecoration.png")
+            background-size: cover
+            background-position: center
+
+        & .priceRange
+          margin-bottom: 60px
+
+      &.sortBy, &.visibleCount, &.categories, &.activation
+        display: flex
+        flex-direction: column
+        align-items: center
+
+        & .btn:not(:last-child)
+          width: 200px
+          margin-bottom: 15px
+
+        & .checkbox:not(:last-child)
+          margin-bottom: 15px
+
+      &.genres
+        & .variants
+          display: grid
+          grid-template-columns: max-content
+          justify-content: space-between
+          row-gap: 10px
+
+          @include for-big-phone-up
+            grid-template-columns: repeat(2, max-content)
+
+      & .title
+        color: #fff
+        font-weight: bold
+        font-size: 30px
+        text-align: center
+        margin-bottom: 50px
+
+  & .apply
+    justify-self: flex-end
+    margin-top: 30px
+
+.range
+  position: relative
+  display: flex
+  align-items: center
+  margin: 10px 35px
+
+  &.purple
+    & .scale, & .from, & .to
+      background-color: #7000FF
+      box-shadow: 0 0 50px rgba(0, 255, 224, 0.6)
+
+  & .scale
+    width: 100%
+    height: 4px
+    background-color: #FF00F5
+
+  & .from, & .to
+    position: absolute
+    bottom: 50%
+    background-color: #FF00F5
+    padding: 3px 15px
+    color: #fff
+    font-weight: 600
+    border-radius: 20px
+    min-width: 60px
+    text-align: center
+    cursor: pointer
+
+  & .from
+    left: 0
+    transform: translate(-50%, 50%)
+
+  & .to
+    right: 0
+    transform: translate(50%, 50%)
+
+.titleFilter
+  color: rgba(255, 255, 255, 0.7)
+  font-weight: 600
+  font-size: 18px
 
 .cartIcon
   background-image: url("./../img/cartIcon.svg")
@@ -463,7 +860,7 @@ label
     display: block
     max-width: max-content
     position: relative
-    font-weight: bold
+    font-weight: 600
     padding: 0 3px
     margin-right: 50px
 
@@ -495,7 +892,7 @@ label
   display: block
   border-radius: 10px
   padding: 5px 8px
-  font-weight: bold
+  font-weight: 600
   font-size: 20px
   max-width: max-content
 
@@ -543,7 +940,7 @@ label
     color: #fff
     text-transform: uppercase
     font-size: 20px
-    font-weight: bold
+    font-weight: 600
     line-height: 1
     margin-top: 10px
     margin-left: 5px
@@ -859,7 +1256,7 @@ label
         color: #FFD1F8
         text-shadow: 0 0 200px #000124
         font-size: 28px
-        font-weight: bold
+        font-weight: 600
 
         @include for-tablet-portrait-up
           font-size: 35px
@@ -964,7 +1361,7 @@ label
       & .title
         color: #fff
         font-size: 24px
-        font-weight: bold
+        font-weight: 600
 
         @include for-tablet-portrait-up
           font-size: 25px
@@ -1000,11 +1397,8 @@ label
   position: relative
   height: 100vh
   max-height: 100vh
-  background-position: center
-  background-size: cover
   width: 100%
   max-width: 1920px
-  background-image: url("./../img/mainBacground.png")
   overflow: hidden
 
   @include for-desktop-up
@@ -1014,7 +1408,7 @@ label
     height: 100vh
 
   &.blackout
-    &.horizontal:before, &.vertical:after
+    &.horizontal:before, &.vertical:after, &.verticalMax:after
       content: ''
       position: absolute
       left: 0
@@ -1048,6 +1442,339 @@ label
         top: initial
         height: 70%
         background: linear-gradient(180deg, rgba(1, 3, 60, 0) 0%, #01033C 100%)
+
+    &.verticalMax:after
+      top: 0
+      bottom: 0
+      width: 100%
+      background: linear-gradient(180deg, rgba(1, 3, 60, 0) 0%, #01033C 100%)
+
+  &.gamePage
+    @include for-tablet-landscape-down
+      padding: 180px 50px 50px 50px
+      min-height: 690px
+      max-height: 780px
+      flex-direction: row
+      display: flex
+      align-items: center
+      overflow: initial
+
+    @include for-tablet-portrait-down
+      padding: 170px 30px 0 30px
+      flex-direction: column
+      height: initial
+      max-height: initial
+
+    @include for-big-phone-down
+      padding: 135px 15px 0 15px
+      min-height: 675px
+      max-height: initial
+      height: initial
+
+    &.blackout.vertical:after
+      @include for-tablet-landscape-down
+        display: none
+
+    &.blackout.horizontal:before
+      @include for-tablet-landscape-down
+        bottom: 65%
+
+    & .img
+      @include for-tablet-landscape-down
+        width: 30%
+        height: 100%
+        border-radius: 20px
+        box-shadow: 0 0 50px #FA00FF
+
+      @include for-tablet-portrait-down
+        width: 500px
+        height: 650px
+        margin-top: 35px
+        box-shadow: 0 0 30px #FA00FF
+
+      @include for-big-phone-down
+        width: 395px
+        box-shadow: 0 0 15px #FA00FF
+
+      @include for-phone-only
+        width: 100%
+        height: 550px
+        margin-top: 30px
+
+    & .offer
+      @include for-tablet-landscape-down
+        display: initial
+        margin-left: 50px
+        width: 100%
+        background-image: initial
+        position: initial
+        transform: initial
+        padding: initial
+        height: initial
+
+      @include for-tablet-portrait-down
+        margin-left: 30px
+        display: contents
+
+      &:before, &:after
+        @include for-tablet-landscape-down
+          content: initial
+
+
+      & .variations
+        display: flex
+        order: -1
+
+        @include for-desktop-up
+          position: absolute
+          top: 0
+
+        & .item
+          position: relative
+
+          &:hover > .elems
+            opacity: 1
+            visibility: visible
+
+          &:not(:last-child)
+            margin-right: 5px
+
+            @include for-tablet-portrait-up
+              margin-right: 10px
+
+            @include for-tablet-landscape-up
+              margin-right: 20px
+
+          & .btn
+            width: max-content
+            font-size: 12px
+            padding: 10px
+
+            @include for-tablet-portrait-up
+              font-size: 14px
+              padding: 12px
+
+            @include for-tablet-landscape-up
+              padding: 12px
+
+            @include for-desktop-up
+              width: 140px
+
+            @include for-big-desktop-up
+              width: 150px
+              padding: 15px
+
+          & .elems
+            background-color: #0E5B74
+            border-radius: 10px
+            padding: 15px 20px
+            margin-top: 16px
+            position: absolute
+            left: 50%
+            transform: translate(-50%)
+            opacity: 0
+            visibility: hidden
+            transition: 0.3s ease-in
+            z-index: 1
+
+            @include for-big-desktop-up
+              padding: 20px 30px
+
+            &:before
+              content: ''
+              position: absolute
+              top: -8px
+              border: 8px solid #0E5B74
+              transform: rotate(45deg)
+              left: calc(50% - 8px)
+
+            & .item
+              white-space: nowrap
+              width: 100%
+              font-weight: 600
+              font-size: 15px
+
+              &:not(:last-child):after
+                content: ''
+                width: 100%
+                height: 1px
+                background-color: #fff
+                display: block
+                margin: 10px 0
+
+      & .name
+        @include for-tablet-landscape-down
+          margin-top: 30px
+          max-width: 700px
+          text-align: initial
+
+        @include for-tablet-portrait-down
+          text-align: center
+
+        & .rate
+          display: inline-block
+          background-color: #0E5B74
+          opacity: 0.4
+          border-radius: 10px
+          padding: 3px 10px
+          text-align: center
+
+          @include for-big-phone-up
+            padding: 3px 12px
+
+          & .name, & .value
+            display: block
+            line-height: 1
+            margin: 0
+
+          & .name
+            font-size: 10px
+
+            @include for-big-phone-up
+              font-size: 11px
+
+          & .value
+            font-size: 28px
+
+            @include for-big-phone-up
+              font-size: 30px
+
+      & .statuses
+        display: block
+        font-weight: 600
+        margin-top: 20px
+        font-size: 12px
+
+        @include for-big-phone-up
+          display: flex
+
+        @include for-tablet-portrait-up
+          font-size: 15px
+          margin-top: 10px
+
+        & .item
+          opacity: 0.7
+          display: flex
+          align-items: center
+
+          &:not(:last-child)
+            margin-bottom: 5px
+
+            @include for-big-phone-up
+              margin-right: 15px
+              margin-bottom: initial
+
+          &:before
+            content: ''
+            display: block
+            width: 12px
+            height: 12px
+            border-radius: 100%
+            margin-right: 8px
+
+          &.positive:before
+            background-color: #14FF00
+            box-shadow: 0 0 10px #33FF00
+
+      & .description
+        @include for-tablet-landscape-down
+          padding: initial
+          display: block
+          max-width: 750px
+
+        @include for-tablet-portrait-down
+          padding: 0 15px
+          text-align: center
+
+        @include for-phone-only
+          padding: 0
+
+      & .bottomContainer
+        @include for-tablet-portrait-down
+          display: flex
+          width: 100%
+          justify-content: space-between
+          padding-left: 50px
+
+        @include for-big-phone-down
+          padding-left: initial
+
+      & .price
+        @include for-tablet-landscape-down
+          padding: initial
+          margin-top: 30px
+
+        @include for-tablet-portrait-down
+          flex-direction: column
+
+        & .fromPrice
+          @include for-tablet-portrait-down
+            margin-top: 10px
+
+        & .discount
+          @include for-tablet-landscape-up
+            display: block
+
+      & .actions
+        @include for-tablet-landscape-down
+          margin-top: 30px
+
+        & .goToPay
+          @include for-tablet-landscape-down
+            width: 250px
+            font-size: 25px
+            height: 100%
+
+          @include for-tablet-portrait-down
+            height: 100%
+            width: 200px
+
+          @include for-phone-only
+            width: 140px
+            font-size: 20px
+
+      & .extends
+        @include for-tablet-portrait-down
+          align-self: flex-end
+
+  & .blogContentCover
+    position: absolute
+    top: 0
+    height: 100%
+    width: 100%
+    color: #fff
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: space-between
+    z-index: 1
+    text-shadow: 0 0 10px #938083
+    padding: 300px 30px 150px 30px
+
+    & .title
+      font-weight: 600
+      font-size: 65px
+      text-transform: uppercase
+      text-align: center
+
+    & .text
+      font-size: 25px
+      max-width: 900px
+      text-align: center
+      line-height: 1.5
+      display: -webkit-box
+      -webkit-line-clamp: 3
+      -webkit-box-orient: vertical
+      overflow: hidden
+
+    & .btn
+      padding: 18px 40px
+      font-size: 18px
+
+  & .img
+    width: 100%
+    height: 100%
+    object-fit: cover
 
   & .video
     width: 100%
@@ -1085,7 +1812,7 @@ label
       display: block
       width: 580px
       height: 499px
-      padding: 100px 0 30px 135px
+      padding: 95px 0 0 135px
       background-image: url("./../img/headOfferBorder.svg")
       top: 20%
       transform: initial
@@ -1125,7 +1852,7 @@ label
 
     & .name
       font-size: 20px
-      font-weight: bold
+      font-weight: 600
       line-height: 1.2
       text-align: center
 
@@ -1143,7 +1870,7 @@ label
       display: none
       opacity: 0.7
       margin-top: 20px
-      font-weight: bold
+      font-weight: 600
       font-size: 18px
       padding: 0 15px
 
@@ -1153,6 +1880,9 @@ label
       @include for-big-desktop-up
         font-size: 20px
         margin-top: 30px
+
+    & .bottomContainer
+      display: contents
 
     & .price
       margin-top: 25px
@@ -1193,7 +1923,7 @@ label
 
         & .value:after
           color: #fff
-          font-weight: bold
+          font-weight: 600
 
       & .fromPrice
         margin-right: 30px
@@ -1229,6 +1959,48 @@ label
 
       & .btn:not(:last-child)
         margin-right: 20px
+
+    & .extends
+      display: flex
+      margin-top: 20px
+
+      & .item
+        width: 47px
+        height: 40px
+        background-image: url("./../img/extendBorder.svg")
+        background-position: center
+        background-size: cover
+        display: flex
+        justify-content: center
+        align-items: center
+        position: relative
+
+        &:hover > .description
+          opacity: 1
+          visibility: visible
+
+
+        &:not(:last-child)
+          margin-right: 10px
+
+        & img
+          width: 30px
+          height: 30px
+
+        & .description
+          position: absolute
+          font-size: 15px
+          font-weight: initial
+          color: #7AD6FF
+          background: #051770
+          box-shadow: 0 0 40px rgba(204, 0, 255, 0.69)
+          border-radius: 20px
+          white-space: nowrap
+          padding: 10px 15px
+          opacity: 0
+          visibility: hidden
+          transition: 0.3s ease-in
+          top: calc(100% - 10px)
 
 .navigateHomeSlide
   padding: 0 20px
@@ -1295,7 +2067,7 @@ label
         justify-content: center
         text-align: center
         font-size: 60px
-        font-weight: bold
+        font-weight: 600
         color: #fff
         padding: 30px
         margin: 15px
@@ -1374,5 +2146,664 @@ label
       & img
         height: 100%
 
+.gridGamePage
+  margin-top: 70px
+
+  @include for-tablet-landscape-up
+    margin-top: 30px
+
+  @include for-desktop-up
+    display: grid
+    grid-template-columns: repeat(3, 1fr)
+    column-gap: 80px
+    margin-top: 50px
+
+  & .head
+
+    @include for-desktop-up
+      border-radius: 20px
+      margin-bottom: 100px
+      padding: 50px
+      grid-column: 1/4
+      justify-content: space-between
+      display: flex
+      flex-direction: row-reverse
+      background: #320065
+      box-shadow: 0 0 50px rgba(235, 0, 255, 0.25)
+
+    & .gallery
+      align-items: center
+      justify-content: space-between
+      width: 100%
+      margin: 0 auto
+
+      @include for-tablet-landscape-up
+        display: flex
+        max-width: 750px
+
+      @include for-desktop-up
+        margin: 0
+
+      @include for-big-desktop-up
+        max-width: 900px
+
+      & .prev, & .next
+        display: none
+
+        @include for-tablet-landscape-up
+          display: block
+
+      & .progress
+        width: 100%
+        max-width: 290px
+        height: 4px
+        background-color: rgba(112, 0, 255, 0.5)
+        margin: 30px auto 0 auto
+        position: relative
+
+        @include for-big-phone-up
+          max-width: 400px
+
+        @include for-tablet-portrait-up
+          max-width: 528px
+
+        @include for-tablet-landscape-up
+          display: none
+          max-width: 650px
+
+        &:before
+          content: ''
+          position: absolute
+          height: 100%
+          left: 30px
+          width: 20%
+          background-color: #7000FF
+
+      & .tape
+        display: flex
+        align-items: center
+        justify-content: space-between
+        width: 100%
+        margin: 0 auto
+        max-width: 290px
+
+        @include for-big-phone-up
+          max-width: 400px
+
+        @include for-tablet-portrait-up
+          max-width: 528px
+
+        @include for-tablet-landscape-up
+          max-width: 650px
+          margin: initial
+
+        @include for-big-desktop-up
+          max-width: 730px
+
+        & .item
+          border-radius: 20px
+          height: 85px
+          width: 140px
+          object-fit: cover
+          box-shadow: 0 0 5px #FF00F5
+          cursor: pointer
+
+          @include for-big-phone-up
+            box-shadow: 0 0 10px #FF00F5
+            height: 115px
+            width: 190px
+
+          @include for-tablet-portrait-up
+            box-shadow: 0 0 15px #FF00F5
+            height: 145px
+            width: 255px
+
+          @include for-tablet-landscape-up
+            height: 185px
+            width: 315px
+
+          @include for-desktop-up
+            box-shadow: 0 0 2px #000
+
+          @include for-big-desktop-up
+            height: 200px
+            width: 350px
+
+    & .metaDescription
+      display: grid
+      grid-template-columns: 1fr 120px
+      font-size: 14px
+      color: rgba(255, 255, 255, 0.8)
+      font-weight: 600
+      margin: 50px auto 0 auto
+      border: 3px solid rgba(255, 0, 245, 0.5)
+      box-shadow: inset 0 0 10px #FF00F5, 0 0 10px #FF00F5
+      border-radius: 20px
+      padding: 10px
+      row-gap: 10px
+      width: 100%
+
+      @include for-big-phone-up
+        padding: 20px
+        grid-template-columns: repeat(2, 1fr)
+        font-size: 16px
+
+      @include for-tablet-portrait-up
+        padding: 20px 40px
+
+      @include for-tablet-landscape-up
+        width: 768px
+        padding: 30px 60px
+        row-gap: 12px
+        font-size: 18px
+
+      @include for-desktop-up
+        margin: initial
+        border: initial
+        box-shadow: initial
+        border-radius: initial
+        padding: initial
+        width: 345px
+        font-size: 16px
+
+      @include for-big-desktop-up
+        font-size: 18px
+        row-gap: 15px
+        width: 400px
+
+  & .information
+    margin-top: 50px
+
+    @include for-desktop-up
+      grid-column: 2/4
+      grid-row: 2/4
+      margin: initial
+
+    & .tabs
+
+      & .nav
+        display: grid
+        grid-template-columns: 1fr
+        grid-gap: 20px
+
+        @include for-big-phone-up
+          grid-template-columns: 1fr 1fr
+
+        @include for-desktop-up
+          display: flex
+          padding: 0 30px
+
+        & .btn
+          width: 100%
+          background-color: #170058
+          border: 2px solid #FFFFFF
+          border-radius: 100px
+          padding: 10px
+          font-size: 20px
+          text-shadow: 0 0 10px #EB00FF
+
+          @include for-big-phone-up
+            font-size: 22px
+
+          @include for-desktop-up
+            width: max-content
+            background-color: initial
+            border: initial
+            border-radius: initial
+            padding: initial
+            text-shadow: initial
+
+          @include for-big-desktop-up
+            font-size: 30px
+
+      & .blocks
+        margin-top: 30px
+
+        @include for-desktop-up
+          margin-top: 15px
+
+        & > .item
+          background-color: #170058
+          border: 2px solid #FFFFFF
+          border-radius: 20px
+          padding: 30px 50px
+
+          @include for-desktop-up
+            background-color: #320065
+            box-shadow: 0 0 50px rgba(235, 0, 255, 0.25)
+            padding: 70px 50px
+            border: initial
+
+          & .title
+            color: #fff
+            text-shadow: 0 0 35px #EB00FF
+            font-size: 30px
+            margin-bottom: 30px
+            text-transform: uppercase
+
+          & .paragraph
+            color: #fff
+            font-size: 18px
+            margin: 0
+            line-height: 1.5
+
+            &:not(:last-child)
+              margin-bottom: 30px
+
+          & .list
+            list-style: none
+
+            & .item
+              display: flex
+              color: #fff
+              font-weight: 600
+              justify-content: flex-start
+              font-size: 20px
+              line-height: 1.5
+
+              &:not(:last-child)
+                margin-bottom: 20px
+
+              &:before
+                content: ''
+                background-image: url("./../img/listDecoration.png")
+                background-size: cover
+                background-position: center
+                min-height: 30px
+                max-height: 30px
+                min-width: 30px
+                max-width: 30px
+                margin-right: 20px
+                display: block
+
+          & .slider
+            display: flex
+            justify-content: space-between
+            align-items: center
+
+            & .tape
+              display: flex
+              justify-content: space-between
+              flex-grow: 1
+
+    & .requirements
+      margin-top: 50px
+
+      & .title
+        text-shadow: 0 0 30px #EB00FF
+        color: #fff
+        font-size: 20px
+        text-transform: uppercase
+
+        @include for-big-phone-up
+          font-size: 22px
+
+        @include for-desktop-up
+          font-size: 30px
+          padding: 0 30px
+
+      & .content
+        background-color: #170058
+        border: 2px solid #FFFFFF
+        border-radius: 10px
+        padding: 15px 10px
+        margin-top: 10px
+        display: grid
+        grid-template-columns: 175px 355px
+        row-gap: 15px
+        column-gap: 15px
+        font-size: 16px
+        color: #fff
+        overflow: auto
+
+        @include for-big-phone-up
+          padding: 30px 50px
+          border-radius: 20px
+          font-size: 18px
+          column-gap: 30px
+          overflow: initial
+          grid-template-columns: 200px 500px
+
+        @include for-desktop-up
+          margin-top: 20px
+          padding: 50px 100px
+          background-color: #320065
+          box-shadow: 0 0 50px rgba(235, 0, 255, 0.25)
+          border: initial
+
+        & .input
+          font-weight: 600
+
+  & .adjacent
+    margin: 50px auto 0 auto
+    max-width: 500px
+
+    @include for-desktop-up
+      margin: initial
+
+    & .title
+      width: 100%
+      cursor: initial
+
+    & .tape
+      display: flex
+      justify-content: space-between
+      overflow: hidden
+      padding: 35px 30px
+
+  & .commentsBlock
+    margin-top: 70px
+
+    & .title
+      width: 100%
+
+    & .comments
+      margin-top: 30px
+
+      & .item
+        color: #fff
+        padding: 12px 25px
+        background-color: rgba(50, 0, 101, 0.8)
+        border-radius: 20px
+        font-size: 18px
+        display: flex
+        align-items: center
+
+        &:not(:last-child)
+          margin-bottom: 20px
+
+        &:before
+          display: block
+          content: ''
+          background-image: url("./../img/extendSingleGame.svg")
+          background-position: center
+          background-size: cover
+          min-width: 30px
+          max-width: 30px
+          min-height: 30px
+          max-height: 30px
+          margin-right: 10px
+
+  & .views
+    display: none
+    grid-column: 1/4
+    position: relative
+    margin-top: 100px
+
+    @include for-desktop-up
+      display: block
+
+    & .title
+      text-shadow: 0 0 30px #eb00ff
+      color: #fff
+      font-size: 30px
+      text-transform: uppercase
+      padding: 0 30px
+      font-weight: 600
+
+    & .tape
+      display: flex
+      justify-content: space-between
+      overflow: hidden
+      padding: 60px 50px
+
+    & .slideControls
+      position: absolute
+      width: 500px
+      top: 0
+      right: 0
+
+
+.gridCatalog
+  grid-template-columns: 1fr 3fr
+  row-gap: 50px
+  column-gap: 50px
+
+  @include for-desktop-up
+    display: grid
+
+  & .title
+    text-align: center
+    text-transform: uppercase
+    font-weight: 600
+    font-size: 35px
+    color: #fff
+
+    @include for-desktop-up
+      display: none
+
+  & .mobileParamsOpen
+    background-position: center
+    background-size: cover
+    background-image: url("./../img/modileParamsOpen.svg")
+    width: 110px
+    height: 100px
+    margin: 0 auto
+
+    @include for-desktop-up
+      display: none
+
+  & .priceRange
+    display: none
+
+    @include for-desktop-up
+      display: initial
+
+    & .rangeWrapper
+      margin-top: 30px
+
+  & .headCatalog
+    justify-content: space-between
+    display: none
+
+    @include for-desktop-up
+      display: flex
+
+    & .sortBy
+
+      & .variants
+        margin-top: 10px
+        display: flex
+        align-items: center
+
+        & .item:not(:last-child)
+          margin-right: 15px
+
+    & .countProducts
+
+      & .variants
+        display: flex
+        margin-top: 10px
+
+        & .item:not(:last-child)
+          margin-right: 15px
+
+  & .filters
+    display: none
+    grid-template-columns: repeat(2, max-content)
+    grid-auto-rows: max-content
+    column-gap: 20px
+    row-gap: 12px
+
+    @include for-desktop-up
+      display: grid
+
+    @include for-big-desktop-up
+      grid-template-columns: repeat(3, max-content)
+
+    & .titleFilter
+      grid-column: 1/-1
+
+      &:not(:first-child)
+        margin-top: 20px
+
+  & .games
+    margin-top: 30px
+
+    @include for-desktop-up
+      margin-top: initial
+
+  & .pagination
+    grid-column: 2/-1
+    display: flex
+    justify-content: center
+    margin-top: 45px
+
+    @include for-desktop-up
+      margin-top: initial
+
+    & .item:not(:last-child)
+      margin-right: 20px
+
 .footer
   margin-top: 100px
+  border-top: 2px solid #00C2FF
+  padding: 40px 0 20px 0
+
+  & .footerNavigation
+    display: flex
+    flex-direction: column
+    justify-content: space-between
+    align-items: center
+
+    @include for-desktop-up
+      flex-direction: row
+      align-items: initial
+
+    & .logoFull
+      width: 100px
+      margin-left: 60px
+      display: none
+
+      @include for-desktop-up
+        display: block
+
+      & img
+        width: 100%
+
+    & .menu
+      display: grid
+      grid-template-columns: repeat(2, max-content)
+      column-gap: 15px
+      row-gap: 15px
+      margin-top: 40px
+      width: 100%
+      max-width: 800px
+      justify-content: space-between
+
+      @include for-desktop-up
+        width: initial
+
+      & .delivery
+        order: 1
+        justify-self: center
+        grid-column: 1/3
+
+        @include for-big-phone-up
+          order: initial
+          justify-self: initial
+          grid-column: initial
+
+      @include for-tablet-portrait-up
+        grid-template-columns: repeat(3, max-content)
+        column-gap: 40px
+        row-gap: 20px
+
+      @include for-tablet-landscape-up
+        column-gap: 50px
+        row-gap: 30px
+
+      @include for-desktop-up
+        margin-top: initial
+
+      & .link
+        font-size: 18px
+
+        @include for-tablet-portrait-up
+          font-size: 21px
+
+        @include for-tablet-landscape-up
+          font-size: 26px
+
+        &:hover
+          text-decoration: underline
+
+    & .social
+      display: flex
+
+      @include for-desktop-up
+        order: 1
+
+      & .link
+        width: 35px
+
+        @include for-tablet-portrait-up
+          width: 50px
+
+        @include for-desktop-up
+          width: 30px
+
+        &:not(:last-child)
+          margin-right: 10px
+
+        & img
+          width: 100%
+
+  & .info
+    display: grid
+    row-gap: 30px
+    margin-top: 30px
+    align-items: center
+    justify-items: center
+
+    @include for-tablet-portrait-up
+      margin-top: 70px
+
+    @include for-desktop-up
+      display: flex
+      margin-top: 70px
+      align-items: center
+      justify-content: space-between
+
+    & .legalInfo
+      @include for-desktop-up
+        order: -1
+
+    & .legalInfo, & .designBy
+      color: #fff
+      opacity: 0.7
+
+      & .link
+        font-size: 13px
+        text-transform: uppercase
+
+        @include for-tablet-portrait-up
+          font-size: 16px
+
+        &:hover
+          text-decoration: underline
+
+    & .payments
+      width: 100%
+      max-width: 900px
+
+      @include for-desktop-up
+        max-width: 650px
+
+      @include for-big-desktop-up
+        max-width: 800px
+
+      & img
+        width: 100%
+
+    & .designBy .link
+      font-size: 12px
+
+      @include for-tablet-portrait-up
+        font-size: 14px
+
+  & .copy
+    color: #A9A9A9
+    max-width: 1050px
+    margin: 30px auto 0 auto
+    text-align: center

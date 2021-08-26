@@ -1,0 +1,1093 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="IceGames -- Магазин Ключей Steam">
+    <meta name="keywords" content="IceGames -- Магазин Ключей Steam">
+    <link rel="stylesheet" href="./styles/bundle.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,600;1,300;1,600&display=swap" rel="stylesheet">
+    <title>ICE Games -- Магазин Ключей Steam</title>
+</head>
+<body class="">
+<div class="mobileParamsFilter">
+    <button class="close btn">
+        <span></span>
+    </button>
+    <div class="blocks">
+        <div class="block main">
+            <div class="title">Цена:</div>
+            <div class="priceRange">
+                <div class="rangeWrapper">
+                    <div class="range purple">
+                        <div class="scale"></div>
+                        <div class="from">0</div>
+                        <div class="to">9999</div>
+                    </div>
+                </div>
+            </div>
+            <button class="btn rounded bg-purple increase">Сортировать по:</button>
+            <button class="btn rounded bg-purple increase">Отображать по:</button>
+            <button class="btn rounded bg-purple increase active">Категории</button>
+            <button class="btn rounded bg-purple increase">Жанр</button>
+            <button class="btn rounded bg-purple increase">Активация</button>
+        </div>
+        <div class="block sortBy">
+            <div class="title">Сортировать по:</div>
+            <button class="btn rounded bg-purple translucent hover-backlight-pink">Дате выхода</button>
+            <button class="btn rounded bg-purple translucent hover-backlight-pink">Цене</button>
+            <button class="btn rounded bg-purple translucent hover-backlight-pink">Скидке</button>
+            <label class="item checkbox">
+                <input type="checkbox" class="input">
+                <div class="mask"></div>
+                <span class="label">Только в наличии</span>
+            </label>
+        </div>
+        <div class="block visibleCount">
+            <div class="title">Отображать по:</div>
+            <button class="btn rounded bg-purple translucent hover-backlight-pink">20</button>
+            <button class="btn rounded bg-purple translucent hover-backlight-pink">40</button>
+            <button class="btn rounded bg-purple translucent hover-backlight-pink">80</button>
+        </div>
+        <div class="block categories">
+            <div class="title">Категории</div>
+            <div class="variants">
+                <label class="item checkbox">
+                    <input type="checkbox" class="input">
+                    <div class="mask"></div>
+                    <span class="label">Топ продаж</span>
+                </label>
+                <label class="item checkbox">
+                    <input type="checkbox" class="input">
+                    <div class="mask"></div>
+                    <span class="label">Скидки</span>
+                </label>
+                <label class="item checkbox">
+                    <input type="checkbox" class="input">
+                    <div class="mask"></div>
+                    <span class="label">Новинки</span>
+                </label>
+            </div>
+        </div>
+        <div class="block genres">
+            <div class="title">Жанр</div>
+            <div class="variants">
+                <label class="item checkbox">
+                    <input type="checkbox" class="input">
+                    <div class="mask"></div>
+                    <span class="label">Экшн</span>
+                </label>
+                <label class="item checkbox">
+                    <input type="checkbox" class="input">
+                    <div class="mask"></div>
+                    <span class="label">Стратегии</span>
+                </label>
+                <label class="item checkbox">
+                    <input type="checkbox" class="input">
+                    <div class="mask"></div>
+                    <span class="label">Приключения</span>
+                </label>
+                <label class="item checkbox">
+                    <input type="checkbox" class="input">
+                    <div class="mask"></div>
+                    <span class="label">Шутеры</span>
+                </label>
+                <label class="item checkbox">
+                    <input type="checkbox" class="input">
+                    <div class="mask"></div>
+                    <span class="label">Инди</span>
+                </label>
+                <label class="item checkbox">
+                    <input type="checkbox" class="input">
+                    <div class="mask"></div>
+                    <span class="label">Квест</span>
+                </label>
+                <label class="item checkbox">
+                    <input type="checkbox" class="input">
+                    <div class="mask"></div>
+                    <span class="label">Ролевые</span>
+                </label>
+                <label class="item checkbox">
+                    <input type="checkbox" class="input">
+                    <div class="mask"></div>
+                    <span class="label">Симуляторы</span>
+                </label>
+                <label class="item checkbox">
+                    <input type="checkbox" class="input">
+                    <div class="mask"></div>
+                    <span class="label">RPG</span>
+                </label>
+                <label class="item checkbox">
+                    <input type="checkbox" class="input">
+                    <div class="mask"></div>
+                    <span class="label">Спорт</span>
+                </label>
+                <label class="item checkbox">
+                    <input type="checkbox" class="input">
+                    <div class="mask"></div>
+                    <span class="label">Песочница</span>
+                </label>
+                <label class="item checkbox">
+                    <input type="checkbox" class="input">
+                    <div class="mask"></div>
+                    <span class="label">Выживание</span>
+                </label>
+                <label class="item checkbox">
+                    <input type="checkbox" class="input">
+                    <div class="mask"></div>
+                    <span class="label">Ужасы</span>
+                </label>
+                <label class="item checkbox">
+                    <input type="checkbox" class="input">
+                    <div class="mask"></div>
+                    <span class="label">Казуальные</span>
+                </label>
+                <label class="item checkbox">
+                    <input type="checkbox" class="input">
+                    <div class="mask"></div>
+                    <span class="label">Гонки</span>
+                </label>
+            </div>
+        </div>
+        <div class="block active activation">
+            <div class="title">Активация</div>
+            <div class="variants">
+                <label class="item checkbox">
+                    <input type="checkbox" class="input">
+                    <div class="mask"></div>
+                    <span class="label">Origin</span>
+                </label>
+                <label class="item checkbox">
+                    <input type="checkbox" class="input">
+                    <div class="mask"></div>
+                    <span class="label">Battle.net</span>
+                </label>
+                <label class="item checkbox">
+                    <input type="checkbox" class="input">
+                    <div class="mask"></div>
+                    <span class="label">ElderScrollsOnline.com</span>
+                </label>
+                <label class="item checkbox">
+                    <input type="checkbox" class="input">
+                    <div class="mask"></div>
+                    <span class="label">Steam</span>
+                </label>
+                <label class="item checkbox">
+                    <input type="checkbox" class="input">
+                    <div class="mask"></div>
+                    <span class="label">Epic Games</span>
+                </label>
+                <label class="item checkbox">
+                    <input type="checkbox" class="input">
+                    <div class="mask"></div>
+                    <span class="label">GOG</span>
+                </label>
+                <label class="item checkbox">
+                    <input type="checkbox" class="input">
+                    <div class="mask"></div>
+                    <span class="label">uPlay</span>
+                </label>
+                <label class="item checkbox">
+                    <input type="checkbox" class="input">
+                    <div class="mask"></div>
+                    <span class="label">Steam Gift</span>
+                </label>
+                <label class="item checkbox">
+                    <input type="checkbox" class="input">
+                    <div class="mask"></div>
+                    <span class="label">Rockstar Games</span>
+                </label>
+            </div>
+        </div>
+    </div>
+    <button class="apply btn rounded border border-purple increase">Применить</button>
+</div>
+<header class="header">
+    <div class="header-wrapper">
+        <div class="logo">
+            <img src="./img/logo.png" alt="Логотип Ice Games" title="Логотип Ice Games">
+            <div class="logo_name">Ice Games<br>Store</div>
+        </div>
+        <div class="navigation">
+            <div class="navigationWrapper">
+                <div class="navigationContainer">
+                    <nav class="navigationMenu">
+                        <ul class="categoryMenu">
+                            <li>
+                                <a href="#" title="Топ продаж">Топ продаж</a>
+                            </li>
+                            <li>
+                                <a href="#" title="Новинки">Новинки</a>
+                            </li>
+                            <li>
+                                <a href="#" title="Предзаказы">Предзаказы</a>
+                            </li>
+                            <li>
+                                <a href="#" title="Скидки">Скидки</a>
+                            </li>
+                            <li>
+                                <a href="#" title="ТОП 2020">ТОП 2020</a>
+                            </li>
+                            <li>
+                                <a href="#" title="Все игры">Все игры</a>
+                            </li>
+                        </ul>
+                        <ul>
+                            <li>Жанры</li>
+                            <li>
+                                <a href="#" title="Шутеры">Шутеры</a>
+                            </li>
+                            <li>
+                                <a href="#" title="Экшн">Экшн</a>
+                            </li>
+                            <li>
+                                <a href="#" title="Ролевые">Ролевые</a>
+                            </li>
+                            <li>
+                                <a href="#" title="Стратегии">Стратегии</a>
+                            </li>
+                            <li>
+                                <a href="#" title="Инди">Инди</a>
+                            </li>
+                            <li>
+                                <a href="#" title="Симуляторы">Симуляторы</a>
+                            </li>
+                            <li>
+                                <a href="#" title="Приключения">Приключения</a>
+                            </li>
+                            <li>
+                                <a href="#" title="Атмосфера">Атмосфера</a>
+                            </li>
+                            <li>
+                                <a href="#" title="Хорор">Хорор</a>
+                            </li>
+                        </ul>
+                        <ul>
+                            <li>Издатели</li>
+                            <li>
+                                <a href="#" title="2К">2К</a>
+                            </li>
+                            <li>
+                                <a href="#" title="Bandi Namko">Bandi Namko</a>
+                            </li>
+                            <li>
+                                <a href="#" title="Bethesda softworks">Bethesda softworks</a>
+                            </li>
+                            <li>
+                                <a href="#" title="Capcom">Capcom</a>
+                            </li>
+                            <li>
+                                <a href="#" title="Electronic Arts">Electronic Arts</a>
+                            </li>
+                            <li>
+                                <a href="#" title="Paradox Interactive">Paradox Interactive</a>
+                            </li>
+                            <li>
+                                <a href="#" title="Segs">Segs</a>
+                            </li>
+                            <li>
+                                <a href="#" title="Ubisoft">Ubisoft</a>
+                            </li>
+                        </ul>
+                        <ul>
+                            <li>Разработчики</li>
+                            <li>
+                                <a href="#" title="Gearbox Software">Gearbox Software</a>
+                            </li>
+                            <li>
+                                <a href="#" title="Hangar 13">Hangar 13</a>
+                            </li>
+                            <li>
+                                <a href="#" title="Team17 Digital">Team17 Digital</a>
+                            </li>
+                            <li>
+                                <a href="#" title="Creative Assembly">Creative Assembly</a>
+                            </li>
+                            <li>
+                                <a href="#" title="Dice">Dice</a>
+                            </li>
+                            <li>
+                                <a href="#" title="Firaxis">Firaxis</a>
+                            </li>
+                            <li>
+                                <a href="#" title="Remedy Entertaiment">Remedy Entertaiment</a>
+                            </li>
+                            <li>
+                                <a href="#" title="Respawn Entertaiment">Respawn Entertaiment</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <button title="Открыть каталог игр" class="btn round border hover-color-pink hover-border-pink navigationOpen">Каталог</button>
+            </div>
+            <div class="searchBar">
+                <input type="text" placeholder="Поиск..." class="fieldSearch">
+                <button class="btn goSearch" title="Выполнить поиск">
+                    <span class="searchIcon"></span>
+                </button>
+            </div>
+            <a href="#" title="Рейтинг пользователей Ice Games" class="btn round border hover-color-pink hover-border-pink">Рейтинг</a>
+        </div>
+        <div class="headerProfile">
+            <a href="#" class="btn profile" title="Авторизоваться/Перейти в профиль">
+                <span class="profileIcon"></span>
+            </a>
+            <a href="#" class="btn cart" title="Перейти в корзину с товарами">
+                <span class="cartIcon"></span>
+            </a>
+        </div>
+        <div class="mobileNav">
+            <button title="Открыть поиск" class="btn searchButton">
+                <span class="searchIcon"></span>
+            </button>
+            <button title="Открыть меню" class="btn toggleMenu">
+                <span class="mobileNavToggle"></span>
+            </button>
+            <div class="searchContainer">
+                <div class="searchBar">
+                    <input type="text" placeholder="Поиск..." class="fieldSearch">
+                    <button class="btn goSearch" title="Выполнить поиск">
+                        <span class="searchIcon"></span>
+                    </button>
+                </div>
+            </div>
+            <nav class="nav">
+                <ul class="staticLink">
+                    <li>
+                        <a href="#" title="Открыть рейтинг пользователей ICE Games">Рейтинг</a>
+                    </li>
+                    <li>
+                        <a href="#" title="Открыть каталог игр ICE Games">Каталог</a>
+                    </li>
+                </ul>
+                <ul class="staticLink right">
+                    <li>
+                        <a href="#" title="Открыть корзину с играми">Корзина</a>
+                    </li>
+                    <li>
+                        <a href="#" title="Откруть авторизацию/профиль">Профиль</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li>
+                        <a href="#" title="Новинки">Новинки</a>
+                    </li>
+                    <li>
+                        <a href="#" title="Предзаказы">Предзаказы</a>
+                    </li>
+                    <li>
+                        <a href="#" title="Топ продаж">Топ продаж</a>
+                    </li>
+                    <li>
+                        <a href="#" title="Скидки">Скидки</a>
+                    </li>
+                    <li>
+                        <a href="#" title="Топ 2020">Топ 2020</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div class="containerProfileForms">
+            <div class="formWrapper loginForm">
+                <div class="switches">
+                    <button class="btn round border fillFromCenter fillFromCenter-darkLilac active">Вход</button>
+                    <button class="btn round border fillFromCenter fillFromCenter-darkLilac">Регистрация</button>
+                </div>
+                <form action="#" method="post" class="">
+                    <label class="inField active hide">
+                        <input type="text" name="nickname">
+                        <span class="label">Ник</span>
+                    </label>
+                    <label class="inField">
+                        <input type="text" name="email">
+                        <span class="label">E-mail</span>
+                    </label>
+                    <label class="inField">
+                        <input type="password" name="password">
+                        <span class="label">Пароль</span>
+                    </label>
+                    <button type="submit" class="btn round border fillFromCenter fillFromCenter-darkLilac">Войти</button>
+                    <div class="restore">
+                        <div class="forgot">Забыли пароль?</div>
+                        <a href="#" title="Открыть форму восстановления пароля">Восстановить</a>
+                    </div>
+                </form>
+            </div>
+            <div class="formWrapper restoreForm hide">
+                <form action="#" method="post">
+                    <div class="forgot">
+                        <div class="title">Вы забыли пароль?</div>
+                        <div class="description">Мы пришлем вам новый на ящик, указанный при регистрации</div>
+                    </div>
+                    <label class="inField">
+                        <input type="text" name="email">
+                        <span class="label">E-mail</span>
+                    </label>
+                    <button type="submit" class="btn round border fillFromCenter fillFromCenter-darkLilac">Восстановить</button>
+                    <div class="back">
+                        <a href="#" title="Вернуться к авторизации">Назад</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</header>
+<main class="mainContent">
+    <div class="breadcrumbs">
+        <a href="#" class="item link btn" title="Перейти к странице">Главная</a>
+        <div class="item">Каталог</div>
+    </div>
+    <div class="mainWrapper withoutHeadCover">
+        <main class="gridCatalog">
+            <div class="title">Каталог 2500 игр</div>
+            <input type="button" class="mobileParamsOpen btn">
+            <div class="priceRange">
+                <div class="titleFilter">Цена:</div>
+                <div class="rangeWrapper">
+                    <div class="range">
+                        <div class="scale"></div>
+                        <div class="from">0</div>
+                        <div class="to">9999</div>
+                    </div>
+                </div>
+            </div>
+            <div class="headCatalog">
+                <div class="sortBy">
+                    <div class="titleFilter">Сортировать по:</div>
+                    <div class="variants">
+                        <button class="item btn rounded translucent bg-lilac">Дате выхода</button>
+                        <button class="item btn rounded translucent bg-lilac">Цене</button>
+                        <button class="item btn rounded translucent bg-lilac">Скидке</button>
+                        <label class="item checkbox">
+                            <input type="checkbox" class="input">
+                            <div class="mask"></div>
+                            <span class="label">Только в наличии</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="countProducts">
+                    <div class="titleFilter">Товаров на странице:</div>
+                    <div class="variants">
+                        <div class="item btn rounded translucent bg-lilac">20</div>
+                        <div class="item btn rounded translucent bg-lilac">40</div>
+                        <div class="item btn rounded translucent bg-lilac">80</div>
+                    </div>
+                </div>
+            </div>
+            <div class="filters">
+                <div class="titleFilter">Категории:</div>
+                <label class="item checkbox">
+                    <input type="checkbox" class="input">
+                    <div class="mask"></div>
+                    <span class="label">Топ продаж</span>
+                </label>
+                <label class="item checkbox">
+                    <input type="checkbox" class="input">
+                    <div class="mask"></div>
+                    <span class="label">Скидки</span>
+                </label>
+                <label class="item checkbox">
+                    <input type="checkbox" class="input">
+                    <div class="mask"></div>
+                    <span class="label">Новинки</span>
+                </label>
+
+                <div class="titleFilter">Жанр:</div>
+                <label class="item checkbox">
+                    <input type="checkbox" class="input">
+                    <div class="mask"></div>
+                    <span class="label">Экшн</span>
+                </label>
+                <label class="item checkbox">
+                    <input type="checkbox" class="input">
+                    <div class="mask"></div>
+                    <span class="label">Стратегии</span>
+                </label>
+                <label class="item checkbox">
+                    <input type="checkbox" class="input">
+                    <div class="mask"></div>
+                    <span class="label">Приключения</span>
+                </label>
+                <label class="item checkbox">
+                    <input type="checkbox" class="input">
+                    <div class="mask"></div>
+                    <span class="label">Шутеры</span>
+                </label>
+                <label class="item checkbox">
+                    <input type="checkbox" class="input">
+                    <div class="mask"></div>
+                    <span class="label">Инди</span>
+                </label>
+                <label class="item checkbox">
+                    <input type="checkbox" class="input">
+                    <div class="mask"></div>
+                    <span class="label">Квест</span>
+                </label>
+                <label class="item checkbox">
+                    <input type="checkbox" class="input">
+                    <div class="mask"></div>
+                    <span class="label">Ролевые</span>
+                </label>
+                <label class="item checkbox">
+                    <input type="checkbox" class="input">
+                    <div class="mask"></div>
+                    <span class="label">Симуляторы</span>
+                </label>
+                <label class="item checkbox">
+                    <input type="checkbox" class="input">
+                    <div class="mask"></div>
+                    <span class="label">RPG</span>
+                </label>
+                <label class="item checkbox">
+                    <input type="checkbox" class="input">
+                    <div class="mask"></div>
+                    <span class="label">Спорт</span>
+                </label>
+                <label class="item checkbox">
+                    <input type="checkbox" class="input">
+                    <div class="mask"></div>
+                    <span class="label">Песочница</span>
+                </label>
+                <label class="item checkbox">
+                    <input type="checkbox" class="input">
+                    <div class="mask"></div>
+                    <span class="label">Выживание</span>
+                </label>
+                <label class="item checkbox">
+                    <input type="checkbox" class="input">
+                    <div class="mask"></div>
+                    <span class="label">Ужасы</span>
+                </label>
+                <label class="item checkbox">
+                    <input type="checkbox" class="input">
+                    <div class="mask"></div>
+                    <span class="label">Казуальные</span>
+                </label>
+                <label class="item checkbox">
+                    <input type="checkbox" class="input">
+                    <div class="mask"></div>
+                    <span class="label">Гонки</span>
+                </label>
+
+
+                <div class="titleFilter">Активация:</div>
+                <label class="item checkbox">
+                    <input type="checkbox" class="input">
+                    <div class="mask"></div>
+                    <span class="label">Origin</span>
+                </label>
+                <label class="item checkbox">
+                    <input type="checkbox" class="input">
+                    <div class="mask"></div>
+                    <span class="label">Battle.net</span>
+                </label>
+                <label class="item checkbox">
+                    <input type="checkbox" class="input">
+                    <div class="mask"></div>
+                    <span class="label">ElderScrollsOnline.com</span>
+                </label>
+                <label class="item checkbox">
+                    <input type="checkbox" class="input">
+                    <div class="mask"></div>
+                    <span class="label">Steam</span>
+                </label>
+                <label class="item checkbox">
+                    <input type="checkbox" class="input">
+                    <div class="mask"></div>
+                    <span class="label">Epic Games</span>
+                </label>
+                <label class="item checkbox">
+                    <input type="checkbox" class="input">
+                    <div class="mask"></div>
+                    <span class="label">GOG</span>
+                </label>
+                <label class="item checkbox">
+                    <input type="checkbox" class="input">
+                    <div class="mask"></div>
+                    <span class="label">uPlay</span>
+                </label>
+                <label class="item checkbox">
+                    <input type="checkbox" class="input">
+                    <div class="mask"></div>
+                    <span class="label">Steam Gift</span>
+                </label>
+                <label class="item checkbox">
+                    <input type="checkbox" class="input">
+                    <div class="mask"></div>
+                    <span class="label">Rockstar Games</span>
+                </label>
+            </div>
+            <div class="games gameGrid">
+                <div class="cardGame small">
+                    <div class="actions">
+                        <button class="btn like">
+                            <span class="likeIcon"></span>
+                        </button>
+                        <button class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart" title="Добавить данный товар в корзину покупок">В корзину</button>
+                    </div>
+                    <div class="cover">
+                        <img src="./img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
+                        <div class="name">Doom ETERNAL</div>
+                    </div>
+                    <div class="price">
+                        <div class="toPrice">
+                            <span class="value">999</span>
+                        </div>
+                        <div class="fromPrice">
+                            <span class="value">1300</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="cardGame small">
+                    <div class="actions">
+                        <button class="btn like">
+                            <span class="likeIcon"></span>
+                        </button>
+                        <button class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart" title="Добавить данный товар в корзину покупок">В корзину</button>
+                    </div>
+                    <div class="cover">
+                        <img src="./img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
+                        <div class="name">Doom ETERNAL</div>
+                    </div>
+                    <div class="price">
+                        <div class="toPrice">
+                            <span class="value">999</span>
+                        </div>
+                        <div class="fromPrice">
+                            <span class="value">1300</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="cardGame small">
+                    <div class="actions">
+                        <button class="btn like">
+                            <span class="likeIcon"></span>
+                        </button>
+                        <button class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart" title="Добавить данный товар в корзину покупок">В корзину</button>
+                    </div>
+                    <div class="cover">
+                        <img src="./img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
+                        <div class="name">Doom ETERNAL</div>
+                    </div>
+                    <div class="price">
+                        <div class="toPrice">
+                            <span class="value">999</span>
+                        </div>
+                        <div class="fromPrice">
+                            <span class="value">1300</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="cardGame small">
+                    <div class="actions">
+                        <button class="btn like">
+                            <span class="likeIcon"></span>
+                        </button>
+                        <button class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart" title="Добавить данный товар в корзину покупок">В корзину</button>
+                    </div>
+                    <div class="cover">
+                        <img src="./img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
+                        <div class="name">Doom ETERNAL</div>
+                    </div>
+                    <div class="price">
+                        <div class="toPrice">
+                            <span class="value">999</span>
+                        </div>
+                        <div class="fromPrice">
+                            <span class="value">1300</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="cardGame small">
+                    <div class="actions">
+                        <button class="btn like">
+                            <span class="likeIcon"></span>
+                        </button>
+                        <button class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart" title="Добавить данный товар в корзину покупок">В корзину</button>
+                    </div>
+                    <div class="cover">
+                        <img src="./img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
+                        <div class="name">Doom ETERNAL</div>
+                    </div>
+                    <div class="price">
+                        <div class="toPrice">
+                            <span class="value">999</span>
+                        </div>
+                        <div class="fromPrice">
+                            <span class="value">1300</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="cardGame small">
+                    <div class="actions">
+                        <button class="btn like">
+                            <span class="likeIcon"></span>
+                        </button>
+                        <button class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart" title="Добавить данный товар в корзину покупок">В корзину</button>
+                    </div>
+                    <div class="cover">
+                        <img src="./img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
+                        <div class="name">Doom ETERNAL</div>
+                    </div>
+                    <div class="price">
+                        <div class="toPrice">
+                            <span class="value">999</span>
+                        </div>
+                        <div class="fromPrice">
+                            <span class="value">1300</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="cardGame small">
+                    <div class="actions">
+                        <button class="btn like">
+                            <span class="likeIcon"></span>
+                        </button>
+                        <button class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart" title="Добавить данный товар в корзину покупок">В корзину</button>
+                    </div>
+                    <div class="cover">
+                        <img src="./img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
+                        <div class="name">Doom ETERNAL</div>
+                    </div>
+                    <div class="price">
+                        <div class="toPrice">
+                            <span class="value">999</span>
+                        </div>
+                        <div class="fromPrice">
+                            <span class="value">1300</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="cardGame small">
+                    <div class="actions">
+                        <button class="btn like">
+                            <span class="likeIcon"></span>
+                        </button>
+                        <button class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart" title="Добавить данный товар в корзину покупок">В корзину</button>
+                    </div>
+                    <div class="cover">
+                        <img src="./img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
+                        <div class="name">Doom ETERNAL</div>
+                    </div>
+                    <div class="price">
+                        <div class="toPrice">
+                            <span class="value">999</span>
+                        </div>
+                        <div class="fromPrice">
+                            <span class="value">1300</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="cardGame small">
+                    <div class="actions">
+                        <button class="btn like">
+                            <span class="likeIcon"></span>
+                        </button>
+                        <button class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart" title="Добавить данный товар в корзину покупок">В корзину</button>
+                    </div>
+                    <div class="cover">
+                        <img src="./img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
+                        <div class="name">Doom ETERNAL</div>
+                    </div>
+                    <div class="price">
+                        <div class="toPrice">
+                            <span class="value">999</span>
+                        </div>
+                        <div class="fromPrice">
+                            <span class="value">1300</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="cardGame small">
+                    <div class="actions">
+                        <button class="btn like">
+                            <span class="likeIcon"></span>
+                        </button>
+                        <button class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart" title="Добавить данный товар в корзину покупок">В корзину</button>
+                    </div>
+                    <div class="cover">
+                        <img src="./img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
+                        <div class="name">Doom ETERNAL</div>
+                    </div>
+                    <div class="price">
+                        <div class="toPrice">
+                            <span class="value">999</span>
+                        </div>
+                        <div class="fromPrice">
+                            <span class="value">1300</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="cardGame small">
+                    <div class="actions">
+                        <button class="btn like">
+                            <span class="likeIcon"></span>
+                        </button>
+                        <button class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart" title="Добавить данный товар в корзину покупок">В корзину</button>
+                    </div>
+                    <div class="cover">
+                        <img src="./img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
+                        <div class="name">Doom ETERNAL</div>
+                    </div>
+                    <div class="price">
+                        <div class="toPrice">
+                            <span class="value">999</span>
+                        </div>
+                        <div class="fromPrice">
+                            <span class="value">1300</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="cardGame small">
+                    <div class="actions">
+                        <button class="btn like">
+                            <span class="likeIcon"></span>
+                        </button>
+                        <button class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart" title="Добавить данный товар в корзину покупок">В корзину</button>
+                    </div>
+                    <div class="cover">
+                        <img src="./img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
+                        <div class="name">Doom ETERNAL</div>
+                    </div>
+                    <div class="price">
+                        <div class="toPrice">
+                            <span class="value">999</span>
+                        </div>
+                        <div class="fromPrice">
+                            <span class="value">1300</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="cardGame small">
+                    <div class="actions">
+                        <button class="btn like">
+                            <span class="likeIcon"></span>
+                        </button>
+                        <button class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart" title="Добавить данный товар в корзину покупок">В корзину</button>
+                    </div>
+                    <div class="cover">
+                        <img src="./img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
+                        <div class="name">Doom ETERNAL</div>
+                    </div>
+                    <div class="price">
+                        <div class="toPrice">
+                            <span class="value">999</span>
+                        </div>
+                        <div class="fromPrice">
+                            <span class="value">1300</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="cardGame small">
+                    <div class="actions">
+                        <button class="btn like">
+                            <span class="likeIcon"></span>
+                        </button>
+                        <button class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart" title="Добавить данный товар в корзину покупок">В корзину</button>
+                    </div>
+                    <div class="cover">
+                        <img src="./img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
+                        <div class="name">Doom ETERNAL</div>
+                    </div>
+                    <div class="price">
+                        <div class="toPrice">
+                            <span class="value">999</span>
+                        </div>
+                        <div class="fromPrice">
+                            <span class="value">1300</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="cardGame small">
+                    <div class="actions">
+                        <button class="btn like">
+                            <span class="likeIcon"></span>
+                        </button>
+                        <button class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart" title="Добавить данный товар в корзину покупок">В корзину</button>
+                    </div>
+                    <div class="cover">
+                        <img src="./img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
+                        <div class="name">Doom ETERNAL</div>
+                    </div>
+                    <div class="price">
+                        <div class="toPrice">
+                            <span class="value">999</span>
+                        </div>
+                        <div class="fromPrice">
+                            <span class="value">1300</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="cardGame small">
+                    <div class="actions">
+                        <button class="btn like">
+                            <span class="likeIcon"></span>
+                        </button>
+                        <button class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart" title="Добавить данный товар в корзину покупок">В корзину</button>
+                    </div>
+                    <div class="cover">
+                        <img src="./img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
+                        <div class="name">Doom ETERNAL</div>
+                    </div>
+                    <div class="price">
+                        <div class="toPrice">
+                            <span class="value">999</span>
+                        </div>
+                        <div class="fromPrice">
+                            <span class="value">1300</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="cardGame small">
+                    <div class="actions">
+                        <button class="btn like">
+                            <span class="likeIcon"></span>
+                        </button>
+                        <button class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart" title="Добавить данный товар в корзину покупок">В корзину</button>
+                    </div>
+                    <div class="cover">
+                        <img src="./img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
+                        <div class="name">Doom ETERNAL</div>
+                    </div>
+                    <div class="price">
+                        <div class="toPrice">
+                            <span class="value">999</span>
+                        </div>
+                        <div class="fromPrice">
+                            <span class="value">1300</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="cardGame small">
+                    <div class="actions">
+                        <button class="btn like">
+                            <span class="likeIcon"></span>
+                        </button>
+                        <button class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart" title="Добавить данный товар в корзину покупок">В корзину</button>
+                    </div>
+                    <div class="cover">
+                        <img src="./img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
+                        <div class="name">Doom ETERNAL</div>
+                    </div>
+                    <div class="price">
+                        <div class="toPrice">
+                            <span class="value">999</span>
+                        </div>
+                        <div class="fromPrice">
+                            <span class="value">1300</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="cardGame small">
+                    <div class="actions">
+                        <button class="btn like">
+                            <span class="likeIcon"></span>
+                        </button>
+                        <button class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart" title="Добавить данный товар в корзину покупок">В корзину</button>
+                    </div>
+                    <div class="cover">
+                        <img src="./img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
+                        <div class="name">Doom ETERNAL</div>
+                    </div>
+                    <div class="price">
+                        <div class="toPrice">
+                            <span class="value">999</span>
+                        </div>
+                        <div class="fromPrice">
+                            <span class="value">1300</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="cardGame small">
+                    <div class="actions">
+                        <button class="btn like">
+                            <span class="likeIcon"></span>
+                        </button>
+                        <button class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart" title="Добавить данный товар в корзину покупок">В корзину</button>
+                    </div>
+                    <div class="cover">
+                        <img src="./img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
+                        <div class="name">Doom ETERNAL</div>
+                    </div>
+                    <div class="price">
+                        <div class="toPrice">
+                            <span class="value">999</span>
+                        </div>
+                        <div class="fromPrice">
+                            <span class="value">1300</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pagination">
+                <div class="item btn rounded translucent bg-lilac">1</div>
+                <div class="item btn rounded translucent bg-lilac">2</div>
+                <div class="item btn rounded translucent bg-lilac">3</div>
+            </div>
+        </main>
+        <footer class="footer">
+            <div class="footerNavigation">
+                <div class="logoFull">
+                    <img src="./img/logoFull.png" alt="Ice Games полный логотип" title="Ice Games полный логотип">
+                </div>
+                <div class="social">
+                    <a href="#" class="link btn" title="Перейти на страницу Ice Games во Вконтакте">
+                        <img src="./img/vkSocial.png" alt="Логотип вконтакте" title="Перейти на страницу Ice Games во Вконтакте">
+                    </a>
+                    <a href="#" class="link btn" title="Перейти на страницу Ice Games в TikTok">
+                        <img src="./img/tiktokSocial.png" alt="Логотип TikTok" title="Перейти на страницу Ice Games в TikTok">
+                    </a>
+                    <a href="#" class="link btn" title="Перейти на страницу Ice Games в Instagram">
+                        <img src="./img/instagramSocial.png" alt="Логотип Instagram" title="Перейти на страницу Ice Games в Instagram">
+                    </a>
+                    <a href="#" class="link btn" title="Перейти на страницу Ice Games в Twitch">
+                        <img src="./img/twitchSocial.png" alt="Логотип Twitch" title="Перейти на страницу Ice Games в Twitch">
+                    </a>
+                    <a href="#" class="link btn" title="Перейти на страницу Ice Games в Twitter">
+                        <img src="./img/twitterSocial.png" alt="Логотип Twitter" title="Перейти на страницу Ice Games в Twitter">
+                    </a>
+                    <a href="#" class="link btn" title="Перейти на страницу Ice Games в FaceBook">
+                        <img src="./img/fbSocial.png" alt="Логотип FaceBook" title="Перейти на страницу Ice Games в FaceBook">
+                    </a>
+                </div>
+                <div class="menu">
+                    <a href="#" class="link btn">Все игры</a>
+                    <a href="#" class="link btn">Поддержка</a>
+                    <a href="#" class="link delivery btn">Доставка и оплата</a>
+                    <a href="#" class="link btn">Отзывы</a>
+                    <a href="#" class="link btn">О магазине</a>
+                    <a href="#" class="link btn">Гарантия</a>
+                    <a href="#" class="link btn">Скидки</a>
+                    <a href="#" class="link btn">Новинки</a>
+                    <a href="#" class="link btn">Предзаказы</a>
+                </div>
+            </div>
+            <div class="info">
+                <div class="payments">
+                    <img src="./img/payments.png" alt="Способы оплаты" title="Способы оплаты">
+                </div>
+                <div class="legalInfo">
+                    <a href="#" class="link btn" title="Перейти на страницу правовой информации">Правовая информация</a>
+                </div>
+                <div class="designBy">
+                    <a href="#" class="link btn" title="Перейти на сайт студии" target="_blank">Дизайн: дизайн студия ган михаила</a>
+                </div>
+            </div>
+            <div class="copy">
+                Все права защищены. Копирование любых материалов сайта запрещено! Все названия продуктов и игр,
+                компаний и марок, логотипы, товарные знаки и другие материалы являются собственностью
+                соответствующих владельцев. Только лицензионные ключи ко всем игровым платформам: Steam, Uplay,
+                Battle.net, Origin и другие. Выгодно, надежно и быстро!
+            </div>
+        </footer>
+    </div>
+</main>
+<footer>
+
+</footer>
+<script src="./js/bundle.js"></script>
+</body>
+</html>

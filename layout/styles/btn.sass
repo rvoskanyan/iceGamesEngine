@@ -18,8 +18,13 @@
   font-weight: bold
   overflow: hidden
 
-  &.increase:hover
-    transform: scale(1.1, 1.1)
+  &:focus
+    outline: 1px solid #fff
+    outline-offset: 1px
+
+  &.increase
+    &:hover, &:focus
+      transform: scale(1.1, 1.1)
 
   &.border
     border: 2px solid #fff
@@ -30,7 +35,7 @@
   &.translucent
     opacity: 0.6
 
-    &:hover, &.active
+    &:hover, &.active, &:focus
       opacity: 1
 
   &.round
@@ -72,7 +77,7 @@
       z-index: -1
       transition: 0.3s ease-in
 
-    &:hover:before, &.active:before
+    &:hover:before, &.active:before, &:focus:before
       width: 100%
       height: 100%
       border-radius: 0px
@@ -90,23 +95,43 @@
     &-darkLilac
       background-color: #410074
 
+    &-darkBlue
+      background-color: #0E5B74
+
+    &-lilac
+      background-color: #9E00FF
+
+    &-purple
+      background-color: #7000FF
+
+    &-blue
+      background-color: rgba(0, 190, 255, 0.4)
+
+  &.border
+    &-purple
+      border-color: #7000FF
+
   &.hover
     &-color
       &-pink
-        &:hover, &.active
+        &:hover, &.active, &:focus
           color: #FF00F5
 
     &-border
       &-pink
-        &:hover, &.active
+        &:hover, &.active, &:focus
           border-color: #FF00F5
 
     &-bg
       &-pink
-        &:hover, &.active
+        &:hover, &.active, &:focus
           background-color: #FF00F5
 
     &-backlight
       &-blue
-        &:hover, &.active
+        &:hover, &.active, &:focus
           box-shadow: 0 0 25px rgba(0, 224, 255, 0.8)
+
+      &-pink
+        &:hover, &.active, &:focus
+          box-shadow: 0 0 25px #DB00FF
