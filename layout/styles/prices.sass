@@ -1,0 +1,37 @@
+@import './breakPoints'
+
+.price
+  display: flex
+
+.toPrice, .fromPrice
+  & .value
+    display: block
+    max-width: max-content
+    position: relative
+    font-weight: 600
+    padding: 0 3px
+    margin-right: 50px
+
+    &:after
+      content: 'Руб.'
+      position: absolute
+      left: 100%
+      bottom: 0
+      padding-left: 3px
+      font-weight: initial
+
+      @include for-tablet-portrait-up
+        padding-left: 7px
+
+.fromPrice
+  & .value
+
+    &:before
+      content: ''
+      position: absolute
+      left: 0
+      right: 0
+      height: 3px
+      top: 50%
+      transform: translateY(0) rotate(-12deg)
+      box-shadow: 0 0 10px #000000

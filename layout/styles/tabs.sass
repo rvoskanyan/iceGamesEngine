@@ -1,0 +1,19 @@
+.tabs
+  & .nav
+    display: flex
+    justify-content: space-between
+
+  & .blocks
+    display: grid
+    grid-template-columns: 1fr
+
+    & > .item
+      visibility: hidden
+      opacity: 0
+      transition: 0.3s ease-in
+      grid-row: 1/2
+      grid-column: 1/2
+
+      &.active
+        visibility: visible
+        opacity: 1

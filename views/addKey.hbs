@@ -1,0 +1,19 @@
+<form action="/admin/keys/add" method="post">
+    <label>
+        Введите ключ:
+        <input type="text" name="key">
+    </label>
+    <br>
+    <br>
+    <label>
+        Выберите игру:
+        <select name="gameId">
+            {{#each games}}
+                <option value="{{id}}">{{name}}</option>
+            {{/each}}
+        </select>
+    </label>
+    <br>
+    <br>
+    <input type="submit" name="add" value="Добавить">
+</form>

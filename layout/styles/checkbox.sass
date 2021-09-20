@@ -1,0 +1,36 @@
+.checkbox
+  display: flex
+  align-items: center
+  cursor: pointer
+
+  & .mask
+    content: ''
+    min-width: 18px
+    max-width: 18px
+    min-height: 18px
+    max-height: 18px
+    background-color: rgba(155, 0, 173, 0.7)
+    display: block
+    box-shadow: inset 0 0 5px 1px rgba(219, 0, 255, 0.7)
+    border-radius: 5px
+    background-size: cover
+    background-position: center
+
+  & .label
+    margin-left: 7px
+    color: rgba(255, 255, 255, 0.5)
+    font-weight: 600
+    font-size: 15px
+
+  & .input
+    display: none
+
+    &:checked
+      & + .mask
+        background-image: url("./../img/checkboxDecoration.png")
+
+      & ~ .label
+        color: rgba(255, 255, 255, 0.8)
+
+  &:hover > .label
+    color: rgba(255, 255, 255, 0.8)

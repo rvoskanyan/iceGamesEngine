@@ -1,0 +1,125 @@
+<form method="post" action="/admin/products/add" enctype="multipart/form-data">
+    <label>
+        Название:
+        <input type="text" name="name">
+    </label>
+    <br>
+    <br>
+    <label>
+        Описание:
+        <input type="text" name="description">
+    </label>
+    <br>
+    <br>
+    <label>
+        Цена:
+        <input type="number" name="price">
+    </label>
+    <br>
+    <br>
+    <label>
+        Скидка:
+        <input type="number" name="discount">
+    </label>
+    <br>
+    <br>
+    <label>
+        Изображение:
+        <input type="file" name="img">
+    </label>
+    <br>
+    <br>
+    <label>
+        Cover изображение:
+        <input type="file" name="coverImg">
+    </label>
+    <br>
+    <br>
+    <label>
+        Cover видео:
+        <input type="file" name="coverVideo">
+    </label>
+    <br>
+    <br>
+    <label>
+        Добавить в слайдер на главной странице:
+        <input type="checkbox" name="inHomeSlider">
+    </label>
+    <br>
+    <br>
+    <label>
+        Процессор:
+        <input type="text" name="cpu">
+    </label>
+    <br>
+    <br>
+    <label>
+        Видео карта:
+        <input type="text" name="graphicsCard">
+    </label>
+    <br>
+    <br>
+    <label>
+        Оперативная память:
+        <input type="text" name="ram">
+    </label>
+    <br>
+    <br>
+    <label>
+        Память на диске:
+        <input type="text" name="diskMemory">
+    </label>
+    <br>
+    <br>
+    <label>
+        Категории игры:
+        <select name="categories" multiple>
+            {{#each categories}}
+                <option value="{{id}}">{{name}}</option>
+            {{/each}}
+        </select>
+    </label>
+    <br>
+    <br>
+    <label>
+        Расширения игры:
+        <select name="gameExtends" multiple>
+            {{#each extends}}
+                <option value="{{id}}">{{name}}</option>
+            {{/each}}
+        </select>
+    </label>
+    <br>
+    <br>
+    <label>
+        Языки игры:
+        <select name="languages" multiple>
+            {{#each languages}}
+                <option value="{{id}}">{{name}}</option>
+            {{/each}}
+        </select>
+    </label>
+    <br>
+    <br>
+    <label>
+        Регионы активации:
+        <select name="regions" multiple>
+            {{#each regions}}
+                <option value="{{id}}">{{name}}</option>
+            {{/each}}
+        </select>
+    </label>
+    <br>
+    <br>
+    <label>
+        Сервис активации:
+        <select name="activationService">
+            {{#each activationServices}}
+                <option value="{{id}}">{{name}}</option>
+            {{/each}}
+        </select>
+    </label>
+    <br>
+    <br>
+    <input type="submit" name="add" value="Добавить">
+</form>

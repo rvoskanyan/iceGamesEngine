@@ -1,5 +1,5 @@
 const index = async (req, res) => {
-  res.json("Index admin");
+  res.render('admin', {layout: 'admin'});
 }
 
 module.exports = {

@@ -1,0 +1,48 @@
+.articleBlock
+  display: flex
+  min-height: min-content
+  overflow: hidden
+  border-radius: 20px
+
+  &.link
+    transition: 0.3s ease-in
+
+    &:not(:last-child)
+      margin-bottom: 50px
+
+    &:hover
+      transform: scale(1.01, 1.01)
+      cursor: pointer
+      box-shadow: 0 0 35px rgba(219, 0, 255, 0.5)
+
+  & .poster
+    object-fit: cover
+    max-height: 250px
+    max-width: 50%
+
+  & .content
+    padding: 20px 50px
+    flex-grow: 1
+    color: #fff
+    text-shadow: 0 0 15px #0F1339
+    display: flex
+    flex-direction: column
+    justify-content: space-between
+
+    & .title
+      font-size: 50px
+      font-weight: 600
+      text-transform: uppercase
+
+    & .text
+      display: -webkit-box
+      -webkit-line-clamp: 3
+      -webkit-box-orient: vertical
+      overflow: hidden
+      font-size: 20px
+
+    & .statistics
+      display: flex
+
+      & .views
+        margin-left: 20px

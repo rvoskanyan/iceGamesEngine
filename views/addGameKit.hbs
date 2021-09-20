@@ -1,0 +1,23 @@
+<form method="post" action="/admin/products/{{gameId}}/addKit" enctype="multipart/form-data">
+    <label>
+        Выберите игру:
+        <select name="productId">
+            {{#each games}}
+                <option value="{{dataValues.id}}">{{dataValues.name}}</option>
+            {{/each}}
+        </select>
+    </label>
+    <br>
+    <br>
+    <label>
+        Выберите название пакета:
+        <select name="namesKitId">
+            {{#each namesKits}}
+                <option value="{{dataValues.id}}">{{dataValues.name}}</option>
+            {{/each}}
+        </select>
+    </label>
+    <br>
+    <br>
+    <input type="submit" name="add" value="Добавить">
+</form>

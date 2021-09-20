@@ -1,9 +1,19 @@
 @charset "UTF-8"
+@import './animations'
 @import './breakPoints'
 @import './colors'
 @import './variables'
 @import './mixins'
 @import './btn'
+@import './checkbox'
+@import './cardGame'
+@import './cardUsp'
+@import './articleBlock'
+@import './prices'
+@import './discount'
+@import './newsPreview'
+@import './tabs'
+@import './homeSlider'
 @import './breadcrumbs'
 
 *
@@ -11,6 +21,17 @@
   box-sizing: border-box
   margin: 0
   padding: 0
+
+body
+  background: #01033C
+  min-width: 320px
+
+  &.noScrolling
+    overflow: hidden
+    padding-right: $widthScrollBar
+
+    & .header
+      left: calc(50% - #{$widthScrollBar} / 2)
 
 img
   pointer-events: none
@@ -20,8 +41,16 @@ img
   user-select: none
   -webkit-user-drag: none
 
+input
+  background: none
+  border: none
+  outline: none
+  padding: 0
+  margin: 0
+  transition: 0.25s ease-in
+
 ::-webkit-scrollbar
-  width: 12px
+  width: $widthScrollBar
   height: 12px
   background-color: #241767
 
@@ -32,17 +61,15 @@ img
 ::-webkit-scrollbar-thumb:hover
   background-color: #9b0787
 
+.mainContainer
+  max-width: 1920px
+  margin: 0 auto
+  position: relative
 
-body
-  background: #01033C
-  min-width: 320px
-
-  &.openMenu
-   overflow: hidden
-
-.mainWrapper
+.contentContainer
   width: 100%
-  max-width: 1790px
+  max-width: 1750px
+  margin: 0 auto
   padding: 0 15px
   z-index: 1
 
@@ -50,80 +77,30 @@ body
     padding: 0 30px
 
   @include for-desktop-up
-    padding: 0 60px
+    padding: 0 50px
 
   &.withoutHeadCover
     padding-top: 200px
 
-input
-  background: none
-  border: none
-  outline: none
-  padding: 0
-  margin: 0
-  transition: 0.25s ease-in
+.header
+  position: fixed
+  z-index: 2
+  left: 50%
+  transform: translateX(-50%)
 
-.newsPreview
-  max-width: 380px
-  display: flex
-  flex-direction: column
-
-  & .imgContainer
-    width: 380px
-    height: 200px
-    border-radius: 30px
-    overflow: hidden
-    box-shadow: 0 0 50px rgba(235, 0, 255, 0.57)
-
-    &:hover
-      transform: scale(1.1, 1.1) translate(18px, -9px)
-
-    & img
-      width: 100%
-      height: 100%
-      object-fit: cover
-
-  & .attributes
-    margin-top: 20px
-    display: flex
-    align-items: center
-
-    & .date
-      margin-left: 20px
-      color: rgba(255, 255, 255, 0.7)
-      font-weight: 600
-      font-size: 17px
-
-  & .description
-    margin-top: 20px
-
-    & .title
-      color: #fff
-      font-weight: 600
-
-    & .text
-      color: rgba(255, 255, 255, 0.7)
-      margin-top: 7px
-
-.tabs
-  & .nav
+  & .wrapper
     display: flex
     justify-content: space-between
+    padding-top: 15px
 
-  & .blocks
-    display: grid
-    grid-template-columns: 1fr
+    @include for-tablet-portrait-up
+      padding-top: 20px
 
-    & > .item
-      visibility: hidden
-      opacity: 0
-      transition: 0.3s ease-in
-      grid-row: 1/2
-      grid-column: 1/2
+    @include for-tablet-landscape-up
+      padding-top: 25px
 
-      &.active
-        visibility: visible
-        opacity: 1
+    & .item
+      align-items: center
 
 label
   color: #fff
@@ -181,43 +158,6 @@ label
   text-align: center
 
 
-.checkbox
-  display: flex
-  align-items: center
-  cursor: pointer
-
-  & .mask
-    content: ''
-    min-width: 18px
-    max-width: 18px
-    min-height: 18px
-    max-height: 18px
-    background-color: rgba(155, 0, 173, 0.7)
-    display: block
-    box-shadow: inset 0 0 5px 1px rgba(219, 0, 255, 0.7)
-    border-radius: 5px
-    background-size: cover
-    background-position: center
-
-  & .label
-    margin-left: 7px
-    color: rgba(255, 255, 255, 0.5)
-    font-weight: 600
-    font-size: 15px
-
-  & .input
-    display: none
-
-    &:checked
-      & + .mask
-        background-image: url("./../img/checkboxDecoration.png")
-
-      & ~ .label
-        color: rgba(255, 255, 255, 0.8)
-
-  &:hover > .label
-    color: rgba(255, 255, 255, 0.8)
-
 .slideControls
   &.brand
     display: flex
@@ -232,8 +172,9 @@ label
       margin: 15px 0
 
       &:before
-        top: 0px
-        height: 10%
+        top: var(--progress)
+        height: var(--share)
+        left: 0
         width: 100%
 
   & .progress
@@ -246,8 +187,8 @@ label
     &:before
       content: ''
       position: absolute
-      left: 0px
-      width: 10%
+      left: var(--progress)
+      width: var(--share)
       height: 100%
       background-color: #fff
       transition: 0.3s ease-in
@@ -334,182 +275,6 @@ label
   &.next
     transform: scale(var(--scaler)) rotate(180deg)
 
-.cardUsp
-  border-radius: 20px
-  background-image: linear-gradient(180.13deg, #DB00FF 0.11%, rgba(205, 120, 219, 0.3875) 45.24%, rgba(196, 196, 196, 0) 94.7%)
-  min-width: 230px
-  min-height: 161px
-  max-width: 260px
-  max-height: 182px
-  width: 15vw
-  height: 10vw
-  color: #fff
-  font-size: 18px
-  text-transform: uppercase
-  display: flex
-  justify-content: center
-  align-items: center
-  padding: 0 15px
-  text-align: center
-  font-weight: 600
-  transition: 0.3s ease-in
-
-  @include for-big-desktop-up
-    font-size: 20px
-    padding: 0 20px
-
-  &:hover
-    transform: scale(1.1, 1.1)
-    cursor: default
-
-.cardGame
-  width: 220px
-  height: 340px
-  border: 2px solid #fff
-  box-shadow: 0 0 10px #FA00FF
-  border-radius: 20px
-  background-color: #460B6E
-  position: relative
-  overflow: hidden
-  transition: 0.3s ease-in
-  cursor: pointer
-
-  @include for-big-desktop-up
-    width: 230px
-    height: 365px
-
-  &.small
-    width: 140px
-    height: 240px
-
-    @include for-big-phone-up
-      width: 190px
-      height: 304px
-
-    @include for-big-desktop-up
-      width: 210px
-      height: 330px
-
-    &:hover, &.active
-      box-shadow: 0 0 20px #00A3FF
-
-    & .cover
-      height: 172px
-
-      @include for-big-phone-up
-        height: 236px
-
-      @include for-big-desktop-up
-        height: 262px
-
-      & .name
-        font-size: 22px
-
-    & .price
-      font-size: 22px
-
-      & .toPrice, & .fromPrice
-        & .value
-          margin-right: 36px
-          padding: 0
-
-          &:after
-            font-size: 16px
-            padding-left: 3px
-
-  &:hover, &.active
-    transform: scale(1.1, 1.1)
-    box-shadow: 0 0 35px #00A3FF
-
-    & .actions, & > .actions .inCart, & > .actions .like
-      opacity: 1
-
-    & > .actions
-      height: 100%
-      padding: 20px
-
-  & .actions
-    position: absolute
-    width: 100%
-    height: 0%
-    z-index: 1
-    background-color: rgba(70, 11, 110, 0.8)
-    padding: 0 20px
-    opacity: 0
-    overflow: hidden
-    transition: inherit
-
-    & .inCart
-      position: absolute
-      bottom: 25%
-      left: 20px
-      right: 20px
-      width: calc(100% - 40px)
-      opacity: 0
-
-    & .like
-      position: absolute
-      right: 20px
-      opacity: 0
-      transition: inherit
-
-  & .cover
-    position: relative
-    height: 292px
-
-    & img
-      object-fit: cover
-      width: 100%
-      height: 99%
-
-    & .name
-      position: absolute
-      bottom: 0
-      background-image: linear-gradient(180deg, rgba(70, 11, 110, 0) 0%, #460B6E 95%)
-      width: 100%
-      text-align: center
-      color: #fff
-      font-size: 21px
-      font-weight: 600
-      padding: 50px 15px 0 15px
-
-      @include for-big-desktop-up
-        font-size: 25px
-
-  & .price
-    position: absolute
-    bottom: 0
-    font-size: 20px
-    color: #fff
-    justify-content: space-between
-    width: 100%
-    padding: 0 10px 15px 10px
-
-    @include for-big-desktop-up
-      font-size: 25px
-      padding: 0 15px 20px 15px
-
-    & .toPrice, & .fromPrice
-      & .value
-        margin-right: 36px
-
-        @include for-big-desktop-up
-          margin-right: 40px
-
-        &:after
-          font-size: 16px
-          padding-left: 3px
-
-          @include for-big-desktop-up
-            font-size: 18px
-
-    & .fromPrice
-      & .value
-        color: #9200AA
-        &:before
-          height: 2px
-          color: #9200AA
-          background-color: #9200AA
 
 .gameGrid
   display: grid
@@ -531,55 +296,6 @@ label
     row-gap: 50px
     grid-template-columns: repeat(5, max-content)
 
-
-.articleBlock
-  display: flex
-  min-height: min-content
-  overflow: hidden
-  border-radius: 20px
-
-  &.link
-    transition: 0.3s ease-in
-
-    &:not(:last-child)
-      margin-bottom: 50px
-
-    &:hover
-      transform: scale(1.01, 1.01)
-      cursor: pointer
-      box-shadow: 0 0 35px rgba(219, 0, 255, 0.5)
-
-  & .poster
-    object-fit: cover
-    max-height: 250px
-    max-width: 50%
-
-  & .content
-    padding: 20px 50px
-    flex-grow: 1
-    color: #fff
-    text-shadow: 0 0 15px #0F1339
-    display: flex
-    flex-direction: column
-    justify-content: space-between
-
-    & .title
-      font-size: 50px
-      font-weight: 600
-      text-transform: uppercase
-
-    & .text
-      display: -webkit-box
-      -webkit-line-clamp: 3
-      -webkit-box-orient: vertical
-      overflow: hidden
-      font-size: 20px
-
-    & .statistics
-      display: flex
-
-      & .views
-        margin-left: 20px
 
 .likes, .views
   font-size: 20px
@@ -852,87 +568,6 @@ label
     transition: 0.5s
     transform: translateY(10px)
 
-.price
-  display: flex
-
-.toPrice, .fromPrice
-  & .value
-    display: block
-    max-width: max-content
-    position: relative
-    font-weight: 600
-    padding: 0 3px
-    margin-right: 50px
-
-    &:after
-      content: 'Руб.'
-      position: absolute
-      left: 100%
-      bottom: 0
-      padding-left: 3px
-      font-weight: initial
-
-      @include for-tablet-portrait-up
-        padding-left: 7px
-
-.fromPrice
-  & .value
-
-    &:before
-      content: ''
-      position: absolute
-      left: 0
-      right: 0
-      height: 3px
-      top: 50%
-      transform: translateY(0) rotate(-12deg)
-      box-shadow: 0 0 10px #000000
-
-.discount
-  display: block
-  border-radius: 10px
-  padding: 5px 8px
-  font-weight: 600
-  font-size: 20px
-  max-width: max-content
-
-  &:before
-    margin-right: 5px
-    content: '-'
-
-  &:after
-    margin-left: 1px
-    content: '%'
-
-.header
-  display: flex
-  position: fixed
-  width: 100%
-  z-index: 100
-  justify-content: center
-
-
-.header-wrapper
-  display: flex
-  justify-content: space-between
-  width: 100%
-  max-width: 1650px
-  padding-top: 15px
-  margin: 0 15px
-
-  @include for-tablet-portrait-up
-    padding-top: 20px
-    margin: 0 25px
-
-  @include for-tablet-landscape-up
-    padding-top: 25px
-    margin: 0 40px
-
-  @include for-desktop-up
-    margin: 0 70px
-
-  & > div
-    align-items: center
 
 .logo
   display: flex
@@ -972,28 +607,29 @@ label
   max-width: 1250px
   justify-content: space-between
   display: none
+  position: relative
 
   @include for-desktop-up
     margin: 0 40px
     display: flex
 
-
-.navigationWrapper
-  position: relative
-  z-index: 1
+  &.active > .navigationContainer
+    opacity: 1
+    visibility: visible
 
 .navigationContainer
   position: absolute
   background-color: rgba(0, 0, 0, 0.9)
-  top: -55px
-  height: calc(100vh + 20px)
+  height: 100vh
   width: 100vw
-  z-index: -1
-  display: none
-
-  @include for-desktop-up
-    left: -35px
-    padding: 130px 0 100px 40px
+  top: -25px
+  z-index: 1
+  left: -35px
+  padding: 130px 0 100px 40px
+  opacity: 0
+  visibility: hidden
+  transition: .3s ease-in
+  transition-property: opacity, visibility
 
   @include for-big-desktop-up
     left: -50px
@@ -1276,26 +912,35 @@ label
             font-size: 42px
 
 .containerProfileForms
-  position: absolute
-  right: 0
+  position: fixed
+  left: 100%
   top: 0
   height: 100vh
   overflow: hidden
-  background-color: rgba(20, 0, 46, 0.9)
+  background-color: rgba(20, 0, 46, 0.96)
   box-shadow: 0 0 50px #000000
-  width: 0
-  transition: 0.3s ease-in
+  width: 100%
+  transition: .5s cubic-bezier(0.6, -0.28, 0.74, 0.05)
+  transition-property: left, opacity
   opacity: 0
+  z-index: 3
+
+  @include for-tablet-portrait-up
+    width: 325px
+
+  @include for-big-desktop-up
+    width: 450px
 
   &.active
     opacity: 1
-    width: 100%
+    left: 0%
+    transition: .3s ease-in
 
     @include for-tablet-portrait-up
-      width: 325px
+      left: calc(100% - 325px)
 
     @include for-big-desktop-up
-      width: 450px
+      left: calc(100% - 450px)
 
   & .formWrapper
     position: absolute
@@ -1309,26 +954,23 @@ label
     @include for-big-desktop-up
       top: 53px
 
-    &.loginForm.hide
-      opacity: 0
-
-    &.restoreForm.hide
+    &.hide
       opacity: 0
 
   & .switches
     display: flex
 
-    & button:not(:last-child)
+    & .btn:not(:last-child)
       margin-right: 20px
 
-  & form
+  & .form
     margin-top: 55px
     transition: 0.3s ease-in
 
     & label:not(:last-child)
       margin-bottom: 20px
 
-    & button[type="submit"]
+    & .btn[type="submit"]
       margin: 40px auto 0 auto
 
   & .restore
@@ -1337,13 +979,17 @@ label
     align-items: center
     margin-top: 30px
 
+    &.hide
+      opacity: 0
+      visibility: hidden
+      transition: .3s ease-in
+
     & .forgot
       color: rgba(255, 255, 255, 0.5)
       font-size: 18px
       margin-bottom: 5px
 
-    & a
-      text-decoration: none
+    & .btn
       color: #fff
       font-size: 18px
 
@@ -1380,18 +1026,12 @@ label
       align-items: center
       margin-top: 15px
 
-      & a
-        text-decoration: none
+      & .btn
         color: rgba(255, 255, 255, 0.5)
         font-size: 16px
 
         &:hover
           text-decoration: underline
-
-.mainContent
-  display: flex
-  align-items: center
-  flex-direction: column
 
 .headCover
   position: relative
@@ -1675,6 +1315,10 @@ label
           &.positive:before
             background-color: #14FF00
             box-shadow: 0 0 10px #33FF00
+
+          &.negative:before
+            background-color: #ff1b36
+            box-shadow: 0 0 10px #ff1616
 
       & .description
         @include for-tablet-landscape-down
@@ -2032,62 +1676,81 @@ label
     & button:not(:last-child)
       margin-right: 20px
 
-  & .products
-    margin-top: 35px
+  & .items
+    display: grid
 
-  & .more
-    margin: 35px auto 0 auto
+    & .item
+      grid-column: 1/-1
+      grid-row: 1/-1
+      transition: .3s ease-in
+
+      &.hide
+        opacity: 0
+        visibility: hidden
+
+    & .products
+      margin-top: 35px
+
+    & .more
+      margin: 35px auto 0 auto
 
 .homeGenresSlider
-  padding: 0 150px
+  padding: 0 100px
   max-width: 1490px
   margin: 100px auto 0 auto
   position: relative
 
-  & .items
-    margin-top: 30px
+  & .visibleArea
+    height: 820px
+    overflow: hidden
 
-    & .slide
+    & .items
       display: flex
+      flex-direction: column
+      align-items: center
+      transition: 1s ease
 
-      &:nth-child(even)
-        flex-direction: row-reverse
-
-        & .genre:first-child:hover
-            transform: translate(-37px, -11px) scale(1.15, 1.15)
-
-        & .genre:last-child:hover
-            transform: translate(18px, -11px) scale(1.15, 1.15)
-
-      & .genre
-        background-position: center
-        background-size: cover
+      & .slide
         display: flex
-        align-items: center
-        justify-content: center
-        text-align: center
-        font-size: 60px
-        font-weight: 600
-        color: #fff
-        padding: 30px
-        margin: 15px
-        border-radius: 30px
-        box-shadow: 0 0 100px rgba(235, 0, 255, 0.57)
-        cursor: pointer
-        height: 350px
-        transition: 0.3s ease-in
 
-        &:first-child
-          width: 690px
+        &:nth-child(even)
+          flex-direction: row-reverse
 
-          &:hover
-            transform: translate(37px, 11px) scale(1.15, 1.15)
-
-        &:last-child
-          width: 440px
+        & .genre
+          text-align: center
+          font-size: 60px
+          font-weight: 600
+          color: #fff
+          margin: 30px
+          border-radius: 30px
+          box-shadow: 0 0 15px rgba(235, 0, 255, 0.57)
+          cursor: pointer
+          height: 350px
+          transition: 0.3s ease-in
+          position: relative
+          overflow: hidden
 
           &:hover
-            transform: translate(-18px, 11px) scale(1.15, 1.15)
+            z-index: 1
+            transform: scale(1.1, 1.1)
+
+          &:first-child
+            width: 690px
+
+          &:last-child
+            width: 440px
+
+          & .img
+            width: 100%
+            height: 100%
+            object-fit: cover
+
+          & .name
+            position: absolute
+            top: 50%
+            left: 50%
+            transform: translate(-50%, -50%)
+
 
   & .controls
     position: absolute
