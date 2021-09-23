@@ -13,12 +13,7 @@ console.log(process.env.IGS_DB_USERNAME);
 console.log(process.env.IGS_DB_PASSWORD);
 console.log(process.env.IGS_DB_NAME);
 
-let sequelize;
-if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config);
-} else {
-  sequelize = new Sequelize(config.database, config.username, config.password, config);
-}
+const sequelize = new Sequelize(config.database, config.username, config.password, config);
 
 fs
   .readdirSync(__dirname)
