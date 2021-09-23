@@ -6,6 +6,7 @@ const fs = require('fs');
 const adminRoutes = require('./routes/admin');
 const clientRoutes = require('./routes/client');
 const {sequelize} = require('./models/index');
+require('dotenv').config();
 
 const app = express();
 
