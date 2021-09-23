@@ -10,6 +10,8 @@ const db = {};
 
 
 console.log(process.env.IGS_DB_USERNAME);
+console.log(process.env.IGS_DB_PASSWORD);
+console.log(process.env.IGS_DB_NAME);
 
 let sequelize;
 if (config.use_env_variable) {
