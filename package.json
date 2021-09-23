@@ -6,7 +6,7 @@
   "socketPath": "/tmp/mysql.sock",
   "private": true,
   "scripts": {
-    "start": "NODE_ENV=$NODE_ENV IGS_DB_USERNAME=$IGS_DB_USERNAME IGS_DB_PASSWORD=$IGS_DB_PASSWORD IGS_DB_NAME=$IGS_DB_NAME node index.js",
+    "start": "node index.js",
     "dev": "nodemon index.js"
   },
   "repository": {
