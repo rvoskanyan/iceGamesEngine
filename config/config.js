@@ -12,9 +12,6 @@ module.exports = {
     database: process.env.IGS_DB_NAME,
     host: '127.0.0.1',
     dialect: 'mysql',
-    dialectOptions: {
-      socketPath: '/tmp/mysql.sock',
-    },
   },
   production: {
     username: process.env.IGS_DB_USERNAME,
@@ -22,8 +19,5 @@ module.exports = {
     database: process.env.IGS_DB_NAME,
     host: '127.0.0.1',
     dialect: 'mysql',
-    dialectOptions: {
-      socketPath: '/tmp/mysql.sock',
-    },
   }
 };
