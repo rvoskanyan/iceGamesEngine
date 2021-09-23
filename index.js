@@ -38,6 +38,8 @@ if (!fs.existsSync(uploadedFilesDir)) {
   fs.mkdirSync(uploadedFilesDir);
 }
 
+console.log(process.env.NODE_ENV);
+
 const start = async () => {
   try {
     await sequelize.authenticate();
