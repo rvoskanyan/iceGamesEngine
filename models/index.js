@@ -9,6 +9,7 @@ const config = require(__dirname + '/../config/config.js')[env];
 const db = {};
 
 
+console.log(process.env.NODE_ENV);
 console.log(process.env.IGS_DB_USERNAME);
 console.log(process.env.IGS_DB_PASSWORD);
 console.log(process.env.IGS_DB_NAME);
