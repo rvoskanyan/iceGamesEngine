@@ -1,0 +1,30 @@
+@import './mixins'
+
+.textField
+  color: #fff
+  font-size: 18px
+
+  &::-webkit-input-placeholder
+    @include place-holder-style
+
+  &::-moz-placeholder
+    @include place-holder-style
+
+  &:-moz-placeholder
+    @include place-holder-style
+
+  &:-ms-input-placeholder
+    @include place-holder-style
+
+  &:focus, &:focus-visible
+    &::-webkit-input-placeholder
+      @include place-holder-focus-style
+
+    &::-moz-placeholder
+      @include place-holder-focus-style
+
+    &:-moz-placeholder
+      @include place-holder-focus-style
+
+    &:-ms-input-placeholder
+      @include place-holder-focus-style

@@ -1,0 +1,158 @@
+@import './breakPoints'
+@import './variables'
+
+.header
+  display: flex
+  justify-content: space-between
+  align-items: center
+  position: fixed
+  left: 0
+  right: 0
+  padding-top: 40px
+  z-index: 1
+
+  & .logo
+    display: flex
+    text-decoration: none
+    position: relative
+
+    &.link
+      &:before
+        position: absolute
+        display: block
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
+        background-image: radial-gradient(50% 50% at 50% 50%, #FF00E5 0%, rgba(255, 0, 229, 0) 100%)
+        transition: .3s ease-in
+        opacity: 0
+
+        @include for-desktop-up
+          content: ''
+
+      &:hover:before
+        opacity: 1
+
+    & .img
+      width: 100px
+      min-width: 100px
+
+    & .name
+      color: #fff
+      text-transform: uppercase
+      font-size: 20px
+      font-weight: 600
+      line-height: 1
+      margin-top: 10px
+      margin-left: 5px
+
+      @include for-tablet-portrait-up
+        font-size: 26px
+
+      @include for-tablet-landscape-up
+        font-size: 30px
+
+      @include for-desktop-up
+        display: none
+
+  & .navigation
+    display: flex
+    justify-content: space-between
+    position: relative
+    flex-grow: 1
+    margin: 0 45px
+
+    &.active
+      & > .containerMenu
+        opacity: 1
+        visibility: visible
+
+      & > .searchBar
+        background-color: rgba(235, 0, 255, 0.4)
+
+    & .containerMenu
+      position: absolute
+      background-color: rgba(0, 0, 0, 0.9)
+      height: 100vh
+      width: 100vw
+      top: -68px
+      left: -35px
+      padding: 140px 0 80px 40px
+      transition: .3s ease-in
+      transition-property: opacity, visibility
+      opacity: 0
+      visibility: hidden
+
+      & .menu
+        display: flex
+        justify-content: space-between
+        max-width: 1100px
+        height: 100%
+
+        &.active
+          & .mainMenu, & .searchResult
+            transform: initial
+
+        & .mainMenu, & .searchResult
+          overflow: auto
+          height: 100%
+          padding-right: 30px
+          transform: translateY(-100%)
+          transition: transform .3s ease
+
+          &::-webkit-scrollbar
+            width: $widthScrollBarSmall
+
+        & .col
+          list-style: none
+
+          & .title
+            font-family: 'Lemon Milk'
+            font-size: 30px
+            color: rgba(255, 105, 249, 0.5)
+            margin-bottom: 35px
+            text-shadow: 0 0 60px #004C5C
+
+          & .colLink
+            &:not(:last-child)
+              margin-bottom: 15px
+
+            & .link
+              font-family: 'Lemon Milk'
+              font-size: 20px
+
+        & .categoriesMenu
+          margin-right: 70px
+
+          & .colLink
+            &:last-child .link
+              color: #fff
+
+            & .link
+              font-size: 25px
+              color: #FF00F5
+              text-shadow: 0 0 50px rgba(0, 0, 0, 0.5)
+
+        & .containerMainMenuSearch
+          flex-grow: 1
+          height: 100%
+          overflow: hidden
+
+          & .searchResult
+            padding: 55px
+            display: grid
+            grid-template-columns: repeat(3, max-content)
+            grid-row-gap: 50px
+            justify-content: space-between
+
+          & .mainMenu
+            display: flex
+            justify-content: space-between
+
+  & .profile
+    display: flex
+    justify-content: space-between
+    align-items: center
+    width: 100px
+    padding-right: 10px

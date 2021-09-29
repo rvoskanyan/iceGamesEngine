@@ -24,7 +24,7 @@ app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
 app.set('views', 'views');
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'layout')));
 app.use(express.static(path.join(__dirname, 'uploadedFiles')));
 app.use(express.urlencoded({extended: true}));
 app.use(fileUpload({}));
@@ -41,7 +41,7 @@ if (!fs.existsSync(uploadedFilesDir)) {
 const start = async () => {
   try {
     await sequelize.authenticate();
-    await sequelize.sync({});
+    //await sequelize.sync({});
     
     app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
   } catch (e) {

@@ -1,0 +1,61 @@
+.genresSlider
+  display: flex
+  align-items: center
+  margin-top: 40px
+  justify-content: space-between
+
+  & .visibleArea
+    overflow: hidden
+    max-height: calc((283px + 36px) * 2)
+    padding: 0 14px
+
+    & .slides
+      transition: 1s ease
+
+      & .slide
+        display: flex
+
+        &:nth-child(even)
+          flex-direction: row-reverse
+
+        & .genre
+          height: 283px
+          width: 629px
+          margin: 18px
+          border-radius: 22px
+          overflow: hidden
+          transition: transform .3s ease-in
+          position: relative
+
+          &:before
+            content: ''
+            position: absolute
+            width: 100%
+            height: 100%
+            background-color: rgba(0, 0, 0, 0.3)
+
+          &:hover
+            transform: scale(1.1, 1.1)
+
+          &:last-child
+            width: 404px
+
+          & .img
+            width: 100%
+            height: 100%
+            object-fit: cover
+
+          & .name
+            font-family: 'Lemon Milk'
+            text-align: center
+            color: #fff
+            font-size: 48px
+            position: absolute
+            top: 50%
+            left: 50%
+            transform: translate(-50%, -50%)
+            width: 100%
+
+  & .slideControls
+    height: 450px
+

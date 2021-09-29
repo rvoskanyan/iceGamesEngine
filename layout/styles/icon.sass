@@ -1,0 +1,40 @@
+.icon
+  mask-position: center
+  mask-size: cover
+  -webkit-mask-position: center
+  -webkit-mask-size: cover
+  background-color: #fff
+  display: block
+
+  &-static
+    background-color: initial
+    background-position: center
+    background-size: cover
+
+    &-actionLike
+      background-image: url("./../img/like.svg")
+      width: 30px
+      height: 25px
+
+      &.active, &:hover
+        background-image: url("./../img/likeActive.svg")
+
+
+  &-search
+    mask-image: url("./../img/searchBtnIcon.svg")
+    -webkit-mask-image: url("./../img/searchBtnIcon.svg")
+    transform: rotateY(180deg)
+    width: 30px
+    height: 30px
+
+  &-profile
+    mask-image: url("./../img/profileIcon.svg")
+    -webkit-mask-image: url("./../img/profileIcon.svg")
+    width: 35px
+    height: 40px
+
+  &-cart
+    mask-image: url("./../img/cartIcon.svg")
+    -webkit-mask-image: url("./../img/cartIcon.svg")
+    width: 40px
+    height: 38px

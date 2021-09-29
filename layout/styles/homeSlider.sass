@@ -9,11 +9,21 @@
     & .slide
       grid-row: 1/2
       grid-column: 1/-1
-      display: none
+      transition: visibility, opacity .3s ease-in
+      visibility: hidden
       opacity: 0
 
       &.active
-        display: block
+        visibility: visible
         opacity: 1
-        animation: animActive .3s ease-in
-        -webkit-animation: animActive .3s ease-in
+
+  & .navigate
+    margin-top: -160px
+
+    & .slideControls
+      position: relative
+      max-width: 440px
+      left: calc(100% - 440px)
+
+    & .items
+      margin-top: 50px

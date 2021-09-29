@@ -1,0 +1,104 @@
+.slideControls
+  display: flex
+  align-items: center
+
+  &.vertical
+    flex-direction: column
+
+    & .progress
+      width: 3px
+      margin: 20px 0
+
+      &:before
+        top: var(--progress)
+        height: var(--share)
+        left: 0
+        width: 100%
+
+    & .btn
+      width: 38px
+      height: 32px
+
+      &.prev
+        &:after, &:before
+          transform: rotate(180deg)
+
+        &:before
+          left: initial
+          top: 14px
+
+        &:hover:before, &:focus-visible:before
+          left: initial
+          top: 9px
+
+      &.next
+        &:after, &:before
+          transform: initial
+
+        &:before
+          right: initial
+          bottom: 14px
+
+        &:hover:before, &:focus-visible:before
+          right: initial
+          bottom: 9px
+
+  & .progress
+    flex-grow: 1
+    height: 3px
+    background-color: rgba(255, 255, 255, 0.6)
+    position: relative
+    margin: 0 20px
+
+    &:before
+      content: ''
+      position: absolute
+      left: var(--progress)
+      width: var(--share)
+      height: 100%
+      background-color: #fff
+      transition: 0.3s ease-in
+
+  & .btn
+    position: relative
+    width: 32px
+    height: 38px
+
+    &:after, &:before
+      content: ''
+      position: absolute
+      background-size: cover
+      background-position: center
+
+    &:after
+      background-image: url("./../img/slideControlBorder.svg")
+      width: 38px
+      height: 32px
+
+    &:before
+      background-image: url("./../img/slideControlArrow.svg")
+      width: 15px
+      height: 8px
+      transition: .3s ease-in
+
+    &.prev
+      &:after, &:before
+        transform: rotate(90deg)
+
+      &:before
+        top: initial
+        left: 11px
+
+      &:hover:before, &:focus-visible:before
+        left: 6px
+
+    &.next
+      &:after, &:before
+        transform: rotate(-90deg)
+
+      &:before
+        bottom: initial
+        right: 11px
+
+      &:hover:before, &:focus-visible:before
+        right: 6px

@@ -1,13 +1,22 @@
 @charset "UTF-8"
+@import './fonts'
 @import './animations'
 @import './breakPoints'
 @import './colors'
 @import './variables'
 @import './mixins'
+@import './burger'
+@import './slideControls'
+@import './gameGrid'
+@import './row'
+@import './homeTitle'
+
+@import './icon'
+@import './textField'
 @import './btn'
+@import './link'
 @import './checkbox'
 @import './cardGame'
-@import './cardUsp'
 @import './articleBlock'
 @import './prices'
 @import './discount'
@@ -15,6 +24,13 @@
 @import './tabs'
 @import './homeSlider'
 @import './breadcrumbs'
+
+@import './header'
+@import './searchBar'
+@import './cover'
+@import './uspBlock'
+@import './homeCatalog'
+@import './genresSlider'
 
 *
   font-family: 'Montserrat', sans-serif
@@ -31,7 +47,7 @@ body
     padding-right: $widthScrollBar
 
     & .header
-      left: calc(50% - #{$widthScrollBar} / 2)
+      right: $widthScrollBar
 
 img
   pointer-events: none
@@ -47,7 +63,7 @@ input
   outline: none
   padding: 0
   margin: 0
-  transition: 0.25s ease-in
+  transition: .3s ease-in
 
 ::-webkit-scrollbar
   width: $widthScrollBar
@@ -67,44 +83,23 @@ input
   position: relative
 
 .contentContainer
-  width: 100%
-  max-width: 1750px
   margin: 0 auto
-  padding: 0 15px
-  z-index: 1
-
-  @include for-tablet-portrait-up
-    padding: 0 30px
-
-  @include for-desktop-up
-    padding: 0 50px
+  min-width: 1260px
+  max-width: 1260px
+  padding-left: 30px
+  padding-right: 30px
 
   &.withoutHeadCover
     padding-top: 200px
 
-.header
-  position: fixed
-  z-index: 2
-  left: 50%
-  transform: translateX(-50%)
+.homeSection
+  margin-top: 100px
 
-  & .wrapper
-    display: flex
-    justify-content: space-between
-    padding-top: 15px
 
-    @include for-tablet-portrait-up
-      padding-top: 20px
 
-    @include for-tablet-landscape-up
-      padding-top: 25px
-
-    & .item
-      align-items: center
 
 label
   color: #fff
-  z-index: 1
 
   &.inField
     position: relative
@@ -129,7 +124,6 @@ label
       position: absolute
       left: 2px
       top: 18px
-      z-index: -1
       transition: 0.3s ease-in
 
     & input
@@ -149,109 +143,6 @@ label
       left: 50%
       transform: translate(-50%)
       font-size: 14px
-
-.homeTitle
-  color: #fff
-  text-shadow: 0 0 50px #DB00FF
-  font-size: 60px
-  font-weight: 600
-  text-align: center
-
-
-.slideControls
-  &.brand
-    display: flex
-    align-items: center
-
-  &.vertical
-    flex-direction: column
-
-    & .progress
-      height: calc(100% - 110px)
-      width: 5px
-      margin: 15px 0
-
-      &:before
-        top: var(--progress)
-        height: var(--share)
-        left: 0
-        width: 100%
-
-  & .progress
-    width: calc(100% - 110px)
-    height: 5px
-    background-color: rgba(255, 255, 255, 0.6)
-    position: relative
-    margin: 0 15px
-
-    &:before
-      content: ''
-      position: absolute
-      left: var(--progress)
-      width: var(--share)
-      height: 100%
-      background-color: #fff
-      transition: 0.3s ease-in
-
-.slideControl
-  &.brand
-    width: 48px
-    height: 40px
-    position: relative
-
-    &:after, &:before
-      content: ''
-      position: absolute
-      background-size: cover
-      background-position: center
-
-    &:after
-      background-image: url("./../img/slideControlBorder.svg")
-      width: 100%
-      height: 100%
-
-    &:before
-      background-image: url("./../img/slideControlArrow.svg")
-      width: 20px
-      height: 12px
-      top: 12px
-      transition: 0.3s ease-in
-
-    &:hover:before
-      top: 18px
-
-    &.left, &.right
-      width: 40px
-      height: 48px
-
-      &:after
-        width: 48px
-        height: 40px
-
-    &.left
-      &:after, &:before
-        transform: rotate(90deg)
-
-      &:before
-        top: initial
-        right: 8px
-
-      &:hover:before
-        right: 14px
-
-    &.right
-      &:after, &:before
-        transform: rotate(-90deg)
-
-      &:before
-        top: initial
-        left: 8px
-
-      &:hover:before
-        left: 14px
-
-    &.top
-      transform: rotate(180deg)
 
 .arrowBlue
   background-image: url("./../img/arrowBlue.svg")
@@ -274,28 +165,6 @@ label
 
   &.next
     transform: scale(var(--scaler)) rotate(180deg)
-
-
-.gameGrid
-  display: grid
-  grid-template-columns: repeat(2, max-content)
-  justify-content: center
-  row-gap: 20px
-  column-gap: 15px
-
-  @include for-tablet-portrait-up
-    column-gap: 30px
-    row-gap: 30px
-
-  @include for-tablet-landscape-up
-    grid-template-columns: repeat(4, max-content)
-    justify-content: space-between
-    column-gap: initial
-
-  @include for-big-desktop-up
-    row-gap: 50px
-    grid-template-columns: repeat(5, max-content)
-
 
 .likes, .views
   font-size: 20px
@@ -325,37 +194,6 @@ label
     mask-image: url("./../img/views.svg")
     -webkit-mask-image: url("./../img/views.svg")
 
-.likeIcon
-  background-image: url("./../img/like.svg")
-  background-size: cover
-  background-position: center
-  width: 30px
-  height: 25px
-
-  &.active
-    background-image: url("./../img/likeActive.svg")
-
-.searchIcon
-  mask-image: url("./../img/searchBtnIcon.svg")
-  mask-position: center
-  mask-size: cover
-  -webkit-mask-image: url("./../img/searchBtnIcon.svg")
-  -webkit-mask-position: center
-  -webkit-mask-size: cover
-  background-color: #fff
-  transform: rotateY(180deg)
-  display: block
-  width: 100%
-  height: 100%
-
-.profileIcon
-  background-image: url("./../img/profileIcon.svg")
-  background-size: cover
-  background-position: center
-  width: 35px
-  height: 35px
-
-
 .mobileParamsFilter
   position: fixed
   display: flex
@@ -367,7 +205,6 @@ label
   min-width: 320px
   overflow: auto
   background: linear-gradient(180deg, rgba(1, 0, 48, 0.8) 0%, #010030 100%)
-  z-index: 101
   align-items: center
   justify-content: space-between
   padding: 0
@@ -525,169 +362,6 @@ label
   font-weight: 600
   font-size: 18px
 
-.cartIcon
-  background-image: url("./../img/cartIcon.svg")
-  background-size: cover
-  background-position: center
-  width: 35px
-  height: 35px
-
-.mobileNavToggle
-  width: 100%
-  height: 100%
-  position: relative
-  display: flex
-  justify-content: center
-  align-items: center
-  transition: 0.5s
-
-  &.active
-    &:before
-      transform: translateY(0) rotate(45deg)
-      box-shadow: none
-
-    &:after
-      transform: translateY(0) rotate(-45deg)
-
-  &:before
-    content: ''
-    position: absolute
-    width: 100%
-    height: 3px
-    background-color: #fff
-    transition: 0.5s
-    transform: translateY(-10px)
-    box-shadow: 0 10px 0 #fff
-
-  &:after
-    content: ''
-    position: absolute
-    width: 100%
-    height: 3px
-    background-color: #fff
-    transition: 0.5s
-    transform: translateY(10px)
-
-
-.logo
-  display: flex
-  & > .logo_name
-    color: #fff
-    text-transform: uppercase
-    font-size: 20px
-    font-weight: 600
-    line-height: 1
-    margin-top: 10px
-    margin-left: 5px
-
-    @include for-tablet-portrait-up
-      font-size: 26px
-
-    @include for-tablet-landscape-up
-      font-size: 30px
-
-    @include for-desktop-up
-      display: none
-
-  & > img
-    width: 50px
-
-    @include for-tablet-portrait-up
-      width: 70px
-
-    @include for-tablet-landscape-up
-      width: 80px
-
-    @include for-big-desktop-up
-      width: 100px
-
-
-.navigation
-  width: 80%
-  max-width: 1250px
-  justify-content: space-between
-  display: none
-  position: relative
-
-  @include for-desktop-up
-    margin: 0 40px
-    display: flex
-
-  &.active > .navigationContainer
-    opacity: 1
-    visibility: visible
-
-.navigationContainer
-  position: absolute
-  background-color: rgba(0, 0, 0, 0.9)
-  height: 100vh
-  width: 100vw
-  top: -25px
-  z-index: 1
-  left: -35px
-  padding: 130px 0 100px 40px
-  opacity: 0
-  visibility: hidden
-  transition: .3s ease-in
-  transition-property: opacity, visibility
-
-  @include for-big-desktop-up
-    left: -50px
-    padding: 150px 0 100px 60px
-
-  &.active
-    display: block
-
-
-.navigationMenu
-  color: rgba(255, 105, 249, 0.5)
-  display: grid
-  grid-template-columns: repeat(4, 1fr)
-  max-width: 1300px
-  height: 100%
-  overflow: auto
-
-  @include for-desktop-up
-    font-size: 26px
-    max-width: 80%
-    min-width: 1000px
-    padding-right: 20px
-
-  @include for-big-desktop-up
-    max-width: 1300px
-    font-size: 34px
-
-  &::-webkit-scrollbar
-    width: 10px
-    border-radius: 10px
-
-  & a
-    text-decoration: none
-
-    &:hover
-      text-decoration: underline
-
-  & > ul
-    list-style: none
-
-  & ul:not(:first-child)
-    & a
-      color: #fff
-
-      @include for-desktop-up
-        font-size: 24px
-
-      @include for-big-desktop-up
-        font-size: 28px
-
-    & li
-      &:not(:last-child)
-        margin-bottom: 15px
-
-      &:first-child
-        margin-bottom: 35px
-        text-shadow: 0 0 60px #004C5C
-
 .categoryMenu
   & li
     &:not(:last-child)
@@ -705,100 +379,6 @@ label
 
     @include for-big-desktop-up
       font-size: 34px
-
-.navigationOpen
-  z-index: 1
-
-.searchBar
-  display: flex
-  background-color: rgba(0, 190, 255, 0.4)
-  border-radius: 100px
-  box-shadow: 0 0 60px #000000
-  align-items: center
-  width: 100%
-  height: 42px
-  z-index: 1
-
-  @include for-desktop-up
-    margin: 0 30px
-    height: 40px
-
-  @include for-big-desktop-up
-    height: 42px
-    margin: 0 50px
-
-  &.active
-    background-color: rgba(235, 0, 255, 0.4)
-
-
-.fieldSearch
-  background-color: transparent
-  border: none
-  color: #fff
-  padding: 11px 10px 11px 20px
-  font-size: 16px
-  outline: none
-  width: 100%
-
-  @include for-big-desktop-up
-    padding: 12px 10px 12px 20px
-
-  &::-webkit-input-placeholder
-    @include place-holder-style
-
-  &::-moz-placeholder
-    @include place-holder-style
-
-  &:-moz-placeholder
-    @include place-holder-style
-
-  &:-ms-input-placeholder
-    @include place-holder-style
-
-  &:focus
-    background-color: #fff
-    border-radius: 100px 0 0 100px
-    color: #000
-
-    & + .goSearch
-      background-color: #fff!important
-
-      & .searchIcon
-        background-color: #000
-
-    &::-webkit-input-placeholder
-      @include place-holder-focus-style
-
-    &::-moz-placeholder
-      @include place-holder-focus-style
-
-    &:-moz-placeholder
-      @include place-holder-focus-style
-
-    &:-ms-input-placeholder
-      @include place-holder-focus-style
-
-.goSearch
-  border-radius: 0 100px 100px 0
-  padding-right: 10px
-  height: 100%
-
-  & .searchIcon
-    @include for-desktop-up
-      width: 30px
-      height: 30px
-
-    @include for-big-desktop-up
-      width: 35px
-      height: 35px
-
-.headerProfile
-  justify-content: space-between
-  width: 80px
-  display: none
-
-  @include for-desktop-up
-    display: flex
 
 .mobileNav
   display: flex
@@ -852,7 +432,6 @@ label
     right: 0
     height: 0
     background: linear-gradient(180deg, rgba(174, 0, 167, 0.9) 0%, rgba(41, 0, 107, 0.9) 100%)
-    z-index: -1
     transition: 0.5s cubic-bezier(0.39, 0.58, 0.57, 1)
     width: 100%
     display: grid
@@ -923,7 +502,6 @@ label
   transition: .5s cubic-bezier(0.6, -0.28, 0.74, 0.05)
   transition-property: left, opacity
   opacity: 0
-  z-index: 3
 
   @include for-tablet-portrait-up
     width: 325px
@@ -1033,731 +611,6 @@ label
         &:hover
           text-decoration: underline
 
-.headCover
-  position: relative
-  height: 100vh
-  max-height: 100vh
-  width: 100%
-  max-width: 1920px
-  overflow: hidden
-
-  @include for-desktop-up
-    height: max-content
-
-  &.maxHeight
-    height: 100vh
-
-  &.blackout
-    &.horizontal:before, &.vertical:after, &.verticalMax:after
-      content: ''
-      position: absolute
-      left: 0
-
-    &.horizontal:before
-      top: 0
-      bottom: 50%
-      width: 100%
-      background: linear-gradient(180deg, #8F00FF 0%, rgba(16, 1, 60, 0) 100%)
-      opacity: 0.4
-
-      @include for-desktop-up
-        top: initial
-        opacity: initial
-        bottom: 0
-        height: 100%
-        width: 70%
-        background: linear-gradient(90deg, #01033C 0%, rgba(62, 0, 194, 0) 100%)
-
-      @include for-very-big-desktop-up
-        width: 100%
-        background: linear-gradient(90deg, #01033C 0%, rgba(62, 0, 194, 0) 50%, #01033C 100%)
-
-    &.vertical:after
-      top: 0
-      bottom: 0
-      width: 100%
-      background: linear-gradient(180deg, rgba(0, 3, 81, 0) 0%, #01033C 90%)
-
-      @include for-desktop-up
-        top: initial
-        height: 70%
-        background: linear-gradient(180deg, rgba(1, 3, 60, 0) 0%, #01033C 100%)
-
-    &.verticalMax:after
-      top: 0
-      bottom: 0
-      width: 100%
-      background: linear-gradient(180deg, rgba(1, 3, 60, 0) 0%, #01033C 100%)
-
-  &.gamePage
-    @include for-tablet-landscape-down
-      padding: 180px 50px 50px 50px
-      min-height: 690px
-      max-height: 780px
-      flex-direction: row
-      display: flex
-      align-items: center
-      overflow: initial
-
-    @include for-tablet-portrait-down
-      padding: 170px 30px 0 30px
-      flex-direction: column
-      height: initial
-      max-height: initial
-
-    @include for-big-phone-down
-      padding: 135px 15px 0 15px
-      min-height: 675px
-      max-height: initial
-      height: initial
-
-    &.blackout.vertical:after
-      @include for-tablet-landscape-down
-        display: none
-
-    &.blackout.horizontal:before
-      @include for-tablet-landscape-down
-        bottom: 65%
-
-    & .img
-      @include for-tablet-landscape-down
-        width: 30%
-        height: 100%
-        border-radius: 20px
-        box-shadow: 0 0 50px #FA00FF
-
-      @include for-tablet-portrait-down
-        width: 500px
-        height: 650px
-        margin-top: 35px
-        box-shadow: 0 0 30px #FA00FF
-
-      @include for-big-phone-down
-        width: 395px
-        box-shadow: 0 0 15px #FA00FF
-
-      @include for-phone-only
-        width: 100%
-        height: 550px
-        margin-top: 30px
-
-    & .offer
-      @include for-tablet-landscape-down
-        display: initial
-        margin-left: 50px
-        width: 100%
-        background-image: initial
-        position: initial
-        transform: initial
-        padding: initial
-        height: initial
-
-      @include for-tablet-portrait-down
-        margin-left: 30px
-        display: contents
-
-      &:before, &:after
-        @include for-tablet-landscape-down
-          content: initial
-
-
-      & .variations
-        display: flex
-        order: -1
-
-        @include for-desktop-up
-          position: absolute
-          top: 0
-
-        & .item
-          position: relative
-
-          &:hover > .elems
-            opacity: 1
-            visibility: visible
-
-          &:not(:last-child)
-            margin-right: 5px
-
-            @include for-tablet-portrait-up
-              margin-right: 10px
-
-            @include for-tablet-landscape-up
-              margin-right: 20px
-
-          & .btn
-            width: max-content
-            font-size: 12px
-            padding: 10px
-
-            @include for-tablet-portrait-up
-              font-size: 14px
-              padding: 12px
-
-            @include for-tablet-landscape-up
-              padding: 12px
-
-            @include for-desktop-up
-              width: 140px
-
-            @include for-big-desktop-up
-              width: 150px
-              padding: 15px
-
-          & .elems
-            background-color: #0E5B74
-            border-radius: 10px
-            padding: 15px 20px
-            margin-top: 16px
-            position: absolute
-            left: 50%
-            transform: translate(-50%)
-            opacity: 0
-            visibility: hidden
-            transition: 0.3s ease-in
-            z-index: 1
-
-            @include for-big-desktop-up
-              padding: 20px 30px
-
-            &:before
-              content: ''
-              position: absolute
-              top: -8px
-              border: 8px solid #0E5B74
-              transform: rotate(45deg)
-              left: calc(50% - 8px)
-
-            & .item
-              white-space: nowrap
-              width: 100%
-              font-weight: 600
-              font-size: 15px
-
-              &:not(:last-child):after
-                content: ''
-                width: 100%
-                height: 1px
-                background-color: #fff
-                display: block
-                margin: 10px 0
-
-      & .name
-        @include for-tablet-landscape-down
-          margin-top: 30px
-          max-width: 700px
-          text-align: initial
-
-        @include for-tablet-portrait-down
-          text-align: center
-
-        & .rate
-          display: inline-block
-          background-color: #0E5B74
-          opacity: 0.4
-          border-radius: 10px
-          padding: 3px 10px
-          text-align: center
-
-          @include for-big-phone-up
-            padding: 3px 12px
-
-          & .name, & .value
-            display: block
-            line-height: 1
-            margin: 0
-
-          & .name
-            font-size: 10px
-
-            @include for-big-phone-up
-              font-size: 11px
-
-          & .value
-            font-size: 28px
-
-            @include for-big-phone-up
-              font-size: 30px
-
-      & .statuses
-        display: block
-        font-weight: 600
-        margin-top: 20px
-        font-size: 12px
-
-        @include for-big-phone-up
-          display: flex
-
-        @include for-tablet-portrait-up
-          font-size: 15px
-          margin-top: 10px
-
-        & .item
-          opacity: 0.7
-          display: flex
-          align-items: center
-
-          &:not(:last-child)
-            margin-bottom: 5px
-
-            @include for-big-phone-up
-              margin-right: 15px
-              margin-bottom: initial
-
-          &:before
-            content: ''
-            display: block
-            width: 12px
-            height: 12px
-            border-radius: 100%
-            margin-right: 8px
-
-          &.positive:before
-            background-color: #14FF00
-            box-shadow: 0 0 10px #33FF00
-
-          &.negative:before
-            background-color: #ff1b36
-            box-shadow: 0 0 10px #ff1616
-
-      & .description
-        @include for-tablet-landscape-down
-          padding: initial
-          display: block
-          max-width: 750px
-
-        @include for-tablet-portrait-down
-          padding: 0 15px
-          text-align: center
-
-        @include for-phone-only
-          padding: 0
-
-      & .bottomContainer
-        @include for-tablet-portrait-down
-          display: flex
-          width: 100%
-          justify-content: space-between
-          padding-left: 50px
-
-        @include for-big-phone-down
-          padding-left: initial
-
-      & .price
-        @include for-tablet-landscape-down
-          padding: initial
-          margin-top: 30px
-
-        @include for-tablet-portrait-down
-          flex-direction: column
-
-        & .fromPrice
-          @include for-tablet-portrait-down
-            margin-top: 10px
-
-        & .discount
-          @include for-tablet-landscape-up
-            display: block
-
-      & .actions
-        @include for-tablet-landscape-down
-          margin-top: 30px
-
-        & .goToPay
-          @include for-tablet-landscape-down
-            width: 250px
-            font-size: 25px
-            height: 100%
-
-          @include for-tablet-portrait-down
-            height: 100%
-            width: 200px
-
-          @include for-phone-only
-            width: 140px
-            font-size: 20px
-
-      & .extends
-        @include for-tablet-portrait-down
-          align-self: flex-end
-
-  & .blogContentCover
-    position: absolute
-    top: 0
-    height: 100%
-    width: 100%
-    color: #fff
-    display: flex
-    flex-direction: column
-    align-items: center
-    justify-content: space-between
-    z-index: 1
-    text-shadow: 0 0 10px #938083
-    padding: 300px 30px 150px 30px
-
-    & .title
-      font-weight: 600
-      font-size: 65px
-      text-transform: uppercase
-      text-align: center
-
-    & .text
-      font-size: 25px
-      max-width: 900px
-      text-align: center
-      line-height: 1.5
-      display: -webkit-box
-      -webkit-line-clamp: 3
-      -webkit-box-orient: vertical
-      overflow: hidden
-
-    & .btn
-      padding: 18px 40px
-      font-size: 18px
-
-  & .img
-    width: 100%
-    height: 100%
-    object-fit: cover
-
-  & .video
-    width: 100%
-    display: none
-
-    @include for-desktop-up
-      display: block
-
-  & .offer
-    width: 100%
-    max-width: 320px
-    height: 265px
-    background-size: cover
-    background-position: center
-    background-image: url("./../img/headOfferBorderMobile.svg")
-    z-index: 1
-    position: absolute
-    color: #fff
-    padding: 30px 60px 15px 60px
-    bottom: 35px
-    left: 50%
-    transform: translateX(-50%)
-    display: flex
-    flex-direction: column
-    align-items: center
-
-    @include for-tablet-portrait-up
-      width: 600px
-      height: 495px
-      max-width: initial
-      padding: 60px 113px 30px 117px
-      bottom: 0
-
-    @include for-desktop-up
-      display: block
-      width: 580px
-      height: 499px
-      padding: 95px 0 0 135px
-      background-image: url("./../img/headOfferBorder.svg")
-      top: 20%
-      transform: initial
-      bottom: initial
-      left: initial
-
-    @include for-big-desktop-up
-      padding: 120px 0 30px 160px
-      width: 697px
-      height: 600px
-      left: 50px
-
-    &:before, &:after
-      content: ''
-      background-image: url("./../img/decorWithHeadOffer.svg")
-      background-position: center
-      background-size: cover
-      position: absolute
-      bottom: -5px
-      width: 217px
-      height: 175px
-
-      @include for-tablet-portrait-up
-        width: 400px
-        height: 323px
-
-      @include for-desktop-up
-        display: none
-
-    &:before
-      transform: rotate(-2deg)
-      right: 82%
-
-    &:after
-      transform: rotate(2deg)
-      left: 82%
-
-    & .name
-      font-size: 20px
-      font-weight: 600
-      line-height: 1.2
-      text-align: center
-
-      @include for-tablet-portrait-up
-        font-size: 38px
-
-      @include for-desktop-up
-        text-align: initial
-
-      @include for-big-desktop-up
-        font-size: 40px
-        line-height: 1.3
-
-    & .description
-      display: none
-      opacity: 0.7
-      margin-top: 20px
-      font-weight: 600
-      font-size: 18px
-      padding: 0 15px
-
-      @include for-desktop-up
-        display: block
-
-      @include for-big-desktop-up
-        font-size: 20px
-        margin-top: 30px
-
-    & .bottomContainer
-      display: contents
-
-    & .price
-      margin-top: 25px
-      padding-left: 15px
-
-      @include for-tablet-portrait-up
-        margin-top: 50px
-
-      @include for-desktop-up
-        margin-top: 15px
-
-      @include for-big-desktop-up
-        margin-top: 20px
-
-      & .toPrice, & .fromPrice
-        & .value
-          font-size: 25px
-          line-height: 0.8
-
-          @include for-tablet-portrait-up
-            font-size: 38px
-
-          @include for-big-desktop-up
-            font-size: 40px
-
-          &:after
-            font-size: 15px
-
-            @include for-tablet-portrait-up
-              font-size: 20px
-
-      & .toPrice
-        margin-right: 15px
-        color: #FF01F5
-
-        @include for-big-desktop-up
-          margin-right: 20px
-
-        & .value:after
-          color: #fff
-          font-weight: 600
-
-      & .fromPrice
-        margin-right: 30px
-        color: #660062
-
-        @include for-big-desktop-up
-          margin-right: 40px
-
-        & .value
-          &:before
-            background-color: #660062
-
-      & .discount
-        display: none
-        color: #080D2D
-        background-color: #4BF2FD
-
-        @include for-desktop-up
-          display: block
-
-    & .actions
-      display: flex
-      margin-top: 30px
-
-      @include for-tablet-portrait-up
-        margin-top: 50px
-
-      @include for-desktop-up
-        margin-top: 25px
-
-      @include for-big-desktop-up
-        margin-top: 35px
-
-      & .btn:not(:last-child)
-        margin-right: 20px
-
-    & .extends
-      display: flex
-      margin-top: 20px
-
-      & .item
-        width: 47px
-        height: 40px
-        background-image: url("./../img/extendBorder.svg")
-        background-position: center
-        background-size: cover
-        display: flex
-        justify-content: center
-        align-items: center
-        position: relative
-
-        &:hover > .description
-          opacity: 1
-          visibility: visible
-
-
-        &:not(:last-child)
-          margin-right: 10px
-
-        & img
-          width: 30px
-          height: 30px
-
-        & .description
-          position: absolute
-          font-size: 15px
-          font-weight: initial
-          color: #7AD6FF
-          background: #051770
-          box-shadow: 0 0 40px rgba(204, 0, 255, 0.69)
-          border-radius: 20px
-          white-space: nowrap
-          padding: 10px 15px
-          opacity: 0
-          visibility: hidden
-          transition: 0.3s ease-in
-          top: calc(100% - 10px)
-
-.navigateHomeSlide
-  padding: 0 20px
-  margin-top: -160px
-
-  @include for-big-desktop-up
-    padding: 0 55px
-
-  & .slideControls
-    position: relative
-    max-width: 600px
-    left: calc(100% - 600px)
-
-  & .items
-    margin-top: 50px
-
-.uspRow
-  display: flex
-  justify-content: space-between
-  margin-top: 100px
-
-.homeCatalog
-  margin-top: 120px
-  padding: 0 55px
-
-  & .categories
-    display: flex
-
-    & button:not(:last-child)
-      margin-right: 20px
-
-  & .items
-    display: grid
-
-    & .item
-      grid-column: 1/-1
-      grid-row: 1/-1
-      transition: .3s ease-in
-
-      &.hide
-        opacity: 0
-        visibility: hidden
-
-    & .products
-      margin-top: 35px
-
-    & .more
-      margin: 35px auto 0 auto
-
-.homeGenresSlider
-  padding: 0 100px
-  max-width: 1490px
-  margin: 100px auto 0 auto
-  position: relative
-
-  & .visibleArea
-    height: 820px
-    overflow: hidden
-
-    & .items
-      display: flex
-      flex-direction: column
-      align-items: center
-      transition: 1s ease
-
-      & .slide
-        display: flex
-
-        &:nth-child(even)
-          flex-direction: row-reverse
-
-        & .genre
-          text-align: center
-          font-size: 60px
-          font-weight: 600
-          color: #fff
-          margin: 30px
-          border-radius: 30px
-          box-shadow: 0 0 15px rgba(235, 0, 255, 0.57)
-          cursor: pointer
-          height: 350px
-          transition: 0.3s ease-in
-          position: relative
-          overflow: hidden
-
-          &:hover
-            z-index: 1
-            transform: scale(1.1, 1.1)
-
-          &:first-child
-            width: 690px
-
-          &:last-child
-            width: 440px
-
-          & .img
-            width: 100%
-            height: 100%
-            object-fit: cover
-
-          & .name
-            position: absolute
-            top: 50%
-            left: 50%
-            transform: translate(-50%, -50%)
-
-
-  & .controls
-    position: absolute
-    top: 225px
-    right: 0
-    height: 60%
-
 .homeNewsTape
   margin-top: 100px
   position: relative
@@ -1794,9 +647,6 @@ label
 
 .mediaHome
   margin-top: 100px
-
-  & .homeTitle
-    text-shadow: 0 0 50px #8000FF
 
   & .items
     display: flex
@@ -2215,7 +1065,6 @@ label
       width: 500px
       top: 0
       right: 0
-
 
 .gridCatalog
   grid-template-columns: 1fr 3fr

@@ -1,44 +1,29 @@
 @import './breakPoints'
 
 .cardGame
-  width: 220px
-  height: 340px
+  display: flex
+  flex-direction: column
+  width: 204px
+  height: 317px
   border: 2px solid #fff
-  box-shadow: 0 0 10px #FA00FF
-  border-radius: 20px
-  background-color: #460B6E
-  position: relative
+  box-shadow: 0 0 15px #0066FF
+  border-radius: 22px
+  background-color: #02043D
   overflow: hidden
-  transition: 0.3s ease-in
+  position: relative
+  transition: transform .3s ease-in
   cursor: pointer
-
-  @include for-big-desktop-up
-    width: 230px
-    height: 365px
+  text-decoration: none
 
   &.small
     width: 140px
     height: 240px
-
-    @include for-big-phone-up
-      width: 190px
-      height: 304px
-
-    @include for-big-desktop-up
-      width: 210px
-      height: 330px
 
     &:hover, &.active
       box-shadow: 0 0 20px #00A3FF
 
     & .cover
       height: 172px
-
-      @include for-big-phone-up
-        height: 236px
-
-      @include for-big-desktop-up
-        height: 262px
 
       & .name
         font-size: 22px
@@ -55,33 +40,38 @@
             font-size: 16px
             padding-left: 3px
 
-  &:hover, &.active
+
+  &:hover, &.active, &:focus-visible
     transform: scale(1.1, 1.1)
-    box-shadow: 0 0 35px #00A3FF
+    box-shadow: 0 0 30px #00A3FF
+    outline: none
 
-    & .actions, & > .actions .inCart, & > .actions .like
+    & .actions
+      bottom: 0
       opacity: 1
+      visibility: visible
 
-    & > .actions
-      height: 100%
-      padding: 20px
+      & .inCart, & .like
+        opacity: 1
 
   & .actions
     position: absolute
     width: 100%
-    height: 0%
-    z-index: 1
+    height: 100%
     background-color: rgba(70, 11, 110, 0.8)
-    padding: 0 20px
-    opacity: 0
+    padding: 20px
     overflow: hidden
-    transition: inherit
+    z-index: 1
+    opacity: 0
+    bottom: 100%
+    visibility: hidden
+    transition: .3s ease-in
+    transition-property: visibility, opacity, bottom
 
     & .inCart
       position: absolute
       bottom: 25%
       left: 20px
-      right: 20px
       width: calc(100% - 40px)
       opacity: 0
 
@@ -89,62 +79,33 @@
       position: absolute
       right: 20px
       opacity: 0
-      transition: inherit
 
-  & .cover
+  & .head
     position: relative
-    height: 292px
+    height: 253px
 
-    & img
+    &:before, & .name
+      position: absolute
+      bottom: 0
+      width: 100%
+
+    &:before
+      content: ''
+      top: 35%
+      background: linear-gradient(180deg, rgba(70, 11, 110, 0) 0%, #02043D 100%)
+
+    & .img
       object-fit: cover
       width: 100%
       height: 99%
 
     & .name
-      position: absolute
-      bottom: 0
-      background-image: linear-gradient(180deg, rgba(70, 11, 110, 0) 0%, #460B6E 95%)
-      width: 100%
-      text-align: center
       color: #fff
-      font-size: 21px
+      font-size: 18px
       font-weight: 600
-      padding: 50px 15px 0 15px
-
-      @include for-big-desktop-up
-        font-size: 25px
+      padding: 0 12px
 
   & .price
-    position: absolute
-    bottom: 0
-    font-size: 20px
-    color: #fff
     justify-content: space-between
     width: 100%
-    padding: 0 10px 15px 10px
-
-    @include for-big-desktop-up
-      font-size: 25px
-      padding: 0 15px 20px 15px
-
-    & .toPrice, & .fromPrice
-      & .value
-        margin-right: 36px
-
-        @include for-big-desktop-up
-          margin-right: 40px
-
-        &:after
-          font-size: 16px
-          padding-left: 3px
-
-          @include for-big-desktop-up
-            font-size: 18px
-
-    & .fromPrice
-      & .value
-        color: #9200AA
-        &:before
-          height: 2px
-          color: #9200AA
-          background-color: #9200AA
+    padding: 20px 12px 0 12px

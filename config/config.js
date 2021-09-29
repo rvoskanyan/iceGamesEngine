@@ -2,9 +2,9 @@ require('dotenv').config();
 
 module.exports = {
   development: {
-    username: 'iceGames',
-    password: 'Evd6LiBnP$#cxS~',
-    database: 'iceGames',
+    username: 'root',
+    password: 'root',
+    database: 'ice_games_engine',
     host: '127.0.0.1',
     dialect: 'mysql',
   },

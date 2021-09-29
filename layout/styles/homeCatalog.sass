@@ -1,0 +1,24 @@
+.homeCatalog
+  & .categories
+    display: flex
+
+    & .btn:not(:last-child)
+      margin-right: 20px
+
+  & .blocks
+    display: grid
+    margin-top: 50px
+
+    & .item
+      grid-column: 1/-1
+      grid-row: 1/-1
+      transition: opacity, visibility .3s ease-in
+      opacity: 0
+      visibility: hidden
+
+      &.active
+        opacity: 1
+        visibility: visible
+
+    & .more
+      margin: 70px auto 0 auto

@@ -4,15 +4,9 @@ const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
 const basename = path.basename(__filename);
-const env = `${process.env.NODE_ENV}` || 'development';
+const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.js')[env];
 const db = {};
-
-
-console.log(process.env.NODE_ENV);
-console.log(process.env.IGS_DB_USERNAME);
-console.log(process.env.IGS_DB_PASSWORD);
-console.log(process.env.IGS_DB_NAME);
 
 const sequelize = new Sequelize(config.database, config.username, config.password, config);
 

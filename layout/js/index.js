@@ -7,7 +7,7 @@ import './../styles/index.sass';
 
 new Slider({
   sliderSelector: '.js-homeSlider',
-  timeOutValue: 10000,
+  timeOutValue: 19000000000000000,
   type: 'switchClass',
   progress: true,
   navigate: true,
