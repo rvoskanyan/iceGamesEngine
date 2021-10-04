@@ -6,6 +6,7 @@
   align-items: center
   text-align: center
   width: max-content
+  min-width: max-content
   border: none
   cursor: pointer
   line-height: 1
@@ -38,17 +39,20 @@
 
   &.round
     border-radius: 100px
-    padding: 8px 20px
+    padding: 8px 15px
 
     &.big
-      padding: 14px 40px
+      padding: 10px 17px
+
+    &.small
+      padding: 6px 13px
 
   &.rounded
     border-radius: 10px
-    padding: 12px
+    padding: 12px 15px
 
     &.big
-      padding: 14px 40px
+      padding: 15px 18px
 
   //&.fillFromCenter
   //  position: relative
@@ -117,6 +121,7 @@
     &-bg
       &-pink
         &:hover, &.active, &:focus-visible
+          outline: none
           background-color: #FF00F5
   //
   //    &-pink

@@ -14,6 +14,10 @@
 
       & .slide
         display: flex
+        visibility: hidden
+
+        &.active
+          visibility: visible
 
         &:nth-child(even)
           flex-direction: row-reverse
@@ -34,8 +38,9 @@
             height: 100%
             background-color: rgba(0, 0, 0, 0.3)
 
-          &:hover
+          &:hover, &:focus-visible
             transform: scale(1.1, 1.1)
+            outline: none
 
           &:last-child
             width: 404px

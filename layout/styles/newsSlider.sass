@@ -1,0 +1,22 @@
+.newsSlider
+  margin-top: 30px
+  position: relative
+  display: flex
+
+  & .prev
+    &:hover
+      transform: scale(1.1, 1.1)
+
+  & .visibleArea
+    flex-grow: 1
+    overflow: hidden
+    padding: 18px 20px
+
+    & .tape
+      display: flex
+
+  & .next
+    transform: rotate(180deg)
+
+    &:hover
+      transform: rotate(180deg) scale(1.1, 1.1)

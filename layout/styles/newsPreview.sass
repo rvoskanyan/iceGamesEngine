@@ -1,41 +1,44 @@
 .newsPreview
-  max-width: 380px
-  display: flex
-  flex-direction: column
+  display: block
+  width: 330px
+  text-decoration: none
 
-  & .imgContainer
-    width: 380px
-    height: 200px
-    border-radius: 30px
+  &:hover
+    & .img
+      transform: scale(1.1, 1.1) translate(15px, -7px)
+
+    & .description
+      & .title, & .text
+        color: #984BFB
+
+  & .img
+    object-fit: cover
+    width: 330px
+    height: 172px
     overflow: hidden
-    box-shadow: 0 0 50px rgba(235, 0, 255, 0.57)
-
-    &:hover
-      transform: scale(1.1, 1.1) translate(18px, -9px)
-
-    & img
-      width: 100%
-      height: 100%
-      object-fit: cover
+    border-radius: 22px
+    transition: transform .3s ease-in
 
   & .attributes
-    margin-top: 20px
     display: flex
     align-items: center
+    margin-top: 20px
 
     & .date
-      margin-left: 20px
-      color: rgba(255, 255, 255, 0.7)
+      margin-left: 15px
       font-weight: 600
-      font-size: 17px
+      color: rgba(255, 255, 255, 0.6)
 
   & .description
-    margin-top: 20px
+    margin-top: 15px
 
     & .title
       color: #fff
       font-weight: 600
+      transition: color .3s ease-in
 
     & .text
-      color: rgba(255, 255, 255, 0.7)
-      margin-top: 7px
+      color: rgba(255, 255, 255, 0.6)
+      margin-top: 10px
+      line-height: 1.5
+      transition: color .3s ease-in

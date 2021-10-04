@@ -1,0 +1,86 @@
+.footer
+  margin-top: 100px
+  border-top: 2px solid #00C2FF
+  padding-top: 40px
+  padding-bottom: 40px
+
+  & .footerNavigation
+    display: flex
+    justify-content: space-between
+    flex-direction: row
+    align-items: initial
+
+    & .logoFull
+      width: 80px
+      margin-left: 60px
+      display: block
+
+      & img
+        width: 100%
+
+    & .menu
+      display: grid
+      grid-template-columns: repeat(3, max-content)
+      column-gap: 50px
+      row-gap: 30px
+      max-width: 800px
+      justify-content: space-between
+
+      & .link
+        font-size: 18px
+        font-family: 'Lemon Milk'
+
+        &:hover
+          text-decoration: underline
+
+    & .social
+      display: flex
+      order: 1
+
+      & .link
+        width: 30px
+
+        &:not(:last-child)
+          margin-right: 10px
+
+        & img
+          width: 100%
+
+  & .info
+    display: flex
+    row-gap: 30px
+    margin-top: 70px
+    align-items: center
+    justify-content: space-between
+
+    & .legalInfo
+      order: -1
+
+    & .legalInfo, & .designBy
+      color: #fff
+      opacity: 0.7
+
+      & .link
+        font-size: 14px
+        font-family: 'Lemon Milk'
+        text-transform: uppercase
+
+        &:hover
+          text-decoration: underline
+
+    & .payments
+      width: 100%
+      max-width: 650px
+
+      & img
+        width: 100%
+
+    & .designBy .link
+      font-size: 14px
+
+  & .copy
+    color: #A9A9A9
+    max-width: 1050px
+    margin: 30px auto 0 auto
+    text-align: center
+    font-size: 13px
