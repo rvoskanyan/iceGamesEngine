@@ -1,5 +1,6 @@
 @import './breakPoints'
 @import './variables'
+@import './zIndex'
 
 .header
   display: flex
@@ -9,7 +10,7 @@
   left: 0
   right: 0
   padding-top: 40px
-  z-index: 1
+  z-index: $ZIndex-Header
 
   & .logo
     display: flex
@@ -63,12 +64,15 @@
     flex-grow: 1
     margin: 0 45px
 
+    @include for-very-big-desktop-up
+      margin: 0 100px
+
     &.active
-      & > .containerMenu
+      & .containerMenu
         opacity: 1
         visibility: visible
 
-      & > .searchBar
+      & .searchBar
         background-color: rgba(235, 0, 255, 0.4)
 
     & .containerMenu
@@ -83,6 +87,7 @@
       transition-property: opacity, visibility
       opacity: 0
       visibility: hidden
+      z-index: $ZIndex-Header-ContainerMenu
 
       & .menu
         display: flex
@@ -149,6 +154,9 @@
           & .mainMenu
             display: flex
             justify-content: space-between
+
+    & .openMenu
+      z-index: $ZIndex-Header-OpenMenu
 
   & .profile
     display: flex

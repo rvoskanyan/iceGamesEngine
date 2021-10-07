@@ -1,4 +1,5 @@
 @import './breakPoints'
+@import './zIndex'
 
 .cardGame
   display: flex
@@ -15,31 +16,13 @@
   cursor: pointer
   text-decoration: none
 
-  &.small
-    width: 140px
-    height: 240px
+  @include for-big-desktop-up
+    width: 220px
+    height: 340px
 
-    &:hover, &.active
-      box-shadow: 0 0 20px #00A3FF
-
-    & .cover
-      height: 172px
-
-      & .name
-        font-size: 22px
-
-    & .price
-      font-size: 22px
-
-      & .toPrice, & .fromPrice
-        & .value
-          margin-right: 36px
-          padding: 0
-
-          &:after
-            font-size: 16px
-            padding-left: 3px
-
+  @include for-very-big-desktop-up
+    width: 233px
+    height: 368px
 
   &:hover, &.active, &:focus-visible, &:focus-within
     transform: scale(1.1, 1.1)
@@ -61,7 +44,7 @@
     background-color: rgba(70, 11, 110, 0.8)
     padding: 20px
     overflow: hidden
-    z-index: 1
+    z-index: $ZIndex-CardGame-Actions
     opacity: 0
     bottom: 100%
     visibility: hidden
@@ -83,6 +66,13 @@
   & .head
     position: relative
     height: 253px
+    width: 100%
+
+    @include for-big-desktop-up
+      height: 272px
+
+    @include for-very-big-desktop-up
+      height: 296px
 
     &:before, & .name
       position: absolute
@@ -101,9 +91,10 @@
 
     & .name
       color: #fff
-      font-size: 18px
+      font-size: 20px
       font-weight: 600
       padding: 0 12px
+      text-align: left
 
   & .price
     justify-content: space-between

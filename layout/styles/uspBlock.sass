@@ -1,3 +1,5 @@
+@import './breakPoints'
+
 .uspBlock
     display: flex
     font-family: 'Lemon Milk'
@@ -14,5 +16,14 @@
     transition: transform .3s ease-in
     padding: 0 10px
 
+    @include for-big-desktop-up
+        width: 218px
+        height: 134px
+
+    @include for-very-big-desktop-up
+        width: 239px
+        height: 137px
+        padding: 0 25px
+
     &:hover
-      transform: scale(1.1, 1.1)
+        transform: scale(1.1, 1.1)

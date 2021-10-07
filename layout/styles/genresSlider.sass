@@ -1,3 +1,5 @@
+@import './breakPoints'
+
 .genresSlider
   display: flex
   align-items: center
@@ -6,8 +8,14 @@
 
   & .visibleArea
     overflow: hidden
-    max-height: calc((283px + 36px) * 2)
+    max-height: calc((283px + 18px * 2) * 2) //(height + margin * 2) * 2
     padding: 0 14px
+
+    @include for-big-desktop-up
+      max-height: calc((310px + 20px * 2) * 2) //(height + margin * 2) * 2
+
+    @include for-very-big-desktop-up
+      max-height: calc((340px + 25px * 2) * 2) //(height + margin * 2) * 2
 
     & .slides
       transition: 1s ease
@@ -23,13 +31,23 @@
           flex-direction: row-reverse
 
         & .genre
-          height: 283px
+          height: 283px //height
           width: 629px
-          margin: 18px
+          margin: 18px //margin
           border-radius: 22px
           overflow: hidden
           transition: transform .3s ease-in
           position: relative
+
+          @include for-big-desktop-up
+            width: 684px
+            height: 310px //height
+            margin: 20px //margin
+
+          @include for-very-big-desktop-up
+            width: 760px
+            height: 340px //height
+            margin: 25px //margin
 
           &:before
             content: ''
@@ -44,6 +62,12 @@
 
           &:last-child
             width: 404px
+
+            @include for-big-desktop-up
+              width: 486px
+
+            @include for-very-big-desktop-up
+              width: 542px
 
           & .img
             width: 100%

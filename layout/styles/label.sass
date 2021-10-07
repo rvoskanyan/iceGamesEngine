@@ -1,0 +1,31 @@
+@import './zIndex'
+
+.label
+  &-inField
+    position: relative
+    display: block
+    border-bottom: 2px solid #fff
+    padding-top: 20px
+
+    & .label, & .textField
+      color: #fff
+      font-size: 16px
+      padding: 5px
+
+    & .label
+      position: absolute
+      left: 0
+      top: 20px
+      z-index: $ZIndex-LabelInTextFiled-Label
+      transition: .3s ease-in
+      transition-property: left, top, transform, font-size
+
+    .textField
+      width: 100%
+
+      &:focus, &.active
+        & + .label
+          top: 0
+          left: 50%
+          transform: translate(-50%)
+          font-size: 14px

@@ -1,4 +1,5 @@
 @import './breakPoints'
+@import './zIndex'
 
 .cover
   position: relative
@@ -7,6 +8,8 @@
   width: 100%
   overflow: hidden
   min-height: 770px
+  max-width: 1920px
+  margin: 0 auto
 
   &.blackout
     position: relative
@@ -20,338 +23,16 @@
     &-left:before
       top: 0
       right: 30%
-      background: linear-gradient(90deg, #01033C 0%, rgba(1, 3, 60, 0) 100%)
+      background: linear-gradient(90deg, #01033C 0%, transparent 100%)
+
+      @include for-very-big-desktop-up
+        background: linear-gradient(90deg, #01033C 0%, transparent 70%, #01033C 100%)
+        right: 0
 
     &-bottom:after
       top: 40%
       right: 0
-      background: linear-gradient(180deg, rgba(1, 3, 60, 0) 0%, #01033C 100%)
-
-  &.gamePage
-    @include for-tablet-landscape-down
-      padding: 180px 50px 50px 50px
-      min-height: 690px
-      max-height: 780px
-      flex-direction: row
-      display: flex
-      align-items: center
-      overflow: initial
-
-    @include for-tablet-portrait-down
-      padding: 170px 30px 0 30px
-      flex-direction: column
-      height: initial
-      max-height: initial
-
-    @include for-big-phone-down
-      padding: 135px 15px 0 15px
-      min-height: 675px
-      max-height: initial
-      height: initial
-
-    &.blackout.vertical:after
-      @include for-tablet-landscape-down
-        display: none
-
-    &.blackout.horizontal:before
-      @include for-tablet-landscape-down
-        bottom: 65%
-
-    & .img
-      @include for-tablet-landscape-down
-        width: 30%
-        height: 100%
-        border-radius: 20px
-        box-shadow: 0 0 50px #FA00FF
-
-      @include for-tablet-portrait-down
-        width: 500px
-        height: 650px
-        margin-top: 35px
-        box-shadow: 0 0 30px #FA00FF
-
-      @include for-big-phone-down
-        width: 395px
-        box-shadow: 0 0 15px #FA00FF
-
-      @include for-phone-only
-        width: 100%
-        height: 550px
-        margin-top: 30px
-
-    & .offer
-      @include for-tablet-landscape-down
-        display: initial
-        margin-left: 50px
-        width: 100%
-        background-image: initial
-        position: initial
-        transform: initial
-        padding: initial
-        height: initial
-
-      @include for-tablet-portrait-down
-        margin-left: 30px
-        display: contents
-
-      &:before, &:after
-        @include for-tablet-landscape-down
-          content: initial
-
-
-      & .variations
-        display: flex
-        order: -1
-
-        @include for-desktop-up
-          position: absolute
-          top: 0
-
-        & .item
-          position: relative
-
-          &:hover > .elems
-            opacity: 1
-            visibility: visible
-
-          &:not(:last-child)
-            margin-right: 5px
-
-            @include for-tablet-portrait-up
-              margin-right: 10px
-
-            @include for-tablet-landscape-up
-              margin-right: 20px
-
-          & .btn
-            width: max-content
-            font-size: 12px
-            padding: 10px
-
-            @include for-tablet-portrait-up
-              font-size: 14px
-              padding: 12px
-
-            @include for-tablet-landscape-up
-              padding: 12px
-
-            @include for-desktop-up
-              width: 140px
-
-            @include for-big-desktop-up
-              width: 150px
-              padding: 15px
-
-          & .elems
-            background-color: #0E5B74
-            border-radius: 10px
-            padding: 15px 20px
-            margin-top: 16px
-            position: absolute
-            left: 50%
-            transform: translate(-50%)
-            opacity: 0
-            visibility: hidden
-            transition: 0.3s ease-in
-
-            @include for-big-desktop-up
-              padding: 20px 30px
-
-            &:before
-              content: ''
-              position: absolute
-              top: -8px
-              border: 8px solid #0E5B74
-              transform: rotate(45deg)
-              left: calc(50% - 8px)
-
-            & .item
-              white-space: nowrap
-              width: 100%
-              font-weight: 600
-              font-size: 15px
-
-              &:not(:last-child):after
-                content: ''
-                width: 100%
-                height: 1px
-                background-color: #fff
-                display: block
-                margin: 10px 0
-
-      & .name
-        @include for-tablet-landscape-down
-          margin-top: 30px
-          max-width: 700px
-          text-align: initial
-
-        @include for-tablet-portrait-down
-          text-align: center
-
-        & .rate
-          display: inline-block
-          background-color: #0E5B74
-          opacity: 0.4
-          border-radius: 10px
-          padding: 3px 10px
-          text-align: center
-
-          @include for-big-phone-up
-            padding: 3px 12px
-
-          & .name, & .value
-            display: block
-            line-height: 1
-            margin: 0
-
-          & .name
-            font-size: 10px
-
-            @include for-big-phone-up
-              font-size: 11px
-
-          & .value
-            font-size: 28px
-
-            @include for-big-phone-up
-              font-size: 30px
-
-      & .statuses
-        display: block
-        font-weight: 600
-        margin-top: 20px
-        font-size: 12px
-
-        @include for-big-phone-up
-          display: flex
-
-        @include for-tablet-portrait-up
-          font-size: 15px
-          margin-top: 10px
-
-        & .item
-          opacity: 0.7
-          display: flex
-          align-items: center
-
-          &:not(:last-child)
-            margin-bottom: 5px
-
-            @include for-big-phone-up
-              margin-right: 15px
-              margin-bottom: initial
-
-          &:before
-            content: ''
-            display: block
-            width: 12px
-            height: 12px
-            border-radius: 100%
-            margin-right: 8px
-
-          &.positive:before
-            background-color: #14FF00
-            box-shadow: 0 0 10px #33FF00
-
-          &.negative:before
-            background-color: #ff1b36
-            box-shadow: 0 0 10px #ff1616
-
-      & .description
-        @include for-tablet-landscape-down
-          padding: initial
-          display: block
-          max-width: 750px
-
-        @include for-tablet-portrait-down
-          padding: 0 15px
-          text-align: center
-
-        @include for-phone-only
-          padding: 0
-
-      & .bottomContainer
-        @include for-tablet-portrait-down
-          display: flex
-          width: 100%
-          justify-content: space-between
-          padding-left: 50px
-
-        @include for-big-phone-down
-          padding-left: initial
-
-      & .price
-        @include for-tablet-landscape-down
-          padding: initial
-          margin-top: 30px
-
-        @include for-tablet-portrait-down
-          flex-direction: column
-
-        & .fromPrice
-          @include for-tablet-portrait-down
-            margin-top: 10px
-
-        & .discount
-          @include for-tablet-landscape-up
-            display: block
-
-      & .actions
-        @include for-tablet-landscape-down
-          margin-top: 30px
-
-        & .goToPay
-          @include for-tablet-landscape-down
-            width: 250px
-            font-size: 25px
-            height: 100%
-
-          @include for-tablet-portrait-down
-            height: 100%
-            width: 200px
-
-          @include for-phone-only
-            width: 140px
-            font-size: 20px
-
-      & .extends
-        @include for-tablet-portrait-down
-          align-self: flex-end
-
-  & .blogContentCover
-    position: absolute
-    top: 0
-    height: 100%
-    width: 100%
-    color: #fff
-    display: flex
-    flex-direction: column
-    align-items: center
-    justify-content: space-between
-    text-shadow: 0 0 10px #938083
-    padding: 300px 30px 150px 30px
-
-    & .title
-      font-weight: 600
-      font-size: 65px
-      text-transform: uppercase
-      text-align: center
-
-    & .text
-      font-size: 25px
-      max-width: 900px
-      text-align: center
-      line-height: 1.5
-      display: -webkit-box
-      -webkit-line-clamp: 3
-      -webkit-box-orient: vertical
-      overflow: hidden
-
-    & .btn
-      padding: 18px 40px
-      font-size: 18px
-
-
+      background: linear-gradient(180deg, transparent 0%, #01033C 100%)
 
   & .img
     width: 100%
@@ -375,60 +56,16 @@
     background-position: center
     padding: 70px 0 0 110px
     top: 18%
-    z-index: 1
-
-    //width: 100%
-    //max-width: 320px
-    //height: 265px
-    //background-size: cover
-    //background-position: center
-    //background-image: url("./../img/headOfferBorderMobile.svg")
-    //position: absolute
-    //color: #fff
-    //padding: 30px 60px 15px 60px
-    //bottom: 35px
-    //left: 50%
-    //transform: translateX(-50%)
-    //display: flex
-    //flex-direction: column
-    //align-items: center
-
-    //@include for-tablet-portrait-up
-    //  width: 600px
-    //  height: 495px
-    //  max-width: initial
-    //  padding: 60px 113px 30px 117px
-    //  bottom: 0
-
-    &:before, &:after
-      content: ''
-      background-image: url("./../img/decorWithHeadOffer.svg")
-      background-position: center
-      background-size: cover
-      position: absolute
-      bottom: -5px
-      width: 217px
-      height: 175px
-
-      @include for-tablet-portrait-up
-        width: 400px
-        height: 323px
-
-      @include for-desktop-up
-        display: none
-
-    &:before
-      transform: rotate(-2deg)
-      right: 82%
-
-    &:after
-      transform: rotate(2deg)
-      left: 82%
+    z-index: $ZIndex-Cover-Offer
+    line-height: 1.3
 
     & .name
       font-family: 'Lemon Milk'
       font-size: 36px
       color: #fff
+
+      @include for-big-desktop-up
+        font-size: 43px
 
     & .description
       margin-top: 15px
@@ -446,9 +83,6 @@
       line-height: 18px // line-height
       max-height: calc(18px * 3) // line-height * line-count
 
-    & .bottomContainer
-      display: contents
-
     & .price
       margin-top: 25px
       display: flex
@@ -460,10 +94,16 @@
           font-weight: 600
           font-family: 'Montserrat'
 
+          @include for-big-desktop-up
+            font-size: 16px
+
         & .value
           font-size: 36px
           line-height: 1
           font-family: 'Lemon Milk'
+
+          @include for-big-desktop-up
+            font-size: 43px
 
       & .toPrice
         margin-right: 20px

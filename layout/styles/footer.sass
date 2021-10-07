@@ -1,22 +1,28 @@
 .footer
-  margin-top: 100px
-  border-top: 2px solid #00C2FF
-  padding-top: 40px
-  padding-bottom: 40px
+  padding-bottom: 45px
 
-  & .footerNavigation
+  & .navigation
+    border-top: 2px solid #00C2FF
+    padding-top: 45px
     display: flex
     justify-content: space-between
-    flex-direction: row
-    align-items: initial
+    align-items: flex-start
 
-    & .logoFull
-      width: 80px
-      margin-left: 60px
-      display: block
+    & .logo
+      width: 75px
+      height: 75px
 
-      & img
-        width: 100%
+    & .social
+      display: flex
+      order: 1
+
+      & .link
+        &:not(:last-child)
+          margin-right: 10px
+
+        & .img
+          width: 30px
+          height: 30px
 
     & .menu
       display: grid
@@ -24,31 +30,13 @@
       column-gap: 50px
       row-gap: 30px
       max-width: 800px
-      justify-content: space-between
 
       & .link
-        font-size: 18px
         font-family: 'Lemon Milk'
-
-        &:hover
-          text-decoration: underline
-
-    & .social
-      display: flex
-      order: 1
-
-      & .link
-        width: 30px
-
-        &:not(:last-child)
-          margin-right: 10px
-
-        & img
-          width: 100%
+        font-size: 18px
 
   & .info
     display: flex
-    row-gap: 30px
     margin-top: 70px
     align-items: center
     justify-content: space-between
@@ -59,28 +47,14 @@
     & .legalInfo, & .designBy
       color: #fff
       opacity: 0.7
-
-      & .link
-        font-size: 14px
-        font-family: 'Lemon Milk'
-        text-transform: uppercase
-
-        &:hover
-          text-decoration: underline
+      font-size: 14px
+      font-family: 'Lemon Milk'
 
     & .payments
-      width: 100%
-      max-width: 650px
-
-      & img
-        width: 100%
-
-    & .designBy .link
-      font-size: 14px
+      width: 600px
 
   & .copy
+    margin-top: 20px
     color: #A9A9A9
-    max-width: 1050px
-    margin: 30px auto 0 auto
     text-align: center
     font-size: 13px
