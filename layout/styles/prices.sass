@@ -2,9 +2,12 @@
 
 .price
   display: flex
-  font-size: 18px
+  font-size: 16px
   color: #fff
   font-weight: 600
+
+  @include for-big-desktop-up
+    font-size: 18px
 
   @include for-very-big-desktop-up
     font-size: 20px
@@ -20,7 +23,10 @@
   &:after
     content: 'Руб.'
     margin-left: 3px
-    font-size: 10px
+    font-size: 8px
+
+    @include for-big-desktop-up
+      font-size: 10px
 
     @include for-very-big-desktop-up
       font-size: 12px

@@ -25,6 +25,8 @@
 @import './tabs'
 @import './homeSlider'
 @import './breadcrumbs'
+@import './range'
+@import './catalog'
 
 @import './login'
 @import './header'
@@ -46,6 +48,9 @@
 body
   background: #01033C
   min-width: 320px
+  min-height: 100vh
+  display: flex
+  flex-direction: column
 
   &.noScrolling
     overflow: hidden
@@ -53,6 +58,9 @@ body
 
     & .header
       right: $widthScrollBar
+
+main
+  flex-grow: 1
 
 img
   pointer-events: none
@@ -88,7 +96,7 @@ img
     padding-right: 180px
 
   &.withoutCover
-    padding-top: 200px
+    padding-top: 180px
 
 .homeSection
   margin-top: 100px
@@ -271,42 +279,6 @@ img
   & .apply
     justify-self: flex-end
     margin-top: 30px
-
-.range
-  position: relative
-  display: flex
-  align-items: center
-  margin: 10px 35px
-
-  &.purple
-    & .scale, & .from, & .to
-      background-color: #7000FF
-      box-shadow: 0 0 50px rgba(0, 255, 224, 0.6)
-
-  & .scale
-    width: 100%
-    height: 4px
-    background-color: #FF00F5
-
-  & .from, & .to
-    position: absolute
-    bottom: 50%
-    background-color: #FF00F5
-    padding: 3px 15px
-    color: #fff
-    font-weight: 600
-    border-radius: 20px
-    min-width: 60px
-    text-align: center
-    cursor: pointer
-
-  & .from
-    left: 0
-    transform: translate(-50%, 50%)
-
-  & .to
-    right: 0
-    transform: translate(50%, 50%)
 
 .titleFilter
   color: rgba(255, 255, 255, 0.7)

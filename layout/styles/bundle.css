@@ -263,6 +263,8 @@
     padding: 12px 15px; }
     .btn.rounded.big {
       padding: 15px 18px; }
+    .btn.rounded.small {
+      padding: 9px 12px; }
   .btn.fillFromCenter {
     position: relative; }
     .btn.fillFromCenter:focus-visible {
@@ -287,6 +289,8 @@
     background-color: #410074; }
   .btn.bg-darkPink {
     background-color: #620064; }
+  .btn.bg-lilac {
+    background-color: rgba(158, 0, 255, 0.6); }
   .btn.backlight-pink {
     box-shadow: 0 0 25px rgba(250, 0, 255, 0.6); }
   .btn.hover-color-pink:hover, .btn.hover-color-pink.active, .btn.hover-color-pink:focus-visible {
@@ -312,40 +316,46 @@
     text-decoration: underline; }
 
 .checkbox {
-  display: flex;
-  align-items: center;
+  display: block;
+  max-width: max-content;
   cursor: pointer; }
-  .checkbox .mask {
-    content: '';
-    min-width: 18px;
-    max-width: 18px;
-    min-height: 18px;
-    max-height: 18px;
-    background-color: rgba(155, 0, 173, 0.7);
-    display: block;
-    box-shadow: inset 0 0 5px 1px rgba(219, 0, 255, 0.7);
-    border-radius: 5px;
-    background-size: cover;
-    background-position: center; }
-  .checkbox .label {
-    margin-left: 7px;
-    color: rgba(255, 255, 255, 0.5);
-    font-weight: 600;
-    font-size: 15px; }
   .checkbox .input {
     display: none; }
-    .checkbox .input:checked + .mask {
-      background-image: url("./../img/checkboxDecoration.png"); }
-    .checkbox .input:checked ~ .label {
+    .checkbox .input:checked + .label {
       color: rgba(255, 255, 255, 0.8); }
-  .checkbox:hover > .label {
+      .checkbox .input:checked + .label:before {
+        background-image: url("./../img/checkboxDecoration.png"); }
+  .checkbox .label {
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 600;
+    font-size: 16px;
+    display: flex;
+    align-items: flex-end;
+    line-height: 1;
+    user-select: none;
+    transition: color .3s ease-in; }
+    .checkbox .label:before {
+      content: '';
+      display: block;
+      min-width: 16px;
+      max-width: 16px;
+      min-height: 16px;
+      max-height: 16px;
+      border-radius: 5px;
+      background-color: rgba(155, 0, 173, 0.6);
+      box-shadow: inset 0 0 10px 2px rgba(219, 0, 255, 0.6);
+      background-size: cover;
+      background-position: center;
+      margin-right: 8px;
+      margin-bottom: 1px; }
+  .checkbox:hover .label {
     color: rgba(255, 255, 255, 0.8); }
 
 .cardGame {
   display: flex;
   flex-direction: column;
-  width: 204px;
-  height: 317px;
+  width: 154px;
+  height: 243px;
   border: 2px solid #fff;
   box-shadow: 0 0 15px #0066FF;
   border-radius: 22px;
@@ -357,12 +367,31 @@
   text-decoration: none; }
   @media (min-width: 1650px) {
     .cardGame {
-      width: 220px;
-      height: 340px; } }
+      width: 171px;
+      height: 270px; } }
   @media (min-width: 1920px) {
     .cardGame {
-      width: 233px;
-      height: 368px; } }
+      width: 197px;
+      height: 311px; } }
+  .cardGame.big {
+    width: 204px;
+    height: 317px; }
+    @media (min-width: 1650px) {
+      .cardGame.big {
+        width: 220px;
+        height: 340px; } }
+    @media (min-width: 1920px) {
+      .cardGame.big {
+        width: 233px;
+        height: 368px; } }
+    .cardGame.big .head {
+      height: 253px; }
+      @media (min-width: 1650px) {
+        .cardGame.big .head {
+          height: 272px; } }
+      @media (min-width: 1920px) {
+        .cardGame.big .head {
+          height: 296px; } }
   .cardGame:hover, .cardGame.active, .cardGame:focus-visible, .cardGame:focus-within {
     transform: scale(1.1, 1.1);
     box-shadow: 0 0 30px #00A3FF;
@@ -389,23 +418,27 @@
     .cardGame .actions .inCart {
       position: absolute;
       bottom: 25%;
-      left: 20px;
-      width: calc(100% - 40px);
+      left: 10px;
+      width: calc(100% - 10px * 2);
       opacity: 0; }
+      @media (min-width: 1920px) {
+        .cardGame .actions .inCart {
+          left: 20px;
+          width: calc(100% - 20px * 2); } }
     .cardGame .actions .like {
       position: absolute;
       right: 20px;
       opacity: 0; }
   .cardGame .head {
     position: relative;
-    height: 253px;
+    height: 190px;
     width: 100%; }
     @media (min-width: 1650px) {
       .cardGame .head {
-        height: 272px; } }
+        height: 215px; } }
     @media (min-width: 1920px) {
       .cardGame .head {
-        height: 296px; } }
+        height: 250px; } }
     .cardGame .head:before, .cardGame .head .name {
       position: absolute;
       bottom: 0;
@@ -420,7 +453,7 @@
       height: 99%; }
     .cardGame .head .name {
       color: #fff;
-      font-size: 20px;
+      font-size: 18px;
       font-weight: 600;
       padding: 0 12px;
       text-align: left; }
@@ -471,9 +504,12 @@
 
 .price {
   display: flex;
-  font-size: 18px;
+  font-size: 16px;
   color: #fff;
   font-weight: 600; }
+  @media (min-width: 1650px) {
+    .price {
+      font-size: 18px; } }
   @media (min-width: 1920px) {
     .price {
       font-size: 20px; } }
@@ -487,7 +523,10 @@
   .toPrice:after, .fromPrice:after {
     content: 'Руб.';
     margin-left: 3px;
-    font-size: 10px; }
+    font-size: 8px; }
+    @media (min-width: 1650px) {
+      .toPrice:after, .fromPrice:after {
+        font-size: 10px; } }
     @media (min-width: 1920px) {
       .toPrice:after, .fromPrice:after {
         font-size: 12px; } }
@@ -695,6 +734,98 @@
         .breadcrumbs .item:not(:last-child):after {
           width: 30px;
           margin: 0 15px; } }
+
+.range {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 15px; }
+  .range:before {
+    content: '';
+    width: 100%;
+    height: 5px;
+    background-color: #D152D6;
+    box-shadow: 0 0 15px rgba(0, 255, 224, 0.6); }
+  .range .min, .range .max {
+    position: absolute;
+    top: 50%;
+    background-color: #D152D6;
+    padding: 2px 8px;
+    color: #fff;
+    border-radius: 20px;
+    min-width: 45px;
+    text-align: center;
+    font-size: 14px;
+    transform: translateY(-50%);
+    line-height: 1;
+    box-shadow: 0 0 20px #000; }
+  .range .min {
+    left: 0; }
+  .range .max {
+    right: 0; }
+
+.catalog {
+  display: flex;
+  width: 100%; }
+  .catalog .filters {
+    width: 265px; }
+    @media (min-width: 1650px) {
+      .catalog .filters {
+        width: 315px; } }
+    .catalog .filters .range {
+      margin-top: 30px; }
+  .catalog .variantsBlock {
+    margin-top: 75px; }
+    @media (min-width: 1650px) {
+      .catalog .variantsBlock .block.genres .variants {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center; }
+        .catalog .variantsBlock .block.genres .variants .checkbox {
+          min-width: 50%; } }
+    .catalog .variantsBlock .block:not(:last-child) {
+      margin-bottom: 40px; }
+    .catalog .variantsBlock .block .title {
+      margin-bottom: 10px; }
+    .catalog .variantsBlock .block .variants .checkbox:not(:first-child) {
+      margin-top: 8px; }
+  .catalog .list {
+    padding-left: 60px;
+    flex-grow: 1; }
+    .catalog .list .settings {
+      display: flex;
+      justify-content: space-between;
+      align-items: center; }
+      .catalog .list .settings .sort .variants {
+        display: flex;
+        align-items: center;
+        margin-top: 20px; }
+        .catalog .list .settings .sort .variants .btn:not(:first-child) {
+          margin-left: 20px; }
+        .catalog .list .settings .sort .variants .inStockOnly {
+          margin-left: 35px; }
+      .catalog .list .settings .countGames .variants {
+        display: flex;
+        margin-top: 20px; }
+        .catalog .list .settings .countGames .variants .btn:not(:last-child) {
+          margin-right: 10px; }
+    .catalog .list .gameGrid {
+      margin-top: 70px; }
+    .catalog .list .pagination {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      margin-top: 25px; }
+      .catalog .list .pagination .btn:not(:last-child) {
+        margin-right: 10px; }
+      .catalog .list .pagination .ellipsis {
+        color: #fff;
+        font-weight: 600;
+        margin-right: 10px; }
+  .catalog .title {
+    font-weight: bold;
+    font-size: 18px;
+    color: #fff; }
 
 @keyframes animActive {
   0% {
@@ -1338,12 +1469,18 @@
 
 body {
   background: #01033C;
-  min-width: 320px; }
+  min-width: 320px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column; }
   body.noScrolling {
     overflow: hidden;
     padding-right: 10px; }
     body.noScrolling .header {
       right: 10px; }
+
+main {
+  flex-grow: 1; }
 
 img {
   pointer-events: none;
@@ -1378,7 +1515,7 @@ img {
       padding-left: 180px;
       padding-right: 180px; } }
   .contentContainer.withoutCover {
-    padding-top: 200px; }
+    padding-top: 180px; }
 
 .homeSection {
   margin-top: 100px; }
@@ -1535,36 +1672,6 @@ img {
   .mobileParamsFilter .apply {
     justify-self: flex-end;
     margin-top: 30px; }
-
-.range {
-  position: relative;
-  display: flex;
-  align-items: center;
-  margin: 10px 35px; }
-  .range.purple .scale, .range.purple .from, .range.purple .to {
-    background-color: #7000FF;
-    box-shadow: 0 0 50px rgba(0, 255, 224, 0.6); }
-  .range .scale {
-    width: 100%;
-    height: 4px;
-    background-color: #FF00F5; }
-  .range .from, .range .to {
-    position: absolute;
-    bottom: 50%;
-    background-color: #FF00F5;
-    padding: 3px 15px;
-    color: #fff;
-    font-weight: 600;
-    border-radius: 20px;
-    min-width: 60px;
-    text-align: center;
-    cursor: pointer; }
-  .range .from {
-    left: 0;
-    transform: translate(-50%, 50%); }
-  .range .to {
-    right: 0;
-    transform: translate(50%, 50%); }
 
 .titleFilter {
   color: rgba(255, 255, 255, 0.7);

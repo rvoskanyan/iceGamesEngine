@@ -1,0 +1,89 @@
+@import './breakPoints'
+
+.catalog
+  display: flex
+  width: 100%
+
+  & .filters
+    width: 265px
+
+    @include for-big-desktop-up
+      width: 315px
+
+    & .range
+      margin-top: 30px
+
+  & .variantsBlock
+    margin-top: 75px
+
+    & .block
+      @include for-big-desktop-up
+        &.genres
+          & .variants
+            display: flex
+            flex-wrap: wrap
+            align-items: center
+
+            & .checkbox
+              min-width: 50%
+
+      &:not(:last-child)
+        margin-bottom: 40px
+
+      & .title
+        margin-bottom: 10px
+
+      & .variants .checkbox:not(:first-child)
+          margin-top: 8px
+
+  & .list
+    padding-left: 60px
+    flex-grow: 1
+
+    & .settings
+      display: flex
+      justify-content: space-between
+      align-items: center
+
+      & .sort
+        & .variants
+          display: flex
+          align-items: center
+          margin-top: 20px
+
+          & .btn:not(:first-child)
+            margin-left: 20px
+
+          & .inStockOnly
+            margin-left: 35px
+
+      & .countGames
+
+        & .variants
+          display: flex
+          margin-top: 20px
+
+          & .btn:not(:last-child)
+            margin-right: 10px
+
+    & .gameGrid
+      margin-top: 70px
+
+    & .pagination
+      display: flex
+      justify-content: center
+      align-items: flex-end
+      margin-top: 25px
+
+      & .btn:not(:last-child)
+        margin-right: 10px
+
+      & .ellipsis
+        color: #fff
+        font-weight: 600
+        margin-right: 10px
+
+  & .title
+    font-weight: bold
+    font-size: 18px
+    color: #fff

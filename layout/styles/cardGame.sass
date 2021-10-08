@@ -4,8 +4,8 @@
 .cardGame
   display: flex
   flex-direction: column
-  width: 204px
-  height: 317px
+  width: 154px
+  height: 243px
   border: 2px solid #fff
   box-shadow: 0 0 15px #0066FF
   border-radius: 22px
@@ -17,12 +17,33 @@
   text-decoration: none
 
   @include for-big-desktop-up
-    width: 220px
-    height: 340px
+    width: 171px
+    height: 270px
 
   @include for-very-big-desktop-up
-    width: 233px
-    height: 368px
+    width: 197px
+    height: 311px
+
+  &.big
+    width: 204px
+    height: 317px
+
+    @include for-big-desktop-up
+      width: 220px
+      height: 340px
+
+    @include for-very-big-desktop-up
+      width: 233px
+      height: 368px
+
+    & .head
+      height: 253px
+
+      @include for-big-desktop-up
+        height: 272px
+
+      @include for-very-big-desktop-up
+        height: 296px
 
   &:hover, &.active, &:focus-visible, &:focus-within
     transform: scale(1.1, 1.1)
@@ -54,9 +75,13 @@
     & .inCart
       position: absolute
       bottom: 25%
-      left: 20px
-      width: calc(100% - 40px)
+      left: 10px //left
+      width: calc(100% - 10px * 2) //100% - left * 2
       opacity: 0
+
+      @include for-very-big-desktop-up
+        left: 20px //left
+        width: calc(100% - 20px * 2) //100% - left * 2
 
     & .like
       position: absolute
@@ -65,14 +90,14 @@
 
   & .head
     position: relative
-    height: 253px
+    height: 190px
     width: 100%
 
     @include for-big-desktop-up
-      height: 272px
+      height: 215px
 
     @include for-very-big-desktop-up
-      height: 296px
+      height: 250px
 
     &:before, & .name
       position: absolute
@@ -91,7 +116,7 @@
 
     & .name
       color: #fff
-      font-size: 20px
+      font-size: 18px
       font-weight: 600
       padding: 0 12px
       text-align: left
