@@ -1,0 +1,21 @@
+@import './zIndex'
+
+.tooltip
+  position: relative
+  width: max-content
+
+  &:hover, &:focus-within
+    z-index: $ZIndex-Tooltip
+
+    .prompt
+      opacity: 1
+      visibility: visible
+
+  & .prompt
+    position: absolute
+    top: 100%
+    left: 50%
+    transform: translateX(-50%)
+    visibility: hidden
+    opacity: 0
+    transition: .3s ease-in

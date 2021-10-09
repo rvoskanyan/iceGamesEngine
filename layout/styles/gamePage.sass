@@ -1,0 +1,114 @@
+@import './zIndex'
+
+.gamePage
+  & .cover
+    & .offer
+
+      & .packages
+        display: flex
+        margin-top: -70px
+        margin-bottom: 25px
+
+        & .package
+          &:not(:last-child)
+            margin-right: 10px
+
+          &.tooltip
+            & .prompt
+              background-color: #2F305E
+              color: #fff
+              padding: 10px 25px
+              border-radius: 20px
+              margin-top: 12px
+
+              &:before
+                content: ''
+                position: absolute
+                bottom: 100%
+                left: 50%
+                transform: translateX(-50%)
+                border: 10px solid transparent
+                border-bottom-color: #2F305E
+
+              & .list
+                list-style: none
+
+                & .item
+                  white-space: nowrap
+                  padding: 10px 3px
+                  line-height: 1
+                  font-weight: 600
+
+                  &:not(:last-child)
+                    border-bottom: 1px solid #fff
+
+      & .statuses
+        display: flex
+        margin-top: 12px
+
+        & .status
+          color: #fff
+          font-size: 14px
+          display: flex
+          align-items: center
+
+          &:not(:last-child)
+            margin-right: 25px
+
+          &:before
+            content: ''
+            display: block
+            width: 7px
+            height: 6px
+            border-radius: 100%
+            margin-right: 7px
+
+          &.positive:before
+            background-color: #00FF38
+
+      & .extends
+        display: flex
+
+        & .tooltip
+          &:hover, &:focus-within
+            &:before
+              content: ''
+              width: 1px
+              height: 1px
+              display: block
+              position: absolute
+              top: 50%
+              left: 50%
+              box-shadow: 0 0 15px 15px rgba(204, 0, 255, 0.69)
+              z-index: $ZIndex-GameExtend-Backlight
+
+          &:not(:last-child)
+            margin-right: 10px
+
+          & .extend
+            width: 41px
+            height: 35px
+            background-image: url("./../img/extendBorder.svg")
+            background-size: cover
+            background-position: center
+            position: relative
+            overflow: initial
+
+            &:hover, &:focus-visible
+              outline: none
+              transform: scale(1.2, 1.2)
+
+            & .img
+              width: 25px
+              object-fit: initial
+
+          & .prompt
+            margin-top: 15px
+            white-space: nowrap
+            color: rgba(122, 214, 255, 0.8)
+            background-color: #051770
+            padding: 12px 14px
+            border-radius: 20px
+            font-size: 14px
+            font-weight: 600
+            box-shadow: 0 0 15px rgba(204, 0, 255, 0.69)

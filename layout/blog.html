@@ -13,359 +13,395 @@
     <title>ICE Games -- Магазин Ключей Steam</title>
 </head>
 <body>
-<header class="header">
-    <div class="header-wrapper">
-        <div class="logo">
-            <img src="img/logo.png" alt="Логотип Ice Games" title="Логотип Ice Games">
-            <div class="logo_name">Ice Games<br>Store</div>
+<div class="login">
+    <div class="formContainer auth active">
+        <div class="switches">
+            <button class="btn round border fillFromCenter fillFromCenter-darkLilac active">Вход</button>
+            <button class="btn round border fillFromCenter fillFromCenter-darkLilac">Регистрация</button>
         </div>
-        <div class="navigation">
-            <div class="navigationWrapper">
-                <div class="navigationContainer">
-                    <nav class="navigationMenu">
-                        <ul class="categoryMenu">
-                            <li>
-                                <a href="#" title="Топ продаж">Топ продаж</a>
-                            </li>
-                            <li>
-                                <a href="#" title="Новинки">Новинки</a>
-                            </li>
-                            <li>
-                                <a href="#" title="Предзаказы">Предзаказы</a>
-                            </li>
-                            <li>
-                                <a href="#" title="Скидки">Скидки</a>
-                            </li>
-                            <li>
-                                <a href="#" title="ТОП 2020">ТОП 2020</a>
-                            </li>
-                            <li>
-                                <a href="#" title="Все игры">Все игры</a>
-                            </li>
-                        </ul>
-                        <ul>
-                            <li>Жанры</li>
-                            <li>
-                                <a href="#" title="Шутеры">Шутеры</a>
-                            </li>
-                            <li>
-                                <a href="#" title="Экшн">Экшн</a>
-                            </li>
-                            <li>
-                                <a href="#" title="Ролевые">Ролевые</a>
-                            </li>
-                            <li>
-                                <a href="#" title="Стратегии">Стратегии</a>
-                            </li>
-                            <li>
-                                <a href="#" title="Инди">Инди</a>
-                            </li>
-                            <li>
-                                <a href="#" title="Симуляторы">Симуляторы</a>
-                            </li>
-                            <li>
-                                <a href="#" title="Приключения">Приключения</a>
-                            </li>
-                            <li>
-                                <a href="#" title="Атмосфера">Атмосфера</a>
-                            </li>
-                            <li>
-                                <a href="#" title="Хорор">Хорор</a>
-                            </li>
-                        </ul>
-                        <ul>
-                            <li>Издатели</li>
-                            <li>
-                                <a href="#" title="2К">2К</a>
-                            </li>
-                            <li>
-                                <a href="#" title="Bandi Namko">Bandi Namko</a>
-                            </li>
-                            <li>
-                                <a href="#" title="Bethesda softworks">Bethesda softworks</a>
-                            </li>
-                            <li>
-                                <a href="#" title="Capcom">Capcom</a>
-                            </li>
-                            <li>
-                                <a href="#" title="Electronic Arts">Electronic Arts</a>
-                            </li>
-                            <li>
-                                <a href="#" title="Paradox Interactive">Paradox Interactive</a>
-                            </li>
-                            <li>
-                                <a href="#" title="Segs">Segs</a>
-                            </li>
-                            <li>
-                                <a href="#" title="Ubisoft">Ubisoft</a>
-                            </li>
-                        </ul>
-                        <ul>
-                            <li>Разработчики</li>
-                            <li>
-                                <a href="#" title="Gearbox Software">Gearbox Software</a>
-                            </li>
-                            <li>
-                                <a href="#" title="Hangar 13">Hangar 13</a>
-                            </li>
-                            <li>
-                                <a href="#" title="Team17 Digital">Team17 Digital</a>
-                            </li>
-                            <li>
-                                <a href="#" title="Creative Assembly">Creative Assembly</a>
-                            </li>
-                            <li>
-                                <a href="#" title="Dice">Dice</a>
-                            </li>
-                            <li>
-                                <a href="#" title="Firaxis">Firaxis</a>
-                            </li>
-                            <li>
-                                <a href="#" title="Remedy Entertaiment">Remedy Entertaiment</a>
-                            </li>
-                            <li>
-                                <a href="#" title="Respawn Entertaiment">Respawn Entertaiment</a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-                <button title="Открыть каталог игр" class="btn round border hover-color-pink hover-border-pink navigationOpen">Каталог</button>
+        <form class="form auth" action="/auth" method="post">
+            <label class="label-inField">
+                <input class="textField" type="text" name="nickName">
+                <span class="label">Ник</span>
+            </label>
+            <label class="label-inField">
+                <input class="textField" type="text" name="email">
+                <span class="label">E-mail</span>
+            </label>
+            <label class="label-inField">
+                <input class="textField" type="password" name="password">
+                <span class="label">Пароль</span>
+            </label>
+            <button type="submit" class="btn round border fillFromCenter fillFromCenter-darkLilac submit">Войти</button>
+        </form>
+        <div class="canRestore">
+            <span class="text">Забыли пароль?</span>
+            <button class="btn link">Восстановить</button>
+        </div>
+    </div>
+    <div class="formContainer restore">
+        <div class="title">Вы забыли пароль?</div>
+        <div class="description">Мы пришлем Вам новый на E-mail, указанный при регистрации!</div>
+        <form class="form" action="/restore" method="post">
+            <label class="label-inField">
+                <input class="textField" type="text" name="email">
+                <span class="label">E-mail</span>
+            </label>
+            <button type="submit" class="btn round border fillFromCenter fillFromCenter-darkLilac submit">Восстановить</button>
+        </form>
+        <button class="btn link">Назад</button>
+    </div>
+</div>
+<header class="header">
+    <div class="contentContainer">
+        <a class="logo link">
+            <img src="img/logo.png" class="img" alt="Логотип Ice Games" title="Логотип Ice Games">
+            <div class="name">Ice Games<br>Store</div>
+        </a>
+        <div class="navigation js-mainNavigation">
+            <div class="containerMenu">
+                <nav class="menu">
+                    <ul class="col categoriesMenu">
+                        <li class="colLink">
+                            <a href="#" class="link" title="Топ продаж">Топ продаж</a>
+                        </li>
+                        <li class="colLink">
+                            <a href="#" class="link" title="Новинки">Новинки</a>
+                        </li>
+                        <li class="colLink">
+                            <a href="#" class="link" title="Предзаказы">Предзаказы</a>
+                        </li>
+                        <li class="colLink">
+                            <a href="#" class="link" title="Скидки">Скидки</a>
+                        </li>
+                        <li class="colLink">
+                            <a href="#" class="link" title="ТОП 2020">ТОП 2020</a>
+                        </li>
+                        <li class="colLink">
+                            <a href="#" class="link" title="Все игры">Все игры</a>
+                        </li>
+                    </ul>
+                    <div class="containerMainMenuSearch">
+                        <div class="searchResult">
+                            <div class="cardGame">
+                                <div class="actions">
+                                    <button class="btn like">
+                                        <span class="likeIcon"></span>
+                                    </button>
+                                    <button class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart" title="Добавить данный товар в корзину покупок">В корзину</button>
+                                </div>
+                                <div class="cover">
+                                    <img src="./img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
+                                    <div class="name">Doom ETERNAL</div>
+                                </div>
+                                <div class="price">
+                                    <div class="toPrice">
+                                        <span class="value">999</span>
+                                    </div>
+                                    <div class="fromPrice">
+                                        <span class="value">1300</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cardGame">
+                                <div class="actions">
+                                    <button class="btn like">
+                                        <span class="likeIcon"></span>
+                                    </button>
+                                    <button class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart" title="Добавить данный товар в корзину покупок">В корзину</button>
+                                </div>
+                                <div class="cover">
+                                    <img src="./img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
+                                    <div class="name">Doom ETERNAL</div>
+                                </div>
+                                <div class="price">
+                                    <div class="toPrice">
+                                        <span class="value">999</span>
+                                    </div>
+                                    <div class="fromPrice">
+                                        <span class="value">1300</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cardGame">
+                                <div class="actions">
+                                    <button class="btn like">
+                                        <span class="likeIcon"></span>
+                                    </button>
+                                    <button class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart" title="Добавить данный товар в корзину покупок">В корзину</button>
+                                </div>
+                                <div class="cover">
+                                    <img src="./img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
+                                    <div class="name">Doom ETERNAL</div>
+                                </div>
+                                <div class="price">
+                                    <div class="toPrice">
+                                        <span class="value">999</span>
+                                    </div>
+                                    <div class="fromPrice">
+                                        <span class="value">1300</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cardGame">
+                                <div class="actions">
+                                    <button class="btn like">
+                                        <span class="likeIcon"></span>
+                                    </button>
+                                    <button class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart" title="Добавить данный товар в корзину покупок">В корзину</button>
+                                </div>
+                                <div class="cover">
+                                    <img src="./img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
+                                    <div class="name">Doom ETERNAL</div>
+                                </div>
+                                <div class="price">
+                                    <div class="toPrice">
+                                        <span class="value">999</span>
+                                    </div>
+                                    <div class="fromPrice">
+                                        <span class="value">1300</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mainMenu">
+                            <ul class="col">
+                                <li class="title">Жанры</li>
+                                <li class="colLink">
+                                    <a href="#" class="link" title="Шутеры">Шутеры</a>
+                                </li>
+                                <li class="colLink">
+                                    <a href="#" class="link" title="Экшн">Экшн</a>
+                                </li>
+                                <li class="colLink">
+                                    <a href="#" class="link" title="Ролевые">Ролевые</a>
+                                </li>
+                                <li class="colLink">
+                                    <a href="#" class="link" title="Стратегии">Стратегии</a>
+                                </li>
+                                <li class="colLink">
+                                    <a href="#" class="link" title="Инди">Инди</a>
+                                </li>
+                                <li class="colLink">
+                                    <a href="#" class="link" title="Симуляторы">Симуляторы</a>
+                                </li>
+                                <li class="colLink">
+                                    <a href="#" class="link" title="Приключения">Приключения</a>
+                                </li>
+                                <li class="colLink">
+                                    <a href="#" class="link" title="Атмосфера">Атмосфера</a>
+                                </li>
+                                <li class="colLink">
+                                    <a href="#" class="link" title="Хорор">Хорор</a>
+                                </li>
+                            </ul>
+                            <ul class="col">
+                                <li class="title">Издатели</li>
+                                <li class="colLink">
+                                    <a href="#" class="link" title="2К">2К</a>
+                                </li>
+                                <li class="colLink">
+                                    <a href="#" class="link" title="Bandi Namko">Bandi Namko</a>
+                                </li>
+                                <li class="colLink">
+                                    <a href="#" class="link" title="Bethesda softworks">Bethesda softworks</a>
+                                </li>
+                                <li class="colLink">
+                                    <a href="#" class="link" title="Capcom">Capcom</a>
+                                </li>
+                                <li class="colLink">
+                                    <a href="#" class="link" title="Electronic Arts">Electronic Arts</a>
+                                </li>
+                                <li class="colLink">
+                                    <a href="#" class="link" title="Paradox Interactive">Paradox Interactive</a>
+                                </li>
+                                <li class="colLink">
+                                    <a href="#" class="link" title="Segs">Segs</a>
+                                </li>
+                                <li class="colLink">
+                                    <a href="#" class="link" title="Ubisoft">Ubisoft</a>
+                                </li>
+                            </ul>
+                            <ul class="col">
+                                <li class="title">Разработчики</li>
+                                <li class="colLink">
+                                    <a href="#" class="link" title="Gearbox Software">Gearbox Software</a>
+                                </li>
+                                <li class="colLink">
+                                    <a href="#" class="link" title="Hangar 13">Hangar 13</a>
+                                </li>
+                                <li class="colLink">
+                                    <a href="#" class="link" title="Team17 Digital">Team17 Digital</a>
+                                </li>
+                                <li class="colLink">
+                                    <a href="#" class="link" title="Creative Assembly">Creative Assembly</a>
+                                </li>
+                                <li class="colLink">
+                                    <a href="#" class="link" title="Dice">Dice</a>
+                                </li>
+                                <li class="colLink">
+                                    <a href="#" class="link" title="Firaxis">Firaxis</a>
+                                </li>
+                                <li class="colLink">
+                                    <a href="#" class="link" title="Remedy Entertaiment">Remedy Entertaiment</a>
+                                </li>
+                                <li class="colLink">
+                                    <a href="#" class="link" title="Respawn Entertaiment">Respawn Entertaiment</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
             </div>
+            <button title="Открыть каталог игр" class="btn round border hover-color-pink hover-border-pink openMenu js-toggleMainNavigation">Каталог</button>
             <div class="searchBar">
-                <input type="text" placeholder="Поиск..." class="fieldSearch">
+                <input class="textField" type="text" placeholder="Поиск...">
                 <button class="btn goSearch" title="Выполнить поиск">
-                    <span class="searchIcon"></span>
+                    <span class="icon icon-search"></span>
                 </button>
             </div>
             <a href="#" title="Рейтинг пользователей Ice Games" class="btn round border hover-color-pink hover-border-pink">Рейтинг</a>
         </div>
-        <div class="headerProfile">
-            <a href="#" class="btn profile" title="Авторизоваться/Перейти в профиль">
-                <span class="profileIcon"></span>
-            </a>
+        <div class="profile">
+            <button class="btn js-openProfileForms" title="Авторизация">
+                <span class="icon icon-profile"></span>
+            </button>
             <a href="#" class="btn cart" title="Перейти в корзину с товарами">
-                <span class="cartIcon"></span>
+                <span class="icon icon-cart"></span>
             </a>
-        </div>
-        <div class="mobileNav">
-            <button title="Открыть поиск" class="btn searchButton">
-                <span class="searchIcon"></span>
-            </button>
-            <button title="Открыть меню" class="btn toggleMenu">
-                <span class="mobileNavToggle"></span>
-            </button>
-            <div class="searchContainer">
-                <div class="searchBar">
-                    <input type="text" placeholder="Поиск..." class="fieldSearch">
-                    <button class="btn goSearch" title="Выполнить поиск">
-                        <span class="searchIcon"></span>
-                    </button>
-                </div>
-            </div>
-            <nav class="nav">
-                <ul class="staticLink">
-                    <li>
-                        <a href="#" title="Открыть рейтинг пользователей ICE Games">Рейтинг</a>
-                    </li>
-                    <li>
-                        <a href="#" title="Открыть каталог игр ICE Games">Каталог</a>
-                    </li>
-                </ul>
-                <ul class="staticLink right">
-                    <li>
-                        <a href="#" title="Открыть корзину с играми">Корзина</a>
-                    </li>
-                    <li>
-                        <a href="#" title="Откруть авторизацию/профиль">Профиль</a>
-                    </li>
-                </ul>
-                <ul>
-                    <li>
-                        <a href="#" title="Новинки">Новинки</a>
-                    </li>
-                    <li>
-                        <a href="#" title="Предзаказы">Предзаказы</a>
-                    </li>
-                    <li>
-                        <a href="#" title="Топ продаж">Топ продаж</a>
-                    </li>
-                    <li>
-                        <a href="#" title="Скидки">Скидки</a>
-                    </li>
-                    <li>
-                        <a href="#" title="Топ 2020">Топ 2020</a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-        <div class="containerProfileForms">
-            <div class="formWrapper loginForm">
-                <div class="switches">
-                    <button class="btn round border fillFromCenter fillFromCenter-darkLilac active">Вход</button>
-                    <button class="btn round border fillFromCenter fillFromCenter-darkLilac">Регистрация</button>
-                </div>
-                <form action="#" method="post" class="">
-                    <label class="inField active hide">
-                        <input type="text" name="nickname">
-                        <span class="label">Ник</span>
-                    </label>
-                    <label class="inField">
-                        <input type="text" name="email">
-                        <span class="label">E-mail</span>
-                    </label>
-                    <label class="inField">
-                        <input type="password" name="password">
-                        <span class="label">Пароль</span>
-                    </label>
-                    <button type="submit" class="btn round border fillFromCenter fillFromCenter-darkLilac">Войти</button>
-                    <div class="restore">
-                        <div class="forgot">Забыли пароль?</div>
-                        <a href="#" title="Открыть форму восстановления пароля">Восстановить</a>
-                    </div>
-                </form>
-            </div>
-            <div class="formWrapper restoreForm hide">
-                <form action="#" method="post">
-                    <div class="forgot">
-                        <div class="title">Вы забыли пароль?</div>
-                        <div class="description">Мы пришлем вам новый на ящик, указанный при регистрации</div>
-                    </div>
-                    <label class="inField">
-                        <input type="text" name="email">
-                        <span class="label">E-mail</span>
-                    </label>
-                    <button type="submit" class="btn round border fillFromCenter fillFromCenter-darkLilac">Восстановить</button>
-                    <div class="back">
-                        <a href="#" title="Вернуться к авторизации">Назад</a>
-                    </div>
-                </form>
-            </div>
         </div>
     </div>
 </header>
-<main class="mainContent">
-    <div class="headCover blackout verticalMax maxHeight">
-        <img class="img" src="./img/blogCover.png" alt="Phoenix Point: Year One Edition" title="Phoenix Point: Year One Edition">
-        <div class="blogContentCover">
+<main class="blogPage">
+    <div class="cover blackout blackout-bottomMax slide active js-slide">
+        <img class="img" src="./img/mainBacground.png" alt="Phoenix Point: Year One Edition" title="Phoenix Point: Year One Edition">
+        <div class="content">
             <div class="title">В майнкрафт добавили татарстан</div>
-            <div class="text">
-                Всвязи с многочисленными просьбами пользователей, из майнкрафта сделали татарстан, также добавили приору
-                и многую другу атрибутику Всвязи с многочисленными просьбами пользователей, из майнкрафта сделали татарстан, также добавили приору
-                и многую другу атрибутику
+            <div class="description">
+                В связи с многочисленными просьбами пользователей, из майнкрафта сделали татарстан, также добавили
+                приору и многую другу атрибутику В связи с многочисленными просьбами пользователей, из майнкрафта
+                сделали татарстан, также добавили приору и многую другу атрибутику В связи с многочисленными просьбами
+                пользователей, из майнкрафта сделали татарстан, также добавили приору и многую другу атрибутику
             </div>
-            <button class="btn rounded increase bg-blue">Читать</button>
         </div>
+        <a class="btn rounded big bg-blue translucent" href="#">Читать</a>
     </div>
-    <div class="mainWrapper">
-        <main>
-            <a class="articleBlock link" style="background: linear-gradient(120deg, #47A00C 35.06%, rgba(196, 196, 196, 0) 88.75%)">
-                <img class="poster" src="./img/articleBlockImg.png" alt="Блок статьи" title="Блок статьи">
-                <div class="content">
-                    <div class="title">digital революция</div>
-                    <div class="text">
-                        В популярной игре симс твой дом теперь строят гастарбайтеры В популярной игре симс твой дом
-                        теперь строят гастарбайтеры В популярной игре симс твой дом теперь строят гастарбайтеры В
-                        популярной игре симс твой дом теперь строят гастарбайтеры В популярной игре симс твой дом теперь
-                        строят гастарбайтеры
+    <div class="contentContainer">
+        <div class="articles">
+            <a class="article" href="#" style="background: linear-gradient(94.29deg, #47A00C 35.06%, rgba(196, 196, 196, 0) 88.75%);">
+                <img class="img" src="./img/blog-sims.jpg" alt="Sims">
+                <div class="info">
+                    <div class="content">
+                        <div class="title">Digital революция</div>
+                        <div class="description">
+                            В популярной игре симс твой дом теперь строят гастарбайтеры В популярной игре симс твой дом
+                            теперь строят гастарбайтеры В популярной игре симс твой дом теперь строят гастарбайтеры В
+                            популярной игре симс твой дом теперь строят гастарбайтеры В популярной игре симс твой дом теперь
+                            строят гастарбайтеры В популярной игре симс твой дом теперь строят гастарбайтеры В популярной
+                            игре симс твой дом теперь строят гастарбайтеры
+                        </div>
                     </div>
-                    <div class="statistics">
+                    <div class="activity">
                         <div class="likes">20</div>
                         <div class="views">500</div>
                     </div>
                 </div>
             </a>
-            <a class="articleBlock link" style="background: linear-gradient(120deg, #47A00C 35.06%, rgba(196, 196, 196, 0) 88.75%)">
-                <img class="poster" src="./img/articleBlockImg.png" alt="Блок статьи" title="Блок статьи">
-                <div class="content">
-                    <div class="title">digital революция</div>
-                    <div class="text">
-                        В популярной игре симс твой дом теперь строят гастарбайтеры В популярной игре симс твой дом
-                        теперь строят гастарбайтеры В популярной игре симс твой дом теперь строят гастарбайтеры В
-                        популярной игре симс твой дом теперь строят гастарбайтеры В популярной игре симс твой дом теперь
-                        строят гастарбайтеры
+            <a class="article right" href="#" style="background: linear-gradient(270deg, #07080A 67.19%, rgba(7, 8, 10, 0) 100%);">
+                <img class="img" src="./img/blog-dish.jpg" alt="Sims">
+                <div class="info">
+                    <div class="content">
+                        <div class="title">Dishonored 2</div>
+                        <div class="description">
+                            Игра прошла сертефикацию для умственно отсталых и теперь все игроки получили почетное звание
+                            Игра прошла сертефикацию для умственно отсталых и теперь все игроки получили почетное звание
+                            Игра прошла сертефикацию для умственно отсталых и теперь все игроки получили почетное звание
+                            Игра прошла сертефикацию для умственно отсталых и теперь все игроки получили почетное звание
+                            Игра прошла сертефикацию для умственно отсталых и теперь все игроки получили почетное звание
+                            Игра прошла сертефикацию для умственно отсталых и теперь все игроки получили почетное звание
+                            Игра прошла сертефикацию для умственно отсталых и теперь все игроки получили почетное звание
+                        </div>
                     </div>
-                    <div class="statistics">
+                    <div class="activity">
                         <div class="likes">20</div>
                         <div class="views">500</div>
                     </div>
                 </div>
             </a>
-            <a class="articleBlock link" style="background: linear-gradient(120deg, #47A00C 35.06%, rgba(196, 196, 196, 0) 88.75%)">
-                <img class="poster" src="./img/articleBlockImg.png" alt="Блок статьи" title="Блок статьи">
-                <div class="content">
-                    <div class="title">digital революция</div>
-                    <div class="text">
-                        В популярной игре симс твой дом теперь строят гастарбайтеры В популярной игре симс твой дом
-                        теперь строят гастарбайтеры В популярной игре симс твой дом теперь строят гастарбайтеры В
-                        популярной игре симс твой дом теперь строят гастарбайтеры В популярной игре симс твой дом теперь
-                        строят гастарбайтеры
+            <a class="article" href="#" style="background: linear-gradient(271.49deg, rgba(160, 127, 120, 0) 9.33%, #A07F78 70.65%, #A07F78 95.93%);">
+                <img class="img" src="./img/blog-battl.jpg" alt="Sims">
+                <div class="info">
+                    <div class="content">
+                        <div class="title">Игра изменившая мир</div>
+                        <div class="description">
+                            Игрок BATTELEFIELD 1 на одном из серверов убил Трампа, который играл под ником “USA GOVNO”
+                            Игрок BATTELEFIELD 1 на одном из серверов убил Трампа, который играл под ником “USA GOVNO”
+                            Игрок BATTELEFIELD 1 на одном из серверов убил Трампа, который играл под ником “USA GOVNO”
+                            Игрок BATTELEFIELD 1 на одном из серверов убил Трампа, который играл под ником “USA GOVNO”
+                            Игрок BATTELEFIELD 1 на одном из серверов убил Трампа, который играл под ником “USA GOVNO”
+                            Игрок BATTELEFIELD 1 на одном из серверов убил Трампа, который играл под ником “USA GOVNO”
+                        </div>
                     </div>
-                    <div class="statistics">
+                    <div class="activity">
                         <div class="likes">20</div>
                         <div class="views">500</div>
                     </div>
                 </div>
             </a>
-        </main>
-        <footer class="footer">
-            <div class="footerNavigation">
-                <div class="logoFull">
-                    <img src="./img/logoFull.png" alt="Ice Games полный логотип" title="Ice Games полный логотип">
-                </div>
-                <div class="social">
-                    <a href="#" class="link btn" title="Перейти на страницу Ice Games во Вконтакте">
-                        <img src="./img/vkSocial.png" alt="Логотип вконтакте" title="Перейти на страницу Ice Games во Вконтакте">
-                    </a>
-                    <a href="#" class="link btn" title="Перейти на страницу Ice Games в TikTok">
-                        <img src="./img/tiktokSocial.png" alt="Логотип TikTok" title="Перейти на страницу Ice Games в TikTok">
-                    </a>
-                    <a href="#" class="link btn" title="Перейти на страницу Ice Games в Instagram">
-                        <img src="./img/instagramSocial.png" alt="Логотип Instagram" title="Перейти на страницу Ice Games в Instagram">
-                    </a>
-                    <a href="#" class="link btn" title="Перейти на страницу Ice Games в Twitch">
-                        <img src="./img/twitchSocial.png" alt="Логотип Twitch" title="Перейти на страницу Ice Games в Twitch">
-                    </a>
-                    <a href="#" class="link btn" title="Перейти на страницу Ice Games в Twitter">
-                        <img src="./img/twitterSocial.png" alt="Логотип Twitter" title="Перейти на страницу Ice Games в Twitter">
-                    </a>
-                    <a href="#" class="link btn" title="Перейти на страницу Ice Games в FaceBook">
-                        <img src="./img/fbSocial.png" alt="Логотип FaceBook" title="Перейти на страницу Ice Games в FaceBook">
-                    </a>
-                </div>
-                <div class="menu">
-                    <a href="#" class="link btn">Все игры</a>
-                    <a href="#" class="link btn">Поддержка</a>
-                    <a href="#" class="link delivery btn">Доставка и оплата</a>
-                    <a href="#" class="link btn">Отзывы</a>
-                    <a href="#" class="link btn">О магазине</a>
-                    <a href="#" class="link btn">Гарантия</a>
-                    <a href="#" class="link btn">Скидки</a>
-                    <a href="#" class="link btn">Новинки</a>
-                    <a href="#" class="link btn">Предзаказы</a>
-                </div>
-            </div>
-            <div class="info">
-                <div class="payments">
-                    <img src="./img/payments.png" alt="Способы оплаты" title="Способы оплаты">
-                </div>
-                <div class="legalInfo">
-                    <a href="#" class="link btn" title="Перейти на страницу правовой информации">Правовая информация</a>
-                </div>
-                <div class="designBy">
-                    <a href="#" class="link btn" title="Перейти на сайт студии" target="_blank">Дизайн: дизайн студия ган михаила</a>
-                </div>
-            </div>
-            <div class="copy">
-                Все права защищены. Копирование любых материалов сайта запрещено! Все названия продуктов и игр,
-                компаний и марок, логотипы, товарные знаки и другие материалы являются собственностью
-                соответствующих владельцев. Только лицензионные ключи ко всем игровым платформам: Steam, Uplay,
-                Battle.net, Origin и другие. Выгодно, надежно и быстро!
-            </div>
-        </footer>
+        </div>
+        <button class="btn more increase" title="Показать еще статьи">
+            <span class="icon icon-arrowBottom"></span>
+        </button>
     </div>
 </main>
-<footer>
-
+<footer class="contentContainer homeSection footer">
+    <div class="navigation">
+        <a class="link" href="#">
+            <img class="logo" src="./img/logoFull.png" alt="Ice Games полный логотип" title="Ice Games полный логотип">
+        </a>
+        <div class="social">
+            <a href="#" class="link" title="Перейти на страницу Ice Games во Вконтакте">
+                <img class="img" src="./img/vkSocial.png" alt="Логотип вконтакте" title="Перейти на страницу Ice Games во Вконтакте">
+            </a>
+            <a href="#" class="link" title="Перейти на страницу Ice Games в TikTok">
+                <img class="img" src="./img/tiktokSocial.png" alt="Логотип TikTok" title="Перейти на страницу Ice Games в TikTok">
+            </a>
+            <a href="#" class="link" title="Перейти на страницу Ice Games в Instagram">
+                <img class="img" src="./img/instagramSocial.png" alt="Логотип Instagram" title="Перейти на страницу Ice Games в Instagram">
+            </a>
+            <a href="#" class="link" title="Перейти на страницу Ice Games в Twitch">
+                <img class="img" src="./img/twitchSocial.png" alt="Логотип Twitch" title="Перейти на страницу Ice Games в Twitch">
+            </a>
+            <a href="#" class="link" title="Перейти на страницу Ice Games в Twitter">
+                <img class="img" src="./img/twitterSocial.png" alt="Логотип Twitter" title="Перейти на страницу Ice Games в Twitter">
+            </a>
+            <a href="#" class="link" title="Перейти на страницу Ice Games в FaceBook">
+                <img class="img" src="./img/fbSocial.png" alt="Логотип FaceBook" title="Перейти на страницу Ice Games в FaceBook">
+            </a>
+        </div>
+        <div class="menu">
+            <a href="#" class="link">Все игры</a>
+            <a href="#" class="link">Поддержка</a>
+            <a href="#" class="link">Доставка и оплата</a>
+            <a href="#" class="link">Отзывы</a>
+            <a href="#" class="link">О магазине</a>
+            <a href="#" class="link">Гарантия</a>
+            <a href="#" class="link">Скидки</a>
+            <a href="#" class="link">Новинки</a>
+            <a href="#" class="link">Предзаказы</a>
+        </div>
+    </div>
+    <div class="info">
+        <img class="payments" src="./img/payments.png" alt="Способы оплаты" title="Способы оплаты">
+        <a class="link legalInfo" href="#" title="Перейти на страницу правовой информации">Правовая информация</a>
+        <a class="link designBy" href="#" title="Перейти на сайт студии" target="_blank">Дизайн: дизайн студия ган михаила</a>
+    </div>
+    <div class="copy">
+        Все права защищены. Копирование любых материалов сайта запрещено! Все названия продуктов и игр,
+        компаний и марок, логотипы, товарные знаки и другие материалы являются собственностью
+        соответствующих владельцев. Только лицензионные ключи ко всем игровым платформам: Steam, Uplay,
+        Battle.net, Origin и другие. Выгодно, надежно и быстро!
+    </div>
 </footer>
 <script src="./js/bundle.js"></script>
 </body>

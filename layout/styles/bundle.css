@@ -147,6 +147,23 @@
   font-size: 55px;
   text-align: center; }
 
+.tooltip {
+  position: relative;
+  width: max-content; }
+  .tooltip:hover, .tooltip:focus-within {
+    z-index: 1; }
+    .tooltip:hover .prompt, .tooltip:focus-within .prompt {
+      opacity: 1;
+      visibility: visible; }
+  .tooltip .prompt {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    visibility: hidden;
+    opacity: 0;
+    transition: .3s ease-in; }
+
 .icon {
   mask-position: center;
   mask-size: cover;
@@ -184,6 +201,21 @@
     -webkit-mask-image: url("./../img/cartIcon.svg");
     width: 40px;
     height: 38px; }
+  .icon-like {
+    mask-image: url("./../img/favorite.svg");
+    -webkit-mask-image: url("./../img/favorite.svg");
+    width: 26px;
+    height: 25px; }
+  .icon-reply {
+    mask-image: url("./../img/reply.svg");
+    -webkit-mask-image: url("./../img/reply.svg");
+    width: 30px;
+    height: 25px; }
+  .icon-arrowBottom {
+    mask-image: url("./../img/arrowBottom.svg");
+    -webkit-mask-image: url("./../img/arrowBottom.svg");
+    width: 67px;
+    height: 39px; }
 
 .textField {
   color: #fff;
@@ -228,7 +260,7 @@
   cursor: pointer;
   line-height: 1;
   background: none;
-  font-size: 18px;
+  font-size: 16px;
   text-decoration: none;
   color: #fff;
   width: max-content;
@@ -238,6 +270,9 @@
   transition: .3s ease-in;
   font-weight: bold;
   overflow: hidden; }
+  @media (min-width: 1650px) {
+    .btn {
+      font-size: 18px; } }
   .btn.increase:hover, .btn.increase:focus-visible {
     outline: none;
     transform: scale(1.1, 1.1); }
@@ -291,6 +326,10 @@
     background-color: #620064; }
   .btn.bg-lilac {
     background-color: rgba(158, 0, 255, 0.6); }
+  .btn.bg-paleBlue {
+    background-color: #2F305E; }
+  .btn.bg-blue {
+    background-color: #00BEFF; }
   .btn.backlight-pink {
     box-shadow: 0 0 25px rgba(250, 0, 255, 0.6); }
   .btn.hover-color-pink:hover, .btn.hover-color-pink.active, .btn.hover-color-pink:focus-visible {
@@ -384,6 +423,9 @@
       .cardGame.big {
         width: 233px;
         height: 368px; } }
+    .cardGame.big .actions .inCart {
+      left: 20px;
+      width: calc(100% - 20px * 2); }
     .cardGame.big .head {
       height: 253px; }
       @media (min-width: 1650px) {
@@ -420,7 +462,8 @@
       bottom: 25%;
       left: 10px;
       width: calc(100% - 10px * 2);
-      opacity: 0; }
+      opacity: 0;
+      font-size: 16px; }
       @media (min-width: 1920px) {
         .cardGame .actions .inCart {
           left: 20px;
@@ -827,6 +870,282 @@
     font-size: 18px;
     color: #fff; }
 
+.gamePage .cover .offer .packages {
+  display: flex;
+  margin-top: -70px;
+  margin-bottom: 25px; }
+  .gamePage .cover .offer .packages .package:not(:last-child) {
+    margin-right: 10px; }
+  .gamePage .cover .offer .packages .package.tooltip .prompt {
+    background-color: #2F305E;
+    color: #fff;
+    padding: 10px 25px;
+    border-radius: 20px;
+    margin-top: 12px; }
+    .gamePage .cover .offer .packages .package.tooltip .prompt:before {
+      content: '';
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 10px solid transparent;
+      border-bottom-color: #2F305E; }
+    .gamePage .cover .offer .packages .package.tooltip .prompt .list {
+      list-style: none; }
+      .gamePage .cover .offer .packages .package.tooltip .prompt .list .item {
+        white-space: nowrap;
+        padding: 10px 3px;
+        line-height: 1;
+        font-weight: 600; }
+        .gamePage .cover .offer .packages .package.tooltip .prompt .list .item:not(:last-child) {
+          border-bottom: 1px solid #fff; }
+
+.gamePage .cover .offer .statuses {
+  display: flex;
+  margin-top: 12px; }
+  .gamePage .cover .offer .statuses .status {
+    color: #fff;
+    font-size: 14px;
+    display: flex;
+    align-items: center; }
+    .gamePage .cover .offer .statuses .status:not(:last-child) {
+      margin-right: 25px; }
+    .gamePage .cover .offer .statuses .status:before {
+      content: '';
+      display: block;
+      width: 7px;
+      height: 6px;
+      border-radius: 100%;
+      margin-right: 7px; }
+    .gamePage .cover .offer .statuses .status.positive:before {
+      background-color: #00FF38; }
+
+.gamePage .cover .offer .extends {
+  display: flex; }
+  .gamePage .cover .offer .extends .tooltip:hover:before, .gamePage .cover .offer .extends .tooltip:focus-within:before {
+    content: '';
+    width: 1px;
+    height: 1px;
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    box-shadow: 0 0 15px 15px rgba(204, 0, 255, 0.69);
+    z-index: -1; }
+  .gamePage .cover .offer .extends .tooltip:not(:last-child) {
+    margin-right: 10px; }
+  .gamePage .cover .offer .extends .tooltip .extend {
+    width: 41px;
+    height: 35px;
+    background-image: url("./../img/extendBorder.svg");
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    overflow: initial; }
+    .gamePage .cover .offer .extends .tooltip .extend:hover, .gamePage .cover .offer .extends .tooltip .extend:focus-visible {
+      outline: none;
+      transform: scale(1.2, 1.2); }
+    .gamePage .cover .offer .extends .tooltip .extend .img {
+      width: 25px;
+      object-fit: initial; }
+  .gamePage .cover .offer .extends .tooltip .prompt {
+    margin-top: 15px;
+    white-space: nowrap;
+    color: rgba(122, 214, 255, 0.8);
+    background-color: #051770;
+    padding: 12px 14px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    box-shadow: 0 0 15px rgba(204, 0, 255, 0.69); }
+
+.blogPage .cover .content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  width: 100%;
+  max-width: 1000px; }
+  .blogPage .cover .content .title, .blogPage .cover .content .description {
+    color: #fff;
+    text-align: center; }
+  .blogPage .cover .content .title {
+    font-family: 'Lemon Milk';
+    font-size: 36px;
+    font-weight: 500; }
+  .blogPage .cover .content .description {
+    margin-top: 15px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    display: -moz-box;
+    -webkit-box-orient: vertical;
+    -moz-box-orient: vertical;
+    box-orient: vertical;
+    line-clamp: 3;
+    -webkit-line-clamp: 3;
+    line-height: 18px;
+    max-height: calc(18px * 3); }
+
+.blogPage .cover .btn {
+  position: absolute;
+  bottom: 200px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1; }
+
+.blogPage .articles .article {
+  border-radius: 40px;
+  overflow: hidden;
+  display: flex;
+  max-width: 1000px;
+  margin: 0 auto;
+  text-decoration: none;
+  transition: transform .3s ease-in; }
+  @media (min-width: 1650px) {
+    .blogPage .articles .article {
+      max-width: 1200px; } }
+  @media (min-width: 1920px) {
+    .blogPage .articles .article {
+      max-width: 1400px; } }
+  .blogPage .articles .article:hover, .blogPage .articles .article:focus-visible {
+    outline: none;
+    transform: scale(1.1, 1.1); }
+  .blogPage .articles .article.right {
+    flex-direction: row-reverse; }
+    .blogPage .articles .article.right .info {
+      padding: 17px 25px 17px 150px;
+      text-align: right;
+      align-items: flex-end; }
+  .blogPage .articles .article:not(:first-child) {
+    margin-top: 65px; }
+    @media (min-width: 1650px) {
+      .blogPage .articles .article:not(:first-child) {
+        margin-top: 75px; } }
+  .blogPage .articles .article .img {
+    object-fit: cover; }
+  .blogPage .articles .article .info {
+    flex-grow: 1;
+    padding: 17px 150px 17px 25px;
+    display: flex;
+    flex-direction: column; }
+    .blogPage .articles .article .info .content {
+      flex-grow: 1; }
+      .blogPage .articles .article .info .content .title {
+        font-size: 36px;
+        font-family: 'Lemon Milk';
+        color: #fff; }
+      .blogPage .articles .article .info .content .description {
+        color: #fff;
+        margin-top: 10px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        display: -moz-box;
+        -webkit-box-orient: vertical;
+        -moz-box-orient: vertical;
+        box-orient: vertical;
+        line-clamp: 3;
+        -webkit-line-clamp: 3;
+        line-height: 18px;
+        max-height: calc(18px * 3); }
+    .blogPage .articles .article .info .activity {
+      margin-top: 20px;
+      display: flex;
+      color: #fff; }
+      .blogPage .articles .article .info .activity .likes, .blogPage .articles .article .info .activity .views {
+        text-shadow: 0 0 10px #938083; }
+      .blogPage .articles .article .info .activity .views {
+        margin-left: 20px; }
+
+.blogPage .more {
+  margin: 70px auto 0 auto; }
+  .blogPage .more .icon {
+    background-color: #00C2FF; }
+
+.blogPage.article .info .content {
+  max-width: 1000px;
+  margin: 0 auto; }
+  @media (min-width: 1650px) {
+    .blogPage.article .info .content {
+      max-width: 1200px; } }
+  @media (min-width: 1920px) {
+    .blogPage.article .info .content {
+      max-width: 1400px; } }
+  .blogPage.article .info .content .block {
+    background: linear-gradient(179.81deg, #29005C 28%, rgba(41, 0, 92, 0) 99.84%);
+    border-radius: 40px 40px 0 0; }
+    .blogPage.article .info .content .block:not(:first-child) {
+      margin-top: 70px; }
+      @media (min-width: 1650px) {
+        .blogPage.article .info .content .block:not(:first-child) {
+          margin-top: 80px; } }
+    .blogPage.article .info .content .block .img {
+      border-radius: 40px;
+      width: 100%;
+      object-fit: cover; }
+    .blogPage.article .info .content .block .text {
+      padding: 45px 100px 170px 100px;
+      color: #fff;
+      text-align: center; }
+    .blogPage.article .info .content .block.left {
+      display: flex;
+      align-items: center;
+      border-radius: 40px 0 0 40px;
+      background: linear-gradient(89.81deg, #29005C 28%, rgba(41, 0, 92, 0) 99.84%); }
+      .blogPage.article .info .content .block.left .img {
+        width: initial; }
+      .blogPage.article .info .content .block.left .text {
+        padding: 60px 170px 60px 45px;
+        text-align: left; }
+    .blogPage.article .info .content .block.right {
+      display: flex;
+      align-items: center;
+      flex-direction: row-reverse;
+      border-radius: 0 40px 40px 0;
+      background: linear-gradient(269.81deg, #29005C 28%, rgba(41, 0, 92, 0) 99.84%); }
+      .blogPage.article .info .content .block.right .img {
+        width: initial; }
+      .blogPage.article .info .content .block.right .text {
+        padding: 60px 54px 60px 170px;
+        text-align: right; }
+
+.blogPage.article .info .activity {
+  display: flex;
+  background: linear-gradient(170.66deg, #270067 7.12%, rgba(94, 0, 151, 0) 104.75%);
+  border-radius: 20px;
+  padding: 10px 40px;
+  justify-content: space-between;
+  margin-top: 80px; }
+  .blogPage.article .info .activity .actions {
+    display: flex; }
+    .blogPage.article .info .activity .actions .block {
+      display: flex;
+      align-items: center; }
+      .blogPage.article .info .activity .actions .block:not(:last-child) {
+        margin-right: 30px; }
+      .blogPage.article .info .activity .actions .block .btn .icon {
+        background-color: #DB00FF; }
+      .blogPage.article .info .activity .actions .block .count {
+        margin-left: 12px;
+        color: #fff;
+        font-weight: 600; }
+  .blogPage.article .info .activity .views {
+    color: #fff; }
+
+.blogPage.article .info .gamesBlock {
+  margin-top: 100px; }
+  .blogPage.article .info .gamesBlock .title {
+    font-size: 40px;
+    color: #fff;
+    font-family: 'Lemon Milk'; }
+  .blogPage.article .info .gamesBlock .games {
+    display: flex;
+    margin-top: 35px; }
+    .blogPage.article .info .gamesBlock .games .cardGame:not(:last-child) {
+      margin-right: 20px; }
+
 @keyframes animActive {
   0% {
     display: none;
@@ -927,14 +1246,16 @@
       margin: 30px auto 0 auto; }
 
 .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   position: fixed;
+  background: linear-gradient(#01033C 0%, rgba(1, 3, 60, 0.3) 75%, transparent 100%);
   left: 0;
   right: 0;
   padding-top: 40px;
   z-index: 2; }
+  .header .contentContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; }
   .header .logo {
     display: flex;
     text-decoration: none;
@@ -1098,17 +1419,21 @@
     height: 100%; }
 
 .cover {
-  position: relative;
-  height: 100%;
-  max-height: 100vh;
-  width: 100%;
   overflow: hidden;
-  min-height: 770px;
-  max-width: 1920px;
+  position: relative;
+  display: grid;
+  grid-template-rows: minmax(770px, 100vh);
+  grid-template-columns: minmax(100%, 1920px);
   margin: 0 auto; }
+  @media (min-width: 1650px) {
+    .cover {
+      grid-template-rows: minmax(800px, 100vh); } }
+  @media (min-width: 1920px) {
+    .cover {
+      grid-template-rows: minmax(900px, 100vh); } }
   .cover.blackout {
     position: relative; }
-    .cover.blackout-left:before, .cover.blackout-bottom:after, .cover.blackout.bottomMax:after {
+    .cover.blackout-left:before, .cover.blackout-bottom:after, .cover.blackout-bottomMax:after {
       content: '';
       position: absolute;
       left: 0;
@@ -1122,16 +1447,26 @@
           background: linear-gradient(90deg, #01033C 0%, transparent 70%, #01033C 100%);
           right: 0; } }
     .cover.blackout-bottom:after {
-      top: 40%;
+      top: 30%;
       right: 0;
       background: linear-gradient(180deg, transparent 0%, #01033C 100%); }
-  .cover .img {
+    .cover.blackout-bottomMax:after {
+      top: 0;
+      right: 0;
+      background: linear-gradient(180deg, transparent 0%, #01033C 100%); }
+  .cover.activeVideo .video {
+    opacity: 1;
+    visibility: visible; }
+  .cover .img, .cover .video {
     width: 100%;
     height: 100%;
-    object-fit: cover; }
+    object-fit: cover;
+    grid-column: 1/-1;
+    grid-row: 1/2; }
   .cover .video {
-    width: 100%;
-    display: none; }
+    display: none;
+    opacity: 0;
+    visibility: hidden; }
     @media (min-width: 1366px) {
       .cover .video {
         display: block; } }

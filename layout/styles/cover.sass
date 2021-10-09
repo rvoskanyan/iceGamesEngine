@@ -2,19 +2,23 @@
 @import './zIndex'
 
 .cover
-  position: relative
-  height: 100%
-  max-height: 100vh
-  width: 100%
   overflow: hidden
-  min-height: 770px
-  max-width: 1920px
+  position: relative
+  display: grid
+  grid-template-rows: minmax(770px, 100vh)
+  grid-template-columns: minmax(100%, 1920px)
   margin: 0 auto
+
+  @include for-big-desktop-up
+    grid-template-rows: minmax(800px, 100vh)
+
+  @include for-very-big-desktop-up
+    grid-template-rows: minmax(900px, 100vh)
 
   &.blackout
     position: relative
 
-    &-left:before, &-bottom:after, &.bottomMax:after
+    &-left:before, &-bottom:after, &-bottomMax:after
       content: ''
       position: absolute
       left: 0
@@ -30,18 +34,31 @@
         right: 0
 
     &-bottom:after
-      top: 40%
+      top: 30%
       right: 0
       background: linear-gradient(180deg, transparent 0%, #01033C 100%)
 
-  & .img
+    &-bottomMax:after
+      top: 0
+      right: 0
+      background: linear-gradient(180deg, transparent 0%, #01033C 100%)
+
+  &.activeVideo
+    & .video
+      opacity: 1
+      visibility: visible
+
+  & .img, & .video
     width: 100%
     height: 100%
     object-fit: cover
+    grid-column: 1/-1
+    grid-row: 1/2
 
   & .video
-    width: 100%
     display: none
+    opacity: 0
+    visibility: hidden
 
     @include for-desktop-up
       display: block

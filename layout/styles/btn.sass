@@ -10,7 +10,7 @@
   cursor: pointer
   line-height: 1
   background: none
-  font-size: 18px
+  font-size: 16px
   text-decoration: none
   color: #fff
   width: max-content
@@ -20,6 +20,9 @@
   transition: .3s ease-in
   font-weight: bold
   overflow: hidden
+
+  @include for-big-desktop-up
+    font-size: 18px
 
   &.increase
     &:hover, &:focus-visible
@@ -96,14 +99,17 @@
     &-lilac
       background-color: rgba(158, 0, 255, 0.6)
 
+    &-paleBlue
+      background-color: #2F305E
+
+    &-blue
+      background-color: #00BEFF
+
   //  &-darkBlue
   //    background-color: #0E5B74
   //
   //  &-purple
   //    background-color: #7000FF
-  //
-  //  &-blue
-  //    background-color: rgba(0, 190, 255, 0.4)
   //
   //&.border
   //  &-purple
