@@ -1,0 +1,24 @@
+.bulletedList
+  list-style: none
+  font-weight: 600
+  color: #fff
+
+  & .item
+    display: flex
+    align-items: flex-start
+
+    &:not(:last-child)
+      margin-bottom: 20px
+
+    &:before
+      content: ''
+      display: block
+      width: 25px
+      min-width: 25px
+      height: 25px
+      min-height: 25px
+      background-image: url("./../img/listDecoration.png")
+      background-size: cover
+      background-position: center
+      margin-right: 8px
+      margin-top: -3px

@@ -49,6 +49,57 @@
       @include for-very-big-desktop-up
         height: 296px
 
+  &.small
+    width: 128px
+    height: 201px
+    box-shadow: 0 0 10px #00A3FF
+
+    @include for-big-desktop-up
+      width: 154px
+      height: 243px
+
+    @include for-very-big-desktop-up
+      width: 171px
+      height: 270px
+
+    &:hover, &.active, &:focus-visible, &:focus-within
+      box-shadow: 0 0 15px #00A3FF
+
+    & .actions .inCart
+      left: 10px //left
+      width: calc(100% - 10px * 2) //100% - left * 2
+      border-width: 1px
+      padding: 7px
+      font-size: 14px
+
+      @include for-big-desktop-up
+        border-width: 3px
+        font-size: 16px
+        padding: 7px 10px
+
+      @include for-very-big-desktop-up
+        padding: 9px 12px
+
+    & .head
+      height: 162px
+      font-size: 16px
+
+      @include for-big-desktop-up
+        height: 195px
+
+      @include for-very-big-desktop-up
+        height: 217px
+
+    & .price
+      font-size: 16px
+      padding: 12px 12px 0 12px
+
+      @include for-big-desktop-up
+        padding: 18px 12px 0 12px
+
+      @include for-big-desktop-up
+        padding: 20px 12px 0 12px
+
   &:hover, &.active, &:focus-visible, &:focus-within
     transform: scale(1.1, 1.1)
     box-shadow: 0 0 30px #00A3FF
@@ -97,6 +148,7 @@
     position: relative
     height: 190px
     width: 100%
+    font-size: 18px
 
     @include for-big-desktop-up
       height: 215px
@@ -121,7 +173,6 @@
 
     & .name
       color: #fff
-      font-size: 18px
       font-weight: 600
       padding: 0 12px
       text-align: left

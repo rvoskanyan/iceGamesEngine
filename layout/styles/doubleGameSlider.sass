@@ -1,0 +1,58 @@
+@import './breakPoints'
+
+.doubleGameSlider
+  max-width: max-content
+
+  & .title
+    font-family: 'Lemon Milk'
+    font-size: 24px
+    text-align: center
+    color: #fff
+
+  & .slider
+    & .visibleAreaWrapper
+      overflow: hidden
+      padding: 26px 13px
+
+      @include for-big-desktop-up
+        padding: 30px 11px
+
+      @include for-very-big-desktop-up
+        padding: 33px 10px
+
+      & .visibleArea
+        max-width: calc((128px + 10px * 2) * 2)
+
+        @include for-big-desktop-up
+          max-width: calc((154px + 15px * 2) * 2)
+
+        @include for-very-big-desktop-up
+          max-width: calc((171px + 20px * 2) * 2)
+
+        & .tape
+          display: flex
+
+          & .slide
+            visibility: hidden
+            min-width: 128px
+            max-width: 128px
+            min-height: 201px
+            max-height: 201px
+            margin: 0 10px
+
+            @include for-big-desktop-up
+              min-width: 154px
+              max-width: 154px
+              min-height: 243px
+              max-height: 243px
+              margin: 0 15px
+
+            @include for-very-big-desktop-up
+              min-width: 171px
+              max-width: 171px
+              min-height: 270px
+              max-height: 270px
+              margin: 0 20px
+
+            &.active
+              visibility: visible

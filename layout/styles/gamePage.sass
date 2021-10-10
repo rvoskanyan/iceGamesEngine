@@ -1,9 +1,14 @@
 @import './zIndex'
+@import './breakPoints'
 
 .gamePage
+  & .infoBlock
+    background-color: #320065
+    border-radius: 40px
+    padding: 30px 45px
+
   & .cover
     & .offer
-
       & .packages
         display: flex
         margin-top: -70px
@@ -70,24 +75,12 @@
         display: flex
 
         & .tooltip
-          &:hover, &:focus-within
-            &:before
-              content: ''
-              width: 1px
-              height: 1px
-              display: block
-              position: absolute
-              top: 50%
-              left: 50%
-              box-shadow: 0 0 15px 15px rgba(204, 0, 255, 0.69)
-              z-index: $ZIndex-GameExtend-Backlight
-
           &:not(:last-child)
             margin-right: 10px
 
           & .extend
-            width: 41px
-            height: 35px
+            width: 47px
+            height: 41px
             background-image: url("./../img/extendBorder.svg")
             background-size: cover
             background-position: center
@@ -99,7 +92,7 @@
               transform: scale(1.2, 1.2)
 
             & .img
-              width: 25px
+              width: 33px
               object-fit: initial
 
           & .prompt
@@ -112,3 +105,174 @@
             font-size: 14px
             font-weight: 600
             box-shadow: 0 0 15px rgba(204, 0, 255, 0.69)
+
+  & .main
+    display: flex
+    align-items: center
+
+    & .gallerySlider
+      display: flex
+      align-items: center
+
+      & .visibleArea
+        overflow: hidden
+        max-width: calc((287px + 19px * 2) * 2) //(widthSlide + paddingWrapper * 2) * countSlides
+
+        @include for-big-desktop-up
+          max-width: calc((346px + 22px * 2) * 2) //(widthSlide + paddingWrapper * 2) * countSlides
+
+        @include for-very-big-desktop-up
+          max-width: calc((403px + 24px * 2) * 2) //(widthSlide + paddingWrapper * 2) * countSlides
+
+        & .tape
+          display: flex
+
+          & .slideWrapper
+            padding: 9px 19px //paddingWrapper
+
+            @include for-big-desktop-up
+              padding: 11px 22px //paddingSlide
+
+            @include for-very-big-desktop-up
+              padding: 12px 24px //paddingSlide
+
+            & .slide
+              visibility: hidden
+              min-width: 287px //widthSlide
+              width: 287px
+              min-height: 176px
+              height: 176px
+
+              @include for-big-desktop-up
+                min-width: 346px //widthSlide
+                width: 346px
+                min-height: 213px
+                height: 213px
+
+              @include for-very-big-desktop-up
+                min-width: 403px //widthSlide
+                width: 403px
+                min-height: 248px
+                height: 248px
+
+
+              &.active
+                visibility: visible
+
+              & .btn
+                width: 100%
+                height: 100%
+                overflow: hidden
+                border-radius: 40px
+                position: relative
+
+                &.video:before
+                  content: ''
+                  position: absolute
+                  top: 50%
+                  left: 50%
+                  transform: translate(-50%, -50%)
+                  width: 31px
+                  height: 40px
+                  background-image: url("./../img/playVideo.svg")
+                  background-size: cover
+                  background-position: center
+
+                & .img
+                  width: 100%
+                  height: 100%
+                  object-fit: cover
+
+      & .next .icon-static
+          transform: rotate(180deg)
+
+  & .fullInfo
+    display: flex
+    margin-top: 100px
+
+    & .sideBar .doubleGameSlider:not(:last-child)
+      margin-bottom: 60px
+
+    & .info
+      flex-grow: 1
+      margin-left: 70px
+
+      & .generalInfo
+        & .nav .btn:not(:last-child)
+          margin-right: 25px
+
+        & .blocks
+          margin-top: 25px
+
+          & > .item
+            display: flex
+            flex-direction: column
+            justify-content: center
+
+            & .package
+              margin-bottom: 25px
+              cursor: initial
+
+            & .slider
+              display: flex
+              align-items: center
+              margin: 0 auto
+
+              & .visibleAreaWrapper
+                overflow: hidden
+                padding: 26px 13px
+
+                @include for-big-desktop-up
+                  padding: 30px 11px
+
+                @include for-very-big-desktop-up
+                  padding: 33px 10px
+
+                & .visibleArea
+                  max-width: calc((128px + 10px * 2) * 4)
+
+                  @include for-big-desktop-up
+                    max-width: calc((154px + 15px * 2) * 4)
+
+                  @include for-very-big-desktop-up
+                    max-width: calc((171px + 20px * 2) * 4)
+
+                  & .tape
+                    display: flex
+
+                    & .slide
+                      visibility: hidden
+                      min-width: 128px
+                      max-width: 128px
+                      min-height: 201px
+                      max-height: 201px
+                      margin: 0 10px
+
+                      @include for-big-desktop-up
+                        min-width: 154px
+                        max-width: 154px
+                        min-height: 243px
+                        max-height: 243px
+                        margin: 0 15px
+
+                      @include for-very-big-desktop-up
+                        min-width: 171px
+                        max-width: 171px
+                        min-height: 270px
+                        max-height: 270px
+                        margin: 0 20px
+
+                      &.active
+                        visibility: visible
+
+              & .next .icon-static
+                transform: rotate(180deg)
+
+    & .systemInfo
+      margin-top: 50px
+
+      & .fieldedList
+        margin-top: 25px
+
+        & .name
+          max-width: 300px
