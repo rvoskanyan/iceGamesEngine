@@ -299,6 +299,160 @@
       width: 50%;
       line-height: 1.5; }
 
+.starRating {
+  max-width: max-content; }
+  .starRating.error .label {
+    color: #FF00F5; }
+  .starRating.error .stars .star .icon {
+    background-color: #FF00F5; }
+  .starRating.error .stars:before {
+    content: '* Оставьте оценку';
+    margin-left: 30px;
+    color: #FF00F5; }
+  .starRating .label {
+    color: #fff; }
+  .starRating .stars {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center; }
+    .starRating .stars .input {
+      display: none; }
+      .starRating .stars .input:checked ~ .star .icon {
+        background-color: #00D1FF;
+        mask-image: url("./../img/starFill.svg");
+        -webkit-mask-image: url("./../img/starFill.svg"); }
+    .starRating .stars .star {
+      cursor: pointer; }
+      .starRating .stars .star:not(:last-child) {
+        padding-left: 5px; }
+      .starRating .stars .star:hover .icon, .starRating .stars .star:hover ~ .star .icon {
+        background-color: #00D1FF;
+        mask-image: url("./../img/starFill.svg");
+        -webkit-mask-image: url("./../img/starFill.svg"); }
+
+.senderField {
+  border: 1px solid #fff;
+  border-radius: 50px;
+  display: flex;
+  align-items: flex-end;
+  padding: 13px 12px; }
+  .senderField.error {
+    border-color: #FF00F5; }
+    .senderField.error .autoSizeInput:after {
+      content: '* Заполните поле';
+      color: #FF00F5;
+      margin-right: 5px; }
+    .senderField.error .btn .icon {
+      background-color: #FF00F5; }
+  .senderField .autoSizeInput {
+    display: flex;
+    align-items: center;
+    color: #fff;
+    margin: 0 10px 9px 10px;
+    flex-grow: 1; }
+    .senderField .autoSizeInput .value {
+      flex-grow: 1; }
+
+.autoSizeInput {
+  position: relative;
+  z-index: 1; }
+  .autoSizeInput.active .placeholder {
+    opacity: 0;
+    visibility: hidden; }
+  .autoSizeInput .placeholder {
+    position: absolute;
+    color: rgba(255, 255, 255, 0.5);
+    z-index: -1; }
+  .autoSizeInput .value {
+    outline: none; }
+
+.review {
+  border: 1px solid #fff;
+  border-radius: 40px;
+  padding: 20px; }
+  .review .head {
+    display: flex;
+    justify-content: space-between; }
+    .review .head .forGame {
+      color: #fff;
+      font-size: 14px; }
+  .review .grade {
+    display: flex;
+    margin-top: 20px; }
+    .review .grade .icon {
+      background-color: #00D1FF; }
+      .review .grade .icon:not(:last-child) {
+        margin-right: 5px; }
+  .review .text {
+    color: #fff;
+    margin-top: 15px; }
+
+.comment {
+  border: 1px solid #fff;
+  border-radius: 40px;
+  padding: 20px; }
+  .comment .head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; }
+    .comment .head .answerFor {
+      flex-grow: 1;
+      margin-left: 14px;
+      color: rgba(255, 255, 255, 0.3); }
+    .comment .head .reactions {
+      display: flex;
+      align-items: center; }
+      .comment .head .reactions .btn {
+        font-weight: 300; }
+        .comment .head .reactions .btn.active {
+          color: #EB00FF; }
+          .comment .head .reactions .btn.active .icon {
+            background-color: #EB00FF; }
+        .comment .head .reactions .btn .icon {
+          margin-right: 6px; }
+      .comment .head .reactions .positive {
+        margin-right: 17px; }
+        .comment .head .reactions .positive .icon {
+          margin-bottom: 9px; }
+      .comment .head .reactions .negative .icon {
+        margin-top: 4px; }
+  .comment .text {
+    color: #fff;
+    margin-top: 10px; }
+  .comment .action {
+    margin-top: 8px;
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 300; }
+  .comment .answers {
+    margin-left: 135px; }
+    .comment .answers .answer {
+      margin-top: 10px; }
+    .comment .answers .answerField {
+      margin-top: 30px; }
+
+.lastViews .title {
+  font-size: 24px;
+  color: #fff;
+  font-family: 'Lemon Milk';
+  margin-bottom: 20px; }
+
+.lastViews .games {
+  display: flex; }
+  .lastViews .games .cardGame:not(:last-child) {
+    margin-right: 30px; }
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end; }
+  .pagination .btn:not(:last-child) {
+    margin-right: 10px; }
+  .pagination .ellipsis {
+    color: #fff;
+    font-weight: 600;
+    margin-right: 10px; }
+
 .icon {
   mask-position: center;
   mask-size: cover;
@@ -351,6 +505,36 @@
     -webkit-mask-image: url("./../img/arrowBottom.svg");
     width: 67px;
     height: 39px; }
+  .icon-star {
+    mask-image: url("./../img/star.svg");
+    -webkit-mask-image: url("./../img/star.svg");
+    width: 31px;
+    height: 29px; }
+  .icon-starFill {
+    mask-image: url("./../img/starFill.svg");
+    -webkit-mask-image: url("./../img/starFill.svg");
+    width: 31px;
+    height: 29px; }
+  .icon-send {
+    mask-image: url("./../img/send.svg");
+    -webkit-mask-image: url("./../img/send.svg");
+    width: 43px;
+    height: 36px; }
+  .icon-thumbsUp {
+    mask-image: url("./../img/thumbsUp.svg");
+    -webkit-mask-image: url("./../img/thumbsUp.svg");
+    width: 22px;
+    height: 21px; }
+  .icon-thumbsDown {
+    mask-image: url("./../img/thumbsDown.svg");
+    -webkit-mask-image: url("./../img/thumbsDown.svg");
+    width: 22px;
+    height: 21px; }
+  .icon-lock {
+    mask-image: url("./../img/lock.svg");
+    -webkit-mask-image: url("./../img/lock.svg");
+    width: 27px;
+    height: 32px; }
 
 .textField {
   color: #fff;
@@ -1015,16 +1199,7 @@
     .catalog .list .gameGrid {
       margin-top: 70px; }
     .catalog .list .pagination {
-      display: flex;
-      justify-content: center;
-      align-items: flex-end;
       margin-top: 25px; }
-      .catalog .list .pagination .btn:not(:last-child) {
-        margin-right: 10px; }
-      .catalog .list .pagination .ellipsis {
-        color: #fff;
-        font-weight: 600;
-        margin-right: 10px; }
   .catalog .title {
     font-weight: bold;
     font-size: 18px;
@@ -1252,46 +1427,49 @@
             transform: rotate(180deg); }
   .gamePage .fullInfo .systemInfo {
     margin-top: 50px; }
+    .gamePage .fullInfo .systemInfo .title {
+      cursor: initial; }
     .gamePage .fullInfo .systemInfo .fieldedList {
       margin-top: 25px; }
       .gamePage .fullInfo .systemInfo .fieldedList .name {
         max-width: 300px; }
+  .gamePage .fullInfo .feedback {
+    margin-top: 80px; }
+    .gamePage .fullInfo .feedback .listItems {
+      margin: 0 45px; }
+      .gamePage .fullInfo .feedback .listItems .item {
+        margin-top: 10px; }
+    .gamePage .fullInfo .feedback .loadMore {
+      margin: 25px auto 0 auto; }
+    .gamePage .fullInfo .feedback .nav .btn:not(:last-child) {
+      margin-right: 25px; }
+    .gamePage .fullInfo .feedback .blocks {
+      margin-top: 25px; }
+    .gamePage .fullInfo .feedback .reviews .addNew {
+      position: relative;
+      overflow: hidden; }
+      .gamePage .fullInfo .feedback .reviews .addNew.locked .lockBlock {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        color: #fff;
+        z-index: 1;
+        background-color: rgba(50, 0, 101, 0.85);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center; }
+        .gamePage .fullInfo .feedback .reviews .addNew.locked .lockBlock .text {
+          margin-top: 12px;
+          width: 450px; }
+      .gamePage .fullInfo .feedback .reviews .addNew .textReview {
+        margin-top: 30px; }
 
-.blogPage .cover .content {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1;
-  width: 100%;
-  max-width: 1000px; }
-  .blogPage .cover .content .title, .blogPage .cover .content .description {
-    color: #fff;
-    text-align: center; }
-  .blogPage .cover .content .title {
-    font-family: 'Lemon Milk';
-    font-size: 36px;
-    font-weight: 500; }
-  .blogPage .cover .content .description {
-    margin-top: 15px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    display: -moz-box;
-    -webkit-box-orient: vertical;
-    -moz-box-orient: vertical;
-    box-orient: vertical;
-    line-clamp: 3;
-    -webkit-line-clamp: 3;
-    line-height: 18px;
-    max-height: calc(18px * 3); }
-
-.blogPage .cover .btn {
-  position: absolute;
-  bottom: 200px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1; }
+.gamePage .lastViews {
+  margin-top: 120px; }
 
 .blogPage .articles .article {
   border-radius: 40px;
@@ -1372,8 +1550,7 @@
     .blogPage.article .info .content {
       max-width: 1400px; } }
   .blogPage.article .info .content .block {
-    background: linear-gradient(179.81deg, #29005C 28%, rgba(41, 0, 92, 0) 99.84%);
-    border-radius: 40px 40px 0 0; }
+    background: linear-gradient(275deg, transparent 0.16%, #29005C 41.17%, rgba(41, 0, 92, 0.969925) 67.13%, transparent 99.84%); }
     .blogPage.article .info .content .block:not(:first-child) {
       margin-top: 70px; }
       @media (min-width: 1650px) {
@@ -1381,19 +1558,24 @@
           margin-top: 80px; } }
     .blogPage.article .info .content .block .img {
       border-radius: 40px;
-      width: 100%;
       object-fit: cover; }
     .blogPage.article .info .content .block .text {
-      padding: 45px 100px 170px 100px;
+      padding: 70px 170px;
       color: #fff;
-      text-align: center; }
+      text-align: center;
+      line-height: 1.5; }
+    .blogPage.article .info .content .block.top {
+      background: linear-gradient(179.81deg, #29005C 28%, rgba(41, 0, 92, 0) 99.84%);
+      border-radius: 40px 40px 0 0; }
+      .blogPage.article .info .content .block.top .img {
+        width: 100%; }
+      .blogPage.article .info .content .block.top .text {
+        padding: 45px 100px 170px 100px; }
     .blogPage.article .info .content .block.left {
       display: flex;
       align-items: center;
       border-radius: 40px 0 0 40px;
       background: linear-gradient(89.81deg, #29005C 28%, rgba(41, 0, 92, 0) 99.84%); }
-      .blogPage.article .info .content .block.left .img {
-        width: initial; }
       .blogPage.article .info .content .block.left .text {
         padding: 60px 170px 60px 45px;
         text-align: left; }
@@ -1403,8 +1585,6 @@
       flex-direction: row-reverse;
       border-radius: 0 40px 40px 0;
       background: linear-gradient(269.81deg, #29005C 28%, rgba(41, 0, 92, 0) 99.84%); }
-      .blogPage.article .info .content .block.right .img {
-        width: initial; }
       .blogPage.article .info .content .block.right .text {
         padding: 60px 54px 60px 170px;
         text-align: right; }
@@ -1443,6 +1623,15 @@
     margin-top: 35px; }
     .blogPage.article .info .gamesBlock .games .cardGame:not(:last-child) {
       margin-right: 20px; }
+
+.reviewsPage .reviewsList .review:not(:last-child) {
+  margin-bottom: 30px; }
+
+.reviewsPage .pagination {
+  margin-top: 45px; }
+
+.reviewsPage .lastViews {
+  margin-top: 100px; }
 
 @keyframes animActive {
   0% {
@@ -1876,6 +2065,40 @@
           visibility: hidden;
           transition: 0.3s ease-in;
           top: calc(100% - 10px); }
+  .cover .textContent {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    width: 100%;
+    max-width: 1000px; }
+    .cover .textContent > .title, .cover .textContent > .description {
+      color: #fff;
+      text-align: center; }
+    .cover .textContent > .title {
+      font-family: 'Lemon Milk';
+      font-size: 40px;
+      font-weight: 500; }
+    .cover .textContent > .description {
+      margin-top: 15px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      display: -moz-box;
+      -webkit-box-orient: vertical;
+      -moz-box-orient: vertical;
+      box-orient: vertical;
+      line-clamp: 3;
+      -webkit-line-clamp: 3;
+      line-height: 18px;
+      max-height: calc(18px * 3); }
+  .cover > .btn {
+    position: absolute;
+    bottom: 200px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1; }
 
 .uspBlock {
   display: flex;

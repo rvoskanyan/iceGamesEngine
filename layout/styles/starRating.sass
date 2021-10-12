@@ -1,0 +1,45 @@
+.starRating
+  max-width: max-content
+
+  &.error
+    & .label
+      color: #FF00F5
+
+    & .stars
+
+      & .star .icon
+        background-color: #FF00F5
+
+      &:before
+        content: '* Оставьте оценку'
+        margin-left: 30px
+        color: #FF00F5
+
+  & .label
+    color: #fff
+
+  & .stars
+    margin-top: 10px
+    display: flex
+    flex-direction: row-reverse
+    align-items: center
+
+    & .input
+      display: none
+
+      &:checked ~ .star .icon
+        background-color: #00D1FF
+        mask-image: url("./../img/starFill.svg")
+        -webkit-mask-image: url("./../img/starFill.svg")
+
+    & .star
+      cursor: pointer
+
+      &:not(:last-child)
+        padding-left: 5px
+
+      &:hover,
+        & .icon, & ~ .star .icon
+          background-color: #00D1FF
+          mask-image: url("./../img/starFill.svg")
+          -webkit-mask-image: url("./../img/starFill.svg")

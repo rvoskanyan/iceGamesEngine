@@ -1,0 +1,17 @@
+@import './zIndex'
+
+.autoSizeInput
+  position: relative
+  z-index: $ZIndex-AutoSizeInput
+
+  &.active .placeholder
+    opacity: 0
+    visibility: hidden
+
+  & .placeholder
+    position: absolute
+    color: rgba(255, 255, 255, 0.5)
+    z-index: $ZIndex-AutoSizeInput-Placeholder
+
+  & .value
+    outline: none

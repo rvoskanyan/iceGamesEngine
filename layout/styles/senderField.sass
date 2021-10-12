@@ -1,0 +1,28 @@
+.senderField
+  border: 1px solid #fff
+  border-radius: 50px
+  display: flex
+  align-items: flex-end
+  padding: 13px 12px
+
+  &.error
+    border-color: #FF00F5
+
+    & .autoSizeInput:after
+      content: '* Заполните поле'
+      color: #FF00F5
+      margin-right: 5px
+
+    & .btn .icon
+      background-color: #FF00F5
+
+
+  & .autoSizeInput
+    display: flex
+    align-items: center
+    color: #fff
+    margin: 0 10px 9px 10px
+    flex-grow: 1
+
+    & .value
+      flex-grow: 1

@@ -193,3 +193,42 @@
           visibility: hidden
           transition: 0.3s ease-in
           top: calc(100% - 10px)
+
+  & .textContent
+    position: absolute
+    top: 50%
+    left: 50%
+    transform: translate(-50%, -50%)
+    z-index: $ZIndex-Cover-Content
+    width: 100%
+    max-width: 1000px
+
+    & > .title, & > .description
+      color: #fff
+      text-align: center
+
+    & > .title
+      font-family: 'Lemon Milk'
+      font-size: 40px
+      font-weight: 500
+
+    & > .description
+      margin-top: 15px
+      overflow: hidden
+      text-overflow: ellipsis
+      display: -webkit-box
+      display: -moz-box
+      -webkit-box-orient: vertical
+      -moz-box-orient: vertical
+      box-orient: vertical
+      line-clamp: 3 // line-count
+      -webkit-line-clamp: 3 // line-count
+      line-height: 18px // line-height
+      max-height: calc(18px * 3) // line-height * line-count
+
+  & > .btn
+    position: absolute
+    bottom: 200px
+    left: 50%
+    transform: translateX(-50%)
+    z-index: $ZIndex-Cover-Btn

@@ -2,46 +2,6 @@
 @import './breakPoints'
 
 .blogPage
-  & .cover
-    & .content
-      position: absolute
-      top: 50%
-      left: 50%
-      transform: translate(-50%, -50%)
-      z-index: $ZIndex-Cover-Content
-      width: 100%
-      max-width: 1000px
-
-      & .title, & .description
-        color: #fff
-        text-align: center
-
-      & .title
-        font-family: 'Lemon Milk'
-        font-size: 36px
-        font-weight: 500
-
-      & .description
-        margin-top: 15px
-        overflow: hidden
-        text-overflow: ellipsis
-        display: -webkit-box
-        display: -moz-box
-        -webkit-box-orient: vertical
-        -moz-box-orient: vertical
-        box-orient: vertical
-        line-clamp: 3 // line-count
-        -webkit-line-clamp: 3 // line-count
-        line-height: 18px // line-height
-        max-height: calc(18px * 3) // line-height * line-count
-
-    & .btn
-      position: absolute
-      bottom: 200px
-      left: 50%
-      transform: translateX(-50%)
-      z-index: $ZIndex-Cover-Btn
-
   & .articles
     & .article
       border-radius: 40px
@@ -138,8 +98,7 @@
           max-width: 1400px
 
         & .block
-          background: linear-gradient(179.81deg, #29005C 28%, rgba(41, 0, 92, 0) 99.84%)
-          border-radius: 40px 40px 0 0
+          background: linear-gradient(275deg, transparent 0.16%, #29005C 41.17%, rgba(41, 0, 92, 0.969925) 67.13%, transparent 99.84%)
 
           &:not(:first-child)
             margin-top: 70px
@@ -149,22 +108,29 @@
 
           & .img
             border-radius: 40px
-            width: 100%
             object-fit: cover
 
           & .text
-            padding: 45px 100px 170px 100px
+            padding: 70px 170px
             color: #fff
             text-align: center
+            line-height: 1.5
+
+          &.top
+            background: linear-gradient(179.81deg, #29005C 28%, rgba(41, 0, 92, 0) 99.84%)
+            border-radius: 40px 40px 0 0
+
+            & .img
+              width: 100%
+
+            & .text
+              padding: 45px 100px 170px 100px
 
           &.left
             display: flex
             align-items: center
             border-radius: 40px 0 0 40px
             background: linear-gradient(89.81deg, #29005C 28%, rgba(41, 0, 92, 0) 99.84%)
-
-            & .img
-              width: initial
 
             & .text
               padding: 60px 170px 60px 45px
@@ -176,9 +142,6 @@
             flex-direction: row-reverse
             border-radius: 0 40px 40px 0
             background: linear-gradient(269.81deg, #29005C 28%, rgba(41, 0, 92, 0) 99.84%)
-
-            & .img
-              width: initial
 
             & .text
               padding: 60px 54px 60px 170px
