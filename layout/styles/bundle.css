@@ -453,6 +453,60 @@
     font-weight: 600;
     margin-right: 10px; }
 
+.collapse {
+  background: #320065;
+  border-radius: 21px;
+  color: #fff;
+  overflow: hidden;
+  transition: .5s ease;
+  transition-property: max-height;
+  display: flex;
+  flex-direction: column;
+  padding: 15px 25px;
+  max-height: 46px; }
+  .collapse.active {
+    max-height: 500px; }
+    .collapse.active .head .control:before, .collapse.active .head .control:after {
+      transform: rotate(0deg); }
+    .collapse.active .content {
+      overflow: auto; }
+  .collapse .head {
+    line-height: 1;
+    font-weight: 300;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-height: 16px;
+    min-height: 16px; }
+    .collapse .head .title {
+      font-size: 16px; }
+    .collapse .head .control {
+      display: flex;
+      min-height: 10px;
+      min-width: 22px;
+      position: relative; }
+      .collapse .head .control:before, .collapse .head .control:after {
+        position: absolute;
+        top: 0;
+        left: 0;
+        content: '';
+        display: block;
+        min-width: 13px;
+        height: 3px;
+        background-color: #fff;
+        transform: rotate(40deg);
+        transition: transform .3s ease-in; }
+      .collapse .head .control:after {
+        left: initial;
+        right: 0;
+        transform: rotate(-40deg); }
+  .collapse .content {
+    line-height: 1.5;
+    flex-grow: 1;
+    margin-top: 20px;
+    overflow: hidden; }
+
 .icon {
   mask-position: center;
   mask-size: cover;
@@ -1632,6 +1686,69 @@
 
 .reviewsPage .lastViews {
   margin-top: 100px; }
+
+.supportPage .titlePage {
+  font-size: 36px;
+  color: #fff;
+  font-family: 'Lemon Milk';
+  margin: 0 auto;
+  width: max-content; }
+
+.supportPage .faq {
+  margin-top: 30px; }
+  .supportPage .faq .item:not(:last-child) {
+    margin-bottom: 12px; }
+
+.supportPage .chatBlock {
+  background-color: #320065;
+  border-radius: 50px;
+  padding: 25px 30px;
+  margin-top: 90px; }
+  .supportPage .chatBlock .chat {
+    margin-top: 30px; }
+    .supportPage .chatBlock .chat .messages {
+      display: flex;
+      flex-direction: column;
+      max-height: 300px;
+      overflow: auto;
+      padding: 25px; }
+      .supportPage .chatBlock .chat .messages .message {
+        background-color: #7E4AB3;
+        border-radius: 19px;
+        padding: 10px 25px;
+        max-width: 300px;
+        width: max-content;
+        color: #fff;
+        text-shadow: 0 0 50px #938083;
+        position: relative; }
+        .supportPage .chatBlock .chat .messages .message:not(:last-child) {
+          margin-bottom: 30px; }
+        .supportPage .chatBlock .chat .messages .message.from {
+          align-self: flex-end; }
+          .supportPage .chatBlock .chat .messages .message.from:before {
+            transform: matrix(-1, 0, 0, 1, 0, 0);
+            right: initial;
+            top: calc(100% - 19px);
+            left: calc(100% - 20px); }
+        .supportPage .chatBlock .chat .messages .message:before {
+          content: '';
+          position: absolute;
+          top: calc(100% - 19px);
+          right: calc(100% - 20px);
+          display: block;
+          width: 20px;
+          height: 24px;
+          mask-position: center;
+          mask-size: cover;
+          -webkit-mask-position: center;
+          -webkit-mask-size: cover;
+          background-color: #7E4AB2;
+          mask-image: url("./../img/decorMesageBlock.svg");
+          -webkit-mask-image: url("./../img/decorMesageBlock.svg"); }
+    .supportPage .chatBlock .chat .messageFiled {
+      margin-top: 30px;
+      background-color: #7E4AB3;
+      border: none; }
 
 @keyframes animActive {
   0% {

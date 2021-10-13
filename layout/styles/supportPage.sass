@@ -1,0 +1,72 @@
+.supportPage
+  & .titlePage
+    font-size: 36px
+    color: #fff
+    font-family: 'Lemon Milk'
+    margin: 0 auto
+    width: max-content
+
+  & .faq
+    margin-top: 30px
+
+    & .item:not(:last-child)
+      margin-bottom: 12px
+
+  & .chatBlock
+    background-color: #320065
+    border-radius: 50px
+    padding: 25px 30px
+    margin-top: 90px
+
+    & .chat
+      margin-top: 30px
+
+      & .messages
+        display: flex
+        flex-direction: column
+        max-height: 300px
+        overflow: auto
+        padding: 25px
+
+        & .message
+          background-color: #7E4AB3
+          border-radius: 19px
+          padding: 10px 25px
+          max-width: 300px
+          width: max-content
+          color: #fff
+          text-shadow: 0 0 50px #938083
+          position: relative
+
+          &:not(:last-child)
+            margin-bottom: 30px
+
+          &.from
+            align-self: flex-end
+
+            &:before
+              transform: matrix(-1, 0, 0, 1, 0, 0)
+              right: initial
+              top: calc(100% - 19px)
+              left: calc(100% - 20px)
+
+          &:before
+            content: ''
+            position: absolute
+            top: calc(100% - 19px)
+            right: calc(100% - 20px)
+            display: block
+            width: 20px
+            height: 24px
+            mask-position: center
+            mask-size: cover
+            -webkit-mask-position: center
+            -webkit-mask-size: cover
+            background-color: #7E4AB2
+            mask-image: url("./../img/decorMesageBlock.svg")
+            -webkit-mask-image: url("./../img/decorMesageBlock.svg")
+
+      & .messageFiled
+        margin-top: 30px
+        background-color: #7E4AB3
+        border: none
