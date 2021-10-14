@@ -1802,7 +1802,8 @@
               font-size: 24px;
               line-height: 1; }
               .basketPage .info .listGames .game .content .main .price .fromPrice {
-                margin: 0 16px; }
+                margin-left: 35px;
+                margin-right: 16px; }
               .basketPage .info .listGames .game .content .main .price .discount {
                 background: #984BFB;
                 border-radius: 12px;
@@ -1829,10 +1830,12 @@
         text-transform: uppercase;
         font-weight: 600;
         display: flex; }
-        .basketPage .info .check .total .toPrice {
+        .basketPage .info .check .total .toValue {
           margin: 0 20px; }
         .basketPage .info .check .total .fromPrice {
           color: #B590D2; }
+          .basketPage .info .check .total .fromPrice:after {
+            display: none; }
           .basketPage .info .check .total .fromPrice .value:before {
             background-color: #B590D2; }
       .basketPage .info .check .list {
@@ -1853,7 +1856,7 @@
             background-color: #fff;
             margin-right: 15px;
             margin-left: 7px; }
-          .basketPage .info .check .list .item .toPrice {
+          .basketPage .info .check .list .item .value {
             margin-left: 30px; }
       .basketPage .info .check .btn {
         border-width: 1px;
@@ -1863,10 +1866,12 @@
         padding: 10px 0;
         margin-top: 30px; }
         .basketPage .info .check .btn .saving {
+          display: flex;
           margin-top: 3px;
-          display: block;
           font-size: 14px;
           font-weight: 300; }
+          .basketPage .info .check .btn .saving .toPrice {
+            margin-left: 5px; }
 
 @keyframes animActive {
   0% {
