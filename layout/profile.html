@@ -282,15 +282,87 @@
     <div class="profile">
         <div class="nav">
             <div class="menu">
-                <button class="btn">Профиль</button>
-                <button class="btn">Личные данные</button>
-                <button class="btn">Достижения</button>
-                <button class="btn">Пригласи друга</button>
-                <button class="btn">Мои игры</button>
-                <button class="btn">Избранное</button>
+                <button class="btn translucent active">Профиль</button>
+                <button class="btn translucent">Личные данные</button>
+                <button class="btn translucent">Достижения</button>
+                <button class="btn translucent">Пригласи друга</button>
+                <button class="btn translucent">Мои игры</button>
+                <button class="btn translucent">Избранное</button>
+                <div class="marker">
+                    <span class="center"></span>
+                </div>
             </div>
             <button class="btn border rounded viewProfile">Как видят мою страницу</button>
             <button class="btn link exit">Выход</button>
+        </div>
+        <div class="main">
+            <div class="head">
+                <div class="info">
+                    <div class="name">Ган Михаил</div>
+                    <div class="rating">Рейтинг 2376</div>
+                    <div class="position">Позиция 10\100</div>
+                </div>
+                <div class="prompt">
+                    <button class="btn">
+                        <span class="icon icon-prompt"></span>
+                    </button>
+                    <div class="content">
+                        <div class="head">
+                            <div class="title">Как работает рейтинг</div>
+                            <button class="btn">
+                                <span class="icon icon-close"></span>
+                            </button>
+                        </div>
+                        <div class="description">
+                            Рейтинг индивидуально присвается каждому пользователю. За активность на сайте даются баллы
+                            из которых собирается рейтинг.
+                        </div>
+                        <div class="listActions">
+                            <div class="title">Вот за что можно получить баллы:</div>
+                            <ul class="list">
+                                <li class="item">Покупка игры - 10 баллов</li>
+                                <li class="item">Приглашение друга - 5 баллов</li>
+                                <li class="item">Прочтение статьи - 2 балла</li>
+                                <li class="item">Получение достижения - 4 балла</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="statistics">
+                <div class="item">
+                    <div class="value">0</div>
+                    <div class="name">Игр куплено</div>
+                </div>
+                <div class="item">
+                    <div class="value">0</div>
+                    <div class="name">Друзей приглашено</div>
+                </div>
+                <div class="item">
+                    <div class="value">0</div>
+                    <div class="name">Статей прочитано</div>
+                </div>
+                <div class="item">
+                    <div class="value">0</div>
+                    <div class="name">Достижений получено</div>
+                </div>
+                <div class="item">
+                    <div class="value">0</div>
+                    <div class="name">Дней с ICE GAMES</div>
+                </div>
+            </div>
+            <div class="achievements">
+                <div class="head">
+                    <div class="title">Мои достижения</div>
+                    <button class="btn round border small">Смотреть все</button>
+                </div>
+                <div class="list">
+                    <div class="achievement"></div>
+                    <div class="achievement"></div>
+                    <div class="achievement"></div>
+                    <div class="achievement"></div>
+                </div>
+            </div>
         </div>
     </div>
 </main>
@@ -344,5 +416,20 @@
     </div>
 </footer>
 <script src="./js/bundle.js"></script>
+<script>
+    let marker = document.querySelector('.marker');
+    let list = document.querySelectorAll('.menu .btn');
+
+    function moveIndicator(e) {
+      marker.style.top = e.offsetTop+'px';
+
+    }
+
+    list.forEach(link => {
+      link.addEventListener('mousemove', (e) => {
+        moveIndicator(e.target)
+      })
+    })
+</script>
 </body>
 </html>
