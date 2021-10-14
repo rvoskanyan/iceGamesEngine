@@ -589,6 +589,11 @@
     -webkit-mask-image: url("./../img/lock.svg");
     width: 27px;
     height: 32px; }
+  .icon-close {
+    mask-image: url("./../img/close.svg");
+    -webkit-mask-image: url("./../img/close.svg");
+    width: 18px;
+    height: 18px; }
 
 .textField {
   color: #fff;
@@ -703,6 +708,8 @@
     background-color: #2F305E; }
   .btn.bg-blue {
     background-color: #00BEFF; }
+  .btn.bg-darkPurple {
+    background-color: #260142; }
   .btn.backlight-pink {
     box-shadow: 0 0 25px rgba(250, 0, 255, 0.6); }
   .btn.hover-color-pink:hover, .btn.hover-color-pink.active, .btn.hover-color-pink:focus-visible {
@@ -1749,6 +1756,117 @@
       margin-top: 30px;
       background-color: #7E4AB3;
       border: none; }
+
+.basketPage {
+  width: 100%; }
+  .basketPage .title {
+    color: #fff;
+    font-size: 36px;
+    font-family: 'Lemon Milk'; }
+  .basketPage .info {
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-between; }
+    .basketPage .info .listGames {
+      flex-grow: 1;
+      max-width: 800px; }
+      .basketPage .info .listGames:before, .basketPage .info .listGames .game:after {
+        content: '';
+        display: block;
+        height: 1px;
+        background: linear-gradient(270deg, transparent 0%, #fff 100%); }
+      .basketPage .info .listGames .game {
+        margin-top: 33px; }
+        .basketPage .info .listGames .game .content {
+          display: flex;
+          align-items: center;
+          margin-bottom: 33px; }
+          .basketPage .info .listGames .game .content .btn {
+            margin-right: 35px; }
+          .basketPage .info .listGames .game .content .img {
+            object-fit: cover;
+            width: 156px;
+            height: 242px;
+            border: 2px solid #fff;
+            box-shadow: 0 0 20px #0066FF;
+            border-radius: 22px;
+            margin-right: 35px; }
+          .basketPage .info .listGames .game .content .main {
+            align-self: flex-start; }
+            .basketPage .info .listGames .game .content .main .name {
+              font-size: 24px;
+              color: #fff;
+              font-family: 'Lemon Milk'; }
+            .basketPage .info .listGames .game .content .main .price {
+              margin-top: 22px;
+              font-size: 24px;
+              line-height: 1; }
+              .basketPage .info .listGames .game .content .main .price .fromPrice {
+                margin: 0 16px; }
+              .basketPage .info .listGames .game .content .main .price .discount {
+                background: #984BFB;
+                border-radius: 12px;
+                color: #fff;
+                font-size: 15px;
+                padding: 5px 6px; }
+            .basketPage .info .listGames .game .content .main .preOrder {
+              margin-top: 15px;
+              border: 1px solid #964AF7;
+              border-radius: 15px;
+              padding: 5px 10px;
+              color: #fff; }
+              .basketPage .info .listGames .game .content .main .preOrder .date {
+                font-weight: 600; }
+    .basketPage .info .check {
+      background: #320065;
+      border: 1px solid #fff;
+      border-radius: 22px;
+      align-self: flex-start;
+      padding: 20px 23px; }
+      .basketPage .info .check .total {
+        color: #fff;
+        font-size: 24px;
+        text-transform: uppercase;
+        font-weight: 600;
+        display: flex; }
+        .basketPage .info .check .total .toPrice {
+          margin: 0 20px; }
+        .basketPage .info .check .total .fromPrice {
+          color: #B590D2; }
+          .basketPage .info .check .total .fromPrice .value:before {
+            background-color: #B590D2; }
+      .basketPage .info .check .list {
+        margin-top: 25px;
+        list-style: none;
+        color: #fff; }
+        .basketPage .info .check .list .item {
+          display: flex;
+          align-items: center; }
+          .basketPage .info .check .list .item:not(:last-child) {
+            margin-bottom: 10px; }
+          .basketPage .info .check .list .item:before {
+            content: '';
+            display: block;
+            min-width: 5px;
+            min-height: 5px;
+            border-radius: 100%;
+            background-color: #fff;
+            margin-right: 15px;
+            margin-left: 7px; }
+          .basketPage .info .check .list .item .toPrice {
+            margin-left: 30px; }
+      .basketPage .info .check .btn {
+        border-width: 1px;
+        white-space: initial;
+        flex-direction: column;
+        width: 100%;
+        padding: 10px 0;
+        margin-top: 30px; }
+        .basketPage .info .check .btn .saving {
+          margin-top: 3px;
+          display: block;
+          font-size: 14px;
+          font-weight: 300; }
 
 @keyframes animActive {
   0% {
