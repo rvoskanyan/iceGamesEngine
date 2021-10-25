@@ -1,0 +1,62 @@
+@import './zIndex'
+
+.textField
+  color: #fff
+  font-size: 16px
+  border: none
+  outline: none
+  padding: 0
+  margin: 0
+  transition: .3s ease-in
+  background: none
+
+.input
+  &-frame
+    display: block
+
+    .label
+      display: block
+      padding: 0 15px
+      color: #fff
+      font-size: 15px
+      margin-bottom: 7px
+
+    .textField
+      border: 1px solid #fff
+      border-radius: 100px
+      padding: 8px 15px
+      display: block
+
+      &::-webkit-input-placeholder
+        color: rgba(255, 255, 255, 0.5)
+        font-size: 16px
+
+  &-labelInField
+    position: relative
+    display: block
+    border-bottom: 2px solid #fff
+    padding-top: 20px
+
+    .label, & .textField
+      color: #fff
+      font-size: 16px
+      padding: 5px
+
+    .label
+      position: absolute
+      left: 0
+      top: 20px
+      z-index: $ZIndex-LabelInTextFiled-Label
+      transition: .3s ease-in
+      transition-property: left, top, transform, font-size
+
+    .textField
+      width: 100%
+      font-size: 18px
+
+      &:focus, &.active
+        & + .label
+          top: 0
+          left: 50%
+          transform: translate(-50%)
+          font-size: 14px
