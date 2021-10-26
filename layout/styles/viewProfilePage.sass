@@ -1,0 +1,123 @@
+@import './breakPoints'
+
+.viewProfilePage
+  width: 100%
+
+  .subtitle
+    font-size: 35px
+    font-weight: 600
+    color: #fff
+    text-align: center
+
+  & > .head
+    max-width: 1250px
+    margin: 40px auto 0 auto
+
+    .main
+      text-align: center
+      color: #fff
+      font-weight: 600
+
+      &.secondPlace
+        background-image: linear-gradient(90deg, transparent 0%, rgba(78, 0, 105, 0.5) 50%, transparent 100%)
+
+      &:before, &:after
+        content: ''
+        display: block
+        height: 2px
+        background-image: linear-gradient(90deg, transparent 0%, #00E0FF 50%, transparent 100%)
+
+      &:before
+        margin-bottom: 30px
+
+      &:after
+        margin-top: 30px
+
+      & .name
+        font-size: 48px
+        text-shadow: 0 0 35px #000000
+
+      & .rating
+        margin-top: 20px
+
+    .statistics
+      display: flex
+      justify-content: space-between
+      margin-top: 20px
+
+      .item
+        max-width: 125px
+        text-align: center
+        color: #fff
+        text-shadow: 0 0 35px #000000
+
+        .value
+          font-family: 'Lemon Milk'
+          font-size: 40px
+
+  .achievements
+    margin-top: 100px
+
+    .slider
+      display: flex
+      align-items: center
+      justify-content: space-between
+      margin-top: 35px
+
+      .next .icon-static
+        transform: rotateY(180deg)
+
+      .visibleAreaWrapper
+        overflow: hidden
+        padding: 15px 0
+
+        .visibleArea
+          max-width: (204px + 15px * 2) * 5 //(widthSlide + marginSlide * 2) * countSlides
+
+          @include for-big-desktop-up
+            max-width: (220px + 15px * 2) * 5 //(widthSlide + marginSlide * 2) * countSlides
+
+          @include for-very-big-desktop-up
+            max-width: (233px + 20px * 2) * 5 //(widthSlide + marginSlide * 2) * countSlides
+
+          .tape
+            display: flex
+
+            .slide
+              background-color: #460B6E
+              border-radius: 22px
+              box-shadow: 0 0 15px #0066ff
+              border: 2px solid #fff
+              opacity: 0
+              visibility: hidden
+              margin: 0 15px //marginSlide
+              min-width: 204px //widthSlide
+              height: 317px
+
+              @include for-big-desktop-up
+                margin: 0 15px //marginSlide
+                min-width: 220px //widthSlide
+                height: 340px
+
+              @include for-very-big-desktop-up
+                margin: 0 20px //marginSlide
+                min-width: 233px //widthSlide
+                height: 368px
+
+              &.active
+                visibility: visible
+                opacity: 1
+
+  .games
+    margin: 100px auto 0 auto
+    width: max-content
+
+    .items
+      margin-top: 35px
+      display: flex
+
+      .cardGame
+        margin: 0 15px
+
+        @include for-very-big-desktop-up
+          margin: 0 20px

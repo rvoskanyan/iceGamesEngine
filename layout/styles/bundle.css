@@ -523,13 +523,37 @@
   .ratingPageBg.main:after {
     background-image: linear-gradient(180deg, #320084 0%, #210030 100%); }
   .ratingPageBg.main .coverImg:before {
-    background-image: linear-gradient(rgba(50, 0, 132, 0.5) 0%, #320084 100%);
-    height: 100%;
-    width: 100%; }
+    background-image: linear-gradient(rgba(50, 0, 132, 0.5) 0%, #320084 100%); }
   .ratingPageBg.main .coverImg:after {
     background: radial-gradient(32.98% 100% at 50% 0%, #D600F9 0%, transparent 100%);
     height: 50%;
     width: 70%; }
+  .ratingPageBg.firstPlaceProfile:after {
+    background-image: linear-gradient(180deg, #320084 0%, #210030 100%); }
+  .ratingPageBg.firstPlaceProfile:before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background: linear-gradient(90deg, #FF00F5 0%, #00FFFF 100%);
+    z-index: 1;
+    opacity: 0.3; }
+  .ratingPageBg.firstPlaceProfile .coverImg:before {
+    background-image: linear-gradient(rgba(50, 0, 132, 0.1) 0%, #320084 100%); }
+  .ratingPageBg.firstPlaceProfile .coverImg:after {
+    background: radial-gradient(50% 50% at 50% 50%, #00E0FF 0%, rgba(196, 196, 196, 0) 100%);
+    opacity: 0.8;
+    height: 70%;
+    width: 70%; }
+  .ratingPageBg.secondPlaceDownProfile:after, .ratingPageBg.secondPlaceDownProfile:before {
+    content: initial; }
+  .ratingPageBg.secondPlaceDownProfile .coverImg:after {
+    content: initial; }
+  .ratingPageBg.secondPlaceDownProfile .coverImg:before {
+    background-image: linear-gradient(360deg, #01033C 0%, rgba(43, 0, 99, 0.3) 100%); }
   .ratingPageBg .coverImg {
     min-height: 100vh;
     max-height: 100vh;
@@ -541,6 +565,9 @@
       display: block;
       left: 50%;
       transform: translateX(-50%); }
+    .ratingPageBg .coverImg:before {
+      width: 100%;
+      height: 100%; }
     .ratingPageBg .coverImg .img {
       width: 100%;
       height: 100%;
@@ -2265,6 +2292,105 @@
       background: #08CCF4; }
     .ratingPage .list .item:nth-child(1n+11) {
       background-color: #0085FF; }
+
+.viewProfilePage {
+  width: 100%; }
+  .viewProfilePage .subtitle {
+    font-size: 35px;
+    font-weight: 600;
+    color: #fff;
+    text-align: center; }
+  .viewProfilePage > .head {
+    max-width: 1250px;
+    margin: 40px auto 0 auto; }
+    .viewProfilePage > .head .main {
+      text-align: center;
+      color: #fff;
+      font-weight: 600; }
+      .viewProfilePage > .head .main.secondPlace {
+        background-image: linear-gradient(90deg, transparent 0%, rgba(78, 0, 105, 0.5) 50%, transparent 100%); }
+      .viewProfilePage > .head .main:before, .viewProfilePage > .head .main:after {
+        content: '';
+        display: block;
+        height: 2px;
+        background-image: linear-gradient(90deg, transparent 0%, #00E0FF 50%, transparent 100%); }
+      .viewProfilePage > .head .main:before {
+        margin-bottom: 30px; }
+      .viewProfilePage > .head .main:after {
+        margin-top: 30px; }
+      .viewProfilePage > .head .main .name {
+        font-size: 48px;
+        text-shadow: 0 0 35px #000000; }
+      .viewProfilePage > .head .main .rating {
+        margin-top: 20px; }
+    .viewProfilePage > .head .statistics {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px; }
+      .viewProfilePage > .head .statistics .item {
+        max-width: 125px;
+        text-align: center;
+        color: #fff;
+        text-shadow: 0 0 35px #000000; }
+        .viewProfilePage > .head .statistics .item .value {
+          font-family: 'Lemon Milk';
+          font-size: 40px; }
+  .viewProfilePage .achievements {
+    margin-top: 100px; }
+    .viewProfilePage .achievements .slider {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 35px; }
+      .viewProfilePage .achievements .slider .next .icon-static {
+        transform: rotateY(180deg); }
+      .viewProfilePage .achievements .slider .visibleAreaWrapper {
+        overflow: hidden;
+        padding: 15px 0; }
+        .viewProfilePage .achievements .slider .visibleAreaWrapper .visibleArea {
+          max-width: 1170px; }
+          @media (min-width: 1650px) {
+            .viewProfilePage .achievements .slider .visibleAreaWrapper .visibleArea {
+              max-width: 1250px; } }
+          @media (min-width: 1920px) {
+            .viewProfilePage .achievements .slider .visibleAreaWrapper .visibleArea {
+              max-width: 1365px; } }
+          .viewProfilePage .achievements .slider .visibleAreaWrapper .visibleArea .tape {
+            display: flex; }
+            .viewProfilePage .achievements .slider .visibleAreaWrapper .visibleArea .tape .slide {
+              background-color: #460B6E;
+              border-radius: 22px;
+              box-shadow: 0 0 15px #0066ff;
+              border: 2px solid #fff;
+              opacity: 0;
+              visibility: hidden;
+              margin: 0 15px;
+              min-width: 204px;
+              height: 317px; }
+              @media (min-width: 1650px) {
+                .viewProfilePage .achievements .slider .visibleAreaWrapper .visibleArea .tape .slide {
+                  margin: 0 15px;
+                  min-width: 220px;
+                  height: 340px; } }
+              @media (min-width: 1920px) {
+                .viewProfilePage .achievements .slider .visibleAreaWrapper .visibleArea .tape .slide {
+                  margin: 0 20px;
+                  min-width: 233px;
+                  height: 368px; } }
+              .viewProfilePage .achievements .slider .visibleAreaWrapper .visibleArea .tape .slide.active {
+                visibility: visible;
+                opacity: 1; }
+  .viewProfilePage .games {
+    margin: 100px auto 0 auto;
+    width: max-content; }
+    .viewProfilePage .games .items {
+      margin-top: 35px;
+      display: flex; }
+      .viewProfilePage .games .items .cardGame {
+        margin: 0 15px; }
+        @media (min-width: 1920px) {
+          .viewProfilePage .games .items .cardGame {
+            margin: 0 20px; } }
 
 @keyframes animActive {
   0% {
