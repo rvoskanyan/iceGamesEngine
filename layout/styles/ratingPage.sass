@@ -1,0 +1,45 @@
+.ratingPage
+  .title
+    font-size: 48px
+    font-weight: 600
+    color: #fff
+    text-align: center
+    margin-top: 70px
+
+  .description
+    color: #fff
+    text-align: center
+    font-size: 18px
+
+  .list
+    width: 800px
+    margin-top: 70px
+
+    .item
+      width: 100%
+      display: flex
+      align-items: center
+      justify-content: space-between
+      color: #fff
+      box-shadow: 0 0 19px #33005A
+      font-weight: bold
+      padding: 14px 32px 14px 120px
+      border-radius: 50px
+
+      &:not(:last-child)
+        margin-bottom: 21px
+
+      &:nth-child(-n+3)
+        margin-bottom: 50px
+
+      &:nth-child(1)
+        background-image: radial-gradient(75% 250% at 55% 75%, #43FFFF -10%, #B85DFF 45%, #FC53F5 75%)
+
+      &:nth-child(1n+2)
+        background: radial-gradient(40% 250% at 56% 80%, #00E0FF 0%, #8F00FF 80%)
+
+      &:nth-child(1n+4)
+        background: #08CCF4
+
+      &:nth-child(1n+11)
+        background-color: #0085FF

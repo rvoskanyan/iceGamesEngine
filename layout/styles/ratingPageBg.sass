@@ -1,0 +1,49 @@
+@import './zIndex'
+
+.ratingPageBg
+  position: absolute
+  display: flex
+  flex-direction: column
+  top: 0
+  left: 0
+  bottom: 0
+  width: 100%
+  z-index: $ZIndex-RatingPageBg
+
+  &:after
+    content: ''
+    display: block
+    flex-grow: 1
+
+  &.main
+    &:after
+      background-image: linear-gradient(180deg, #320084 0%, #210030 100%)
+
+    .coverImg
+      &:before
+        background-image: linear-gradient(rgba(50, 0, 132, 0.5) 0%, #320084 100%)
+        height: 100%
+        width: 100%
+
+      &:after
+        background: radial-gradient(32.98% 100% at 50% 0%, #D600F9 0%, transparent 100%)
+        height: 50%
+        width: 70%
+
+  .coverImg
+    min-height: 100vh
+    max-height: 100vh
+    position: relative
+
+    &:before, &:after
+      content: ''
+      top: 0
+      position: absolute
+      display: block
+      left: 50%
+      transform: translateX(-50%)
+
+    .img
+      width: 100%
+      height: 100%
+      object-fit: cover

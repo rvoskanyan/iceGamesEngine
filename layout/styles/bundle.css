@@ -507,6 +507,45 @@
     margin-top: 20px;
     overflow: hidden; }
 
+.ratingPageBg {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: -1; }
+  .ratingPageBg:after {
+    content: '';
+    display: block;
+    flex-grow: 1; }
+  .ratingPageBg.main:after {
+    background-image: linear-gradient(180deg, #320084 0%, #210030 100%); }
+  .ratingPageBg.main .coverImg:before {
+    background-image: linear-gradient(rgba(50, 0, 132, 0.5) 0%, #320084 100%);
+    height: 100%;
+    width: 100%; }
+  .ratingPageBg.main .coverImg:after {
+    background: radial-gradient(32.98% 100% at 50% 0%, #D600F9 0%, transparent 100%);
+    height: 50%;
+    width: 70%; }
+  .ratingPageBg .coverImg {
+    min-height: 100vh;
+    max-height: 100vh;
+    position: relative; }
+    .ratingPageBg .coverImg:before, .ratingPageBg .coverImg:after {
+      content: '';
+      top: 0;
+      position: absolute;
+      display: block;
+      left: 50%;
+      transform: translateX(-50%); }
+    .ratingPageBg .coverImg .img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; }
+
 .icon {
   mask-position: center;
   mask-size: cover;
@@ -2189,6 +2228,44 @@
       .profilePage .content.savedGames .list .cardGame {
         margin: 15px; }
 
+.ratingPage .title {
+  font-size: 48px;
+  font-weight: 600;
+  color: #fff;
+  text-align: center;
+  margin-top: 70px; }
+
+.ratingPage .description {
+  color: #fff;
+  text-align: center;
+  font-size: 18px; }
+
+.ratingPage .list {
+  width: 800px;
+  margin-top: 70px; }
+  .ratingPage .list .item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #fff;
+    box-shadow: 0 0 19px #33005A;
+    font-weight: bold;
+    padding: 14px 32px 14px 120px;
+    border-radius: 50px; }
+    .ratingPage .list .item:not(:last-child) {
+      margin-bottom: 21px; }
+    .ratingPage .list .item:nth-child(-n+3) {
+      margin-bottom: 50px; }
+    .ratingPage .list .item:nth-child(1) {
+      background-image: radial-gradient(75% 250% at 55% 75%, #43FFFF -10%, #B85DFF 45%, #FC53F5 75%); }
+    .ratingPage .list .item:nth-child(1n+2) {
+      background: radial-gradient(40% 250% at 56% 80%, #00E0FF 0%, #8F00FF 80%); }
+    .ratingPage .list .item:nth-child(1n+4) {
+      background: #08CCF4; }
+    .ratingPage .list .item:nth-child(1n+11) {
+      background-color: #0085FF; }
+
 @keyframes animActive {
   0% {
     display: none;
@@ -2883,7 +2960,8 @@ body {
   min-width: 320px;
   min-height: 100vh;
   display: flex;
-  flex-direction: column; }
+  flex-direction: column;
+  position: relative; }
   body.noScrolling {
     overflow: hidden;
     padding-right: 10px; }
