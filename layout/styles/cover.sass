@@ -38,10 +38,14 @@
       right: 0
       background: linear-gradient(180deg, transparent 0%, #01033C 100%)
 
-    &-bottomMax:after
-      top: 0
-      right: 0
-      background: linear-gradient(180deg, transparent 0%, #01033C 100%)
+    &-bottomMax
+      &:after
+        top: 0
+        right: 0
+        background: linear-gradient(180deg, transparent 0%, #01033C 100%)
+
+      &-darker:after
+        background: linear-gradient(180deg, rgba(1, 3, 60, 0.65) 0%, #01033C 100%)
 
   &.activeVideo
     & .video

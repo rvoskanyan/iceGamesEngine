@@ -1,0 +1,254 @@
+@import './zIndex'
+
+.aboutPage
+  color: #fff
+
+  .title
+    font-size: 48px
+    font-weight: 600
+
+  .description
+    font-size: 18px
+
+  .rocket
+    width: 1060px
+    margin: 0 auto
+    display: flex
+    flex-direction: column
+    align-items: center
+    text-align: center
+
+    .img
+      width: 170px
+      margin: 0 auto
+
+    .content
+      background-image: url("./../img/aboutPage-rocket-bg.svg")
+      background-size: cover
+      background-position: center
+      padding-top: 100px
+      padding-bottom: 210px
+      margin-top: -15px
+      margin-right: 25px
+      z-index: $ZIndex-AboutPage-BgBlocks
+
+      .description
+        margin-top: 15px
+
+  .history
+    max-width: 1200px
+    margin: 100px auto 0 auto
+
+    .infoBlock
+      display: flex
+
+      .img
+        width: 150px
+        margin-right: 80px
+
+      &:first-child .description
+        margin-top: 25px
+
+      &:nth-child(even)
+        flex-direction: row-reverse
+
+        .img
+          margin-right: initial
+          margin-left: 80px
+
+      &:not(:last-child)
+        margin-bottom: 70px
+
+  .Earth
+    max-width: 1200px
+    margin: 150px auto 0 auto
+    display: flex
+    justify-content: space-between
+
+    .content
+      margin-right: 110px
+
+      .description
+        margin-top: 30px
+
+    .bgBlock
+      position: relative
+
+      &:before
+        content: ''
+        display: block
+        position: absolute
+        background-size: cover
+        background-position: center
+        background-image: url("./../img/aboutPage-Earth-bg.svg")
+        right: calc(100% - 106px)
+        top: -20px
+        z-index: $ZIndex-AboutPage-BgBlocks
+        width: 1040px
+        height: 230px
+
+      .img
+        width: 200px
+
+  .weMade
+    margin: 150px auto 0 auto
+    max-width: 850px
+    text-align: center
+
+    .list
+      margin-top: 70px
+      text-shadow: 0 0 60px #938083
+
+      .item
+        padding: 70px 90px
+        position: relative
+
+        &:not(:last-child)
+          &:before
+            content: ''
+            display: block
+            position: absolute
+            height: 100%
+            width: 42%
+            border: 2px solid #fff
+            top: 0
+            left: 0
+            border-right-color: transparent
+            border-radius: 100px 0 0 100px
+
+          &:nth-child(odd):before
+            border-left-color: transparent
+            border-right-color: #fff
+            border-radius: 0 100px 100px 0
+            right: 0
+            left: initial
+            margin: -2px 0
+
+        .decorationIcon
+          position: absolute
+          left: 50%
+          transform: translateX(-50%)
+          width: 73px
+          height: 63px
+          bottom: calc(100% - 30px)
+
+        .title
+          font-size: 30px
+
+        .description
+          margin-top: 15px
+
+  .companyValues
+    text-align: center
+    margin-top: 150px
+    position: relative
+
+    &:before
+      content: ''
+      display: block
+      position: absolute
+      background-size: cover
+      background-position: center
+      background-image: url("./../img/aboutPage-companyValues-bg.svg")
+      width: 1305px
+      height: 1258px
+      top: 140px
+      left: calc(50% + 12px)
+      transform: translateX(-50%)
+      z-index: -1
+
+    .title
+      margin: 30px 0 50px 0
+
+    .trianglePuzzleWrapper
+      display: flex
+      justify-content: center
+      align-items: center
+      width: 175px
+      height: 155px
+      margin: 0 auto
+
+      .trianglePuzzle
+        width: 0
+        height: 0
+        position: relative
+
+        .icon
+          position: absolute
+          bottom: 5px
+          left: -42px
+
+          &:nth-child(2)
+            transform: rotate(60deg) translate(36px, -20px)
+
+          &:nth-child(3)
+            transform: rotate(120deg) translate(36px, -61px)
+
+          &:nth-child(4)
+            transform: rotate(180deg) translate(0px, -82px)
+
+          &:nth-child(5)
+            transform: rotate(240deg) translate(-36px, -62px)
+
+          &:nth-child(6)
+            transform: rotate(300deg) translate(-36px, -20px)
+
+    .description
+      margin: 15px 0 50px 0
+
+  .quote
+    margin: 150px auto 0 auto
+    max-width: 350px
+    text-shadow: 0 0 60px #938083
+    text-align: center
+    position: relative
+
+    .decorationIcon
+      position: absolute
+      background-color: rgba(255, 255, 255, 0.3)
+
+      &:nth-child(2)
+        left: -100px
+        transform: rotate(90deg)
+        width: 33px
+        height: 30px
+
+      &:nth-child(3)
+        width: 65px
+        height: 58px
+        top: -50px
+        left: -115px
+        transform: rotate(100deg)
+
+      &:nth-child(4)
+        width: 33px
+        height: 30px
+        top: -80px
+        left: 100px
+        transform: rotate(130deg)
+
+      &:nth-child(5)
+        width: 53px
+        height: 48px
+        top: -80px
+        left: 250px
+        transform: rotate(110deg)
+
+      &:nth-child(6)
+        width: 65px
+        height: 58px
+        top: -10px
+        left: 360px
+        transform: rotate(135deg)
+
+  .end
+    text-align: center
+    margin-top: 100px
+
+    .name
+      font-weight: 300
+      font-family: 'Lemon Milk'
+
+    .img
+      margin-top: 50px
+      width: 159px

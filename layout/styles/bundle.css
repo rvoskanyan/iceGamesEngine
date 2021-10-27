@@ -665,6 +665,11 @@
     -webkit-mask-image: url("./../img/prompt.svg");
     width: 64px;
     height: 55px; }
+  .icon-triangle {
+    mask-image: url("./../img/triangle.svg");
+    -webkit-mask-image: url("./../img/triangle.svg");
+    width: 83px;
+    height: 73px; }
 
 .textField {
   color: #fff;
@@ -2392,6 +2397,209 @@
           .viewProfilePage .games .items .cardGame {
             margin: 0 20px; } }
 
+.aboutPage {
+  color: #fff; }
+  .aboutPage .title {
+    font-size: 48px;
+    font-weight: 600; }
+  .aboutPage .description {
+    font-size: 18px; }
+  .aboutPage .rocket {
+    width: 1060px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center; }
+    .aboutPage .rocket .img {
+      width: 170px;
+      margin: 0 auto; }
+    .aboutPage .rocket .content {
+      background-image: url("./../img/aboutPage-rocket-bg.svg");
+      background-size: cover;
+      background-position: center;
+      padding-top: 100px;
+      padding-bottom: 210px;
+      margin-top: -15px;
+      margin-right: 25px;
+      z-index: -1; }
+      .aboutPage .rocket .content .description {
+        margin-top: 15px; }
+  .aboutPage .history {
+    max-width: 1200px;
+    margin: 100px auto 0 auto; }
+    .aboutPage .history .infoBlock {
+      display: flex; }
+      .aboutPage .history .infoBlock .img {
+        width: 150px;
+        margin-right: 80px; }
+      .aboutPage .history .infoBlock:first-child .description {
+        margin-top: 25px; }
+      .aboutPage .history .infoBlock:nth-child(even) {
+        flex-direction: row-reverse; }
+        .aboutPage .history .infoBlock:nth-child(even) .img {
+          margin-right: initial;
+          margin-left: 80px; }
+      .aboutPage .history .infoBlock:not(:last-child) {
+        margin-bottom: 70px; }
+  .aboutPage .Earth {
+    max-width: 1200px;
+    margin: 150px auto 0 auto;
+    display: flex;
+    justify-content: space-between; }
+    .aboutPage .Earth .content {
+      margin-right: 110px; }
+      .aboutPage .Earth .content .description {
+        margin-top: 30px; }
+    .aboutPage .Earth .bgBlock {
+      position: relative; }
+      .aboutPage .Earth .bgBlock:before {
+        content: '';
+        display: block;
+        position: absolute;
+        background-size: cover;
+        background-position: center;
+        background-image: url("./../img/aboutPage-Earth-bg.svg");
+        right: calc(100% - 106px);
+        top: -20px;
+        z-index: -1;
+        width: 1040px;
+        height: 230px; }
+      .aboutPage .Earth .bgBlock .img {
+        width: 200px; }
+  .aboutPage .weMade {
+    margin: 150px auto 0 auto;
+    max-width: 850px;
+    text-align: center; }
+    .aboutPage .weMade .list {
+      margin-top: 70px;
+      text-shadow: 0 0 60px #938083; }
+      .aboutPage .weMade .list .item {
+        padding: 70px 90px;
+        position: relative; }
+        .aboutPage .weMade .list .item:not(:last-child):before {
+          content: '';
+          display: block;
+          position: absolute;
+          height: 100%;
+          width: 42%;
+          border: 2px solid #fff;
+          top: 0;
+          left: 0;
+          border-right-color: transparent;
+          border-radius: 100px 0 0 100px; }
+        .aboutPage .weMade .list .item:not(:last-child):nth-child(odd):before {
+          border-left-color: transparent;
+          border-right-color: #fff;
+          border-radius: 0 100px 100px 0;
+          right: 0;
+          left: initial;
+          margin: -2px 0; }
+        .aboutPage .weMade .list .item .decorationIcon {
+          position: absolute;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 73px;
+          height: 63px;
+          bottom: calc(100% - 30px); }
+        .aboutPage .weMade .list .item .title {
+          font-size: 30px; }
+        .aboutPage .weMade .list .item .description {
+          margin-top: 15px; }
+  .aboutPage .companyValues {
+    text-align: center;
+    margin-top: 150px;
+    position: relative; }
+    .aboutPage .companyValues:before {
+      content: '';
+      display: block;
+      position: absolute;
+      background-size: cover;
+      background-position: center;
+      background-image: url("./../img/aboutPage-companyValues-bg.svg");
+      width: 1305px;
+      height: 1258px;
+      top: 140px;
+      left: calc(50% + 12px);
+      transform: translateX(-50%);
+      z-index: -1; }
+    .aboutPage .companyValues .title {
+      margin: 30px 0 50px 0; }
+    .aboutPage .companyValues .trianglePuzzleWrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 175px;
+      height: 155px;
+      margin: 0 auto; }
+      .aboutPage .companyValues .trianglePuzzleWrapper .trianglePuzzle {
+        width: 0;
+        height: 0;
+        position: relative; }
+        .aboutPage .companyValues .trianglePuzzleWrapper .trianglePuzzle .icon {
+          position: absolute;
+          bottom: 5px;
+          left: -42px; }
+          .aboutPage .companyValues .trianglePuzzleWrapper .trianglePuzzle .icon:nth-child(2) {
+            transform: rotate(60deg) translate(36px, -20px); }
+          .aboutPage .companyValues .trianglePuzzleWrapper .trianglePuzzle .icon:nth-child(3) {
+            transform: rotate(120deg) translate(36px, -61px); }
+          .aboutPage .companyValues .trianglePuzzleWrapper .trianglePuzzle .icon:nth-child(4) {
+            transform: rotate(180deg) translate(0px, -82px); }
+          .aboutPage .companyValues .trianglePuzzleWrapper .trianglePuzzle .icon:nth-child(5) {
+            transform: rotate(240deg) translate(-36px, -62px); }
+          .aboutPage .companyValues .trianglePuzzleWrapper .trianglePuzzle .icon:nth-child(6) {
+            transform: rotate(300deg) translate(-36px, -20px); }
+    .aboutPage .companyValues .description {
+      margin: 15px 0 50px 0; }
+  .aboutPage .quote {
+    margin: 150px auto 0 auto;
+    max-width: 350px;
+    text-shadow: 0 0 60px #938083;
+    text-align: center;
+    position: relative; }
+    .aboutPage .quote .decorationIcon {
+      position: absolute;
+      background-color: rgba(255, 255, 255, 0.3); }
+      .aboutPage .quote .decorationIcon:nth-child(2) {
+        left: -100px;
+        transform: rotate(90deg);
+        width: 33px;
+        height: 30px; }
+      .aboutPage .quote .decorationIcon:nth-child(3) {
+        width: 65px;
+        height: 58px;
+        top: -50px;
+        left: -115px;
+        transform: rotate(100deg); }
+      .aboutPage .quote .decorationIcon:nth-child(4) {
+        width: 33px;
+        height: 30px;
+        top: -80px;
+        left: 100px;
+        transform: rotate(130deg); }
+      .aboutPage .quote .decorationIcon:nth-child(5) {
+        width: 53px;
+        height: 48px;
+        top: -80px;
+        left: 250px;
+        transform: rotate(110deg); }
+      .aboutPage .quote .decorationIcon:nth-child(6) {
+        width: 65px;
+        height: 58px;
+        top: -10px;
+        left: 360px;
+        transform: rotate(135deg); }
+  .aboutPage .end {
+    text-align: center;
+    margin-top: 100px; }
+    .aboutPage .end .name {
+      font-weight: 300;
+      font-family: 'Lemon Milk'; }
+    .aboutPage .end .img {
+      margin-top: 50px;
+      width: 159px; }
+
 @keyframes animActive {
   0% {
     display: none;
@@ -2700,6 +2908,8 @@
       top: 0;
       right: 0;
       background: linear-gradient(180deg, transparent 0%, #01033C 100%); }
+    .cover.blackout-bottomMax-darker:after {
+      background: linear-gradient(180deg, rgba(1, 3, 60, 0.65) 0%, #01033C 100%); }
   .cover.activeVideo .video {
     opacity: 1;
     visibility: visible; }
