@@ -1,0 +1,9 @@
+<a href="/admin/{{section}}/add/">{{addTitle}}</a>
+
+<ul>
+    {{#each elements}}
+        <li>
+            <a href="/admin/{{../section}}/edit/{{id}}">{{name}}</a>
+        </li>
+    {{/each}}
+</ul>

@@ -1,25 +1,25 @@
-<form method="post" action="/admin/products/add" enctype="multipart/form-data">
+<form method="post" action="/admin/products/{{#if isEdit}}edit/{{game.id}}{{else}}add{{/if}}" enctype="multipart/form-data">
     <label>
         Название:
-        <input type="text" name="name">
+        <input type="text" name="name" value="{{game.name}}">
     </label>
     <br>
     <br>
     <label>
         Описание:
-        <input type="text" name="description">
+        <input type="text" name="description" value="{{game.description}}">
     </label>
     <br>
     <br>
     <label>
         Цена:
-        <input type="number" name="price">
+        <input type="number" name="price" value="{{game.price}}">
     </label>
     <br>
     <br>
     <label>
         Скидка:
-        <input type="number" name="discount">
+        <input type="number" name="discount" value="{{game.discount}}">
     </label>
     <br>
     <br>
@@ -29,10 +29,20 @@
     </label>
     <br>
     <br>
+    {{#if game.img}}
+        <img src="/{{game.img}}" style="max-width: 300px">
+    {{/if}}
+    <br>
+    <br>
     <label>
         Cover изображение:
         <input type="file" name="coverImg">
     </label>
+    <br>
+    <br>
+    {{#if game.coverImg}}
+        <img src="/{{game.coverImg}}" style="max-width: 300px">
+    {{/if}}
     <br>
     <br>
     <label>
@@ -41,33 +51,38 @@
     </label>
     <br>
     <br>
+    {{#if game.coverVideo}}
+        <video src="/{{game.coverVideo}}"></video>
+    {{/if}}
+    <br>
+    <br>
     <label>
         Добавить в слайдер на главной странице:
-        <input type="checkbox" name="inHomeSlider">
+        <input type="checkbox" name="inHomeSlider" {{#if game.inHomeSlider}}checked{{/if}}>
     </label>
     <br>
     <br>
     <label>
         Процессор:
-        <input type="text" name="cpu">
+        <input type="text" name="cpu" value="{{game.cpu}}">
     </label>
     <br>
     <br>
     <label>
         Видео карта:
-        <input type="text" name="graphicsCard">
+        <input type="text" name="graphicsCard" value="{{game.graphicsCard}}">
     </label>
     <br>
     <br>
     <label>
         Оперативная память:
-        <input type="text" name="ram">
+        <input type="text" name="ram" value="{{game.ram}}">
     </label>
     <br>
     <br>
     <label>
         Память на диске:
-        <input type="text" name="diskMemory">
+        <input type="text" name="diskMemory" value="{{game.diskMemory}}">
     </label>
     <br>
     <br>
@@ -75,7 +90,7 @@
         Категории игры:
         <select name="categories" multiple>
             {{#each categories}}
-                <option value="{{id}}">{{name}}</option>
+                <option value="{{id}}" {{#if selected}}selected{{/if}}>{{name}}</option>
             {{/each}}
         </select>
     </label>
@@ -85,7 +100,7 @@
         Расширения игры:
         <select name="gameExtends" multiple>
             {{#each extends}}
-                <option value="{{id}}">{{name}}</option>
+                <option value="{{id}}" {{#if selected}}selected{{/if}}>{{name}}</option>
             {{/each}}
         </select>
     </label>
@@ -95,7 +110,7 @@
         Языки игры:
         <select name="languages" multiple>
             {{#each languages}}
-                <option value="{{id}}">{{name}}</option>
+                <option value="{{id}}" {{#if selected}}selected{{/if}}>{{name}}</option>
             {{/each}}
         </select>
     </label>
@@ -105,7 +120,7 @@
         Регионы активации:
         <select name="regions" multiple>
             {{#each regions}}
-                <option value="{{id}}">{{name}}</option>
+                <option value="{{id}}" {{#if selected}}selected{{/if}}>{{name}}</option>
             {{/each}}
         </select>
     </label>
@@ -115,11 +130,11 @@
         Сервис активации:
         <select name="activationService">
             {{#each activationServices}}
-                <option value="{{id}}">{{name}}</option>
+                <option value="{{id}}" {{#if selected}}selected{{/if}}>{{name}}</option>
             {{/each}}
         </select>
     </label>
     <br>
     <br>
-    <input type="submit" name="add" value="Добавить">
+    <input type="submit" name="add" value="{{#if isEdit}}Сохранить изменения{{else}}Добавить игру{{/if}}">
 </form>

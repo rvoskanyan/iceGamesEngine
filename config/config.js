@@ -7,6 +7,12 @@ module.exports = {
     database: 'ice_games_engine',
     host: '127.0.0.1',
     dialect: 'mysql',
+  
+    //username: 'developer',
+    //password: 'Evd6LiBnP$#cxS~',
+    //database: 'iceGames',
+    //host: '185.251.88.215',
+    //dialect: 'mysql',
   },
   test: {
     username: `${process.env.IGS_DB_USERNAME}`,

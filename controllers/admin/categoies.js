@@ -1,7 +1,21 @@
 const {Category} = require('./../../models/index');
+const {Product} = require("../../models/index");
 
 const pageCategories = async (req, res) => {
-  res.json('Categories page');
+  try {
+    const categories = await Category.findAll({attributes: ['id', 'name']});
+  
+    res.render('listElements', {
+      layout: 'admin',
+      title: 'Список категорий',
+      section: 'categories',
+      elements: categories.map(item => item.dataValues),
+      addTitle: "Добавить категорию",
+    });
+  } catch (e) {
+    console.log(e);
+    res.redirect('/admin');
+  }
 }
 
 const pageAddCategories = async (req, res) => {

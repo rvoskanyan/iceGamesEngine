@@ -1,10 +1,23 @@
 const {
   Product,
-  Key, Category,
+  Key,
 } = require('./../../models/index');
 
 const pageKeys = async (req, res) => {
-  res.json('Keys page');
+  try {
+    const keys = await Key.findAll({attributes: ['id', 'key']});
+    
+    res.render('listElements', {
+      layout: 'admin',
+      title: 'Список ключей',
+      section: 'keys',
+      elements: keys.map(item => item.dataValues),
+      addTitle: "Добавить ключ",
+    });
+  } catch (e) {
+    console.log(e);
+    res.redirect('/admin');
+  }
 }
 
 const pageAddKey = async (req, res) => {

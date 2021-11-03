@@ -1,7 +1,20 @@
 const {Usp} = require('./../../models/index');
 
 const pageUsp = async (req, res) => {
-  res.json("Usp page");
+  try {
+    const usps = await Usp.findAll({attributes: ['id', 'text']});
+    
+    res.render('listElements', {
+      layout: 'admin',
+      title: 'Список УТП',
+      section: 'usp',
+      elements: usps.map(item => item.dataValues),
+      addTitle: "Добавить УТП",
+    });
+  } catch (e) {
+    console.log(e);
+    res.redirect('/admin');
+  }
 }
 
 const pageAddUsp = async (req, res) => {

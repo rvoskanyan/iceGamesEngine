@@ -2,8 +2,22 @@ const uuid = require("uuid");
 const path = require("path");
 const {Extend} = require("./../../models/index");
 const {getExtendFile} = require("../../utils/functions");
+
 const pageExtends = async (req, res) => {
-  res.json("Extends page");
+  try {
+    const allExtends = await Extend.findAll({attributes: ['id', 'name']});
+    
+    res.render('listElements', {
+      layout: 'admin',
+      title: 'Список расширений',
+      section: 'extends',
+      elements: allExtends.map(item => item.dataValues),
+      addTitle: "Добавить расширение",
+    });
+  } catch (e) {
+    console.log(e);
+    res.redirect('/admin');
+  }
 }
 
 const pageAddExtend = async (req, res) => {

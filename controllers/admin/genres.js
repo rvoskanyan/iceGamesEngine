@@ -3,7 +3,20 @@ const uuid = require("uuid");
 const path = require("path");
 
 const pageGenres = async (req, res) => {
-  res.json('Genres page');
+  try {
+    const genres = await Genre.findAll({attributes: ['id', 'name']});
+    
+    res.render('listElements', {
+      layout: 'admin',
+      title: 'Список жанров',
+      section: 'genres',
+      elements: genres.map(item => item.dataValues),
+      addTitle: "Добавить жанр",
+    });
+  } catch (e) {
+    console.log(e);
+    res.redirect('/admin');
+  }
 }
 
 const pageAddGenres = async (req, res) => {
