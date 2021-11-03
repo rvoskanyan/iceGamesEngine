@@ -52,7 +52,9 @@
     <br>
     <br>
     {{#if game.coverVideo}}
-        <video src="/{{game.coverVideo}}"></video>
+        <video width="300" controls="controls" poster="/{{game.coverImg}}">
+            <source src="/{{game.coverVideo}}">
+        </video>
     {{/if}}
     <br>
     <br>
