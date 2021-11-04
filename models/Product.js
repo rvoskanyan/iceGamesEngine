@@ -35,14 +35,14 @@ module.exports = (sequelize, DataTypes) => {
       models.Product.belongsTo(models.Publisher, {
         foreignKey: {
           name: 'publisherId',
-          allowNull: true,
+          allowNull: false,
         }
       });
   
       models.Product.belongsTo(models.Platform, {
         foreignKey: {
           name: 'platformId',
-          allowNull: true,
+          allowNull: false,
         }
       });
   

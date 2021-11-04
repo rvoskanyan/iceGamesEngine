@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
       models.Platform.hasMany(models.Product, {
         foreignKey: {
           name: 'platformId',
-          allowNull: true,
+          allowNull: false,
         }
       });
     }

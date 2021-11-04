@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
       models.Publisher.hasMany(models.Product, {
         foreignKey: {
           name: 'publisherId',
-          allowNull: true,
+          allowNull: false,
         }
       });
     }
