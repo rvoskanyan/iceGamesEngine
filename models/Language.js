@@ -4,13 +4,6 @@ const {Model} = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Language extends Model {
     static associate(models) {
-      models.Product.belongsToMany(models.Language, {
-        through: models.LanguagesProduct,
-        foreignKey: {
-          name: 'productId',
-          allowNull: false,
-        }
-      });
       models.Language.belongsToMany(models.Product, {
         through: models.LanguagesProduct,
         foreignKey: {

@@ -1,9 +1,22 @@
+{{#if haveKits}}
+    <p>Текущие пакеты данной игры:</p>
+    <ul>
+        {{#each kits}}
+            <li>
+                <a href="/admin/products/{{../gameId}}/{{id}}/addElementKit">{{name}}</a>
+            </li>
+        {{/each}}
+    </ul>
+{{else}}
+    <p>У данной игры нет пакетов</p>
+{{/if}}
+
 <form method="post" action="/admin/products/{{gameId}}/addKit" enctype="multipart/form-data">
     <label>
         Выберите игру:
         <select name="productId">
             {{#each games}}
-                <option value="{{dataValues.id}}">{{dataValues.name}}</option>
+                <option value="{{id}}">{{name}}</option>
             {{/each}}
         </select>
     </label>
@@ -11,9 +24,9 @@
     <br>
     <label>
         Выберите название пакета:
-        <select name="namesKitId">
+        <select name="nameKitId">
             {{#each namesKits}}
-                <option value="{{dataValues.id}}">{{dataValues.name}}</option>
+                <option value="{{id}}">{{name}}</option>
             {{/each}}
         </select>
     </label>

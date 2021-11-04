@@ -3,7 +3,14 @@ const {Model} = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   class ActivationService extends Model {
-    static associate(models) {}
+    static associate(models) {
+      models.ActivationService.hasMany(models.Product, {
+        foreignKey: {
+          name: 'activationServiceId',
+          allowNull: false,
+        }
+      });
+    }
   }
   
   ActivationService.init({

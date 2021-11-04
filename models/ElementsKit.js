@@ -4,12 +4,12 @@ const {Model} = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class ElementsKit extends Model {
     static associate(models) {
-      models.Kit.hasMany(models.ElementsKit, {
+      models.ElementsKit.belongsTo(models.Kit, {
         foreignKey: {
+          name: 'kitId',
           allowNull: false,
         }
       });
-      models.ElementsKit.belongsTo(models.Kit);
     }
   }
   

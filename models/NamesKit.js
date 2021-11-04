@@ -3,7 +3,14 @@ const {Model} = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   class NamesKit extends Model {
-    static associate(models) {}
+    static associate(models) {
+      models.NamesKit.hasMany(models.Kit, {
+        foreignKey: {
+          name: 'nameKitId',
+          allowNull: false,
+        }
+      });
+    }
   }
   
   NamesKit.init({

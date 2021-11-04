@@ -4,7 +4,13 @@ const {Model} = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Genre extends Model {
     static associate(models) {
-      // define association here
+      models.Genre.belongsToMany(models.Product, {
+        through: models.GenresProduct,
+        foreignKey: {
+          name: 'genreId',
+          allowNull: false,
+        }
+      })
     }
   }
   

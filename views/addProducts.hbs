@@ -1,3 +1,8 @@
+{{#if isEdit}}
+    <a href="/admin/products/{{game.id}}/addKit">Добавить пакет к данной игре</a>
+{{/if}}
+<br>
+<br>
 <form method="post" action="/admin/products/{{#if isEdit}}edit/{{game.id}}{{else}}add{{/if}}" enctype="multipart/form-data">
     <label>
         Название:
@@ -65,6 +70,18 @@
     <br>
     <br>
     <label>
+        Дата выхода:
+        <input type="text" name="releaseDate" value="{{game.releaseDate}}">
+    </label>
+    <br>
+    <br>
+    <label>
+        ОС:
+        <input type="text" name="os" value="{{game.os}}">
+    </label>
+    <br>
+    <br>
+    <label>
         Процессор:
         <input type="text" name="cpu" value="{{game.cpu}}">
     </label>
@@ -92,7 +109,21 @@
         Категории игры:
         <select name="categories" multiple>
             {{#each categories}}
-                <option value="{{id}}" {{#if selected}}selected{{/if}}>{{name}}</option>
+                <option value="{{id}}" {{#if selected}}selected{{/if}}>
+                    {{name}}
+                </option>
+            {{/each}}
+        </select>
+    </label>
+    <br>
+    <br>
+    <label>
+        Жанры игры:
+        <select name="genres" multiple>
+            {{#each genres}}
+                <option value="{{id}}" {{#if selected}}selected{{/if}}>
+                    {{name}}
+                </option>
             {{/each}}
         </select>
     </label>
@@ -102,7 +133,9 @@
         Расширения игры:
         <select name="gameExtends" multiple>
             {{#each extends}}
-                <option value="{{id}}" {{#if selected}}selected{{/if}}>{{name}}</option>
+                <option value="{{id}}" {{#if selected}}selected{{/if}}>
+                    {{name}}
+                </option>
             {{/each}}
         </select>
     </label>
@@ -112,7 +145,9 @@
         Языки игры:
         <select name="languages" multiple>
             {{#each languages}}
-                <option value="{{id}}" {{#if selected}}selected{{/if}}>{{name}}</option>
+                <option value="{{id}}" {{#if selected}}selected{{/if}}>
+                    {{name}}
+                </option>
             {{/each}}
         </select>
     </label>
@@ -122,7 +157,33 @@
         Регионы активации:
         <select name="regions" multiple>
             {{#each regions}}
-                <option value="{{id}}" {{#if selected}}selected{{/if}}>{{name}}</option>
+                <option value="{{id}}" {{#if selected}}selected{{/if}}>
+                    {{name}}
+                </option>
+            {{/each}}
+        </select>
+    </label>
+    <br>
+    <br>
+    <label>
+        Разработчики:
+        <select name="developers" multiple>
+            {{#each developers}}
+                <option value="{{id}}" {{#if selected}}selected{{/if}}>
+                    {{name}}
+                </option>
+            {{/each}}
+        </select>
+    </label>
+    <br>
+    <br>
+    <label>
+        Издатель:
+        <select name="publisher">
+            {{#each publishers}}
+                <option value="{{id}}" {{#if selected}}selected{{/if}}>
+                    {{name}}
+                </option>
             {{/each}}
         </select>
     </label>
@@ -132,7 +193,21 @@
         Сервис активации:
         <select name="activationService">
             {{#each activationServices}}
-                <option value="{{id}}" {{#if selected}}selected{{/if}}>{{name}}</option>
+                <option value="{{id}}" {{#if selected}}selected{{/if}}>
+                    {{name}}
+                </option>
+            {{/each}}
+        </select>
+    </label>
+    <br>
+    <br>
+    <label>
+        Платформа:
+        <select name="platform">
+            {{#each platforms}}
+                <option value="{{id}}" {{#if selected}}selected{{/if}}>
+                    {{name}}
+                </option>
             {{/each}}
         </select>
     </label>

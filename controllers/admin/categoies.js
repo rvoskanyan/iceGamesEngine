@@ -1,5 +1,4 @@
 const {Category} = require('./../../models/index');
-const {Product} = require("../../models/index");
 
 const pageCategories = async (req, res) => {
   try {

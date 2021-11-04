@@ -1,4 +1,17 @@
-<form method="post" action="/admin/products/{{gameId}}/{{kitId}}/addElementKit" enctype="multipart/form-data">
+{{#if haveElements}}
+    <p>Текущие элементы данного пакета:</p>
+    <ul>
+        {{#each elementsKit}}
+            <li>
+                {{text}}
+            </li>
+        {{/each}}
+    </ul>
+{{else}}
+    <p>У данного пакета нет элементов</p>
+{{/if}}
+
+<form method="post" action="/admin/products/{{gameId}}/{{kitId}}/addElementKit">
     <label>
         Текст элемента:
         <input type="text" name="text">
