@@ -1,10 +1,10 @@
 const {Router} = require('express');
-const indexRoute =  require('./client/index');
+const homeRoute =  require('./client/home');
 const catalogRoute =  require('./client/catalog');
 
 const router = Router();
 
-router.use('/', indexRoute);
+router.use('/', homeRoute);
 router.use('/games', catalogRoute);
 
 module.exports = router;
