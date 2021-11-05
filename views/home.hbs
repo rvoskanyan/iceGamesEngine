@@ -3,7 +3,10 @@
         <div class="tape js-tapeSlider">
             {{#each sliderGames}}
                 <div class="cover blackout blackout-left blackout-bottom slide js-slide{{#if @first}} active{{/if}}">
-                    <img class="img" src="/{{coverVideo}}" alt="{{name}}" title="{{name}}">
+                    <!--<img class="img" src="/{coverImg}}" alt="{name}}" title="{name}}">-->
+                    <video class="video" autoplay muted loop>
+                        <source src="/{{coverVideo}}">
+                    </video>
                     <div class="offer">
                         <div class="name">
                             {{name}}
