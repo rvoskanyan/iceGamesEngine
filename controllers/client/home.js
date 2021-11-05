@@ -7,7 +7,7 @@ const {
 
 const renderHome = async (req, res) => {
   const sliderGames = await Product.findAll({
-    attributes: ['id', 'name', 'description', 'price', 'img', 'coverImg'],
+    attributes: ['id', 'name', 'description', 'price', 'img', 'coverImg', 'coverVideo'],
     limit: 5,
     where: {
       inHomeSlider: true,
