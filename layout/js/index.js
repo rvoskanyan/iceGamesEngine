@@ -7,43 +7,26 @@ import './../styles/index.sass';
 
 const switchHomeSlider = async (slides) => {
   const slideNode = slides[0];
-  const videoName = slideNode.dataset.videoName;
-  const videoNode = document.createElement('video');
+  let videoNode = slideNode.querySelector('.video');
   
-  videoNode.setAttribute('src',`http://185.251.88.215:4000/${videoName}`);
-  videoNode.setAttribute('class', 'video');
-  videoNode.setAttribute('autoplay', '');
-  videoNode.setAttribute('muted', '');
-  videoNode.setAttribute('loop', '');
-  slideNode.prepend(videoNode);
+  if (!videoNode) {
+    const videoName = slideNode.dataset.videoName;
+    const sourceNode = document.createElement('source');
+  
+    videoNode = document.createElement('video');
+    videoNode.setAttribute('class', 'video');
+    videoNode.setAttribute('muted', '');
+    videoNode.append(sourceNode);
+    slideNode.prepend(videoNode);
+    sourceNode.setAttribute('src',`http://185.251.88.215:4000/${videoName}`);
+  }
   
   videoNode.addEventListener('canplaythrough', () => {
     setTimeout(async () => {
       slideNode.classList.add('activeVideo');
+      videoNode.play();
     }, 2000)
   });
-  
-  //let videoNode = slideNode.querySelector('.video');
-  //
-  //if (!videoNode) {
-  //  const videoName = slideNode.dataset.videoName;
-  //  const sourceNode = document.createElement('source');
-  //
-  //  videoNode = document.createElement('video');
-  //  videoNode.setAttribute('class', 'video');
-  //  videoNode.setAttribute('muted', '');
-  //  videoNode.setAttribute('autoplay', '');
-  //  videoNode.append(sourceNode);
-  //  slideNode.prepend(videoNode);
-  //  sourceNode.setAttribute('src',`http://185.251.88.215:4000/${videoName}`);
-  //}
-  //
-  //videoNode.addEventListener('canplaythrough', () => {
-  //  setTimeout(async () => {
-  //    slideNode.classList.add('activeVideo');
-  //    videoNode.play();
-  //  }, 2000)
-  //});
 }
 
 const homeSlider = new Slider({
