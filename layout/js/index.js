@@ -13,20 +13,16 @@ const switchHomeSlider = async (slides) => {
   
   const response = await fetch(`http://185.251.88.215:4000/${videoName}`);
   const video = await response.blob();
-  console.log(video);
-  //const blob = await video.blob();
-  //console.log(video);
-  //const url = URL.createObjectURL(blob);
-  //
-  //
-  //videoNode.setAttribute('class', 'video');
-  //videoNode.setAttribute('muted', 'true');
-  //videoNode.setAttribute('loop', '');
-  //sourceNode.setAttribute('src', url);
-  //videoNode.append(sourceNode);
-  //slideNode.classList.add('activeVideo');
-  //
-  //slideNode.prepend(videoNode);
+  const url = URL.createObjectURL(video);
+  
+  videoNode.setAttribute('class', 'video');
+  videoNode.setAttribute('muted', 'true');
+  videoNode.setAttribute('loop', '');
+  sourceNode.setAttribute('src', url);
+  videoNode.append(sourceNode);
+  slideNode.classList.add('activeVideo');
+  
+  slideNode.prepend(videoNode);
 }
 
 const homeSlider = new Slider({
