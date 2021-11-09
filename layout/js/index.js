@@ -17,6 +17,7 @@ const switchHomeSlider = async (slides) => {
   
   videoNode.setAttribute('class', 'video');
   videoNode.setAttribute('muted', 'true');
+  videoNode.setAttribute('autoplay', '');
   videoNode.setAttribute('loop', '');
   sourceNode.setAttribute('src', url);
   videoNode.append(sourceNode);
