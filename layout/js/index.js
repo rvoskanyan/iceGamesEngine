@@ -23,6 +23,7 @@ const switchHomeSlider = async (slides) => {
   slideNode.classList.add('activeVideo');
   
   slideNode.prepend(videoNode);
+  await videoNode.play();
 }
 
 const homeSlider = new Slider({
