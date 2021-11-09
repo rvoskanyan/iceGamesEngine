@@ -11,9 +11,7 @@ const switchHomeSlider = async (slides) => {
   const videoNode = document.createElement('video');
   const sourceNode = document.createElement('source');
   
-  const response = await fetch(`http://185.251.88.215:4000/${videoName}`, {
-    mode: 'no-cors'
-  });
+  const response = await fetch(`http://185.251.88.215:4000/${videoName}`);
   const video = await response.blob();
   console.log(video);
   //const blob = await video.blob();
