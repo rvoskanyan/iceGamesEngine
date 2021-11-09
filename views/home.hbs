@@ -2,11 +2,8 @@
     <div class="homeSlider js-homeSlider">
         <div class="tape js-tapeSlider">
             {{#each sliderGames}}
-                <div class="cover blackout blackout-left blackout-bottom slide js-slide activeVideo{{#if @first}} active{{/if}}">
-                    <!--<img class="img" src="/{coverImg}}" alt="{name}}" title="{name}}">-->
-                    <video class="video" autoplay muted loop>
-                        <source src="/{{coverVideo}}">
-                    </video>
+                <div class="cover blackout blackout-left blackout-bottom slide{{#if @first}} active{{/if}} js-slide" data-video-name="{{coverVideo}}">
+                    <img class="img" src="http://185.251.88.215:4000/{{coverImg}}" alt="{name}}" title="{{name}}">
                     <div class="offer">
                         <div class="name">
                             {{name}}
@@ -27,7 +24,7 @@
                         </div>
                         <div class="actions">
                             <button title="Добавить игру в корзину покупок" class="btn rounded increase bg-pink hover-backlight-blue">В корзину</button>
-                            <a href="/catalog/{{id}}" title="Перейти к странице игры" class="btn rounded translucent bg-pink">Подробнее</a>
+                            <a href="/games/{{id}}" title="Перейти к странице игры" class="btn rounded translucent bg-pink">Подробнее</a>
                         </div>
                     </div>
                 </div>
@@ -35,15 +32,15 @@
         </div>
         <div class="contentContainer navigate">
             <div class="slideControls">
-                <button class="btn prev js-prevSlide"></button>
-                <div class="progress js-progressSlider"></div>
-                <button class="btn next js-nextSlide"></button>
+                <button class="btn prev js-prevBtn"></button>
+                <div class="progress js-progress"></div>
+                <button class="btn next js-nextBtn"></button>
             </div>
             <div class="items gameGrid">
                 {{#each sliderGames}}
-                    <button class="cardGame big js-itemNavSlider{{#if @first}} active{{/if}}" title="Переключить слайд">
+                    <button class="cardGame big{{#if @first}} active{{/if}} js-itemNavigate" title="Переключить слайд">
                         <div class="head">
-                            <img class="img" src="/{{img}}" alt="{{name}}" title="{{name}}">
+                            <img class="img" src="http://185.251.88.215:4000/{{img}}" alt="{{name}}" title="{{name}}">
                             <div class="name">{{name}}</div>
                         </div>
                         <div class="price">

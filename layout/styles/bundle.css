@@ -883,9 +883,17 @@
       background: linear-gradient(180deg, transparent 0%, #01033C 100%); }
     .cover.blackout-bottomMax-darker:after {
       background: linear-gradient(180deg, rgba(1, 3, 60, 0.65) 0%, #01033C 100%); }
+  .cover.activeVideo .video, .cover.activeVideo .img {
+    transition: 1s ease-in;
+    transition-property: opacity, visibility; }
   .cover.activeVideo .video {
     opacity: 1;
-    visibility: visible; }
+    visibility: visible;
+    z-index: -1; }
+  .cover.activeVideo .img {
+    opacity: 0;
+    visibility: hidden;
+    z-index: -1; }
   .cover .img, .cover .video {
     width: 100%;
     height: 100%;

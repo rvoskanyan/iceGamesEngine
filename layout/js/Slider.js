@@ -1,94 +1,69 @@
 export default class Slider {
   constructor(options) {
     const {
-      sliderSelector,
-      timeOutValue = 10000,
-      type = 'track',
-      countVisibleSlides = 1,
-      slideScroll = 1,
-      progress = false,
-      navigate = false,
+      selector,
+      switchingTime,
+      isTrack,
+      vertical,
+      progress,
+      navigate,
+      countSlidesScroll = 1,
+      onSwitch,
     } = options;
-    
-    this.type = type;
-    this.countVisibleSlides = countVisibleSlides;
-    this.slideScroll = slideScroll;
-    this.timeOutValue = timeOutValue;
+  
+    this.switchingTime = switchingTime;
+    this.isTrack = isTrack;
+    this.vertical = vertical;
     this.progress = progress;
     this.navigate = navigate;
+    this.countSlidesScroll = countSlidesScroll;
+    this.onSwitch = onSwitch;
+    this.activeScreen = 1;
+    this.countVisibleSlides = 1;
   
-    this.node = document.querySelector(sliderSelector);
-    if (!this.node) {
-      return console.error(`Не удалось найти контейнер слайдера с селектором: ${sliderSelector}`);
-    }
-    this.slidesNodes = this.node.querySelectorAll('.js-slide');
-    this.prevBtnNode = this.node.querySelector('.js-prevSlide');
-    this.nextBtnNode = this.node.querySelector('.js-nextSlide');
-    this.visibleAreaNode = this.node.querySelector('.js-visibleAreaSlider');
-    this.tapeNode = this.node.querySelector('.js-tapeSlider');
-  
-    this.countSlides = this.slidesNodes.length;
-    const countScreens = (this.countSlides - (this.countVisibleSlides - this.slideScroll)) / this.slideScroll;
-    this.countScreens = Math.ceil((this.countSlides - (this.countVisibleSlides - this.slideScroll)) / this.slideScroll);
-    this.ceilScreens = Number.isInteger(countScreens);
-    this.shareProgress = 100 / this.countScreens;
-    this.slideActive = 0;
-    this.screenActive = 1;
-  
-    if (sliderSelector.length < 1) {
-      return console.error('Не указан селектор слайдера');
+    this.mainNode = document.querySelector(selector);
+    this.prevBtnNode = this.mainNode.querySelector('.js-prevBtn');
+    this.nextBtnNode = this.mainNode.querySelector('.js-nextBtn');
+    this.tapeNode = this.mainNode.querySelector('.js-tape');
+    this.slideNodes = this.mainNode.querySelectorAll('.js-slide');
+    
+    this.countSlides = this.slideNodes.length;
+    this.countScreens = this.countSlides;
+    
+    if (this.isTrack) {
+      this.countVisibleSlides = 1;
+      this.countScreens = Math.ceil((this.countSlides - (this.countVisibleSlides - this.countSlidesScroll)) / this.countSlidesScroll);
+      this.visibleAreaNode = this.mainNode.querySelector('.js-visibleArea');
     }
   
-    if (!this.node) {
-      return console.error(`Не удалось найти контейнер слайдера с селектором: ${sliderSelector}`);
-    }
-  
-    if (!this.prevBtnNode) {
-      return console.error('Не удалось найти элемент кнопки переключения предыдущего слайда, который должен иметь селектор .js-prevSlide');
-    }
-  
-    if (!this.nextBtnNode) {
-      return console.error('Не удалось найти элемент кнопки переключения следующего слайда, который должен иметь селектор .js-nextSlide');
-    }
-  
-    if (!this.visibleAreaNode) {
-      console.warn('Не удалось найти элемент видимой области слайдера, который должен иметь селектор .js-visibleAreaSlider');
-    }
-  
-    if (!this.tapeNode) {
-      console.warn('Не удалось найти элемент видимой области слайдера, который должен иметь селектор .js-tapeSlider');
+    if (this.progress) {
+      this.shareProgress = 100 / this.countScreens;
+      this.progressNode = this.mainNode.querySelector('.js-progress');
+      this.progressNode.style.setProperty('--share', `${this.shareProgress}%`);
+      this.progressNode.style.setProperty('--progress', `0%`);
     }
   
     if (this.navigate) {
-      this.navNodes = this.node.querySelectorAll('.js-itemNavSlider');
-    
-      if (this.navNodes.length !== this.countSlides) {
-        console.warn(`
-          Внимание! Количество слайдов и элементов навигации по слайдам не соответствует. Необходимо это исправить во
-          избежание ошибок работы слайдера.
-        `);
-      } else {
-        this.navigateInitial = true;
-      }
-    }
-
-    if (this.progress) {
-      this.progressNode = this.node.querySelector('.js-progressSlider');
+      this.navigateItemNodes = this.mainNode.querySelectorAll('.js-itemNavigate');
       
-      if (!this.progressNode) {
-        console.warn('Не удалось найти прогресс-бар слайдера, который должен иметь селектор .js-progressSlider');
-      } else {
-        this.progressInitial = true;
-      }
+      this.navigateItemNodes.forEach((item, index) => {
+        item.addEventListener('click', () => this.switchScreen(index + 1));
+      })
     }
   
-    this.nextBtnNode.addEventListener('click', () => this.handleSwitch(this.screenActive + 1));
-    this.prevBtnNode.addEventListener('click', () => this.handleSwitch(this.screenActive - 1));
+    if (this.onSwitch) {
+      const slide = this.slideNodes[0];
+      this.onSwitch([slide]);
+    }
+    
+    this.prevBtnNode.addEventListener('click', () => this.switchScreen(this.activeScreen - 1));
+    this.nextBtnNode.addEventListener('click', () => this.switchScreen(this.activeScreen + 1));
   
-    switch (this.type) {
+    //this.nextBtnNode.addEventListener('click', () => this.handleSwitch(this.screenActive + 1));
+    //this.prevBtnNode.addEventListener('click', () => this.handleSwitch(this.screenActive - 1));
+  
+    /*switch (this.type) {
       case 'switchClass': {
-        this.countVisibleSlides = 1;
-        this.slideScroll = 1;
         this.handleSwitch = this.getSwitcher(this.switchClass);
         this.tapeNode = true;
         if (this.navigateInitial) {
@@ -113,12 +88,48 @@ export default class Slider {
         this.handleSwitch = this.getSwitcher(this.verticalTrackSwitch);
         break;
       }
+    }*/
+  }
+  
+  switchScreen = (targetScreen) => {
+    const prevScreen = this.activeScreen;
+    
+    this.activeScreen = targetScreen;
+    
+    if (targetScreen > this.countScreens) {
+      this.activeScreen = 1;
     }
     
-    if (this.progressInitial) {
-      this.progressNode.style.setProperty('--share', `${this.shareProgress}%`);
-      this.progressNode.style.setProperty('--progress', `0%`);
+    if (targetScreen < 1) {
+      this.activeScreen = this.countScreens;
     }
+  
+    this.setActiveClass(prevScreen, 'remove');
+    const slides = this.setActiveClass(this.activeScreen, 'add');
+  
+    if (this.onSwitch) {
+      this.onSwitch(slides);
+    }
+  }
+  
+  setActiveClass = (screen, action) => {
+    let current = screen * this.countVisibleSlides;
+    const end = screen * this.countVisibleSlides + this.countVisibleSlides;
+    const members = [];
+  
+    if (this.navigate) {
+      this.navigateItemNodes[screen - 1].classList[action]('active');
+    }
+    
+    while (current < end) {
+      const slide = this.slideNodes[current - 1];
+      
+      members.push(slide);
+      slide.classList[action]('active');
+      current++;
+    }
+    
+    return members;
   }
   
   getSwitcher = (handler) => {
@@ -188,7 +199,8 @@ export default class Slider {
     generalActions(oldSlide, this.slideActive);
   }
   
-  verticalTrackSwitch = (targetScreen, generalActions) => {if (targetScreen > this.screenActive) {
+  verticalTrackSwitch = (targetScreen, generalActions) => {
+    if (targetScreen > this.screenActive) {
       if (targetScreen > this.countScreens) {
         this.positionTape = 0;
         this.screenActive = 1;

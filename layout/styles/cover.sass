@@ -48,9 +48,19 @@
         background: linear-gradient(180deg, rgba(1, 3, 60, 0.65) 0%, #01033C 100%)
 
   &.activeVideo
+    & .video, & .img
+      transition: 1s ease-in
+      transition-property: opacity, visibility
+
     & .video
       opacity: 1
       visibility: visible
+      z-index: $ZIndex-Cover-ActiveVideo-Element
+
+    & .img
+      opacity: 0
+      visibility: hidden
+      z-index: $ZIndex-Cover-ActiveVideo-Element
 
   & .img, & .video
     width: 100%
