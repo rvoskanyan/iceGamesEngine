@@ -6,25 +6,43 @@ import Tabs from "./Tabs";
 import './../styles/index.sass';
 
 const switchHomeSlider = async (slides) => {
+  //const slideNode = slides[0];
+  //const videoName = slideNode.dataset.videoName;
+  //const videoNode = document.createElement('video');
+  //const sourceNode = document.createElement('source');
+  //
+  //const response = await fetch(`http://185.251.88.215:4000/${videoName}`);
+  //const video = await response.blob();
+  //const url = URL.createObjectURL(video);
+  //
+  //videoNode.setAttribute('class', 'video');
+  //videoNode.setAttribute('muted', 'true');
+  //videoNode.setAttribute('autoplay', '');
+  //videoNode.setAttribute('loop', '');
+  //sourceNode.setAttribute('src', url);
+  //videoNode.append(sourceNode);
+  //slideNode.classList.add('activeVideo');
+  //
+  //slideNode.prepend(videoNode);
+  //await videoNode.play();
+  
   const slideNode = slides[0];
   const videoName = slideNode.dataset.videoName;
   const videoNode = document.createElement('video');
   const sourceNode = document.createElement('source');
   
-  const response = await fetch(`http://185.251.88.215:4000/${videoName}`);
-  const video = await response.blob();
-  const url = URL.createObjectURL(video);
-  
   videoNode.setAttribute('class', 'video');
-  videoNode.setAttribute('muted', 'true');
+  videoNode.setAttribute('muted', '');
   videoNode.setAttribute('autoplay', '');
-  videoNode.setAttribute('loop', '');
-  sourceNode.setAttribute('src', url);
   videoNode.append(sourceNode);
-  slideNode.classList.add('activeVideo');
-  
   slideNode.prepend(videoNode);
-  await videoNode.play();
+  sourceNode.setAttribute('src',`http://185.251.88.215:4000/${videoName}`);
+  
+  videoNode.addEventListener('canplaythrough', () => {
+    setTimeout(async () => {
+      slideNode.classList.add('activeVideo');
+    }, 2000)
+  });
 }
 
 const homeSlider = new Slider({
