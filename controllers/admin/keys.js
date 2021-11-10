@@ -36,10 +36,7 @@ const pageAddKey = async (req, res) => {
 
 const addKey = async (req, res) => {
   try {
-    console.log(req.body);
     const {key, gameId} = req.body;
-  
-    console.log(key);
     
     await Key.create({key, productId: gameId});
     

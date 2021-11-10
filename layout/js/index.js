@@ -5,42 +5,52 @@ import Tabs from "./Tabs";
 
 import './../styles/index.sass';
 
+let playVideoTimeOutId;
+
 const homeSlider = new Slider({
   selector: '.js-homeSlider',
   onSwitch: switchHomeSlider,
   progress: true,
   navigate: true,
+  switchingTime: 3000,
 });
 
 function switchHomeSlider(slides, prevSlides = []) {
+  clearTimeout(playVideoTimeOutId);
   const slideNode = slides[0];
-  const prevSlide = prevSlides[0];
-  let videoNode = slideNode.querySelector('.video');
+  const prevSlideNode = prevSlides[0];
+  const videoName = slideNode.dataset.videoName;
+  const videoNode = slideNode.querySelector('.video');
+  let canplaythrough = true;
   
-  if (prevSlide) {
-    prevSlide.classList.remove('activeVideo');
-    prevSlide.querySelector('.video').remove();
+  if (slideNode === prevSlideNode) {
+    return;
   }
   
-  if (!videoNode) {
-    const videoName = slideNode.dataset.videoName;
-    const sourceNode = document.createElement('source');
-    
-    videoNode = document.createElement('video');
-    videoNode.setAttribute('class', 'video');
-    videoNode.setAttribute('muted', '');
-    videoNode.append(sourceNode);
-    slideNode.prepend(videoNode);
-    sourceNode.setAttribute('src',`http://185.251.88.215:4000/${videoName}`);
-  }
+  const onCanplaythrough = () => {
+    if (!canplaythrough) {
+      return;
+    }
   
-  videoNode.addEventListener('canplaythrough', () => {
-    setTimeout(async () => {
+    playVideoTimeOutId = setTimeout(() => {
       slideNode.classList.add('activeVideo');
-      videoNode.play();
       homeSlider.changeTimeoutOnce(videoNode.duration * 1000);
+      videoNode.play();
     }, 2000);
-  });
+    
+    canplaythrough = false;
+  }
+  
+  if (prevSlideNode) {
+    const prevSlideVideoNode = prevSlideNode.querySelector('.video');
+  
+    prevSlideNode.classList.remove('activeVideo');
+    prevSlideVideoNode.removeAttribute('src');
+    prevSlideVideoNode.removeEventListener('canplaythrough', onCanplaythrough);
+  }
+  
+  videoNode.addEventListener('canplaythrough', onCanplaythrough);
+  videoNode.setAttribute('src',`http://185.251.88.215:4000/${videoName}`);
 }
 
 

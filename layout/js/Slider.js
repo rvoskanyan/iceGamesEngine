@@ -20,6 +20,7 @@ export default class Slider {
     this.onSwitch = onSwitch;
     this.activeScreen = 1;
     this.countVisibleSlides = 1;
+    this.timeOutId = null;
   
     this.mainNode = document.querySelector(selector);
     this.prevBtnNode = this.mainNode.querySelector('.js-prevBtn');
@@ -50,16 +51,15 @@ export default class Slider {
         item.addEventListener('click', () => this.switchScreen(index + 1));
       })
     }
-    
-    if (this.switchingTime) {
-      this.timeOutObject = setTimeout(() => {
-        this.switchScreen(this.activeScreen + 1);
-      }, this.switchingTime);
-    }
   
     if (this.onSwitch) {
-      const slide = this.slideNodes[0];
-      this.onSwitch([slide]);
+      this.onSwitch([this.slideNodes[0]]);
+    }
+  
+    if (this.switchingTime) {
+      this.timeOutId = setTimeout(() => {
+        this.switchScreen(this.activeScreen + 1);
+      }, this.switchingTime);
     }
     
     this.prevBtnNode.addEventListener('click', () => this.switchScreen(this.activeScreen - 1));
@@ -98,12 +98,10 @@ export default class Slider {
   }
   
   switchScreen = (targetScreen) => {
-    if (this.timeOutObject) {
-      clearTimeout(this.timeOutObject);
-    }
+    clearTimeout(this.timeOutId);
     
     if (this.switchingTime) {
-      this.timeOutObject = setTimeout(() => {
+      this.timeOutId = setTimeout(() => {
         this.switchScreen(this.activeScreen + 1);
       }, this.switchingTime);
     }
@@ -123,6 +121,8 @@ export default class Slider {
     const prevSlides = this.setActiveClass(prevScreen, 'remove');
     const slides = this.setActiveClass(this.activeScreen, 'add');
   
+    this.progressNode.style.setProperty('--progress', `${this.shareProgress * (this.activeScreen - 1)}%`);
+  
     if (this.onSwitch) {
       this.onSwitch(slides, prevSlides);
     }
@@ -135,6 +135,7 @@ export default class Slider {
   
     if (this.navigate) {
       this.navigateItemNodes[screen - 1].classList[action]('active');
+      this.navigateItemNodes[screen - 1].blur();
     }
     
     while (current < end) {
@@ -149,10 +150,8 @@ export default class Slider {
   }
   
   changeTimeoutOnce = (time) => {
-    if (this.timeOutObject) {
-      clearTimeout(this.timeOutObject);
-    }
-    this.timeOutObject = setTimeout(() => {
+    clearTimeout(this.timeOutId);
+    this.timeOutId = setTimeout(() => {
       this.switchScreen(this.activeScreen + 1);
     }, time);
   }
