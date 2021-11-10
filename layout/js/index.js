@@ -5,14 +5,27 @@ import Tabs from "./Tabs";
 
 import './../styles/index.sass';
 
-const switchHomeSlider = async (slides) => {
+const homeSlider = new Slider({
+  selector: '.js-homeSlider',
+  onSwitch: switchHomeSlider,
+  progress: true,
+  navigate: true,
+});
+
+function switchHomeSlider(slides, prevSlides = []) {
   const slideNode = slides[0];
+  const prevSlide = prevSlides[0];
   let videoNode = slideNode.querySelector('.video');
+  
+  if (prevSlide) {
+    prevSlide.classList.remove('activeVideo');
+    prevSlide.querySelector('.video').remove();
+  }
   
   if (!videoNode) {
     const videoName = slideNode.dataset.videoName;
     const sourceNode = document.createElement('source');
-  
+    
     videoNode = document.createElement('video');
     videoNode.setAttribute('class', 'video');
     videoNode.setAttribute('muted', '');
@@ -25,16 +38,10 @@ const switchHomeSlider = async (slides) => {
     setTimeout(async () => {
       slideNode.classList.add('activeVideo');
       videoNode.play();
-    }, 2000)
+      homeSlider.changeTimeoutOnce(videoNode.duration * 1000);
+    }, 2000);
   });
 }
-
-const homeSlider = new Slider({
-  selector: '.js-homeSlider',
-  onSwitch: switchHomeSlider,
-  progress: true,
-  navigate: true,
-});
 
 
 //new Slider({

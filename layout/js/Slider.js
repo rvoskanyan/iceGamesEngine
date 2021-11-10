@@ -50,6 +50,12 @@ export default class Slider {
         item.addEventListener('click', () => this.switchScreen(index + 1));
       })
     }
+    
+    if (this.switchingTime) {
+      this.timeOutObject = setTimeout(() => {
+        this.switchScreen(this.activeScreen + 1);
+      }, this.switchingTime);
+    }
   
     if (this.onSwitch) {
       const slide = this.slideNodes[0];
@@ -92,6 +98,16 @@ export default class Slider {
   }
   
   switchScreen = (targetScreen) => {
+    if (this.timeOutObject) {
+      clearTimeout(this.timeOutObject);
+    }
+    
+    if (this.switchingTime) {
+      this.timeOutObject = setTimeout(() => {
+        this.switchScreen(this.activeScreen + 1);
+      }, this.switchingTime);
+    }
+    
     const prevScreen = this.activeScreen;
     
     this.activeScreen = targetScreen;
@@ -104,11 +120,11 @@ export default class Slider {
       this.activeScreen = this.countScreens;
     }
   
-    this.setActiveClass(prevScreen, 'remove');
+    const prevSlides = this.setActiveClass(prevScreen, 'remove');
     const slides = this.setActiveClass(this.activeScreen, 'add');
   
     if (this.onSwitch) {
-      this.onSwitch(slides);
+      this.onSwitch(slides, prevSlides);
     }
   }
   
@@ -130,6 +146,15 @@ export default class Slider {
     }
     
     return members;
+  }
+  
+  changeTimeoutOnce = (time) => {
+    if (this.timeOutObject) {
+      clearTimeout(this.timeOutObject);
+    }
+    this.timeOutObject = setTimeout(() => {
+      this.switchScreen(this.activeScreen + 1);
+    }, time);
   }
   
   getSwitcher = (handler) => {
