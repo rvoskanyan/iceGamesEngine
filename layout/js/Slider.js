@@ -21,6 +21,7 @@ export default class Slider {
     this.activeScreen = 0;
     this.countVisibleSlides = 1;
     this.timeOutId = null;
+    this.offsetSlide = 0;
   
     this.mainNode = mainNode;
     this.prevBtnNode = this.mainNode.querySelector('.js-prevBtn');
@@ -37,7 +38,6 @@ export default class Slider {
       this.shareSlide = this.slideNodes[0].offsetWidth;
       this.shareVisibleArea = this.visibleAreaNode.offsetWidth;
       this.positionTape = 0;
-      this.offsetSlide = 0;
       
       if (this.isVertical) {
         this.shareSlide = this.slideNodes[0].offsetHeight;
