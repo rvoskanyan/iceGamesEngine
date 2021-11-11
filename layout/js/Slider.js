@@ -37,6 +37,7 @@ export default class Slider {
       this.shareSlide = this.slideNodes[0].offsetWidth;
       this.shareVisibleArea = this.visibleAreaNode.offsetWidth;
       this.positionTape = 0;
+      this.offsetSlide = 0;
       
       if (this.isVertical) {
         this.shareSlide = this.slideNodes[0].offsetHeight;
@@ -150,12 +151,17 @@ export default class Slider {
   }
   
   setActiveClass = (screen, action) => {
-    let current = screen * this.countVisibleSlides;
-    let end = screen * this.countVisibleSlides + this.countVisibleSlides;
+    let current = screen * this.countVisibleSlides - this.offsetSlide;
+    let end = screen * this.countVisibleSlides + this.countVisibleSlides - this.offsetSlide;
     const members = [];
     
+    if (this.activeScreen === 0 && this.offsetSlide) {
+      this.offsetSlide = 0;
+    }
+    
     if (this.isTrack && end > this.countSlides) {
-      current -= end - this.countSlides;
+      this.offsetSlide = end - this.countSlides;
+      current -= this.offsetSlide;
       end = this.countSlides;
     }
   
