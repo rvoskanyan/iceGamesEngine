@@ -65,17 +65,17 @@
                 <div class="uspBlock">{{text}}</div>
             {{/each}}
         </div>
-        <div class="homeSection homeCatalog js-tabs">
+        <div class="homeSection homeCatalog js-homeCatalogTabs">
             <div class="categories">
                 {{#each catalog}}
-                    <button class="btn round border big bg-darkLilac translucent js-tabsBtn{{#if @first}} active{{/if}}" data-target="{{id}}">
+                    <button class="btn round border big bg-darkLilac translucent js-tabBtn{{#if @first}} active{{/if}}" data-target-id="{{id}}">
                         {{name}}
                     </button>
                 {{/each}}
             </div>
             <div class="blocks">
                 {{#each catalog}}
-                    <div class="item js-tabsTarget-{{id}}{{#if @first}} active{{/if}}">
+                    <div class="item js-tabBlock-{{id}}{{#if @first}} active{{/if}}">
                         <div class="gameGrid">
                             {{#each products}}
                                 <a href="/games/{{id}}" class="cardGame big js-itemNavSlider" title="Перейти к странице игры">
@@ -117,14 +117,14 @@
                     class="more btn border rounded big increase translucent bg-darkLilac"
                     title="Открыть каталог со всеми играми"
             >
-                Ещё
+                В каталог
             </a>
         </div>
         <div class="homeSection">
             <div class="homeTitle">Жанры</div>
             <div class="genresSlider js-genresSlider">
-                <div class="visibleArea js-visibleAreaSlider">
-                    <div class="slides js-tapeSlider">
+                <div class="visibleArea js-visibleArea">
+                    <div class="slides js-tape">
                         <div class="slide js-slide active">
                             {{#each genres}}
                                 <a class="genre" href="{{url}}" title="Открыть игры с жанром {{name}}">
@@ -133,7 +133,7 @@
                                         {{name}}
                                     </div>
                                 </a>
-                                {{#if (isSecond @index @last)}}
+                                {{#if (endOfBlock @index 2 @last)}}
                                     </div>
                                     <div class="slide js-slide{{#if (isLess @index 3)}} active{{/if}}">
                                 {{/if}}
@@ -142,9 +142,9 @@
                     </div>
                 </div>
                 <div class="slideControls vertical">
-                    <button class="btn prev js-prevSlide"></button>
-                    <div class="progress js-progressSlider"></div>
-                    <button class="btn next js-nextSlide"></button>
+                    <button class="btn prev js-prevBtn"></button>
+                    <div class="progress js-progress"></div>
+                    <button class="btn next js-nextBtn"></button>
                 </div>
             </div>
         </div>

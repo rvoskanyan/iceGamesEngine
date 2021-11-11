@@ -1,75 +1,34 @@
 export default class Tabs {
   constructor(options) {
     const {
-      nodeTabs,
-      nodesBtn,
-      nodeActiveBtn,
+      mainNode,
     } = options;
     
-    this.nodeTabs = nodeTabs;
-    this.nodesBtn = nodesBtn;
-    this.nodeActiveBtn = nodeActiveBtn;
+    this.mainNode = mainNode;
+    this.tabBtnNodes = this.mainNode.querySelectorAll('.js-tabBtn');
+    this.activeTabBtnNode = this.tabBtnNodes[0];
     
-    this.start();
+    this.tabBtnNodes.forEach(item => {
+      item.addEventListener('click', this.switchTab)
+    });
   }
   
-  start = () => {
-    this.nodesBtn.forEach(item => {
-      item.addEventListener('click', (e) => {
-        if (this.nodeActiveBtn === item) {
-          return;
-        }
-        
-        this.switch(e);
-      })
-    })
-  }
-  
-  switch = (e) => {
-    const btnFrom = this.nodeActiveBtn;
-    const btnTo = e.target;
-    const targetsFrom = this.nodeTabs.querySelectorAll(`.js-tabsTarget-${btnFrom.dataset.target}`);
-    const targetsTo = this.nodeTabs.querySelectorAll(`.js-tabsTarget-${btnTo.dataset.target}`);
+  switchTab = (e) => {
+    const targetNode = e.target;
     
-    btnFrom.classList.remove('active');
-    btnTo.classList.add('active');
-    
-    targetsFrom.forEach(item => {
-      item.classList.add('hide');
-    })
-  
-    targetsTo.forEach(item => {
-      item.classList.remove('hide');
-    })
-  
-    this.nodeActiveBtn = btnTo;
-    
-    const setAttribute = btnTo.dataset.setattribute;
-    
-    if (!setAttribute) {
+    if (this.activeTabBtnNode === targetNode) {
       return;
     }
     
-    this.setAttribute(JSON.parse(setAttribute));
-  }
+    const fromTabId = this.activeTabBtnNode.dataset.targetId;
+    const toTabId = targetNode.dataset.targetId;
+    
+    this.activeTabBtnNode.classList.remove('active');
+    targetNode.classList.add('active');
   
-  setAttribute = (attributes) => {
-    attributes.forEach(({name, value, selectorTarget, children}) => {
-      if (((!name || !name.length) && !children) || !value || !value.length || !selectorTarget || !selectorTarget.length) {
-        return;
-      }
-  
-      const nodeTarget = this.nodeTabs.querySelector(`.js-${selectorTarget}`);
-  
-      if (!nodeTarget) {
-        return;
-      }
-      
-      if (children) {
-        return nodeTarget.innerHTML = value;
-      }
-  
-      nodeTarget.setAttribute(name, value);
-    })
+    this.activeTabBtnNode = targetNode;
+    
+    this.mainNode.querySelector(`.js-tabBlock-${fromTabId}`).classList.remove('active');
+    this.mainNode.querySelector(`.js-tabBlock-${toTabId}`).classList.add('active');
   }
 }

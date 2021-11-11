@@ -14,8 +14,8 @@ const hbs = exphbs.create({
   defaultLayout: 'main',
   extname: 'hbs',
   helpers: {
-    isSecond: (value, last) => {
-      return ((value + 1) % 2 === 0) && !last;
+    endOfBlock: (index, countItems, last) => {
+      return ((index + 1) % countItems === 0) && !last;
     },
     isLess: (valFrom, valTo) => {
       return valFrom < valTo;

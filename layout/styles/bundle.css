@@ -1091,14 +1091,16 @@
   .homeCatalog .blocks .item {
     grid-column: 1/-1;
     grid-row: 1/-1;
-    transition: opacity, visibility .3s ease-in;
+    transition: .3s ease-in;
+    transition-property: opacity, visibility;
     opacity: 0;
     visibility: hidden; }
     .homeCatalog .blocks .item.active {
       opacity: 1;
       visibility: visible; }
-  .homeCatalog .blocks .more {
-    margin: 70px auto 0 auto; }
+
+.homeCatalog .more {
+  margin: 60px auto 0 auto; }
 
 .genresSlider {
   display: flex;
@@ -1119,9 +1121,13 @@
       transition: 1s ease; }
       .genresSlider .visibleArea .slides .slide {
         display: flex;
-        visibility: hidden; }
+        visibility: hidden;
+        opacity: 0;
+        transition: .3s ease-in;
+        transition-property: opacity, visibility; }
         .genresSlider .visibleArea .slides .slide.active {
-          visibility: visible; }
+          visibility: visible;
+          opacity: 1; }
         .genresSlider .visibleArea .slides .slide:nth-child(even) {
           flex-direction: row-reverse; }
         .genresSlider .visibleArea .slides .slide .genre {

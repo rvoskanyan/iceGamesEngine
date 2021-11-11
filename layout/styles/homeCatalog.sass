@@ -12,7 +12,8 @@
     & .item
       grid-column: 1/-1
       grid-row: 1/-1
-      transition: opacity, visibility .3s ease-in
+      transition: .3s ease-in
+      transition-property: opacity, visibility
       opacity: 0
       visibility: hidden
 
@@ -20,5 +21,5 @@
         opacity: 1
         visibility: visible
 
-    & .more
-      margin: 70px auto 0 auto
+  & .more
+    margin: 60px auto 0 auto

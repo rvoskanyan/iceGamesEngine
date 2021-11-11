@@ -1,10 +1,10 @@
 export default class Slider {
   constructor(options) {
     const {
-      selector,
+      mainNode,
       switchingTime,
       isTrack,
-      vertical,
+      isVertical,
       progress,
       navigate,
       countSlidesScroll = 1,
@@ -13,16 +13,16 @@ export default class Slider {
   
     this.switchingTime = switchingTime;
     this.isTrack = isTrack;
-    this.vertical = vertical;
+    this.isVertical = isVertical;
     this.progress = progress;
     this.navigate = navigate;
     this.countSlidesScroll = countSlidesScroll;
     this.onSwitch = onSwitch;
-    this.activeScreen = 1;
+    this.activeScreen = 0;
     this.countVisibleSlides = 1;
     this.timeOutId = null;
   
-    this.mainNode = document.querySelector(selector);
+    this.mainNode = mainNode;
     this.prevBtnNode = this.mainNode.querySelector('.js-prevBtn');
     this.nextBtnNode = this.mainNode.querySelector('.js-nextBtn');
     this.tapeNode = this.mainNode.querySelector('.js-tape');
@@ -32,9 +32,24 @@ export default class Slider {
     this.countScreens = this.countSlides;
     
     if (this.isTrack) {
-      this.countVisibleSlides = 1;
-      this.countScreens = Math.ceil((this.countSlides - (this.countVisibleSlides - this.countSlidesScroll)) / this.countSlidesScroll);
       this.visibleAreaNode = this.mainNode.querySelector('.js-visibleArea');
+      
+      this.shareSlide = this.slideNodes[0].offsetWidth;
+      this.shareVisibleArea = this.visibleAreaNode.offsetWidth;
+      this.positionTape = 0;
+      
+      if (this.isVertical) {
+        this.shareSlide = this.slideNodes[0].offsetHeight;
+        this.shareVisibleArea = this.visibleAreaNode.offsetHeight;
+      }
+      
+      this.countVisibleSlides = this.shareVisibleArea / this.shareSlide;
+      
+      if (this.countSlidesScroll > this.countVisibleSlides) {
+        this.countSlidesScroll = this.countVisibleSlides;
+      }
+      
+      this.countScreens = Math.ceil((this.countSlides - (this.countVisibleSlides - this.countSlidesScroll)) / this.countSlidesScroll);
     }
   
     if (this.progress) {
@@ -48,7 +63,7 @@ export default class Slider {
       this.navigateItemNodes = this.mainNode.querySelectorAll('.js-itemNavigate');
       
       this.navigateItemNodes.forEach((item, index) => {
-        item.addEventListener('click', () => this.switchScreen(index + 1));
+        item.addEventListener('click', () => this.switchScreen(index));
       })
     }
   
@@ -98,48 +113,59 @@ export default class Slider {
   }
   
   switchScreen = (targetScreen) => {
-    clearTimeout(this.timeOutId);
+    const prevScreen = this.activeScreen;
     
+    this.activeScreen = targetScreen;
+    
+    if (targetScreen >= this.countScreens) {
+      this.activeScreen = 0;
+    }
+    
+    if (targetScreen < 0) {
+      this.activeScreen = this.countScreens - 1;
+    }
+  
+    const prevSlides = this.setActiveClass(prevScreen, 'remove');
+    const slides = this.setActiveClass(this.activeScreen, 'add');
+    
+    if (this.progress) {
+      this.progressNode.style.setProperty('--progress', `${this.shareProgress * (this.activeScreen)}%`);
+    }
+  
+    if (this.onSwitch) {
+      this.onSwitch(slides, prevSlides);
+    }
+    
+    if (this.isTrack) {
+      this.moveTape(prevScreen);
+    }
+  
+    clearTimeout(this.timeOutId);
+  
     if (this.switchingTime) {
       this.timeOutId = setTimeout(() => {
         this.switchScreen(this.activeScreen + 1);
       }, this.switchingTime);
     }
-    
-    const prevScreen = this.activeScreen;
-    
-    this.activeScreen = targetScreen;
-    
-    if (targetScreen > this.countScreens) {
-      this.activeScreen = 1;
-    }
-    
-    if (targetScreen < 1) {
-      this.activeScreen = this.countScreens;
-    }
-  
-    const prevSlides = this.setActiveClass(prevScreen, 'remove');
-    const slides = this.setActiveClass(this.activeScreen, 'add');
-  
-    this.progressNode.style.setProperty('--progress', `${this.shareProgress * (this.activeScreen - 1)}%`);
-  
-    if (this.onSwitch) {
-      this.onSwitch(slides, prevSlides);
-    }
   }
   
   setActiveClass = (screen, action) => {
     let current = screen * this.countVisibleSlides;
-    const end = screen * this.countVisibleSlides + this.countVisibleSlides;
+    let end = screen * this.countVisibleSlides + this.countVisibleSlides;
     const members = [];
+    
+    if (this.isTrack && end > this.countSlides) {
+      current -= end - this.countSlides;
+      end = this.countSlides;
+    }
   
     if (this.navigate) {
-      this.navigateItemNodes[screen - 1].classList[action]('active');
-      this.navigateItemNodes[screen - 1].blur();
+      this.navigateItemNodes[screen].classList[action]('active');
+      this.navigateItemNodes[screen].blur();
     }
     
     while (current < end) {
-      const slide = this.slideNodes[current - 1];
+      const slide = this.slideNodes[current];
       
       members.push(slide);
       slide.classList[action]('active');
@@ -149,6 +175,24 @@ export default class Slider {
     return members;
   }
   
+  moveTape = (prevScreen) => {
+    if (this.activeScreen > prevScreen) {
+      if (this.activeScreen + 1 === this.countScreens) {
+        this.positionTape = ((this.countSlides - this.countVisibleSlides) * this.shareSlide) * -1;
+      } else {
+        this.positionTape -= this.countVisibleSlides * this.shareSlide;
+      }
+    } else {
+      if (this.activeScreen === 0) {
+        this.positionTape = 0;
+      } else {
+        this.positionTape += this.countVisibleSlides * this.shareSlide;
+      }
+    }
+    
+    this.tapeNode.style.transform = `translateY(${this.positionTape}px)`;
+  }
+  
   changeTimeoutOnce = (time) => {
     clearTimeout(this.timeOutId);
     this.timeOutId = setTimeout(() => {
@@ -156,108 +200,7 @@ export default class Slider {
     }, time);
   }
   
-  getSwitcher = (handler) => {
-    const generalActions = (oldSlide, newSlide) => {
-      if (this.navigateInitial) {
-        this.navNodes[oldSlide].classList.remove('active');
-        this.navNodes[newSlide].classList.add('active');
-      }
-  
-      if (this.progressInitial) {
-        this.progressNode.style.setProperty('--progress', `${this.shareProgress * newSlide}%`);
-      }
-    }
-    
-    if (this.timeOutValue > 500) {
-      this.timeOut = setTimeout(() => handler(this.slideActive + this.slideScroll), this.timeOutValue);
-      
-      return (...args) => {
-        handler(...args, generalActions);
-        clearTimeout(this.timeOut);
-        this.timeOut = setTimeout(() => handler(this.slideActive + this.slideScroll), this.timeOutValue);
-      }
-    }
-    
-    return (...args) => {
-      handler(...args, generalActions);
-    }
-  }
-  
-  switchClass = (targetSlide, generalActions) => {
-    const oldSlide = this.slideActive;
-    
-    this.slidesNodes[this.slideActive].classList.remove('active');
-    
-    this.slideActive = targetSlide;
-    
-    if (targetSlide >= this.countSlides) {
-      this.slideActive = 0;
-    }
-    
-    if (targetSlide < 0) {
-      this.slideActive = this.countSlides - 1;
-    }
-    
-    this.slidesNodes[this.slideActive].classList.add('active');
-  
-    generalActions(oldSlide, this.slideActive);
-  }
-  
-  trackSwitch = (slide, generalActions) => {
-    const oldSlide = this.slideActive;
-    
-    this.slideActive = slide;
-    
-    if (slide >= this.countSlides) {
-      this.slideActive = 0;
-    }
-    
-    if (slide < 0) {
-      this.slideActive = this.slides.length - 1;
-    }
-    
-    this.positionSliders = -this.slideActive * this.widthSlide
-    
-    this.tape.style.transform = `translateX(${this.positionSliders}px)`;
-  
-    generalActions(oldSlide, this.slideActive);
-  }
-  
-  verticalTrackSwitch = (targetScreen, generalActions) => {
-    if (targetScreen > this.screenActive) {
-      if (targetScreen > this.countScreens) {
-        this.positionTape = 0;
-        this.screenActive = 1;
-      } else {
-        this.positionTape -= (targetScreen - this.screenActive) * this.slideScroll * this.heightSlide;
-        this.screenActive = targetScreen;
-      }
-    } else {
-      if (targetScreen < 1) {
-        this.positionTape = (this.countSlides - this.countVisibleSlides) * -this.heightSlide;
-        this.screenActive = this.countScreens;
-      } else {
-        this.positionTape += (this.screenActive - targetScreen) * this.slideScroll * this.heightSlide;
-        this.screenActive = targetScreen;
-      }
-    }
-    
-    if (targetScreen === this.countScreens) {
-      this.positionTape = (this.countSlides - this.countVisibleSlides) * -this.heightSlide;
-      this.screenActive = this.countScreens;
-    }
-    
-    if (targetScreen === 1) {
-      this.positionTape = 0;
-      this.screenActive = 1;
-    }
-  
-    this.tapeNode.style.transform = `translateY(${this.positionTape}px)`;
-  
-    this.progressNode.style.setProperty('--progress', `${this.shareProgress * (this.screenActive - 1)}%`);
-  }
-  
-  moveTape = (click) => {
+  /*moveTape = (click) => {
     const targetClick = click.pageX;
     
     let translateX = 0;
@@ -312,5 +255,5 @@ export default class Slider {
       
       this.tape.style.transform = `translate(${this.positionSliders}px, 0)`;
     }
-  }
+  }*/
 }
