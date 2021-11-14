@@ -4,7 +4,7 @@ const {
   Category,
   Genre,
 } = require('../../models/index');
-const Config = require('./../../config');
+const {websiteAddress} = require('./../../config');
 
 const renderHome = async (req, res) => {
   const sliderGames = await Product.findAll({
@@ -34,7 +34,7 @@ const renderHome = async (req, res) => {
   
   res.render('home', {
     title: "ICE Games -- магазин ключей",
-    websiteAddress: Config.websiteAddress,
+    websiteAddress,
     isHome: true,
     sliderGames: sliderGames.map(item => item.dataValues),
     usp: usp.map(item => item.dataValues),
