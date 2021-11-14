@@ -71,8 +71,8 @@ const addProduct = async (req, res) => {
     const {
       name,
       description,
-      price,
-      discount,
+      priceTo,
+      priceFrom,
       inHomeSlider,
       releaseDate,
       os,
@@ -111,8 +111,8 @@ const addProduct = async (req, res) => {
     const product = await Product.create({
       name,
       description,
-      price,
-      discount,
+      priceTo,
+      priceFrom,
       inHomeSlider: inHomeSlider === "on",
       releaseDate,
       cpu,
@@ -404,8 +404,8 @@ const editProduct = async (req, res) => {
     const {
       name,
       description,
-      price,
-      discount,
+      priceTo,
+      priceFrom,
       inHomeSlider,
       releaseDate,
       os,
@@ -427,8 +427,8 @@ const editProduct = async (req, res) => {
     const values = {
       name,
       description,
-      price,
-      discount,
+      priceTo,
+      priceFrom,
       inHomeSlider: inHomeSlider === "on",
       releaseDate,
       os,
