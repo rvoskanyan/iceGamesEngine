@@ -1,4 +1,5 @@
 import Slider from "./Slider";
+import Config from "./config";
 import ContextMenuController from "./ContextMenuController";
 import TextField from "./TextField";
 import Tabs from "./Tabs";
@@ -55,7 +56,7 @@ if (homeSliderNode) {
     }
     
     videoNode.addEventListener('canplaythrough', onCanplaythrough);
-    videoNode.setAttribute('src',`http://185.251.88.215:4000/${videoName}`);
+    videoNode.setAttribute('src',`${Config.websiteAddress}${videoName}`);
   }
 }
 

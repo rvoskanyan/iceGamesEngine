@@ -1,336 +1,714 @@
-<main>
-    <div class="contentContainer breadcrumbs">
-        <a href="/" class="item link btn" title="Перейти к странице">Главная</a>
-        <a href="/game" class="item link btn" title="Перейти к странице">Каталог</a>
-        <div class="item">{{game.name}}</div>
+<main class="gamePage">
+    <div class="breadcrumbs contentContainer">
+        <div class="item">
+            <a class="btn link" href="/">Главная</a>
+        </div>
+        <div class="item">
+            <a class="btn link" href="/games">Каталог</a>
+        </div>
+        <div class="current">
+            {{game.name}}
+        </div>
     </div>
-    <div class="headCover blackout horizontal vertical maxHeight gamePage">
-        <!--<video class="video" autoplay muted loop>
-            <source type="video/mp4" src="https://icegames.store/wp-content/uploads/2021/07/cut.mp4">
-        </video>-->
-        <img class="img" src="/{{game.coverImg}}" alt="Phoenix Point: Year One Edition" title="Phoenix Point: Year One Edition">
+    <div class="cover blackout blackout-left blackout-bottom slide active js-slide">
+        <img class="img" src="{{websiteAddress}}{{game.coverImg}}" alt="{{game.name}}" title="{{game.name}}">
         <div class="offer">
-            {{#if hasKits}}
-                <div class="variations">
-                    <div class="item">
-                        {{#if mainGameId}}
-                            <a href='/games/{{mainGameId}}' class="btn rounded translucent bg-darkBlue">Standard</a>
-                        {{else}}
-                            <div class="btn rounded translucent bg-darkBlue active">Standard</div>
-                        {{/if}}
+            <div class="packages">
+                <div class="btn rounded translucent bg-paleBlue active package">Standard</div>
+                <div class="tooltip package">
+                    <a href="#" class="btn rounded translucent bg-paleBlue">Ultima edition</a>
+                    <div class="prompt">
+                        <ul class="list">
+                            <li class="item">Guccci halat</li>
+                            <li class="item">3 кг отборной ганжи</li>
+                            <li class="item">2 М16 с доставкой</li>
+                            <li class="item">Номер в отеле “Юстина”</li>
+                        </ul>
                     </div>
-                    {{#each kits}}
-                        <div class="item">
-                            {{#if isCurrent}}
-                                <div class="btn rounded translucent bg-darkBlue active">{{nameKit}}</div>
-                            {{else}}
-                                <a href='/games/{{kit.ProductId}}' class="btn rounded translucent bg-darkBlue">{{nameKit}}</a>
-                                <div class="elems">
-                                    {{#each elements}}
-                                        <div class="item">{{this}}</div>
-                                    {{/each}}
-                                </div>
-                            {{/if}}
-                        </div>
-                    {{/each}}
                 </div>
-            {{/if}}
-            <div class="name">
-                {{game.name}}
-                <span class="rate">
-                    <span class="name">Ice Games</span>
-                    <span class="value">4.5</span>
-                </span>
-                <span class="rate">
-                    <span class="name">Metacritic</span>
-                    <span class="value">83</span>
-                </span>
+                <div class="tooltip package">
+                    <a href="#" class="btn rounded translucent bg-paleBlue">Premium edition</a>
+                    <div class="prompt">
+                        <ul class="list">
+                            <li class="item">Guccci halat</li>
+                            <li class="item">3 кг отборной ганжи</li>
+                            <li class="item">2 М16 с доставкой</li>
+                            <li class="item">Номер в отеле “Юстина”</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
+            <div class="name">{{game.name}}</div>
             <div class="statuses">
-                {{#if inStock}}
-                    <div class="item positive">В наличии</div>
-                {{else}}
-                    <div class="item negative">Нет в наличии</div>
-                {{/if}}
-                <div class="item positive">Данный товар купили сегодня 30 раз</div>
+                <div class="status positive">В наличии</div>
+                <div class="status positive">Данный товар купили сегодня 30 раз</div>
             </div>
-            <div class="description">{{game.description}}</div>
-            <div class="bottomContainer">
-                <div class="price">
-                    <div class="toPrice">
-                        <span class="value">{{game.price}}</span>
-                    </div>
-                    <div class="fromPrice">
-                        <span class="value">1300</span>
-                    </div>
-                    <div class="discount">{{game.discount}}</div>
+            <div class="description">
+                {{game.description}}
+            </div>
+            <div class="price">
+                <div class="toPrice">
+                    <span class="value">
+                        {{game.priceTo}}
+                    </span>
                 </div>
-                <div class="actions">
-                    <button title="Добавить игру в корзину покупок" class="goToPay btn rounded increase bg-pink hover-backlight-blue">В корзину</button>
+                <div class="fromPrice">
+                    <span class="value">
+                        {{game.priceFrom}}
+                    </span>
                 </div>
+                <div class="discount">
+                    {{game.discount}}
+                </div>
+            </div>
+            <div class="actions">
+                <button title="Добавить игру в корзину покупок" class="btn rounded increase bg-pink hover-backlight-blue">В корзину</button>
             </div>
             {{#if hasExtends}}
                 <div class="extends">
-                    {{#each gameExtends}}
-                        <div class="item">
-                            <img src="/{{icon}}" alt="Игра с геймпадом" title="Игра с геймпадом">
-                            <div class="description">{{name}}</div>
+                    {{#each extends}}
+                        <div class="tooltip">
+                            <button class="btn extend">
+                                <img  class="img" src="{{websiteAddress}}{{icon}}" alt="{{text}}" title="{{text}}">
+                            </button>
+                            <div class="prompt">
+                                {{name}}
+                            </div>
                         </div>
                     {{/each}}
                 </div>
             {{/if}}
         </div>
     </div>
-    <div class="contentContainer gridGamePage">
-        <div class="head">
-            <div class="gallery">
-                <input type="button" class="arrowBlue prev" title="Предыдущий слайд">
-                <div class="tape">
-                    <img class="item" src="/img/gamePageGallery-1.png" alt="Первый" title="Первый">
-                    <img class="item" src="/img/gamePageGallery-2.png" alt="Второй" title="Второй">
+    <div class="contentContainer">
+        <div class="main infoBlock">
+            <ul class="fieldedList">
+                <li class="item">
+                    <div class="name">Язык:</div>
+                    <div class="value">
+                        {{#each languages}}
+                            {{#if @last}}
+                                {{name}}
+                            {{else}}
+                                {{name}},
+                            {{/if}}
+                        {{/each}}
+                    </div>
+                </li>
+                <li class="item">
+                    <div class="name">Регион активации:</div>
+                    <div class="value">
+                        {{#each regions}}
+                            {{#if @last}}
+                                {{name}}
+                            {{else}}
+                                {{name}},
+                            {{/if}}
+                        {{/each}}
+                    </div>
+                </li>
+                <li class="item">
+                    <div class="name">Сервис активации:</div>
+                    <div class="value">
+                        {{service.name}}
+                    </div>
+                </li>
+                <li class="item">
+                    <div class="name">Жанр:</div>
+                    <div class="value">
+                        {{#each genres}}
+                            {{#if @last}}
+                                {{name}}
+                            {{else}}
+                                {{name}},
+                            {{/if}}
+                        {{/each}}
+                    </div>
+                </li>
+                <li class="item">
+                    <div class="name">Платформа:</div>
+                    <div class="value">
+                        {{platform.name}}
+                    </div>
+                </li>
+                <li class="item">
+                    <div class="name">Издатель:</div>
+                    <div class="value">
+                        {{publisher.name}}
+                    </div>
+                </li>
+                <li class="item">
+                    <div class="name">Дата выхода:</div>
+                    <div class="value">
+                        {{game.releaseDate}}
+                    </div>
+                </li>
+            </ul>
+            <div class="gallerySlider">
+                <button class="btn prev increase">
+                    <span class="icon-static icon-static-arrow"></span>
+                </button>
+                <div class="visibleArea">
+                    <div class="tape">
+                        <div class="slideWrapper active">
+                            <div class="slide active">
+                                <button class="btn increase video" title="Открыть на весь экран">
+                                    <img class="img" src="/img/gamePageGallery-1.png" alt="Фото из галереи игы">
+                                </button>
+                            </div>
+                        </div>
+                        <div class="slideWrapper active">
+                            <div class="slide active">
+                                <button class="btn increase" title="Открыть на весь экран">
+                                    <img class="img" src="/img/gamePageGallery-2.png" alt="Фото из галереи игы">
+                                </button>
+                            </div>
+                        </div>
+                        <div class="slideWrapper">
+                            <div class="slide">
+                                <button class="btn increase" title="Открыть на весь экран">
+                                    <img class="img" src="/img/gamePageGallery-2.png" alt="Фото из галереи игы">
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <input type="button" class="arrowBlue next" title="Следующий слайд">
-                <div class="progress"></div>
-            </div>
-            <div class="metaDescription">
-                <div class="input">Язык:</div>
-                <div class="value">
-                    {{#each languages}}
-                        {{name}}{{#if @last}}{{else}},{{/if}}
-                    {{/each}}
-                </div>
-                <div class="input">Регион активации:</div>
-                <div class="value">
-                    {{#each regions}}
-                        {{name}}{{#if @last}}{{else}},{{/if}}
-                    {{/each}}
-                </div>
-                <div class="input">Сервис активации:</div>
-                <div class="value">
-                    {{activationService.name}}
-                </div>
-                <div class="input">Жанр:</div>
-                <div class="value">Экшн</div>
-                <div class="input">Платформа:</div>
-                <div class="value">PC</div>
-                <div class="input">Издатель:</div>
-                <div class="value">Gucci Gang Gaming</div>
+                <button class="btn next increase">
+                    <span class="icon-static icon-static-arrow"></span>
+                </button>
             </div>
         </div>
-        <div class="information">
-            <div class="tabs">
-                <div class="nav">
-                    <button class="btn uppercase translucent active">Об игре</button>
-                    <button class="btn uppercase translucent">Активация</button>
-                    <button class="btn uppercase translucent">СОСТАВ НАБОРА</button>
-                    <button class="btn uppercase translucent">сЕРИИ ИГР</button>
-                </div>
-                <div class="blocks">
-                    <div class="item active">
-                        <p class="paragraph">
-                            Phoenix Point: Year One Edition — самое полное издание знаменитой стратегии от создателя
-                            X-COM, которое включает в себя все предыдущие дополнения, обновления и дополнительный
-                            контент.
-                        </p>
-                        <p class="paragraph">
-                            Земля была захвачена. Мутирующая инопланетная угроза угрожает последним остаткам
-                            человечества. Только «Проект Феникс» — секретная организация, состоящая из лучших умов и
-                            самых храбрых солдат, оставшихся на Земле, может дать отпор инопланетянам и остановить
-                            неизбежное. Вам предстоит возглавить Проект Феникс, чтобы исследовать и разрабатывать новые
-                            технологии и методики, исследовать опустошенный земной шар, управлять ресурсами и сражаться
-                            в тяжелых битвах.
-                        </p>
-                        <p class="paragraph">
-                            Но вам не придется это делать в одиночку. Фракции, в том числе Новый Иерихон, Синедрион и
-                            Последователи Ану, а также их ответвления имеют свои собственные ценности и взгляды на
-                            Пандоранов. Вы можете сотрудничать с фракциями благодаря системе дипломатии в Phoenix Point
-                            или просто сокрушить всех вокруг своей военной мощью. Что бы вы ни выбрали, победа не дастся
-                            вам легко.
-                        </p>
+        <div class="fullInfo">
+            <div class="sideBar">
+                <div class="doubleGameSlider">
+                    <div class="title">Вам может понравится</div>
+                    <div class="slider">
+                        <div class="visibleAreaWrapper">
+                            <div class="visibleArea">
+                                <div class="tape">
+                                    <div class="slide active">
+                                        <a href="#" class="cardGame small" title="Перейти к странице игры">
+                                            <div class="actions">
+                                                <button class="btn like" title="Добавить игру в избранное">
+                                                    <span class="icon-static icon-static-actionLike"></span>
+                                                </button>
+                                                <button
+                                                        class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart small"
+                                                        title="Добавить данный товар в корзину покупок"
+                                                >
+                                                    В корзину
+                                                </button>
+                                            </div>
+                                            <div class="head">
+                                                <img class="img" src="/img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
+                                                <div class="name">Doom ETERNAL</div>
+                                            </div>
+                                            <div class="price">
+                                                <div class="toPrice">
+                                                    <span class="value">999</span>
+                                                </div>
+                                                <div class="fromPrice">
+                                                    <span class="value">1300</span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="slide active">
+                                        <a href="#" class="cardGame small" title="Перейти к странице игры">
+                                            <div class="actions">
+                                                <button class="btn like" title="Добавить игру в избранное">
+                                                    <span class="icon-static icon-static-actionLike"></span>
+                                                </button>
+                                                <button
+                                                        class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart small"
+                                                        title="Добавить данный товар в корзину покупок"
+                                                >
+                                                    В корзину
+                                                </button>
+                                            </div>
+                                            <div class="head">
+                                                <img class="img" src="/img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
+                                                <div class="name">Doom ETERNAL</div>
+                                            </div>
+                                            <div class="price">
+                                                <div class="toPrice">
+                                                    <span class="value">999</span>
+                                                </div>
+                                                <div class="fromPrice">
+                                                    <span class="value">1300</span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="slide">
+                                        <a href="#" class="cardGame small" title="Перейти к странице игры">
+                                            <div class="actions">
+                                                <button class="btn like" title="Добавить игру в избранное">
+                                                    <span class="icon-static icon-static-actionLike"></span>
+                                                </button>
+                                                <button
+                                                        class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart small"
+                                                        title="Добавить данный товар в корзину покупок"
+                                                >
+                                                    В корзину
+                                                </button>
+                                            </div>
+                                            <div class="head">
+                                                <img class="img" src="/img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
+                                                <div class="name">Doom ETERNAL</div>
+                                            </div>
+                                            <div class="price">
+                                                <div class="toPrice">
+                                                    <span class="value">999</span>
+                                                </div>
+                                                <div class="fromPrice">
+                                                    <span class="value">1300</span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slideControls">
+                            <button class="btn prev"></button>
+                            <div class="progress"></div>
+                            <button class="btn next"></button>
+                        </div>
                     </div>
-                    <div class="item">
-                        <ul class="list">
-                            <li class="item">Если у вас не установлен Steam клиент, скачайте и установите его. Если у вас не установлен Steam клиент, скачайте и установите его.</li>
+                </div>
+            </div>
+            <div class="info">
+                <div class="generalInfo tabs">
+                    <div class="nav">
+                        <button class="btn round border big translucent active">Об игре</button>
+                        <button class="btn round border big translucent">Активация</button>
+                        <button class="btn round border big translucent">Состав набора</button>
+                        <button class="btn round border big translucent">Серии игр</button>
+                    </div>
+                    <div class="blocks totalHeight infoBlock">
+                        <div class="item active">
+                            <p class="paragraph">
+                                {{game.description}}
+                            </p>
+                        </div>
+                        <ul class="item bulletedList">
+                            <li class="item">Если у вас не установлен Steam клиент, скачайте и установите его.</li>
                             <li class="item">Войдите в свой аккаунт Steam или зарегистрируйте новый, если у вас его нет.</li>
                             <li class="item">Перейдите в раздел "Игры" и выберите "Активировать через Steam...".</li>
                             <li class="item">Введите ключ активации.</li>
                             <li class="item">После этого игра будет в вашей библиотеке Steam, и вы сможете скачать.</li>
                         </ul>
-                    </div>
-                    <div class="item">
-                        <h3 class="title">Gucci edition</h3>
-                        <ul class="list">
-                            <li class="item">Набор гитлера</li>
-                            <li class="item">Адская носоглотка</li>
-                            <li class="item">Крепкий орешек</li>
-                            <li class="item">Копье ануса</li>
-                        </ul>
-                    </div>
-                    <div class="item">
-                        <div class="slider">
-                            <input type="button" class="arrowBlue prev" title="Предыдущий слайд">
-                            <div class="tape">
-                                <div class="item">
-                                    <div class="cardGame small">
-                                        <div class="actions">
-                                            <button class="btn like">
-                                                <span class="likeIcon"></span>
-                                            </button>
-                                            <button class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart" title="Добавить данный товар в корзину покупок">В корзину</button>
-                                        </div>
-                                        <div class="cover">
-                                            <img src="/img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
-                                            <div class="name">Doom ETERNAL</div>
-                                        </div>
-                                        <div class="price">
-                                            <div class="toPrice">
-                                                <span class="value">999</span>
+                        <div class="item">
+                            <div class="btn rounded bg-paleBlue package">Ultima edition</div>
+                            <ul class="bulletedList">
+                                <li class="item">Набор гитлера</li>
+                                <li class="item">Адская носоглотка</li>
+                                <li class="item">Крепкий орешек</li>
+                                <li class="item">Копье ануса</li>
+                            </ul>
+                        </div>
+                        <div class="item">
+                            <div class="slider">
+                                <button class="btn prev increase">
+                                    <span class="icon-static icon-static-arrow"></span>
+                                </button>
+                                <div class="visibleAreaWrapper">
+                                    <div class="visibleArea">
+                                        <div class="tape">
+                                            <div class="slide active">
+                                                <a href="#" class="cardGame small" title="Перейти к странице игры">
+                                                    <div class="actions">
+                                                        <button class="btn like" title="Добавить игру в избранное">
+                                                            <span class="icon-static icon-static-actionLike"></span>
+                                                        </button>
+                                                        <button
+                                                                class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart small"
+                                                                title="Добавить данный товар в корзину покупок"
+                                                        >
+                                                            В корзину
+                                                        </button>
+                                                    </div>
+                                                    <div class="head">
+                                                        <img class="img" src="/img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
+                                                        <div class="name">Doom ETERNAL</div>
+                                                    </div>
+                                                    <div class="price">
+                                                        <div class="toPrice">
+                                                            <span class="value">999</span>
+                                                        </div>
+                                                        <div class="fromPrice">
+                                                            <span class="value">1300</span>
+                                                        </div>
+                                                    </div>
+                                                </a>
                                             </div>
-                                            <div class="fromPrice">
-                                                <span class="value">1300</span>
+                                            <div class="slide active">
+                                                <a href="#" class="cardGame small" title="Перейти к странице игры">
+                                                    <div class="actions">
+                                                        <button class="btn like" title="Добавить игру в избранное">
+                                                            <span class="icon-static icon-static-actionLike"></span>
+                                                        </button>
+                                                        <button
+                                                                class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart small"
+                                                                title="Добавить данный товар в корзину покупок"
+                                                        >
+                                                            В корзину
+                                                        </button>
+                                                    </div>
+                                                    <div class="head">
+                                                        <img class="img" src="/img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
+                                                        <div class="name">Doom ETERNAL</div>
+                                                    </div>
+                                                    <div class="price">
+                                                        <div class="toPrice">
+                                                            <span class="value">999</span>
+                                                        </div>
+                                                        <div class="fromPrice">
+                                                            <span class="value">1300</span>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="slide active">
+                                                <a href="#" class="cardGame small" title="Перейти к странице игры">
+                                                    <div class="actions">
+                                                        <button class="btn like" title="Добавить игру в избранное">
+                                                            <span class="icon-static icon-static-actionLike"></span>
+                                                        </button>
+                                                        <button
+                                                                class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart small"
+                                                                title="Добавить данный товар в корзину покупок"
+                                                        >
+                                                            В корзину
+                                                        </button>
+                                                    </div>
+                                                    <div class="head">
+                                                        <img class="img" src="/img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
+                                                        <div class="name">Doom ETERNAL</div>
+                                                    </div>
+                                                    <div class="price">
+                                                        <div class="toPrice">
+                                                            <span class="value">999</span>
+                                                        </div>
+                                                        <div class="fromPrice">
+                                                            <span class="value">1300</span>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="slide active">
+                                                <a href="#" class="cardGame small" title="Перейти к странице игры">
+                                                    <div class="actions">
+                                                        <button class="btn like" title="Добавить игру в избранное">
+                                                            <span class="icon-static icon-static-actionLike"></span>
+                                                        </button>
+                                                        <button
+                                                                class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart small"
+                                                                title="Добавить данный товар в корзину покупок"
+                                                        >
+                                                            В корзину
+                                                        </button>
+                                                    </div>
+                                                    <div class="head">
+                                                        <img class="img" src="/img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
+                                                        <div class="name">Doom ETERNAL</div>
+                                                    </div>
+                                                    <div class="price">
+                                                        <div class="toPrice">
+                                                            <span class="value">999</span>
+                                                        </div>
+                                                        <div class="fromPrice">
+                                                            <span class="value">1300</span>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="slide">
+                                                <a href="#" class="cardGame small" title="Перейти к странице игры">
+                                                    <div class="actions">
+                                                        <button class="btn like" title="Добавить игру в избранное">
+                                                            <span class="icon-static icon-static-actionLike"></span>
+                                                        </button>
+                                                        <button
+                                                                class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart small"
+                                                                title="Добавить данный товар в корзину покупок"
+                                                        >
+                                                            В корзину
+                                                        </button>
+                                                    </div>
+                                                    <div class="head">
+                                                        <img class="img" src="/img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
+                                                        <div class="name">Doom ETERNAL</div>
+                                                    </div>
+                                                    <div class="price">
+                                                        <div class="toPrice">
+                                                            <span class="value">999</span>
+                                                        </div>
+                                                        <div class="fromPrice">
+                                                            <span class="value">1300</span>
+                                                        </div>
+                                                    </div>
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="item">
-                                    <div class="cardGame small">
-                                        <div class="actions">
-                                            <button class="btn like">
-                                                <span class="likeIcon"></span>
-                                            </button>
-                                            <button class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart" title="Добавить данный товар в корзину покупок">В корзину</button>
-                                        </div>
-                                        <div class="cover">
-                                            <img src="/img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
-                                            <div class="name">Doom ETERNAL</div>
-                                        </div>
-                                        <div class="price">
-                                            <div class="toPrice">
-                                                <span class="value">999</span>
-                                            </div>
-                                            <div class="fromPrice">
-                                                <span class="value">1300</span>
-                                            </div>
-                                        </div>
+                                <button class="btn next increase">
+                                    <span class="icon-static icon-static-arrow"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="systemInfo">
+                    <div class="btn border round big title">Системные требования</div>
+                    <ul class="fieldedList infoBlock">
+                        {{#if game.os}}
+                            <li class="item">
+                                <div class="name">ОС:</div>
+                                <div class="value">
+                                    {{game.os}}
+                                </div>
+                            </li>
+                        {{/if}}
+                        <li class="item">
+                            <div class="name">Процессор:</div>
+                            <div class="value">
+                                {{game.cpu}}
+                            </div>
+                        </li>
+                        <li class="item">
+                            <div class="name">Видеокарта:</div>
+                            <div class="value">
+                                {{game.graphicsCard}}
+                            </div>
+                        </li>
+                        <li class="item">
+                            <div class="name">Оперативная память:</div>
+                            <div class="value">
+                                {{game.ram}}
+                            </div>
+                        </li>
+                        <li class="item">
+                            <div class="name">Место на диске:</div>
+                            <div class="value">
+                                {{game.diskMemory}}
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="feedback tabs">
+                    <div class="nav">
+                        <button class="btn border round big translucent active">Отзывы</button>
+                        <button class="btn border round big translucent">Комментарии</button>
+                    </div>
+                    <div class="blocks">
+                        <div class="item reviews active">
+                            <form action="#" method="post" class="addNew infoBlock locked">
+                                <div class="starRating error">
+                                    <div class="label">Оцените игру</div>
+                                    <div class="stars">
+                                        <input class="input" type="radio" name="rating" value="5" id="star5">
+                                        <label class="star" for="star5">
+                                            <span class="icon icon-star"></span>
+                                        </label>
+                                        <input class="input" type="radio" name="rating" value="5" id="star4">
+                                        <label class="star" for="star4">
+                                            <span class="icon icon-star"></span>
+                                        </label>
+                                        <input class="input" type="radio" name="rating" value="5" id="star3">
+                                        <label class="star" for="star3">
+                                            <span class="icon icon-star"></span>
+                                        </label>
+                                        <input class="input" type="radio" name="rating" value="5" id="star2">
+                                        <label class="star" for="star2">
+                                            <span class="icon icon-star"></span>
+                                        </label>
+                                        <input class="input" type="radio" name="rating" value="5" id="star1">
+                                        <label class="star" for="star1">
+                                            <span class="icon icon-star"></span>
+                                        </label>
                                     </div>
                                 </div>
-                                <div class="item">
-                                    <div class="cardGame small">
-                                        <div class="actions">
-                                            <button class="btn like">
-                                                <span class="likeIcon"></span>
-                                            </button>
-                                            <button class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart" title="Добавить данный товар в корзину покупок">В корзину</button>
-                                        </div>
-                                        <div class="cover">
-                                            <img src="/img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
-                                            <div class="name">Doom ETERNAL</div>
-                                        </div>
-                                        <div class="price">
-                                            <div class="toPrice">
-                                                <span class="value">999</span>
-                                            </div>
-                                            <div class="fromPrice">
-                                                <span class="value">1300</span>
-                                            </div>
+                                <div class="senderField error textReview">
+                                    <div class="autoSizeInput">
+                                        <span class="placeholder">Напишите отзыв до 1000 символов</span>
+                                        <div class="value" contentEditable></div>
+                                    </div>
+                                    <button class="btn" type="submit">
+                                        <span class="icon icon-send"></span>
+                                    </button>
+                                </div>
+                                <div class="lockBlock">
+                                    <span class="icon icon-lock"></span>
+                                    <div class="text">
+                                        Для того, чтобы исключить накрутку, добавление отзыва доступно только после
+                                        покупки игры.
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="listItems">
+                                <div class="item review">
+                                    <div class="head">
+                                        <a class="btn link userName" href="#" title="Перейти на страницу Айс214421">Айс214421</a>
+                                        <div class="forGame">
+                                            Отзыв на игру: <a class="link gameName" href="#">Адская носоглотка</a>
                                         </div>
                                     </div>
+                                    <div class="grade">
+                                        <span class="icon icon-starFill"></span>
+                                        <span class="icon icon-starFill"></span>
+                                        <span class="icon icon-starFill"></span>
+                                        <span class="icon icon-starFill"></span>
+                                        <span class="icon icon-star"></span>
+                                    </div>
+                                    <div class="text">Игра топ, быстро пришла, очень понравилась</div>
+                                </div>
+                                <div class="item review">
+                                    <div class="head">
+                                        <a class="btn link userName" href="#" title="Перейти на страницу Айс214421">Айс214421</a>
+                                        <div class="forGame">
+                                            Отзыв на игру: <a class="link gameName" href="#">Адская носоглотка</a>
+                                        </div>
+                                    </div>
+                                    <div class="grade">
+                                        <span class="icon icon-starFill"></span>
+                                        <span class="icon icon-starFill"></span>
+                                        <span class="icon icon-starFill"></span>
+                                        <span class="icon icon-star"></span>
+                                        <span class="icon icon-star"></span>
+                                    </div>
+                                    <div class="text">Игра топ, быстро пришла, очень понравилась</div>
+                                </div>
+                                <div class="item review">
+                                    <div class="head">
+                                        <a class="btn link userName" href="#" title="Перейти на страницу Айс214421">Айс214421</a>
+                                        <div class="forGame">
+                                            Отзыв на игру: <a class="link gameName" href="#">Адская носоглотка</a>
+                                        </div>
+                                    </div>
+                                    <div class="grade">
+                                        <span class="icon icon-starFill"></span>
+                                        <span class="icon icon-starFill"></span>
+                                        <span class="icon icon-starFill"></span>
+                                        <span class="icon icon-starFill"></span>
+                                        <span class="icon icon-starFill"></span>
+                                    </div>
+                                    <div class="text">Игра топ, быстро пришла, очень понравилась</div>
                                 </div>
                             </div>
-                            <input type="button" class="arrowBlue next" title="Следующий слайд">
+                            <div class="btn link translucent loadMore">Загрузить еще</div>
+                        </div>
+                        <div class="item comments">
+                            <form action="#" method="post" class="addNew infoBlock">
+                                <div class="senderField textReview">
+                                    <div class="autoSizeInput">
+                                        <span class="placeholder">Напишите комментарий до 1000 символов</span>
+                                        <div class="value" contentEditable></div>
+                                    </div>
+                                    <button class="btn" type="submit">
+                                        <span class="icon icon-send"></span>
+                                    </button>
+                                </div>
+                            </form>
+                            <div class="listItems">
+                                <div class="item comment">
+                                    <div class="head">
+                                        <a class="btn link" href="#" title="Перейти в профиль пользователя Айс 214421">Айс 214421</a>
+                                        <div class="reactions">
+                                            <button class="btn active positive">
+                                                <span class="icon icon-thumbsUp"></span> 54
+                                            </button>
+                                            <button class="btn negative">
+                                                <span class="icon icon-thumbsDown"></span> 31
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="text">Игра топ, очень понравилась</div>
+                                    <button class="btn link action">Ответить</button>
+                                </div>
+                                <div class="item comment">
+                                    <div class="head">
+                                        <a class="btn link" href="#" title="Перейти в профиль пользователя Айс 214421">Айс 214421</a>
+                                        <div class="reactions">
+                                            <button class="btn active positive">
+                                                <span class="icon icon-thumbsUp"></span> 54
+                                            </button>
+                                            <button class="btn negative">
+                                                <span class="icon icon-thumbsDown"></span> 31
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="text">Игра топ, очень понравилась</div>
+                                    <button class="btn link action">Ответить</button>
+                                    <div class="answers">
+                                        <div class="answer">
+                                            <div class="head">
+                                                <a class="btn link" href="#" title="Перейти в профиль пользователя Айс 214421">Айс 214421</a>
+                                                <div class="answerFor">ответ пользователю Айс 214421</div>
+                                                <div class="reactions">
+                                                    <button class="btn positive">
+                                                        <span class="icon icon-thumbsUp"></span> 54
+                                                    </button>
+                                                    <button class="btn negative active">
+                                                        <span class="icon icon-thumbsDown"></span> 31
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="text">Игра топ, очень понравилась</div>
+                                            <button class="btn link action">Ответить</button>
+                                        </div>
+                                        <div class="senderField answerField">
+                                            <div class="autoSizeInput">
+                                                <span class="placeholder">Напишите Ваш ответ до 1000 символов</span>
+                                                <div class="value" contentEditable></div>
+                                            </div>
+                                            <button class="btn" type="submit">
+                                                <span class="icon icon-send"></span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item comment">
+                                    <div class="head">
+                                        <a class="btn link" href="#" title="Перейти в профиль пользователя Айс 214421">Айс 214421</a>
+                                        <div class="reactions">
+                                            <button class="btn active positive">
+                                                <span class="icon icon-thumbsUp"></span> 54
+                                            </button>
+                                            <button class="btn negative">
+                                                <span class="icon icon-thumbsDown"></span> 31
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="text">Игра топ, очень понравилась</div>
+                                    <button class="btn link action">Ответить</button>
+                                </div>
+                            </div>
+                            <div class="btn link translucent loadMore">Загрузить еще</div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="requirements">
-                <h2 class="title">Рекомендуемые системные требования</h2>
-                <div class="content">
-                    <div class="input">Процессор:</div>
-                    <div class="value">{{game.cpu}}</div>
-
-                    <div class="input">Видеокарта:</div>
-                    <div class="value">{{game.graphicsCard}}</div>
-
-                    <div class="input">Оперативная память:</div>
-                    <div class="value">{{game.ram}}</div>
-
-                    <div class="input">Место на диске:</div>
-                    <div class="value">{{game.diskMemory}}</div>
                 </div>
             </div>
         </div>
-        <div class="adjacent">
-            <div class="title btn border round uppercase">Вам может понравится</div>
-            <div class="tape">
-                <div class="cardGame small">
-                    <div class="actions">
-                        <button class="btn like">
-                            <span class="likeIcon"></span>
-                        </button>
-                        <button class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart" title="Добавить данный товар в корзину покупок">В корзину</button>
-                    </div>
-                    <div class="cover">
-                        <img src="/img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
-                        <div class="name">Doom ETERNAL</div>
-                    </div>
-                    <div class="price">
-                        <div class="toPrice">
-                            <span class="value">999</span>
-                        </div>
-                        <div class="fromPrice">
-                            <span class="value">1300</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="cardGame small">
-                    <div class="actions">
-                        <button class="btn like">
-                            <span class="likeIcon"></span>
-                        </button>
-                        <button class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart" title="Добавить данный товар в корзину покупок">В корзину</button>
-                    </div>
-                    <div class="cover">
-                        <img src="/img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
-                        <div class="name">Doom ETERNAL</div>
-                    </div>
-                    <div class="price">
-                        <div class="toPrice">
-                            <span class="value">999</span>
-                        </div>
-                        <div class="fromPrice">
-                            <span class="value">1300</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="slideControls brand">
-                <div class="btn prev slideControl brand left"></div>
-                <div class="progress"></div>
-                <div class="btn next slideControl brand right"></div>
-            </div>
-        </div>
-        <div class="commentsBlock">
-            <div class="title btn border round uppercase">Комментарии</div>
-            <div class="comments">
-                <div class="item">Классная игра, рекомендую!</div>
-                <div class="item">Отличная цена!</div>
-                <div class="item">Посоветовал другу!</div>
-                <div class="item">Пришло через 3 секунды!</div>
-                <div class="item">Купил премиум версию и не пожалел! Купил премиум версию и не пожалел!</div>
-            </div>
-        </div>
-        <div class="views">
+        <div class="lastViews">
             <div class="title">Вы недавно смотрели</div>
-            <div class="tape">
-                <div class="cardGame">
+            <div class="games">
+                <a href="#" class="cardGame small" title="Перейти к странице игры">
                     <div class="actions">
-                        <button class="btn like">
-                            <span class="likeIcon"></span>
+                        <button class="btn like" title="Добавить игру в избранное">
+                            <span class="icon-static icon-static-actionLike"></span>
                         </button>
-                        <button class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart" title="Добавить данный товар в корзину покупок">В корзину</button>
+                        <button
+                                class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart small"
+                                title="Добавить данный товар в корзину покупок"
+                        >
+                            В корзину
+                        </button>
                     </div>
-                    <div class="cover">
-                        <img src="/img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
+                    <div class="head">
+                        <img class="img" src="/img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
                         <div class="name">Doom ETERNAL</div>
                     </div>
                     <div class="price">
@@ -341,16 +719,21 @@
                             <span class="value">1300</span>
                         </div>
                     </div>
-                </div>
-                <div class="cardGame">
+                </a>
+                <a href="#" class="cardGame small" title="Перейти к странице игры">
                     <div class="actions">
-                        <button class="btn like">
-                            <span class="likeIcon"></span>
+                        <button class="btn like" title="Добавить игру в избранное">
+                            <span class="icon-static icon-static-actionLike"></span>
                         </button>
-                        <button class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart" title="Добавить данный товар в корзину покупок">В корзину</button>
+                        <button
+                                class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart small"
+                                title="Добавить данный товар в корзину покупок"
+                        >
+                            В корзину
+                        </button>
                     </div>
-                    <div class="cover">
-                        <img src="/img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
+                    <div class="head">
+                        <img class="img" src="/img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
                         <div class="name">Doom ETERNAL</div>
                     </div>
                     <div class="price">
@@ -361,16 +744,21 @@
                             <span class="value">1300</span>
                         </div>
                     </div>
-                </div>
-                <div class="cardGame">
+                </a>
+                <a href="#" class="cardGame small" title="Перейти к странице игры">
                     <div class="actions">
-                        <button class="btn like">
-                            <span class="likeIcon"></span>
+                        <button class="btn like" title="Добавить игру в избранное">
+                            <span class="icon-static icon-static-actionLike"></span>
                         </button>
-                        <button class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart" title="Добавить данный товар в корзину покупок">В корзину</button>
+                        <button
+                                class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart small"
+                                title="Добавить данный товар в корзину покупок"
+                        >
+                            В корзину
+                        </button>
                     </div>
-                    <div class="cover">
-                        <img src="/img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
+                    <div class="head">
+                        <img class="img" src="/img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
                         <div class="name">Doom ETERNAL</div>
                     </div>
                     <div class="price">
@@ -381,16 +769,21 @@
                             <span class="value">1300</span>
                         </div>
                     </div>
-                </div>
-                <div class="cardGame">
+                </a>
+                <a href="#" class="cardGame small" title="Перейти к странице игры">
                     <div class="actions">
-                        <button class="btn like">
-                            <span class="likeIcon"></span>
+                        <button class="btn like" title="Добавить игру в избранное">
+                            <span class="icon-static icon-static-actionLike"></span>
                         </button>
-                        <button class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart" title="Добавить данный товар в корзину покупок">В корзину</button>
+                        <button
+                                class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart small"
+                                title="Добавить данный товар в корзину покупок"
+                        >
+                            В корзину
+                        </button>
                     </div>
-                    <div class="cover">
-                        <img src="/img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
+                    <div class="head">
+                        <img class="img" src="/img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
                         <div class="name">Doom ETERNAL</div>
                     </div>
                     <div class="price">
@@ -401,16 +794,21 @@
                             <span class="value">1300</span>
                         </div>
                     </div>
-                </div>
-                <div class="cardGame">
+                </a>
+                <a href="#" class="cardGame small" title="Перейти к странице игры">
                     <div class="actions">
-                        <button class="btn like">
-                            <span class="likeIcon"></span>
+                        <button class="btn like" title="Добавить игру в избранное">
+                            <span class="icon-static icon-static-actionLike"></span>
                         </button>
-                        <button class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart" title="Добавить данный товар в корзину покупок">В корзину</button>
+                        <button
+                                class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart small"
+                                title="Добавить данный товар в корзину покупок"
+                        >
+                            В корзину
+                        </button>
                     </div>
-                    <div class="cover">
-                        <img src="/img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
+                    <div class="head">
+                        <img class="img" src="/img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
                         <div class="name">Doom ETERNAL</div>
                     </div>
                     <div class="price">
@@ -421,12 +819,57 @@
                             <span class="value">1300</span>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="slideControls brand">
-                <div class="btn prev slideControl brand left"></div>
-                <div class="progress"></div>
-                <div class="btn next slideControl brand right"></div>
+                </a>
+                <a href="#" class="cardGame small" title="Перейти к странице игры">
+                    <div class="actions">
+                        <button class="btn like" title="Добавить игру в избранное">
+                            <span class="icon-static icon-static-actionLike"></span>
+                        </button>
+                        <button
+                                class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart small"
+                                title="Добавить данный товар в корзину покупок"
+                        >
+                            В корзину
+                        </button>
+                    </div>
+                    <div class="head">
+                        <img class="img" src="/img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
+                        <div class="name">Doom ETERNAL</div>
+                    </div>
+                    <div class="price">
+                        <div class="toPrice">
+                            <span class="value">999</span>
+                        </div>
+                        <div class="fromPrice">
+                            <span class="value">1300</span>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="cardGame small" title="Перейти к странице игры">
+                    <div class="actions">
+                        <button class="btn like" title="Добавить игру в избранное">
+                            <span class="icon-static icon-static-actionLike"></span>
+                        </button>
+                        <button
+                                class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart small"
+                                title="Добавить данный товар в корзину покупок"
+                        >
+                            В корзину
+                        </button>
+                    </div>
+                    <div class="head">
+                        <img class="img" src="/img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
+                        <div class="name">Doom ETERNAL</div>
+                    </div>
+                    <div class="price">
+                        <div class="toPrice">
+                            <span class="value">999</span>
+                        </div>
+                        <div class="fromPrice">
+                            <span class="value">1300</span>
+                        </div>
+                    </div>
+                </a>
             </div>
         </div>
     </div>

@@ -19,7 +19,10 @@ const hbs = exphbs.create({
     },
     isLess: (valFrom, valTo) => {
       return valFrom < valTo;
-    }
+    },
+    eval: (str) => {
+      return eval(str);
+    },
   },
 })
 

@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="description" content="IceGames -- Магазин Ключей Steam">
     <meta name="keywords" content="IceGames -- Магазин Ключей Steam">
-    <link rel="stylesheet" href="./styles/bundle.css">
+    <link rel="stylesheet" href="/styles/bundle.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,600;1,300;1,600&display=swap" rel="stylesheet">
@@ -54,10 +54,17 @@
 </div>
 <header class="header">
     <div class="contentContainer">
-        <a class="logo link">
-            <img src="img/logo.png" class="img" alt="Логотип Ice Games" title="Логотип Ice Games">
-            <div class="name">Ice Games<br>Store</div>
-        </a>
+        {{#if isHome}}
+            <div class="logo link">
+                <img src="/img/logo.png" class="img" alt="Логотип Ice Games" title="Логотип Ice Games">
+                <div class="name">Ice Games<br>Store</div>
+            </div>
+        {{else}}
+            <a class="logo link" href="/">
+                <img src="/img/logo.png" class="img" alt="Логотип Ice Games" title="Логотип Ice Games">
+                <div class="name">Ice Games<br>Store</div>
+            </a>
+        {{/if}}
         <div class="navigation js-mainNavigation">
             <div class="containerMenu">
                 <nav class="menu">
@@ -91,7 +98,7 @@
                                     <button class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart" title="Добавить данный товар в корзину покупок">В корзину</button>
                                 </div>
                                 <div class="cover">
-                                    <img src="./img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
+                                    <img src="/img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
                                     <div class="name">Doom ETERNAL</div>
                                 </div>
                                 <div class="price">
@@ -111,7 +118,7 @@
                                     <button class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart" title="Добавить данный товар в корзину покупок">В корзину</button>
                                 </div>
                                 <div class="cover">
-                                    <img src="./img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
+                                    <img src="/img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
                                     <div class="name">Doom ETERNAL</div>
                                 </div>
                                 <div class="price">
@@ -131,7 +138,7 @@
                                     <button class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart" title="Добавить данный товар в корзину покупок">В корзину</button>
                                 </div>
                                 <div class="cover">
-                                    <img src="./img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
+                                    <img src="/img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
                                     <div class="name">Doom ETERNAL</div>
                                 </div>
                                 <div class="price">
@@ -151,7 +158,7 @@
                                     <button class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart" title="Добавить данный товар в корзину покупок">В корзину</button>
                                 </div>
                                 <div class="cover">
-                                    <img src="./img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
+                                    <img src="/img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
                                     <div class="name">Doom ETERNAL</div>
                                 </div>
                                 <div class="price">
@@ -278,26 +285,26 @@
 <footer class="contentContainer homeSection footer">
     <div class="navigation">
         <a class="link" href="#">
-            <img class="logo" src="./img/logoFull.png" alt="Ice Games полный логотип" title="Ice Games полный логотип">
+            <img class="logo" src="/img/logoFull.png" alt="Ice Games полный логотип" title="Ice Games полный логотип">
         </a>
         <div class="social">
             <a href="#" class="link" title="Перейти на страницу Ice Games во Вконтакте">
-                <img class="img" src="./img/vkSocial.png" alt="Логотип вконтакте" title="Перейти на страницу Ice Games во Вконтакте">
+                <img class="img" src="/img/vkSocial.png" alt="Логотип вконтакте" title="Перейти на страницу Ice Games во Вконтакте">
             </a>
             <a href="#" class="link" title="Перейти на страницу Ice Games в TikTok">
-                <img class="img" src="./img/tiktokSocial.png" alt="Логотип TikTok" title="Перейти на страницу Ice Games в TikTok">
+                <img class="img" src="/img/tiktokSocial.png" alt="Логотип TikTok" title="Перейти на страницу Ice Games в TikTok">
             </a>
             <a href="#" class="link" title="Перейти на страницу Ice Games в Instagram">
-                <img class="img" src="./img/instagramSocial.png" alt="Логотип Instagram" title="Перейти на страницу Ice Games в Instagram">
+                <img class="img" src="/img/instagramSocial.png" alt="Логотип Instagram" title="Перейти на страницу Ice Games в Instagram">
             </a>
             <a href="#" class="link" title="Перейти на страницу Ice Games в Twitch">
-                <img class="img" src="./img/twitchSocial.png" alt="Логотип Twitch" title="Перейти на страницу Ice Games в Twitch">
+                <img class="img" src="/img/twitchSocial.png" alt="Логотип Twitch" title="Перейти на страницу Ice Games в Twitch">
             </a>
             <a href="#" class="link" title="Перейти на страницу Ice Games в Twitter">
-                <img class="img" src="./img/twitterSocial.png" alt="Логотип Twitter" title="Перейти на страницу Ice Games в Twitter">
+                <img class="img" src="/img/twitterSocial.png" alt="Логотип Twitter" title="Перейти на страницу Ice Games в Twitter">
             </a>
             <a href="#" class="link" title="Перейти на страницу Ice Games в FaceBook">
-                <img class="img" src="./img/fbSocial.png" alt="Логотип FaceBook" title="Перейти на страницу Ice Games в FaceBook">
+                <img class="img" src="/img/fbSocial.png" alt="Логотип FaceBook" title="Перейти на страницу Ice Games в FaceBook">
             </a>
         </div>
         <div class="menu">
@@ -313,7 +320,7 @@
         </div>
     </div>
     <div class="info">
-        <img class="payments" src="./img/payments.png" alt="Способы оплаты" title="Способы оплаты">
+        <img class="payments" src="/img/payments.png" alt="Способы оплаты" title="Способы оплаты">
         <a class="link legalInfo" href="#" title="Перейти на страницу правовой информации">Правовая информация</a>
         <a class="link designBy" href="#" title="Перейти на сайт студии" target="_blank">Дизайн: дизайн студия ган михаила</a>
     </div>
@@ -324,6 +331,6 @@
         Battle.net, Origin и другие. Выгодно, надежно и быстро!
     </div>
 </footer>
-<script src="./js/bundle.js"></script>
+<script src="/js/bundle.js"></script>
 </body>
 </html>

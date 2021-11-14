@@ -4,10 +4,11 @@ const {
   Category,
   Genre,
 } = require('../../models/index');
+const Config = require('./../../config');
 
 const renderHome = async (req, res) => {
   const sliderGames = await Product.findAll({
-    attributes: ['id', 'name', 'description', 'price', 'img', 'coverImg', 'coverVideo'],
+    attributes: ['id', 'name', 'description', 'priceTo', 'priceFrom', 'img', 'coverImg', 'coverVideo'],
     limit: 5,
     where: {
       inHomeSlider: true,
@@ -21,7 +22,7 @@ const renderHome = async (req, res) => {
   
   for (let i = 0; i < categories.length; i++) {
     const products = await categories[i].getProducts({
-      attributes: ['id', 'name', 'img', 'price'],
+      attributes: ['id', 'name', 'img', 'priceTo', 'priceFrom'],
       limit: 10,
     });
   
@@ -33,6 +34,8 @@ const renderHome = async (req, res) => {
   
   res.render('home', {
     title: "ICE Games -- магазин ключей",
+    websiteAddress: Config.websiteAddress,
+    isHome: true,
     sliderGames: sliderGames.map(item => item.dataValues),
     usp: usp.map(item => item.dataValues),
     genres: genres.map(item => item.dataValues),

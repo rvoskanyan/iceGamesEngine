@@ -25,6 +25,13 @@ module.exports = (sequelize, DataTypes) => {
         }
       });
   
+      models.Product.hasMany(models.Image, {
+        foreignKey: {
+          name: 'productId',
+          allowNull: false,
+        }
+      })
+  
       models.Product.belongsTo(models.ActivationService, {
         foreignKey: {
           name: 'activationServiceId',
