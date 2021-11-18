@@ -1,6 +1,7 @@
 const {
   Product
 } = require('./../../models/index');
+const {getDiscount} = require("../../utils/functions");
 const Config = require('./../../config');
 
 const gamesPage = async (req, res) => {
@@ -21,7 +22,7 @@ const gamePage = async (req, res) => {
     
     const gameData = game.dataValues;
     
-    gameData.discount = Math.floor(100 - gameData.priceTo / (gameData.priceFrom / 100));
+    gameData.discount = getDiscount(gameData.priceTo, gameData.priceFrom);
   
     res.render('game', {
       title: "ICE Games -- магазин ключей",

@@ -8,6 +8,11 @@ const getExtendFile = (fileName) => {
   return new Error('Неверное имя файла!');
 }
 
+const getDiscount = (priceTo, priceFrom) => {
+  return Math.floor(100 - priceTo / (priceFrom / 100));
+}
+
 module.exports = {
   getExtendFile,
+  getDiscount,
 }

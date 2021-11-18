@@ -35,7 +35,7 @@
     <br>
     <br>
     {{#if game.img}}
-        <img src="/{{game.img}}" style="max-width: 300px">
+        <img src="{{websiteAddress}}{{game.img}}" style="max-width: 300px">
     {{/if}}
     <br>
     <br>
@@ -46,7 +46,7 @@
     <br>
     <br>
     {{#if game.coverImg}}
-        <img src="/{{game.coverImg}}" style="max-width: 300px">
+        <img src="{{websiteAddress}}{{game.coverImg}}" style="max-width: 300px">
     {{/if}}
     <br>
     <br>
@@ -57,9 +57,24 @@
     <br>
     <br>
     {{#if game.coverVideo}}
-        <video width="300" controls="controls" poster="/{{game.coverImg}}">
-            <source src="/{{game.coverVideo}}">
+        <video width="300" controls="controls" poster="{{websiteAddress}}{{game.coverImg}}">
+            <source src="{{websiteAddress}}{{game.coverVideo}}">
         </video>
+    {{/if}}
+    <br>
+    <br>
+    <label>
+        Изображения слайдера:
+        <input type="file" name="gameImages" multiple>
+    </label>
+    <br>
+    <br>
+    {{#if gameImages}}
+        <div style="display: flex; flex-wrap: wrap">
+            {{#each gameImages}}
+                <img src="{{../websiteAddress}}{{name}}" alt="Изображение{{@index}} из игры {{../game.name}}" style="max-width: 300px; margin: 5px">
+            {{/each}}
+        </div>
     {{/if}}
     <br>
     <br>

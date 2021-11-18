@@ -2,6 +2,7 @@ const {Op} = require('sequelize');
 const {getExtendFile} = require("../../utils/functions");
 const uuid = require('uuid');
 const path = require('path');
+const {websiteAddress} = require('./../../config');
 const {
   Product,
   Category,
@@ -16,6 +17,7 @@ const {
   ActivationService,
   Developer,
   Platform,
+  Image,
 } = require('../../models/index');
 
 const pageProducts = async (req, res) => {
@@ -190,6 +192,7 @@ const pageEditProduct = async (req, res) => {
     const gamePublisher = await game.getPublisher({attributes: ['id', 'name']});
     const gameActivationService = await game.getActivationService({attributes: ['id', 'name']});
     const gamePlatform = await game.getPlatform({attributes: ['id', 'name']});
+    const gameImages = await game.getImages({attributes: ['name']});
   
     const categoryIds = gameCategories.map(item => item.dataValues.id);
     const genreIds = gameGenres.map(item => item.dataValues.id);
@@ -378,8 +381,10 @@ const pageEditProduct = async (req, res) => {
     res.render('addProducts', {
       layout: 'admin',
       title: "Редактирование игры",
+      websiteAddress,
       isEdit: true,
       game: game.dataValues,
+      gameImages: gameImages.map(item => item.dataValues),
       categories,
       genres,
       extends: allExtends,
@@ -441,35 +446,57 @@ const editProduct = async (req, res) => {
       platformId: platform,
     }
     
+    const gameImgNames = [];
+    
     if (req.files) {
-      const {img, coverImg, coverVideo} = req.files;
-  
-      let imgName = null;
-      let coverImgName = null;
-      let coverVideoName = null;
+      const {img, coverImg, coverVideo, gameImages} = req.files;
   
       if (img) {
         const extend = getExtendFile(img.name);
-    
-        imgName = `${uuid.v4()}.${extend}`;
+        const imgName = `${uuid.v4()}.${extend}`;
+        
         await img.mv(path.resolve(__dirname, '../../uploadedFiles', imgName));
         values.img = imgName;
       }
   
       if (coverImg) {
         const extend = getExtendFile(coverImg.name);
-    
-        coverImgName = `${uuid.v4()}.${extend}`;
+        const coverImgName = `${uuid.v4()}.${extend}`;
+        
         await coverImg.mv(path.resolve(__dirname, '../../uploadedFiles', coverImgName));
         values.coverImg = coverImgName;
       }
   
       if (coverVideo) {
         const extend = getExtendFile(coverVideo.name);
-    
-        coverVideoName = `${uuid.v4()}.${extend}`;
+        const coverVideoName = `${uuid.v4()}.${extend}`;
+        
         await coverVideo.mv(path.resolve(__dirname, '../../uploadedFiles', coverVideoName));
         values.coverVideo = coverVideoName;
+      }
+      
+      if (gameImages) {
+        if (Array.isArray(gameImages)) {
+          for (const item of gameImages) {
+            const extend = getExtendFile(item.name);
+            const gameImgName = `${uuid.v4()}.${extend}`;
+  
+            await item.mv(path.resolve(__dirname, '../../uploadedFiles', gameImgName));
+            
+            const imgObj = await Image.create({name: gameImgName});
+            
+            gameImgNames.push(imgObj.dataValues.id);
+          }
+        } else {
+          const extend = getExtendFile(gameImages.name);
+          const gameImgName = `${uuid.v4()}.${extend}`;
+  
+          await gameImages.mv(path.resolve(__dirname, '../../uploadedFiles', gameImgName));
+  
+          const imgObj = await Image.create({name: gameImgName});
+          
+          gameImgNames.push(imgObj.dataValues.id);
+        }
       }
     }
   
@@ -482,6 +509,8 @@ const editProduct = async (req, res) => {
     );
     
     const game = await Product.findByPk(gameId);
+    
+    await game.addImages(gameImgNames);
     
     let gameCurrentCategories = await game.getCategories({attributes: ['id']});
     let gameCurrentGenres = await game.getGenres({attributes: ['id']});
