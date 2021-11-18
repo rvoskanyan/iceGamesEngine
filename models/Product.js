@@ -4,20 +4,6 @@ const {Model} = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Product extends Model {
     static associate(models) {
-      models.Product.hasOne(models.Kit, {
-        foreignKey: {
-          name: 'productId',
-          allowNull: false,
-        }
-      });
-  
-      models.Product.hasMany(models.Kit, {
-        foreignKey: {
-          name: 'mainProductId',
-          allowNull: false,
-        }
-      });
-      
       models.Product.hasMany(models.Key, {
         foreignKey: {
           name: 'productId',
@@ -29,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: {
           name: 'productId',
         }
-      })
+      });
   
       models.Product.belongsTo(models.ActivationService, {
         foreignKey: {

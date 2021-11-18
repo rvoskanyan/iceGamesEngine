@@ -10,6 +10,12 @@ module.exports = (sequelize, DataTypes) => {
           allowNull: false,
         }
       });
+  
+      models.ActivationService.hasMany(models.ActivationStage, {
+        foreignKey: {
+          name: 'activationServiceId',
+        }
+      });
     }
   }
   

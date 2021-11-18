@@ -16,9 +16,11 @@ const gamePage = async (req, res) => {
     const languages = await game.getLanguages();
     const regions = await game.getRegions();
     const service = await game.getActivationService();
+    const stages = await service.getActivationStages();
     const genres = await game.getGenres();
     const platform = await game.getPlatform();
     const publisher = await game.getPublisher();
+    const images = await game.getImages({attributes: ['name']});
     
     const gameData = game.dataValues;
     
@@ -33,9 +35,11 @@ const gamePage = async (req, res) => {
       languages: languages.map(item => item.dataValues),
       regions: regions.map(item => item.dataValues),
       service: service.dataValues,
+      stages: stages.map(item => item.dataValues),
       genres: genres.map(item => item.dataValues),
       platform: platform.dataValues,
       publisher: publisher.dataValues,
+      images: images.map(item => item.dataValues),
     });
   } catch (e) {
     console.log(e);

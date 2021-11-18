@@ -2,24 +2,23 @@
 const {Model} = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-  class ElementsKit extends Model {
+  class ActivationStage extends Model {
     static associate(models) {
-      models.ElementsKit.belongsTo(models.Kit, {
+      models.ActivationStage.belongsTo(models.ActivationService, {
         foreignKey: {
-          name: 'kitId',
-          allowNull: false,
+          name: 'activationServiceId',
         }
       });
     }
   }
   
-  ElementsKit.init({
+  ActivationStage.init({
     id: {allowNull: false, autoIncrement: true, primaryKey: true, type: DataTypes.INTEGER},
     text: {type: DataTypes.STRING, allowNull: false},
   }, {
     sequelize,
-    modelName: 'ElementsKit',
+    modelName: 'ActivationStage',
   });
   
-  return ElementsKit;
+  return ActivationStage;
 };

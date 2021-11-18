@@ -9,6 +9,7 @@ import './../styles/index.sass';
 const homeSliderNode = document.querySelector('.js-homeSlider');
 const homeCatalogTabs = document.querySelector('.js-homeCatalogTabs');
 const genresSliderNode = document.querySelector('.js-genresSlider');
+const gameInfoTabs = document.querySelector('.js-gameInfoTabs');
 
 if (homeSliderNode) {
   let playVideoTimeOutId;
@@ -74,6 +75,12 @@ if (genresSliderNode) {
     isVertical: true,
     countSlidesScroll: 2,
     switchingTime: 1000000,
+  });
+}
+
+if (gameInfoTabs) {
+  new Tabs({
+    mainNode: gameInfoTabs,
   });
 }
 

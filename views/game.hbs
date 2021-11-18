@@ -150,27 +150,22 @@
                 </button>
                 <div class="visibleArea">
                     <div class="tape">
-                        <div class="slideWrapper active">
+                        {{#each images}}
+                            <div class="slideWrapper{{#if (isLess @index 2)}} active{{/if}}">
+                                <div class="slide{{#if (isLess @index 2)}} active{{/if}}">
+                                    <button class="btn increase" title="Открыть на весь экран">
+                                        <img class="img" src="{{../websiteAddress}}{{name}}" alt="Фото из галереи игы">
+                                    </button>
+                                </div>
+                            </div>
+                        {{/each}}
+                        <!--<div class="slideWrapper active">
                             <div class="slide active">
                                 <button class="btn increase video" title="Открыть на весь экран">
                                     <img class="img" src="/img/gamePageGallery-1.png" alt="Фото из галереи игы">
                                 </button>
                             </div>
-                        </div>
-                        <div class="slideWrapper active">
-                            <div class="slide active">
-                                <button class="btn increase" title="Открыть на весь экран">
-                                    <img class="img" src="/img/gamePageGallery-2.png" alt="Фото из галереи игы">
-                                </button>
-                            </div>
-                        </div>
-                        <div class="slideWrapper">
-                            <div class="slide">
-                                <button class="btn increase" title="Открыть на весь экран">
-                                    <img class="img" src="/img/gamePageGallery-2.png" alt="Фото из галереи игы">
-                                </button>
-                            </div>
-                        </div>
+                        </div>-->
                     </div>
                 </div>
                 <button class="btn next increase">
@@ -279,27 +274,27 @@
                 </div>
             </div>
             <div class="info">
-                <div class="generalInfo tabs">
+                <div class="generalInfo tabs js-gameInfoTabs">
                     <div class="nav">
-                        <button class="btn round border big translucent active">Об игре</button>
-                        <button class="btn round border big translucent">Активация</button>
-                        <button class="btn round border big translucent">Состав набора</button>
-                        <button class="btn round border big translucent">Серии игр</button>
+                        <button class="btn round border big translucent active js-tabBtn" data-target-id="1">Об игре</button>
+                        <button class="btn round border big translucent js-tabBtn" data-target-id="2">Активация</button>
+                        <button class="btn round border big translucent js-tabBtn" data-target-id="3">Состав набора</button>
+                        <button class="btn round border big translucent js-tabBtn" data-target-id="4">Серии игр</button>
                     </div>
                     <div class="blocks totalHeight infoBlock">
-                        <div class="item active">
+                        <div class="item active js-tabBlock-1">
                             <p class="paragraph">
                                 {{game.description}}
                             </p>
                         </div>
-                        <ul class="item bulletedList">
-                            <li class="item">Если у вас не установлен Steam клиент, скачайте и установите его.</li>
-                            <li class="item">Войдите в свой аккаунт Steam или зарегистрируйте новый, если у вас его нет.</li>
-                            <li class="item">Перейдите в раздел "Игры" и выберите "Активировать через Steam...".</li>
-                            <li class="item">Введите ключ активации.</li>
-                            <li class="item">После этого игра будет в вашей библиотеке Steam, и вы сможете скачать.</li>
+                        <ul class="item bulletedList js-tabBlock-2">
+                            {{#each stages}}
+                                <li class="item">
+                                    {{text}}
+                                </li>
+                            {{/each}}
                         </ul>
-                        <div class="item">
+                        <div class="item js-tabBlock-3">
                             <div class="btn rounded bg-paleBlue package">Ultima edition</div>
                             <ul class="bulletedList">
                                 <li class="item">Набор гитлера</li>
@@ -308,7 +303,7 @@
                                 <li class="item">Копье ануса</li>
                             </ul>
                         </div>
-                        <div class="item">
+                        <div class="item js-tabBlock-4">
                             <div class="slider">
                                 <button class="btn prev increase">
                                     <span class="icon-static icon-static-arrow"></span>

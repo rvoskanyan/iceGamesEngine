@@ -1,9 +1,23 @@
-<form action="/admin/activation-services/add" method="post">
+<form action="/admin/activation-services/{{#if isEdit}}edit/{{activationService.id}}{{else}}add{{/if}}" method="post">
     <label>
         Название сервиса активации:
-        <input type="text" name="name">
+        <input type="text" name="name"{{#if isEdit}} value="{{activationService.name}}"{{/if}}>
     </label>
     <br>
     <br>
-    <input type="submit" name="add" value="Добавить">
+    <input type="submit" name="add" value="{{#if isEdit}}Сохранить изменения{{else}}Добавить{{/if}}">
 </form>
+{{#if isEdit}}
+    {{#if activationStages}}
+        <br>
+        <ol>
+            {{#each activationStages}}
+                <li>
+                    {{text}}
+                </li>
+            {{/each}}
+        </ol>
+    {{/if}}
+    <br>
+    <a href="/admin/activation-services/{{activationService.id}}/add-activation-stage">Добавить этап активации</a>
+{{/if}}
