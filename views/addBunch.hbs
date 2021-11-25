@@ -1,0 +1,31 @@
+{{#if isEdit}}
+    <a href="/admin/bunches/{{bunch.id}}/addProduct">Добавить игру в данную связку</a>
+    <br>
+    <br>
+{{/if}}
+<form method="post" action="/admin/bunches/{{#if isEdit}}edit/{{bunch.id}}{{else}}add{{/if}}">
+    <label>
+        Название связки:
+        <input type="text" name="name"{{#if isEdit}} value="{{bunch.name}}"{{/if}}>
+    </label>
+    <br>
+    <br>
+    <input type="submit" name="add" value="{{#if isEdit}}Сохранить изменения{{else}}Добавить{{/if}}">
+</form>
+{{#if isEdit}}
+    <br>
+    Игры в связке:
+    {{#if games}}
+        <ul>
+            {{#each games}}
+                <li>
+                    <a href="/admin/bunches/{{../bunch.id}}/{{id}}">
+                        {{name}}
+                    </a>
+                </li>
+            {{/each}}
+        </ul>
+    {{else}}
+        Отсутствуют
+    {{/if}}
+{{/if}}

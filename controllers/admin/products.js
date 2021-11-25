@@ -18,6 +18,7 @@ const {
   Developer,
   Platform,
   Image,
+  Edition,
 } = require('../../models/index');
 
 const pageProducts = async (req, res) => {
@@ -48,6 +49,7 @@ const pageAddProduct = async (req, res) => {
     const publishers = await Publisher.findAll({attributes: ['id', 'name']});
     const activationServices = await ActivationService.findAll({attributes: ['id', 'name']});
     const platforms = await Platform.findAll({attributes: ['id', 'name']});
+    const editions = await Edition.findAll({attributes: ['id', 'name']});
   
     res.render('addProducts', {
       layout: 'admin',
@@ -61,6 +63,7 @@ const pageAddProduct = async (req, res) => {
       publishers: publishers.map(item => item.dataValues),
       activationServices: activationServices.map(item => item.dataValues),
       platforms: platforms.map(item => item.dataValues),
+      editions: editions.map(item => item.dataValues),
     });
   } catch (e) {
     console.log(e);
@@ -91,6 +94,7 @@ const addProduct = async (req, res) => {
       publisher,
       activationService,
       platform,
+      edition,
     } = req.body;
     
     const {img, coverImg, coverVideo, gameImages} = req.files;
@@ -153,6 +157,7 @@ const addProduct = async (req, res) => {
       activationServiceId: activationService,
       publisherId: publisher,
       platformId: platform,
+      editionId: edition,
     });
   
     await product.addImages(gameImgIds);
@@ -219,6 +224,7 @@ const pageEditProduct = async (req, res) => {
     const gamePublisher = await game.getPublisher({attributes: ['id', 'name']});
     const gameActivationService = await game.getActivationService({attributes: ['id', 'name']});
     const gamePlatform = await game.getPlatform({attributes: ['id', 'name']});
+    const gameEdition = await game.getEdition({attributes: ['id', 'name']});
     const gameImages = await game.getImages({attributes: ['name']});
   
     const categoryIds = gameCategories.map(item => item.dataValues.id);
@@ -230,6 +236,7 @@ const pageEditProduct = async (req, res) => {
     const publisherId = gamePublisher.dataValues.id;
     const activationServiceId = gameActivationService.dataValues.id;
     const platformId = gamePlatform.dataValues.id;
+    const editionId = gameEdition?.dataValues?.id || 0;
   
     const restCategories = await Category.findAll({
       attributes: ['id', 'name'],
@@ -308,6 +315,15 @@ const pageEditProduct = async (req, res) => {
       where: {
         id: {
           [Op.notIn]: [platformId]
+        }
+      }
+    });
+  
+    const restEditions = await Edition.findAll({
+      attributes: ['id', 'name'],
+      where: {
+        id: {
+          [Op.notIn]: [editionId]
         }
       }
     });
@@ -405,6 +421,18 @@ const pageEditProduct = async (req, res) => {
       ...restPlatforms.map(item => item.dataValues),
     ];
   
+    const editions = [
+      ...restEditions.map(item => item.dataValues),
+    ];
+    
+    if (gameEdition) {
+      editions.push({
+        id: gameEdition.dataValues.id,
+        name: gameEdition.dataValues.name,
+        selected: true,
+      });
+    }
+  
     res.render('addProducts', {
       layout: 'admin',
       title: "Редактирование игры",
@@ -421,6 +449,7 @@ const pageEditProduct = async (req, res) => {
       activationServices,
       publishers,
       platforms,
+      editions,
     });
   } catch (e) {
     console.log(e);
@@ -454,6 +483,7 @@ const editProduct = async (req, res) => {
       publisher,
       activationService,
       platform,
+      edition,
     } = req.body;
   
     const values = {
@@ -471,6 +501,7 @@ const editProduct = async (req, res) => {
       publisherId: publisher,
       activationServiceId: activationService,
       platformId: platform,
+      editionId: edition,
     }
     
     const gameImgIds = [];
@@ -669,117 +700,10 @@ const editProduct = async (req, res) => {
   }
 }
 
-const pageAddGameKid = async (req, res) => {
-  try {
-    const {gameId} = req.params;
-    const games = await Product.findAll({
-      attributes: ['id', 'name'],
-      where: {
-        id: {
-          [Op.not]: gameId,
-        }
-      }
-    });
-    const namesKits = await NamesKit.findAll({attributes: ['id', 'name']});
-    let kits = await Kit.findAll({
-      attributes: ['id'],
-      where: {
-        mainProductId: gameId,
-      },
-      include: {
-        model: NamesKit,
-        attributes: ['name'],
-      }
-    });
-    
-    let haveKits = false;
-    
-    if (kits.length) {
-      kits = kits.map(item => {
-        return {
-          id: item.dataValues.id,
-          name: item.dataValues.NamesKit.dataValues.name,
-        }
-      });
-      haveKits = true;
-    }
-    
-    res.render('addGameKit', {
-      layout: 'admin',
-      gameId,
-      games: games.map(item => item.dataValues),
-      namesKits: namesKits.map(item => item.dataValues),
-      haveKits,
-      kits,
-    });
-  } catch (e) {
-    console.log(e);
-  }
-}
-
-const addGameKid = async (req, res) => {
-  const {gameId} = req.params;
-  
-  try {
-    const {productId, nameKitId} = req.body;
-    
-    await Kit.create({productId, nameKitId, mainProductId: gameId});
-  
-    res.redirect(`/admin/products`);
-  } catch (e) {
-    console.log(e);
-    res.redirect(`/admin/products/${gameId}/addKit`);
-  }
-}
-
-const pageAddElementKit = async (req, res) => {
-  const {gameId, kitId} = req.params;
-  
-  try {
-    const elementsKit = await ElementsKit.findAll({
-      attributes: ['text'],
-      where: {
-        kitId,
-      }
-    });
-    
-    const haveElements = !!elementsKit.length;
-    
-    res.render('addElementKit', {
-      layout: 'admin',
-      gameId,
-      kitId,
-      elementsKit: elementsKit.map(item => item.dataValues),
-      haveElements,
-    });
-  } catch (e) {
-    console.log(e);
-    res.redirect(`/admin/products/${gameId}/addKit`)
-  }
-}
-
-const addElementKit = async (req, res) => {
-  const {gameId, kitId} = req.params;
-  
-  try {
-    const {text} = req.body;
-    
-    await ElementsKit.create({text, kitId});
-    res.redirect(`/admin/products/${gameId}/addKit`);
-  } catch (e) {
-    console.log(e);
-    res.redirect(`/admin/products/${gameId}/${kitId}/addElementKit`);
-  }
-}
-
 module.exports = {
   pageProducts,
   pageAddProduct,
   addProduct,
   pageEditProduct,
   editProduct,
-  pageAddGameKid,
-  addGameKid,
-  pageAddElementKit,
-  addElementKit,
 };

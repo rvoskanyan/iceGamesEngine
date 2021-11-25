@@ -1,8 +1,3 @@
-{{#if isEdit}}
-    <a href="/admin/products/{{game.id}}/addKit">Добавить пакет к данной игре</a>
-{{/if}}
-<br>
-<br>
 <form method="post" action="/admin/products/{{#if isEdit}}edit/{{game.id}}{{else}}add{{/if}}" enctype="multipart/form-data">
     <label>
         Название:
@@ -220,6 +215,18 @@
         Платформа:
         <select name="platform">
             {{#each platforms}}
+                <option value="{{id}}" {{#if selected}}selected{{/if}}>
+                    {{name}}
+                </option>
+            {{/each}}
+        </select>
+    </label>
+    <br>
+    <br>
+    <label>
+        Версия:
+        <select name="edition">
+            {{#each editions}}
                 <option value="{{id}}" {{#if selected}}selected{{/if}}>
                     {{name}}
                 </option>

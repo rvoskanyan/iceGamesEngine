@@ -1,0 +1,21 @@
+<form method="post" action="/admin/bunches/{{bunchId}}/addProduct">
+    <label>
+        Выберите игру:
+        <select name="gameId">
+            {{#each games}}
+                <option value="{{id}}" {{#if selected}}selected{{/if}}>
+                    {{name}}
+                </option>
+            {{/each}}
+        </select>
+    </label>
+    <br>
+    <br>
+    <label>
+        Укажите порядок (при необходимости):
+        <input type="number" name="orderInBundle">
+    </label>
+    <br>
+    <br>
+    <input type="submit" name="add" value="Добавить">
+</form>

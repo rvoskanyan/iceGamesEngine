@@ -12,7 +12,9 @@ const regionsRoute = require('./admin/regions');
 const activationServicesRoute = require('./admin/activationServices');
 const publishersRoute = require('./admin/publishers');
 const developersRoute = require('./admin/developers');
-const platformRoute = require('./admin/platforms');
+const platformsRoute = require('./admin/platforms');
+const bunchesRoute = require('./admin/bunches');
+const editionsRoute = require('./admin/editions');
 
 const router = Router();
 
@@ -29,6 +31,8 @@ router.use('/regions', regionsRoute);
 router.use('/activation-services', activationServicesRoute);
 router.use('/publishers', publishersRoute);
 router.use('/developers', developersRoute);
-router.use('/platforms', platformRoute);
+router.use('/platforms', platformsRoute);
+router.use('/bunches', bunchesRoute);
+router.use('/editions', editionsRoute);
 
 module.exports = router;

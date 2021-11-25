@@ -17,6 +17,19 @@ module.exports = (sequelize, DataTypes) => {
         }
       });
   
+      models.Product.hasMany(models.GameElement, {
+        foreignKey: {
+          name: 'belongsProductId',
+        }
+      });
+  
+      models.Product.hasMany(models.GameElement, {
+        foreignKey: {
+          name: 'productId',
+        },
+        as: 'AsGameElement',
+      });
+  
       models.Product.belongsTo(models.ActivationService, {
         foreignKey: {
           name: 'activationServiceId',
@@ -35,6 +48,18 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: {
           name: 'platformId',
           allowNull: false,
+        }
+      });
+  
+      models.Product.belongsTo(models.Bunch, {
+        foreignKey: {
+          name: 'bunchId',
+        }
+      });
+  
+      models.Product.belongsTo(models.Edition, {
+        foreignKey: {
+          name: 'editionId',
         }
       });
   
@@ -105,6 +130,7 @@ module.exports = (sequelize, DataTypes) => {
     ram: {type: DataTypes.STRING, allowNull: false},
     diskMemory: {type: DataTypes.STRING, allowNull: true},
     rating: {type: DataTypes.FLOAT(2)},
+    orderInBundle: {type: DataTypes.FLOAT(2)},
     isActive: {type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false},
   }, {
     sequelize,

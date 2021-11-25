@@ -1899,6 +1899,7 @@
     transition: .3s ease-in;
     transition-property: visibility, opacity; }
     .tabs .blocks.totalHeight > .item.active {
+      z-index: 1;
       visibility: visible;
       opacity: 1; }
 
