@@ -7,9 +7,6 @@ const {
   Product,
   Category,
   Genre,
-  NamesKit,
-  Kit,
-  ElementsKit,
   Extend,
   Language,
   Region,
@@ -19,6 +16,7 @@ const {
   Platform,
   Image,
   Edition,
+  GameElement,
 } = require('../../models/index');
 
 const pageProducts = async (req, res) => {
@@ -226,6 +224,15 @@ const pageEditProduct = async (req, res) => {
     const gamePlatform = await game.getPlatform({attributes: ['id', 'name']});
     const gameEdition = await game.getEdition({attributes: ['id', 'name']});
     const gameImages = await game.getImages({attributes: ['name']});
+    const gameElements = await game.getGameElements({
+      attributes: ['id', 'name', 'description'],
+      order: [['productId', 'DESC']],
+      include: {
+        model: Product,
+        as: 'Entity',
+        attributes: ['id', 'name']
+      },
+    });
   
     const categoryIds = gameCategories.map(item => item.dataValues.id);
     const genreIds = gameGenres.map(item => item.dataValues.id);
@@ -236,7 +243,11 @@ const pageEditProduct = async (req, res) => {
     const publisherId = gamePublisher.dataValues.id;
     const activationServiceId = gameActivationService.dataValues.id;
     const platformId = gamePlatform.dataValues.id;
-    const editionId = gameEdition.dataValues.id || 0;
+    let editionId = null;
+    
+    if (gameEdition) {
+      editionId = gameEdition.dataValues.id || 0;
+    }
   
     const restCategories = await Category.findAll({
       attributes: ['id', 'name'],
@@ -440,6 +451,21 @@ const pageEditProduct = async (req, res) => {
       isEdit: true,
       game: game.dataValues,
       gameImages: gameImages.map(item => item.dataValues),
+      gameElements: gameElements.map(item => {
+        const dataValues = item.dataValues;
+        
+        if (!dataValues.Entity) {
+          return dataValues;
+        }
+        
+        const gameData = dataValues.Entity.dataValues;
+        
+        return {
+          id: dataValues.id,
+          gameId: gameData.id,
+          name: gameData.name,
+        }
+      }),
       categories,
       genres,
       extends: allExtends,
@@ -700,10 +726,63 @@ const editProduct = async (req, res) => {
   }
 }
 
+const pageAddGameElement = async (req, res) => {
+  const {gameId} = req.params;
+  
+  try {
+    const games = await Product.findAll({
+      attributes: ['id', 'name'],
+      where: {
+        id: {
+          [Op.notIn]: [gameId],
+        }
+      }
+    });
+    
+    res.render('addProductElement', {
+      layout: 'admin',
+      title: 'Добавление элемента к игре',
+      games: games.map(item => item.dataValues),
+      gameId,
+    });
+  } catch (e) {
+    console.log(e);
+    res.redirect(`/admin/products/edit/${gameId}`);
+  }
+}
+
+const addGameElement = async (req, res) => {
+  const {gameId} = req.params;
+  
+  try {
+    const {name, description, productId} = req.body;
+    const game = await Product.findByPk(gameId);
+    const values = {
+      name,
+      description,
+    }
+    
+    if (+productId) {
+      values.productId = +productId;
+    }
+    
+    const gameElement = await GameElement.create(values);
+    
+    await game.addGameElement(gameElement.dataValues.id);
+    
+    res.redirect(`/admin/products/edit/${gameId}`);
+  } catch (e) {
+    console.log(e);
+    req.redirect(`/admin/products/${gameId}/addElement`);
+  }
+}
+
 module.exports = {
   pageProducts,
   pageAddProduct,
   addProduct,
   pageEditProduct,
   editProduct,
+  pageAddGameElement,
+  addGameElement,
 };

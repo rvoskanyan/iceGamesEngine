@@ -1,3 +1,33 @@
+{{#if isEdit}}
+    <a href="/admin/products/{{game.id}}/addElement">Добавить элемент</a>
+    {{#if gameElements}}
+        <br>
+        <br>
+        Список элементов игры:
+        <ul>
+            {{#each gameElements}}
+                <li>
+                    <a href="/admin/products/{{../game.id}}/{{id}}">
+                        {{name}}
+                    </a>
+                    {{#if gameId}}
+                        --- <a href="/admin/products/edit/{{gameId}}">Перейти к игре</a>
+                    {{else}}
+                        {{#if description}}
+                            <p>
+                                {{description}}
+                            </p>
+                        {{/if}}
+                    {{/if}}
+                    <br>
+                    <br>
+                </li>
+            {{/each}}
+        </ul>
+    {{/if}}
+    <br>
+    <br>
+{{/if}}
 <form method="post" action="/admin/products/{{#if isEdit}}edit/{{game.id}}{{else}}add{{/if}}" enctype="multipart/form-data">
     <label>
         Название:
@@ -226,6 +256,7 @@
     <label>
         Версия:
         <select name="edition">
+            <option value="null">Не выбрано</option>
             {{#each editions}}
                 <option value="{{id}}" {{#if selected}}selected{{/if}}>
                     {{name}}

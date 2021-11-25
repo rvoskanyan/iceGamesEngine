@@ -7,7 +7,6 @@ module.exports = (sequelize, DataTypes) => {
       models.GameElement.belongsTo(models.Product, {
         foreignKey: {
           name: 'belongsProductId',
-          allowNull: false
         }
       });
       models.GameElement.belongsTo(models.Product, {
@@ -21,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
   
   GameElement.init({
     id: {allowNull: false, autoIncrement: true, primaryKey: true, type: DataTypes.INTEGER},
-    name: {type: DataTypes.STRING, allowNull: false},
+    name: {type: DataTypes.STRING},
     description: {type: DataTypes.STRING(1000)},
   }, {
     sequelize,

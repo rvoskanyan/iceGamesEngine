@@ -1,0 +1,28 @@
+<form method="post" action="/admin/products/{{gameId}}/addElement">
+    <label>
+        Название:
+        <input type="text" name="name">
+    </label>
+    <br>
+    <br>
+    <label>
+        Описание:
+        <textarea name="description" cols="30" rows="10"></textarea>
+    </label>
+    <br>
+    <br>
+    <label>
+        Игра:
+        <select name="productId">
+            <option value="0">Не выбрана</option>
+            {{#each games}}
+                <option value="{{id}}">
+                    {{name}}
+                </option>
+            {{/each}}
+        </select>
+    </label>
+    <br>
+    <br>
+    <input type="submit" name="add" value="Добавить">
+</form>

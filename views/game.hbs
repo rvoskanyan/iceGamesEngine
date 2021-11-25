@@ -13,31 +13,34 @@
     <div class="cover blackout blackout-left blackout-bottom slide active js-slide">
         <img class="img" src="{{websiteAddress}}{{game.coverImg}}" alt="{{game.name}}" title="{{game.name}}">
         <div class="offer">
-            <div class="packages">
-                <div class="btn rounded translucent bg-paleBlue active package">Standard</div>
-                <div class="tooltip package">
-                    <a href="#" class="btn rounded translucent bg-paleBlue">Ultima edition</a>
-                    <div class="prompt">
-                        <ul class="list">
-                            <li class="item">Guccci halat</li>
-                            <li class="item">3 кг отборной ганжи</li>
-                            <li class="item">2 М16 с доставкой</li>
-                            <li class="item">Номер в отеле “Юстина”</li>
-                        </ul>
-                    </div>
+            {{#if gamesBunch}}
+                <div class="packages">
+                    {{#each gamesBunch}}
+                        {{#if isCurrent}}
+                            <div class="btn rounded translucent bg-paleBlue active package">
+                                {{edition}}
+                            </div>
+                        {{else}}
+                            <div class="tooltip package">
+                                <a href="/games/{{id}}" class="btn rounded translucent bg-paleBlue">
+                                    {{edition}}
+                                </a>
+                                {{#if elements}}
+                                    <div class="prompt">
+                                        <ul class="list">
+                                            {{#each elements}}
+                                                <li class="item">
+                                                    {{name}}
+                                                </li>
+                                            {{/each}}
+                                        </ul>
+                                    </div>
+                                {{/if}}
+                            </div>
+                        {{/if}}
+                    {{/each}}
                 </div>
-                <div class="tooltip package">
-                    <a href="#" class="btn rounded translucent bg-paleBlue">Premium edition</a>
-                    <div class="prompt">
-                        <ul class="list">
-                            <li class="item">Guccci halat</li>
-                            <li class="item">3 кг отборной ганжи</li>
-                            <li class="item">2 М16 с доставкой</li>
-                            <li class="item">Номер в отеле “Юстина”</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+            {{/if}}
             <div class="name">{{game.name}}</div>
             <div class="statuses">
                 <div class="status positive">В наличии</div>
@@ -278,7 +281,9 @@
                     <div class="nav">
                         <button class="btn round border big translucent active js-tabBtn" data-target-id="1">Об игре</button>
                         <button class="btn round border big translucent js-tabBtn" data-target-id="2">Активация</button>
-                        <button class="btn round border big translucent js-tabBtn" data-target-id="3">Состав набора</button>
+                        {{#if gameElements}}
+                            <button class="btn round border big translucent js-tabBtn" data-target-id="3">Состав набора</button>
+                        {{/if}}
                         <button class="btn round border big translucent js-tabBtn" data-target-id="4">Серии игр</button>
                     </div>
                     <div class="blocks totalHeight infoBlock">
@@ -294,15 +299,28 @@
                                 </li>
                             {{/each}}
                         </ul>
-                        <div class="item js-tabBlock-3">
-                            <div class="btn rounded bg-paleBlue package">Ultima edition</div>
-                            <ul class="bulletedList">
-                                <li class="item">Набор гитлера</li>
-                                <li class="item">Адская носоглотка</li>
-                                <li class="item">Крепкий орешек</li>
-                                <li class="item">Копье ануса</li>
-                            </ul>
-                        </div>
+                        {{#if gameElements}}
+                            <div class="item js-tabBlock-3">
+                                {{#if gameEdition}}
+                                    <div class="btn rounded bg-paleBlue package">
+                                        {{gameEdition}}
+                                    </div>
+                                {{/if}}
+                                <ul class="bulletedList">
+                                    {{#each gameElements}}
+                                        <li class="item">
+                                            {{#if gameId}}
+                                                <a href="/games/{{gameId}}">
+                                                    {{name}}
+                                                </a>
+                                            {{else}}
+                                                {{name}}
+                                            {{/if}}
+                                        </li>
+                                    {{/each}}
+                                </ul>
+                            </div>
+                        {{/if}}
                         <div class="item js-tabBlock-4">
                             <div class="slider">
                                 <button class="btn prev increase">

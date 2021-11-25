@@ -1,5 +1,7 @@
 const {
-  Product
+  Product,
+  GameElement,
+  Edition,
 } = require('./../../models/index');
 const {getDiscount} = require("../../utils/functions");
 const Config = require('./../../config');
@@ -21,8 +23,91 @@ const gamePage = async (req, res) => {
     const platform = await game.getPlatform();
     const publisher = await game.getPublisher();
     const images = await game.getImages({attributes: ['name']});
-    
+    const bunch = await game.getBunch({attributes: ['id']});
     const gameData = game.dataValues;
+    let gameElements = null;
+    let gameEdition = null;
+    let gamesBunch = null;
+    
+    if (bunch) {
+      gamesBunch = await bunch.getProducts({
+        attributes: ['id', 'name'],
+        order: [['orderInBundle', 'DESC']],
+        include: [
+          {
+            model: GameElement,
+            separate: true,
+            attributes: ['name'],
+            order: [['productId', 'DESC']],
+            include: {
+              model: Product,
+              as: 'Entity',
+              attributes: ['id', 'name'],
+            },
+          },
+          {
+            model: Edition,
+            attributes: ['name'],
+          },
+        ]
+      });
+  
+      gamesBunch = gamesBunch.map(item => {
+        const gameData = item.dataValues;
+        const values = {};
+  
+        if (item.Edition) {
+          values.edition = item.Edition.dataValues.name;
+        }
+        
+        if (+gameData.id === +gameId) {
+          values.isCurrent = true;
+          
+          if (values.edition) {
+            gameEdition = values.edition;
+          }
+          
+          if (item.GameElements) {
+            gameElements = item.GameElements.map(item => {
+              const dataValues = item.dataValues;
+  
+              if (!dataValues.Entity) {
+                return dataValues;
+              }
+  
+              const gameData = dataValues.Entity.dataValues;
+  
+              return {
+                id: dataValues.id,
+                gameId: gameData.id,
+                name: gameData.name,
+              };
+            })
+          }
+          
+          return values;
+        }
+        
+        values.id = gameData.id;
+        values.name = gameData.name;
+        
+        if (item.GameElements) {
+          values.elements = item.GameElements.map(item => {
+            const dataValues = item.dataValues;
+  
+            if (!dataValues.Entity) {
+              return dataValues;
+            }
+            
+            return {
+              name: dataValues.Entity.dataValues.name,
+            };
+          })
+        }
+        
+        return values;
+      });
+    }
     
     gameData.discount = getDiscount(gameData.priceTo, gameData.priceFrom);
   
@@ -40,6 +125,9 @@ const gamePage = async (req, res) => {
       platform: platform.dataValues,
       publisher: publisher.dataValues,
       images: images.map(item => item.dataValues),
+      gamesBunch,
+      gameEdition,
+      gameElements,
     });
   } catch (e) {
     console.log(e);
