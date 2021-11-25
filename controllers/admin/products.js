@@ -236,7 +236,7 @@ const pageEditProduct = async (req, res) => {
     const publisherId = gamePublisher.dataValues.id;
     const activationServiceId = gameActivationService.dataValues.id;
     const platformId = gamePlatform.dataValues.id;
-    const editionId = gameEdition?.dataValues?.id || 0;
+    const editionId = gameEdition.dataValues.id || 0;
   
     const restCategories = await Category.findAll({
       attributes: ['id', 'name'],
