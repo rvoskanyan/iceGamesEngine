@@ -53,14 +53,14 @@
       display: flex
       flex-direction: column
       justify-content: flex-end
-      transition: height .3s ease
+      transition: height .3s ease-in
       transition-delay: 0s
       height: 248px
 
       & .input-labelInField
         &:first-child
           transition: .3s ease-in
-          transition-delay: .2s
+          transition-delay: .35s
           transition-property: opacity, visibility
 
         &:not(:first-child)
@@ -68,7 +68,6 @@
 
       &.auth
         height: 182px
-        transition-delay: .2s
 
         & .input-labelInField:first-child
           transition-delay: 0s

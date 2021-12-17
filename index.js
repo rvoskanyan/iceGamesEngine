@@ -3,8 +3,9 @@ const fileUpload = require('express-fileupload');
 const exphbs = require('express-handlebars');
 const path = require('path');
 const fs = require('fs');
-const adminRoutes = require('./routes/admin');
 const clientRoutes = require('./routes/client');
+const adminRoutes = require('./routes/admin');
+const apiRoutes = require('./routes/api');
 const {sequelize} = require('./models/index');
 require('dotenv').config();
 
@@ -34,8 +35,9 @@ app.use(express.static(path.join(__dirname, 'layout')));
 app.use(express.static(path.join(__dirname, 'uploadedFiles')));
 app.use(express.urlencoded({extended: true}));
 app.use(fileUpload({}));
-app.use('/admin', adminRoutes);
 app.use('/', clientRoutes);
+app.use('/admin', adminRoutes);
+app.use('/api', apiRoutes);
 
 const PORT = process.env.PORT || 4000;
 const uploadedFilesDir = path.resolve(__dirname, 'uploadedFiles');

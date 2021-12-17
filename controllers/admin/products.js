@@ -76,6 +76,7 @@ const addProduct = async (req, res) => {
       description,
       priceTo,
       priceFrom,
+      trailerLink,
       inHomeSlider,
       releaseDate,
       os,
@@ -142,6 +143,7 @@ const addProduct = async (req, res) => {
       description,
       priceTo,
       priceFrom,
+      trailerLink,
       inHomeSlider: inHomeSlider === "on",
       releaseDate,
       cpu,
@@ -155,7 +157,6 @@ const addProduct = async (req, res) => {
       activationServiceId: activationService,
       publisherId: publisher,
       platformId: platform,
-      editionId: edition,
     });
   
     await product.addImages(gameImgIds);
@@ -197,6 +198,9 @@ const addProduct = async (req, res) => {
     await product.setLanguages(resLanguages);
     await product.setRegions(resRegions);
     await product.setDevelopers(resDevelopers);
+    if (+edition) {
+      product.setEdition(edition);
+    }
     
     res.redirect('/admin/products');
     
@@ -243,12 +247,8 @@ const pageEditProduct = async (req, res) => {
     const publisherId = gamePublisher.dataValues.id;
     const activationServiceId = gameActivationService.dataValues.id;
     const platformId = gamePlatform.dataValues.id;
-    let editionId = null;
-    
-    if (gameEdition) {
-      editionId = gameEdition.dataValues.id || 0;
-    }
-  
+    const editionId = gameEdition?.dataValues?.id || 0;
+
     const restCategories = await Category.findAll({
       attributes: ['id', 'name'],
       where: {
@@ -493,6 +493,7 @@ const editProduct = async (req, res) => {
       description,
       priceTo,
       priceFrom,
+      trailerLink,
       inHomeSlider,
       releaseDate,
       os,
@@ -517,6 +518,7 @@ const editProduct = async (req, res) => {
       description,
       priceTo,
       priceFrom,
+      trailerLink,
       inHomeSlider: inHomeSlider === "on",
       releaseDate,
       os,
@@ -527,7 +529,10 @@ const editProduct = async (req, res) => {
       publisherId: publisher,
       activationServiceId: activationService,
       platformId: platform,
-      editionId: edition,
+    }
+    
+    if (+edition) {
+      values.editionId = edition;
     }
     
     const gameImgIds = [];

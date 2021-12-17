@@ -57,6 +57,12 @@ module.exports = (sequelize, DataTypes) => {
         }
       });
   
+      models.Product.belongsTo(models.Series, {
+        foreignKey: {
+          name: 'seriesId',
+        }
+      });
+  
       models.Product.belongsTo(models.Edition, {
         foreignKey: {
           name: 'editionId',
@@ -122,6 +128,7 @@ module.exports = (sequelize, DataTypes) => {
     img: {type: DataTypes.STRING, allowNull: false},
     coverImg: {type: DataTypes.STRING},
     coverVideo: {type: DataTypes.STRING},
+    trailerLink: {type: DataTypes.STRING},
     inHomeSlider: {type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false},
     releaseDate: {type: DataTypes.STRING, allowNull: true},
     os: {type: DataTypes.STRING, allowNull: true},
@@ -131,6 +138,7 @@ module.exports = (sequelize, DataTypes) => {
     diskMemory: {type: DataTypes.STRING, allowNull: true},
     rating: {type: DataTypes.FLOAT(2)},
     orderInBundle: {type: DataTypes.FLOAT(2)},
+    isOriginalInBundle: {type: DataTypes.BOOLEAN, defaultValue: false},
     isActive: {type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false},
   }, {
     sequelize,

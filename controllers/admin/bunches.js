@@ -2,6 +2,7 @@ const {
   Bunch,
   Product,
 } = require('./../../models/index');
+const {where} = require("sequelize");
 
 const pageBunches = async (req, res) => {
   try {
@@ -103,8 +104,24 @@ const addProductBunch = async (req, res) => {
   const {bunchId} = req.params;
   
   try {
-    const {gameId, orderInBundle} = req.body;
+    const {gameId, orderInBundle, isOriginalInBundle} = req.body;
     const values = {bunchId};
+    
+    if (isOriginalInBundle) {
+      const currentOriginal = await Product.findAll({
+        attributes: ['id'],
+        where: {
+          bunchId,
+          isOriginalInBundle: true,
+        }
+      });
+      
+      if (currentOriginal) {
+        await currentOriginal.update({isOriginalInBundle: false});
+      }
+  
+      values.isOriginalInBundle = true;
+    }
     
     if (orderInBundle) {
       values.orderInBundle = orderInBundle;
@@ -123,6 +140,65 @@ const addProductBunch = async (req, res) => {
   }
 }
 
+const pageEditProductBunch = async (req, res) => {
+  const {bunchId, productId} = req.params;
+  
+  try {
+    const game = await Product.findByPk(productId, {attributes: ['id', 'name', 'orderInBundle', 'isOriginalInBundle']});
+    
+    res.render('addProductBunch', {
+      layout: 'admin',
+      title: 'Редактирование игры связки',
+      game: game.dataValues,
+      isEdit: true,
+      bunchId,
+    });
+  } catch (e) {
+    console.log(e);
+    res.redirect(`/admin/bunches/edit/${bunchId}`);
+  }
+}
+
+const editProductBunch = async (req, res) => {
+  const {bunchId, productId} = req.params;
+  
+  try {
+    const {orderInBundle, isOriginalInBundle} = req.body;
+    const values = {};
+  
+    if (orderInBundle) {
+      values.orderInBundle = orderInBundle;
+    }
+  
+    if (isOriginalInBundle) {
+      const currentOriginal = await Product.findAll({
+        attributes: ['id'],
+        where: {
+          bunchId,
+          isOriginalInBundle: true,
+        }
+      });
+    
+      if (currentOriginal.length) {
+        await currentOriginal[0].update({isOriginalInBundle: false});
+      }
+    
+      values.isOriginalInBundle = true;
+    }
+    
+    await Product.update(values, {
+      where: {
+        id: productId,
+      }
+    })
+    
+    res.redirect(`/admin/bunches/edit/${bunchId}`);
+  } catch (e) {
+    console.log(e);
+    res.redirect(`/admin/bunches/${bunchId}/${productId}`);
+  }
+}
+
 module.exports = {
   pageBunches,
   pageAddBunch,
@@ -131,4 +207,6 @@ module.exports = {
   editBunch,
   pageAddProductBunch,
   addProductBunch,
+  pageEditProductBunch,
+  editProductBunch,
 }

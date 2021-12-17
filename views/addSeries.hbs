@@ -1,0 +1,26 @@
+{{#if isEdit}}
+    <a href="/admin/series/{{series.id}}/addGame">Добавить игру в серию</a>
+    <br>
+    <br>
+    {{#if gamesSeries}}
+        Игры серии:
+        <ul>
+            {{#each gamesSeries}}
+                <li>
+                    <a href="/admin/products/edit/{{id}}">
+                        {{name}}
+                    </a>
+                </li>
+            {{/each}}
+        </ul>
+    {{/if}}
+{{/if}}
+<form action="/admin/series/{{#if isEdit}}edit/{{series.id}}{{else}}add{{/if}}" method="post">
+    <label>
+        Название серии:
+        <input type="text" name="name"{{#if isEdit}} value="{{series.name}}"{{/if}}>
+    </label>
+    <br>
+    <br>
+    <input type="submit" name="add" value="{{#if isEdit}}Сохранить изменения{{else}}Добавить{{/if}}">
+</form>

@@ -40,37 +40,23 @@
     padding-left: 60px
     flex-grow: 1
 
-    & .settings
-      display: flex
-      justify-content: space-between
-      align-items: center
+    & .sort
+      & .variants
+        display: flex
+        align-items: center
+        margin-top: 20px
 
-      & .sort
-        & .variants
-          display: flex
-          align-items: center
-          margin-top: 20px
+        & .btn:not(:first-child)
+          margin-left: 20px
 
-          & .btn:not(:first-child)
-            margin-left: 20px
-
-          & .inStockOnly
-            margin-left: 35px
-
-      & .countGames
-
-        & .variants
-          display: flex
-          margin-top: 20px
-
-          & .btn:not(:last-child)
-            margin-right: 10px
+        & .inStockOnly
+          margin-left: 35px
 
     & .gameGrid
       margin-top: 70px
 
-    & .pagination
-      margin-top: 25px
+    & .loadMore
+      margin: 35px auto 0 auto
 
   & .title
     font-weight: bold

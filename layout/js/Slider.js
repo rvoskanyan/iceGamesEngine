@@ -33,14 +33,15 @@ export default class Slider {
     this.countScreens = this.countSlides;
     
     if (this.isTrack) {
+      const stylesSlide = getComputedStyle(this.slideNodes[0]);
       this.visibleAreaNode = this.mainNode.querySelector('.js-visibleArea');
       
-      this.shareSlide = this.slideNodes[0].offsetWidth;
+      this.shareSlide = this.slideNodes[0].offsetWidth + parseInt(stylesSlide.marginLeft) + parseInt(stylesSlide.marginRight);
       this.shareVisibleArea = this.visibleAreaNode.offsetWidth;
       this.positionTape = 0;
       
       if (this.isVertical) {
-        this.shareSlide = this.slideNodes[0].offsetHeight;
+        this.shareSlide = this.slideNodes[0].offsetHeight + parseInt(stylesSlide.marginTop) + parseInt(stylesSlide.marginBottom);
         this.shareVisibleArea = this.visibleAreaNode.offsetHeight;
       }
       
@@ -80,9 +81,6 @@ export default class Slider {
     
     this.prevBtnNode.addEventListener('click', () => this.switchScreen(this.activeScreen - 1));
     this.nextBtnNode.addEventListener('click', () => this.switchScreen(this.activeScreen + 1));
-  
-    //this.nextBtnNode.addEventListener('click', () => this.handleSwitch(this.screenActive + 1));
-    //this.prevBtnNode.addEventListener('click', () => this.handleSwitch(this.screenActive - 1));
   
     /*switch (this.type) {
       case 'switchClass': {
@@ -151,7 +149,7 @@ export default class Slider {
   }
   
   setActiveClass = (screen, action) => {
-    let current = screen * this.countVisibleSlides - this.offsetSlide;
+    let start = screen * this.countVisibleSlides - this.offsetSlide;
     let end = screen * this.countVisibleSlides + this.countVisibleSlides - this.offsetSlide;
     const members = [];
     
@@ -161,7 +159,7 @@ export default class Slider {
     
     if (this.isTrack && end > this.countSlides) {
       this.offsetSlide = end - this.countSlides;
-      current -= this.offsetSlide;
+      start -= this.offsetSlide;
       end = this.countSlides;
     }
   
@@ -170,12 +168,12 @@ export default class Slider {
       this.navigateItemNodes[screen].blur();
     }
     
-    while (current < end) {
-      const slide = this.slideNodes[current];
+    while (start < end) {
+      const slide = this.slideNodes[start];
       
       members.push(slide);
       slide.classList[action]('active');
-      current++;
+      start++;
     }
     
     return members;
@@ -196,7 +194,11 @@ export default class Slider {
       }
     }
     
-    this.tapeNode.style.transform = `translateY(${this.positionTape}px)`;
+    if (this.isVertical) {
+      return this.tapeNode.style.transform = `translateY(${this.positionTape}px)`;
+    }
+  
+    this.tapeNode.style.transform = `translateX(${this.positionTape}px)`;
   }
   
   changeTimeoutOnce = (time) => {

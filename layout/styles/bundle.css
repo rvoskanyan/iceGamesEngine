@@ -139,6 +139,11 @@
 .row {
   display: flex;
   justify-content: space-between; }
+  .row-game {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: max-content;
+    grid-column-gap: 30px; }
 
 .homeTitle {
   font-family: 'Lemon Milk';
@@ -573,6 +578,33 @@
       height: 100%;
       object-fit: cover; }
 
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 3; }
+  .modal .modalContainer {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 80px 30px;
+    min-height: max-content;
+    overflow: auto; }
+    .modal .modalContainer .close {
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 10px;
+      background-color: rgba(128, 128, 128, 0.8);
+      border-radius: 5px; }
+    .modal .modalContainer .modalContent {
+      margin: 0 auto;
+      height: 600px;
+      width: 1100px; }
+
 @keyframes animActive {
   0% {
     display: none;
@@ -634,18 +666,17 @@
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      transition: height .3s ease;
+      transition: height .3s ease-in;
       transition-delay: 0s;
       height: 248px; }
       .login .auth .form .input-labelInField:first-child {
         transition: .3s ease-in;
-        transition-delay: .2s;
+        transition-delay: .35s;
         transition-property: opacity, visibility; }
       .login .auth .form .input-labelInField:not(:first-child) {
         margin-top: 15px; }
       .login .auth .form.auth {
-        height: 182px;
-        transition-delay: .2s; }
+        height: 182px; }
         .login .auth .form.auth .input-labelInField:first-child {
           transition-delay: 0s;
           opacity: 0;
@@ -2040,27 +2071,18 @@
   .catalog .list {
     padding-left: 60px;
     flex-grow: 1; }
-    .catalog .list .settings {
+    .catalog .list .sort .variants {
       display: flex;
-      justify-content: space-between;
-      align-items: center; }
-      .catalog .list .settings .sort .variants {
-        display: flex;
-        align-items: center;
-        margin-top: 20px; }
-        .catalog .list .settings .sort .variants .btn:not(:first-child) {
-          margin-left: 20px; }
-        .catalog .list .settings .sort .variants .inStockOnly {
-          margin-left: 35px; }
-      .catalog .list .settings .countGames .variants {
-        display: flex;
-        margin-top: 20px; }
-        .catalog .list .settings .countGames .variants .btn:not(:last-child) {
-          margin-right: 10px; }
+      align-items: center;
+      margin-top: 20px; }
+      .catalog .list .sort .variants .btn:not(:first-child) {
+        margin-left: 20px; }
+      .catalog .list .sort .variants .inStockOnly {
+        margin-left: 35px; }
     .catalog .list .gameGrid {
       margin-top: 70px; }
-    .catalog .list .pagination {
-      margin-top: 25px; }
+    .catalog .list .loadMore {
+      margin: 35px auto 0 auto; }
   .catalog .title {
     font-weight: bold;
     font-size: 18px;
@@ -2153,55 +2175,65 @@
 .gamePage .main {
   display: flex;
   align-items: center; }
+  .gamePage .main .fieldedList {
+    margin-right: 15px; }
   .gamePage .main .gallerySlider {
     display: flex;
     align-items: center; }
-    .gamePage .main .gallerySlider .visibleArea {
+    .gamePage .main .gallerySlider .visibleAreaWrapper {
       overflow: hidden;
-      max-width: calc((287px + 19px * 2) * 2); }
+      padding: 9px 19px; }
       @media (min-width: 1650px) {
-        .gamePage .main .gallerySlider .visibleArea {
-          max-width: calc((346px + 22px * 2) * 2); } }
+        .gamePage .main .gallerySlider .visibleAreaWrapper {
+          padding: 11px 22px; } }
       @media (min-width: 1920px) {
-        .gamePage .main .gallerySlider .visibleArea {
-          max-width: calc((403px + 24px * 2) * 2); } }
-      .gamePage .main .gallerySlider .visibleArea .tape {
-        display: flex; }
-        .gamePage .main .gallerySlider .visibleArea .tape .slideWrapper {
-          padding: 9px 19px; }
-          @media (min-width: 1650px) {
-            .gamePage .main .gallerySlider .visibleArea .tape .slideWrapper {
-              padding: 11px 22px; } }
-          @media (min-width: 1920px) {
-            .gamePage .main .gallerySlider .visibleArea .tape .slideWrapper {
-              padding: 12px 24px; } }
-          .gamePage .main .gallerySlider .visibleArea .tape .slideWrapper .slide {
+        .gamePage .main .gallerySlider .visibleAreaWrapper {
+          padding: 12px 24px; } }
+      .gamePage .main .gallerySlider .visibleAreaWrapper .visibleArea {
+        max-width: calc((287px + 15px * 2) * 2); }
+        @media (min-width: 1650px) {
+          .gamePage .main .gallerySlider .visibleAreaWrapper .visibleArea {
+            max-width: calc((346px + 15px * 2) * 2); } }
+        @media (min-width: 1920px) {
+          .gamePage .main .gallerySlider .visibleAreaWrapper .visibleArea {
+            max-width: calc((403px + 15px * 2) * 2); } }
+        .gamePage .main .gallerySlider .visibleAreaWrapper .visibleArea .tape {
+          display: flex;
+          transition: .3s ease-in;
+          transition-property: transform; }
+          .gamePage .main .gallerySlider .visibleAreaWrapper .visibleArea .tape .slide {
             visibility: hidden;
+            opacity: 0;
+            transition: .3s ease-in;
+            transition-property: opacity, visibility;
+            margin: 0 15px;
             min-width: 287px;
-            width: 287px;
+            max-width: 287px;
             min-height: 176px;
-            height: 176px; }
+            max-height: 176px; }
             @media (min-width: 1650px) {
-              .gamePage .main .gallerySlider .visibleArea .tape .slideWrapper .slide {
+              .gamePage .main .gallerySlider .visibleAreaWrapper .visibleArea .tape .slide {
                 min-width: 346px;
-                width: 346px;
+                max-width: 346px;
                 min-height: 213px;
-                height: 213px; } }
+                max-height: 213px; } }
             @media (min-width: 1920px) {
-              .gamePage .main .gallerySlider .visibleArea .tape .slideWrapper .slide {
+              .gamePage .main .gallerySlider .visibleAreaWrapper .visibleArea .tape .slide {
                 min-width: 403px;
-                width: 403px;
+                max-width: 403px;
                 min-height: 248px;
-                height: 248px; } }
-            .gamePage .main .gallerySlider .visibleArea .tape .slideWrapper .slide.active {
-              visibility: visible; }
-            .gamePage .main .gallerySlider .visibleArea .tape .slideWrapper .slide .btn {
+                max-height: 248px; } }
+            .gamePage .main .gallerySlider .visibleAreaWrapper .visibleArea .tape .slide.active {
+              visibility: visible;
+              opacity: 1; }
+            .gamePage .main .gallerySlider .visibleAreaWrapper .visibleArea .tape .slide .btn {
               width: 100%;
               height: 100%;
+              min-width: initial;
               overflow: hidden;
               border-radius: 40px;
               position: relative; }
-              .gamePage .main .gallerySlider .visibleArea .tape .slideWrapper .slide .btn.video:before {
+              .gamePage .main .gallerySlider .visibleAreaWrapper .visibleArea .tape .slide .btn.video:before {
                 content: '';
                 position: absolute;
                 top: 50%;
@@ -2212,7 +2244,7 @@
                 background-image: url("./../img/playVideo.svg");
                 background-size: cover;
                 background-position: center; }
-              .gamePage .main .gallerySlider .visibleArea .tape .slideWrapper .slide .btn .img {
+              .gamePage .main .gallerySlider .visibleAreaWrapper .visibleArea .tape .slide .btn .img {
                 width: 100%;
                 height: 100%;
                 object-fit: cover; }

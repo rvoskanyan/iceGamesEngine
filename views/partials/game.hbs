@@ -1,0 +1,31 @@
+<a href="/games/{{id}}" class="cardGame {{size}}" title="Перейти к странице игры">
+    <div class="actions">
+        <button class="btn like" title="Добавить игру в избранное">
+            <span class="icon-static icon-static-actionLike"></span>
+        </button>
+        <button
+            class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart small"
+            title="Добавить данный товар в корзину покупок"
+        >
+            В корзину
+        </button>
+    </div>
+    <div class="head">
+        <img class="img" src="{{websiteAddress}}{{img}}" alt="Картинка {{name}}" title="{{name}}">
+        <div class="name">
+            {{name}}
+        </div>
+    </div>
+    <div class="price">
+        <div class="toPrice">
+            <span class="value">
+                {{priceTo}}
+            </span>
+        </div>
+        <div class="fromPrice">
+            <span class="value">
+                {{priceFrom}}
+            </span>
+        </div>
+    </div>
+</a>

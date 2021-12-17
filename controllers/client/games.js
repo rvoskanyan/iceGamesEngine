@@ -2,12 +2,41 @@ const {
   Product,
   GameElement,
   Edition,
+  Category,
+  Genre,
+  ActivationService,
 } = require('./../../models/index');
 const {getDiscount} = require("../../utils/functions");
 const Config = require('./../../config');
 
 const gamesPage = async (req, res) => {
-
+  try {
+    const games = await Product.findAll({
+      attributes: ['id', 'name', 'img', 'priceTo', 'priceFrom'],
+      limit: 20,
+    });
+    const categories = await Category.findAll({
+      attributes: ['id', 'name'],
+    });
+    const genres = await Genre.findAll({
+      attributes: ['id', 'name'],
+    });
+    const activationServices = await ActivationService.findAll({
+      attributes: ['id', 'name'],
+    });
+    
+    res.render('catalog', {
+      websiteAddress: Config.websiteAddress,
+      title: 'Каталог игр',
+      games: games.map(item => item.dataValues),
+      categories: categories.map(item => item.dataValues),
+      genres: genres.map(item => item.dataValues),
+      activationServices: activationServices.map(item => item.dataValues),
+    });
+  } catch (e) {
+    console.log(e);
+    res.redirect('/')
+  }
 }
 
 const gamePage = async (req, res) => {
@@ -24,10 +53,13 @@ const gamePage = async (req, res) => {
     const publisher = await game.getPublisher();
     const images = await game.getImages({attributes: ['name']});
     const bunch = await game.getBunch({attributes: ['id']});
+    const series = await game.getSeries({attributes: ['id']});
     const gameData = game.dataValues;
     let gameElements = null;
     let gameEdition = null;
     let gamesBunch = null;
+    let trailerId = null;
+    let gamesSeries = [];
     
     if (bunch) {
       gamesBunch = await bunch.getProducts({
@@ -109,6 +141,35 @@ const gamePage = async (req, res) => {
       });
     }
     
+    if (series) {
+      gamesSeries = await series.getProducts({attributes: ['id', 'name', 'img', 'priceTo', 'priceFrom']});
+    } else if (bunch) {
+      const seriesIdOnBundle = await Product.findAll({
+        attributes: ['seriesId'],
+        where: {
+          bunchId: bunch.dataValues.id,
+          isOriginalInBundle: true,
+        }
+      });
+      
+      if (seriesIdOnBundle.length) {
+        gamesSeries = await Product.findAll({
+          attributes: ['id', 'name', 'img', 'priceTo', 'priceFrom'],
+          where: {
+            seriesId: seriesIdOnBundle[0].dataValues.seriesId,
+          }
+        });
+      }
+    }
+    
+    if (gamesSeries) {
+      gamesSeries = gamesSeries.map(item => item.dataValues);
+    }
+    
+    if (gameData.trailerLink) {
+      trailerId = gameData.trailerLink.split('v=')[1];
+    }
+    
     gameData.discount = getDiscount(gameData.priceTo, gameData.priceFrom);
   
     res.render('game', {
@@ -125,6 +186,9 @@ const gamePage = async (req, res) => {
       platform: platform.dataValues,
       publisher: publisher.dataValues,
       images: images.map(item => item.dataValues),
+      gamesSeries,
+      seriesIsSlider: gamesSeries.length > 4,
+      trailerId,
       gamesBunch,
       gameEdition,
       gameElements,
