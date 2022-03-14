@@ -1,7 +1,7 @@
-const {
+/*const {
   Series,
   Product,
-} = require('./../../models/index');
+} = require('./../../models/index');*/
 
 const pageSeries = async (req, res) => {
   try {

@@ -97,7 +97,7 @@
     {{#if gameImages}}
         <div style="display: flex; flex-wrap: wrap">
             {{#each gameImages}}
-                <img src="{{../websiteAddress}}{{name}}" alt="Изображение{{@index}} из игры {{../game.name}}" style="height: 200px; max-width: 300px; margin: 5px; object-fit: cover">
+                <img src="{{@root.websiteAddress}}{{name}}" alt="Изображение{{@index}} из игры {{../game.name}}" style="height: 200px; max-width: 300px; margin: 5px; object-fit: cover">
             {{/each}}
         </div>
     {{/if}}

@@ -1,9 +1,10 @@
-import Config from "./config";
-
 import Slider from "./Slider";
 import Tabs from "./Tabs";
 import Modal from "./Modal";
 import PopupController from "./PopupController";
+import AsyncForm from "./AsyncForm";
+
+import Config from "./config";
 
 import './../styles/index.sass';
 
@@ -15,6 +16,7 @@ const gameInfoTabsNode = document.querySelector('.js-gameInfoTabs');
 const youtubePlayNodes = document.querySelectorAll('.js-playYouTubeVideo');
 const catalogNode = document.querySelector('.js-catalog');
 const loginFormNode = document.querySelector('.js-loginForm');
+const profileEditFormNode = document.querySelector('.js-profileEditForm');
 const submitLoginNode = document.querySelector('.js-submitLoginForm');
 const btnSwitchAuthNode = document.querySelector('.js-btnSwitchAuth');
 const btnSwitchRegNode = document.querySelector('.js-btnSwitchReg');
@@ -38,7 +40,7 @@ new PopupController([
   }
 ]);
 
-if (homeSliderNode) {
+/*if (homeSliderNode) {
   let playVideoTimeOutId;
   
   const homeSlider = new Slider({
@@ -86,7 +88,7 @@ if (homeSliderNode) {
     videoNode.addEventListener('canplaythrough', onCanplaythrough);
     videoNode.setAttribute('src',`${Config.websiteAddress}${videoName}`);
   }
-}
+}*/
 
 if (homeCatalogTabsNode) {
   new Tabs({
@@ -212,5 +214,22 @@ if (inputLabelInFieldNodes.length) {
     item.querySelector('input').addEventListener('blur', (e) => {
       e.target.value.length ? e.target.classList.add('active') : e.target.classList.remove('active');
     })
+  })
+}
+
+if (loginFormNode) {
+  new AsyncForm({
+    mainNode: loginFormNode,
+    successHandler: () => {
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500)
+    },
+  });
+}
+
+if (profileEditFormNode) {
+  new AsyncForm({
+    mainNode: profileEditFormNode,
   })
 }

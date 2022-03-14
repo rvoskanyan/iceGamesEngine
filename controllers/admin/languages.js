@@ -1,4 +1,6 @@
+/*
 const {Language} = require('./../../models/index');
+*/
 
 const pageLanguages = async (req, res) => {
   try {

@@ -1,20 +1,17 @@
-'use strict';
-const {Model} = require('sequelize');
+const {Schema, model} = require('mongoose');
 
-module.exports = (sequelize, DataTypes) => {
-  class Usp extends Model {}
-  
-  Usp.init({
-    id: {allowNull: false, autoIncrement: true, primaryKey: true, type: DataTypes.INTEGER},
-    text: {type: DataTypes.STRING, allowNull: false},
-    
-  }, {
-    sequelize,
-    modelName: 'Usp',
-    indexes: [
-      {unique: true, fields: ['text']}
-    ]
-  });
-  
-  return Usp;
+const fields = {
+  text: {
+    type: String,
+    unique: true,
+    required: true,
+  }
 };
+
+const options = {
+  timestamps: true,
+};
+
+const uspSchema = new Schema(fields, options);
+
+module.exports = model('Usp', uspSchema);

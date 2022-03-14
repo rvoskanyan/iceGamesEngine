@@ -1,34 +1,27 @@
-'use strict';
-const {Model} = require('sequelize');
+const {Schema, model} = require('mongoose');
 
-module.exports = (sequelize, DataTypes) => {
-  class ActivationService extends Model {
-    static associate(models) {
-      models.ActivationService.hasMany(models.Product, {
-        foreignKey: {
-          name: 'activationServiceId',
-          allowNull: false,
-        }
-      });
-  
-      models.ActivationService.hasMany(models.ActivationStage, {
-        foreignKey: {
-          name: 'activationServiceId',
-        }
-      });
+const fields = {
+  name: {
+    type: String,
+    unique: true,
+    required: true,
+  },
+  stages: [{
+    name: {
+      type: String,
+      required: true,
+    },
+    order: {
+      type: Number,
+      required: true,
     }
-  }
-  
-  ActivationService.init({
-    id: {allowNull: false, autoIncrement: true, primaryKey: true, type: DataTypes.INTEGER},
-    name: {type: DataTypes.STRING, allowNull: false},
-  }, {
-    sequelize,
-    modelName: 'ActivationService',
-    indexes: [
-      {unique: true, fields: ['name']}
-    ]
-  });
-  
-  return ActivationService;
-};
+  }],
+}
+
+const options = {
+  timestamps: true,
+}
+
+const activationServiceSchema = new Schema(fields, options);
+
+module.exports = model('ActivationService', activationServiceSchema);

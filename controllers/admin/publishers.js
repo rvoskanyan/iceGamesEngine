@@ -1,4 +1,4 @@
-const {Publisher} = require("./../../models/index");
+/*const {Publisher} = require("./../../models/index");*/
 
 const pagePublishers = async (req, res) => {
   try {

@@ -1,13 +1,12 @@
-const {
+/*const {
   Product,
   GameElement,
   Edition,
   Category,
   Genre,
   ActivationService,
-} = require('./../../models/index');
+} = require('./../../models/index');*/
 const {getDiscount} = require("../../utils/functions");
-const Config = require('./../../config');
 
 const gamesPage = async (req, res) => {
   try {
@@ -26,7 +25,6 @@ const gamesPage = async (req, res) => {
     });
     
     res.render('catalog', {
-      websiteAddress: Config.websiteAddress,
       title: 'Каталог игр',
       games: games.map(item => item.dataValues),
       categories: categories.map(item => item.dataValues),
@@ -174,7 +172,6 @@ const gamePage = async (req, res) => {
   
     res.render('game', {
       title: "ICE Games -- магазин ключей",
-      websiteAddress: Config.websiteAddress,
       game: gameData,
       hasExtends: !!gameExtends.length,
       extends: gameExtends.map(item => item.dataValues),

@@ -1,27 +1,17 @@
-'use strict';
-const {Model} = require('sequelize');
+const {Schema, model} = require('mongoose');
 
-module.exports = (sequelize, DataTypes) => {
-  class Bunch extends Model {
-    static associate(models) {
-      models.Bunch.hasMany(models.Product, {
-        foreignKey: {
-          name: 'bunchId',
-        }
-      });
-    }
-  }
-  
-  Bunch.init({
-    id: {allowNull: false, autoIncrement: true, primaryKey: true, type: DataTypes.INTEGER},
-    name: {type: DataTypes.STRING, allowNull: false},
-  }, {
-    sequelize,
-    modelName: 'Bunch',
-    indexes: [
-      {unique: true, fields: ['name']}
-    ]
-  });
-  
-  return Bunch;
+const fields = {
+  name: {
+    type: String,
+    required: true,
+    unique: true,
+  },
 };
+
+const options = {
+  timestamps: true,
+};
+
+const bunchSchema = new Schema(fields, options);
+
+module.exports = model('Bunch', bunchSchema);

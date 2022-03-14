@@ -1,7 +1,7 @@
-const {
+/*const {
   ActivationService,
   ActivationStage,
-} = require('./../../models/index');
+} = require('./../../models/index');*/
 
 const pageActivationServices = async (req, res) => {
   try {

@@ -1,4 +1,4 @@
-const {Usp} = require('./../../models/index');
+/*const {Usp} = require('./../../models/index');*/
 
 const pageUsp = async (req, res) => {
   try {

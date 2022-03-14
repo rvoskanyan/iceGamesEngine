@@ -1,152 +1,211 @@
-'use strict';
-const {Model} = require('sequelize');
+const {Schema, model} = require('mongoose');
 
-module.exports = (sequelize, DataTypes) => {
-  class Product extends Model {
-    static associate(models) {
-      models.Product.hasMany(models.Key, {
-        foreignKey: {
-          name: 'productId',
-          allowNull: false,
-        }
-      });
-  
-      models.Product.hasMany(models.Image, {
-        foreignKey: {
-          name: 'productId',
-        }
-      });
-  
-      models.Product.hasMany(models.GameElement, {
-        foreignKey: {
-          name: 'belongsProductId',
-        }
-      });
-  
-      models.Product.hasMany(models.GameElement, {
-        foreignKey: {
-          name: 'productId',
-        },
-        as: 'AsGameElement',
-      });
-  
-      models.Product.belongsTo(models.ActivationService, {
-        foreignKey: {
-          name: 'activationServiceId',
-          allowNull: false,
-        }
-      });
-  
-      models.Product.belongsTo(models.Publisher, {
-        foreignKey: {
-          name: 'publisherId',
-          allowNull: false,
-        }
-      });
-  
-      models.Product.belongsTo(models.Platform, {
-        foreignKey: {
-          name: 'platformId',
-          allowNull: false,
-        }
-      });
-  
-      models.Product.belongsTo(models.Bunch, {
-        foreignKey: {
-          name: 'bunchId',
-        }
-      });
-  
-      models.Product.belongsTo(models.Series, {
-        foreignKey: {
-          name: 'seriesId',
-        }
-      });
-  
-      models.Product.belongsTo(models.Edition, {
-        foreignKey: {
-          name: 'editionId',
-        }
-      });
-  
-      models.Product.belongsToMany(models.Region, {
-        through: models.RegionsProduct,
-        foreignKey: {
-          name: 'productId',
-          allowNull: false,
-        }
-      });
-  
-      models.Product.belongsToMany(models.Language, {
-        through: models.LanguagesProduct,
-        foreignKey: {
-          name: 'productId',
-          allowNull: false,
-        }
-      });
-      
-      models.Product.belongsToMany(models.Category, {
-        through: models.CategoryProduct,
-        foreignKey: {
-          name: 'productId',
-          allowNull: false,
-        }
-      });
-      
-      models.Product.belongsToMany(models.Developer, {
-        through: models.DevelopersProduct,
-        foreignKey: {
-          name: 'productId',
-          allowNull: false,
-        }
-      });
-  
-      models.Product.belongsToMany(models.Genre, {
-        through: models.GenresProduct,
-        foreignKey: {
-          name: 'productId',
-          allowNull: false,
-        }
-      });
-  
-      models.Product.belongsToMany(models.Extend, {
-        through: models.ExtendsProduct,
-        foreignKey: {
-          name: 'productId',
-          allowNull: false,
-        }
-      });
-    }
-  }
-  
-  Product.init({
-    id: {allowNull: false, autoIncrement: true, primaryKey: true, type: DataTypes.INTEGER},
-    name: {type: DataTypes.STRING, allowNull: false},
-    description: {type: DataTypes.STRING(2000), allowNull: false},
-    priceTo: {type: DataTypes.FLOAT(8), allowNull: false},
-    priceFrom: {type: DataTypes.INTEGER},
-    img: {type: DataTypes.STRING, allowNull: false},
-    coverImg: {type: DataTypes.STRING},
-    coverVideo: {type: DataTypes.STRING},
-    trailerLink: {type: DataTypes.STRING},
-    inHomeSlider: {type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false},
-    releaseDate: {type: DataTypes.STRING, allowNull: true},
-    os: {type: DataTypes.STRING, allowNull: true},
-    cpu: {type: DataTypes.STRING, allowNull: false},
-    graphicsCard: {type: DataTypes.STRING, allowNull: false},
-    ram: {type: DataTypes.STRING, allowNull: false},
-    diskMemory: {type: DataTypes.STRING, allowNull: true},
-    rating: {type: DataTypes.FLOAT(2)},
-    orderInBundle: {type: DataTypes.FLOAT(2)},
-    isOriginalInBundle: {type: DataTypes.BOOLEAN, defaultValue: false},
-    isActive: {type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false},
-  }, {
-    sequelize,
-    modelName: 'Product',
-    indexes: [
-      {unique: true, fields: ['name']}
-    ]
-  });
-  
-  return Product;
+const keySchema = new Schema({
+  value: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  sold: {
+    type: Boolean,
+    default: false,
+  },
+});
+
+const elementSchema = new Schema({
+  name: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  description: {
+    type: String,
+    required: true,
+  },
+  productId: {
+    type: Schema.Types.ObjectId,
+    ref: 'Product',
+  },
+});
+
+const imageSchema = new Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+});
+
+const commentSchema = new Schema({
+  text: {
+    type: String,
+    required: true,
+  },
+  authorId: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    require: true,
+  },
+});
+
+const fields = {
+  name: {
+    type: String,
+    required: true,
+    unique: true,
+    index: true,
+  },
+  alias: {
+    type: String,
+    require: true,
+    unique: true,
+    index: true,
+  },
+  description: {
+    type: String,
+    required: true,
+  },
+  priceTo: {
+    type: Number,
+    required: true,
+  },
+  priceFrom: Number,
+  img: {
+    type: String,
+    required: true,
+  },
+  coverImg: String,
+  coverVideo: String,
+  trailerLink: String,
+  inHomeSlider: {
+    type: Boolean,
+    default: false,
+  },
+  dlc: {
+    type: Boolean,
+    default: false,
+  },
+  dlcFor: {
+    type: Schema.Types.ObjectId,
+    ref: 'Product',
+  },
+  dlcForFree: {
+    type: Boolean,
+    default: false,
+  },
+  dlcForName: String,
+  releaseDate: {
+    type: Date,
+    required: true,
+  },
+  os: {
+    type: String,
+    required: true,
+  },
+  cpu: {
+    type: String,
+    required: true,
+  },
+  graphicsCard: {
+    type: String,
+    required: true,
+  },
+  ram: {
+    type: String,
+    required: true,
+  },
+  diskMemory: {
+    type: String,
+    required: true,
+  },
+  rating: Number,
+  orderInBundle: Number,
+  images: {
+    type: [imageSchema],
+    default: [],
+  },
+  elements: {
+    type: [elementSchema],
+    default: [],
+  },
+  keys: {
+    type: [keySchema],
+    default: [],
+  },
+  countKeys: {
+    type: Number,
+    default: 0,
+  },
+  activationServiceId: {
+    type: Schema.Types.ObjectId,
+    ref: 'ActivationService',
+    required: true,
+  },
+  publisherId: {
+    type: Schema.Types.ObjectId,
+    ref: 'Publisher',
+    required: true,
+  },
+  seriesId: {
+    type: Schema.Types.ObjectId,
+    ref: 'Series',
+  },
+  editionId: {
+    type: Schema.Types.ObjectId,
+    ref: 'Edition',
+  },
+  bunchId: {
+    type: Schema.Types.ObjectId,
+    ref: 'Bunch',
+  },
+  authorId: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+  },
+  lastEditor: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+  },
+  platform: {
+    type: Schema.Types.ObjectId,
+    ref: 'Platform',
+    required: true,
+  },
+  languages: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Language',
+  }],
+  activationRegions: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Region',
+  }],
+  categories: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Category',
+  }],
+  genres: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Genre',
+  }],
+  developers: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Developer',
+  }],
+  extends: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Extend',
+  }],
+  active: {
+    type: Boolean,
+    default: false,
+  },
 };
+
+const options = {
+  timestamps: true,
+};
+
+const productSchema = new Schema(fields, options);
+
+module.exports = model('Product', productSchema);

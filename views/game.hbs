@@ -72,7 +72,7 @@
                     {{#each extends}}
                         <div class="tooltip">
                             <button class="btn extend">
-                                <img  class="img" src="{{../websiteAddress}}{{icon}}" alt="{{text}}" title="{{text}}">
+                                <img  class="img" src="{{@root.websiteAddress}}{{icon}}" alt="{{text}}" title="{{text}}">
                             </button>
                             <div class="prompt">
                                 {{name}}
@@ -163,7 +163,7 @@
                                 {{#each images}}
                                     <div class="slide js-slide{{#if (isLess @index 1)}} active{{/if}}">
                                         <button class="btn increase" title="Открыть на весь экран">
-                                            <img class="img" src="{{../websiteAddress}}{{name}}" alt="Фото из галереи игы">
+                                            <img class="img" src="{{@root.websiteAddress}}{{name}}" alt="Фото из галереи игы">
                                         </button>
                                     </div>
                                 {{/each}}
@@ -171,7 +171,7 @@
                                 {{#each images}}
                                     <div class="slide js-slide{{#if (isLess @index 2)}} active{{/if}}">
                                         <button class="btn increase" title="Открыть на весь экран">
-                                            <img class="img" src="{{../websiteAddress}}{{name}}" alt="Фото из галереи игы">
+                                            <img class="img" src="{{@root.websiteAddress}}{{name}}" alt="Фото из галереи игы">
                                         </button>
                                     </div>
                                 {{/each}}
@@ -348,7 +348,6 @@
                                     {{/if}}
                                         {{> game
                                             size='small'
-                                            websiteAddress=../websiteAddress
                                             id=id
                                             img=img
                                             name=name

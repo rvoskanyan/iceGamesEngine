@@ -1,0 +1,36 @@
+<main class="contentContainer withoutCover profilePage">
+    <div class="breadcrumbs contentContainer">
+        <div class="item">
+            <a class="btn link" href="#">Главная</a>
+        </div>
+        <div class="current">Профиль</div>
+    </div>
+    <div class="profile">
+        {{> profileMenu}}
+        <div class="content">
+            <div class="referralLink">
+                <div class="subtitle">Ваша реферальная ссылка</div>
+                <div class="description">Копируй ссылку и отправляй друзям, чтобы подниматься в рейтинге айсов</div>
+                <div class="linkBlock">
+                    <div class="refLink">{{websiteAddress}}?inviter={{userId}}</div>
+                    <button class="btn border round small">Копировать</button>
+                </div>
+            </div>
+            <div class="friends">
+                <div class="subtitle">Приглашенные друзья</div>
+                {{#if invitedUsers.length}}
+                    <div class="list">
+                        {{#each invitedUsers}}
+                            <div class="item">
+                                <div class="name">{{login}}</div>
+                                <div class="ratingPosition">Позиция 3 \ 10</div>
+                            </div>
+                        {{/each}}
+                    </div>
+                {{else}}
+                    <div style="color: #fff; margin-top: 30px; text-align: center">Вы еще не пригласили ни одного друга</div>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+</main>

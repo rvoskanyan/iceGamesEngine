@@ -1,4 +1,4 @@
-const {Region} = require('./../../models/index');
+/*const {Region} = require('./../../models/index');*/
 
 const pageRegions = async (req, res) => {
   try {

@@ -1,0 +1,35 @@
+<main class="contentContainer withoutCover profilePage">
+    <div class="breadcrumbs contentContainer">
+        <div class="item">
+            <a class="btn link" href="#">Главная</a>
+        </div>
+        <div class="current">Профиль</div>
+    </div>
+    <div class="profile">
+        {{> profileMenu}}
+        <form class="content personalDataForm js-profileEditForm" method="post" action="/profile/edit">
+            <div class="responseMessage"></div>
+            <div class="personalData">
+                <div class="subtitle">Личные данные</div>
+                <label class="input-frame">
+                    <span class="label">Ник</span>
+                    <input class="textField" type="text" name="login" placeholder="Укажите желаемый ник" value="{{user.login}}">
+                </label>
+                <label class="input-frame">
+                    <span class="label">Почта</span>
+                    <input class="textField" type="email" name="email" placeholder="Укажите Вашу почту" value="{{user.email}}">
+                </label>
+            </div>
+            <div class="password">
+                <div class="subtitle">Смена пароля</div>
+                <label class="input-frame">
+                    <input class="textField" type="password" name="password" placeholder="Текущий пароль">
+                </label>
+                <label class="input-frame">
+                    <input class="textField" type="password" name="newPassword" placeholder="Новый пароль">
+                </label>
+            </div>
+            <button class="btn small round border hover-color-pink hover-border-pink" type="submit">Сохранить</button>
+        </form>
+    </div>
+</main>

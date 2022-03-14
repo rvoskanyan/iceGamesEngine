@@ -1,9 +1,8 @@
-const {Op} = require('sequelize');
+/*const {Op} = require('sequelize');*/
 const {getExtendFile} = require("../../utils/functions");
 const uuid = require('uuid');
 const path = require('path');
-const {websiteAddress} = require('./../../config');
-const {
+/*const {
   Product,
   Category,
   Genre,
@@ -17,7 +16,7 @@ const {
   Image,
   Edition,
   GameElement,
-} = require('../../models/index');
+} = require('../../models/index');*/
 
 const pageProducts = async (req, res) => {
   try {
@@ -447,7 +446,6 @@ const pageEditProduct = async (req, res) => {
     res.render('addProducts', {
       layout: 'admin',
       title: "Редактирование игры",
-      websiteAddress,
       isEdit: true,
       game: game.dataValues,
       gameImages: gameImages.map(item => item.dataValues),

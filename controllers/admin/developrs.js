@@ -1,4 +1,4 @@
-const {Developer} = require("./../../models/index");
+/*const {Developer} = require("./../../models/index");*/
 
 const pageDevelopers = async (req, res) => {
   try {

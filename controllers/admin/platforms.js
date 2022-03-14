@@ -1,4 +1,4 @@
-const {Platform} = require("./../../models/index");
+/*const {Platform} = require("./../../models/index");*/
 
 
 const pagePlatforms = async (req, res) => {

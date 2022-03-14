@@ -10,49 +10,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,600;1,300;1,600&display=swap" rel="stylesheet">
-    <title>ICE Games -- Магазин Ключей Steam</title>
+    <title>{{title}}</title>
 </head>
 <body>
-{{#unless isAuthorized}}
-    <div class="login js-login">
-        <div class="formContainer auth active js-loginFormContainer">
-            <div class="switches">
-                <button class="btn round border fillFromCenter fillFromCenter-darkLilac active js-btnSwitchAuth">Вход</button>
-                <button class="btn round border fillFromCenter fillFromCenter-darkLilac js-btnSwitchReg">Регистрация</button>
-            </div>
-            <form class="form auth js-loginForm" action="/auth" method="post">
-                <label class="input-labelInField js-inputLabelInField">
-                    <input class="textField" type="text" name="nickName">
-                    <span class="label">Ник</span>
-                </label>
-                <label class="input-labelInField js-inputLabelInField">
-                    <input class="textField" type="text" name="email">
-                    <span class="label">E-mail</span>
-                </label>
-                <label class="input-labelInField js-inputLabelInField">
-                    <input class="textField" type="password" name="password">
-                    <span class="label">Пароль</span>
-                </label>
-                <button type="submit" class="btn round border fillFromCenter fillFromCenter-darkLilac submit js-submitLoginForm">Войти</button>
-            </form>
-            <div class="canRestore">
-                <span class="text">Забыли пароль?</span>
-                <button class="btn link js-btnRestore">Восстановить</button>
-            </div>
-        </div>
-        <div class="formContainer restore js-restoreFomContainer">
-            <div class="title">Вы забыли пароль?</div>
-            <div class="description">Мы пришлем Вам новый на E-mail, указанный при регистрации!</div>
-            <form class="form" action="/restore" method="post">
-                <label class="input-labelInField js-inputLabelInField">
-                    <input class="textField" type="text" name="email">
-                    <span class="label">E-mail</span>
-                </label>
-                <button type="submit" class="btn round border fillFromCenter fillFromCenter-darkLilac submit">Восстановить</button>
-            </form>
-            <button class="btn link js-btnBackLogin">Назад</button>
-        </div>
-    </div>
+{{#unless isAuth}}
+    {{> loginForm}}
 {{/unless}}
 <header class="header">
     <div class="contentContainer">
@@ -272,7 +234,7 @@
             <a href="#" title="Рейтинг пользователей Ice Games" class="btn round border hover-color-pink hover-border-pink">Рейтинг</a>
         </div>
         <div class="profile">
-            {{#if isAuthorized}}
+            {{#if isAuth}}
                 <a href="/profile" class="btn" title="Перейти в профиль">
                     <span class="icon icon-profile"></span>
                 </a>

@@ -1,3 +1,3 @@
 module.exports = {
-  websiteAddress: 'http://185.251.88.215:4000/',
+  websiteAddress: 'http://141.8.194.196:4000/',
 }

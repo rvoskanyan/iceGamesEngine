@@ -1,4 +1,6 @@
+/*
 const {Category} = require('./../../models/index');
+*/
 
 const pageCategories = async (req, res) => {
   try {

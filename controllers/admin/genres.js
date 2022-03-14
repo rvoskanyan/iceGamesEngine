@@ -1,4 +1,4 @@
-const {Genre} = require('./../../models/index');
+/*const {Genre} = require('./../../models/index');*/
 const uuid = require("uuid");
 const path = require("path");
 

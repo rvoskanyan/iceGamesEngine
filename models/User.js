@@ -1,36 +1,59 @@
-'use strict';
-const {Model} = require('sequelize');
+const {Schema, model} = require('mongoose');
 
-module.exports = (sequelize, DataTypes) => {
-  class User extends Model {}
-  
-  User.init({
-    id: {allowNull:  false, autoIncrement: true, primaryKey: true, type: DataTypes.INTEGER},
-    email: {type: DataTypes.STRING, allowNull: false},
-    login: {type: DataTypes.STRING, allowNull: false},
-    name: {type: DataTypes.STRING},
-    password: {type: DataTypes.STRING, allowNull: false},
-    role: {type: DataTypes.STRING, allowNull: false, defaultValue: 'client'},
-    checkEmailSecret: {type: DataTypes.STRING},
-    checkedEmail: {type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false},
-    isBlock: {type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false},
-    blockMessage: {type: DataTypes.STRING},
-    isActive: {type: DataTypes.BOOLEAN, allowNull: false, defaultValue: true},
-  }, {
-    sequelize,
-    modelName: 'User',
-    indexes: [
-      {unique: true, fields: ['email']},
-      {unique: true, fields: ['login']},
-    ]
-  });
-  
-  return User;
+const fields = {
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    index: true,
+  },
+  login: {
+    type: String,
+    required: true,
+    unique: true,
+    index: true,
+  },
+  name: {
+    type: String,
+    index: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+  rating: {
+    type: Number,
+    default: 0,
+  },
+  invitedUsers: [{
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+  }],
+  role: {
+    type: String,
+    required: true,
+    default: 'client',
+  },
+  emailChecked: {
+    type: Boolean,
+    default: false,
+  },
+  checkEmailHash: String,
+  locked: {
+    type: Boolean,
+    default: false,
+  },
+  lockingMessage: String,
+  active: {
+    type: Boolean,
+    default: true,
+  },
 };
 
-//type
-//allowNull
-//defaultValue
-//unique
-//primaryKey
-//autoIncrement
+const options = {
+  timestamps: true,
+};
+
+const userSchema = new Schema(fields, options);
+
+module.exports = model('User', userSchema);

@@ -1,0 +1,142 @@
+<main class="contentContainer withoutCover profilePage">
+    <div class="breadcrumbs contentContainer">
+        <div class="item">
+            <a class="btn link" href="/">Главная</a>
+        </div>
+        <div class="current">Профиль</div>
+    </div>
+    <div class="profile">
+        {{> profileMenu}}
+        <div class="content">
+            <div class="head">
+                <div class="info">
+                    <div class="name">{{user.login}}</div>
+                    <div class="rating">Рейтинг {{user.rating}}</div>
+                    <div class="rating">Позиция 10 \ 100</div>
+                </div>
+                <div class="prompt">
+                    <button class="btn">
+                        <span class="icon icon-prompt"></span>
+                    </button>
+                    <div class="block">
+                        <div class="head">
+                            <div class="title">Как работает рейтинг</div>
+                            <button class="btn">
+                                <span class="icon icon-close"></span>
+                            </button>
+                        </div>
+                        <div class="description">
+                            Рейтинг индивидуально присвается каждому пользователю. За активность на сайте даются баллы
+                            из которых собирается рейтинг.
+                        </div>
+                        <div class="listActions">
+                            <div class="title">Вот за что можно получить баллы:</div>
+                            <ul class="list">
+                                <li class="item">Покупка игры - 10 баллов</li>
+                                <li class="item">Приглашение друга - 5 баллов</li>
+                                <li class="item">Прочтение статьи - 2 балла</li>
+                                <li class="item">Получение достижения - 4 балла</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="statistics">
+                <div class="items">
+                    <div class="item">
+                        <div class="value">0</div>
+                        <div class="name">Игр куплено</div>
+                    </div>
+                    <div class="item">
+                        <div class="value">0</div>
+                        <div class="name">Друзей приглашено</div>
+                    </div>
+                    <div class="item">
+                        <div class="value">0</div>
+                        <div class="name">Статей прочитано</div>
+                    </div>
+                    <div class="item">
+                        <div class="value">0</div>
+                        <div class="name">Достижений получено</div>
+                    </div>
+                    <div class="item">
+                        <div class="value">0</div>
+                        <div class="name">Дней с<br>ICE GAMES</div>
+                    </div>
+                </div>
+            </div>
+            <div class="achievements">
+                <div class="head">
+                    <div class="title">Мои достижения</div>
+                    <button class="btn round border small">Смотреть все</button>
+                </div>
+                <div class="list">
+                    <div class="achievement"></div>
+                    <div class="achievement"></div>
+                    <div class="achievement"></div>
+                    <div class="achievement"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="homeSection">
+        <div class="homeTitle">Новости и статьи</div>
+        <div class="newsSlider">
+            <button class="btn prev increase">
+                <span class="icon-static icon-static-arrow"></span>
+            </button>
+            <div class="visibleArea">
+                <div class="tape">
+                    <a href="#" class="newsPreview active">
+                        <img class="img" src="./img/newPreview-1.png" alt="Новость 1" title="Новость 1">
+                        <div class="attributes">
+                            <div class="btn small round border small bg-darkLilac">Новости</div>
+                            <div class="date">12.01.21</div>
+                        </div>
+                        <div class="description">
+                            <div class="title">8 Миллионов продаж</div>
+                            <div class="text">CDPR похвастались в своем твиттере, что количество предзаказов...</div>
+                        </div>
+                    </a>
+                    <a href="#" class="newsPreview active">
+                        <img class="img" src="./img/newPreview-2.png" alt="Новость 1" title="Новость 1">
+                        <div class="attributes">
+                            <div class="btn small round border small bg-darkLilac">Новости</div>
+                            <div class="date">12.01.21</div>
+                        </div>
+                        <div class="description">
+                            <div class="title">8 Миллионов продаж</div>
+                            <div class="text">CDPR похвастались в своем твиттере, что количество предзаказов...</div>
+                        </div>
+                    </a>
+                    <a href="#" class="newsPreview active">
+                        <img class="img" src="./img/newPreview-3.png" alt="Новость 1" title="Новость 1">
+                        <div class="attributes">
+                            <div class="btn small round border small bg-darkLilac">Новости</div>
+                            <div class="date">12.01.21</div>
+                        </div>
+                        <div class="description">
+                            <div class="title">8 Миллионов продаж</div>
+                            <div class="text">CDPR похвастались в своем твиттере, что количество предзаказов...</div>
+                        </div>
+                    </a>
+                    <a href="#" class="newsPreview">
+                        <img class="img" src="./img/newPreview-3.png" alt="Новость 1" title="Новость 1">
+                        <div class="attributes">
+                            <div class="btn small round border small bg-darkLilac">Новости</div>
+                            <div class="date">12.01.21</div>
+                        </div>
+                        <div class="description">
+                            <div class="title">8 Миллионов продаж</div>
+                            <div class="text">CDPR похвастались в своем твиттере, что количество предзаказов...</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <button class="btn next increase">
+                <span class="icon-static icon-static-arrow"></span>
+            </button>
+        </div>
+        <a class="btn round border backlight-pink hover-bg-palePink all" href="#">Все новости</a>
+    </div>
+</main>

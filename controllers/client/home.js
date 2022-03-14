@@ -1,13 +1,12 @@
-const {
+/*const {
   Product,
   Usp,
   Category,
   Genre,
-} = require('../../models/index');
-const {websiteAddress} = require('./../../config');
+} = require('../../models/index');*/
 
-const renderHome = async (req, res) => {
-  const sliderGames = await Product.findAll({
+const homepage = async (req, res) => {
+  /*const sliderGames = await Product.findAll({
     attributes: ['id', 'name', 'description', 'priceTo', 'priceFrom', 'img', 'coverImg', 'coverVideo'],
     limit: 5,
     where: {
@@ -16,9 +15,9 @@ const renderHome = async (req, res) => {
   });
   const usp = await Usp.findAll({attributes: ['text']});
   const categories = await Category.findAll({attributes: ['id', 'name']});
-  const genres = await Genre.findAll({attributes: ['id', 'name', 'img', 'url']});
+  const genres = await Genre.findAll({attributes: ['id', 'name', 'img', 'url']});*/
   
-  const catalog = [];
+  /*const catalog = [];
   
   for (let i = 0; i < categories.length; i++) {
     const products = await categories[i].getProducts({
@@ -30,19 +29,24 @@ const renderHome = async (req, res) => {
       ...categories[i].dataValues,
       products: products.map(item => item.dataValues),
     });
+  }*/
+  
+  const inviter = req.query.inviter;
+  
+  if (inviter && !req.session.isAuth) {
+    res.cookie('inviterId', inviter).redirect('/');
   }
   
   res.render('home', {
     title: "ICE Games -- магазин ключей",
-    websiteAddress,
     isHome: true,
-    sliderGames: sliderGames.map(item => item.dataValues),
-    usp: usp.map(item => item.dataValues),
-    genres: genres.map(item => item.dataValues),
-    catalog,
+    sliderGames: [],
+    usp: [],
+    genres: [],
+    catalog: [],
   });
 }
 
 module.exports = {
-  renderHome,
+  homepage,
 };

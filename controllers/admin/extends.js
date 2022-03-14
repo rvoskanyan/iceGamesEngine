@@ -1,6 +1,6 @@
 const uuid = require("uuid");
 const path = require("path");
-const {Extend} = require("./../../models/index");
+/*const {Extend} = require("./../../models/index");*/
 const {getExtendFile} = require("../../utils/functions");
 
 const pageExtends = async (req, res) => {

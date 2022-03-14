@@ -1,29 +1,17 @@
-'use strict';
-const {Model} = require('sequelize');
+const {Schema, model} = require('mongoose');
 
-module.exports = (sequelize, DataTypes) => {
-  class Language extends Model {
-    static associate(models) {
-      models.Language.belongsToMany(models.Product, {
-        through: models.LanguagesProduct,
-        foreignKey: {
-          name: 'languageId',
-          allowNull: false,
-        }
-      });
-    }
-  }
-  
-  Language.init({
-    id: {allowNull: false, autoIncrement: true, primaryKey: true, type: DataTypes.INTEGER},
-    name: {type: DataTypes.STRING, allowNull: false},
-  }, {
-    sequelize,
-    modelName: 'Language',
-    indexes: [
-      {unique: true, fields: ['name']}
-    ]
-  });
-  
-  return Language;
+const fields = {
+  name: {
+    type: String,
+    required: true,
+    unique: true,
+  },
 };
+
+const options = {
+  timestamps: true,
+};
+
+const languageSchema = new Schema(fields, options);
+
+module.exports = model('Language', languageSchema);

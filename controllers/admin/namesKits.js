@@ -1,4 +1,6 @@
+/*
 const {NamesKit} = require('./../../models/index');
+*/
 
 const pageNamesKits = async (req, res) => {
   try {

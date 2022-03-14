@@ -1,30 +1,22 @@
-'use strict';
-const {Model} = require('sequelize');
+const {Schema, model} = require('mongoose');
 
-module.exports = (sequelize, DataTypes) => {
-  class Extend extends Model {
-    static associate(models) {
-      models.Extend.belongsToMany(models.Product, {
-        through: models.ExtendsProduct,
-        foreignKey: {
-          name: 'extendId',
-          allowNull: false,
-        }
-      });
-    }
-  }
-  
-  Extend.init({
-    id: {allowNull: false, autoIncrement: true, primaryKey: true, type: DataTypes.INTEGER},
-    name: {type: DataTypes.STRING, allowNull: false},
-    icon: {type: DataTypes.STRING, allowNull: false},
-  }, {
-    sequelize,
-    modelName: 'Extend',
-    indexes: [
-      {unique: true, fields: ['name']}
-    ]
-  });
-  
-  return Extend;
+const fields = {
+  name: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  icon: {
+    type: String,
+    required: true,
+    unique: true,
+  },
 };
+
+const options = {
+  timestamps: true,
+};
+
+const extendSchema = new Schema(fields, options);
+
+module.exports = model('Extend', extendSchema);
