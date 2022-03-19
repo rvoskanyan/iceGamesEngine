@@ -116,8 +116,45 @@
     <br>
     <br>
     <label>
+        DLC:
+        <input type="checkbox" name="dlc"{{#if game.dlc}} checked{{/if}}>
+    </label>
+    <br>
+    <br>
+    <label>
+        DLC для бесплатной игры:
+        <input type="checkbox" name="dlcForFree"{{#if game.dlcForFree}} checked{{/if}}>
+    </label>
+    <br>
+    <br>
+    <label>
+        Название игры, если ее нет на сайте, к которой относится это DLC:
+        <input type="text" name="dlcForName"{{#if game.dlcForName}} value="{{game.dlcForName}}"{{/if}}>
+    </label>
+    <br>
+    <br>
+    <label>
+        Игра с сайта, к которой относится это DLC:
+        <select name="dlcFor">
+            <option value="0">Не выбрано</option>
+            {{#each products}}
+                <option value="{{id}}" {{#if selected}}selected{{/if}}>
+                    {{name}}
+                </option>
+            {{/each}}
+        </select>
+    </label>
+    <br>
+    <br>
+    <label>
+        Предзаказ:
+        <input type="checkbox" name="preOrder"{{#if game.preOrder}} checked{{/if}}>
+    </label>
+    <br>
+    <br>
+    <label>
         Дата выхода:
-        <input type="text" name="releaseDate" value="{{game.releaseDate}}">
+        <input type="date" name="releaseDate" value="{{game.releaseDate}}">
     </label>
     <br>
     <br>
@@ -215,6 +252,19 @@
         Разработчики:
         <select name="developers" multiple>
             {{#each developers}}
+                <option value="{{id}}" {{#if selected}}selected{{/if}}>
+                    {{name}}
+                </option>
+            {{/each}}
+        </select>
+    </label>
+    <br>
+    <br>
+    <label>
+        Игра серии:
+        <select name="series">
+            <option value="0">Не выбрано</option>
+            {{#each series}}
                 <option value="{{id}}" {{#if selected}}selected{{/if}}>
                     {{name}}
                 </option>

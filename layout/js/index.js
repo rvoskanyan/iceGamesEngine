@@ -3,6 +3,7 @@ import Tabs from "./Tabs";
 import Modal from "./Modal";
 import PopupController from "./PopupController";
 import AsyncForm from "./AsyncForm";
+import Prompt from "./Prompt";
 
 import Config from "./config";
 
@@ -21,6 +22,7 @@ const submitLoginNode = document.querySelector('.js-submitLoginForm');
 const btnSwitchAuthNode = document.querySelector('.js-btnSwitchAuth');
 const btnSwitchRegNode = document.querySelector('.js-btnSwitchReg');
 const inputLabelInFieldNodes = document.querySelectorAll('.js-inputLabelInField');
+const promptNodes = document.querySelectorAll('.js-prompt');
 
 new PopupController([
   {
@@ -232,4 +234,8 @@ if (profileEditFormNode) {
   new AsyncForm({
     mainNode: profileEditFormNode,
   })
+}
+
+if (promptNodes.length) {
+  promptNodes.forEach(item => new Prompt({mainNode: item}));
 }

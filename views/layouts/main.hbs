@@ -235,9 +235,15 @@
         </div>
         <div class="profile">
             {{#if isAuth}}
-                <a href="/profile" class="btn" title="Перейти в профиль">
-                    <span class="icon icon-profile"></span>
-                </a>
+                {{#if isProfileHome}}
+                    <div class="btn">
+                        <span class="icon icon-profile"></span>
+                    </div>
+                {{else}}
+                    <a href="/profile" class="btn" title="Перейти в профиль">
+                        <span class="icon icon-profile"></span>
+                    </a>
+                {{/if}}
             {{else}}
                 <button class="btn js-openLogin" title="Авторизация">
                     <span class="icon icon-profile"></span>

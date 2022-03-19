@@ -1,18 +1,14 @@
-/*const {
-  Bunch,
-  Product,
-} = require('./../../models/index');
-const {where} = require("sequelize");*/
+const Bunch = require('./../../models/Bunch');
 
 const pageBunches = async (req, res) => {
   try {
-    const bunches = await Bunch.findAll({attributes: ['id', 'name']});
+    const bunches = await Bunch.find().select(['name']);
     
     res.render('listElements', {
       layout: 'admin',
       title: 'Список связок',
       section: 'bunches',
-      elements: bunches.map(item => item.dataValues),
+      elements: bunches,
       addTitle: "Добавить связку",
     });
   } catch (e) {

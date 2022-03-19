@@ -12,16 +12,16 @@
                 <div class="info">
                     <div class="name">{{user.login}}</div>
                     <div class="rating">Рейтинг {{user.rating}}</div>
-                    <div class="rating">Позиция 10 \ 100</div>
+                    <div class="rating">Позиция 1 \ {{countUsers}}</div>
                 </div>
-                <div class="prompt">
-                    <button class="btn">
+                <div class="prompt js-prompt">
+                    <button class="btn js-promptOpen">
                         <span class="icon icon-prompt"></span>
                     </button>
-                    <div class="block">
+                    <div class="block js-promptBlock">
                         <div class="head">
                             <div class="title">Как работает рейтинг</div>
-                            <button class="btn">
+                            <button class="btn js-promptClose">
                                 <span class="icon icon-close"></span>
                             </button>
                         </div>
@@ -48,7 +48,7 @@
                         <div class="name">Игр куплено</div>
                     </div>
                     <div class="item">
-                        <div class="value">0</div>
+                        <div class="value">{{user.invitedUsers.length}}</div>
                         <div class="name">Друзей приглашено</div>
                     </div>
                     <div class="item">
@@ -60,7 +60,7 @@
                         <div class="name">Достижений получено</div>
                     </div>
                     <div class="item">
-                        <div class="value">0</div>
+                        <div class="value">{{user.daysUs}}</div>
                         <div class="name">Дней с<br>ICE GAMES</div>
                     </div>
                 </div>
@@ -68,7 +68,7 @@
             <div class="achievements">
                 <div class="head">
                     <div class="title">Мои достижения</div>
-                    <button class="btn round border small">Смотреть все</button>
+                    <a href="/profile/achievements" class="btn round border small">Смотреть все</a>
                 </div>
                 <div class="list">
                     <div class="achievement"></div>

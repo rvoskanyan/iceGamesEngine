@@ -1,32 +1,32 @@
-/*const {Op} = require('sequelize');*/
-const {getExtendFile} = require("../../utils/functions");
 const uuid = require('uuid');
 const path = require('path');
-/*const {
-  Product,
-  Category,
-  Genre,
-  Extend,
-  Language,
-  Region,
-  Publisher,
-  ActivationService,
-  Developer,
-  Platform,
-  Image,
-  Edition,
-  GameElement,
-} = require('../../models/index');*/
+const {
+  getExtendFile,
+  getArray,
+  getAlias,
+} = require("../../utils/functions");
+const Product = require('../../models/Product');
+const Category = require('../../models/Category');
+const Genre = require('../../models/Genre');
+const Extend = require('../../models/Extend');
+const Language = require('../../models/Language');
+const Region = require('../../models/Region');
+const Developer = require('../../models/Developer');
+const Publisher = require('../../models/Publisher');
+const ActivationService = require('../../models/ActivationService');
+const Platform = require('../../models/Platform');
+const Edition = require('../../models/Edition');
+const Series = require('../../models/Series');
 
 const pageProducts = async (req, res) => {
   try {
-    const games = await Product.findAll({attributes: ['id', 'name']});
+    const products = await Product.find().select(['name']);
   
     res.render('listElements', {
       layout: 'admin',
-      title: 'Список игры',
+      title: 'Список игр',
       section: 'products',
-      elements: games.map(item => item.dataValues),
+      elements: products,
       addTitle: "Добавить игру",
     });
   } catch (e) {
@@ -37,30 +37,34 @@ const pageProducts = async (req, res) => {
 
 const pageAddProduct = async (req, res) => {
   try {
-    const categories = await Category.findAll({attributes: ['id', 'name']});
-    const genres = await Genre.findAll({attributes: ['id', 'name']});
-    const allExtends = await Extend.findAll({attributes: ['id', 'name']});
-    const languages = await Language.findAll({attributes: ['id', 'name']});
-    const regions = await Region.findAll({attributes: ['id', 'name']});
-    const developers = await Developer.findAll({attributes: ['id', 'name']});
-    const publishers = await Publisher.findAll({attributes: ['id', 'name']});
-    const activationServices = await ActivationService.findAll({attributes: ['id', 'name']});
-    const platforms = await Platform.findAll({attributes: ['id', 'name']});
-    const editions = await Edition.findAll({attributes: ['id', 'name']});
+    const categories = await Category.find().select(['name']);
+    const genres = await Genre.find().select(['name']);
+    const allExtends = await Extend.find().select(['name']);
+    const languages = await Language.find().select(['name']);
+    const regions = await Region.find().select(['name']);
+    const developers = await Developer.find().select(['name']);
+    const publishers = await Publisher.find().select(['name']);
+    const activationServices = await ActivationService.find().select(['name']);
+    const platforms = await Platform.find().select(['name']);
+    const editions = await Edition.find().select(['name']);
+    const products = await Product.find().select(['name']);
+    const series = await Series.find().select(['name']);
   
     res.render('addProducts', {
       layout: 'admin',
       title: "Добавление новой игры",
-      extends: allExtends.map(item => item.dataValues),
-      languages: languages.map(item => item.dataValues),
-      categories: categories.map(item => item.dataValues),
-      genres: genres.map(item => item.dataValues),
-      regions: regions.map(item => item.dataValues),
-      developers: developers.map(item => item.dataValues),
-      publishers: publishers.map(item => item.dataValues),
-      activationServices: activationServices.map(item => item.dataValues),
-      platforms: platforms.map(item => item.dataValues),
-      editions: editions.map(item => item.dataValues),
+      extends: allExtends,
+      languages,
+      categories,
+      genres,
+      regions,
+      developers,
+      publishers,
+      activationServices,
+      platforms,
+      editions,
+      products,
+      series,
     });
   } catch (e) {
     console.log(e);
@@ -77,6 +81,11 @@ const addProduct = async (req, res) => {
       priceFrom,
       trailerLink,
       inHomeSlider,
+      dlc,
+      dlcForFree,
+      dlcForName,
+      dlcFor,
+      preOrder,
       releaseDate,
       os,
       cpu,
@@ -89,6 +98,7 @@ const addProduct = async (req, res) => {
       languages,
       regions,
       developers,
+      series,
       publisher,
       activationService,
       platform,
@@ -96,21 +106,58 @@ const addProduct = async (req, res) => {
     } = req.body;
     
     const {img, coverImg, coverVideo, gameImages} = req.files;
-    const imgName = `${uuid.v4()}.jpg`;
-    const gameImgIds = [];
-    let coverImgName = null;
-    let coverVideoName = null;
+    const imgExtend = getExtendFile(img.name);
+    const imgName = `${uuid.v4()}.${imgExtend}`;
+    const creator = req.session.userId;
+    const product = new Product({
+      name,
+      authorId: creator,
+      lastEditorId: creator,
+      alias: getAlias(name),
+      description,
+      priceTo,
+      priceFrom,
+      trailerLink,
+      images: [],
+      inHomeSlider: inHomeSlider === "on",
+      dlc,
+      dlcForFree,
+      dlcForName,
+      preOrder,
+      releaseDate,
+      os,
+      cpu,
+      graphicsCard,
+      ram,
+      diskMemory,
+      categories: getArray(categories),
+      genres: getArray(genres),
+      extends: getArray(gameExtends),
+      languages: getArray(languages),
+      regions: getArray(regions),
+      developers: getArray(developers),
+      publisherId: publisher,
+      activationServiceId: activationService,
+      platformId: platform,
+    });
     
     await img.mv(path.resolve(__dirname, '../../uploadedFiles', imgName));
+    product.img = imgName;
     
     if (coverImg) {
-      coverImgName = `${uuid.v4()}.jpg`;
+      const coverImgExtend = getExtendFile(coverImg.name);
+      const coverImgName = `${uuid.v4()}.${coverImgExtend}`;
+      
       await coverImg.mv(path.resolve(__dirname, '../../uploadedFiles', coverImgName));
+      product.coverImg = coverImgName;
     }
   
     if (coverVideo) {
-      coverVideoName = `${uuid.v4()}.mp4`;
+      const coverVideoExtend = getExtendFile(coverVideo.name);
+      const coverVideoName = `${uuid.v4()}.${coverVideoExtend}`;
+      
       await coverVideo.mv(path.resolve(__dirname, '../../uploadedFiles', coverVideoName));
+      product.coverVideo = coverVideoName;
     }
   
     if (gameImages) {
@@ -120,93 +167,34 @@ const addProduct = async (req, res) => {
           const gameImgName = `${uuid.v4()}.${extend}`;
         
           await item.mv(path.resolve(__dirname, '../../uploadedFiles', gameImgName));
-        
-          const imgObj = await Image.create({name: gameImgName});
-        
-          gameImgIds.push(imgObj.dataValues.id);
+          product.images.push({name: gameImgName});
         }
       } else {
         const extend = getExtendFile(gameImages.name);
         const gameImgName = `${uuid.v4()}.${extend}`;
       
         await gameImages.mv(path.resolve(__dirname, '../../uploadedFiles', gameImgName));
-      
-        const imgObj = await Image.create({name: gameImgName});
-      
-        gameImgIds.push(imgObj.dataValues.id);
+        product.images.push({name: gameImgName});
       }
     }
-  
-    const product = await Product.create({
-      name,
-      description,
-      priceTo,
-      priceFrom,
-      trailerLink,
-      inHomeSlider: inHomeSlider === "on",
-      releaseDate,
-      cpu,
-      os,
-      graphicsCard,
-      ram,
-      diskMemory,
-      img: imgName,
-      coverImg: coverImgName,
-      coverVideo: coverVideoName,
-      activationServiceId: activationService,
-      publisherId: publisher,
-      platformId: platform,
-    });
-  
-    await product.addImages(gameImgIds);
     
-    let resCategories = categories;
-    let resGenres = genres;
-    let resExtends = gameExtends;
-    let resLanguages = languages;
-    let resRegions = regions;
-    let resDevelopers = developers;
+    if (+dlcFor) {
+      product.dlcForId = dlcFor;
+    }
     
-    if (!Array.isArray(categories)) {
-      resCategories = [categories];
-    }
-  
-    if (!Array.isArray(genres)) {
-      resGenres = [genres];
-    }
-  
-    if (!Array.isArray(gameExtends)) {
-      resExtends = [gameExtends];
-    }
-  
-    if (!Array.isArray(languages)) {
-      resLanguages = [languages];
-    }
-  
-    if (!Array.isArray(regions)) {
-      resRegions = [regions];
-    }
-  
-    if (!Array.isArray(developers)) {
-      resDevelopers = [developers];
-    }
-  
-    await product.setCategories(resCategories);
-    await product.setGenres(resGenres);
-    await product.setExtends(resExtends);
-    await product.setLanguages(resLanguages);
-    await product.setRegions(resRegions);
-    await product.setDevelopers(resDevelopers);
     if (+edition) {
-      product.setEdition(edition);
+      product.editionId = edition;
     }
     
-    res.redirect('/admin/products');
+    if (+series) {
+      product.seriesId = series;
+    }
     
+    await product.save();
+    res.redirect('/admin/products');
   } catch (e) {
     console.log(e);
     res.redirect('/admin/products/add');
-    res.json({error: true});
   }
 }
 

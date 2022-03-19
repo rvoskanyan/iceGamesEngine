@@ -1,16 +1,17 @@
-/*const {Genre} = require('./../../models/index');*/
 const uuid = require("uuid");
 const path = require("path");
+const Genre = require('./../../models/Genre');
+const {getExtendFile} = require("../../utils/functions");
 
 const pageGenres = async (req, res) => {
   try {
-    const genres = await Genre.findAll({attributes: ['id', 'name']});
+    const genres = await Genre.find().select(['name']);
     
     res.render('listElements', {
       layout: 'admin',
       title: 'Список жанров',
       section: 'genres',
-      elements: genres.map(item => item.dataValues),
+      elements: genres,
       addTitle: "Добавить жанр",
     });
   } catch (e) {
@@ -27,7 +28,8 @@ const addGenres = async (req, res) => {
   try {
     const {name, url} = req.body;
     const {img} = req.files;
-    const imgName = `${uuid.v4()}.jpg`;
+    const imgExtend = getExtendFile(img.name);
+    const imgName = `${uuid.v4()}.${imgExtend}`;
   
     await img.mv(path.resolve(__dirname, '../../uploadedFiles', imgName));
   

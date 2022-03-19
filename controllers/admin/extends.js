@@ -1,18 +1,18 @@
 const uuid = require("uuid");
 const path = require("path");
-/*const {Extend} = require("./../../models/index");*/
+const Extend = require("./../../models/Extend");
 const {getExtendFile} = require("../../utils/functions");
 
 const pageExtends = async (req, res) => {
   try {
-    const allExtends = await Extend.findAll({attributes: ['id', 'name']});
+    const allExtends = await Extend.find().select(['name']);
     
     res.render('listElements', {
       layout: 'admin',
       title: 'Список расширений',
       section: 'extends',
-      elements: allExtends.map(item => item.dataValues),
-      addTitle: "Добавить расширение",
+      elements: allExtends,
+      addTitle: 'Добавить расширение',
     });
   } catch (e) {
     console.log(e);

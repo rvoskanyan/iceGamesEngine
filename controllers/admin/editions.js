@@ -1,14 +1,14 @@
-/*const {Edition} = require("./../../models/index");*/
+const Edition = require("./../../models/Edition");
 
 const pageEditions = async (req, res) => {
   try {
-    const editions = await Edition.findAll({attributes: ['id', 'name']});
+    const editions = await Edition.find().select(['name']);
     
     res.render('listElements', {
       layout: 'admin',
       title: 'Список версий',
       section: 'editions',
-      elements: editions.map(item => item.dataValues),
+      elements: editions,
       addTitle: "Добавить версию",
     });
   } catch (e) {

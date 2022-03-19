@@ -1,17 +1,14 @@
-/*const {
-  Series,
-  Product,
-} = require('./../../models/index');*/
+const Series = require('./../../models/Series');
 
 const pageSeries = async (req, res) => {
   try {
-    const series = await Series.findAll({attributes: ['id', 'name']});
+    const series = await Series.find().select(['name']);
   
     res.render('listElements', {
       layout: 'admin',
       title: 'Список серий игр',
       section: 'series',
-      elements: series.map(item => item.dataValues),
+      elements: series,
       addTitle: "Добавить серию",
     });
   } catch (e) {

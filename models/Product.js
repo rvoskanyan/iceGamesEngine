@@ -84,7 +84,7 @@ const fields = {
     type: Boolean,
     default: false,
   },
-  dlcFor: {
+  dlcForId: {
     type: Schema.Types.ObjectId,
     ref: 'Product',
   },
@@ -93,6 +93,10 @@ const fields = {
     default: false,
   },
   dlcForName: String,
+  preOrder: {
+    type: Boolean,
+    default: false,
+  },
   releaseDate: {
     type: Date,
     required: true,
@@ -117,7 +121,10 @@ const fields = {
     type: String,
     required: true,
   },
-  rating: Number,
+  rating: {
+    type: Number,
+    default: 0,
+  },
   orderInBundle: Number,
   images: {
     type: [imageSchema],
@@ -162,12 +169,12 @@ const fields = {
     ref: 'User',
     required: true,
   },
-  lastEditor: {
+  lastEditorId: {
     type: Schema.Types.ObjectId,
     ref: 'User',
     required: true,
   },
-  platform: {
+  platformId: {
     type: Schema.Types.ObjectId,
     ref: 'Platform',
     required: true,
@@ -198,7 +205,7 @@ const fields = {
   }],
   active: {
     type: Boolean,
-    default: false,
+    default: true,
   },
 };
 

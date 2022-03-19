@@ -1,15 +1,15 @@
-/*const {Platform} = require("./../../models/index");*/
+const Platform = require("./../../models/Platform");
 
 
 const pagePlatforms = async (req, res) => {
   try {
-    const platforms = await Platform.findAll();
+    const platforms = await Platform.find().select('name');
   
     res.render('listElements', {
       layout: 'admin',
       title: 'Список платформ',
       section: 'platforms',
-      elements: platforms.map(item => item.dataValues),
+      elements: platforms,
       addTitle: "Добавить платформу",
     });
   } catch (e) {

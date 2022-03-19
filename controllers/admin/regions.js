@@ -1,14 +1,14 @@
-/*const {Region} = require('./../../models/index');*/
+const Region = require('./../../models/Region');
 
 const pageRegions = async (req, res) => {
   try {
-    const regions = await Region.findAll({attributes: ['id', 'name']});
+    const regions = await Region.find().select(['name']);
     
     res.render('listElements', {
       layout: 'admin',
       title: 'Список регионов',
       section: 'regions',
-      elements: regions.map(item => item.dataValues),
+      elements: regions,
       addTitle: "Добавить регион",
     });
   } catch (e) {

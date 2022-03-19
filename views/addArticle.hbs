@@ -1,0 +1,50 @@
+{{#if isEdit}}
+    <a href="/admin/articles/{{article.id}}/addBlock">Добавить контент-блок</a>
+    <br>
+    <br>
+{{/if}}
+<form method="post" action="/admin/articles/{{#if isEdit}}{{article.id}}{{else}}add{{/if}}">
+    <label>
+        Название записи:
+        <input type="text" name="name"{{#if isEdit}} value="{{article.name}}"{{/if}}>
+    </label>
+    <br>
+    <br>
+    <label>
+        Тип:
+        <select name="type">
+            <option value="article" {{#iff article.type '===' 'article'}}selected{{/iff}}>Статья</option>
+            <option value="news" {{#iff article.type '===' 'news'}}selected{{/iff}}>Новость</option>
+        </select>
+    </label>
+    <br>
+    <br>
+    <label>
+        Прикрепленные игры:
+        <select name="products" multiple>
+            {{#each products}}
+                <option value="{{id}}" {{#if selected}}selected{{/if}}>
+                    {{name}}
+                </option>
+            {{/each}}
+        </select>
+    </label>
+    <br>
+    <br>
+    <input type="submit" name="add" value="{{#if isEdit}}Сохранить изменения{{else}}Добавить{{/if}}">
+</form>
+{{#if isEdit}}
+    <br>
+    Контент-блоки:
+    {{#if article.blocks.length}}
+        <ul>
+            {{#each article.blocks}}
+                <li>
+                    {{text}}
+                </li>
+            {{/each}}
+        </ul>
+    {{else}}
+        Отсутствуют
+    {{/if}}
+{{/if}}

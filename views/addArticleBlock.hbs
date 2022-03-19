@@ -1,0 +1,30 @@
+{{#if isEdit}}
+    <a href="/admin/articles/{{article.id}}/addBlock">Добавить контент-блок</a>
+    <br>
+    <br>
+{{/if}}
+<form method="post" action="/admin/articles/{{articleId}}/addBlock" enctype="multipart/form-data">
+    <label>
+        Текст:
+        <textarea name="text" cols="30" rows="10">{{block.text}}</textarea>
+    </label>
+    <br>
+    <br>
+    <label>
+        Картинка:
+        <input type="file" name="img">
+    </label>
+    <br>
+    <br>
+    <label>
+        Позиция картинки:
+        <select name="imgPosition">
+            <option value="top" {{#iff block.imgPosition '===' 'top'}}selected{{/iff}}>Вверху</option>
+            <option value="left" {{#iff block.imgPosition '===' 'left'}}selected{{/iff}}>Слева</option>
+            <option value="right" {{#iff block.imgPosition '===' 'right'}}selected{{/iff}}>Справа</option>
+        </select>
+    </label>
+    <br>
+    <br>
+    <input type="submit" name="add" value="{{#if isEdit}}Сохранить изменения{{else}}Добавить{{/if}}">
+</form>

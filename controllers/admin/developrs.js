@@ -1,14 +1,14 @@
-/*const {Developer} = require("./../../models/index");*/
+const Developer = require("./../../models/Developer");
 
 const pageDevelopers = async (req, res) => {
   try {
-    const developers = await Developer.findAll({attributes: ['id', 'name']});
+    const developers = await Developer.find().select('name');
     
     res.render('listElements', {
       layout: 'admin',
       title: 'Список разработчиков',
       section: 'developers',
-      elements: developers.map(item => item.dataValues),
+      elements: developers,
       addTitle: "Добавить разработчика",
     });
   } catch (e) {

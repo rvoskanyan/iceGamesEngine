@@ -1,14 +1,14 @@
-/*const {Usp} = require('./../../models/index');*/
+const Usp = require('./../../models/Usp');
 
 const pageUsp = async (req, res) => {
   try {
-    const usps = await Usp.findAll({attributes: ['id', 'text']});
+    const usps = await Usp.find().select('text');
     
     res.render('listElements', {
       layout: 'admin',
       title: 'Список УТП',
       section: 'usp',
-      elements: usps.map(item => item.dataValues),
+      elements: usps,
       addTitle: "Добавить УТП",
     });
   } catch (e) {

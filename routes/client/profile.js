@@ -7,6 +7,7 @@ const {
   profileInvitePage,
   profileOrdersPage,
   profileFavoritesPage,
+  profileViewPage,
 } = require("../../controllers/client/profile");
 const {editProfileValidator} = require("../../utils/validators");
 
@@ -24,5 +25,7 @@ router.get('/invite', profileInvitePage);
 router.get('/orders', profileOrdersPage);
 
 router.get('/favorites', profileFavoritesPage);
+
+router.get('/view/:login', profileViewPage);
 
 module.exports = router;

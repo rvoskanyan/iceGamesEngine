@@ -56,4 +56,12 @@ const options = {
 
 const userSchema = new Schema(fields, options);
 
+userSchema.virtual('daysUs').get(function () {
+  const user = this;
+  const startDate = user.createdAt;
+  const currentDate = new Date();
+  
+  return Math.ceil(Math.abs(currentDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24));
+});
+
 module.exports = model('User', userSchema);

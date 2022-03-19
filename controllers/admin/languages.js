@@ -1,16 +1,14 @@
-/*
-const {Language} = require('./../../models/index');
-*/
+const Language = require('./../../models/Language');
 
 const pageLanguages = async (req, res) => {
   try {
-    const languages = await Language.findAll({attributes: ['id', 'name']});
+    const languages = await Language.find().select(['name']);
     
     res.render('listElements', {
       layout: 'admin',
       title: 'Список языков',
       section: 'languages',
-      elements: languages.map(item => item.dataValues),
+      elements: languages,
       addTitle: "Добавить язык",
     });
   } catch (e) {

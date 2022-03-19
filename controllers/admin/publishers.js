@@ -1,14 +1,14 @@
-/*const {Publisher} = require("./../../models/index");*/
+const Publisher = require("./../../models/Publisher");
 
 const pagePublishers = async (req, res) => {
   try {
-    const publishers = await Publisher.findAll({attributes: ['id', 'name']});
+    const publishers = await Publisher.find().select(['name']);
     
     res.render('listElements', {
       layout: 'admin',
       title: 'Список издателей',
       section: 'publishers',
-      elements: publishers.map(item => item.dataValues),
+      elements: publishers,
       addTitle: "Добавить издателя",
     });
   } catch (e) {

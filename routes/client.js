@@ -4,6 +4,7 @@ const gamesRoute =  require('./client/games');
 const formActionsRoute =  require('./client/formsActions');
 const systemRoute =  require('./client/system');
 const profileRoute =  require('./client/profile');
+const blogRoute =  require('./client/blog');
 
 const router = Router();
 
@@ -12,5 +13,6 @@ router.use('/', formActionsRoute);
 router.use('/', systemRoute);
 router.use('/games', gamesRoute);
 router.use('/profile', profileRoute);
+router.use('/blog', blogRoute);
 
 module.exports = router;

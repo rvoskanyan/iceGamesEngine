@@ -16,6 +16,7 @@ const platformsRoute = require('./admin/platforms');
 const bunchesRoute = require('./admin/bunches');
 const editionsRoute = require('./admin/editions');
 const seriesRoute = require('./admin/series');
+const articlesRoute = require('./admin/articles');
 
 const router = Router();
 
@@ -36,5 +37,6 @@ router.use('/platforms', platformsRoute);
 router.use('/bunches', bunchesRoute);
 router.use('/editions', editionsRoute);
 router.use('/series', seriesRoute);
+router.use('/articles', articlesRoute);
 
 module.exports = router;

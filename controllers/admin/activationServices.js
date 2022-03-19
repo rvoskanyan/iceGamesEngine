@@ -1,17 +1,14 @@
-/*const {
-  ActivationService,
-  ActivationStage,
-} = require('./../../models/index');*/
+const ActivationService = require('./../../models/ActivationService');
 
 const pageActivationServices = async (req, res) => {
   try {
-    const activationServices = await ActivationService.findAll({attributes: ['id', 'name']});
+    const activationServices = await ActivationService.find().select(['name']);
     
     res.render('listElements', {
       layout: 'admin',
       title: 'Список сервисов активации',
       section: 'activation-services',
-      elements: activationServices.map(item => item.dataValues),
+      elements: activationServices,
       addTitle: "Добавить сервис активации",
     });
   } catch (e) {

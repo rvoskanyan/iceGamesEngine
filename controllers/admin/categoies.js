@@ -1,16 +1,14 @@
-/*
-const {Category} = require('./../../models/index');
-*/
+const Category = require('./../../models/Category');
 
 const pageCategories = async (req, res) => {
   try {
-    const categories = await Category.findAll({attributes: ['id', 'name']});
+    const categories = await Category.find().select(['name']);
   
     res.render('listElements', {
       layout: 'admin',
       title: 'Список категорий',
       section: 'categories',
-      elements: categories.map(item => item.dataValues),
+      elements: categories,
       addTitle: "Добавить категорию",
     });
   } catch (e) {
@@ -26,8 +24,9 @@ const pageAddCategories = async (req, res) => {
 const addCategories = async (req, res) => {
   try {
     const {name} = req.body;
-  
-    await Category.create({name});
+    const category = new Category({name});
+    
+    await category.save();
     
     res.redirect('/admin/categories');
   } catch (e) {

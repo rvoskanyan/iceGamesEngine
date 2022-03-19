@@ -11,7 +11,7 @@ const fields = {
     required: true,
     unique: true,
   },
-  path: {
+  url: {
     type: String,
     required: true,
     unique: true,

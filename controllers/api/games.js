@@ -1,5 +1,6 @@
 //const Product = require('./../../models/Product');
 const {Schema} = require("mongoose");
+const Product = require("../../models/Product");
 
 /*Articles.find({_id: {$ne: article._id}, lang: 'default', categories: relCategory})
   .sort({moderated: -1})
@@ -19,6 +20,12 @@ const {Schema} = require("mongoose");
       });
     }
   });*/
+
+/*const products = await Product.find({
+  _id: {
+    $nin: article.products,
+  }
+}).select(['name']);*/
 
 const getAllGames = async (req, res) => {
   try {
