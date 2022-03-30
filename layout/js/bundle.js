@@ -15,7 +15,7 @@
   \********************/
 /***/ ((module) => {
 
-eval("module.exports = {\r\n  //websiteAddress: 'http://141.8.194.196:4000/',\r\n  websiteAddress: 'http://localhost:4000/',\r\n}\n\n//# sourceURL=webpack:///../config.js?");
+eval("module.exports = {\r\n  websiteAddress: 'http://141.8.194.196:4000/',\r\n  //websiteAddress: 'http://localhost:4000/',\r\n}\n\n//# sourceURL=webpack:///../config.js?");
 
 /***/ }),
 
@@ -103,7 +103,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nconst Config = {\r\n  //websiteAddress: 'http://141.8.194.196:4000/',\r\n  websiteAddress: 'http://localhost:4000/',\r\n}\r\n\r\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Config);\n\n//# sourceURL=webpack:///./js/config.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nconst Config = {\r\n  websiteAddress: 'http://141.8.194.196:4000/',\r\n  //websiteAddress: 'http://localhost:4000/',\r\n}\r\n\r\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Config);\n\n//# sourceURL=webpack:///./js/config.js?");
 
 /***/ }),
 
