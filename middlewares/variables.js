@@ -1,8 +1,10 @@
+const {websiteAddress} = require('../config');
+
 module.exports = (req, res, next) => {
   res.locals = {
     ...res.locals,
+    websiteAddress,
     isAuth: req.session.isAuth,
-    websiteAddress: 'http://141.8.194.196:4000/',
   }
   
   next();

@@ -9,21 +9,18 @@
         <div class="current">{{article.name}}</div>
     </div>
     <div class="cover blackout blackout-bottomMax slide active js-slide">
-        <img class="img" src="./img/mainBacground.png" alt="Phoenix Point: Year One Edition" title="Phoenix Point: Year One Edition">
+        <img class="img" src="/{{article.coverImg}}" alt="Phoenix Point: Year One Edition" title="Phoenix Point: Year One Edition">
         <div class="textContent">
-            <h1 class="title">В майнкрафт добавили татарстан</h1>
+            <h1 class="title">{{article.name}}</h1>
             <div class="description">
-                В связи с многочисленными просьбами пользователей, из майнкрафта сделали татарстан, также добавили
-                приору и многую другу атрибутику В связи с многочисленными просьбами пользователей, из майнкрафта
-                сделали татарстан, также добавили приору и многую другу атрибутику В связи с многочисленными просьбами
-                пользователей, из майнкрафта сделали татарстан, также добавили приору и многую другу атрибутику
+                {{article.introText}}
             </div>
         </div>
-        <button class="btn translucent" href="#">
+        <button class="btn translucent js-scroller" data-target="articleContent">
             <span class="icon icon-arrowBottom"></span>
         </button>
     </div>
-    <div class="info contentContainer">
+    <div class="info contentContainer js-articleContent">
         <div class="content">
             {{#each article.blocks}}
                 <div class="block {{imgPosition}}">
@@ -37,10 +34,14 @@
         <div class="activity">
             <div class="actions">
                 <div class="block">
-                    <button class="btn increase">
-                        <span class="icon icon-like"></span>
-                    </button>
-                    <div class="count">{{article.likes}}</div>
+                    {{#if isAuth}}
+                        <div class="btn increase js-likeArticle" data-target="{{article.id}}">
+                    {{/if}}
+                    <span class="icon icon-like"></span>
+                    {{#if isAuth}}
+                        </div>
+                    {{/if}}
+                    <div class="count js-countLikes">{{article.likes}}</div>
                 </div>
                 <div class="block">
                     <button class="btn increase">

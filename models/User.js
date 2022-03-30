@@ -34,6 +34,14 @@ const fields = {
     required: true,
     default: 'client',
   },
+  viewedArticles: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Article',
+  }],
+  likedArticles: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Article',
+  }],
   emailChecked: {
     type: Boolean,
     default: false,

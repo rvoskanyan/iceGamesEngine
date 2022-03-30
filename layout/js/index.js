@@ -8,6 +8,10 @@ import Prompt from "./Prompt";
 import Config from "./config";
 
 import './../styles/index.sass';
+import Postman from "./Postman";
+import {websiteAddress} from "../../config";
+
+const postman = new Postman();
 
 const homeSliderNode = document.querySelector('.js-homeSlider');
 const homeCatalogTabsNode = document.querySelector('.js-homeCatalogTabs');
@@ -23,9 +27,13 @@ const btnSwitchAuthNode = document.querySelector('.js-btnSwitchAuth');
 const btnSwitchRegNode = document.querySelector('.js-btnSwitchReg');
 const inputLabelInFieldNodes = document.querySelectorAll('.js-inputLabelInField');
 const promptNodes = document.querySelectorAll('.js-prompt');
-
-new PopupController([
+const scrollerNode = document.querySelector('.js-scroller');
+const likeArticleNode = document.querySelector('.js-likeArticle');
+const copyBtnNode = document.querySelector('.js-copyBtn');
+const searchStringNode = document.querySelector('.js-searchString');
+const popupController = new PopupController([
   {
+    id: 'loginFrom',
     btnSelector: '.js-openLogin',
     popupSelector: '.js-login',
     states: [
@@ -39,8 +47,137 @@ new PopupController([
         blockSelector: '.js-restoreFomContainer',
       },
     ],
+  },
+  {
+    id: 'navigate',
+    btnSelector: '.js-toggleMainNavigation',
+    popupSelector: '.js-mainNavigation',
   }
 ]);
+
+searchStringNode.addEventListener('input', async () => {
+  popupController.activateById('navigate');
+  
+  const response = await postman.get(`${websiteAddress}api/products`, {searchString: searchStringNode.value});
+  const result = await response.json();
+  const menuNode = document.querySelector('.js-menu');
+  const searchResultNode = document.querySelector('.js-searchResult');
+  
+  if (result.error) {
+    return;
+  }
+  
+  menuNode.classList.add('activeSearchResult');
+  
+  if (result.products?.length === 0) {
+    return searchResultNode.innerHTML = '<p style="color: #fff">Ни чего не найдено</p>';
+  }
+  
+  searchResultNode.innerHTML = '';
+  
+  result.products.forEach(product => {
+    searchResultNode.innerHTML += `
+      <a href="/games/${product.alias}" class="cardGame" title="Перейти к странице игры">
+        <div class="actions">
+            <button class="btn like" title="Добавить игру в избранное">
+                <span class="icon-static icon-static-actionLike"></span>
+            </button>
+            <button
+                class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart small"
+                title="Добавить данный товар в корзину покупок"
+            >
+                В корзину
+            </button>
+        </div>
+        <div class="head">
+            <img class="img" src="${websiteAddress}${product.img}" alt="Картинка ${product.name}" title="${product.name}">
+            <div class="name">
+                ${product.name}
+            </div>
+        </div>
+        <div class="price">
+            <div class="toPrice">
+                <span class="value">
+                    ${product.priceTo}
+                </span>
+            </div>
+            <div class="fromPrice">
+                <span class="value">
+                    ${product.priceFrom}
+                </span>
+            </div>
+        </div>
+      </a>
+    `;
+  });
+})
+
+if (copyBtnNode) {
+  copyBtnNode.addEventListener('click', () => {
+    const copyTextNode = document.querySelector('.js-copyText');
+    const copyNodeContentsToClipboard = (el) => {
+      const range = document.createRange();
+      const selection = window.getSelection();
+      range.selectNodeContents(el);
+      selection.removeAllRanges();
+      selection.addRange(range);
+      document.execCommand('copy');
+      selection.removeAllRanges();
+    }
+    const copyToClipboard = (el) => {
+      const oldContentEditable = el.contentEditable;
+      const oldReadOnly = el.readOnly;
+      try {
+        el.contentEditable = 'true'; //  специально для iOS
+        el.readOnly = false;
+        copyNodeContentsToClipboard(el);
+      } finally {
+        el.contentEditable = oldContentEditable;
+        el.readOnly = oldReadOnly;
+      }
+    }
+    
+    try {
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(copyTextNode.innerText);
+      } else if (window.clipboardData) {
+        window.clipboardData.setData('text', copyTextNode.innerText); // для Internet Explorer
+      } else {
+        copyToClipboard(copyTextNode); // для других браузеров, iOS, Mac OS
+      }
+      //Вывод инфы об успешном копировании
+    } catch (e) {
+      //Вывод инфы о неудавшемся копировании
+    }
+  })
+}
+
+if (scrollerNode) {
+  scrollerNode.addEventListener('click', () => {
+    const targetSelector = `.js-${scrollerNode.dataset.target}`;
+    const topOffset = document.querySelector('.js-header').offsetHeight;
+    const targetPosition = document.querySelector(targetSelector).getBoundingClientRect().top;
+    const offsetPosition = targetPosition - topOffset;
+    
+    window.scrollBy({
+      top: offsetPosition,
+      behavior: 'smooth'
+    });
+  });
+}
+
+if (likeArticleNode) {
+  likeArticleNode.addEventListener('click', async () => {
+    const countLikesNode = document.querySelector('.js-countLikes');
+    const articleId = likeArticleNode.dataset.target;
+    const response = await postman.post('/api/articles/like', {articleId});
+    const result = await response.json();
+    
+    if (!result.error) {
+      countLikesNode.innerText = result.countLikes;
+    }
+  })
+}
 
 /*if (homeSliderNode) {
   let playVideoTimeOutId;

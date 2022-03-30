@@ -3,10 +3,40 @@
     <br>
     <br>
 {{/if}}
-<form method="post" action="/admin/articles/{{#if isEdit}}{{article.id}}{{else}}add{{/if}}">
+<form method="post" action="/admin/articles/{{#if isEdit}}{{article.id}}{{else}}add{{/if}}" enctype="multipart/form-data">
     <label>
         Название записи:
         <input type="text" name="name"{{#if isEdit}} value="{{article.name}}"{{/if}}>
+    </label>
+    <br>
+    <br>
+    <label>
+        Вступительный текст:
+        <textarea name="introText" cols="30" rows="10">{{article.introText}}</textarea>
+    </label>
+    <br>
+    <br>
+    <label>
+        Cover изображение:
+        <input type="file" name="coverImg">
+    </label>
+    <br>
+    <br>
+    <label>
+        Картинка:
+        <input type="file" name="img">
+    </label>
+    <br>
+    <br>
+    <label>
+        Картинка справа:
+        <input type="checkbox" name="rightImg" {{#if article.rightImg}}checked{{/if}}>
+    </label>
+    <br>
+    <br>
+    <label>
+        Цвет блока:
+        <input type="color" name="blockColor"{{#if isEdit}} value="{{article.blockColor}}"{{/if}}>
     </label>
     <br>
     <br>
@@ -16,6 +46,12 @@
             <option value="article" {{#iff article.type '===' 'article'}}selected{{/iff}}>Статья</option>
             <option value="news" {{#iff article.type '===' 'news'}}selected{{/iff}}>Новость</option>
         </select>
+    </label>
+    <br>
+    <br>
+    <label>
+        Закрепить в шапке:
+        <input type="checkbox" name="fixed" {{#if article.fixed}}checked{{/if}}>
     </label>
     <br>
     <br>

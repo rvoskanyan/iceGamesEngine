@@ -1,11 +1,17 @@
 const Article = require('../../models/Article');
+const User = require('../../models/User');
 
 const blogHomePage = async (req, res) => {
   try {
-    const articles = await Article.find();
+    const articles = await Article.find({fixed: false}).limit(3);
+    const fixArticle = await Article.findOne({fixed: true});
+  
+    console.log(articles);
+    console.log(fixArticle);
     
     res.render('blogHome', {
       title: 'ICE Games -- Блог',
+      fixArticle,
       articles,
     });
   } catch (e) {
@@ -16,6 +22,19 @@ const blogHomePage = async (req, res) => {
 const blogArticlePage = async (req, res) => {
   try {
     const article = await Article.findOne({alias: req.params.alias});
+    
+    if (req.session.isAuth) {
+      const user = await User.findById(req.session.userId).select(['viewedArticles']);
+      const isArticleRead = user.viewedArticles.findIndex(item => item.toString() === article.id) !== -1;
+      
+      if (!isArticleRead) {
+        user.viewedArticles.push(article._id);
+        article.views += 1;
+        
+        await user.save();
+        await article.save();
+      }
+    }
   
     res.render('blogArticle', {
       title: 'ICE Games -- Статья',

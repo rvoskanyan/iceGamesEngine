@@ -7,11 +7,11 @@
             <a class="btn link" href="/games">Каталог</a>
         </div>
         <div class="current">
-            {{game.name}}
+            {{product.name}}
         </div>
     </div>
     <div class="cover blackout blackout-left blackout-bottom slide active js-slide">
-        <img class="img" src="{{websiteAddress}}{{game.coverImg}}" alt="{{game.name}}" title="{{game.name}}">
+        <img class="img" src="{{websiteAddress}}{{product.coverImg}}" alt="{{product.name}}" title="{{product.name}}">
         <div class="offer">
             {{#if gamesBunch}}
                 <div class="packages">
@@ -41,35 +41,35 @@
                     {{/each}}
                 </div>
             {{/if}}
-            <div class="name">{{game.name}}</div>
+            <div class="name">{{product.name}}</div>
             <div class="statuses">
                 <div class="status positive">В наличии</div>
                 <div class="status positive">Данный товар купили сегодня 30 раз</div>
             </div>
             <div class="description">
-                {{game.description}}
+                {{product.description}}
             </div>
             <div class="price">
                 <div class="toPrice">
                     <span class="value">
-                        {{game.priceTo}}
+                        {{product.priceTo}}
                     </span>
                 </div>
                 <div class="fromPrice">
                     <span class="value">
-                        {{game.priceFrom}}
+                        {{product.priceFrom}}
                     </span>
                 </div>
                 <div class="discount">
-                    {{game.discount}}
+                    {{product.discount}}
                 </div>
             </div>
             <div class="actions">
                 <button title="Добавить игру в корзину покупок" class="btn rounded increase bg-pink hover-backlight-blue">В корзину</button>
             </div>
-            {{#if hasExtends}}
+            {{#if product.extends.length}}
                 <div class="extends">
-                    {{#each extends}}
+                    {{#each product.extends}}
                         <div class="tooltip">
                             <button class="btn extend">
                                 <img  class="img" src="{{@root.websiteAddress}}{{icon}}" alt="{{text}}" title="{{text}}">
@@ -89,7 +89,7 @@
                 <li class="item">
                     <div class="name">Язык:</div>
                     <div class="value">
-                        {{#each languages}}
+                        {{#each product.languages}}
                             {{#if @last}}
                                 {{name}}
                             {{else}}
@@ -101,7 +101,7 @@
                 <li class="item">
                     <div class="name">Регион активации:</div>
                     <div class="value">
-                        {{#each regions}}
+                        {{#each product.activationRegions}}
                             {{#if @last}}
                                 {{name}}
                             {{else}}
@@ -113,13 +113,13 @@
                 <li class="item">
                     <div class="name">Сервис активации:</div>
                     <div class="value">
-                        {{service.name}}
+                        {{product.activationServiceId.name}}
                     </div>
                 </li>
                 <li class="item">
                     <div class="name">Жанр:</div>
                     <div class="value">
-                        {{#each genres}}
+                        {{#each product.genres}}
                             {{#if @last}}
                                 {{name}}
                             {{else}}
@@ -131,19 +131,19 @@
                 <li class="item">
                     <div class="name">Платформа:</div>
                     <div class="value">
-                        {{platform.name}}
+                        {{product.platformId.name}}
                     </div>
                 </li>
                 <li class="item">
                     <div class="name">Издатель:</div>
                     <div class="value">
-                        {{publisher.name}}
+                        {{product.publisherId.name}}
                     </div>
                 </li>
                 <li class="item">
                     <div class="name">Дата выхода:</div>
                     <div class="value">
-                        {{game.releaseDate}}
+                        {{product.releaseDate}}
                     </div>
                 </li>
             </ul>
@@ -154,7 +154,7 @@
                 <div class="visibleAreaWrapper">
                     <div class="visibleArea js-visibleArea">
                         <div class="tape js-tape">
-                            {{#if game.trailerLink}}
+                            {{#if product.trailerLink}}
                                 <div class="slide js-slide active">
                                     <button class="btn increase video js-playYouTubeVideo" title="Посмотреть трейлер игры" data-link="{{trailerId}}">
                                         <img class="img" src="https://img.youtube.com/vi/{{trailerId}}/maxresdefault.jpg" alt="Трейлер игры {{game.name}}">
@@ -289,7 +289,7 @@
                     <div class="nav">
                         <button class="btn round border big translucent active js-tabBtn" data-target-id="1">Об игре</button>
                         <button class="btn round border big translucent js-tabBtn" data-target-id="2">Активация</button>
-                        {{#if gameElements}}
+                        {{#if product.elements.length}}
                             <button class="btn round border big translucent js-tabBtn" data-target-id="3">Состав набора</button>
                         {{/if}}
                         <button class="btn round border big translucent js-tabBtn" data-target-id="4">Игры серии</button>
@@ -297,7 +297,7 @@
                     <div class="blocks totalHeight infoBlock">
                         <div class="item active js-tabBlock-1">
                             <p class="paragraph">
-                                {{game.description}}
+                                {{product.description}}
                             </p>
                         </div>
                         <ul class="item bulletedList js-tabBlock-2">
@@ -307,15 +307,15 @@
                                 </li>
                             {{/each}}
                         </ul>
-                        {{#if gameElements}}
+                        {{#if product.elements.length}}
                             <div class="item js-tabBlock-3">
-                                {{#if gameEdition}}
+                                {{#if product.editionId}}
                                     <div class="btn rounded bg-paleBlue package">
-                                        {{gameEdition}}
+                                        {{product.editionId.name}}
                                     </div>
                                 {{/if}}
                                 <ul class="bulletedList">
-                                    {{#each gameElements}}
+                                    {{#each product.elements}}
                                         <li class="item">
                                             {{#if gameId}}
                                                 <a href="/games/{{gameId}}">
@@ -329,7 +329,7 @@
                                 </ul>
                             </div>
                         {{/if}}
-                        {{#if gamesSeries}}
+                        {{#if false}}
                             <div class="item js-tabBlock-4">
                                 {{#if seriesIsSlider}}
                                     <div class="slider">
@@ -376,36 +376,36 @@
                 <div class="systemInfo">
                     <div class="btn border round big title">Системные требования</div>
                     <ul class="fieldedList infoBlock">
-                        {{#if game.os}}
+                        {{#if product.os}}
                             <li class="item">
                                 <div class="name">ОС:</div>
                                 <div class="value">
-                                    {{game.os}}
+                                    {{product.os}}
                                 </div>
                             </li>
                         {{/if}}
                         <li class="item">
                             <div class="name">Процессор:</div>
                             <div class="value">
-                                {{game.cpu}}
+                                {{product.cpu}}
                             </div>
                         </li>
                         <li class="item">
                             <div class="name">Видеокарта:</div>
                             <div class="value">
-                                {{game.graphicsCard}}
+                                {{product.graphicsCard}}
                             </div>
                         </li>
                         <li class="item">
                             <div class="name">Оперативная память:</div>
                             <div class="value">
-                                {{game.ram}}
+                                {{product.ram}}
                             </div>
                         </li>
                         <li class="item">
                             <div class="name">Место на диске:</div>
                             <div class="value">
-                                {{game.diskMemory}}
+                                {{product.diskMemory}}
                             </div>
                         </li>
                     </ul>

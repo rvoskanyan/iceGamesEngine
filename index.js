@@ -10,12 +10,13 @@ const mongoose = require('mongoose');
 const path = require('path');
 const fs = require('fs');
 const varMiddleware = require('./middlewares/variables');
+const constClientMiddleware =  require('./middlewares/constClientData');
 const clientRoutes = require('./routes/client');
 const adminRoutes = require('./routes/admin');
 const apiRoutes = require('./routes/api');
 require('dotenv').config();
 
-const MONGODB_URI = `mongodb+srv://Rafik:Z3Akp3gR7aH1tet2@icegamesdev.saekw.mongodb.net/igsDev`;
+const MONGODB_URI = `mongodb://Rafik:Z3Akp3gR7aH1tet2@localhost:27017/igsDev?authSource=admin`;
 const app = express();
 const store = new MongoStore({
   collection: 'sessions',
@@ -87,7 +88,7 @@ app.use(express.json());
 app.use(fileUpload({}));
 app.use(cookieParser());
 
-app.use('/', clientRoutes);
+app.use('/', constClientMiddleware, clientRoutes);
 app.use('/admin', adminRoutes);
 app.use('/api', apiRoutes);
 

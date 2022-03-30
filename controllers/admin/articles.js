@@ -42,15 +42,34 @@ const addArticlePage = async (req, res) => {
 
 const addArticle = async (req, res) => {
   try {
-    const {name, type, products} = req.body;
+    const {name, introText, rightImg, blockColor, type, products, fixed} = req.body;
+    const {img, coverImg} = req.files;
+    const mustFix = fixed === "on";
+    const imgExtend = getExtendFile(img.name);
+    const coverImgExtend = getExtendFile(coverImg.name);
+    const imgName = `${uuid.v4()}.${imgExtend}`;
+    const coverImgName = `${uuid.v4()}.${coverImgExtend}`;
     const article = new Article({
       name,
       type,
+      fixed: mustFix,
+      introText,
+      blockColor,
+      img: imgName,
+      coverImg: coverImgName,
+      rightImg: rightImg === "on",
       alias: getAlias(name),
       products: getArray(products),
       authorId: req.session.userId,
       lastEditorId: req.session.userId,
     });
+  
+    await img.mv(path.resolve(__dirname, '../../uploadedFiles', imgName));
+    await coverImg.mv(path.resolve(__dirname, '../../uploadedFiles', coverImgName));
+    
+    if (mustFix) {
+      await Article.findOneAndUpdate({fixed: true}, {fixed: false});
+    }
     
     await article.save();
     
@@ -99,19 +118,51 @@ const editArticle = async (req, res) => {
   const id = req.params.id;
   
   try {
-    const {name, type, products} = req.body;
+    const {name, introText, rightImg, blockColor, type, products, fixed} = req.body;
     const article = await Article.findById(id);
+    const mustFix = fixed === "on";
+    let img = null;
+    let coverImg = null;
+    
+    if (req.files) {
+      img = req.files.img;
+      coverImg = req.files.coverImg;
+    }
+    
+    if (img) {
+      const imgExtend = getExtendFile(img.name);
+      const imgName = `${uuid.v4()}.${imgExtend}`;
+      
+      await img.mv(path.resolve(__dirname, '../../uploadedFiles', imgName));
+      article.img = imgName;
+    }
+    
+    if (coverImg) {
+      const coverImgExtend = getExtendFile(coverImg.name);
+      const coverImgName = `${uuid.v4()}.${coverImgExtend}`;
+  
+      await coverImg.mv(path.resolve(__dirname, '../../uploadedFiles', coverImgName));
+      article.coverImg = coverImgName;
+    }
     
     article.name = name;
+    article.introText = introText;
+    article.rightImg = rightImg === "on";
+    article.blockColor = blockColor;
     article.type = type;
+    article.fixed = mustFix;
     //article.products = products;
+    
+    if (mustFix) {
+      await Article.findOneAndUpdate({_id: {$ne: id}, fixed: true}, {fixed: false});
+    }
     
     await article.save();
     
     res.redirect('/admin/articles');
   } catch (e) {
     console.log(e);
-    res.redirect(`/admin/article/edit/${id}`);
+    res.redirect(`/admin/articles/edit/${id}`);
   }
 }
 

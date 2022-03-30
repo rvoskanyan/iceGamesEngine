@@ -1,35 +1,22 @@
-/*const {
-  Product,
-  GameElement,
-  Edition,
-  Category,
-  Genre,
-  ActivationService,
-} = require('./../../models/index');*/
+const Product = require('../../models/Product');
+const Category = require('../../models/Category');
+const Genre = require('../../models/Genre');
+const ActivationService = require('../../models/ActivationService');
 const {getDiscount} = require("../../utils/functions");
 
 const gamesPage = async (req, res) => {
   try {
-    const games = await Product.findAll({
-      attributes: ['id', 'name', 'img', 'priceTo', 'priceFrom'],
-      limit: 20,
-    });
-    const categories = await Category.findAll({
-      attributes: ['id', 'name'],
-    });
-    const genres = await Genre.findAll({
-      attributes: ['id', 'name'],
-    });
-    const activationServices = await ActivationService.findAll({
-      attributes: ['id', 'name'],
-    });
+    const products = await Product.find().select(['name', 'alias', 'img', 'priceTo', 'priceFrom']).limit(20);
+    const categories = await Category.find().select(['name']);
+    const genres = await Genre.find().select(['name']);
+    const activationServices = await ActivationService.find().select(['name']);
     
     res.render('catalog', {
       title: 'Каталог игр',
-      games: games.map(item => item.dataValues),
-      categories: categories.map(item => item.dataValues),
-      genres: genres.map(item => item.dataValues),
-      activationServices: activationServices.map(item => item.dataValues),
+      products,
+      categories,
+      genres,
+      activationServices,
     });
   } catch (e) {
     console.log(e);
@@ -39,27 +26,32 @@ const gamesPage = async (req, res) => {
 
 const gamePage = async (req, res) => {
   try {
-    const {gameId} = req.params;
-    const game = await Product.findByPk(gameId);
-    const gameExtends = await game.getExtends();
-    const languages = await game.getLanguages();
-    const regions = await game.getRegions();
-    const service = await game.getActivationService();
-    const stages = await service.getActivationStages();
-    const genres = await game.getGenres();
-    const platform = await game.getPlatform();
-    const publisher = await game.getPublisher();
-    const images = await game.getImages({attributes: ['name']});
-    const bunch = await game.getBunch({attributes: ['id']});
-    const series = await game.getSeries({attributes: ['id']});
-    const gameData = game.dataValues;
-    let gameElements = null;
-    let gameEdition = null;
-    let gamesBunch = null;
-    let trailerId = null;
-    let gamesSeries = [];
+    const {alias} = req.params;
+    const product = await Product
+      .findOne({alias})
+      .populate([
+        'extends',
+        'languages',
+        'activationRegions',
+        'genres',
+        'developers',
+        'categories',
+        'platformId',
+        'activationServiceId',
+        'publisherId',
+        'bunchId',
+        'seriesId',
+      ]);
     
-    if (bunch) {
+    let trailerId = null;
+  
+    if (product.trailerLink) {
+      trailerId = product.trailerLink.split('v=')[1];
+    }
+  
+    console.log(product);
+    
+    /*if (bunch) {
       gamesBunch = await bunch.getProducts({
         attributes: ['id', 'name'],
         order: [['orderInBundle', 'DESC']],
@@ -164,31 +156,16 @@ const gamePage = async (req, res) => {
       gamesSeries = gamesSeries.map(item => item.dataValues);
     }
     
-    if (gameData.trailerLink) {
-      trailerId = gameData.trailerLink.split('v=')[1];
-    }
-    
-    gameData.discount = getDiscount(gameData.priceTo, gameData.priceFrom);
+    gameData.discount = getDiscount(gameData.priceTo, gameData.priceFrom);*/
   
     res.render('game', {
       title: "ICE Games -- магазин ключей",
-      game: gameData,
-      hasExtends: !!gameExtends.length,
-      extends: gameExtends.map(item => item.dataValues),
-      languages: languages.map(item => item.dataValues),
-      regions: regions.map(item => item.dataValues),
-      service: service.dataValues,
-      stages: stages.map(item => item.dataValues),
-      genres: genres.map(item => item.dataValues),
-      platform: platform.dataValues,
-      publisher: publisher.dataValues,
-      images: images.map(item => item.dataValues),
-      gamesSeries,
-      seriesIsSlider: gamesSeries.length > 4,
+      product,
       trailerId,
+      /*
       gamesBunch,
       gameEdition,
-      gameElements,
+      */
     });
   } catch (e) {
     console.log(e);

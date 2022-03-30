@@ -7,6 +7,6 @@ const {
 const router = Router();
 
 router.get('/', gamesPage);
-router.get('/:gameId', gamePage);
+router.get('/:alias', gamePage);
 
 module.exports = router;

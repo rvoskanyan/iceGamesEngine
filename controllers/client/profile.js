@@ -158,7 +158,7 @@ const profileFavoritesPage = async (req, res) => {
 const profileViewPage = async (req, res) => {
   try {
     const {login} = req.params;
-    const user = await User.findOne({login}).select(['rating', 'invitedUsers', 'createdAt']);
+    const user = await User.findOne({login}).select(['rating', 'invitedUsers', 'viewedArticles', 'createdAt']);
     const countUsers = await User.estimatedDocumentCount();
     
     user.login = login;

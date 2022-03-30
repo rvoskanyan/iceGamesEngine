@@ -1,0 +1,43 @@
+<div class="containerMenu">
+    <nav class="menu js-menu">
+        <ul class="col categoriesMenu">
+            {{#each allCategories}}
+                <li class="colLink">
+                    <a href="/games?categories={{id}}" class="link" title="Топ продаж">{{name}}</a>
+                </li>
+            {{/each}}
+            <li class="colLink">
+                <a href="/games" class="link" title="Все игры">Все игры</a>
+            </li>
+        </ul>
+        <div class="containerMainMenuSearch">
+            <div class="searchResult js-searchResult"></div>
+            <div class="mainMenu">
+                <ul class="col">
+                    <li class="title">Жанры</li>
+                    {{#each allGenres}}
+                        <li class="colLink">
+                            <a href="/games?genres={{id}}" class="link" title="Шутеры">{{name}}</a>
+                        </li>
+                    {{/each}}
+                </ul>
+                <ul class="col">
+                    <li class="title">Издатели</li>
+                    {{#each allPublishers}}
+                        <li class="colLink">
+                            <a href="#" class="link" title="2К">{{name}}</a>
+                        </li>
+                    {{/each}}
+                </ul>
+                <ul class="col">
+                    <li class="title">Разработчики</li>
+                    {{#each allDevelopers}}
+                        <li class="colLink">
+                            <a href="#" class="link" title="Gearbox Software">{{name}}</a>
+                        </li>
+                    {{/each}}
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>

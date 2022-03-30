@@ -11,13 +11,13 @@ export default class Postman {
   
   get = (url, params) => {
     const newUrl = new URL(url);
-    
-    params.entries.forEach(([key, value]) => {
-      newUrl.searchParams.append(key,value);
+  
+    Object.entries(params).forEach(([key, value]) => {
+      newUrl.searchParams.append(key, value);
     });
     
     return this.query({
-      newUrl,
+      url: newUrl,
       method: 'GET',
     });
   }
@@ -51,13 +51,18 @@ export default class Postman {
       method,
       params = {},
     } = options;
-  
-    return fetch(url, {
+    
+    const init = {
       method,
       headers: {
         'Content-Type': 'application/json;charset=utf-8'
       },
-      body: JSON.stringify(params)
-    });
+    }
+    
+    if (method !== 'GET') {
+      init.body = JSON.stringify(params);
+    }
+  
+    return fetch(url, init);
   }
 }

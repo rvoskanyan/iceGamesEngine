@@ -13,6 +13,26 @@ const fields = {
     unique: true,
     index: true,
   },
+  introText: {
+    type: String,
+    required: true,
+  },
+  img: {
+    type: String,
+    required: true,
+  },
+  rightImg: {
+    type: Boolean,
+    default: false,
+  },
+  blockColor: {
+    type: String,
+    default: '#000',
+  },
+  coverImg: {
+    type: String,
+    required: true,
+  },
   type: {
     type: String,
     required: true,
@@ -41,6 +61,10 @@ const fields = {
       required: true,
     }
   }],
+  fixed: {
+    type: Boolean,
+    default: false,
+  },
   authorId: {
     type: Schema.Types.ObjectId,
     ref: 'User',

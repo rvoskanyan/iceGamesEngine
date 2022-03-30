@@ -5,29 +5,28 @@
         </div>
         <div class="current">Блог</div>
     </div>
-    <div class="cover blackout blackout-bottomMax slide active js-slide">
-        <img class="img" src="./img/mainBacground.png" alt="Phoenix Point: Year One Edition" title="Phoenix Point: Year One Edition">
-        <div class="textContent">
-            <div class="title">В майнкрафт добавили татарстан</div>
-            <div class="description">
-                В связи с многочисленными просьбами пользователей, из майнкрафта сделали татарстан, также добавили
-                приору и многую другу атрибутику В связи с многочисленными просьбами пользователей, из майнкрафта
-                сделали татарстан, также добавили приору и многую другу атрибутику В связи с многочисленными просьбами
-                пользователей, из майнкрафта сделали татарстан, также добавили приору и многую другу атрибутику
+    {{#if fixArticle}}
+        <div class="cover blackout blackout-bottomMax slide active js-slide">
+            <img class="img" src="{{fixArticle.coverImg}}" alt="Phoenix Point: Year One Edition" title="Phoenix Point: Year One Edition">
+            <div class="textContent">
+                <div class="title">{{fixArticle.name}}</div>
+                <div class="description">
+                    {{fixArticle.introText}}
+                </div>
             </div>
+            <a class="btn rounded big bg-blue translucent" href="/blog/{{fixArticle.alias}}">Читать</a>
         </div>
-        <a class="btn rounded big bg-blue translucent" href="#">Читать</a>
-    </div>
+    {{/if}}
     <div class="contentContainer">
         <div class="articles">
             {{#each articles}}
-                <a class="article" href="/blog/{{alias}}" style="background: linear-gradient(94.29deg, #47A00C 35.06%, rgba(196, 196, 196, 0) 88.75%);">
-                    <img class="img" src="./img/blog-sims.jpg" alt="Sims">
+                <a class="article{{#if rightImg}} right{{/if}}" href="/blog/{{alias}}" style="background: linear-gradient(94.29deg, {{blockColor}} 35.06%, rgba(196, 196, 196, 0) 88.75%);">
+                    <img class="img" src="{{img}}" alt="Sims">
                     <div class="info">
                         <div class="content">
                             <div class="title">{{name}}</div>
                             <div class="description">
-                                {{text}}
+                                {{introText}}
                             </div>
                         </div>
                         <div class="activity">
