@@ -1,3 +1,4 @@
+const User = require('../../models/User');
 const Product = require('../../models/Product');
 const Category = require('../../models/Category');
 const Genre = require('../../models/Genre');
@@ -6,10 +7,30 @@ const {getDiscount} = require("../../utils/functions");
 
 const gamesPage = async (req, res) => {
   try {
-    const products = await Product.find().select(['name', 'alias', 'img', 'priceTo', 'priceFrom']).limit(20);
+    let products = await Product.find().select(['name', 'dsId', 'alias', 'img', 'priceTo', 'priceFrom']).lean().limit(20);
     const categories = await Category.find().select(['name']);
     const genres = await Genre.find().select(['name']);
     const activationServices = await ActivationService.find().select(['name']);
+    
+    if (req.session.isAuth) {
+      const user = await User.findById(req.session.userId);
+      const favoritesProducts = user.favoritesProducts;
+      const cart = user.cart;
+      
+      if (favoritesProducts.length || cart.length) {
+        products = products.map(item => {
+          if (favoritesProducts.includes(item._id.toString())) {
+            item.inFavorites = true;
+          }
+  
+          if (cart.includes(item._id.toString())) {
+            item.inCart = true;
+          }
+          
+          return item;
+        })
+      }
+    }
     
     res.render('catalog', {
       title: 'Каталог игр',

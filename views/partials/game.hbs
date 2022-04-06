@@ -1,17 +1,26 @@
-<a href="/games/{{alias}}" class="cardGame {{size}}" title="Перейти к странице игры">
+<a
+    href="/games/{{alias}}"
+    class="cardGame {{size}} js-cardGame"
+    data-id="{{id}}"
+    data-ds-id="{{dsId}}"
+    {{#if inCart}}data-in-cart="true"{{/if}}
+    title="Перейти к странице игры"
+>
     <div class="actions">
-        <button class="btn like" title="Добавить игру в избранное">
-            <span class="icon-static icon-static-actionLike"></span>
-        </button>
+        {{#if @root.isAuth}}
+            <button class="btn like js-favoritesBtn{{#if inFavorites}} js-active{{/if}}" title="{{#if inFavorites}}Удалить игру из избранного{{else}}Добавить игру в избранное{{/if}}">
+                <span class="icon-static icon-static-actionLike js-icon {{#if inFavorites}} active{{/if}}"></span>
+            </button>
+        {{/if}}
         <button
-            class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart small"
-            title="Добавить данный товар в корзину покупок"
+            class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart small js-addToCart{{#if inCart}} active js-active{{/if}}"
+            title="{{#if inCart}}Перейти в корзину покупок{{else}}Добавить данный товар в корзину покупок{{/if}}"
         >
-            В корзину
+            {{#if inCart}}В корзине ✔{{else}}В корзину{{/if}}
         </button>
     </div>
     <div class="head">
-        <img class="img" src="{{websiteAddress}}{{img}}" alt="Картинка {{name}}" title="{{name}}">
+        <img class="img" src="{{@root.websiteAddress}}{{img}}" alt="Картинка {{name}}" title="{{name}}">
         <div class="name">
             {{name}}
         </div>

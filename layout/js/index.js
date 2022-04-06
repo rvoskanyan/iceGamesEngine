@@ -4,12 +4,14 @@ import Modal from "./Modal";
 import PopupController from "./PopupController";
 import AsyncForm from "./AsyncForm";
 import Prompt from "./Prompt";
+import {urlEncodeFormData} from "./utils";
 
 import Config from "./config";
 
 import './../styles/index.sass';
 import Postman from "./Postman";
 import {websiteAddress} from "../../config";
+import {query} from "express-validator";
 
 const postman = new Postman();
 
@@ -31,6 +33,8 @@ const scrollerNode = document.querySelector('.js-scroller');
 const likeArticleNode = document.querySelector('.js-likeArticle');
 const copyBtnNode = document.querySelector('.js-copyBtn');
 const searchStringNode = document.querySelector('.js-searchString');
+const productCards = document.querySelectorAll('.js-cardGame');
+const cartNode = document.querySelector('.js-cart');
 const popupController = new PopupController([
   {
     id: 'loginFrom',
@@ -54,6 +58,228 @@ const popupController = new PopupController([
     popupSelector: '.js-mainNavigation',
   }
 ]);
+
+if (cartNode) {
+  const products = cartNode.querySelectorAll('.js-product');
+  const checkNode = cartNode.querySelector('.js-check');
+  const totalPriceToNode = checkNode.querySelector('.js-totalTo');
+  const totalPriceFromNode = checkNode.querySelector('.js-totalFrom');
+  const totalProductsNode = checkNode.querySelector('.js-totalProducts');
+  const payBtnNode = checkNode.querySelector('.js-payBtn');
+  const savingNode = checkNode.querySelector('.js-saving');
+  let countProducts = products.length;
+  let totalPriceToValue = +totalPriceToNode.innerText;
+  let totalPriceFromValue = +totalPriceFromNode.innerText;
+  let savingValueNode = null;
+  let savingValue = null;
+  
+  if (savingNode) {
+    savingValueNode = checkNode.querySelector('.js-savingValue');
+    savingValue = +savingValueNode.innerText;
+  }
+  
+  if (payBtnNode) {
+    payBtnNode.addEventListener('click', async () => {
+      const response = await postman.post('/api/order');
+      const result = await response.json();
+      
+      if (result.error) {
+        return;
+      }
+      
+      const payFormNode = cartNode.querySelector('.js-payForm');
+      payFormNode.submit();
+    })
+  }
+  
+  if (countProducts) {
+    products.forEach(productNode => {
+      const deleteFromCartBtn = productNode.querySelector('.js-deleteFromCart');
+      const dsCartId = document.querySelector('body').dataset.dsCartId;
+      const productId = productNode.dataset.productId;
+      const dsId = productNode.dataset.dsId;
+    
+      deleteFromCartBtn.addEventListener('click', async () => {
+        if (!dsCartId || !dsId || !productId) {
+          return;
+        }
+        
+        let formData = new FormData();
+        
+        formData.append('cart_uid', dsCartId);
+        formData.append('cart_curr', 'RUR');
+        formData.append('lang', 'ru-RU');
+  
+        const responseCartDS = await fetch('https://shop.digiseller.ru/xml/shop_cart_lst.asp', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: urlEncodeFormData(formData),
+        });
+  
+        const resultCartDS = await responseCartDS.json();
+  
+        if (!resultCartDS.products) {
+          return;
+        }
+        
+        const {item_id} = resultCartDS.products.find(item => item.id === dsId);
+  
+        formData.append('item_id', item_id);
+        formData.append('product_cnt', '0');
+  
+        let responseUpdateCartDS = await fetch('https://shop.digiseller.ru/xml/shop_cart_lst.asp', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: urlEncodeFormData(formData),
+        });
+  
+        let resultUpdateCartDS = await responseUpdateCartDS.json();
+  
+        if (resultUpdateCartDS.cart_err !== '0' && resultUpdateCartDS.cart_err !== '5') {
+          return;
+        }
+        
+        const response = await postman.delete(`/api/products/${productId}/cart`);
+        const result = await response.json();
+      
+        if (result.error) {
+          return;
+        }
+  
+        countProducts -= 1;
+        
+        if (countProducts === 0)   {
+          return cartNode.innerHTML = '<p style="color: #fff">Вы еще не добавили ни одного товара в корзину покупок</p>';
+        }
+  
+        const priceTo = +productNode.querySelector('.js-priceTo').innerText;
+        const priceFrom = +productNode.querySelector('.js-priceFrom').innerText;
+  
+        totalPriceToValue -= priceTo;
+        totalPriceFromValue -= priceFrom;
+  
+        totalPriceToNode.innerText = totalPriceToValue;
+        totalPriceFromNode.innerText = totalPriceFromValue;
+        totalProductsNode.innerText = countProducts;
+        
+        if (savingValue) {
+          savingValue -= priceFrom - priceTo;
+          
+          if (!savingValue) {
+            savingNode.remove();
+          }
+        }
+        
+        productNode.remove();
+      })
+    })
+  }
+}
+
+if (productCards.length) {
+  productCards.forEach(productNode => {
+    const addToCartBtnNode = productNode.querySelector('.js-addToCart');
+    const favoritesBtnNode = productNode.querySelector('.js-favoritesBtn');
+    const productId = productNode.dataset.id;
+    const dsId = productNode.dataset.dsId;
+    const dsCartId = document.querySelector('body').dataset.dsCartId;
+    let iconFavoritesBtnNode;
+    
+    if (favoritesBtnNode) {
+      iconFavoritesBtnNode = favoritesBtnNode.querySelector('.js-icon');
+    }
+  
+    productNode.addEventListener('click', (e) => {
+      if (e.target === iconFavoritesBtnNode || e.target === favoritesBtnNode || e.target === addToCartBtnNode) {
+        e.preventDefault();
+      }
+    })
+    
+    if (!addToCartBtnNode) {
+      return;
+    }
+    
+    if (favoritesBtnNode) {
+      favoritesBtnNode.addEventListener('click', async () => {
+        if (favoritesBtnNode.classList.contains('js-active')) {
+          const response = await postman.delete(`/api/products/${productId}/favorites`);
+          const result = await response.json();
+      
+          if (result.error) {
+            return;
+          }
+      
+          favoritesBtnNode.setAttribute('title', 'Добавить игру в избранное');
+          favoritesBtnNode.classList.remove('js-active');
+          iconFavoritesBtnNode.classList.remove('active');
+          return;
+        }
+    
+        const response = await postman.post(`/api/products/${productId}/favorites`);
+        const result = await response.json();
+    
+        if (result.error) {
+          return;
+        }
+    
+        favoritesBtnNode.setAttribute('title', 'Удалить игру из избранного');
+        favoritesBtnNode.classList.add('js-active');
+        iconFavoritesBtnNode.classList.add('active');
+      })
+    }
+  
+    addToCartBtnNode.addEventListener('click', async () => {
+      if (addToCartBtnNode.classList.contains('js-active')) {
+        window.location.href = '/cart';
+        return;
+      }
+  
+      const formData = new FormData();
+  
+      formData.append('product_id', dsId);
+      formData.append('product_cnt', '1');
+      formData.append('typecurr', 'wmr');
+      formData.append('lang', 'ru-RU');
+      
+      if (dsCartId) {
+        formData.append('cart_uid', dsCartId);
+      }
+  
+      const responseAddCartDS = await fetch('https://shop.digiseller.ru/xml/shop_cart_add.asp', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: urlEncodeFormData(formData),
+      });
+  
+      const resultAddCartDS = await responseAddCartDS.json();
+  
+      if (resultAddCartDS.cart_err_num !== '0') {
+        return;
+      }
+  
+      const response = await postman.post(`/api/products/${productId}/cart`, {dsCartId: resultAddCartDS.cart_uid});
+      const result = await response.json();
+  
+      if (result.error) {
+        return;
+      }
+  
+      if (!dsCartId) {
+        document.querySelector('body').dataset.dsCartId = resultAddCartDS.cart_uid;
+      }
+      
+      addToCartBtnNode.innerText = 'В корзине ✔';
+      addToCartBtnNode.classList.add('js-active', 'active');
+      addToCartBtnNode.setAttribute('title', 'Перейти в корзину покупок');
+    })
+  })
+}
 
 searchStringNode.addEventListener('input', async () => {
   popupController.activateById('navigate');

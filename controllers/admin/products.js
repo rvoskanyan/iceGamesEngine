@@ -76,6 +76,7 @@ const addProduct = async (req, res) => {
   try {
     const {
       name,
+      dsId,
       description,
       priceTo,
       priceFrom,
@@ -178,16 +179,20 @@ const addProduct = async (req, res) => {
       }
     }
     
-    if (+dlcFor) {
+    if (dlcFor) {
       product.dlcForId = dlcFor;
     }
     
-    if (+edition) {
+    if (edition) {
       product.editionId = edition;
     }
     
-    if (+series) {
+    if (series) {
       product.seriesId = series;
+    }
+    
+    if (dsId) {
+      product.dsId = dsId;
     }
     
     await product.save();
@@ -476,6 +481,7 @@ const editProduct = async (req, res) => {
   try {
     const {
       name,
+      dsId,
       description,
       priceTo,
       priceFrom,

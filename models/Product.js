@@ -60,6 +60,10 @@ const fields = {
     unique: true,
     index: true,
   },
+  dsId: {
+    type: Number,
+    unique: true,
+  },
   description: {
     type: String,
     required: true,

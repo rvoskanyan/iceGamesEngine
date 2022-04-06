@@ -68,12 +68,14 @@
         <div class="gameGrid">
             {{#each products}}
                 {{> game
+                    id=_id
                     size=''
                     alias=alias
                     img=img
                     name=name
                     priceTo=priceTo
                     priceFrom=priceFrom
+                    inFavorites=inFavorites
                 }}
             {{/each}}
         </div>

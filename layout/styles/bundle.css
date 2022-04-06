@@ -2660,7 +2660,10 @@
       border: 1px solid #fff;
       border-radius: 22px;
       align-self: flex-start;
-      padding: 20px 23px; }
+      padding: 20px 23px;
+      position: sticky;
+      top: 180px;
+      min-width: 320px; }
       .basketPage .info .check .total {
         color: #fff;
         font-size: 24px;
@@ -2701,7 +2704,7 @@
         flex-direction: column;
         width: 100%;
         padding: 10px 0;
-        margin-top: 30px; }
+        margin-top: 20px; }
         .basketPage .info .check .btn .saving {
           display: flex;
           margin-top: 3px;

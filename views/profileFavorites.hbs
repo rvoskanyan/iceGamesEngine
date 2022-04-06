@@ -10,7 +10,24 @@
         <div class="content savedGames">
             <div class="subtitle">Избранное</div>
             <div class="description">Здесь отображаются игры, которые Вам понравились</div>
-            <div style="text-align: center; color: #fff; margin-top: 30px;">Вы не отметили еще ни одной игры</div>
+            {{#if favorites.length}}
+                <div class="list">
+                    {{#each favorites}}
+                        {{> game
+                            id=id
+                            size='small'
+                            alias=alias
+                            img=img
+                            name=name
+                            priceTo=priceTo
+                            priceFrom=priceFrom
+                            inFavorites=true
+                        }}
+                    {{/each}}
+                </div>
+            {{else}}
+                <div style="text-align: center; color: #fff; margin-top: 30px;">Вы не отметили еще ни одной игры</div>
+            {{/if}}
             <!--<div class="list">
                 <a href="#" class="cardGame small" title="Перейти к странице игры">
                     <div class="actions">

@@ -67,7 +67,10 @@ const hbs = exphbs.create({
       }
       
       return opts.inverse(this)
-    }
+    },
+    sub: (lvalue, rvalue) => {
+      return lvalue - rvalue;
+    },
   },
 })
 
@@ -83,10 +86,10 @@ app.use(session({
   saveUninitialized: false,
   store,
 }));
+app.use(cookieParser());
 app.use(varMiddleware);
 app.use(express.json());
 app.use(fileUpload({}));
-app.use(cookieParser());
 
 app.use('/', constClientMiddleware, clientRoutes);
 app.use('/admin', adminRoutes);

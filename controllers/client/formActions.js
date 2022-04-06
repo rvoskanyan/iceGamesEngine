@@ -71,6 +71,7 @@ const auth = async (req, res) => {
           req.session.isAuth = true;
           req.session.role = candidate['role'];
           req.session.userId = candidate['_id'].toString();
+          req.session.dsCartId = candidate['dsCartId'];
           req.session.save(err => {
             if (err) {
               throw err;

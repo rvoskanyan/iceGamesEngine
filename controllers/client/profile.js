@@ -142,12 +142,15 @@ const profileOrdersPage = async (req, res) => {
 
 const profileFavoritesPage = async (req, res) => {
   try {
-    const user = await User.findById(req.session.userId);
+    const user = await User
+      .findById(req.session.userId)
+      .select(['favoritesProducts'])
+      .populate('favoritesProducts', ['name', 'alias', 'img', 'priceTo', 'priceFrom']);
     
     res.render('profileFavorites', {
       title: 'ICE Games -- Товары в избранном',
       isProfileFavorites: true,
-      user,
+      favorites: user.favoritesProducts,
     })
   } catch (e) {
     console.log(e);

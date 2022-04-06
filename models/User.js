@@ -34,6 +34,14 @@ const fields = {
     required: true,
     default: 'client',
   },
+  dsCartId: {
+    type: String,
+    unique: true,
+  },
+  cart: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Product',
+  }],
   viewedArticles: [{
     type: Schema.Types.ObjectId,
     ref: 'Article',
@@ -41,6 +49,10 @@ const fields = {
   likedArticles: [{
     type: Schema.Types.ObjectId,
     ref: 'Article',
+  }],
+  favoritesProducts: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Product',
   }],
   emailChecked: {
     type: Boolean,

@@ -83,30 +83,24 @@ const addArticle = async (req, res) => {
 const editArticlePage = async (req, res) => {
   try {
     const article = await Article.findById(req.params.id);
-    const products = await Product.find().select(['name']);
+    let products = await Product.find().select(['name']);
     
-    const resProducts = products.map(i => {
-      let selected = false;
-      
-      article.products.forEach(j => {
-        if (i.id === j.toString()) {
-          selected = true;
+    if (article.products.length) {
+      products = products.map(item => {
+        if (article.products.includes(item.id)) {
+          item._doc.selected = true;
         }
+    
+        return item;
       })
-      
-      if (selected) {
-        i._doc.selected = true;
-      }
-      
-      return i;
-    })
+    }
     
     res.render('addArticle', {
       layout: 'admin',
       title: 'Редактирование записи',
       isEdit: true,
       article,
-      products: resProducts,
+      products,
     });
   } catch (e) {
     console.log(e);
