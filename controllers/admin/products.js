@@ -179,19 +179,19 @@ const addProduct = async (req, res) => {
       }
     }
     
-    if (dlcFor) {
+    if (+dlcFor) {
       product.dlcForId = dlcFor;
     }
     
-    if (edition) {
+    if (+edition) {
       product.editionId = edition;
     }
     
-    if (series) {
+    if (+series) {
       product.seriesId = series;
     }
     
-    if (dsId) {
+    if (+dsId) {
       product.dsId = dsId;
     }
     
