@@ -186,7 +186,7 @@ if (productCards.length) {
     const favoritesBtnNode = productNode.querySelector('.js-favoritesBtn');
     const productId = productNode.dataset.id;
     const dsId = productNode.dataset.dsId;
-    const dsCartId = document.querySelector('body').dataset.dsCartId;
+    let dsCartId = document.querySelector('body').dataset.dsCartId;
     let iconFavoritesBtnNode;
     
     if (favoritesBtnNode) {
@@ -272,6 +272,7 @@ if (productCards.length) {
   
       if (!dsCartId) {
         document.querySelector('body').dataset.dsCartId = resultAddCartDS.cart_uid;
+        dsCartId = resultAddCartDS.cart_uid;
       }
       
       addToCartBtnNode.innerText = 'В корзине ✔';
