@@ -15,7 +15,7 @@
                             <button class="btn js-deleteFromCart">
                                 <span class="icon icon-close"></span>
                             </button>
-                            <img class="img" src="{{@root.webSiteAddress}}{{img}}" alt="{{name}}">
+                            <img class="img" src="{{@root.websiteAddress}}{{img}}" alt="{{name}}">
                             <div class="main">
                                 <div class="name">
                                     {{name}}
@@ -73,9 +73,10 @@
                 {{#if @root.person.email}}
                     <input type="hidden" name="email" value="{{@root.user.email}}" />
                 {{/if}}
-                <input type="hidden" name="typecurr" value="WMR" />
-                <input type="hidden" name="failpage" value="http://localhost:4000/cart" />
+                <input type="hidden" name="failpage" value="{{@root.websiteAddress}}cart" />
                 <input type="hidden" name="agent" value="951647" />
+                <input type="hidden" name="typecurr" value="WME" />
+                <input type="hidden" name="dsCartId" value="{{@root.person.dsCartId}}" />
             </form>
         {{else}}
             <p style="color: #fff">Вы еще не добавили ни одного товара в корзину покупок</p>
