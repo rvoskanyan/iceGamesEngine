@@ -68,7 +68,7 @@
                     {{/if}}
                 </button>
             </div>
-            <form action="https://oplata.info/asp2/pay.asp" class="js-payForm" method="post" style="display: none">
+            <form action="https://oplata.info/asp2/pay.asp?dscartid={{@root.person.dsCartId}}" class="js-payForm" method="post" style="display: none">
                 <input type="hidden" name="cart_uid" value="{{@root.person.dsCartId}}" />
                 {{#if @root.person.email}}
                     <input type="hidden" name="email" value="{{@root.user.email}}" />
@@ -76,7 +76,7 @@
                 <input type="hidden" name="failpage" value="{{@root.websiteAddress}}cart" />
                 <input type="hidden" name="agent" value="951647" />
                 <input type="hidden" name="typecurr" value="WME" />
-                <input type="hidden" name="dsCartId" value="{{@root.person.dsCartId}}" />
+                <input type="hidden" name="dscartid" value="{{@root.person.dsCartId}}" />
             </form>
         {{else}}
             <p style="color: #fff">Вы еще не добавили ни одного товара в корзину покупок</p>
