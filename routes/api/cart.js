@@ -1,10 +1,10 @@
-const {Router} = require('express');
-const {
+import {Router} from 'express';
+import {
   addProduct
-} = require("../../controllers/api/cart");
+} from "../../controllers/api/cart.js";
 
 const router = Router();
 
 router.post('/addProduct', addProduct);
 
-module.exports = router;
+export default router;

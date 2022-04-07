@@ -1,10 +1,10 @@
-const {Router} = require('express');
-const {
+import {Router} from 'express';
+import {
   assignOrderPay,
-} = require('./../../controllers/api/external');
+} from './../../controllers/api/external.js';
 
 const router = Router();
 
 router.post('/payNotice', assignOrderPay);
 
-module.exports = router;
+export default router;

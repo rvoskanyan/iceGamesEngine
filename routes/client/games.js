@@ -1,12 +1,12 @@
-const {Router} = require('express');
-const {
+import {Router} from 'express';
+import {
   gamesPage,
   gamePage,
-} = require("../../controllers/client/games");
+} from "../../controllers/client/games.js";
 
 const router = Router();
 
 router.get('/', gamesPage);
 router.get('/:alias', gamePage);
 
-module.exports = router;
+export default router;

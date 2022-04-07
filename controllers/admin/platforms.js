@@ -1,7 +1,6 @@
-const Platform = require("./../../models/Platform");
+import Platform from "./../../models/Platform.js";
 
-
-const pagePlatforms = async (req, res) => {
+export const pagePlatforms = async (req, res) => {
   try {
     const platforms = await Platform.find().select('name');
   
@@ -18,14 +17,14 @@ const pagePlatforms = async (req, res) => {
   }
 }
 
-const pageAddPlatform = async (req, res) => {
+export const pageAddPlatform = async (req, res) => {
   res.render('addPlatform', {
     layout: 'admin',
     title: 'Добавление новой платформы',
   });
 }
 
-const addPlatform = async (req, res) => {
+export const addPlatform = async (req, res) => {
   try {
     const {name} = req.body;
     
@@ -36,10 +35,4 @@ const addPlatform = async (req, res) => {
     console.log(e);
     res.redirect('/admin/platforms/add');
   }
-}
-
-module.exports = {
-  pagePlatforms,
-  pageAddPlatform,
-  addPlatform,
 }

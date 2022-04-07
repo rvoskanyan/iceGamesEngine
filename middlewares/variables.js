@@ -1,8 +1,8 @@
-const {websiteAddress} = require('../config');
-const User = require('../models/User');
-const Guest = require('../models/Guest');
+import {websiteAddress} from './../config.js';
+import User from './../models/User.js';
+import Guest from './../models/Guest.js';
 
-module.exports = async (req, res, next) => {
+export default async (req, res, next) => {
   let person = null;
   
   if (req.session.isAuth) {

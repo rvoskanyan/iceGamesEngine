@@ -1,11 +1,4 @@
-/*const {
-  Product,
-  Usp,
-  Category,
-  Genre,
-} = require('../../models/index');*/
-
-const homepage = async (req, res) => {
+export const homepage = async (req, res) => {
   /*const sliderGames = await Product.findAll({
     attributes: ['id', 'name', 'description', 'priceTo', 'priceFrom', 'img', 'coverImg', 'coverVideo'],
     limit: 5,
@@ -46,7 +39,3 @@ const homepage = async (req, res) => {
     catalog: [],
   });
 }
-
-module.exports = {
-  homepage,
-};

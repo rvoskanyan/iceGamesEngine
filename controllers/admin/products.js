@@ -1,24 +1,25 @@
-const uuid = require('uuid');
-const path = require('path');
-const {
+import {v4 as uuidv4} from 'uuid';
+import path from 'path';
+import {__dirname} from "../../rootPathes.js";
+import Product from './../../models/Product.js';
+import Category from './../../models/Category.js';
+import Genre from './../../models/Genre.js';
+import Extend from './../../models/Extend.js';
+import Language from './../../models/Language.js';
+import Region from './../../models/Region.js';
+import Developer from './../../models/Developer.js';
+import Publisher from './../../models/Publisher.js';
+import ActivationService from './../../models/ActivationService.js';
+import Platform from './../../models/Platform.js';
+import Edition from './../../models/Edition.js';
+import Series from './../../models/Series.js';
+import {
   getExtendFile,
   getArray,
   getAlias,
-} = require("../../utils/functions");
-const Product = require('../../models/Product');
-const Category = require('../../models/Category');
-const Genre = require('../../models/Genre');
-const Extend = require('../../models/Extend');
-const Language = require('../../models/Language');
-const Region = require('../../models/Region');
-const Developer = require('../../models/Developer');
-const Publisher = require('../../models/Publisher');
-const ActivationService = require('../../models/ActivationService');
-const Platform = require('../../models/Platform');
-const Edition = require('../../models/Edition');
-const Series = require('../../models/Series');
+} from "../../utils/functions.js";
 
-const pageProducts = async (req, res) => {
+export const pageProducts = async (req, res) => {
   try {
     const products = await Product.find().select(['name']);
   
@@ -35,7 +36,7 @@ const pageProducts = async (req, res) => {
   }
 }
 
-const pageAddProduct = async (req, res) => {
+export const pageAddProduct = async (req, res) => {
   try {
     const categories = await Category.find().select(['name']);
     const genres = await Genre.find().select(['name']);
@@ -72,7 +73,7 @@ const pageAddProduct = async (req, res) => {
   }
 }
 
-const addProduct = async (req, res) => {
+export const addProduct = async (req, res) => {
   try {
     const {
       name,
@@ -108,7 +109,7 @@ const addProduct = async (req, res) => {
     
     const {img, coverImg, coverVideo, gameImages} = req.files;
     const imgExtend = getExtendFile(img.name);
-    const imgName = `${uuid.v4()}.${imgExtend}`;
+    const imgName = `${uuidv4()}.${imgExtend}`;
     const creator = req.session.userId;
     const product = new Product({
       name,
@@ -147,7 +148,7 @@ const addProduct = async (req, res) => {
     
     if (coverImg) {
       const coverImgExtend = getExtendFile(coverImg.name);
-      const coverImgName = `${uuid.v4()}.${coverImgExtend}`;
+      const coverImgName = `${uuidv4()}.${coverImgExtend}`;
       
       await coverImg.mv(path.resolve(__dirname, '../../uploadedFiles', coverImgName));
       product.coverImg = coverImgName;
@@ -155,7 +156,7 @@ const addProduct = async (req, res) => {
   
     if (coverVideo) {
       const coverVideoExtend = getExtendFile(coverVideo.name);
-      const coverVideoName = `${uuid.v4()}.${coverVideoExtend}`;
+      const coverVideoName = `${uuidv4()}.${coverVideoExtend}`;
       
       await coverVideo.mv(path.resolve(__dirname, '../../uploadedFiles', coverVideoName));
       product.coverVideo = coverVideoName;
@@ -165,14 +166,14 @@ const addProduct = async (req, res) => {
       if (Array.isArray(gameImages)) {
         for (const item of gameImages) {
           const extend = getExtendFile(item.name);
-          const gameImgName = `${uuid.v4()}.${extend}`;
+          const gameImgName = `${uuidv4()}.${extend}`;
         
           await item.mv(path.resolve(__dirname, '../../uploadedFiles', gameImgName));
           product.images.push({name: gameImgName});
         }
       } else {
         const extend = getExtendFile(gameImages.name);
-        const gameImgName = `${uuid.v4()}.${extend}`;
+        const gameImgName = `${uuidv4()}.${extend}`;
       
         await gameImages.mv(path.resolve(__dirname, '../../uploadedFiles', gameImgName));
         product.images.push({name: gameImgName});
@@ -203,7 +204,7 @@ const addProduct = async (req, res) => {
   }
 }
 
-const pageEditProduct = async (req, res) => {
+export const pageEditProduct = async (req, res) => {
   const {gameId} = req.params;
   
   try {
@@ -475,7 +476,7 @@ const pageEditProduct = async (req, res) => {
   }
 }
 
-const editProduct = async (req, res) => {
+export const editProduct = async (req, res) => {
   const {gameId} = req.params;
   
   try {
@@ -534,7 +535,7 @@ const editProduct = async (req, res) => {
   
       if (img) {
         const extend = getExtendFile(img.name);
-        const imgName = `${uuid.v4()}.${extend}`;
+        const imgName = `${uuidv4()}.${extend}`;
         
         await img.mv(path.resolve(__dirname, '../../uploadedFiles', imgName));
         values.img = imgName;
@@ -542,7 +543,7 @@ const editProduct = async (req, res) => {
   
       if (coverImg) {
         const extend = getExtendFile(coverImg.name);
-        const coverImgName = `${uuid.v4()}.${extend}`;
+        const coverImgName = `${uuidv4()}.${extend}`;
         
         await coverImg.mv(path.resolve(__dirname, '../../uploadedFiles', coverImgName));
         values.coverImg = coverImgName;
@@ -550,7 +551,7 @@ const editProduct = async (req, res) => {
   
       if (coverVideo) {
         const extend = getExtendFile(coverVideo.name);
-        const coverVideoName = `${uuid.v4()}.${extend}`;
+        const coverVideoName = `${uuidv4()}.${extend}`;
         
         await coverVideo.mv(path.resolve(__dirname, '../../uploadedFiles', coverVideoName));
         values.coverVideo = coverVideoName;
@@ -560,7 +561,7 @@ const editProduct = async (req, res) => {
         if (Array.isArray(gameImages)) {
           for (const item of gameImages) {
             const extend = getExtendFile(item.name);
-            const gameImgName = `${uuid.v4()}.${extend}`;
+            const gameImgName = `${uuidv4()}.${extend}`;
   
             await item.mv(path.resolve(__dirname, '../../uploadedFiles', gameImgName));
             
@@ -570,7 +571,7 @@ const editProduct = async (req, res) => {
           }
         } else {
           const extend = getExtendFile(gameImages.name);
-          const gameImgName = `${uuid.v4()}.${extend}`;
+          const gameImgName = `${uuidv4()}.${extend}`;
   
           await gameImages.mv(path.resolve(__dirname, '../../uploadedFiles', gameImgName));
   
@@ -723,7 +724,7 @@ const editProduct = async (req, res) => {
   }
 }
 
-const pageAddGameElement = async (req, res) => {
+export const pageAddGameElement = async (req, res) => {
   const {gameId} = req.params;
   
   try {
@@ -748,7 +749,7 @@ const pageAddGameElement = async (req, res) => {
   }
 }
 
-const addGameElement = async (req, res) => {
+export const addGameElement = async (req, res) => {
   const {gameId} = req.params;
   
   try {
@@ -773,13 +774,3 @@ const addGameElement = async (req, res) => {
     req.redirect(`/admin/products/${gameId}/addElement`);
   }
 }
-
-module.exports = {
-  pageProducts,
-  pageAddProduct,
-  addProduct,
-  pageEditProduct,
-  editProduct,
-  pageAddGameElement,
-  addGameElement,
-};

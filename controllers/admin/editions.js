@@ -1,6 +1,6 @@
-const Edition = require("./../../models/Edition");
+import Edition from "./../../models/Edition.js";
 
-const pageEditions = async (req, res) => {
+export const pageEditions = async (req, res) => {
   try {
     const editions = await Edition.find().select(['name']);
     
@@ -16,14 +16,14 @@ const pageEditions = async (req, res) => {
   }
 }
 
-const pageAddEdition = async (req, res) => {
+export const pageAddEdition = async (req, res) => {
   res.render('addEdition', {
     layout: 'admin',
     title: 'Добавление новой версии',
   })
 }
 
-const addEdition = async (req, res) => {
+export const addEdition = async (req, res) => {
   try {
     const {name} = req.body;
     
@@ -34,10 +34,4 @@ const addEdition = async (req, res) => {
     console.log(e);
     res.redirect('/admin/editions/add');
   }
-}
-
-module.exports = {
-  pageEditions,
-  pageAddEdition,
-  addEdition,
 }

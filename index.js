@@ -1,24 +1,27 @@
-const express = require('express');
-const fileUpload = require('express-fileupload');
-const exphbs = require('express-handlebars');
-const Handlebars = require('handlebars');
-const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access');
-const session = require('express-session');
-const cookieParser = require('cookie-parser')
-const MongoStore = require('connect-mongodb-session')(session);
-const mongoose = require('mongoose');
-const path = require('path');
-const fs = require('fs');
-const varMiddleware = require('./middlewares/variables');
-const constClientMiddleware =  require('./middlewares/constClientData');
-const clientRoutes = require('./routes/client');
-const adminRoutes = require('./routes/admin');
-const apiRoutes = require('./routes/api');
-require('dotenv').config();
+import express from 'express';
+import fileUpload from 'express-fileupload';
+import exphbs from 'express-handlebars';
+import Handlebars from 'handlebars';
+import {allowInsecurePrototypeAccess} from '@handlebars/allow-prototype-access';
+import session from 'express-session';
+import cookieParser from 'cookie-parser';
+import MongoStore from 'connect-mongodb-session';
+import mongoose from 'mongoose';
+import path from 'path';
+import fs from 'fs';
+import dotenv from 'dotenv';
+import {__dirname} from "./rootPathes.js";
+import varMiddleware from './middlewares/variables.js';
+import constClientMiddleware from './middlewares/constClientData.js';
+import clientRoutes from './routes/client.js';
+import adminRoutes from './routes/admin.js';
+import apiRoutes from'./routes/api.js';
+
+dotenv.config();
 
 const MONGODB_URI = `mongodb://Rafik:Z3Akp3gR7aH1tet2@localhost:27017/igsDev?authSource=admin`;
 const app = express();
-const store = new MongoStore({
+const store = new (MongoStore(session))({
   collection: 'sessions',
   uri: MONGODB_URI,
 });

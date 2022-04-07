@@ -1,7 +1,7 @@
-const Article = require('../../models/Article');
-const User = require('../../models/User');
+import Article from './../../models/Article.js';
+import User from './../../models/User.js';
 
-const blogHomePage = async (req, res) => {
+export const blogHomePage = async (req, res) => {
   try {
     const articles = await Article.find({fixed: false}).limit(3);
     const fixArticle = await Article.findOne({fixed: true});
@@ -19,7 +19,7 @@ const blogHomePage = async (req, res) => {
   }
 }
 
-const blogArticlePage = async (req, res) => {
+export const blogArticlePage = async (req, res) => {
   try {
     const article = await Article.findOne({alias: req.params.alias});
     
@@ -43,9 +43,4 @@ const blogArticlePage = async (req, res) => {
   } catch (e) {
   
   }
-}
-
-module.exports = {
-  blogHomePage,
-  blogArticlePage,
 }

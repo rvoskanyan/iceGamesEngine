@@ -1,9 +1,9 @@
-const {Router} = require('express');
-const {
+import {Router} from 'express';
+import {
   pageUsp,
   pageAddUsp,
   addUsp
-} = require("../../controllers/admin/usp");
+} from "./../../controllers/admin/usp.js";
 
 const router = Router();
 
@@ -11,4 +11,4 @@ router.get('/', pageUsp);
 router.get('/add', pageAddUsp);
 router.post('/add', addUsp);
 
-module.exports = router;
+export default router;

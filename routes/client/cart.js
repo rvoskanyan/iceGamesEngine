@@ -1,10 +1,10 @@
-const {Router} = require('express');
-const {
+import {Router} from 'express';
+import {
   cartPage,
-} = require('./../../controllers/client/cart');
+} from './../../controllers/client/cart.js';
 
 const router = Router();
 
 router.get('/', cartPage);
 
-module.exports = router;
+export default router;

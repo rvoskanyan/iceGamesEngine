@@ -1,22 +1,22 @@
-const {Router} = require('express');
-const indexRoute = require('./admin/index');
-const productsRoute = require('./admin/products');
-const uspRoute = require('./admin/usp');
-const categoriesRoute = require('./admin/categories');
-const genresRoute = require('./admin/genres');
-const namesKitsRoute = require('./admin/namesKits');
-const keysRoute = require('./admin/keys');
-const extendsRoute = require('./admin/extends');
-const languagesRoute = require('./admin/languages');
-const regionsRoute = require('./admin/regions');
-const activationServicesRoute = require('./admin/activationServices');
-const publishersRoute = require('./admin/publishers');
-const developersRoute = require('./admin/developers');
-const platformsRoute = require('./admin/platforms');
-const bunchesRoute = require('./admin/bunches');
-const editionsRoute = require('./admin/editions');
-const seriesRoute = require('./admin/series');
-const articlesRoute = require('./admin/articles');
+import {Router} from 'express';
+import indexRoute from './admin/index.js';
+import productsRoute from './admin/products.js';
+import uspRoute from './admin/usp.js';
+import categoriesRoute from './admin/categories.js';
+import genresRoute from './admin/genres.js';
+import namesKitsRoute from './admin/namesKits.js';
+import keysRoute from './admin/keys.js';
+import extendsRoute from './admin/extends.js';
+import languagesRoute from './admin/languages.js';
+import regionsRoute from './admin/regions.js';
+import activationServicesRoute from './admin/activationServices.js';
+import publishersRoute from './admin/publishers.js';
+import developersRoute from './admin/developers.js';
+import platformsRoute from './admin/platforms.js';
+import bunchesRoute from './admin/bunches.js';
+import editionsRoute from './admin/editions.js';
+import seriesRoute from './admin/series.js';
+import articlesRoute from './admin/articles.js';
 
 const router = Router();
 
@@ -39,4 +39,4 @@ router.use('/editions', editionsRoute);
 router.use('/series', seriesRoute);
 router.use('/articles', articlesRoute);
 
-module.exports = router;
+export default router;

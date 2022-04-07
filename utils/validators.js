@@ -1,7 +1,7 @@
-const {body} = require('express-validator/check');
-const User = require('./../models/User');
+import {body} from 'express-validator';
+import User from './../models/User.js';
 
-exports.registrationValidator = [
+export const registrationValidator = [
   body('login', 'Некорректно указан Ник')
     .isString()
     .isLength({min: 3, max: 15})
@@ -33,12 +33,12 @@ exports.registrationValidator = [
   body('password', 'Некорректно указан пароль').isLength({min: 6, max: 56}).isAlphanumeric(),
 ];
 
-exports.authValidator = [
+export const authValidator = [
   body('email', 'Некорректно указан E-mail').isEmail(),
   body('password', 'Некорректно указан пароль').isLength({min: 6, max: 56}).isAlphanumeric(),
 ];
 
-exports.editProfileValidator = [
+export const editProfileValidator = [
   body('email', 'Некорректно указан E-mail').isEmail().custom(async (value, {req}) => {
     const user = await User.findOne({email: value});
     

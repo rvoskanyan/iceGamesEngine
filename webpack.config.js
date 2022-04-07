@@ -1,9 +1,10 @@
-const path = require('path');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const CssMinimizerWebpackPlugin = require('css-minimizer-webpack-plugin')
-const TerserWebpackPlugin = require('terser-webpack-plugin')
+import path from 'path';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import CssMinimizerWebpackPlugin from 'css-minimizer-webpack-plugin';
+import TerserWebpackPlugin from 'terser-webpack-plugin';
+import {__dirname} from "./rootPathes.js";
 
-module.exports = {
+export default {
   context: path.resolve(__dirname, 'layout'),
   mode: 'development',
   entry: './js/index.js',

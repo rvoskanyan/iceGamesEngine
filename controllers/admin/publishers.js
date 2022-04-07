@@ -1,6 +1,6 @@
-const Publisher = require("./../../models/Publisher");
+import Publisher from "./../../models/Publisher.js";
 
-const pagePublishers = async (req, res) => {
+export const pagePublishers = async (req, res) => {
   try {
     const publishers = await Publisher.find().select(['name']);
     
@@ -17,11 +17,11 @@ const pagePublishers = async (req, res) => {
   }
 }
 
-const pageAddPublishers = async (req, res) => {
+export const pageAddPublishers = async (req, res) => {
   res.render('addPublisher', {layout: 'admin'});
 }
 
-const addPublishers = async (req, res) => {
+export const addPublishers = async (req, res) => {
   try {
     const {name} = req.body;
     
@@ -32,10 +32,4 @@ const addPublishers = async (req, res) => {
     console.log(e);
     res.redirect('/admin/publishers/add');
   }
-}
-
-module.exports = {
-  pagePublishers,
-  pageAddPublishers,
-  addPublishers,
 }

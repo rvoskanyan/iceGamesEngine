@@ -1,9 +1,9 @@
-const Category = require('../models/Category');
-const Genre = require('../models/Genre');
-const Publisher = require('../models/Publisher');
-const Developer = require('../models/Developer');
+import Category from '../models/Category.js';
+import Genre from '../models/Genre.js';
+import Publisher from '../models/Publisher.js';
+import Developer from '../models/Developer.js';
 
-module.exports = async (req, res, next) => {
+export default async (req, res, next) => {
   res.locals = {
     ...res.locals,
     allCategories: await Category.find().select(['name']),

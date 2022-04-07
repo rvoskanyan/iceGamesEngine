@@ -1,5 +1,5 @@
-const {Router} = require('express');
-const {
+import {Router} from 'express';
+import {
   profilePage,
   profileEditPage,
   profileEdit,
@@ -8,8 +8,8 @@ const {
   profileOrdersPage,
   profileFavoritesPage,
   profileViewPage,
-} = require("../../controllers/client/profile");
-const {editProfileValidator} = require("../../utils/validators");
+} from "../../controllers/client/profile.js";
+import {editProfileValidator} from "../../utils/validators.js";
 
 const router = Router();
 
@@ -28,4 +28,4 @@ router.get('/favorites', profileFavoritesPage);
 
 router.get('/view/:login', profileViewPage);
 
-module.exports = router;
+export default router;

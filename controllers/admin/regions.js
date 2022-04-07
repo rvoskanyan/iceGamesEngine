@@ -1,6 +1,6 @@
-const Region = require('./../../models/Region');
+import Region from './../../models/Region.js';
 
-const pageRegions = async (req, res) => {
+export const pageRegions = async (req, res) => {
   try {
     const regions = await Region.find().select(['name']);
     
@@ -17,11 +17,11 @@ const pageRegions = async (req, res) => {
   }
 }
 
-const pageAddRegion = async (req, res) => {
+export const pageAddRegion = async (req, res) => {
   res.render('addRegion', {layout: 'admin'});
 }
 
-const addRegion = async (req, res) => {
+export const addRegion = async (req, res) => {
   try {
     const {name} = req.body;
     
@@ -32,10 +32,4 @@ const addRegion = async (req, res) => {
     console.log(e);
     res.redirect('/admin/regions/add');
   }
-}
-
-module.exports = {
-  pageRegions,
-  pageAddRegion,
-  addRegion,
 }

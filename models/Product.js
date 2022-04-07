@@ -1,5 +1,6 @@
-const {Schema, model} = require('mongoose');
+import Mongoose from "mongoose";
 
+const {Schema, model} = Mongoose;
 const keySchema = new Schema({
   value: {
     type: String,
@@ -217,4 +218,4 @@ const options = {
 
 const productSchema = new Schema(fields, options);
 
-module.exports = model('Product', productSchema);
+export default model('Product', productSchema);

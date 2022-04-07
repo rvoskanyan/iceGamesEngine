@@ -1,5 +1,5 @@
-const {Router} = require('express');
-const {
+import {Router} from 'express';
+import {
   pageSeries,
   pageAddSeries,
   addSeries,
@@ -7,7 +7,7 @@ const {
   editSeries,
   pageAddGameSeries,
   addGameSeries,
-} = require("../../controllers/admin/series");
+} from "./../../controllers/admin/series.js";
 
 const router = Router();
 
@@ -22,4 +22,4 @@ router.post('/edit/:seriesId', editSeries);
 router.get('/:seriesId/addGame', pageAddGameSeries);
 router.post('/:seriesId/addGame', addGameSeries);
 
-module.exports = router;
+export default router;

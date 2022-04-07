@@ -1,17 +1,14 @@
-import Slider from "./Slider";
-import Tabs from "./Tabs";
-import Modal from "./Modal";
-import PopupController from "./PopupController";
-import AsyncForm from "./AsyncForm";
-import Prompt from "./Prompt";
-import {urlEncodeFormData} from "./utils";
-
-import Config from "./config";
+import Slider from "./Slider.js";
+import Tabs from "./Tabs.js";
+import Modal from "./Modal.js";
+import PopupController from "./PopupController.js";
+import AsyncForm from "./AsyncForm.js";
+import Prompt from "./Prompt.js";
+import {urlEncodeFormData} from "./utils.js";
+import Postman from "./Postman.js";
+import {websiteAddress} from "../../config.js";
 
 import './../styles/index.sass';
-import Postman from "./Postman";
-import {websiteAddress} from "../../config";
-import {query} from "express-validator";
 
 const postman = new Postman();
 

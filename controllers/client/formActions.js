@@ -1,9 +1,9 @@
-const {validationResult} = require('express-validator/check');
-const bcrypt = require('bcryptjs');
+import {validationResult} from 'express-validator';
+import bcrypt from 'bcryptjs';
 
-const User = require('./../../models/User');
+import User from './../../models/User.js';
 
-const registration = async (req, res) => {
+export const registration = async (req, res) => {
   try {
     const {login, email, password} = req.body;
     const {inviterId} = req.cookies;
@@ -50,7 +50,7 @@ const registration = async (req, res) => {
   }
 }
 
-const auth = async (req, res) => {
+export const auth = async (req, res) => {
   try {
     const {email, password} = req.body;
     
@@ -99,9 +99,4 @@ const auth = async (req, res) => {
       message: 'Неизвестная ошибка, попробуйте позже или обратитесь в поддержку.',
     });
   }
-}
-
-module.exports = {
-  registration,
-  auth,
 }

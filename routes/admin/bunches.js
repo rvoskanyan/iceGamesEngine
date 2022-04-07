@@ -1,5 +1,5 @@
-const {Router} = require('express');
-const {
+import {Router} from 'express';
+import {
   addBunch,
   pageAddBunch,
   pageBunches,
@@ -9,7 +9,7 @@ const {
   addProductBunch,
   pageEditProductBunch,
   editProductBunch,
-} = require('../../controllers/admin/bunches');
+} from '../../controllers/admin/bunches.js';
 
 const router = Router();
 
@@ -27,4 +27,4 @@ router.post('/:bunchId/addProduct', addProductBunch);
 router.get('/:bunchId/:productId', pageEditProductBunch);
 router.post('/:bunchId/:productId', editProductBunch);
 
-module.exports = router;
+export default router;

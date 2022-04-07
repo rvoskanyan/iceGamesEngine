@@ -1,6 +1,6 @@
-const Series = require('./../../models/Series');
+import Series from './../../models/Series.js';
 
-const pageSeries = async (req, res) => {
+export const pageSeries = async (req, res) => {
   try {
     const series = await Series.find().select(['name']);
   
@@ -17,14 +17,14 @@ const pageSeries = async (req, res) => {
   }
 }
 
-const pageAddSeries = async (req, res) => {
+export const pageAddSeries = async (req, res) => {
   res.render('addSeries', {
     layout: 'admin',
     title: 'Добавление серии игр',
   })
 }
 
-const addSeries = async (req, res) => {
+export const addSeries = async (req, res) => {
   try {
     const {name} = req.body;
     
@@ -37,7 +37,7 @@ const addSeries = async (req, res) => {
   }
 }
 
-const pageEditSeries = async (req, res) => {
+export const pageEditSeries = async (req, res) => {
   try {
     const {seriesId} = req.params;
     
@@ -57,7 +57,7 @@ const pageEditSeries = async (req, res) => {
   }
 }
 
-const editSeries = async (req, res) => {
+export const editSeries = async (req, res) => {
   const {seriesId} = req.params;
   
   try {
@@ -76,7 +76,7 @@ const editSeries = async (req, res) => {
   }
 }
 
-const pageAddGameSeries = async (req, res) => {
+export const pageAddGameSeries = async (req, res) => {
   const {seriesId} = req.params;
   
   try {
@@ -99,7 +99,7 @@ const pageAddGameSeries = async (req, res) => {
   }
 }
 
-const addGameSeries = async (req, res) => {
+export const addGameSeries = async (req, res) => {
   const {seriesId} = req.params;
   
   try {
@@ -116,14 +116,4 @@ const addGameSeries = async (req, res) => {
     console.log(e);
     res.redirect(`/admin/series/${seriesId}/addGame`);
   }
-}
-
-module.exports = {
-  pageSeries,
-  pageAddSeries,
-  addSeries,
-  pageEditSeries,
-  editSeries,
-  pageAddGameSeries,
-  addGameSeries,
 }

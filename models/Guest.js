@@ -1,5 +1,6 @@
-const {Schema, model} = require('mongoose');
+import Mongoose from 'mongoose';
 
+const {Schema, model} = Mongoose;
 const fields = {
   cart: [{
     type: Schema.Types.ObjectId,
@@ -17,4 +18,4 @@ const options = {
 
 const GuestSchema = new Schema(fields, options);
 
-module.exports = model('Guest', GuestSchema);
+export default model('Guest', GuestSchema);

@@ -1,6 +1,6 @@
-const Bunch = require('./../../models/Bunch');
+import Bunch from './../../models/Bunch.js';
 
-const pageBunches = async (req, res) => {
+export const pageBunches = async (req, res) => {
   try {
     const bunches = await Bunch.find().select(['name']);
     
@@ -16,14 +16,14 @@ const pageBunches = async (req, res) => {
   }
 }
 
-const pageAddBunch = async (req, res) => {
+export const pageAddBunch = async (req, res) => {
   res.render('addBunch', {
     layout: 'admin',
     title: 'Добавление новой связки',
   })
 }
 
-const addBunch = async (req, res) => {
+export const addBunch = async (req, res) => {
   try {
     const {name} = req.body;
     
@@ -36,7 +36,7 @@ const addBunch = async (req, res) => {
   }
 }
 
-const pageEditBunch = async (req, res) => {
+export const pageEditBunch = async (req, res) => {
   try {
     const {id} = req.params;
     const bunch = await Bunch.findByPk(id, {attributes: ['id', 'name']});
@@ -55,7 +55,7 @@ const pageEditBunch = async (req, res) => {
   }
 }
 
-const editBunch = async (req, res) => {
+export const editBunch = async (req, res) => {
   const {id} = req.params;
   
   try {
@@ -74,7 +74,7 @@ const editBunch = async (req, res) => {
   }
 }
 
-const pageAddProductBunch = async (req, res) => {
+export const pageAddProductBunch = async (req, res) => {
   const {bunchId} = req.params;
   
   try {
@@ -96,7 +96,7 @@ const pageAddProductBunch = async (req, res) => {
   }
 }
 
-const addProductBunch = async (req, res) => {
+export const addProductBunch = async (req, res) => {
   const {bunchId} = req.params;
   
   try {
@@ -136,7 +136,7 @@ const addProductBunch = async (req, res) => {
   }
 }
 
-const pageEditProductBunch = async (req, res) => {
+export const pageEditProductBunch = async (req, res) => {
   const {bunchId, productId} = req.params;
   
   try {
@@ -155,7 +155,7 @@ const pageEditProductBunch = async (req, res) => {
   }
 }
 
-const editProductBunch = async (req, res) => {
+export const editProductBunch = async (req, res) => {
   const {bunchId, productId} = req.params;
   
   try {
@@ -193,16 +193,4 @@ const editProductBunch = async (req, res) => {
     console.log(e);
     res.redirect(`/admin/bunches/${bunchId}/${productId}`);
   }
-}
-
-module.exports = {
-  pageBunches,
-  pageAddBunch,
-  addBunch,
-  pageEditBunch,
-  editBunch,
-  pageAddProductBunch,
-  addProductBunch,
-  pageEditProductBunch,
-  editProductBunch,
 }

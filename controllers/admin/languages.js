@@ -1,6 +1,6 @@
-const Language = require('./../../models/Language');
+import Language from './../../models/Language.js';
 
-const pageLanguages = async (req, res) => {
+export const pageLanguages = async (req, res) => {
   try {
     const languages = await Language.find().select(['name']);
     
@@ -17,11 +17,11 @@ const pageLanguages = async (req, res) => {
   }
 }
 
-const pageAddLanguage = async (req, res) => {
+export const pageAddLanguage = async (req, res) => {
   res.render('addLanguage', {layout: 'admin'});
 }
 
-const addLanguage = async (req, res) => {
+export const addLanguage = async (req, res) => {
   try {
     const {name} = req.body;
   
@@ -32,10 +32,4 @@ const addLanguage = async (req, res) => {
     console.log(e);
     res.redirect('/admin/languages/add');
   }
-}
-
-module.exports = {
-  pageLanguages,
-  pageAddLanguage,
-  addLanguage,
 }

@@ -1,9 +1,9 @@
-const {Router} = require('express');
-const {
+import {Router} from 'express';
+import {
   pageLanguages,
   pageAddLanguage,
   addLanguage,
-} = require("../../controllers/admin/languages");
+} from "../../controllers/admin/languages.js";
 
 const router = Router();
 
@@ -11,4 +11,4 @@ router.get('/', pageLanguages);
 router.get('/add', pageAddLanguage);
 router.post('/add', addLanguage);
 
-module.exports = router;
+export default router;

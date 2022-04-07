@@ -1,5 +1,6 @@
-const {Schema, model} = require('mongoose');
+import Mongoose from "mongoose";
 
+const {Schema, model} = Mongoose;
 const fields = {
   name: {
     type: String,
@@ -14,4 +15,4 @@ const options = {
 
 const bunchSchema = new Schema(fields, options);
 
-module.exports = model('Bunch', bunchSchema);
+export default model('Bunch', bunchSchema);

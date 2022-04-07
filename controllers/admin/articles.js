@@ -1,14 +1,15 @@
-const Article = require('../../models/Article');
-const Product = require('../../models/Product');
-const Region = require('../../models/Region');
-const {
+import {v4 as uuidv4} from "uuid";
+import path from "path";
+import {__dirname} from "./../../rootPathes.js";
+import Article from '../../models/Article.js';
+import Product from '../../models/Product.js';
+import {
   getArray,
-  getAlias, getExtendFile,
-} = require("../../utils/functions");
-const uuid = require("uuid");
-const path = require("path");
+  getAlias,
+  getExtendFile,
+} from "./../../utils/functions.js";
 
-const articlesPage = async (req, res) => {
+export const articlesPage = async (req, res) => {
   try {
     const articles = await Article.find().select(['name']);
   
@@ -25,7 +26,7 @@ const articlesPage = async (req, res) => {
   }
 }
 
-const addArticlePage = async (req, res) => {
+export const addArticlePage = async (req, res) => {
   try {
     const products = await Product.find().select(['name']);
     
@@ -40,15 +41,15 @@ const addArticlePage = async (req, res) => {
   }
 }
 
-const addArticle = async (req, res) => {
+export const addArticle = async (req, res) => {
   try {
     const {name, introText, rightImg, blockColor, type, products, fixed} = req.body;
     const {img, coverImg} = req.files;
     const mustFix = fixed === "on";
     const imgExtend = getExtendFile(img.name);
     const coverImgExtend = getExtendFile(coverImg.name);
-    const imgName = `${uuid.v4()}.${imgExtend}`;
-    const coverImgName = `${uuid.v4()}.${coverImgExtend}`;
+    const imgName = `${uuidv4()}.${imgExtend}`;
+    const coverImgName = `${uuidv4()}.${coverImgExtend}`;
     const article = new Article({
       name,
       type,
@@ -80,7 +81,7 @@ const addArticle = async (req, res) => {
   }
 }
 
-const editArticlePage = async (req, res) => {
+export const editArticlePage = async (req, res) => {
   try {
     const article = await Article.findById(req.params.id);
     let products = await Product.find().select(['name']);
@@ -108,7 +109,7 @@ const editArticlePage = async (req, res) => {
   }
 }
 
-const editArticle = async (req, res) => {
+export const editArticle = async (req, res) => {
   const id = req.params.id;
   
   try {
@@ -125,7 +126,7 @@ const editArticle = async (req, res) => {
     
     if (img) {
       const imgExtend = getExtendFile(img.name);
-      const imgName = `${uuid.v4()}.${imgExtend}`;
+      const imgName = `${uuidv4()}.${imgExtend}`;
       
       await img.mv(path.resolve(__dirname, '../../uploadedFiles', imgName));
       article.img = imgName;
@@ -133,7 +134,7 @@ const editArticle = async (req, res) => {
     
     if (coverImg) {
       const coverImgExtend = getExtendFile(coverImg.name);
-      const coverImgName = `${uuid.v4()}.${coverImgExtend}`;
+      const coverImgName = `${uuidv4()}.${coverImgExtend}`;
   
       await coverImg.mv(path.resolve(__dirname, '../../uploadedFiles', coverImgName));
       article.coverImg = coverImgName;
@@ -160,7 +161,7 @@ const editArticle = async (req, res) => {
   }
 }
 
-const addBlockPage = (req, res) => {
+export const addBlockPage = (req, res) => {
   res.render('addArticleBlock', {
     layout: 'admin',
     title: 'Добавление контент-блока в запись',
@@ -168,7 +169,7 @@ const addBlockPage = (req, res) => {
   });
 }
 
-const addBlock = async (req, res) => {
+export const addBlock = async (req, res) => {
   const id = req.params.id;
   
   try {
@@ -179,7 +180,7 @@ const addBlock = async (req, res) => {
     
     if (img) {
       const imgExtend = getExtendFile(img.name);
-      const imgName = `${uuid.v4()}.${imgExtend}`;
+      const imgName = `${uuidv4()}.${imgExtend}`;
   
       await img.mv(path.resolve(__dirname, '../../uploadedFiles', imgName));
       
@@ -196,14 +197,4 @@ const addBlock = async (req, res) => {
     console.log(e);
     res.redirect(`/admin/articles/${id}/addBlock`);
   }
-}
-
-module.exports = {
-  articlesPage,
-  addArticlePage,
-  addArticle,
-  editArticlePage,
-  editArticle,
-  addBlockPage,
-  addBlock,
 }

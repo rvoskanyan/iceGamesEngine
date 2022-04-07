@@ -1,6 +1,6 @@
-const Order = require('./../../models/Order');
+import Order from './../../models/Order.js';
 
-const createOrder = async (req, res) => {
+export const createOrder = async (req, res) => {
   try {
     const person = res.locals.person;
     
@@ -40,8 +40,4 @@ const createOrder = async (req, res) => {
       error: true,
     });
   }
-}
-
-module.exports = {
-  createOrder,
 }

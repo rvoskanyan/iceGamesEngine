@@ -1,9 +1,9 @@
-const {Router} = require("express");
-const {
+import {Router} from "express";
+import {
   pageExtends,
   pageAddExtend,
   addExtend,
-} = require("../../controllers/admin/extends");
+} from "../../controllers/admin/extends.js";
 
 const router = Router();
 
@@ -11,4 +11,4 @@ router.get('/', pageExtends);
 router.get('/add', pageAddExtend);
 router.post('/add', addExtend);
 
-module.exports = router;
+export default router;

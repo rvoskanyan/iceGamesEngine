@@ -1,6 +1,6 @@
-const Developer = require("./../../models/Developer");
+import Developer from "./../../models/Developer.js";
 
-const pageDevelopers = async (req, res) => {
+export const pageDevelopers = async (req, res) => {
   try {
     const developers = await Developer.find().select('name');
     
@@ -17,11 +17,11 @@ const pageDevelopers = async (req, res) => {
   }
 }
 
-const pageAddDeveloper = async (req, res) => {
+export const pageAddDeveloper = async (req, res) => {
   res.render('addDeveloper', {layout: 'admin'});
 }
 
-const addDeveloper = async (req, res) => {
+export const addDeveloper = async (req, res) => {
   try {
     const {name} = req.body;
     
@@ -32,10 +32,4 @@ const addDeveloper = async (req, res) => {
     console.log(e);
     res.redirect('/admin/developers/add');
   }
-}
-
-module.exports = {
-  pageDevelopers,
-  pageAddDeveloper,
-  addDeveloper,
 }

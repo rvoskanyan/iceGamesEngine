@@ -1,7 +1,6 @@
-const Product = require("../../models/Product");
-const User = require("../../models/User");
-const Guest = require("../../models/Guest");
-const {log} = require("webpack-cli/lib/utils/logger");
+import Product from "../../models/Product.js";
+import User from "../../models/User.js";
+import Guest from "../../models/Guest.js";
 /*
   Articles.find({_id: {$ne: article._id}})
  */
@@ -21,7 +20,7 @@ const {log} = require("webpack-cli/lib/utils/logger");
   as: 'users',
 });*/
 
-const getProducts = async (req, res) => {
+export const getProducts = async (req, res) => {
   try {
     const {searchString} = req.query;
     const name = new RegExp(searchString, 'i');
@@ -41,7 +40,7 @@ const getProducts = async (req, res) => {
   }
 }
 
-const addToFavorites = async (req, res) => {
+export const addToFavorites = async (req, res) => {
   try {
     const productId = req.params.productId;
     const userId = req.session.userId;
@@ -75,7 +74,7 @@ const addToFavorites = async (req, res) => {
   }
 }
 
-const deleteFromFavorites = async (req, res) => {
+export const deleteFromFavorites = async (req, res) => {
   try {
     const productId = req.params.productId;
     const userId = req.session.userId;
@@ -104,7 +103,7 @@ const deleteFromFavorites = async (req, res) => {
   }
 }
 
-const addToCart = async (req, res) => {
+export const addToCart = async (req, res) => {
   try {
     const productId = req.params.productId;
     const dsCartId = req.body.dsCartId;
@@ -153,7 +152,7 @@ const addToCart = async (req, res) => {
   }
 }
 
-const deleteFromCart = async (req, res) => {
+export const deleteFromCart = async (req, res) => {
   try {
     const productId = req.params.productId;
     const person = res.locals.person;
@@ -179,12 +178,4 @@ const deleteFromCart = async (req, res) => {
       error: true,
     });
   }
-}
-
-module.exports = {
-  getProducts,
-  addToFavorites,
-  deleteFromFavorites,
-  addToCart,
-  deleteFromCart,
 }

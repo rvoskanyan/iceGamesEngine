@@ -1,9 +1,9 @@
-const {Router} = require('express');
-const {
+import {Router} from 'express';
+import {
   pageRegions,
   pageAddRegion,
   addRegion,
-} = require("../../controllers/admin/regions");
+} from "../../controllers/admin/regions.js";
 
 const router = Router();
 
@@ -11,4 +11,4 @@ router.get('/', pageRegions);
 router.get('/add', pageAddRegion);
 router.post('/add', addRegion);
 
-module.exports = router;
+export default router;

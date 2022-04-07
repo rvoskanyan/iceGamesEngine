@@ -1,5 +1,5 @@
-const {Router} = require('express');
-const {
+import {Router} from 'express';
+import {
   pageProducts,
   pageAddProduct,
   addProduct,
@@ -7,7 +7,8 @@ const {
   editProduct,
   pageAddGameElement,
   addGameElement,
-} = require('../../controllers/admin/products');
+} from '../../controllers/admin/products.js';
+
 const router = Router();
 
 router.get('/', pageProducts);
@@ -19,4 +20,4 @@ router.post('/edit/:gameId', editProduct);
 router.get('/:gameId/addElement', pageAddGameElement);
 router.post('/:gameId/addElement', addGameElement);
 
-module.exports = router;
+export default router;

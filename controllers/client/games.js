@@ -1,11 +1,11 @@
-const User = require('../../models/User');
-const Product = require('../../models/Product');
-const Category = require('../../models/Category');
-const Genre = require('../../models/Genre');
-const ActivationService = require('../../models/ActivationService');
-const {getDiscount} = require("../../utils/functions");
+import User from '../../models/User.js';
+import Product from '../../models/Product.js';
+import Category from '../../models/Category.js';
+import Genre from '../../models/Genre.js';
+import ActivationService from '../../models/ActivationService.js';
+import {getDiscount} from "../../utils/functions.js";
 
-const gamesPage = async (req, res) => {
+export const gamesPage = async (req, res) => {
   try {
     let products = await Product.find().select(['name', 'dsId', 'alias', 'img', 'priceTo', 'priceFrom']).lean().limit(20);
     const categories = await Category.find().select(['name']);
@@ -45,7 +45,7 @@ const gamesPage = async (req, res) => {
   }
 }
 
-const gamePage = async (req, res) => {
+export const gamePage = async (req, res) => {
   try {
     const {alias} = req.params;
     const product = await Product
@@ -192,9 +192,4 @@ const gamePage = async (req, res) => {
     console.log(e);
     res.redirect('/games');
   }
-}
-
-module.exports = {
-  gamesPage,
-  gamePage,
 }

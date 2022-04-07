@@ -1,16 +1,16 @@
-const {Router} = require('express');
-const {
+import {Router} from 'express';
+import {
   registrationValidator,
   authValidator,
-} = require('./../../utils/validators');
-const {
+} from './../../utils/validators.js';
+import {
   registration,
   auth,
-} = require('./../../controllers/client/formActions');
+} from './../../controllers/client/formActions.js';
 
 const router = Router();
 
 router.post('/reg', registrationValidator, registration);
 router.post('/auth', authValidator, auth);
 
-module.exports = router;
+export default router;

@@ -1,12 +1,8 @@
-const user = require('./../../models/User');
-
-const addProduct = async (req, res) => {
+export const addProduct = async (req, res) => {
   try {
     if (!req.session.isAuth) {
       throw new Error();
     }
-    
-    
     
     res.json({
       success: true,
@@ -17,8 +13,4 @@ const addProduct = async (req, res) => {
       error: true,
     })
   }
-}
-
-module.exports = {
-  addProduct,
 }

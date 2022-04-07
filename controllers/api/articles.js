@@ -1,7 +1,7 @@
-const User = require('../../models/User');
-const Article = require('../../models/Article');
+import User from '../../models/User.js';
+import Article from '../../models/Article.js';
 
-const likeArticle = async (req, res) => {
+export const likeArticle = async (req, res) => {
   try {
     const {articleId} = req.body;
     const user = await User.findById(req.session.userId).select(['likedArticles']);
@@ -30,8 +30,4 @@ const likeArticle = async (req, res) => {
       error: true,
     });
   }
-}
-
-module.exports = {
-  likeArticle,
 }

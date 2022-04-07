@@ -1,4 +1,4 @@
-import Postman from './Postman';
+import Postman from './Postman.js';
 
 export default class AsyncForm {
   constructor(options) {

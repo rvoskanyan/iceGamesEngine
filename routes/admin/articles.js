@@ -1,5 +1,5 @@
-const {Router} = require('express');
-const {
+import {Router} from 'express';
+import {
   articlesPage,
   addArticlePage,
   addArticle,
@@ -7,7 +7,7 @@ const {
   editArticle,
   addBlockPage,
   addBlock,
-} = require('../../controllers/admin/articles');
+} from '../../controllers/admin/articles.js';
 
 const router = Router();
 
@@ -21,4 +21,4 @@ router.post('/:id', editArticle);
 router.get('/:id/addBlock', addBlockPage);
 router.post('/:id/addBlock', addBlock);
 
-module.exports = router;
+export default router;

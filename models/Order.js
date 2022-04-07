@@ -1,5 +1,6 @@
-const {Schema, model} = require('mongoose');
+import Mongoose from "mongoose";
 
+const {Schema, model} = Mongoose;
 const fields = {
   dsCartId: {
     type: String,
@@ -30,4 +31,4 @@ const options = {
 
 const OrderSchema = new Schema(fields, options);
 
-module.exports = model('Order', OrderSchema);
+export default model('Order', OrderSchema);

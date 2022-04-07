@@ -1,9 +1,4 @@
-/*const {
-  Product,
-  Key,
-} = require('./../../models/index');*/
-
-const pageKeys = async (req, res) => {
+export const pageKeys = async (req, res) => {
   try {
     const keys = await Key.findAll({attributes: ['id', 'key']});
     
@@ -20,7 +15,7 @@ const pageKeys = async (req, res) => {
   }
 }
 
-const pageAddKey = async (req, res) => {
+export const pageAddKey = async (req, res) => {
   try {
     const games = await Product.findAll({attributes: ['id', 'name']});
   
@@ -34,7 +29,7 @@ const pageAddKey = async (req, res) => {
   }
 }
 
-const addKey = async (req, res) => {
+export const addKey = async (req, res) => {
   try {
     const {key, gameId} = req.body;
     
@@ -45,10 +40,4 @@ const addKey = async (req, res) => {
     console.log(e);
     res.redirect('/admin/keys/add');
   }
-}
-
-module.exports = {
-  pageKeys,
-  pageAddKey,
-  addKey,
 }

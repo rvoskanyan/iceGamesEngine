@@ -1,10 +1,10 @@
-const {Router} = require('express');
-const {
+import {Router} from 'express';
+import {
   logout,
-} = require('./../../controllers/client/system');
+} from './../../controllers/client/system.js';
 
 const router = Router();
 
 router.get('/logout', logout);
 
-module.exports = router;
+export default router;

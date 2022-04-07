@@ -1,9 +1,9 @@
-const {Router} = require('express');
-const {
+import {Router} from 'express';
+import {
   pageGenres,
   pageAddGenres,
   addGenres
-} = require("../../controllers/admin/genres");
+} from "../../controllers/admin/genres.js";
 
 const router = Router();
 
@@ -11,4 +11,4 @@ router.get('/', pageGenres);
 router.get('/add', pageAddGenres);
 router.post('/add', addGenres);
 
-module.exports = router;
+export default router;

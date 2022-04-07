@@ -1,5 +1,6 @@
-const {Schema, model} = require('mongoose');
+import Mongoose from "mongoose";
 
+const {Schema, model} = Mongoose;
 const fields = {
   name: {
     type: String,
@@ -19,4 +20,4 @@ const options = {
 
 const extendSchema = new Schema(fields, options);
 
-module.exports = model('Extend', extendSchema);
+export default model('Extend', extendSchema);

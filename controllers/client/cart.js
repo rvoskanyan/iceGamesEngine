@@ -1,4 +1,4 @@
-const cartPage = async (req, res) => {
+export const cartPage = async (req, res) => {
   try {
     const person = res.locals.person;
     let priceToTotal = 0;
@@ -25,8 +25,4 @@ const cartPage = async (req, res) => {
     console.log(e);
     res.redirect('/');
   }
-}
-
-module.exports = {
-  cartPage,
 }

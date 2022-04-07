@@ -1,11 +1,11 @@
-const {Router} = require('express');
-const homeRoute =  require('./client/home');
-const gamesRoute =  require('./client/games');
-const formActionsRoute =  require('./client/formsActions');
-const systemRoute =  require('./client/system');
-const profileRoute =  require('./client/profile');
-const blogRoute =  require('./client/blog');
-const cartRoute =  require('./client/cart');
+import {Router} from 'express';
+import homeRoute from './client/home.js';
+import gamesRoute from './client/games.js';
+import formActionsRoute from './client/formsActions.js';
+import systemRoute from './client/system.js';
+import profileRoute from './client/profile.js';
+import blogRoute from './client/blog.js';
+import cartRoute from './client/cart.js';
 
 const router = Router();
 
@@ -17,4 +17,4 @@ router.use('/profile', profileRoute);
 router.use('/blog', blogRoute);
 router.use('/cart', cartRoute);
 
-module.exports = router;
+export default router;

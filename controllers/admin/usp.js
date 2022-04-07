@@ -1,6 +1,6 @@
-const Usp = require('./../../models/Usp');
+import Usp from './../../models/Usp.js';
 
-const pageUsp = async (req, res) => {
+export const pageUsp = async (req, res) => {
   try {
     const usps = await Usp.find().select('text');
     
@@ -17,11 +17,11 @@ const pageUsp = async (req, res) => {
   }
 }
 
-const pageAddUsp = async (req, res) => {
+export const pageAddUsp = async (req, res) => {
   res.render('addUsp', {layout: 'admin'});
 }
 
-const addUsp = async (req, res) => {
+export const addUsp = async (req, res) => {
   try {
     const {text} = req.body;
   
@@ -32,10 +32,4 @@ const addUsp = async (req, res) => {
     console.log(e);
     res.redirect('/admin/usp/add');
   }
-}
-
-module.exports = {
-  pageUsp,
-  pageAddUsp,
-  addUsp,
 }

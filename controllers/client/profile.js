@@ -1,8 +1,8 @@
-const {validationResult} = require('express-validator/check');
-const bcrypt = require('bcryptjs');
-const User = require('../../models/User');
+import {validationResult} from 'express-validator';
+import bcrypt from 'bcryptjs';
+import User from '../../models/User.js';
 
-const profilePage = async (req, res) => {
+export const profilePage = async (req, res) => {
   try {
     const {userId} = req.session;
     const user = await User.findById(userId);
@@ -20,7 +20,7 @@ const profilePage = async (req, res) => {
   }
 }
 
-const profileEditPage = async (req, res) => {
+export const profileEditPage = async (req, res) => {
   try {
     const {userId} = req.session;
     const user = await User.findById(userId);
@@ -36,7 +36,7 @@ const profileEditPage = async (req, res) => {
   }
 }
 
-const profileEdit = async (req, res) => {
+export const profileEdit = async (req, res) => {
   try {
     const {login, email, password, newPassword} = req.body;
     const errors = validationResult(req);
@@ -88,7 +88,7 @@ const profileEdit = async (req, res) => {
   }
 }
 
-const profileAchievementsPage = async (req, res) => {
+export const profileAchievementsPage = async (req, res) => {
   try {
     const user = await User.findById(req.session.userId);
     
@@ -103,7 +103,7 @@ const profileAchievementsPage = async (req, res) => {
   }
 }
 
-const profileInvitePage = async (req, res) => {
+export const profileInvitePage = async (req, res) => {
   try {
     const countUsers = await User.estimatedDocumentCount();
     const user = await User
@@ -125,7 +125,7 @@ const profileInvitePage = async (req, res) => {
   }
 }
 
-const profileOrdersPage = async (req, res) => {
+export const profileOrdersPage = async (req, res) => {
   try {
     const user = await User.findById(req.session.userId);
     
@@ -140,7 +140,7 @@ const profileOrdersPage = async (req, res) => {
   }
 }
 
-const profileFavoritesPage = async (req, res) => {
+export const profileFavoritesPage = async (req, res) => {
   try {
     const user = await User
       .findById(req.session.userId)
@@ -158,7 +158,7 @@ const profileFavoritesPage = async (req, res) => {
   }
 }
 
-const profileViewPage = async (req, res) => {
+export const profileViewPage = async (req, res) => {
   try {
     const {login} = req.params;
     const user = await User.findOne({login}).select(['rating', 'invitedUsers', 'viewedArticles', 'createdAt']);
@@ -175,15 +175,4 @@ const profileViewPage = async (req, res) => {
     console.log(e);
     res.redirect('/');
   }
-}
-
-module.exports = {
-  profilePage,
-  profileEditPage,
-  profileEdit,
-  profileAchievementsPage,
-  profileInvitePage,
-  profileOrdersPage,
-  profileFavoritesPage,
-  profileViewPage,
 }

@@ -1,5 +1,6 @@
-const {Schema, model} = require('mongoose');
+import Mongoose from 'mongoose';
 
+const {Schema, model} = Mongoose;
 const fields = {
   email: {
     type: String,
@@ -84,4 +85,4 @@ userSchema.virtual('daysUs').get(function () {
   return Math.ceil(Math.abs(currentDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24));
 });
 
-module.exports = model('User', userSchema);
+export default model('User', userSchema);

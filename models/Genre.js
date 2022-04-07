@@ -1,5 +1,6 @@
-const {Schema, model} = require('mongoose');
+import Mongoose from 'mongoose';
 
+const {Schema, model} = Mongoose;
 const fields = {
   name: {
     type: String,
@@ -24,4 +25,4 @@ const options = {
 
 const genreSchema = new Schema(fields, options);
 
-module.exports = model('Genre', genreSchema);
+export default model('Genre', genreSchema);

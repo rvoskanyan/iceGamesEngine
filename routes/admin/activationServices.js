@@ -1,5 +1,5 @@
-const {Router} = require('express');
-const {
+import {Router} from 'express';
+import {
   pageActivationServices,
   pageAddActivationService,
   addActivationService,
@@ -7,7 +7,7 @@ const {
   editActivationService,
   pageAddActivationStage,
   addActivationStage,
-} = require("../../controllers/admin/activationServices");
+} from "../../controllers/admin/activationServices.js";
 
 const router = Router();
 
@@ -19,4 +19,4 @@ router.post('/edit/:id', editActivationService);
 router.get('/:id/add-activation-stage', pageAddActivationStage);
 router.post('/:id/add-activation-stage', addActivationStage);
 
-module.exports = router;
+export default router;

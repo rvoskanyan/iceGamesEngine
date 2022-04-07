@@ -1,5 +1,6 @@
-const {Schema, model} = require('mongoose');
+import Mongoose from "mongoose";
 
+const {Schema, model} = Mongoose;
 const fields = {
   text: {
     type: String,
@@ -14,4 +15,4 @@ const options = {
 
 const uspSchema = new Schema(fields, options);
 
-module.exports = model('Usp', uspSchema);
+export default model('Usp', uspSchema);

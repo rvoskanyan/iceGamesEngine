@@ -1,9 +1,10 @@
-const uuid = require("uuid");
-const path = require("path");
-const Extend = require("./../../models/Extend");
-const {getExtendFile} = require("../../utils/functions");
+import {v4 as uuidv4} from "uuid";
+import path from "path";
+import {__dirname} from "./../../rootPathes.js";
+import Extend from "./../../models/Extend.js";
+import {getExtendFile} from "./../../utils/functions.js";
 
-const pageExtends = async (req, res) => {
+export const pageExtends = async (req, res) => {
   try {
     const allExtends = await Extend.find().select(['name']);
     
@@ -20,16 +21,16 @@ const pageExtends = async (req, res) => {
   }
 }
 
-const pageAddExtend = async (req, res) => {
+export const pageAddExtend = async (req, res) => {
   res.render('addExtend', {layout: 'admin'});
 }
 
-const addExtend = async (req, res) => {
+export const addExtend = async (req, res) => {
   try {
     const {name} = req.body;
     const {icon} = req.files;
     const iconExtend = getExtendFile(icon.name);
-    const iconName = `${uuid.v4()}.${iconExtend}`;
+    const iconName = `${uuidv4()}.${iconExtend}`;
   
     await icon.mv(path.resolve(__dirname, '../../uploadedFiles', iconName));
   
@@ -40,10 +41,4 @@ const addExtend = async (req, res) => {
     console.log(e);
     res.redirect('/admin/extends/add');
   }
-}
-
-module.exports = {
-  pageExtends,
-  pageAddExtend,
-  addExtend,
 }

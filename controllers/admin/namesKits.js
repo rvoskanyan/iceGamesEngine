@@ -1,8 +1,4 @@
-/*
-const {NamesKit} = require('./../../models/index');
-*/
-
-const pageNamesKits = async (req, res) => {
+export const pageNamesKits = async (req, res) => {
   try {
     const namesKits = await NamesKit.findAll({attributes: ['id', 'name']});
     
@@ -19,11 +15,11 @@ const pageNamesKits = async (req, res) => {
   }
 }
 
-const pageAddNameKit = async (req, res) => {
+export const pageAddNameKit = async (req, res) => {
   res.render('addNameKit', {layout: 'admin'});
 }
 
-const addNameKit = async (req, res) => {
+export const addNameKit = async (req, res) => {
   try {
     const {name} = req.body;
   
@@ -34,10 +30,4 @@ const addNameKit = async (req, res) => {
     console.log(e);
     res.redirect('/admin/names-kits/add');
   }
-}
-
-module.exports = {
-  pageNamesKits,
-  pageAddNameKit,
-  addNameKit,
 }

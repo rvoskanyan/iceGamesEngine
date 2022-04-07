@@ -1,12 +1,12 @@
-const {Router} = require('express');
-const {
+import {Router} from 'express';
+import {
   blogHomePage,
   blogArticlePage,
-} = require('./../../controllers/client/blog');
+} from './../../controllers/client/blog.js';
 
 const router = Router();
 
 router.get('/', blogHomePage);
 router.get('/:alias', blogArticlePage);
 
-module.exports = router;
+export default router;

@@ -1,9 +1,9 @@
-const {Router} = require('express');
-const {
+import {Router} from 'express';
+import {
   pageNamesKits,
   pageAddNameKit,
   addNameKit,
-} = require("../../controllers/admin/namesKits");
+} from "../../controllers/admin/namesKits.js";
 
 const router = Router();
 
@@ -11,4 +11,4 @@ router.get('/', pageNamesKits);
 router.get('/add', pageAddNameKit);
 router.post('/add', addNameKit);
 
-module.exports = router;
+export default router;

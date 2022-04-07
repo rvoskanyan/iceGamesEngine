@@ -1,5 +1,4 @@
-const {log} = require("webpack-cli/lib/utils/logger");
-const getExtendFile = (fileName) => {
+export const getExtendFile = (fileName) => {
   const parts = fileName.split('.');
   
   if (parts.length > 1) {
@@ -9,7 +8,7 @@ const getExtendFile = (fileName) => {
   return new Error('Неверное имя файла!');
 }
 
-const getDiscount = (priceTo, priceFrom) => {
+export const getDiscount = (priceTo, priceFrom) => {
   return Math.floor(100 - priceTo / (priceFrom / 100));
 }
 
@@ -17,7 +16,7 @@ const getDiscount = (priceTo, priceFrom) => {
   GetArray - Используется для преобразования в массив данных,
   приходящих из полей multiple, если выбран был только один элемент
 */
-const getArray = (value) => {
+export const getArray = (value) => {
   if (Array.isArray(value)) {
     return value;
   }
@@ -25,7 +24,7 @@ const getArray = (value) => {
   return [value];
 }
 
-const getAlias = (str) => {
+export const getAlias = (str) => {
   const replace = {
     'a': 'а',
     'b': 'б',
@@ -82,11 +81,4 @@ const getAlias = (str) => {
   })
   
   return resultStr;
-}
-
-module.exports = {
-  getExtendFile,
-  getDiscount,
-  getArray,
-  getAlias,
 }

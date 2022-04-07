@@ -1,9 +1,9 @@
-const {Router} = require('express');
-const {
+import {Router} from 'express';
+import {
   pagePlatforms,
   pageAddPlatform,
   addPlatform,
-} = require("../../controllers/admin/platforms");
+} from "../../controllers/admin/platforms.js";
 
 const router = Router();
 
@@ -11,4 +11,4 @@ router.get('/', pagePlatforms);
 router.get('/add', pageAddPlatform);
 router.post('/add', addPlatform);
 
-module.exports = router;
+export default router;

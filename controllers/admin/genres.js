@@ -1,9 +1,10 @@
-const uuid = require("uuid");
-const path = require("path");
-const Genre = require('./../../models/Genre');
-const {getExtendFile} = require("../../utils/functions");
+import {v4 as uuidv4} from "uuid";
+import path from "path";
+import {__dirname} from "./../../rootPathes.js";
+import Genre from './../../models/Genre.js';
+import {getExtendFile} from "../../utils/functions.js";
 
-const pageGenres = async (req, res) => {
+export const pageGenres = async (req, res) => {
   try {
     const genres = await Genre.find().select(['name']);
     
@@ -20,16 +21,16 @@ const pageGenres = async (req, res) => {
   }
 }
 
-const pageAddGenres = async (req, res) => {
+export const pageAddGenres = async (req, res) => {
   res.render('addGenres', {layout: 'admin'});
 }
 
-const addGenres = async (req, res) => {
+export const addGenres = async (req, res) => {
   try {
     const {name, url} = req.body;
     const {img} = req.files;
     const imgExtend = getExtendFile(img.name);
-    const imgName = `${uuid.v4()}.${imgExtend}`;
+    const imgName = `${uuidv4()}.${imgExtend}`;
   
     await img.mv(path.resolve(__dirname, '../../uploadedFiles', imgName));
   
@@ -41,10 +42,4 @@ const addGenres = async (req, res) => {
     res.redirect('/admin/genres/add');
     res.json({error: true});
   }
-}
-
-module.exports = {
-  pageGenres,
-  pageAddGenres,
-  addGenres,
 }

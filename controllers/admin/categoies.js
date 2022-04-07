@@ -1,6 +1,6 @@
-const Category = require('./../../models/Category');
+import Category from './../../models/Category.js';
 
-const pageCategories = async (req, res) => {
+export const pageCategories = async (req, res) => {
   try {
     const categories = await Category.find().select(['name']);
   
@@ -17,11 +17,11 @@ const pageCategories = async (req, res) => {
   }
 }
 
-const pageAddCategories = async (req, res) => {
+export const pageAddCategories = async (req, res) => {
   res.render('addCategories', {layout: 'admin'});
 }
 
-const addCategories = async (req, res) => {
+export const addCategories = async (req, res) => {
   try {
     const {name} = req.body;
     const category = new Category({name});
@@ -33,10 +33,4 @@ const addCategories = async (req, res) => {
     console.log(e);
     res.redirect('/admin/categories/add');
   }
-}
-
-module.exports = {
-  pageCategories,
-  pageAddCategories,
-  addCategories,
 }

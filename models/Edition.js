@@ -1,5 +1,6 @@
-const {Schema, model} = require('mongoose');
+import Mongoose from "mongoose";
 
+const {Schema, model} = Mongoose;
 const fields = {
   name: {
     type: String,
@@ -14,4 +15,4 @@ const options = {
 
 const editionSchema = new Schema(fields, options);
 
-module.exports = model('Edition', editionSchema);
+export default model('Edition', editionSchema);

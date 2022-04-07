@@ -1,6 +1,6 @@
-const ActivationService = require('./../../models/ActivationService');
+import ActivationService from './../../models/ActivationService.js';
 
-const pageActivationServices = async (req, res) => {
+export const pageActivationServices = async (req, res) => {
   try {
     const activationServices = await ActivationService.find().select(['name']);
     
@@ -17,11 +17,11 @@ const pageActivationServices = async (req, res) => {
   }
 }
 
-const pageAddActivationService = async (req, res) => {
+export const pageAddActivationService = async (req, res) => {
   res.render('addActivationService', {layout: 'admin'});
 }
 
-const addActivationService = async (req, res) => {
+export const addActivationService = async (req, res) => {
   try {
     const {name} = req.body;
     
@@ -34,7 +34,7 @@ const addActivationService = async (req, res) => {
   }
 }
 
-const pageEditActivationService = async (req, res) => {
+export const pageEditActivationService = async (req, res) => {
   try {
     const {id} = req.params;
     const activationService = await ActivationService.findByPk(id);
@@ -53,7 +53,7 @@ const pageEditActivationService = async (req, res) => {
   }
 }
 
-const editActivationService = async (req, res) => {
+export const editActivationService = async (req, res) => {
   const {id} = req.params;
   
   try {
@@ -74,7 +74,7 @@ const editActivationService = async (req, res) => {
   }
 }
 
-const pageAddActivationStage = async (req, res) => {
+export const pageAddActivationStage = async (req, res) => {
   const {id} = req.params;
   
   try {
@@ -91,7 +91,7 @@ const pageAddActivationStage = async (req, res) => {
   }
 }
 
-const addActivationStage = async (req, res) => {
+export const addActivationStage = async (req, res) => {
   const {id} = req.params;
   
   try {
@@ -107,14 +107,4 @@ const addActivationStage = async (req, res) => {
     console.log(e);
     res.redirect(`/admin/activation-services/${id}/add`);
   }
-}
-
-module.exports = {
-  pageActivationServices,
-  pageAddActivationService,
-  addActivationService,
-  pageEditActivationService,
-  editActivationService,
-  pageAddActivationStage,
-  addActivationStage,
 }

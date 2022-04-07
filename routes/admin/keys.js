@@ -1,9 +1,9 @@
-const {Router} = require('express');
-const {
+import {Router} from 'express';
+import {
   pageKeys,
   pageAddKey,
   addKey
-} = require("../../controllers/admin/keys");
+} from "../../controllers/admin/keys.js";
 
 const router = Router();
 
@@ -11,4 +11,4 @@ router.get('/', pageKeys);
 router.get('/add', pageAddKey);
 router.post('/add', addKey);
 
-module.exports = router;
+export default router;
