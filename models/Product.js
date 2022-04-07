@@ -4,7 +4,6 @@ const keySchema = new Schema({
   value: {
     type: String,
     required: true,
-    unique: true,
   },
   sold: {
     type: Boolean,
