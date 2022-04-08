@@ -27,7 +27,7 @@ export const createOrder = async (req, res) => {
     
     await order.save();
     
-    person.dsCartId = "";
+    person.dsCartId = undefined;
     person.cart = [];
     
     await person.save();
