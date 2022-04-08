@@ -14,6 +14,10 @@ export const assignOrderPay = async (req, res) => {
     const addParams = Buffer.from(params['Through'], 'base64').toString('ascii');
     const {dsCartId} = addParams;
     const order = await Order.findOne({dsCartId});
+  
+    console.log(dsCartId);
+    console.log(addParams);
+    console.log(params['Through']);
     
     if (!order) {
       throw new Error('Order not found');
