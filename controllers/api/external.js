@@ -36,6 +36,8 @@ export const assignOrderPay = async (req, res) => {
     const resultOrder = await responseOrder.json();
     const priceProduct = resultOrder.content.amount;
     const order = await Order.findOne({dsCartId});
+  
+    console.log(order);
     
     res.json({
       success: true,
