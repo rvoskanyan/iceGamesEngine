@@ -1,6 +1,7 @@
 import fetch from "node-fetch";
 import crypto from "crypto";
 import Order from "./../../models/Order.js";
+import Product from "./../../models/Product.js";
 
 export const assignOrderPay = async (req, res) => {
   try {
@@ -11,8 +12,12 @@ export const assignOrderPay = async (req, res) => {
     const dsProductId = params['ID_D'];
     const buyerEmail = params['Email'];
     const addParams = Buffer.from(params['Through'], 'base64').toString('ascii');
-    console.log(addParams);
-    //const {dsCartId} = addParams;
+    const {dsCartId} = addParams;
+    const order = await Order.findOne({dsCartId});
+    
+    if (!order) {
+      throw new Error('Order not found');
+    }
     
     const responseToken = await fetch('https://api.digiseller.ru/api/apilogin', {
       method: 'POST',
@@ -36,7 +41,24 @@ export const assignOrderPay = async (req, res) => {
     });
     const resultOrder = await responseOrder.json();
     const priceProduct = resultOrder.content.amount;
-    //const order = await Order.findOne({dsCartId});
+    const product = await Product.findOne({dsId: dsProductId});
+    const productByOrder = {
+      productId: product._id,
+      purchasePrice: priceProduct,
+    };
+    
+    if (order.status !== 'paid') {
+      order.status = 'paid';
+      order.products = [productByOrder];
+    } else {
+      order.products.push(productByOrder);
+    }
+    
+    if (!order.buyerEmail) {
+      order.buyerEmail = buyerEmail;
+    }
+    
+    order.save();
     
     res.json({
       success: true,
