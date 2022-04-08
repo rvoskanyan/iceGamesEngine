@@ -11,6 +11,7 @@ export const assignOrderPay = async (req, res) => {
     const dsProductId = params['ID_D'];
     const buyerEmail = params['EMAIL'];
     const addParams = Buffer.from(params['THROUGH'], 'base64').toString('ascii');
+    console.log(params);
     const {dsCartId} = addParams;
     
     const responseToken = await fetch('https://api.digiseller.ru/api/apilogin', {
