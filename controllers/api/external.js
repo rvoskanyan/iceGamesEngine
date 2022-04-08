@@ -12,7 +12,7 @@ export const assignOrderPay = async (req, res) => {
     const dsProductId = params['ID_D'];
     const buyerEmail = params['Email'];
     const addParams = Buffer.from(params['Through'], 'base64').toString('ascii');
-    const {dsCartId} = addParams;
+    const dsCartId = addParams['dsCartId'] || addParams['cart_uid'];
     const order = await Order.findOne({dsCartId});
   
     console.log(dsCartId);
