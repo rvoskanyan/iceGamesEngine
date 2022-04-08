@@ -6,10 +6,7 @@ const fields = {
     type: Schema.Types.ObjectId,
     ref: 'Product',
   }],
-  dsCartId: {
-    type: String,
-    unique: true,
-  },
+  dsCartId: String,
 };
 
 const options = {

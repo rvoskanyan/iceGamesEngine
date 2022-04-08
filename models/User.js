@@ -35,10 +35,7 @@ const fields = {
     required: true,
     default: 'client',
   },
-  dsCartId: {
-    type: String,
-    unique: true,
-  },
+  dsCartId: String,
   cart: [{
     type: Schema.Types.ObjectId,
     ref: 'Product',
