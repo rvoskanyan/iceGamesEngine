@@ -11,13 +11,22 @@ export const assignOrderPay = async (req, res) => {
     const timestamp = currentDate.getTime();
     const dsProductId = params['ID_D'];
     const buyerEmail = params['Email'];
-    const addParams = JSON.parse(Buffer.from(params['Through'], 'base64').toString('ascii'));
-    const dsCartId = addParams['dsCartId'] || addParams['cart_uid'];
+    const addParams = Buffer.from(params['Through'], 'base64').toString('ascii').split('&');
+    let dsCartId = null;
+    
+    addParams.find(item => {
+      const param = item.split('=');
+      const nameParam = param[0];
+      
+      if (nameParam === 'dsCartId' || nameParam === 'cart_uid') {
+        dsCartId = param[1];
+        return true;
+      }
+    });
+    
     const order = await Order.findOne({dsCartId});
   
     console.log(dsCartId);
-    console.log(addParams);
-    console.log(params['Through']);
     
     if (!order) {
       throw new Error('Order not found');
