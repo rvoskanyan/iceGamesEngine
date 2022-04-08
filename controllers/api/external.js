@@ -9,9 +9,9 @@ export const assignOrderPay = async (req, res) => {
     const currentDate = new Date();
     const timestamp = currentDate.getTime();
     const dsProductId = params['ID_D'];
-    const buyerEmail = params['EMAIL'];
-    //const addParams = Buffer.from(params['THROUGH'], 'base64').toString('ascii');
-    console.log(params);
+    const buyerEmail = params['Email'];
+    const addParams = Buffer.from(params['Through'], 'base64').toString('ascii');
+    console.log(addParams);
     //const {dsCartId} = addParams;
     
     const responseToken = await fetch('https://api.digiseller.ru/api/apilogin', {
