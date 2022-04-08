@@ -10,9 +10,9 @@ export const assignOrderPay = async (req, res) => {
     const timestamp = currentDate.getTime();
     const dsProductId = params['ID_D'];
     const buyerEmail = params['EMAIL'];
-    const addParams = Buffer.from(params['THROUGH'], 'base64').toString('ascii');
+    //const addParams = Buffer.from(params['THROUGH'], 'base64').toString('ascii');
     console.log(params);
-    const {dsCartId} = addParams;
+    //const {dsCartId} = addParams;
     
     const responseToken = await fetch('https://api.digiseller.ru/api/apilogin', {
       method: 'POST',
@@ -36,9 +36,7 @@ export const assignOrderPay = async (req, res) => {
     });
     const resultOrder = await responseOrder.json();
     const priceProduct = resultOrder.content.amount;
-    const order = await Order.findOne({dsCartId});
-  
-    console.log(order);
+    //const order = await Order.findOne({dsCartId});
     
     res.json({
       success: true,
