@@ -32,6 +32,7 @@ const copyBtnNode = document.querySelector('.js-copyBtn');
 const searchStringNode = document.querySelector('.js-searchString');
 const productCards = document.querySelectorAll('.js-cardGame');
 const cartNode = document.querySelector('.js-cart');
+const collapseNodes = document.querySelectorAll('.js-collapse');
 const popupController = new PopupController([
   {
     id: 'loginFrom',
@@ -55,6 +56,23 @@ const popupController = new PopupController([
     popupSelector: '.js-mainNavigation',
   }
 ]);
+
+if (collapseNodes.length) {
+  let activeCollapse = null;
+  
+  collapseNodes.forEach(collapse => {
+    collapse.addEventListener('click', (e) => {
+      activeCollapse && activeCollapse.classList.remove('active');
+      
+      if (activeCollapse === collapse) {
+        return activeCollapse = null;
+      }
+  
+      collapse.classList.add('active');
+      activeCollapse = collapse;
+    })
+  })
+}
 
 if (cartNode) {
   const products = cartNode.querySelectorAll('.js-product');

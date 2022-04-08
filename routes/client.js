@@ -6,6 +6,7 @@ import systemRoute from './client/system.js';
 import profileRoute from './client/profile.js';
 import blogRoute from './client/blog.js';
 import cartRoute from './client/cart.js';
+import supportRoute from './client/support.js';
 
 const router = Router();
 
@@ -16,5 +17,6 @@ router.use('/games', gamesRoute);
 router.use('/profile', profileRoute);
 router.use('/blog', blogRoute);
 router.use('/cart', cartRoute);
+router.use('/support', supportRoute);
 
 export default router;
