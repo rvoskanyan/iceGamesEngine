@@ -1,4 +1,3 @@
-import User from '../../models/User.js';
 import Product from '../../models/Product.js';
 import Category from '../../models/Category.js';
 import Genre from '../../models/Genre.js';
@@ -11,25 +10,23 @@ export const gamesPage = async (req, res) => {
     const categories = await Category.find().select(['name']);
     const genres = await Genre.find().select(['name']);
     const activationServices = await ActivationService.find().select(['name']);
+    const person = res.locals.person;
     
-    if (req.session.isAuth) {
-      const user = await User.findById(req.session.userId);
-      const favoritesProducts = user.favoritesProducts;
-      const cart = user.cart;
-      
-      if (favoritesProducts.length || cart.length) {
-        products = products.map(item => {
-          if (favoritesProducts.includes(item._id.toString())) {
-            item.inFavorites = true;
-          }
+    if (person) {
+      const favoritesProducts = person.favoritesProducts;
+      const cart = person.cart;
   
-          if (cart.includes(item._id.toString())) {
-            item.inCart = true;
-          }
-          
-          return item;
-        })
-      }
+      products = products.map(item => {
+        if (favoritesProducts && favoritesProducts.includes(item._id.toString())) {
+          item.inFavorites = true;
+        }
+    
+        if (cart && cart.includes(item._id.toString())) {
+          item.inCart = true;
+        }
+    
+        return item;
+      });
     }
     
     res.render('catalog', {
