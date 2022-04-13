@@ -6,7 +6,7 @@ import AsyncForm from "./AsyncForm.js";
 import Prompt from "./Prompt.js";
 import {urlEncodeFormData} from "./utils.js";
 import Postman from "./Postman.js";
-import {websiteAddress} from "../../config.js";
+import {websiteAddress} from "./config.js";
 
 import './../styles/index.sass';
 
