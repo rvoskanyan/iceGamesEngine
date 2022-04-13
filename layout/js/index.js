@@ -17,6 +17,7 @@ const homeCatalogTabsNode = document.querySelector('.js-homeCatalogTabs');
 const genresSliderNode = document.querySelector('.js-genresSlider');
 const gameGallerySliderNode = document.querySelector('.js-gameGallerySlider');
 const gameInfoTabsNode = document.querySelector('.js-gameInfoTabs');
+const feedbackProductTabsNode = document.querySelector('.js-feedbackProductTabs');
 const youtubePlayNodes = document.querySelectorAll('.js-playYouTubeVideo');
 const catalogNode = document.querySelector('.js-catalog');
 const loginFormNode = document.querySelector('.js-loginForm');
@@ -33,6 +34,9 @@ const searchStringNode = document.querySelector('.js-searchString');
 const productCards = document.querySelectorAll('.js-cardGame');
 const cartNode = document.querySelector('.js-cart');
 const collapseNodes = document.querySelectorAll('.js-collapse');
+const autoSizeInputNodes = document.querySelectorAll('.js-autoSizeInput');
+const addReviewFormNode = document.querySelector('.js-addReviewForm');
+const commentProductFormNode = document.querySelector('.js-commentProductForm');
 const popupController = new PopupController([
   {
     id: 'loginFrom',
@@ -56,6 +60,135 @@ const popupController = new PopupController([
     popupSelector: '.js-mainNavigation',
   }
 ]);
+
+if (autoSizeInputNodes) {
+  autoSizeInputNodes.forEach(autoSizeInput => {
+    const valueNode = autoSizeInput.querySelector('.js-value');
+    
+    valueNode.addEventListener('input', () => {
+      const isInputActive = autoSizeInput.classList.contains('active');
+      const isAddActive = !!valueNode.innerText.length;
+      
+      if (isAddActive && isInputActive) {
+        return;
+      }
+      
+      if (isAddActive && !isInputActive) {
+        return autoSizeInput.classList.add('active');
+      }
+  
+      autoSizeInput.classList.remove('active');
+    })
+  })
+}
+
+if (commentProductFormNode) {
+  const loadMoreCommentBtnNode = document.querySelector('.js-loadMoreCommentBtn');
+  const listCommentsNode = document.querySelector('.js-listComments');
+  const subjectId = commentProductFormNode.dataset.subjectId;
+  const ref = commentProductFormNode.dataset.ref;
+  let skip = +commentProductFormNode.dataset.skip;
+  
+  new AsyncForm({
+    mainNode: commentProductFormNode,
+    extraParams: ['subjectId', 'ref'],
+    successHandler: (params) => {
+      const userName = listCommentsNode.dataset.userName;
+      const commentFieldNode = commentProductFormNode.querySelector('.js-autoSizeInput');
+      const commentValueNode = commentFieldNode.querySelector('.js-value');
+  
+      commentValueNode.innerText = '';
+      commentValueNode.dispatchEvent(new Event('input'));
+      
+  
+      listCommentsNode.innerHTML = `
+        <div class="item comment">
+            <div class="head">
+                <a class="btn link" href="/profile/view/${userName}" title="Перейти в профиль пользователя ${userName}">${userName}</a>
+                <!--<div class="reactions">
+                    <button class="btn active positive">
+                        <span class="icon icon-thumbsUp"></span> 54
+                    </button>
+                    <button class="btn negative">
+                        <span class="icon icon-thumbsDown"></span> 31
+                    </button>
+                </div>-->
+            </div>
+            <div class="text">
+                ${params.text}
+            </div>
+            <!--<button class="btn link action">Ответить</button>-->
+        </div>
+      ` + listCommentsNode.innerHTML;
+    }
+  });
+  
+  if (loadMoreCommentBtnNode) {
+    loadMoreCommentBtnNode.addEventListener('click', async () => {
+      const response = await postman.get(`${websiteAddress}api/comments`, {
+        subjectId,
+        ref,
+        skip,
+      });
+      const result = await response.json();
+  
+      skip += 3;
+      
+      if (result.items.length) {
+        result.items.forEach(comment => {
+          listCommentsNode.innerHTML = listCommentsNode.innerHTML + `
+            <div class="item comment">
+              <div class="head">
+                  <a class="btn link" href="/profile/view/${comment.author.login}" title="Перейти в профиль пользователя ${comment.author.login}">${comment.author.login}</a>
+                  <!--<div class="reactions">
+                      <button class="btn active positive">
+                          <span class="icon icon-thumbsUp"></span> 54
+                      </button>
+                      <button class="btn negative">
+                          <span class="icon icon-thumbsDown"></span> 31
+                      </button>
+                  </div>-->
+              </div>
+              <div class="text">
+                  ${comment.text}
+              </div>
+              <!--<button class="btn link action">Ответить</button>-->
+          </div>
+          `;
+        })
+      }
+    })
+  }
+}
+
+if (addReviewFormNode) {
+  new AsyncForm({
+    mainNode: addReviewFormNode,
+    successHandler: (params) => {
+      const listReviewsNode = document.querySelector('.js-listReviews');
+      const userName = listReviewsNode.dataset.userName;
+      
+      addReviewFormNode.remove();
+      
+      listReviewsNode.innerHTML = `
+        <div class="item review">
+          <div class="head">
+              <a class="btn link userName" href="/profile/view/${userName}" title="Перейти на страницу пользователя ${userName}">${userName}</a>
+          </div>
+          <div class="grade">
+              <span class="icon icon-star${params.eval >= 1 ? 'Fill' : ''}"></span>
+              <span class="icon icon-star${params.eval >= 2 ? 'Fill' : ''}"></span>
+              <span class="icon icon-star${params.eval >= 3 ? 'Fill' : ''}"></span>
+              <span class="icon icon-star${params.eval >= 4 ? 'Fill' : ''}"></span>
+              <span class="icon icon-star${params.eval >= 5 ? 'Fill' : ''}"></span>
+          </div>
+          <div class="text">
+              ${params.text}
+          </div>
+        </div>` + listReviewsNode.innerHTML;
+    }
+  })
+}
 
 if (collapseNodes.length) {
   let activeCollapse = null;
@@ -499,6 +632,12 @@ if (gameGallerySliderNode) {
 if (gameInfoTabsNode) {
   new Tabs({
     mainNode: gameInfoTabsNode,
+  });
+}
+
+if (feedbackProductTabsNode) {
+  new Tabs({
+    mainNode: feedbackProductTabsNode,
   });
 }
 

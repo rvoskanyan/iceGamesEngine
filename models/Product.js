@@ -46,6 +46,22 @@ const commentSchema = new Schema({
   },
 });
 
+const reviews = new Schema({
+  userId: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+  },
+  eval: {
+    type: Number,
+    required: true,
+  },
+  text: {
+    type: String,
+    required: true,
+  },
+});
+
 const fields = {
   name: {
     type: String,
@@ -142,6 +158,18 @@ const fields = {
     default: [],
   },
   countKeys: {
+    type: Number,
+    default: 0,
+  },
+  reviews: {
+    type: [reviews],
+    default: [],
+  },
+  countReviews: {
+    type: Number,
+    default: 0,
+  },
+  totalEval: {
     type: Number,
     default: 0,
   },

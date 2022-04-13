@@ -52,6 +52,10 @@ const fields = {
     type: Schema.Types.ObjectId,
     ref: 'Product',
   }],
+  viewedProducts: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Product',
+  }],
   emailChecked: {
     type: Boolean,
     default: false,

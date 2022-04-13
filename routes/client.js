@@ -7,6 +7,12 @@ import profileRoute from './client/profile.js';
 import blogRoute from './client/blog.js';
 import cartRoute from './client/cart.js';
 import supportRoute from './client/support.js';
+import paymentRoute from './client/payment.js';
+import aboutRoute from './client/about.js';
+import discountsRoute from './client/discounts.js';
+import noveltyRoute from './client/novelty.js';
+import preordersRoute from './client/preorders.js';
+import reviewsRoute from './client/reviews.js';
 
 const router = Router();
 
@@ -18,5 +24,11 @@ router.use('/profile', profileRoute);
 router.use('/blog', blogRoute);
 router.use('/cart', cartRoute);
 router.use('/support', supportRoute);
+router.use('/payment', paymentRoute);
+router.use('/about', aboutRoute);
+router.use('/discounts', discountsRoute);
+router.use('/novelty', noveltyRoute);
+router.use('/preorders', preordersRoute);
+router.use('/reviews', reviewsRoute);
 
 export default router;

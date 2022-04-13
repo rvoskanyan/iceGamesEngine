@@ -1,6 +1,7 @@
 import Product from "../../models/Product.js";
 import User from "../../models/User.js";
 import Guest from "../../models/Guest.js";
+import Order from "../../models/Order.js";
 /*
   Articles.find({_id: {$ne: article._id}})
  */
@@ -169,6 +170,67 @@ export const deleteFromCart = async (req, res) => {
   
     person.cart.splice(index, 1);
     await person.save();
+    res.json({
+      success: true,
+    });
+  } catch (e) {
+    console.log(e);
+    res.json({
+      error: true,
+    });
+  }
+}
+
+export const addReview = async (req, res) => {
+  try {
+    if (!req.session.isAuth) {
+      throw new Error('No auth');
+    }
+    
+    const user = res.locals.person;
+    const productId = req.params.productId;
+    const text = req.body.text;
+    const validErrors = [];
+    const evalValue = parseInt(req.body.eval);
+    const order = await Order.findOne({status: 'paid', userId: user._id, products: {$elemMatch: {productId}}});
+  
+    if (!order) {
+      throw new Error('Product not purchased');
+    }
+    
+    if (!evalValue || evalValue < 1 || evalValue > 5) {
+      validErrors.push('eval');
+    }
+    
+    if (!text || typeof text !== 'string') {
+      validErrors.push('text');
+    }
+    
+    if (validErrors.length) {
+      return res.json({
+        error: true,
+        validErrors,
+      });
+    }
+    
+    const product = await Product.findById(productId).select(['reviews', 'countReviews', 'totalEval']);
+    const isNoReview = product.reviews.findIndex(review => review.userId.toString() === user.id) === -1;
+
+    if (!isNoReview) {
+      throw new Error('The product has a review from an current user');
+    }
+    
+    product.reviews.push({
+      userId: user._id,
+      eval: evalValue,
+      text,
+    });
+    
+    product.countReviews += 1;
+    product.totalEval += evalValue;
+    
+    await product.save();
+    
     res.json({
       success: true,
     });

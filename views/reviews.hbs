@@ -1,0 +1,65 @@
+<main class="reviewsPage article">
+    <div class="breadcrumbs contentContainer">
+        <div class="item">
+            <a class="btn link" href="/">Главная</a>
+        </div>
+        <div class="current">Отзывы</div>
+    </div>
+    <div class="cover blackout blackout-bottomMax slide active js-slide">
+        <img class="img" src="./img/reviewsCover.png" alt="Phoenix Point: Year One Edition" title="Phoenix Point: Year One Edition">
+        <div class="textContent">
+            <h1 class="title">Отзывы</h1>
+        </div>
+        <button class="btn translucent js-scroller" data-target="listReviews">
+            <span class="icon icon-arrowBottom"></span>
+        </button>
+    </div>
+    <div class="contentContainer js-listReviews">
+        <div class="reviewsList">
+            {{#each products}}
+                <div class="review">
+                    <div class="head">
+                        <a class="btn link userName" href="/profile/view/{{reviews.user.login}}" title="Перейти на страницу {{reviews.user.login}}">{{reviews.user.login}}</a>
+                        <div class="forGame">
+                            Отзыв на игру: <a class="link gameName" href="/games/{{alias}}">{{name}}</a>
+                        </div>
+                    </div>
+                    <div class="grade">
+                        <span class="icon icon-star{{#iff reviews.eval '>=' 1}}Fill{{/iff}}"></span>
+                        <span class="icon icon-star{{#iff reviews.eval '>=' 2}}Fill{{/iff}}"></span>
+                        <span class="icon icon-star{{#iff reviews.eval '>=' 3}}Fill{{/iff}}"></span>
+                        <span class="icon icon-star{{#iff reviews.eval '>=' 4}}Fill{{/iff}}"></span>
+                        <span class="icon icon-star{{#iff reviews.eval '>=' 5}}Fill{{/iff}}"></span>
+                    </div>
+                    <div class="text">
+                        {{reviews.text}}
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+        {{#iff countReviews '>' 3}}
+            <div class="btn link translucent loadMore js-loadMoreReviewsBtn">Загрузить еще</div>
+        {{/iff}}
+        {{#if lastViewedProducts.length}}
+            <div class="lastViews">
+                <div class="title">Вы недавно смотрели</div>
+                <div class="games">
+                    {{#each lastViewedProducts}}
+                        {{> game
+                                id=viewedProduct._id
+                                dsId=viewedProduct.dsId
+                                size='small'
+                                alias=viewedProduct.alias
+                                img=viewedProduct.img
+                                name=viewedProduct.name
+                                priceTo=viewedProduct.priceTo
+                                priceFrom=viewedProduct.priceFrom
+                                inFavorites=viewedProduct.inFavorites
+                                inCart=viewedProduct.inCart
+                        }}
+                    {{/each}}
+                </div>
+            </div>
+        {{/if}}
+    </div>
+</main>

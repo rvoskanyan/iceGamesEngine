@@ -6,6 +6,7 @@ export const supportPage = async (req, res) => {
     
     res.render('support', {
       title: 'ICE Games -- Поддержка',
+      isSupport: true,
       faqs,
     });
   } catch (e) {

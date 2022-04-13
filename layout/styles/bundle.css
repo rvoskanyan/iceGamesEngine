@@ -357,14 +357,14 @@
     margin: 0 10px 9px 10px;
     flex-grow: 1; }
     .senderField .autoSizeInput .value {
-      flex-grow: 1; }
+      flex-grow: 1;
+      min-height: 20px; }
 
 .autoSizeInput {
   position: relative;
   z-index: 1; }
   .autoSizeInput.active .placeholder {
-    opacity: 0;
-    visibility: hidden; }
+    display: none; }
   .autoSizeInput .placeholder {
     position: absolute;
     color: rgba(255, 255, 255, 0.5);
@@ -2341,10 +2341,12 @@
       margin-right: 25px; }
     .gamePage .fullInfo .feedback .blocks {
       margin-top: 25px; }
-    .gamePage .fullInfo .feedback .reviews .addNew {
+    .gamePage .fullInfo .feedback .reviews .addNew .textReview {
+      margin-top: 30px; }
+    .gamePage .fullInfo .feedback .reviews .addNew, .gamePage .fullInfo .feedback .comments .addNew {
       position: relative;
       overflow: hidden; }
-      .gamePage .fullInfo .feedback .reviews .addNew.locked .lockBlock {
+      .gamePage .fullInfo .feedback .reviews .addNew.locked .lockBlock, .gamePage .fullInfo .feedback .comments .addNew.locked .lockBlock {
         position: absolute;
         top: 0;
         left: 0;
@@ -2358,11 +2360,9 @@
         align-items: center;
         justify-content: center;
         text-align: center; }
-        .gamePage .fullInfo .feedback .reviews .addNew.locked .lockBlock .text {
+        .gamePage .fullInfo .feedback .reviews .addNew.locked .lockBlock .text, .gamePage .fullInfo .feedback .comments .addNew.locked .lockBlock .text {
           margin-top: 12px;
           width: 450px; }
-      .gamePage .fullInfo .feedback .reviews .addNew .textReview {
-        margin-top: 30px; }
 
 .gamePage .lastViews {
   margin-top: 120px; }

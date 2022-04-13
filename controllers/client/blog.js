@@ -11,11 +11,13 @@ export const blogHomePage = async (req, res) => {
     
     res.render('blogHome', {
       title: 'ICE Games -- Блог',
+      isBlog: true,
       fixArticle,
       articles,
     });
   } catch (e) {
-  
+    console.log(e);
+    res.redirect('/');
   }
 }
 

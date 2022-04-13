@@ -91,15 +91,51 @@
             </a>
         </div>
         <div class="menu">
-            <a href="#" class="link">Все игры</a>
-            <a href="/support" class="link">Поддержка</a>
-            <a href="#" class="link">Доставка и оплата</a>
-            <a href="#" class="link">Отзывы</a>
-            <a href="#" class="link">О магазине</a>
-            <a href="#" class="link">Блог</a>
-            <a href="#" class="link">Скидки</a>
-            <a href="#" class="link">Новинки</a>
-            <a href="#" class="link">Предзаказы</a>
+            {{#if isCatalog}}
+                <span class="link">Все игры</span>
+            {{else}}
+                <a href="/games" class="link">Все игры</a>
+            {{/if}}
+            {{#if isSupport}}
+                <span class="link">Поддержка</span>
+            {{else}}
+                <a href="/support" class="link">Поддержка</a>
+            {{/if}}
+            {{#if isPayment}}
+                <span class="link">Доставка и оплата</span>
+            {{else}}
+                <a href="/payment" class="link">Доставка и оплата</a>
+            {{/if}}
+            {{#if isReviews}}
+                <span class="link">Отзывы</span>
+            {{else}}
+                <a href="/reviews" class="link">Отзывы</a>
+            {{/if}}
+            {{#if isAbout}}
+                <span class="link">О магазине</span>
+            {{else}}
+                <a href="/about" class="link">О магазине</a>
+            {{/if}}
+            {{#if isBlog}}
+                <span class="link">Блог</span>
+            {{else}}
+                <a href="/blog" class="link">Блог</a>
+            {{/if}}
+            {{#if isDiscounts}}
+                <span class="link">Скидки</span>
+            {{else}}
+                <a href="/discounts" class="link">Скидки</a>
+            {{/if}}
+            {{#if isNovelty}}
+                <span class="link">Новинки</span>
+            {{else}}
+                <a href="/novelty" class="link">Новинки</a>
+            {{/if}}
+            {{#if isPreorders}}
+                <span class="link">Предзаказы</span>
+            {{else}}
+                <a href="/preorders" class="link">Предзаказы</a>
+            {{/if}}
         </div>
     </div>
     <div class="info">

@@ -1,18 +1,22 @@
 import {validationResult} from 'express-validator';
 import bcrypt from 'bcryptjs';
 import User from '../../models/User.js';
+import Order from './../../models/Order.js';
 
 export const profilePage = async (req, res) => {
   try {
     const {userId} = req.session;
     const user = await User.findById(userId);
     const countUsers = await User.estimatedDocumentCount();
+    const orders = await Order.find({status: 'paid', userId});
+    const purchasedProducts = orders.reduce((purchasedProducts, order) => purchasedProducts + order.products.length, 0);
     
     res.render('profile', {
       title: "ICE Games -- Мой профиль",
       isProfileHome: true,
       user,
       countUsers,
+      purchasedProducts,
     });
   } catch (e) {
     console.log(e);
