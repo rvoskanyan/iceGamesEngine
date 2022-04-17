@@ -32,7 +32,7 @@ export const addGenres = async (req, res) => {
     const imgExtend = getExtendFile(img.name);
     const imgName = `${uuidv4()}.${imgExtend}`;
   
-    await img.mv(path.resolve(__dirname, '../../uploadedFiles', imgName));
+    await img.mv(path.join(__dirname, '/uploadedFiles', imgName));
   
     await Genre.create({name, img: imgName, url});
   

@@ -1,0 +1,26 @@
+<form method="post" action="/admin/bundles/{{bundleId}}/{{#if isEdit}}{{product.id}}{{else}}addProduct{{/if}}">
+    {{#if isEdit}}
+        Игры в связке: {{product.name}}
+    {{else}}
+        <label>
+            Выберите продукт:
+            <input type="search" name="productId" list="products">
+            <datalist id="products">
+                {{#each products}}
+                    <option value="{{id}}" {{#if selected}}selected{{/if}}>
+                        {{name}}
+                    </option>
+                {{/each}}
+            </datalist>
+        </label>
+    {{/if}}
+    <br>
+    <br>
+    <label>
+        Исходный товар связки:
+        <input type="checkbox" name="isOriginalInBundle"{{#if product.isOriginalInBundle}} checked{{/if}} {{#if product.isOriginalInBundle}} disabled{{/if}}>
+    </label>
+    <br>
+    <br>
+    <input type="submit" name="add" value="{{#if isEdit}}Сохранить изменения{{else}}Добавить{{/if}}">
+</form>

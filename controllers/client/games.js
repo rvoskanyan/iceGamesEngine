@@ -61,8 +61,6 @@ export const gamePage = async (req, res) => {
         'platformId',
         'activationServiceId',
         'publisherId',
-        'bunchId',
-        'seriesId',
         'reviews.userId'
       ]);
     const comments = await Comment
@@ -71,14 +69,39 @@ export const gamePage = async (req, res) => {
       .sort({'createdAt': -1})
       .limit(3);
     const countComments = await Comment.estimatedDocumentCount();
+    const person = res.locals.person;
+    const genreIds = product.genres.map(genre => genre._id);
+    const recProductsFilter = { //Фильтры для подборки рекомендаций
+      _id: {$ne: product._id}, //Отсеивает открытый продукт
+      genres: {$in: genreIds}, //Находит продукты содержащие хотя бы один из жанров текущего товара
+      $or: [ //"ИЛИ" для связок
+        {bundleId: {$ne: null}, isOriginalInBundle: true}, //Если товар состоит в связке, то он должен быть исходным
+        {bundleId: null}, //Иначе он не должен состоять в связке вовсе
+      ],
+    };
     let isProductNoReview = true;
     let isProductNotPurchased = true;
     let lastViewedProducts = [];
+    let currentProductInCart = false;
+    let bundleProducts = null;
+    let seriesProducts = null;
+  
+    if (person) {
+      const cart = person.cart;
+      
+      if (cart && cart.includes(product._id.toString())) {
+        currentProductInCart = true;
+      }
+    }
   
     if (req.session.isAuth) {
-      const person = res.locals.person;
       const favoritesProducts = person.favoritesProducts;
       const cart = person.cart;
+      const order = await Order.findOne({status: 'paid', userId: res.locals.person._id, products: {$elemMatch: {productId: product._id}}});
+  
+      if (order) {
+        isProductNotPurchased = false;
+      }
       
       lastViewedProducts = await User.aggregate([
         {$match: {_id: res.locals.person._id}},
@@ -126,126 +149,53 @@ export const gamePage = async (req, res) => {
       await person.save();
     }
     
-    if (req.session.isAuth) {
-      const order = await Order.findOne({status: 'paid', userId: res.locals.person._id, products: {$elemMatch: {productId: product._id}}});
-      
-      if (order) {
-        isProductNotPurchased = false;
-      }
-    }
-    
     let trailerId = null;
   
     if (product.trailerLink) {
       trailerId = product.trailerLink.split('v=')[1];
     }
     
-    /*if (bunch) {
-      gamesBunch = await bunch.getProducts({
-        attributes: ['id', 'name'],
-        order: [['orderInBundle', 'DESC']],
-        include: [
-          {
-            model: GameElement,
-            separate: true,
-            attributes: ['name'],
-            order: [['productId', 'DESC']],
-            include: {
-              model: Product,
-              as: 'Entity',
-              attributes: ['id', 'name'],
-            },
-          },
-          {
-            model: Edition,
-            attributes: ['name'],
-          },
-        ]
-      });
+    if (product.bundleId) {
+      recProductsFilter.bundleId = {$ne: product.bundleId}; //Отсеиваем товары, которые выводятся в блоке связок
+      bundleProducts = await Product
+        .find({bundleId: product.bundleId})
+        .sort({'priceFrom': 1})
+        .populate('editionId', ['name'])
+        .select(['name', 'alias', 'elements', 'editionId'])
+        .lean();
   
-      gamesBunch = gamesBunch.map(item => {
-        const gameData = item.dataValues;
-        const values = {};
-  
-        if (item.Edition) {
-          values.edition = item.Edition.dataValues.name;
+      bundleProducts = bundleProducts.map(bundleProduct => {
+        if (bundleProduct._id.toString() === product.id) {
+          bundleProduct.isCurrent = true;
         }
         
-        if (+gameData.id === +gameId) {
-          values.isCurrent = true;
-          
-          if (values.edition) {
-            gameEdition = values.edition;
-          }
-          
-          if (item.GameElements) {
-            gameElements = item.GameElements.map(item => {
-              const dataValues = item.dataValues;
-  
-              if (!dataValues.Entity) {
-                return dataValues;
-              }
-  
-              const gameData = dataValues.Entity.dataValues;
-  
-              return {
-                id: dataValues.id,
-                gameId: gameData.id,
-                name: gameData.name,
-              };
-            })
-          }
-          
-          return values;
-        }
-        
-        values.id = gameData.id;
-        values.name = gameData.name;
-        
-        if (item.GameElements) {
-          values.elements = item.GameElements.map(item => {
-            const dataValues = item.dataValues;
-  
-            if (!dataValues.Entity) {
-              return dataValues;
-            }
-            
-            return {
-              name: dataValues.Entity.dataValues.name,
-            };
-          })
-        }
-        
-        return values;
+        return bundleProduct;
       });
     }
     
-    if (series) {
-      gamesSeries = await series.getProducts({attributes: ['id', 'name', 'img', 'priceTo', 'priceFrom']});
-    } else if (bunch) {
-      const seriesIdOnBundle = await Product.findAll({
-        attributes: ['seriesId'],
-        where: {
-          bunchId: bunch.dataValues.id,
-          isOriginalInBundle: true,
-        }
-      });
+    if (product.seriesId) {
+      recProductsFilter.seriesId = {$ne: product.seriesId}; //Отсеиваем товары, которые есть в серии текущей игры
+      seriesProducts = await Product
+        .find({_id: {$ne: product.id}, seriesId: product.seriesId})
+        .select(['name', 'alias', 'priceTo', 'priceFrom', 'img', 'dsId'])
+        .lean();
+    } else if (product.bundleId) {
+      const originalProduct = await Product.findOne({bundleId: product.bundleId, isOriginalInBundle: true});
       
-      if (seriesIdOnBundle.length) {
-        gamesSeries = await Product.findAll({
-          attributes: ['id', 'name', 'img', 'priceTo', 'priceFrom'],
-          where: {
-            seriesId: seriesIdOnBundle[0].dataValues.seriesId,
-          }
-        });
+      if (originalProduct && originalProduct.seriesId) {
+        recProductsFilter.seriesId = {$ne: originalProduct.seriesId}; //Отсеиваем товары, которые есть в серии исходной игры связки, если текущая не принадлежит серии
+        seriesProducts = await Product
+          .find({_id: {$ne: originalProduct.id}, seriesId: originalProduct.seriesId})
+          .select(['name', 'alias', 'priceTo', 'priceFrom', 'img'])
+          .lean();
       }
     }
     
-    if (gamesSeries) {
-      gamesSeries = gamesSeries.map(item => item.dataValues);
-    }
-    
-    gameData.discount = getDiscount(gameData.priceTo, gameData.priceFrom);*/
+    const recProducts = await Product.aggregate([
+      {$match: recProductsFilter},
+      {$project: {name: 1, alias: 1, dsId: 1, img: 1, priceTo: 1, priceFrom: 1}},
+      {$sample: {size: 8}},
+    ]);
   
     res.render('game', {
       title: "ICE Games -- магазин ключей",
@@ -257,10 +207,10 @@ export const gamePage = async (req, res) => {
       comments,
       countComments,
       lastViewedProducts,
-      /*
-      gamesBunch,
-      gameEdition,
-      */
+      currentProductInCart,
+      bundleProducts,
+      seriesProducts,
+      recProducts,
     });
   } catch (e) {
     console.log(e);

@@ -55,7 +55,7 @@ const hbs = exphbs.create({
         case '>=':
           bool = a >= b;
           break;
-        case '<==':
+        case '<=':
           bool = a <= b;
           break;
         case '!==':

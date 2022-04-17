@@ -12,7 +12,7 @@ export default class Postman {
   get = (url, params) => {
     const newUrl = new URL(url);
   
-    Object.entries(params).forEach(([key, value]) => {
+    params && Object.entries(params).forEach(([key, value]) => {
       newUrl.searchParams.append(key, value);
     });
     

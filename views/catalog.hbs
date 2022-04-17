@@ -8,9 +8,9 @@
     <div class="filters js-filter">
         <div class="priceBlock">
             <div class="title">Цена:</div>
-            <div class="range">
-                <div class="min" contenteditable>0</div>
-                <div class="max" contenteditable>3500</div>
+            <div class="range js-range js-priceRange" data-min="0" data-max="3500">
+                <div class="min js-minSlider js-slider" data-name="priceFrom">0</div>
+                <div class="max js-maxSlider js-slider" data-name="priceTo">3500</div>
             </div>
         </div>
         <div class="variantsBlock">
@@ -56,29 +56,16 @@
         <div class="sort js-sort">
             <div class="title">Сортировать по:</div>
             <div class="variants">
-                <button class="btn small rounded bg-lilac translucent">Дате выхода</button>
-                <button class="btn small rounded bg-lilac translucent">Цене</button>
-                <button class="btn small rounded bg-lilac translucent">Скидке</button>
-                <label class="checkbox inStockOnly">
-                    <input class="input" type="checkbox" name="onlyStock" value="1">
+                <button class="btn small rounded bg-lilac translucent js-variant-sort" data-sort="date">Дате выхода</button>
+                <button class="btn small rounded bg-lilac translucent js-variant-sort" data-sort="price">Цене</button>
+                <button class="btn small rounded bg-lilac translucent js-variant-sort" data-sort="discount">Скидке</button>
+                <label class="checkbox inStockOnly js-checkbox">
+                    <input class="input" type="checkbox" name="onlyStock" value="true">
                     <span class="label">Только в наличии</span>
                 </label>
             </div>
         </div>
-        <div class="gameGrid">
-            {{#each products}}
-                {{> game
-                    id=_id
-                    size=''
-                    alias=alias
-                    img=img
-                    name=name
-                    priceTo=priceTo
-                    priceFrom=priceFrom
-                    inFavorites=inFavorites
-                }}
-            {{/each}}
-        </div>
+        <div class="gameGrid js-productGrid"></div>
         <button class="btn rounded bg-lilac translucent loadMore js-loadMore">Загрузить ещё</button>
     </div>
 </main>

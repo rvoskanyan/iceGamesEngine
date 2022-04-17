@@ -37,6 +37,8 @@ const collapseNodes = document.querySelectorAll('.js-collapse');
 const autoSizeInputNodes = document.querySelectorAll('.js-autoSizeInput');
 const addReviewFormNode = document.querySelector('.js-addReviewForm');
 const commentProductFormNode = document.querySelector('.js-commentProductForm');
+const gamePageNode = document.querySelector('.js-gamePage');
+const rangeNode = document.querySelector('.js-range');
 const popupController = new PopupController([
   {
     id: 'loginFrom',
@@ -60,6 +62,228 @@ const popupController = new PopupController([
     popupSelector: '.js-mainNavigation',
   }
 ]);
+
+if (rangeNode) {
+  const rangeWidth = parseFloat(getComputedStyle(rangeNode).width);
+  const min = +rangeNode.dataset.min;
+  const max = +rangeNode.dataset.max;
+  const minSliderNode = rangeNode.querySelector('.js-minSlider');
+  const maxSliderNode = rangeNode.querySelector('.js-maxSlider');
+  const initialSliders = () => {
+    let minSliderValue = +minSliderNode.innerText;
+    let maxSliderValue = +maxSliderNode.innerText;
+    
+    if (minSliderValue > maxSliderValue) {
+      const saveMin = minSliderValue;
+      
+      minSliderValue = maxSliderValue
+      maxSliderValue = saveMin;
+  
+      minSliderNode.style.zIndex = '0';
+      maxSliderNode.style.zIndex = '1';
+      activeSlide = maxSliderNode;
+    }
+    
+    if (minSliderValue < min) {
+      minSliderValue = min;
+    }
+    
+    if (maxSliderValue > max) {
+      maxSliderValue = max;
+    }
+  
+    minSliderNode.style.left = `${(minSliderValue - min) / step}px`;
+    maxSliderNode.style.left = `${(maxSliderValue - min) / step}px`;
+    minSliderNode.innerText = minSliderValue;
+    maxSliderNode.innerText = maxSliderValue;
+    minSliderNode.dispatchEvent(new Event('initialSlider'));
+    maxSliderNode.dispatchEvent(new Event('initialSlider'));
+  }
+  
+  let maxSliderValue = +maxSliderNode.innerText;
+  let activeSlide = null;
+  
+  maxSliderNode.innerText = max;
+  
+  const maxSliderMaxValueWidth = parseFloat(getComputedStyle(maxSliderNode).width);
+  const step = (max - min) / (rangeWidth - maxSliderMaxValueWidth);
+  
+  maxSliderNode.innerText = maxSliderValue;
+  
+  initialSliders();
+  
+  maxSliderNode.addEventListener('mousedown', listenerMousedownSlider);
+  minSliderNode.addEventListener('mousedown', listenerMousedownSlider);
+  
+  maxSliderNode.addEventListener('startInitial', initialSliders);
+  minSliderNode.addEventListener('startInitial', initialSliders);
+  
+  async function listenerMousedownSlider(e) {
+    if (e.target === document.activeElement) {
+      return;
+    }
+    
+    e.preventDefault();
+    let holder = false;
+    
+    await new Promise(resolve => {
+      const timeout = setTimeout(() => {
+        holder = true;
+        e.target.removeEventListener('mouseup', listenerMouseup);
+        resolve();
+      }, 150);
+      
+      e.target.addEventListener('mouseup', listenerMouseup);
+  
+      function listenerMouseup () {
+        clearTimeout(timeout);
+        const range = document.createRange();
+        const sel = window.getSelection();
+        const sliderNode = e.target;
+        const inputSlider = (e) => {
+          if (e.key === 'Enter') {
+            e.returnValue = false;
+            return sliderNode.blur();
+          }
+          
+          const value = parseInt(sliderNode.innerText) || 0;
+          const num = parseInt(e.key);
+      
+          if ((num !== 0 && !num) || !(value <= max)) {
+            e.returnValue = false;
+        
+            if (e.preventDefault) {
+              e.preventDefault();
+            }
+          }
+      
+          if (sliderNode.innerText[0] === '0') {
+            sliderNode.innerText = sliderNode.innerText.replace(/^0+/, '');
+          }
+        }
+        const blurSlider = () => {
+          initialSliders();
+          e.target.removeEventListener('mouseup', listenerMouseup);
+          e.target.removeEventListener('blur', blurSlider);
+          sliderNode.removeAttribute('contenteditable');
+        }
+    
+        sliderNode.setAttribute('contenteditable', '');
+        range.selectNodeContents(sliderNode);
+        range.collapse(false);
+        sel.removeAllRanges();
+        sel.addRange(range);
+        sliderNode.addEventListener('keypress', inputSlider);
+        sliderNode.addEventListener('blur', blurSlider);
+        resolve();
+      }
+    });
+    
+    if (!holder) {
+      return;
+    }
+  
+    const cursorStartPosition = e.pageX;
+    const sliderStartPosition = parseInt(getComputedStyle(e.target).left);
+    const sliderNode = e.target;
+    const listenerMousemove = (e) => {
+      moveSlider(e, sliderNode, cursorStartPosition, sliderStartPosition);
+    }
+    const listenerMouseup = () => {
+      document.removeEventListener('mousemove', listenerMousemove);
+      document.removeEventListener('mouseup', listenerMouseup);
+      sliderNode.dispatchEvent(new Event('blur'));
+      initialSliders();
+      sliderNode.style.cursor = 'initial';
+    }
+  
+    sliderNode.style.cursor = 'pointer';
+  
+    document.addEventListener('mousemove', listenerMousemove);
+    document.addEventListener('mouseup', listenerMouseup);
+  
+    if (activeSlide) {
+      activeSlide.style.zIndex = '0';
+    }
+  
+    sliderNode.style.zIndex = '1';
+    activeSlide = sliderNode;
+  }
+  
+  function moveSlider(e, sliderNode, cursorStartPosition, currentPositionSlider) {
+    const offset = e.pageX - cursorStartPosition;
+    const sliderWidth = parseFloat(getComputedStyle(sliderNode).width);
+    let position = offset + currentPositionSlider;
+    let sliderValue = Math.round(position * step + min);
+    
+    if (position > rangeWidth - sliderWidth) {
+      position = rangeWidth - sliderWidth;
+      sliderValue = max;
+    }
+    
+    if (position < 0) {
+      position = 0;
+      sliderValue = min;
+    }
+  
+    sliderNode.style.left = `${position}px`;
+    sliderNode.innerText = sliderValue;
+  }
+}
+
+if (gamePageNode) {
+  const addToCartBtnNode = gamePageNode.querySelector('.js-addToCartBtn');
+  
+  addToCartBtnNode.addEventListener('click', async () => {
+    if (addToCartBtnNode.classList.contains('js-active')) {
+      window.location.href = '/cart';
+      return;
+    }
+    
+    const dsCartId = document.querySelector('body').dataset.dsCartId;
+    const formData = new FormData();
+    const dsId = addToCartBtnNode.dataset.dsId;
+    const productId = addToCartBtnNode.dataset.productId;
+    
+    formData.append('product_id', dsId);
+    formData.append('product_cnt', '1');
+    formData.append('typecurr', 'wmr');
+    formData.append('lang', 'ru-RU');
+    
+    if (dsCartId) {
+      formData.append('cart_uid', dsCartId);
+    }
+    
+    const responseAddCartDS = await fetch('https://shop.digiseller.ru/xml/shop_cart_add.asp', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: urlEncodeFormData(formData),
+    });
+    
+    const resultAddCartDS = await responseAddCartDS.json();
+    
+    if (resultAddCartDS.cart_err_num !== '0') {
+      return;
+    }
+    
+    const response = await postman.post(`/api/products/${productId}/cart`, {dsCartId: resultAddCartDS.cart_uid});
+    const result = await response.json();
+    
+    if (result.error) {
+      return;
+    }
+    
+    if (!dsCartId) {
+      document.querySelector('body').dataset.dsCartId = resultAddCartDS.cart_uid;
+    }
+    
+    addToCartBtnNode.innerText = 'В корзине ✔';
+    addToCartBtnNode.classList.add('js-active');
+    addToCartBtnNode.setAttribute('title', 'Перейти в корзину покупок');
+  })
+}
 
 if (autoSizeInputNodes) {
   autoSizeInputNodes.forEach(autoSizeInput => {
@@ -662,52 +886,210 @@ if (youtubePlayNodes.length) {
 if (catalogNode) {
   const filterNode = catalogNode.querySelector('.js-filter');
   const sortNode = catalogNode.querySelector('.js-sort');
+  const rangePriceNode = catalogNode.querySelector('.js-priceRange');
   const loadMoreNode = catalogNode.querySelector('.js-loadMore');
-  const params = [];
+  const fields = [];
+  let sortActiveBtn = null;
   
   const checkbox = [
     ...filterNode.querySelectorAll('.js-checkbox'),
     ...sortNode.querySelectorAll('.js-checkbox'),
   ];
+  const sortBtnNodes = sortNode.querySelectorAll('.js-variant-sort');
+  const rangePriceSliderNodes = rangePriceNode.querySelectorAll('.js-slider');
+  
+  rangePriceSliderNodes.forEach(rangePriceSliderNode => {
+    const name = rangePriceSliderNode.dataset.name;
+    
+    rangePriceSliderNode.addEventListener('initialSlider', () => {
+      const url = new URL(window.location.href);
+      const value = rangePriceSliderNode.innerText;
+      
+      url.searchParams.set(name, value);
+      history.pushState(null, null, url);
+      catalogNode.dispatchEvent(new Event('changeParams'));
+    })
+  
+    fields.push({
+      name,
+      node: rangePriceSliderNode,
+      type: 'contentEditable',
+      dispatch: true,
+      event: 'startInitial',
+    });
+  })
+  
+  sortBtnNodes.forEach(sortBtnNode => {
+    const value = sortBtnNode.dataset.sort;
+    
+    sortBtnNode.addEventListener('click', () => {
+      const url = new URL(window.location.href);
+      
+      if (sortActiveBtn !== sortBtnNode) {
+        url.searchParams.set('sort', value);
+        sortBtnNode.classList.add('active');
+        sortActiveBtn && sortActiveBtn.classList.remove('active');
+        sortActiveBtn = sortBtnNode;
+      } else {
+        sortActiveBtn = null;
+        sortBtnNode.classList.remove('active');
+        url.searchParams.delete('sort');
+      }
+  
+      history.pushState(null, null, url);
+      catalogNode.dispatchEvent(new Event('changeParams'));
+    })
+  
+    fields.push({
+      name: 'sort',
+      value,
+      fixValue: true,
+      node: sortBtnNode,
+      dispatch: true,
+      event: 'click',
+    });
+  })
   
   checkbox.forEach(item => {
-    item.querySelector('.input').addEventListener('click', (e) => {
-      const url = new URL(window.location.href);
-      const input = e.currentTarget;
+    const input = item.querySelector('.input');
+    const inputName = input.name;
+    const inputValue = input.value;
     
+    input.addEventListener('click', (e) => {
+      const url = new URL(window.location.href);
+      
       if (input.checked) {
-        url.searchParams.append(input.name, input.value);
-        
-        params.push({
-          name: input.name,
-          value: input.value,
-        })
+        url.searchParams.append(inputName, inputValue);
       } else {
         const entriesParams = [...url.searchParams.entries()];
-        const paramIndex = params.findIndex(item => item.name === input.name && item.value === input.value);
       
-        for(item of entriesParams) {
+        for (item of entriesParams) {
           url.searchParams.delete(item[0]);
         }
       
-        for(item of entriesParams) {
-          if (item[1] === input.value) {
+        for (item of entriesParams) {
+          if (item[1] === inputValue) {
             continue;
           }
         
           url.searchParams.append(item[0], item[1]);
         }
-        
-        if (paramIndex === -1) {
-          return;
-        }
-        
-        params.splice(paramIndex, 1);
       }
     
       history.pushState(null, null, url);
+      catalogNode.dispatchEvent(new Event('changeParams'));
+    });
+    
+    fields.push({
+      name: inputName,
+      value: inputValue,
+      fixValue: true,
+      node: input,
+      type: 'checkbox',
     });
   })
+  
+  const url = new URL(window.location.href);
+  const entriesSearchParams = [...url.searchParams.entries()];
+  
+  entriesSearchParams.forEach(searchParam => {
+    const field = fields.find(field => {
+      if (field.fixValue) {
+        return field.name === searchParam[0] && field.value === searchParam[1];
+      }
+  
+      return field.name === searchParam[0];
+    });
+    
+    if (!field) {
+      return;
+    }
+    
+    switch (field.type) {
+      case 'checkbox': {
+        field.node.checked = true;
+        break;
+      }
+      case 'contentEditable': {
+        field.node.innerText = searchParam[1];
+        break;
+      }
+    }
+    
+    if (field.dispatch) {
+      field.node.dispatchEvent(new Event(field.event));
+    }
+  
+    let param = {
+      name: searchParam[0],
+      value: searchParam[1],
+    };
+    
+    switch (field.type) {
+      case 'checkbox': {
+        param.value = field.node.value;
+        break;
+      }
+      case 'contentEditable': {
+        param.value = field.node.innerText;
+        break;
+      }
+    }
+  })
+  
+  catalogNode.addEventListener('changeParams', async () => {
+    const url = new URL(window.location.href);
+    const response = await postman.get(`${websiteAddress}api/products${url.search}`);
+    const result = await response.json();
+    const productGridNode = catalogNode.querySelector('.js-productGrid');
+    productGridNode.innerHTML = '';
+    
+    result.products.forEach(product => {
+      productGridNode.innerHTML += `
+        <a
+            href="/games/${product.alias}"
+            class="cardGame js-cardGame"
+            data-id="${product._id}"
+            data-ds-id="${product.dsId}"
+            title="Перейти к странице игры"
+        >
+            <div class="actions">
+                <!--{{#if @root.isAuth}}
+                    <button class="btn like js-favoritesBtn{{#if inFavorites}} js-active{{/if}}" title="{{#if inFavorites}}Удалить игру из избранного{{else}}Добавить игру в избранное{{/if}}">
+                        <span class="icon-static icon-static-actionLike js-icon {{#if inFavorites}} active{{/if}}"></span>
+                    </button>
+                {{/if}}-->
+                <button
+                    class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart small js-addToCart{{#if inCart}} active js-active{{/if}}"
+                    title="{{#if inCart}}Перейти в корзину покупок{{else}}Добавить данный товар в корзину покупок{{/if}}"
+                >
+                    <!--{{#if inCart}}В корзине ✔{{else}}-->В корзину<!--{{/if}}-->
+                </button>
+            </div>
+            <div class="head">
+                <img class="img" src="${websiteAddress}${product.img}" alt="Картинка ${product.name}" title="${product.name}">
+                <div class="name">
+                    ${product.name}
+                </div>
+            </div>
+            <div class="price">
+                <div class="toPrice">
+                    <span class="value">
+                        ${product.priceTo}
+                    </span>
+                </div>
+                <div class="fromPrice">
+                    <span class="value">
+                        ${product.priceFrom}
+                    </span>
+                </div>
+            </div>
+        </a>
+      `
+    });
+  })
+  
+  catalogNode.dispatchEvent(new Event('changeParams'));
 }
 
 if (loginFormNode && btnSwitchAuthNode && btnSwitchRegNode && submitLoginNode) {

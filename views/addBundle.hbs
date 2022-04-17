@@ -1,12 +1,12 @@
 {{#if isEdit}}
-    <a href="/admin/bunches/{{bunch.id}}/addProduct">Добавить игру в данную связку</a>
+    <a href="/admin/bundles/{{bundle.id}}/addProduct">Добавить игру в данную связку</a>
     <br>
     <br>
 {{/if}}
-<form method="post" action="/admin/bunches/{{#if isEdit}}edit/{{bunch.id}}{{else}}add{{/if}}">
+<form method="post" action="/admin/bundles/{{#if isEdit}}edit/{{bundle.id}}{{else}}add{{/if}}">
     <label>
         Название связки:
-        <input type="text" name="name"{{#if isEdit}} value="{{bunch.name}}"{{/if}}>
+        <input type="text" name="name"{{#if isEdit}} value="{{bundle.name}}"{{/if}}>
     </label>
     <br>
     <br>
@@ -15,11 +15,11 @@
 {{#if isEdit}}
     <br>
     Игры в связке:
-    {{#if games}}
+    {{#if products}}
         <ul>
-            {{#each games}}
+            {{#each products}}
                 <li>
-                    <a href="/admin/bunches/{{../bunch.id}}/{{id}}">
+                    <a href="/admin/bundles/{{@root.bundle.id}}/{{id}}">
                         {{name}}
                     </a>
                 </li>

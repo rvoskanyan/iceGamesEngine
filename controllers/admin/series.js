@@ -1,4 +1,5 @@
 import Series from './../../models/Series.js';
+import Product from './../../models/Product.js';
 
 export const pageSeries = async (req, res) => {
   try {
@@ -40,16 +41,15 @@ export const addSeries = async (req, res) => {
 export const pageEditSeries = async (req, res) => {
   try {
     const {seriesId} = req.params;
-    
-    const series = await Series.findByPk(seriesId, {attributes: ['id', 'name']});
-    const gamesSeries = await series.getProducts({attributes: ['id', 'name']});
+    const series = await Series.findById(seriesId);
+    const seriesProducts = await Product.find({seriesId});
     
     res.render('addSeries', {
       layout: 'admin',
       title: 'Редактирование серии игр',
       isEdit: true,
-      series: series.dataValues,
-      gamesSeries: gamesSeries.map(item => item.dataValues),
+      series,
+      seriesProducts,
     })
   } catch (e) {
     console.log(e);
@@ -80,17 +80,12 @@ export const pageAddGameSeries = async (req, res) => {
   const {seriesId} = req.params;
   
   try {
-    const games = await Product.findAll({
-      attributes: ['id', 'name'],
-      where: {
-        seriesId: null,
-      }
-    });
+    const products = await Product.find({seriesId: null});
     
     res.render('addGameSeries', {
       layout: 'admin',
       title: 'Добавление игры в серию',
-      games: games.map(item => item.dataValues),
+      products,
       seriesId,
     });
   } catch (e) {
@@ -103,13 +98,12 @@ export const addGameSeries = async (req, res) => {
   const {seriesId} = req.params;
   
   try {
-    const {gameId} = req.body;
+    const {productId} = req.body;
+    const product = await Product.findById(productId);
     
-    await Product.update({seriesId}, {
-      where: {
-        id: gameId,
-      }
-    });
+    product.seriesId = seriesId;
+    
+    await product.save();
     
     res.redirect(`/admin/series/edit/${seriesId}`);
   } catch (e) {

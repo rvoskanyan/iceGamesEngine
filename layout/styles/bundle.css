@@ -2021,7 +2021,7 @@
   position: relative;
   display: flex;
   align-items: center;
-  height: 15px; }
+  height: 18px; }
   .range:before {
     content: '';
     width: 100%;
@@ -2040,11 +2040,8 @@
     font-size: 14px;
     transform: translateY(-50%);
     line-height: 1;
-    box-shadow: 0 0 20px #000; }
-  .range .min {
+    box-shadow: 0 0 20px #000;
     left: 0; }
-  .range .max {
-    right: 0; }
 
 .catalog {
   display: flex;

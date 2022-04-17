@@ -23,10 +23,75 @@ import Order from "../../models/Order.js";
 
 export const getProducts = async (req, res) => {
   try {
-    const {searchString} = req.query;
+    const {
+      searchString = '',
+      priceFrom = '',
+      priceTo = '',
+      sort = '',
+      onlyStock = '',
+      categories = [],
+      genres = [],
+      activationServices = [],
+    } = req.query;
     const name = new RegExp(searchString, 'i');
+    const filter = {name};
     
-    const products = await Product.find({name});
+    if (categories.length) {
+      filter.categories = {$in: categories};
+    }
+  
+    if (genres.length) {
+      filter.genres = {$in: genres};
+    }
+  
+    if (genres.length) {
+      filter.genres = {$in: genres};
+    }
+  
+    if (activationServices.length) {
+      filter.activationServices = {$in: activationServices};
+    }
+    
+    if (+priceFrom && +priceFrom >= 0) {
+      filter.priceTo = {$gte: +priceFrom};
+    }
+  
+    if (priceTo && +priceFrom >= 0) {
+      filter.priceTo = {
+        ...filter.priceTo,
+        $lte: +priceTo,
+      }
+    }
+  
+    if (onlyStock) {
+      filter.inStock = true;
+    }
+    
+    let query = Product.find(filter);
+    
+    if (sort) {
+      let sortField = '';
+      const sortObjs = {};
+      
+      switch (sort) {
+        case 'date': {
+          sortField = 'releaseDate';
+          break;
+        }
+        case 'price': {
+          sortField = 'priceTo';
+          break;
+        }
+      }
+  
+      sortObjs[sortField] = 1;
+      
+      if (sortField) {
+        query = query.sort(sortObjs);
+      }
+    }
+    
+    const products = await query;
     
     res.json({
       message: 'success',

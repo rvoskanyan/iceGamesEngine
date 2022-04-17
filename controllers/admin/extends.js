@@ -32,7 +32,7 @@ export const addExtend = async (req, res) => {
     const iconExtend = getExtendFile(icon.name);
     const iconName = `${uuidv4()}.${iconExtend}`;
   
-    await icon.mv(path.resolve(__dirname, '../../uploadedFiles', iconName));
+    await icon.mv(path.join(__dirname, '/uploadedFiles', iconName));
   
     await Extend.create({name, icon: iconName});
     

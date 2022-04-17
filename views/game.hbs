@@ -1,4 +1,4 @@
-<main class="gamePage">
+<main class="gamePage js-gamePage">
     <div class="breadcrumbs contentContainer">
         <div class="item">
             <a class="btn link" href="/">Главная</a>
@@ -13,19 +13,19 @@
     <div class="cover blackout blackout-left blackout-bottom slide active js-slide">
         <img class="img" src="{{websiteAddress}}{{product.coverImg}}" alt="{{product.name}}" title="{{product.name}}">
         <div class="offer">
-            {{#if gamesBunch}}
+            {{#if bundleProducts}}
                 <div class="packages">
-                    {{#each gamesBunch}}
+                    {{#each bundleProducts}}
                         {{#if isCurrent}}
                             <div class="btn rounded translucent bg-paleBlue active package">
-                                {{edition}}
+                                {{editionId.name}}
                             </div>
                         {{else}}
                             <div class="tooltip package">
-                                <a href="/games/{{id}}" class="btn rounded translucent bg-paleBlue">
-                                    {{edition}}
+                                <a href="/games/{{alias}}" class="btn rounded translucent bg-paleBlue">
+                                    {{editionId.name}}
                                 </a>
-                                {{#if elements}}
+                                {{#if elements.length}}
                                     <div class="prompt">
                                         <ul class="list">
                                             {{#each elements}}
@@ -67,7 +67,16 @@
                 {{/if}}
             </div>
             <div class="actions">
-                <button title="Добавить игру в корзину покупок" class="btn rounded increase bg-pink hover-backlight-blue">В корзину</button>
+                <button
+                    title="{{#if currentProductInCart}}Перейти в корзину покупок{{else}}Добавить данный товар в корзину покупок{{/if}}"
+                    class="btn rounded increase bg-pink hover-backlight-blue js-addToCartBtn{{#if currentProductInCart}} js-active{{/if}}"
+                    {{#unless currentProductInCart}}
+                        data-ds-id="{{product.dsId}}"
+                        data-product-id="{{product.id}}"
+                    {{/unless}}
+                >
+                    {{#if currentProductInCart}}В корзине ✔{{else}}В корзину{{/if}}
+                </button>
             </div>
             {{#if product.extends.length}}
                 <div class="extends">
@@ -194,87 +203,14 @@
                         <div class="visibleAreaWrapper">
                             <div class="visibleArea">
                                 <div class="tape">
-                                    <div class="slide active">
-                                        <a href="#" class="cardGame small" title="Перейти к странице игры">
-                                            <div class="actions">
-                                                <button class="btn like" title="Добавить игру в избранное">
-                                                    <span class="icon-static icon-static-actionLike"></span>
-                                                </button>
-                                                <button
-                                                        class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart small"
-                                                        title="Добавить данный товар в корзину покупок"
-                                                >
-                                                    В корзину
-                                                </button>
-                                            </div>
-                                            <div class="head">
-                                                <img class="img" src="/img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
-                                                <div class="name">Doom ETERNAL</div>
-                                            </div>
-                                            <div class="price">
-                                                <div class="toPrice">
-                                                    <span class="value">999</span>
-                                                </div>
-                                                <div class="fromPrice">
-                                                    <span class="value">1300</span>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="slide active">
-                                        <a href="#" class="cardGame small" title="Перейти к странице игры">
-                                            <div class="actions">
-                                                <button class="btn like" title="Добавить игру в избранное">
-                                                    <span class="icon-static icon-static-actionLike"></span>
-                                                </button>
-                                                <button
-                                                        class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart small"
-                                                        title="Добавить данный товар в корзину покупок"
-                                                >
-                                                    В корзину
-                                                </button>
-                                            </div>
-                                            <div class="head">
-                                                <img class="img" src="/img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
-                                                <div class="name">Doom ETERNAL</div>
-                                            </div>
-                                            <div class="price">
-                                                <div class="toPrice">
-                                                    <span class="value">999</span>
-                                                </div>
-                                                <div class="fromPrice">
-                                                    <span class="value">1300</span>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="slide">
-                                        <a href="#" class="cardGame small" title="Перейти к странице игры">
-                                            <div class="actions">
-                                                <button class="btn like" title="Добавить игру в избранное">
-                                                    <span class="icon-static icon-static-actionLike"></span>
-                                                </button>
-                                                <button
-                                                        class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart small"
-                                                        title="Добавить данный товар в корзину покупок"
-                                                >
-                                                    В корзину
-                                                </button>
-                                            </div>
-                                            <div class="head">
-                                                <img class="img" src="/img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
-                                                <div class="name">Doom ETERNAL</div>
-                                            </div>
-                                            <div class="price">
-                                                <div class="toPrice">
-                                                    <span class="value">999</span>
-                                                </div>
-                                                <div class="fromPrice">
-                                                    <span class="value">1300</span>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>
+                                    {{#each recProducts}}
+                                        <div class="slide{{#iff @index '<=' 2}} active{{/iff}}">
+                                            {{> game
+                                                id=_id
+                                                size='small'
+                                            }}
+                                        </div>
+                                    {{/each}}
                                 </div>
                             </div>
                         </div>
@@ -294,7 +230,9 @@
                         {{#if product.elements.length}}
                             <button class="btn round border big translucent js-tabBtn" data-target-id="3">Состав набора</button>
                         {{/if}}
-                        <button class="btn round border big translucent js-tabBtn" data-target-id="4">Игры серии</button>
+                        {{#if seriesProducts.length}}
+                            <button class="btn round border big translucent js-tabBtn" data-target-id="4">Игры серии</button>
+                        {{/if}}
                     </div>
                     <div class="blocks totalHeight infoBlock">
                         <div class="item active js-tabBlock-1">
@@ -331,7 +269,7 @@
                                 </ul>
                             </div>
                         {{/if}}
-                        {{#if false}}
+                        {{#if seriesProducts.length}}
                             <div class="item js-tabBlock-4">
                                 {{#if seriesIsSlider}}
                                     <div class="slider">
@@ -344,17 +282,13 @@
                                 {{else}}
                                     <div class="row-game">
                                 {{/if}}
-                                {{#each gamesSeries}}
+                                {{#each seriesProducts}}
                                     {{#if seriesIsSlider}}
                                         <div class="slide{{#if (isLess @index 4)}} active{{/if}}">
                                     {{/if}}
                                         {{> game
                                             size='small'
-                                            id=id
-                                            img=img
-                                            name=name
-                                            priceTo=priceTo
-                                            priceFrom=priceFrom
+                                            id=_id
                                         }}
                                     {{#if seriesIsSlider}}
                                         </div>

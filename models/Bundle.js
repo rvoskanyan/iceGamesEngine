@@ -13,6 +13,6 @@ const options = {
   timestamps: true,
 };
 
-const bunchSchema = new Schema(fields, options);
+const bundleSchema = new Schema(fields, options);
 
-export default model('Bunch', bunchSchema);
+export default model('Bundle', bundleSchema);

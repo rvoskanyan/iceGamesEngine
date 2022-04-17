@@ -143,14 +143,14 @@ export const addProduct = async (req, res) => {
       platformId: platform,
     });
     
-    await img.mv(path.resolve(__dirname, '../../uploadedFiles', imgName));
+    await img.mv(path.join(__dirname, '/uploadedFiles', imgName));
     product.img = imgName;
     
     if (coverImg) {
       const coverImgExtend = getExtendFile(coverImg.name);
       const coverImgName = `${uuidv4()}.${coverImgExtend}`;
       
-      await coverImg.mv(path.resolve(__dirname, '../../uploadedFiles', coverImgName));
+      await coverImg.mv(path.join(__dirname, '/uploadedFiles', coverImgName));
       product.coverImg = coverImgName;
     }
   
@@ -158,7 +158,7 @@ export const addProduct = async (req, res) => {
       const coverVideoExtend = getExtendFile(coverVideo.name);
       const coverVideoName = `${uuidv4()}.${coverVideoExtend}`;
       
-      await coverVideo.mv(path.resolve(__dirname, '../../uploadedFiles', coverVideoName));
+      await coverVideo.mv(path.join(__dirname, '/uploadedFiles', coverVideoName));
       product.coverVideo = coverVideoName;
     }
   
@@ -168,14 +168,14 @@ export const addProduct = async (req, res) => {
           const extend = getExtendFile(item.name);
           const gameImgName = `${uuidv4()}.${extend}`;
         
-          await item.mv(path.resolve(__dirname, '../../uploadedFiles', gameImgName));
+          await item.mv(path.join(__dirname, '/uploadedFiles', gameImgName));
           product.images.push({name: gameImgName});
         }
       } else {
         const extend = getExtendFile(gameImages.name);
         const gameImgName = `${uuidv4()}.${extend}`;
       
-        await gameImages.mv(path.resolve(__dirname, '../../uploadedFiles', gameImgName));
+        await gameImages.mv(path.join(__dirname, '/uploadedFiles', gameImgName));
         product.images.push({name: gameImgName});
       }
     }
@@ -537,7 +537,7 @@ export const editProduct = async (req, res) => {
         const extend = getExtendFile(img.name);
         const imgName = `${uuidv4()}.${extend}`;
         
-        await img.mv(path.resolve(__dirname, '../../uploadedFiles', imgName));
+        await img.mv(path.join(__dirname, '/uploadedFiles', imgName));
         values.img = imgName;
       }
   
@@ -545,7 +545,7 @@ export const editProduct = async (req, res) => {
         const extend = getExtendFile(coverImg.name);
         const coverImgName = `${uuidv4()}.${extend}`;
         
-        await coverImg.mv(path.resolve(__dirname, '../../uploadedFiles', coverImgName));
+        await coverImg.mv(path.join(__dirname, '/uploadedFiles', coverImgName));
         values.coverImg = coverImgName;
       }
   
@@ -553,7 +553,7 @@ export const editProduct = async (req, res) => {
         const extend = getExtendFile(coverVideo.name);
         const coverVideoName = `${uuidv4()}.${extend}`;
         
-        await coverVideo.mv(path.resolve(__dirname, '../../uploadedFiles', coverVideoName));
+        await coverVideo.mv(path.join(__dirname, '/uploadedFiles', coverVideoName));
         values.coverVideo = coverVideoName;
       }
       
@@ -563,7 +563,7 @@ export const editProduct = async (req, res) => {
             const extend = getExtendFile(item.name);
             const gameImgName = `${uuidv4()}.${extend}`;
   
-            await item.mv(path.resolve(__dirname, '../../uploadedFiles', gameImgName));
+            await item.mv(path.join(__dirname, '/uploadedFiles', gameImgName));
             
             const imgObj = await Image.create({name: gameImgName});
   
@@ -573,7 +573,7 @@ export const editProduct = async (req, res) => {
           const extend = getExtendFile(gameImages.name);
           const gameImgName = `${uuidv4()}.${extend}`;
   
-          await gameImages.mv(path.resolve(__dirname, '../../uploadedFiles', gameImgName));
+          await gameImages.mv(path.join(__dirname, '/uploadedFiles', gameImgName));
   
           const imgObj = await Image.create({name: gameImgName});
   

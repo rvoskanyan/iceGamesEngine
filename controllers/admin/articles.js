@@ -65,8 +65,8 @@ export const addArticle = async (req, res) => {
       lastEditorId: req.session.userId,
     });
   
-    await img.mv(path.resolve(__dirname, '../../uploadedFiles', imgName));
-    await coverImg.mv(path.resolve(__dirname, '../../uploadedFiles', coverImgName));
+    await img.mv(path.join(__dirname, '/uploadedFiles', imgName));
+    await coverImg.mv(path.join(__dirname, '/uploadedFiles', coverImgName));
     
     if (mustFix) {
       await Article.findOneAndUpdate({fixed: true}, {fixed: false});
@@ -128,7 +128,7 @@ export const editArticle = async (req, res) => {
       const imgExtend = getExtendFile(img.name);
       const imgName = `${uuidv4()}.${imgExtend}`;
       
-      await img.mv(path.resolve(__dirname, '../../uploadedFiles', imgName));
+      await img.mv(path.join(__dirname, '/uploadedFiles', imgName));
       article.img = imgName;
     }
     
@@ -136,7 +136,7 @@ export const editArticle = async (req, res) => {
       const coverImgExtend = getExtendFile(coverImg.name);
       const coverImgName = `${uuidv4()}.${coverImgExtend}`;
   
-      await coverImg.mv(path.resolve(__dirname, '../../uploadedFiles', coverImgName));
+      await coverImg.mv(path.join(__dirname, '/uploadedFiles', coverImgName));
       article.coverImg = coverImgName;
     }
     
@@ -182,7 +182,7 @@ export const addBlock = async (req, res) => {
       const imgExtend = getExtendFile(img.name);
       const imgName = `${uuidv4()}.${imgExtend}`;
   
-      await img.mv(path.resolve(__dirname, '../../uploadedFiles', imgName));
+      await img.mv(path.join(__dirname, '/uploadedFiles', imgName));
       
       block.img = imgName;
       block.imgPosition = imgPosition;

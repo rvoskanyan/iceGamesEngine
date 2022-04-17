@@ -144,7 +144,6 @@ const fields = {
     type: Number,
     default: 0,
   },
-  orderInBundle: Number,
   images: {
     type: [imageSchema],
     default: [],
@@ -156,6 +155,10 @@ const fields = {
   keys: {
     type: [keySchema],
     default: [],
+  },
+  inStock: {
+    type: Boolean,
+    default: true,
   },
   countKeys: {
     type: Number,
@@ -191,9 +194,13 @@ const fields = {
     type: Schema.Types.ObjectId,
     ref: 'Edition',
   },
-  bunchId: {
+  bundleId: {
     type: Schema.Types.ObjectId,
-    ref: 'Bunch',
+    ref: 'Bundle',
+  },
+  isOriginalInBundle: {
+    type: Boolean,
+    default: false,
   },
   authorId: {
     type: Schema.Types.ObjectId,
