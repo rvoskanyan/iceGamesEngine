@@ -5,37 +5,16 @@ import ActivationService from '../../models/ActivationService.js';
 import Order from '../../models/Order.js';
 import Comment from '../../models/Comment.js';
 import User from '../../models/User.js';
-import {getDiscount} from "../../utils/functions.js";
 
 export const gamesPage = async (req, res) => {
   try {
-    let products = await Product.find().select(['name', 'dsId', 'alias', 'img', 'priceTo', 'priceFrom']).lean().limit(20);
     const categories = await Category.find().select(['name']);
     const genres = await Genre.find().select(['name']);
     const activationServices = await ActivationService.find().select(['name']);
-    const person = res.locals.person;
-    
-    if (person) {
-      const favoritesProducts = person.favoritesProducts;
-      const cart = person.cart;
-  
-      products = products.map(item => {
-        if (favoritesProducts && favoritesProducts.includes(item._id.toString())) {
-          item.inFavorites = true;
-        }
-    
-        if (cart && cart.includes(item._id.toString())) {
-          item.inCart = true;
-        }
-    
-        return item;
-      });
-    }
     
     res.render('catalog', {
       title: 'Каталог игр',
       isCatalog: true,
-      products,
       categories,
       genres,
       activationServices,
@@ -200,7 +179,6 @@ export const gamePage = async (req, res) => {
     res.render('game', {
       title: "ICE Games -- магазин ключей",
       product,
-      discount: getDiscount(product.priceTo, product.priceFrom),
       trailerId,
       isProductNotPurchased,
       isProductNoReview,

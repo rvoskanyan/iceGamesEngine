@@ -38,7 +38,11 @@
                     <span class="icon icon-search"></span>
                 </button>
             </div>
-            <a href="#" title="Рейтинг пользователей Ice Games" class="btn round border hover-color-pink hover-border-pink">Рейтинг</a>
+            {{#if isRating}}
+                <span title="Рейтинг пользователей Ice Games" class="btn round border hover-color-pink hover-border-pink">Рейтинг</span>
+            {{else}}
+                <a href="/rating" title="Рейтинг пользователей Ice Games" class="btn round border hover-color-pink hover-border-pink">Рейтинг</a>
+            {{/if}}
         </div>
         <div class="profile">
             {{#if isAuth}}

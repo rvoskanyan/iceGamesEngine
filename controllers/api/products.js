@@ -2,6 +2,7 @@ import Product from "../../models/Product.js";
 import User from "../../models/User.js";
 import Guest from "../../models/Guest.js";
 import Order from "../../models/Order.js";
+import {achievementEvent} from "../../services/achievement.js";
 /*
   Articles.find({_id: {$ne: article._id}})
  */
@@ -32,9 +33,12 @@ export const getProducts = async (req, res) => {
       categories = [],
       genres = [],
       activationServices = [],
+      limit = 20,
+      skip = 0,
     } = req.query;
     const name = new RegExp(searchString, 'i');
     const filter = {name};
+    const person = res.locals.person;
     
     if (categories.length) {
       filter.categories = {$in: categories};
@@ -67,35 +71,58 @@ export const getProducts = async (req, res) => {
       filter.inStock = true;
     }
     
-    let query = Product.find(filter);
+    let query = Product.find(filter).lean();
     
     if (sort) {
-      let sortField = '';
       const sortObjs = {};
       
       switch (sort) {
         case 'date': {
-          sortField = 'releaseDate';
+          sortObjs.releaseDate = -1;
           break;
         }
         case 'price': {
-          sortField = 'priceTo';
+          sortObjs.priceTo = 1;
+          break;
+        }
+        case 'discount': {
+          sortObjs.discount = -1;
           break;
         }
       }
   
-      sortObjs[sortField] = 1;
+      sortObjs.createdAt = -1;
       
-      if (sortField) {
-        query = query.sort(sortObjs);
-      }
+      query = query.sort(sortObjs);
     }
     
-    const products = await query;
+    let products = await query.skip(skip).limit(limit);
+  
+    if (person) {
+      const favoritesProducts = person.favoritesProducts;
+      const cart = person.cart;
+    
+      products = products.map(item => {
+        if (favoritesProducts && favoritesProducts.includes(item._id.toString())) {
+          item.inFavorites = true;
+        }
+      
+        if (cart && cart.includes(item._id.toString())) {
+          item.inCart = true;
+        }
+      
+        return item;
+      });
+    }
+  
+    const count = await Product.countDocuments(filter);
+    const isLast = +skip + +limit >= count;
     
     res.json({
       message: 'success',
+      isAuth: req.session.isAuth,
       products,
+      isLast,
     });
   } catch (e) {
     console.log(e);
@@ -109,9 +136,9 @@ export const getProducts = async (req, res) => {
 export const addToFavorites = async (req, res) => {
   try {
     const productId = req.params.productId;
-    const userId = req.session.userId;
+    const isAuth = req.session.isAuth;
     
-    if (!productId || !userId) {
+    if (!productId || !isAuth) {
       throw new Error();
     }
     
@@ -121,7 +148,7 @@ export const addToFavorites = async (req, res) => {
       throw new Error();
     }
     
-    const user = await User.findById(userId);
+    const user = res.locals.person;
     
     if (user.favoritesProducts.includes(productId)) {
       throw new Error();
@@ -129,6 +156,7 @@ export const addToFavorites = async (req, res) => {
     
     user.favoritesProducts.push(productId);
     await user.save();
+    await achievementEvent('addProductFavorites', user);
     res.json({
       success: true,
     });

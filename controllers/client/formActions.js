@@ -2,6 +2,7 @@ import {validationResult} from 'express-validator';
 import bcrypt from 'bcryptjs';
 
 import User from './../../models/User.js';
+import {achievementEvent} from "../../services/achievement.js";
 
 export const registration = async (req, res) => {
   try {
@@ -30,8 +31,10 @@ export const registration = async (req, res) => {
       
       if (inviter) {
         inviter.invitedUsers.push(user._id);
+        inviter.increaseRating(5);
   
         await inviter.save();
+        await achievementEvent('friendInvitation', inviter);
         
         res.clearCookie('inviterId')
       }

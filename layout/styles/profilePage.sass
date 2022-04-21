@@ -143,6 +143,9 @@
           & .listActions
             margin-top: 15px
 
+            & .title
+              font-size: 24px
+
           & .list
             list-style: none
             margin-top: 15px
@@ -211,18 +214,6 @@
         display: flex
         justify-content: space-between
         margin-top: 30px
-
-        & .achievement
-          background: #460B6E
-          border: 2px solid #FFFFFF
-          box-sizing: border-box
-          border-radius: 22px
-          width: 160px
-          height: 211px
-
-          @include for-big-desktop-up
-            width: 181px
-            height: 238px
 
     &.personalDataForm
       .personalData, .password
@@ -294,17 +285,15 @@
       margin-top: 50px
 
       & .list
-        display: flex
+        display: grid
+        grid-template-columns: repeat(4, max-content)
+        justify-content: space-between
+        row-gap: 50px
+        column-gap: 30px
         margin-top: 20px
 
-        & .achievement
-          width: 135px
-          height: 178px
-          border: 2px solid #fff
-          border-radius: 22px
-
-          &:not(:last-child)
-            margin-right: 20px
+        & .achievement:not(:last-child)
+          margin-right: 20px
 
     .referralLink
       .description

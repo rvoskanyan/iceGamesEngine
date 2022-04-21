@@ -1,0 +1,44 @@
+<form method="post" action="/admin/achievements/{{#if isEdit}}{{achievement.id}}{{else}}add{{/if}}" enctype="multipart/form-data">
+    <label>
+        *Название:
+        <input type="text" name="name"{{#if isEdit}} value="{{achievement.name}}"{{/if}}>
+    </label>
+    <br>
+    <br>
+    <label>
+        *Описание:
+        <textarea name="description" cols="30" rows="10">{{achievement.description}}</textarea>
+    </label>
+    <br>
+    <br>
+    <label>
+        *Тип:
+        <select name="type">
+            {{#each types}}
+                <option value="{{key}}"{{#if selected}} selected{{/if}}>
+                    {{name}}
+                </option>
+            {{/each}}
+        </select>
+    </label>
+    <br>
+    <br>
+    <label>
+        *Количество:
+        <input type="number" name="amount"{{#if isEdit}} value="{{achievement.amount}}"{{/if}}>
+    </label>
+    <br>
+    <br>
+    <label>
+        *Иконка:
+        <input type="file" name="icon">
+    </label>
+    {{#if isEdit}}
+        <br>
+        <br>
+        <img src="{{websiteAddress}}{{achievement.icon}}">
+    {{/if}}
+    <br>
+    <br>
+    <input type="submit" name="add" value="{{#if isEdit}}Сохранить{{else}}Добавить{{/if}}">
+</form>

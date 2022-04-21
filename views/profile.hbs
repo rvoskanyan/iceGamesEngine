@@ -12,7 +12,7 @@
                 <div class="info">
                     <div class="name">{{user.login}}</div>
                     <div class="rating">Рейтинг {{user.rating}}</div>
-                    <div class="rating">Позиция 1 \ {{countUsers}}</div>
+                    <div class="rating">Позиция {{ratingPosition}} \ {{countUsers}}</div>
                 </div>
                 <div class="prompt js-prompt">
                     <button class="btn js-promptOpen">
@@ -44,7 +44,7 @@
             <div class="statistics">
                 <div class="items">
                     <div class="item">
-                        <div class="value">{{purchasedProducts}}</div>
+                        <div class="value">{{user.purchasedProducts}}</div>
                         <div class="name">Игр куплено</div>
                     </div>
                     <div class="item">
@@ -56,7 +56,7 @@
                         <div class="name">Статей прочитано</div>
                     </div>
                     <div class="item">
-                        <div class="value">0</div>
+                        <div class="value">{{countAchievements}}</div>
                         <div class="name">Достижений получено</div>
                     </div>
                     <div class="item">
@@ -65,18 +65,23 @@
                     </div>
                 </div>
             </div>
-            <div class="achievements">
-                <div class="head">
-                    <div class="title">Мои достижения</div>
-                    <a href="/profile/achievements" class="btn round border small">Смотреть все</a>
+            {{#if user.achievements.length}}
+                <div class="achievements">
+                    <div class="head">
+                        <div class="title">Мои достижения</div>
+                        <a href="/profile/achievements" class="btn round border small">Смотреть все</a>
+                    </div>
+                    <div class="list">
+                        {{#each user.achievements}}
+                            <div class="achievement">
+                                <img src="{{@root.websiteAddress}}{{icon}}" alt="{{name}}" class="achievementIcon">
+                                <div class="name">{{name}}</div>
+                                <div class="description">{{description}}</div>
+                            </div>
+                        {{/each}}
+                    </div>
                 </div>
-                <div class="list">
-                    <div class="achievement"></div>
-                    <div class="achievement"></div>
-                    <div class="achievement"></div>
-                    <div class="achievement"></div>
-                </div>
-            </div>
+            {{/if}}
         </div>
     </div>
     <div class="homeSection">

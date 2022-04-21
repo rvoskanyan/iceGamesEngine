@@ -16,7 +16,7 @@ import Series from './../../models/Series.js';
 import {
   getExtendFile,
   getArray,
-  getAlias,
+  getAlias, getDiscount,
 } from "../../utils/functions.js";
 
 export const pageProducts = async (req, res) => {
@@ -119,6 +119,7 @@ export const addProduct = async (req, res) => {
       description,
       priceTo,
       priceFrom,
+      discount: getDiscount(priceTo, priceFrom),
       trailerLink,
       images: [],
       inHomeSlider: inHomeSlider === "on",

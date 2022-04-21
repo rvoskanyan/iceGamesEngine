@@ -7,7 +7,11 @@
                 </li>
             {{/each}}
             <li class="colLink">
-                <a href="/games" class="link" title="Все игры">Все игры</a>
+                {{#if isCatalog}}
+                    <span class="link">Все игры</span>
+                {{else}}
+                    <a href="/games" class="link" title="Все игры">Все игры</a>
+                {{/if}}
             </li>
         </ul>
         <div class="containerMainMenuSearch">

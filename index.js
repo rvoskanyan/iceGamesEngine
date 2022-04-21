@@ -39,6 +39,9 @@ const hbs = exphbs.create({
     eval: (str) => {
       return eval(str);
     },
+    inc: (value) => {
+      return parseInt(value) + 1;
+    },
     iff: function (a, operator, b, opts) {
       let bool = false;
       

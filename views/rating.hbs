@@ -1,0 +1,24 @@
+<div class="ratingPageBg main">
+    <div class="coverImg">
+        <img class="img" src="./img/ratingCover.jpg" alt="Rating">
+    </div>
+</div>
+<main class="contentContainer withoutCover ratingPage">
+    <div class="breadcrumbs contentContainer">
+        <div class="item">
+            <a class="btn link" href="#">Главная</a>
+        </div>
+        <div class="current">Рейтинг</div>
+    </div>
+    <div class="title">Рейтинг айсов</div>
+    <div class="description">Тут Вы можете увидеть рейтинг среди всех пользователей на сайте</div>
+    <div class="list">
+        {{#each users}}
+            <div class="item">
+                <div class="position">{{inc @index}} \ {{@root.countUsers}}</div>
+                <div class="name">{{login}}</div>
+                <div class="rating">{{rating}}</div>
+            </div>
+        {{/each}}
+    </div>
+</main>

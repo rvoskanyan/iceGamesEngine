@@ -1,14 +1,13 @@
 import User from '../../models/User.js';
 import Article from '../../models/Article.js';
+import {achievementEvent} from "../../services/achievement.js";
 
 export const likeArticle = async (req, res) => {
   try {
     const {articleId} = req.body;
-    const user = await User.findById(req.session.userId).select(['likedArticles']);
+    const user = res.locals.person;
     const article = await Article.findById(articleId).select(['likes']);
     const indexLikedArticle = user.likedArticles.findIndex(item => item.toString() === articleId);
-  
-    console.log(article);
   
     if (indexLikedArticle === -1) {
       user.likedArticles.push(articleId);
@@ -20,6 +19,10 @@ export const likeArticle = async (req, res) => {
   
     await user.save();
     await article.save();
+  
+    if (indexLikedArticle === -1) {
+      await achievementEvent('likeArticle', user)
+    }
     
     res.json({
       countLikes: article.likes,

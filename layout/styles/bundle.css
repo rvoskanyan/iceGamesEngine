@@ -624,7 +624,7 @@
     display: none; } }
 
 .login {
-  z-index: 3;
+  z-index: 4;
   position: fixed;
   height: 100vh;
   overflow: hidden;
@@ -709,7 +709,7 @@
   left: 0;
   right: 0;
   padding-top: 40px;
-  z-index: 2; }
+  z-index: 3; }
   .header .contentContainer {
     display: flex;
     justify-content: space-between;
@@ -825,9 +825,16 @@
           .header .navigation .containerMenu .menu .containerMainMenuSearch .searchResult {
             padding: 55px;
             display: grid;
-            grid-template-columns: repeat(3, max-content);
+            grid-template-columns: repeat(4, max-content);
             grid-row-gap: 50px;
             justify-content: space-between; }
+            .header .navigation .containerMenu .menu .containerMainMenuSearch .searchResult .goToAllSearchResults {
+              background: initial;
+              justify-content: space-between;
+              padding-top: 85px;
+              padding-bottom: 55px; }
+              .header .navigation .containerMenu .menu .containerMainMenuSearch .searchResult .goToAllSearchResults .text {
+                font-size: 14px; }
           .header .navigation .containerMenu .menu .containerMainMenuSearch .mainMenu {
             display: flex;
             justify-content: space-between; }
@@ -1405,6 +1412,11 @@
     -webkit-mask-image: url("./../img/triangle.svg");
     width: 83px;
     height: 73px; }
+  .icon-allResults {
+    mask-image: url("./../img/allResults.svg");
+    -webkit-mask-image: url("./../img/allResults.svg");
+    width: 78px;
+    height: 59px; }
 
 .textField {
   color: #fff;
@@ -1763,6 +1775,50 @@
     width: 100%;
     padding: 20px 12px 0 12px; }
 
+.achievement {
+  border: 2px solid #fff;
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px;
+  color: #fff;
+  text-align: center;
+  border-radius: 22px;
+  min-width: 160px;
+  max-width: 160px;
+  min-height: 211px;
+  max-height: 211px; }
+  @media (min-width: 1650px) {
+    .achievement {
+      min-width: 181px;
+      max-width: 181px;
+      min-height: 238px;
+      max-height: 238px; } }
+  .achievement .achievementIcon {
+    width: 70px; }
+  .achievement .name {
+    margin-top: 10px;
+    font-weight: 900;
+    font-size: 14px; }
+  .achievement .description {
+    font-size: 10px;
+    font-weight: normal;
+    margin-top: 10px; }
+  .achievement .lock {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(50, 0, 101, 0.6); }
+
 .articleBlock {
   display: flex;
   min-height: min-content;
@@ -2083,6 +2139,8 @@
       margin-top: 70px; }
     .catalog .list .loadMore {
       margin: 35px auto 0 auto; }
+      .catalog .list .loadMore.hide {
+        display: none; }
   .catalog .title {
     font-weight: bold;
     font-size: 18px;
@@ -2823,6 +2881,8 @@
             margin-top: 20px; }
           .profilePage .content .head .prompt .block .listActions {
             margin-top: 15px; }
+            .profilePage .content .head .prompt .block .listActions .title {
+              font-size: 24px; }
           .profilePage .content .head .prompt .block .list {
             list-style: none;
             margin-top: 15px; }
@@ -2877,17 +2937,6 @@
         display: flex;
         justify-content: space-between;
         margin-top: 30px; }
-        .profilePage .content .achievements .list .achievement {
-          background: #460B6E;
-          border: 2px solid #FFFFFF;
-          box-sizing: border-box;
-          border-radius: 22px;
-          width: 160px;
-          height: 211px; }
-          @media (min-width: 1650px) {
-            .profilePage .content .achievements .list .achievement {
-              width: 181px;
-              height: 238px; } }
     .profilePage .content.personalDataForm .personalData .input-frame, .profilePage .content.personalDataForm .password .input-frame {
       margin-top: 16px; }
     .profilePage .content.personalDataForm .password {
@@ -2940,15 +2989,14 @@
     .profilePage .content .achievementsList {
       margin-top: 50px; }
       .profilePage .content .achievementsList .list {
-        display: flex;
+        display: grid;
+        grid-template-columns: repeat(4, max-content);
+        justify-content: space-between;
+        row-gap: 50px;
+        column-gap: 30px;
         margin-top: 20px; }
-        .profilePage .content .achievementsList .list .achievement {
-          width: 135px;
-          height: 178px;
-          border: 2px solid #fff;
-          border-radius: 22px; }
-          .profilePage .content .achievementsList .list .achievement:not(:last-child) {
-            margin-right: 20px; }
+        .profilePage .content .achievementsList .list .achievement:not(:last-child) {
+          margin-right: 20px; }
     .profilePage .content .referralLink .description {
       margin-top: 14px; }
     .profilePage .content .referralLink .linkBlock {

@@ -13,6 +13,7 @@ import discountsRoute from './client/discounts.js';
 import noveltyRoute from './client/novelty.js';
 import preordersRoute from './client/preorders.js';
 import reviewsRoute from './client/reviews.js';
+import ratingRoute from './client/rating.js';
 
 const router = Router();
 
@@ -30,5 +31,6 @@ router.use('/discounts', discountsRoute);
 router.use('/novelty', noveltyRoute);
 router.use('/preorders', preordersRoute);
 router.use('/reviews', reviewsRoute);
+router.use('/rating', ratingRoute);
 
 export default router;

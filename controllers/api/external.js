@@ -2,6 +2,8 @@ import fetch from "node-fetch";
 import crypto from "crypto";
 import Order from "./../../models/Order.js";
 import Product from "./../../models/Product.js";
+import User from "./../../models/User.js";
+import {achievementEvent} from "../../services/achievement.js";
 
 export const assignOrderPay = async (req, res) => {
   try {
@@ -25,8 +27,6 @@ export const assignOrderPay = async (req, res) => {
     });
     
     const order = await Order.findOne({dsCartId});
-  
-    console.log(dsCartId);
     
     if (!order) {
       throw new Error('Order not found');
@@ -71,7 +71,16 @@ export const assignOrderPay = async (req, res) => {
       order.buyerEmail = buyerEmail;
     }
     
-    order.save();
+    await order.save();
+    
+    if (order.userId) {
+      const user = User.findById(order.userId);
+  
+      user.purchasedProducts += 1;
+      await user.save();
+      await user.increaseRating(10);
+      await achievementEvent('productPurchase', user);
+    }
     
     res.json({
       success: true,

@@ -1,28 +1,40 @@
 <main class="contentContainer withoutCover profilePage">
     <div class="breadcrumbs contentContainer">
         <div class="item">
-            <a class="btn link" href="#">Главная</a>
+            <a class="btn link" href="/">Главная</a>
         </div>
         <div class="current">Профиль</div>
     </div>
     <div class="profile">
         {{> profileMenu}}
         <div class="content">
-            <div class="progressBar start">
+            <div class="progressBar{{#iff @root.percent '===' 0}} zero{{else}}{{#iff @root.percent '<' 100}} start{{/iff}}{{/iff}}">
                 <div class="progressWrapper">
-                    <div class="progressScale" style="width: 30%"></div>
+                    <div class="progressScale" style="width: {{@root.percent}}%"></div>
                 </div>
-                <div class="value">20 \ 55</div>
+                <div class="value">{{achievements.length}} \ {{achievementCount}}</div>
             </div>
             <div class="achievementsList">
-                <div class="title">Мои достижения</div>
-                <div style="color: #fff; text-align: center; margin-top: 30px">Вы еще не получили ни одного достижения</div>
-                <!--<div class="list">
-                    <div class="achievement"></div>
-                    <div class="achievement"></div>
-                    <div class="achievement"></div>
-                    <div class="achievement"></div>
-                </div>-->
+                <div class="title">Достижения</div>
+                <div class="list">
+                    {{#each achievements}}
+                        <div class="achievement">
+                            <img src="{{@root.websiteAddress}}{{icon}}" alt="{{name}}" class="achievementIcon">
+                            <div class="name">{{name}}</div>
+                            <div class="description">{{description}}</div>
+                        </div>
+                    {{/each}}
+                    {{#each restAchievements}}
+                        <div class="achievement">
+                            <img src="{{@root.websiteAddress}}{{icon}}" alt="{{name}}" class="achievementIcon">
+                            <div class="name">{{name}}</div>
+                            <div class="description">{{description}}</div>
+                            <div class="lock" title="Достижение еще не получено">
+                                <span class="icon icon-lock"></span>
+                            </div>
+                        </div>
+                    {{/each}}
+                </div>
             </div>
         </div>
     </div>

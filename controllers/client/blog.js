@@ -1,13 +1,10 @@
 import Article from './../../models/Article.js';
-import User from './../../models/User.js';
+import {achievementEvent} from "./../../services/achievement.js";
 
 export const blogHomePage = async (req, res) => {
   try {
     const articles = await Article.find({fixed: false}).limit(3);
     const fixArticle = await Article.findOne({fixed: true});
-  
-    console.log(articles);
-    console.log(fixArticle);
     
     res.render('blogHome', {
       title: 'ICE Games -- Блог',
@@ -26,15 +23,17 @@ export const blogArticlePage = async (req, res) => {
     const article = await Article.findOne({alias: req.params.alias});
     
     if (req.session.isAuth) {
-      const user = await User.findById(req.session.userId).select(['viewedArticles']);
+      const user = res.locals.person;
       const isArticleRead = user.viewedArticles.findIndex(item => item.toString() === article.id) !== -1;
       
       if (!isArticleRead) {
         user.viewedArticles.push(article._id);
+        user.increaseRating(2);
         article.views += 1;
         
         await user.save();
         await article.save();
+        await achievementEvent('articlesRead', user);
       }
     }
   
@@ -43,6 +42,7 @@ export const blogArticlePage = async (req, res) => {
       article,
     });
   } catch (e) {
-  
+    console.log(e);
+    res.redirect('/blog');
   }
 }

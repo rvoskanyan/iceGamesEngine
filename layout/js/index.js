@@ -31,7 +31,6 @@ const scrollerNode = document.querySelector('.js-scroller');
 const likeArticleNode = document.querySelector('.js-likeArticle');
 const copyBtnNode = document.querySelector('.js-copyBtn');
 const searchStringNode = document.querySelector('.js-searchString');
-const productCards = document.querySelectorAll('.js-cardGame');
 const cartNode = document.querySelector('.js-cart');
 const collapseNodes = document.querySelectorAll('.js-collapse');
 const autoSizeInputNodes = document.querySelectorAll('.js-autoSizeInput');
@@ -552,58 +551,54 @@ if (cartNode) {
   }
 }
 
-if (productCards.length) {
-  productCards.forEach(productNode => {
-    const addToCartBtnNode = productNode.querySelector('.js-addToCart');
-    const favoritesBtnNode = productNode.querySelector('.js-favoritesBtn');
-    const productId = productNode.dataset.id;
-    const dsId = productNode.dataset.dsId;
-    let iconFavoritesBtnNode;
-    
-    if (favoritesBtnNode) {
-      iconFavoritesBtnNode = favoritesBtnNode.querySelector('.js-icon');
-    }
+document.addEventListener('click', async (e) => {
+  const target = e.target;
+  const productCardNode = target.closest('.js-cardGame');
   
-    productNode.addEventListener('click', (e) => {
-      if (e.target === iconFavoritesBtnNode || e.target === favoritesBtnNode || e.target === addToCartBtnNode) {
-        e.preventDefault();
-      }
-    })
-    
-    if (!addToCartBtnNode) {
+  if (productCardNode) {
+    if (target === productCardNode) {
       return;
     }
-    
-    if (favoritesBtnNode) {
-      favoritesBtnNode.addEventListener('click', async () => {
-        if (favoritesBtnNode.classList.contains('js-active')) {
-          const response = await postman.delete(`/api/products/${productId}/favorites`);
-          const result = await response.json();
+  
+    const productId = productCardNode.dataset.id;
+    const dsId = productCardNode.dataset.dsId;
+    const addToFavoriteBtnNode = target.closest('.js-favoritesBtn');
+    const addToCartBtnNode = target.closest('.js-addToCart');
+  
+    if (addToFavoriteBtnNode) {
+      e.preventDefault();
       
-          if (result.error) {
-            return;
-          }
-      
-          favoritesBtnNode.setAttribute('title', 'Добавить игру в избранное');
-          favoritesBtnNode.classList.remove('js-active');
-          iconFavoritesBtnNode.classList.remove('active');
-          return;
-        }
-    
-        const response = await postman.post(`/api/products/${productId}/favorites`);
+      const addToFavoriteIconNode = addToFavoriteBtnNode.querySelector('.js-icon');
+  
+      if (addToFavoriteBtnNode.classList.contains('js-active')) {
+        const response = await postman.delete(`/api/products/${productId}/favorites`);
         const result = await response.json();
     
         if (result.error) {
           return;
         }
-    
-        favoritesBtnNode.setAttribute('title', 'Удалить игру из избранного');
-        favoritesBtnNode.classList.add('js-active');
-        iconFavoritesBtnNode.classList.add('active');
-      })
-    }
   
-    addToCartBtnNode.addEventListener('click', async () => {
+        addToFavoriteBtnNode.setAttribute('title', 'Добавить игру в избранное');
+        addToFavoriteBtnNode.classList.remove('js-active');
+        addToFavoriteIconNode.classList.remove('active');
+        return;
+      }
+  
+      const response = await postman.post(`/api/products/${productId}/favorites`);
+      const result = await response.json();
+  
+      if (result.error) {
+        return;
+      }
+  
+      addToFavoriteBtnNode.setAttribute('title', 'Удалить игру из избранного');
+      addToFavoriteBtnNode.classList.add('js-active');
+      addToFavoriteIconNode.classList.add('active');
+    }
+    
+    if (addToCartBtnNode) {
+      e.preventDefault();
+  
       if (addToCartBtnNode.classList.contains('js-active')) {
         window.location.href = '/cart';
         return;
@@ -616,7 +611,7 @@ if (productCards.length) {
       formData.append('product_cnt', '1');
       formData.append('typecurr', 'wmr');
       formData.append('lang', 'ru-RU');
-      
+  
       if (dsCartId) {
         formData.append('cart_uid', dsCartId);
       }
@@ -645,18 +640,50 @@ if (productCards.length) {
       if (!dsCartId) {
         document.querySelector('body').dataset.dsCartId = resultAddCartDS.cart_uid;
       }
-      
+  
       addToCartBtnNode.innerText = 'В корзине ✔';
       addToCartBtnNode.classList.add('js-active', 'active');
       addToCartBtnNode.setAttribute('title', 'Перейти в корзину покупок');
-    })
-  })
-}
+    }
+  }
+  
+  /*class Menu { //Шаблон для переписывания js на классы, сделать кланый класс Page
+    constructor(elem) {
+      this._elem = elem;
+      elem.onclick = this.onClick.bind(this); // (*)
+    }
+    
+    save() {
+      alert('сохраняю');
+    }
+    
+    load() {
+      alert('загружаю');
+    }
+    
+    search() {
+      alert('ищу');
+    }
+    
+    onClick(event) {
+      let action = event.target.dataset.action;
+      if (action) {
+        this[action]();
+      }
+    }
+  }
+  
+  new Menu(menu);*/
+})
 
 searchStringNode.addEventListener('input', async () => {
+  if (catalogNode) {
+    return;
+  }
+  
   popupController.activateById('navigate');
   
-  const response = await postman.get(`${websiteAddress}api/products`, {searchString: searchStringNode.value});
+  const response = await postman.get(`${websiteAddress}api/products`, {searchString: searchStringNode.value, limit: 7});
   const result = await response.json();
   const menuNode = document.querySelector('.js-menu');
   const searchResultNode = document.querySelector('.js-searchResult');
@@ -675,39 +702,58 @@ searchStringNode.addEventListener('input', async () => {
   
   result.products.forEach(product => {
     searchResultNode.innerHTML += `
-      <a href="/games/${product.alias}" class="cardGame" title="Перейти к странице игры">
-        <div class="actions">
-            <button class="btn like" title="Добавить игру в избранное">
-                <span class="icon-static icon-static-actionLike"></span>
-            </button>
-            <button
-                class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart small"
-                title="Добавить данный товар в корзину покупок"
-            >
-                В корзину
-            </button>
-        </div>
-        <div class="head">
-            <img class="img" src="${websiteAddress}${product.img}" alt="Картинка ${product.name}" title="${product.name}">
-            <div class="name">
-                ${product.name}
-            </div>
-        </div>
-        <div class="price">
-            <div class="toPrice">
-                <span class="value">
-                    ${product.priceTo}
-                </span>
-            </div>
-            <div class="fromPrice">
-                <span class="value">
-                    ${product.priceFrom}
-                </span>
-            </div>
-        </div>
+      <a
+          href="/games/${product.alias}"
+          class="cardGame small js-cardGame"
+          data-id="${product._id}"
+          data-ds-id="${product.dsId}"
+          title="Перейти к странице игры"
+      >
+          <div class="actions">
+              ${result.isAuth ? `
+                <button class="btn like js-favoritesBtn${product.inFavorites ? ' js-active' : ''}" title="${product.inFavorites ? 'Удалить игру из избранного' : 'Добавить игру в избранное'}">
+                    <span class="icon-static icon-static-actionLike js-icon${product.inFavorites ? ' active' : ''}"></span>
+                </button>
+              ` : ''}
+              <button
+                  class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart small js-addToCart${product.inCart ? ' active js-active' : ''}"
+                  title="${product.inCart ? 'Перейти в корзину покупок' : 'Добавить данный товар в корзину покупок'}"
+              >
+                  ${product.inCart ? 'В корзине ✔' : 'В корзину'}
+              </button>
+          </div>
+          <div class="head">
+              <img class="img" src="${websiteAddress}${product.img}" alt="Картинка ${product.name}" title="${product.name}">
+              <div class="name">
+                  ${product.name}
+              </div>
+          </div>
+          <div class="price">
+              <div class="toPrice">
+                  <span class="value">
+                      ${product.priceTo}
+                  </span>
+              </div>
+              <div class="fromPrice">
+                  <span class="value">
+                      ${product.priceFrom}
+                  </span>
+              </div>
+          </div>
       </a>
     `;
   });
+  
+  if (!result.isLast) {
+    searchResultNode.innerHTML += `
+        <a class="btn cardGame small goToAllSearchResults" href="/games?searchString=${searchStringNode.value}">
+            <div class="">
+                <span class="icon icon-allResults"></span>
+            </div>
+            <div class="text">Все результаты</div>
+        </a>
+    `;
+  }
 })
 
 if (copyBtnNode) {
@@ -898,6 +944,64 @@ if (catalogNode) {
   const sortBtnNodes = sortNode.querySelectorAll('.js-variant-sort');
   const rangePriceSliderNodes = rangePriceNode.querySelectorAll('.js-slider');
   
+  loadMoreNode.addEventListener('click', async () => {
+    const url = new URL(window.location.href);
+    const response = await postman.get(`${websiteAddress}api/products${url.search ? url.search : '?'}&skip=${loadMoreNode.dataset.skip}&limit=1`);
+    const result = await response.json();
+    const productGridNode = catalogNode.querySelector('.js-productGrid');
+    
+    if (result.error) {
+      return;
+    }
+  
+    loadMoreNode.dataset.skip = parseInt(loadMoreNode.dataset.skip) + 1;
+    result.isLast ? loadMoreNode.classList.add('hide') : loadMoreNode.classList.remove('hide');
+  
+    result.products.forEach(product => {
+      productGridNode.innerHTML += `
+        <a
+            href="/games/${product.alias}"
+            class="cardGame js-cardGame"
+            data-id="${product._id}"
+            data-ds-id="${product.dsId}"
+            title="Перейти к странице игры"
+        >
+            <div class="actions">
+                ${result.isAuth ? `
+                  <button class="btn like js-favoritesBtn${product.inFavorites ? ' js-active' : ''}" title="${product.inFavorites ? 'Удалить игру из избранного' : 'Добавить игру в избранное'}">
+                      <span class="icon-static icon-static-actionLike js-icon${product.inFavorites ? ' active' : ''}"></span>
+                  </button>
+                ` : ''}
+                <button
+                    class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart small js-addToCart${product.inCart ? ' active js-active' : ''}"
+                    title="${product.inCart ? 'Перейти в корзину покупок' : 'Добавить данный товар в корзину покупок'}"
+                >
+                    ${product.inCart ? 'В корзине ✔' : 'В корзину'}
+                </button>
+            </div>
+            <div class="head">
+                <img class="img" src="${websiteAddress}${product.img}" alt="Картинка ${product.name}" title="${product.name}">
+                <div class="name">
+                    ${product.name}
+                </div>
+            </div>
+            <div class="price">
+                <div class="toPrice">
+                    <span class="value">
+                        ${product.priceTo}
+                    </span>
+                </div>
+                <div class="fromPrice">
+                    <span class="value">
+                        ${product.priceFrom}
+                    </span>
+                </div>
+            </div>
+        </a>
+      `;
+    })
+  })
+  
   rangePriceSliderNodes.forEach(rangePriceSliderNode => {
     const name = rangePriceSliderNode.dataset.name;
     
@@ -1039,9 +1143,16 @@ if (catalogNode) {
   
   catalogNode.addEventListener('changeParams', async () => {
     const url = new URL(window.location.href);
-    const response = await postman.get(`${websiteAddress}api/products${url.search}`);
+    const response = await postman.get(`${websiteAddress}api/products${url.search ? url.search : '?'}&limit=1`);
     const result = await response.json();
     const productGridNode = catalogNode.querySelector('.js-productGrid');
+    
+    if (result.error) {
+      return;
+    }
+  
+    loadMoreNode.dataset.skip = 1;
+    result.isLast ? loadMoreNode.classList.add('hide') : loadMoreNode.classList.remove('hide');
     productGridNode.innerHTML = '';
     
     result.products.forEach(product => {
@@ -1054,16 +1165,16 @@ if (catalogNode) {
             title="Перейти к странице игры"
         >
             <div class="actions">
-                <!--{{#if @root.isAuth}}
-                    <button class="btn like js-favoritesBtn{{#if inFavorites}} js-active{{/if}}" title="{{#if inFavorites}}Удалить игру из избранного{{else}}Добавить игру в избранное{{/if}}">
-                        <span class="icon-static icon-static-actionLike js-icon {{#if inFavorites}} active{{/if}}"></span>
-                    </button>
-                {{/if}}-->
+                ${result.isAuth ? `
+                  <button class="btn like js-favoritesBtn${product.inFavorites ? ' js-active' : ''}" title="${product.inFavorites ? 'Удалить игру из избранного' : 'Добавить игру в избранное'}">
+                      <span class="icon-static icon-static-actionLike js-icon${product.inFavorites ? ' active' : ''}"></span>
+                  </button>
+                ` : ''}
                 <button
-                    class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart small js-addToCart{{#if inCart}} active js-active{{/if}}"
-                    title="{{#if inCart}}Перейти в корзину покупок{{else}}Добавить данный товар в корзину покупок{{/if}}"
+                    class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart small js-addToCart${product.inCart ? ' active js-active' : ''}"
+                    title="${product.inCart ? 'Перейти в корзину покупок' : 'Добавить данный товар в корзину покупок'}"
                 >
-                    <!--{{#if inCart}}В корзине ✔{{else}}-->В корзину<!--{{/if}}-->
+                    ${product.inCart ? 'В корзине ✔' : 'В корзину'}
                 </button>
             </div>
             <div class="head">

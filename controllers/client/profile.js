@@ -2,21 +2,22 @@ import {validationResult} from 'express-validator';
 import bcrypt from 'bcryptjs';
 import User from '../../models/User.js';
 import Order from './../../models/Order.js';
+import Achievement from './../../models/Achievement.js';
 
 export const profilePage = async (req, res) => {
   try {
-    const {userId} = req.session;
-    const user = await User.findById(userId);
+    const countAchievements = res.locals.person.achievements.length;
+    const user = await res.locals.person.populate({path: 'achievements', options: {limit: 4}});
     const countUsers = await User.estimatedDocumentCount();
-    const orders = await Order.find({status: 'paid', userId});
-    const purchasedProducts = orders.reduce((purchasedProducts, order) => purchasedProducts + order.products.length, 0);
+    const ratingPosition = await user.getRatingPosition();
     
     res.render('profile', {
       title: "ICE Games -- Мой профиль",
       isProfileHome: true,
       user,
       countUsers,
-      purchasedProducts,
+      ratingPosition,
+      countAchievements,
     });
   } catch (e) {
     console.log(e);
@@ -94,12 +95,25 @@ export const profileEdit = async (req, res) => {
 
 export const profileAchievementsPage = async (req, res) => {
   try {
-    const user = await User.findById(req.session.userId);
+    const {achievements} = await res.locals.person.populate('achievements');
+    const achievementIds = achievements.map(achievement => achievement._id.toString());
+    let restFilter = {};
+    
+    if (achievementIds.length) {
+      restFilter = {_id: {$nin: achievementIds}}
+    }
+    
+    const restAchievements = await Achievement.find(restFilter);
+    const achievementCount = achievements.length + restAchievements.length;
+    const percent = 100 / achievementCount * achievements.length;
     
     res.render('profileAchievements', {
       title: 'ICE Games -- Мои достижения',
       isProfileAchievements: true,
-      user,
+      achievements,
+      restAchievements,
+      achievementCount,
+      percent,
     });
   } catch (e) {
     console.log(e);
