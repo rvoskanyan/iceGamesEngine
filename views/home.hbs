@@ -1,10 +1,10 @@
 <main>
     <div class="homeSlider js-homeSlider">
         <div class="tape js-tapeSlider">
-            {{#each sliderGames}}
+            {{#each sliderProducts}}
                 <div class="cover blackout blackout-left blackout-bottom slide{{#if @first}} active{{/if}} js-slide" data-video-name="{{coverVideo}}">
                     <video class="video" muted></video>
-                    <img class="img" src="{{@root.websiteAddress}}{{coverImg}}" alt="{name}}" title="{{name}}">
+                    <img class="img" src="{{@root.websiteAddress}}{{coverImg}}" alt="{{name}}" title="{{name}}">
                     <div class="offer">
                         <div class="name">
                             {{name}}
@@ -15,17 +15,21 @@
                         <div class="price">
                             <div class="toPrice">
                                 <span class="value">
-                                    {{price}}
+                                    {{priceTo}}
                                 </span>
                             </div>
                             <div class="fromPrice">
-                                <span class="value">1300</span>
+                                <span class="value">
+                                    {{priceFrom}}
+                                </span>
                             </div>
-                            <div class="discount">30</div>
+                            <div class="discount">
+                                {{discount}}
+                            </div>
                         </div>
                         <div class="actions">
-                            <button title="Добавить игру в корзину покупок" class="btn rounded increase bg-pink hover-backlight-blue">В корзину</button>
-                            <a href="/games/{{id}}" title="Перейти к странице игры" class="btn rounded translucent bg-pink">Подробнее</a>
+                            <button title="Добавить товар в корзину покупок" class="btn rounded increase bg-pink hover-backlight-blue">В корзину</button>
+                            <a href="/games/{{alias}}" title="Перейти к странице товара" class="btn rounded translucent bg-pink">Подробнее</a>
                         </div>
                     </div>
                 </div>
@@ -38,20 +42,24 @@
                 <button class="btn next js-nextBtn"></button>
             </div>
             <div class="items gameGrid">
-                {{#each sliderGames}}
+                {{#each sliderProducts}}
                     <button class="cardGame big{{#if @first}} active{{/if}} js-itemNavigate" title="Переключить слайд">
                         <div class="head">
                             <img class="img" src="{{@root.websiteAddress}}{{img}}" alt="{{name}}" title="{{name}}">
-                            <div class="name">{{name}}</div>
+                            <div class="name">
+                                {{name}}
+                            </div>
                         </div>
                         <div class="price">
                             <div class="toPrice">
                                 <span class="value">
-                                    {{price}}
+                                    {{priceTo}}
                                 </span>
                             </div>
                             <div class="fromPrice">
-                                <span class="value">1300</span>
+                                <span class="value">
+                                    {{priceFrom}}
+                                </span>
                             </div>
                         </div>
                     </button>
@@ -68,17 +76,17 @@
         <div class="homeSection homeCatalog js-homeCatalogTabs">
             <div class="categories">
                 {{#each catalog}}
-                    <button class="btn round border big bg-darkLilac translucent js-tabBtn{{#if @first}} active{{/if}}" data-target-id="{{id}}">
-                        {{name}}
+                    <button class="btn round border big bg-darkLilac translucent js-tabBtn{{#if @first}} active{{/if}}" data-target-id="{{category._id}}">
+                        {{category.name}}
                     </button>
                 {{/each}}
             </div>
             <div class="blocks">
                 {{#each catalog}}
-                    <div class="item js-tabBlock-{{id}}{{#if @first}} active{{/if}}">
+                    <div class="item js-tabBlock-{{category._id}}{{#if @first}} active{{/if}}">
                         <div class="gameGrid">
                             {{#each products}}
-                                <a href="/games/{{id}}" class="cardGame big js-itemNavSlider" title="Перейти к странице игры">
+                                <a href="/games/{{alias}}" class="cardGame big js-itemNavSlider" title="Перейти к странице игры">
                                     <div class="actions">
                                         <button class="btn like" title="Добавить игру в избранное">
                                             <span class="icon-static icon-static-actionLike"></span>
@@ -99,11 +107,13 @@
                                     <div class="price">
                                         <div class="toPrice">
                                             <span class="value">
-                                                {{price}}
+                                                {{priceTo}}
                                             </span>
                                         </div>
                                         <div class="fromPrice">
-                                            <span class="value">1300</span>
+                                            <span class="value">
+                                                {{priceTo}}
+                                            </span>
                                         </div>
                                     </div>
                                 </a>
@@ -115,7 +125,7 @@
             <a
                     href="/games"
                     class="more btn border rounded big increase translucent bg-darkLilac"
-                    title="Открыть каталог со всеми играми"
+                    title="Открыть каталог со всеми товарами"
             >
                 В каталог
             </a>
@@ -127,7 +137,7 @@
                     <div class="slides js-tape">
                         <div class="slide js-slide active">
                             {{#each genres}}
-                                <a class="genre" href="{{url}}" title="Открыть игры с жанром {{name}}">
+                                <a class="genre" href="{{websiteAddress}}{{url}}" title="Открыть игры с жанром {{name}}">
                                     <img class="img" src="{{@root.websiteAddress}}{{img}}" alt="Картинка жанра {{name}}">
                                     <div class="name">
                                         {{name}}
@@ -156,57 +166,32 @@
                 </button>
                 <div class="visibleArea">
                     <div class="tape">
-                        <a href="#" class="newsPreview active">
-                            <img class="img" src="./img/newPreview-1.png" alt="Новость 1" title="Новость 1">
-                            <div class="attributes">
-                                <div class="btn small round border small bg-darkLilac">Новости</div>
-                                <div class="date">12.01.21</div>
-                            </div>
-                            <div class="description">
-                                <div class="title">8 Миллионов продаж</div>
-                                <div class="text">CDPR похвастались в своем твиттере, что количество предзаказов...</div>
-                            </div>
-                        </a>
-                        <a href="#" class="newsPreview active">
-                            <img class="img" src="./img/newPreview-2.png" alt="Новость 1" title="Новость 1">
-                            <div class="attributes">
-                                <div class="btn small round border small bg-darkLilac">Новости</div>
-                                <div class="date">12.01.21</div>
-                            </div>
-                            <div class="description">
-                                <div class="title">8 Миллионов продаж</div>
-                                <div class="text">CDPR похвастались в своем твиттере, что количество предзаказов...</div>
-                            </div>
-                        </a>
-                        <a href="#" class="newsPreview active">
-                            <img class="img" src="./img/newPreview-3.png" alt="Новость 1" title="Новость 1">
-                            <div class="attributes">
-                                <div class="btn small round border small bg-darkLilac">Новости</div>
-                                <div class="date">12.01.21</div>
-                            </div>
-                            <div class="description">
-                                <div class="title">8 Миллионов продаж</div>
-                                <div class="text">CDPR похвастались в своем твиттере, что количество предзаказов...</div>
-                            </div>
-                        </a>
-                        <a href="#" class="newsPreview">
-                            <img class="img" src="./img/newPreview-3.png" alt="Новость 1" title="Новость 1">
-                            <div class="attributes">
-                                <div class="btn small round border small bg-darkLilac">Новости</div>
-                                <div class="date">12.01.21</div>
-                            </div>
-                            <div class="description">
-                                <div class="title">8 Миллионов продаж</div>
-                                <div class="text">CDPR похвастались в своем твиттере, что количество предзаказов...</div>
-                            </div>
-                        </a>
+                        {{#each articles}}
+                            <a href="{{websiteAddress}}blog/{{alias}}" class="newsPreview{{#iff @index '<' 3}} active{{/iff}}">
+                                <img class="img" src="{{websiteAddress}}{{img}}" alt="Изображение {{name}}" title="{{name}}">
+                                <div class="attributes">
+                                    <div class="btn small round border small bg-darkLilac">
+                                        {{#iff type '===' 'news'}}Новости{{else}}Статьи{{/iff}}
+                                    </div>
+                                    <div class="date">12.01.21</div>
+                                </div>
+                                <div class="description">
+                                    <div class="title">
+                                        {{name}}
+                                    </div>
+                                    <div class="text">
+                                        {{introText}}
+                                    </div>
+                                </div>
+                            </a>
+                        {{/each}}
                     </div>
                 </div>
                 <button class="btn next increase">
                     <span class="icon-static icon-static-arrow"></span>
                 </button>
             </div>
-            <a class="btn round border backlight-pink hover-bg-palePink all" href="#">Все новости</a>
+            <a class="btn round border backlight-pink hover-bg-palePink all" href="{{websiteAddress}}blog">Все новости</a>
         </div>
         <div class="homeSection">
             <div class="homeTitle">Медиа о нас</div>

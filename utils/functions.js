@@ -82,3 +82,21 @@ export const getAlias = (str) => {
   
   return resultStr;
 }
+
+export const getAllProductParams = (relatedItems, restItems) => {
+  return [
+    ...relatedItems.map(item => {
+      return {
+        id: item._id,
+        name: item.name,
+        selected: true,
+      }
+    }),
+    ...restItems.map(item => {
+      return {
+        id: item._id,
+        name: item.name,
+      }
+    }),
+  ];
+}

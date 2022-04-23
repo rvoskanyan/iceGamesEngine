@@ -433,121 +433,123 @@ if (collapseNodes.length) {
 if (cartNode) {
   const products = cartNode.querySelectorAll('.js-product');
   const checkNode = cartNode.querySelector('.js-check');
-  const totalPriceToNode = checkNode.querySelector('.js-totalTo');
-  const totalPriceFromNode = checkNode.querySelector('.js-totalFrom');
-  const totalProductsNode = checkNode.querySelector('.js-totalProducts');
-  const payBtnNode = checkNode.querySelector('.js-payBtn');
-  const savingNode = checkNode.querySelector('.js-saving');
-  let countProducts = products.length;
-  let totalPriceToValue = +totalPriceToNode.innerText;
-  let totalPriceFromValue = +totalPriceFromNode.innerText;
-  let savingValueNode = null;
-  let savingValue = null;
+  if (products && checkNode) {
+    const totalPriceToNode = checkNode.querySelector('.js-totalTo');
+    const totalPriceFromNode = checkNode.querySelector('.js-totalFrom');
+    const totalProductsNode = checkNode.querySelector('.js-totalProducts');
+    const payBtnNode = checkNode.querySelector('.js-payBtn');
+    const savingNode = checkNode.querySelector('.js-saving');
+    let countProducts = products.length;
+    let totalPriceToValue = +totalPriceToNode.innerText;
+    let totalPriceFromValue = +totalPriceFromNode.innerText;
+    let savingValueNode = null;
+    let savingValue = null;
   
-  if (savingNode) {
-    savingValueNode = checkNode.querySelector('.js-savingValue');
-    savingValue = +savingValueNode.innerText;
-  }
+    if (savingNode) {
+      savingValueNode = checkNode.querySelector('.js-savingValue');
+      savingValue = +savingValueNode.innerText;
+    }
   
-  if (payBtnNode) {
-    payBtnNode.addEventListener('click', async () => {
-      const response = await postman.post('/api/order');
-      const result = await response.json();
-      
-      if (result.error) {
-        return;
-      }
-      
-      const payFormNode = cartNode.querySelector('.js-payForm');
-      payFormNode.submit();
-    })
-  }
-  
-  if (countProducts) {
-    products.forEach(productNode => {
-      const deleteFromCartBtn = productNode.querySelector('.js-deleteFromCart');
-      const dsCartId = document.querySelector('body').dataset.dsCartId;
-      const productId = productNode.dataset.productId;
-      const dsId = productNode.dataset.dsId;
-    
-      deleteFromCartBtn.addEventListener('click', async () => {
-        if (!dsCartId || !dsId || !productId) {
-          return;
-        }
-        
-        let formData = new FormData();
-        
-        formData.append('cart_uid', dsCartId);
-        formData.append('cart_curr', 'RUR');
-        formData.append('lang', 'ru-RU');
-  
-        const responseCartDS = await fetch('https://shop.digiseller.ru/xml/shop_cart_lst.asp', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-          },
-          body: urlEncodeFormData(formData),
-        });
-  
-        const resultCartDS = await responseCartDS.json();
-  
-        if (!resultCartDS.products) {
-          return;
-        }
-        
-        const {item_id} = resultCartDS.products.find(item => item.id === dsId);
-  
-        formData.append('item_id', item_id);
-        formData.append('product_cnt', '0');
-  
-        let responseUpdateCartDS = await fetch('https://shop.digiseller.ru/xml/shop_cart_lst.asp', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-          },
-          body: urlEncodeFormData(formData),
-        });
-  
-        let resultUpdateCartDS = await responseUpdateCartDS.json();
-  
-        if (resultUpdateCartDS.cart_err !== '0' && resultUpdateCartDS.cart_err !== '5') {
-          return;
-        }
-        
-        const response = await postman.delete(`/api/products/${productId}/cart`);
+    if (payBtnNode) {
+      payBtnNode.addEventListener('click', async () => {
+        const response = await postman.post('/api/order');
         const result = await response.json();
       
         if (result.error) {
           return;
         }
-  
-        countProducts -= 1;
-        
-        if (countProducts === 0)   {
-          return cartNode.innerHTML = '<p style="color: #fff">Вы еще не добавили ни одного товара в корзину покупок</p>';
-        }
-  
-        const priceTo = +productNode.querySelector('.js-priceTo').innerText;
-        const priceFrom = +productNode.querySelector('.js-priceFrom').innerText;
-  
-        totalPriceToValue -= priceTo;
-        totalPriceFromValue -= priceFrom;
-  
-        totalPriceToNode.innerText = totalPriceToValue;
-        totalPriceFromNode.innerText = totalPriceFromValue;
-        totalProductsNode.innerText = countProducts;
-        
-        if (savingValue) {
-          savingValue -= priceFrom - priceTo;
-          
-          if (!savingValue) {
-            savingNode.remove();
-          }
-        }
-        
-        productNode.remove();
+      
+        const payFormNode = cartNode.querySelector('.js-payForm');
+        payFormNode.submit();
       })
-    })
+    }
+  
+    if (countProducts) {
+      products.forEach(productNode => {
+        const deleteFromCartBtn = productNode.querySelector('.js-deleteFromCart');
+        const dsCartId = document.querySelector('body').dataset.dsCartId;
+        const productId = productNode.dataset.productId;
+        const dsId = productNode.dataset.dsId;
+      
+        deleteFromCartBtn.addEventListener('click', async () => {
+          if (!dsCartId || !dsId || !productId) {
+            return;
+          }
+        
+          let formData = new FormData();
+        
+          formData.append('cart_uid', dsCartId);
+          formData.append('cart_curr', 'RUR');
+          formData.append('lang', 'ru-RU');
+        
+          const responseCartDS = await fetch('https://shop.digiseller.ru/xml/shop_cart_lst.asp', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: urlEncodeFormData(formData),
+          });
+        
+          const resultCartDS = await responseCartDS.json();
+        
+          if (!resultCartDS.products) {
+            return;
+          }
+        
+          const {item_id} = resultCartDS.products.find(item => item.id === dsId);
+        
+          formData.append('item_id', item_id);
+          formData.append('product_cnt', '0');
+        
+          let responseUpdateCartDS = await fetch('https://shop.digiseller.ru/xml/shop_cart_lst.asp', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: urlEncodeFormData(formData),
+          });
+        
+          let resultUpdateCartDS = await responseUpdateCartDS.json();
+        
+          if (resultUpdateCartDS.cart_err !== '0' && resultUpdateCartDS.cart_err !== '5') {
+            return;
+          }
+        
+          const response = await postman.delete(`/api/products/${productId}/cart`);
+          const result = await response.json();
+        
+          if (result.error) {
+            return;
+          }
+        
+          countProducts -= 1;
+        
+          if (countProducts === 0)   {
+            return cartNode.innerHTML = '<p style="color: #fff">Вы еще не добавили ни одного товара в корзину покупок</p>';
+          }
+        
+          const priceTo = +productNode.querySelector('.js-priceTo').innerText;
+          const priceFrom = +productNode.querySelector('.js-priceFrom').innerText;
+        
+          totalPriceToValue -= priceTo;
+          totalPriceFromValue -= priceFrom;
+        
+          totalPriceToNode.innerText = totalPriceToValue;
+          totalPriceFromNode.innerText = totalPriceFromValue;
+          totalProductsNode.innerText = countProducts;
+        
+          if (savingValue) {
+            savingValue -= priceFrom - priceTo;
+          
+            if (!savingValue) {
+              savingNode.remove();
+            }
+          }
+        
+          productNode.remove();
+        })
+      })
+    }
   }
 }
 
@@ -823,18 +825,18 @@ if (likeArticleNode) {
   })
 }
 
-/*if (homeSliderNode) {
+if (homeSliderNode) {
   let playVideoTimeOutId;
   
   const homeSlider = new Slider({
     mainNode: homeSliderNode,
-    onSwitch: switchHomeSlider,
+    //onSwitch: switchHomeSlider,
     progress: true,
     navigate: true,
-    switchingTime: 3000,
+    switchingTime: 5000,
   });
   
-  function switchHomeSlider(slides, prevSlides = []) {
+  /*function switchHomeSlider(slides, prevSlides = []) {
     clearTimeout(playVideoTimeOutId);
     const slideNode = slides[0];
     const prevSlideNode = prevSlides[0];
@@ -869,9 +871,9 @@ if (likeArticleNode) {
     }
     
     videoNode.addEventListener('canplaythrough', onCanplaythrough);
-    videoNode.setAttribute('src',`${Config.websiteAddress}${videoName}`);
-  }
-}*/
+    videoNode.setAttribute('src',`${websiteAddress}${videoName}`);
+  }*/
+}
 
 if (homeCatalogTabsNode) {
   new Tabs({

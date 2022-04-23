@@ -1,7 +1,6 @@
 import {validationResult} from 'express-validator';
 import bcrypt from 'bcryptjs';
 import User from '../../models/User.js';
-import Order from './../../models/Order.js';
 import Achievement from './../../models/Achievement.js';
 
 export const profilePage = async (req, res) => {

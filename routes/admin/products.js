@@ -14,10 +14,10 @@ const router = Router();
 router.get('/', pageProducts);
 router.get('/add', pageAddProduct);
 router.post('/add', addProduct);
-router.get('/edit/:gameId', pageEditProduct);
-router.post('/edit/:gameId', editProduct);
+router.get('/edit/:productId', pageEditProduct);
+router.post('/edit/:productId', editProduct);
 
-router.get('/:gameId/addElement', pageAddGameElement);
-router.post('/:gameId/addElement', addGameElement);
+router.get('/:productId/addElement', pageAddGameElement);
+router.post('/:productId/addElement', addGameElement);
 
 export default router;

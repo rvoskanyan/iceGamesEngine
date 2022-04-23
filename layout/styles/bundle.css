@@ -585,7 +585,7 @@
   right: 0;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.7);
-  z-index: 3; }
+  z-index: 4; }
   .modal .modalContainer {
     position: relative;
     width: 100%;
@@ -1967,8 +1967,17 @@
     .newsPreview .description .text {
       color: rgba(255, 255, 255, 0.6);
       margin-top: 10px;
-      line-height: 1.5;
-      transition: color .3s ease-in; }
+      transition: color .3s ease-in;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      display: -moz-box;
+      -webkit-box-orient: vertical;
+      -moz-box-orient: vertical;
+      box-orient: vertical;
+      line-clamp: 2;
+      -webkit-line-clamp: 2;
+      line-height: 18px;
+      max-height: calc(18px * 3); }
 
 .tabs .nav {
   display: flex; }

@@ -1,30 +1,34 @@
+import Product from "../../models/Product.js";
+import Usp from "../../models/Usp.js";
+import Category from "../../models/Category.js";
+import Genre from "../../models/Genre.js";
+import Article from "../../models/Article.js";
+
 export const homepage = async (req, res) => {
-  /*const sliderGames = await Product.findAll({
-    attributes: ['id', 'name', 'description', 'priceTo', 'priceFrom', 'img', 'coverImg', 'coverVideo'],
-    limit: 5,
-    where: {
-      inHomeSlider: true,
-    }
-  });
-  const usp = await Usp.findAll({attributes: ['text']});
-  const categories = await Category.findAll({attributes: ['id', 'name']});
-  const genres = await Genre.findAll({attributes: ['id', 'name', 'img', 'url']});*/
+  const sliderProducts = await Product
+    .find({inHomeSlider: true})
+    .limit(5)
+    .select(['name', 'alias', 'description', 'priceTo', 'priceFrom', 'img', 'coverImg', 'coverVideo', 'discount'])
+    .lean();
+  const usp = await Usp.find().select('text').lean();
+  const categories = await Category.find().select('name').lean();
+  const genres = await Genre.find().select(['id', 'name', 'img', 'url']).lean();
+  const articles = await Article.find({active: true}).select(['name', 'alias', 'introText', 'type', 'createdAt', 'img']).lean();
+  const inviter = req.query.inviter;
+  const catalog = [];
   
-  /*const catalog = [];
-  
-  for (let i = 0; i < categories.length; i++) {
-    const products = await categories[i].getProducts({
-      attributes: ['id', 'name', 'img', 'priceTo', 'priceFrom'],
-      limit: 10,
-    });
+  for (let category of categories) {
+    const products = await Product
+      .find({categories: {$in: category._id.toString()}})
+      .select(['name', 'alias', 'img', 'priceTo', 'priceFrom'])
+      .lean()
+      .limit(10);
   
     catalog.push({
-      ...categories[i].dataValues,
-      products: products.map(item => item.dataValues),
+      category,
+      products,
     });
-  }*/
-  
-  const inviter = req.query.inviter;
+  }
   
   if (inviter && !req.session.isAuth) {
     res.cookie('inviterId', inviter).redirect('/');
@@ -33,9 +37,10 @@ export const homepage = async (req, res) => {
   res.render('home', {
     title: "ICE Games -- магазин ключей",
     isHome: true,
-    sliderGames: [],
-    usp: [],
-    genres: [],
-    catalog: [],
+    sliderProducts,
+    usp,
+    catalog,
+    genres,
+    articles,
   });
 }

@@ -61,5 +61,14 @@
     & .text
       color: rgba(255, 255, 255, 0.6)
       margin-top: 10px
-      line-height: 1.5
       transition: color .3s ease-in
+      text-overflow: ellipsis
+      display: -webkit-box
+      display: -moz-box
+      -webkit-box-orient: vertical
+      -moz-box-orient: vertical
+      box-orient: vertical
+      line-clamp: 2 // line-count
+      -webkit-line-clamp: 2 // line-count
+      line-height: 18px // line-height
+      max-height: calc(18px * 3) // line-height * line-count

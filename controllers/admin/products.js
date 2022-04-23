@@ -16,7 +16,7 @@ import Series from './../../models/Series.js';
 import {
   getExtendFile,
   getArray,
-  getAlias, getDiscount,
+  getAlias, getDiscount, getAllProductParams,
 } from "../../utils/functions.js";
 
 export const pageProducts = async (req, res) => {
@@ -206,244 +206,50 @@ export const addProduct = async (req, res) => {
 }
 
 export const pageEditProduct = async (req, res) => {
-  const {gameId} = req.params;
+  const {productId} = req.params;
   
   try {
-    const game = await Product.findByPk(gameId);
-  
-    const gameCategories = await game.getCategories({attributes: ['id', 'name']});
-    const gameGenres = await game.getGenres({attributes: ['id', 'name']});
-    const gameExtends = await game.getExtends({attributes: ['id', 'name']});
-    const gameLanguages = await game.getLanguages({attributes: ['id', 'name']});
-    const gameRegions = await game.getRegions({attributes: ['id', 'name']});
-    const gameDevelopers = await game.getDevelopers({attributes: ['id', 'name']});
-    const gamePublisher = await game.getPublisher({attributes: ['id', 'name']});
-    const gameActivationService = await game.getActivationService({attributes: ['id', 'name']});
-    const gamePlatform = await game.getPlatform({attributes: ['id', 'name']});
-    const gameEdition = await game.getEdition({attributes: ['id', 'name']});
-    const gameImages = await game.getImages({attributes: ['name']});
-    const gameElements = await game.getGameElements({
-      attributes: ['id', 'name', 'description'],
-      order: [['productId', 'DESC']],
-      include: {
-        model: Product,
-        as: 'Entity',
-        attributes: ['id', 'name']
-      },
-    });
-  
-    const categoryIds = gameCategories.map(item => item.dataValues.id);
-    const genreIds = gameGenres.map(item => item.dataValues.id);
-    const extentIds = gameExtends.map(item => item.dataValues.id);
-    const languageIds = gameLanguages.map(item => item.dataValues.id);
-    const regionIds = gameRegions.map(item => item.dataValues.id);
-    const developerIds = gameDevelopers.map(item => item.dataValues.id);
-    const publisherId = gamePublisher.dataValues.id;
-    const activationServiceId = gameActivationService.dataValues.id;
-    const platformId = gamePlatform.dataValues.id;
-    const editionId = gameEdition.dataValues.id || 0;
+    let product = await Product.findById(productId);
 
-    const restCategories = await Category.findAll({
-      attributes: ['id', 'name'],
-      where: {
-        id: {
-          [Op.notIn]: [...categoryIds]
-        }
-      }
-    });
+    const restCategories = await Category.find({_id: {$nin: product.categories}}).select('name').lean();
+    const restGenres = await Genre.find({_id: {$nin: product.genres}}).select('name').lean();
+    const restExtends = await Extend.find({_id: {$nin: product.extends}}).select('name').lean();
+    const restLanguages = await Language.find({_id: {$nin: product.languages}}).select('name').lean();
+    const restActivationRegions = await Region.find({_id: {$nin: product.activationRegions}}).select('name').lean();
+    const restDevelopers = await Developer.find({_id: {$nin: product.developers}}).select('name').lean();
+    const restPublishers = await Publisher.find({_id: {$nin: product.publisherId}}).select('name').lean();
+    const restActivationServices = await ActivationService.find({_id: {$nin: product.activationServiceId}}).select('name').lean();
+    const restPlatforms = await Platform.find({_id: {$nin: product.platformId}}).select('name').lean();
   
-    const restGenres = await Genre.findAll({
-      attributes: ['id', 'name'],
-      where: {
-        id: {
-          [Op.notIn]: [...genreIds]
-        }
-      }
-    });
-  
-    const restExtends = await Extend.findAll({
-      attributes: ['id', 'name'],
-      where: {
-        id: {
-          [Op.notIn]: [...extentIds]
-        }
-      }
-    });
-  
-    const restLanguages = await Language.findAll({
-      attributes: ['id', 'name'],
-      where: {
-        id: {
-          [Op.notIn]: [...languageIds]
-        }
-      }
-    });
-  
-    const restRegions = await Region.findAll({
-      attributes: ['id', 'name'],
-      where: {
-        id: {
-          [Op.notIn]: [...regionIds]
-        }
-      }
-    });
-  
-    const restDevelopers = await Developer.findAll({
-      attributes: ['id', 'name'],
-      where: {
-        id: {
-          [Op.notIn]: [...developerIds]
-        }
-      }
-    });
-  
-    const restPublishers = await Publisher.findAll({
-      attributes: ['id', 'name'],
-      where: {
-        id: {
-          [Op.notIn]: [publisherId]
-        }
-      }
-    });
-  
-    const restActivationServices = await ActivationService.findAll({
-      attributes: ['id', 'name'],
-      where: {
-        id: {
-          [Op.notIn]: [activationServiceId]
-        }
-      }
-    });
-  
-    const restPlatforms = await Platform.findAll({
-      attributes: ['id', 'name'],
-      where: {
-        id: {
-          [Op.notIn]: [platformId]
-        }
-      }
-    });
-  
-    const restEditions = await Edition.findAll({
-      attributes: ['id', 'name'],
-      where: {
-        id: {
-          [Op.notIn]: [editionId]
-        }
-      }
-    });
-  
-    const categories = [
-      ...gameCategories.map(item => {
-        return {
-          id: item.dataValues.id,
-          name: item.dataValues.name,
-          selected: true,
-        }
-      }),
-      ...restCategories.map(item => item.dataValues),
-    ];
-  
-    const genres = [
-      ...gameGenres.map(item => {
-        return {
-          id: item.dataValues.id,
-          name: item.dataValues.name,
-          selected: true,
-        }
-      }),
-      ...restGenres.map(item => item.dataValues),
-    ];
-  
-    const allExtends = [
-      ...gameExtends.map(item => {
-        return {
-          id: item.dataValues.id,
-          name: item.dataValues.name,
-          selected: true,
-        }
-      }),
-      ...restExtends.map(item => item.dataValues),
-    ];
-  
-    const languages = [
-      ...gameLanguages.map(item => {
-        return {
-          id: item.dataValues.id,
-          name: item.dataValues.name,
-          selected: true,
-        }
-      }),
-      ...restLanguages.map(item => item.dataValues),
-    ];
-  
-    const regions = [
-      ...gameRegions.map(item => {
-        return {
-          id: item.dataValues.id,
-          name: item.dataValues.name,
-          selected: true,
-        }
-      }),
-      ...restRegions.map(item => item.dataValues),
-    ];
-  
-    const developers = [
-      ...gameDevelopers.map(item => {
-        return {
-          id: item.dataValues.id,
-          name: item.dataValues.name,
-          selected: true,
-        }
-      }),
-      ...restDevelopers.map(item => item.dataValues),
-    ];
-  
-    const publishers = [
-      {
-        id: gamePublisher.dataValues.id,
-        name: gamePublisher.dataValues.name,
-        selected: true,
-      },
-      ...restPublishers.map(item => item.dataValues),
-    ];
-  
-    const activationServices = [
-      {
-        id: gameActivationService.dataValues.id,
-        name: gameActivationService.dataValues.name,
-        selected: true,
-      },
-      ...restActivationServices.map(item => item.dataValues),
-    ];
-  
-    const platforms = [
-      {
-        id: gamePlatform.dataValues.id,
-        name: gamePlatform.dataValues.name,
-        selected: true,
-      },
-      ...restPlatforms.map(item => item.dataValues),
-    ];
-  
-    const editions = [
-      ...restEditions.map(item => item.dataValues),
-    ];
+    product = await product
+      .populate([
+        'categories',
+        'genres',
+        'extends',
+        'languages',
+        'activationRegions',
+        'developers',
+        'publisherId',
+        'activationServiceId',
+        'platformId',
+      ]);
     
-    if (gameEdition) {
-      editions.push({
-        id: gameEdition.dataValues.id,
-        name: gameEdition.dataValues.name,
-        selected: true,
-      });
-    }
-  
+    const categories = getAllProductParams(product.categories, restCategories);
+    const genres = getAllProductParams(product.genres, restGenres);
+    const allExtends = getAllProductParams(product.extends, restExtends);
+    const languages = getAllProductParams(product.languages, restLanguages);
+    const activationRegions = getAllProductParams(product.activationRegions, restActivationRegions);
+    const developers = getAllProductParams(product.developers, restDevelopers);
+    const publishers = getAllProductParams([product.publisherId], restPublishers);
+    const activationServices = getAllProductParams([product.activationServiceId], restActivationServices);
+    const platforms = getAllProductParams([product.platformId], restPlatforms);
+    
     res.render('addProducts', {
       layout: 'admin',
       title: "Редактирование игры",
       isEdit: true,
-      game: game.dataValues,
-      gameImages: gameImages.map(item => item.dataValues),
+      product,
+      /*gameImages: gameImages.map(item => item.dataValues),
       gameElements: gameElements.map(item => {
         const dataValues = item.dataValues;
         
@@ -458,17 +264,16 @@ export const pageEditProduct = async (req, res) => {
           gameId: gameData.id,
           name: gameData.name,
         }
-      }),
+      }),*/
       categories,
       genres,
       extends: allExtends,
       languages,
-      regions,
+      activationRegions,
       developers,
       activationServices,
       publishers,
       platforms,
-      editions,
     });
   } catch (e) {
     console.log(e);
