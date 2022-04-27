@@ -14,6 +14,10 @@ const fields = {
     unique: true,
     index: true,
   },
+  metaDescription: {
+    type: String,
+    required: true,
+  },
   introText: {
     type: String,
     required: true,

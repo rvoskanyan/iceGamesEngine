@@ -35,7 +35,8 @@ export const homepage = async (req, res) => {
   }
   
   res.render('home', {
-    title: "ICE Games -- магазин ключей",
+    title: "ICE Games — магазин ключей",
+    metaDescription: 'Добро пожаловать в интернет-магазин ключей игр - ICE Games',
     isHome: true,
     sliderProducts,
     usp,

@@ -1,0 +1,9 @@
+User-Agent: *
+Disallow: /profile/
+Disallow: /admin/
+Disallow: /api/
+Disallow: /logout
+Disallow: /reg
+Disallow: /auth
+
+Sitemap: https://icegames.store/sitemap.xml

@@ -5,7 +5,7 @@
         </div>
         <div class="current">Корзина</div>
     </div>
-    <div class="title">Список покупок</div>
+    <h1 class="title">Список покупок</h1>
     <div class="info js-cart">
         {{#if cart.items.length}}
             <div class="listGames">
@@ -15,7 +15,7 @@
                             <button class="btn js-deleteFromCart">
                                 <span class="icon icon-close"></span>
                             </button>
-                            <img class="img" src="{{@root.websiteAddress}}{{img}}" alt="{{name}}">
+                            <img class="img" src="{{@root.websiteAddress}}{{img}}" alt="{{name}}" title="{{name}}">
                             <div class="main">
                                 <div class="name">
                                     {{name}}

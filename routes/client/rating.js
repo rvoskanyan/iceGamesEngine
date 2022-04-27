@@ -1,8 +1,12 @@
 import {Router} from "express";
-import {ratingPage} from "../../controllers/client/rating.js";
+import {
+  ratingPage,
+  profileViewPage,
+} from "../../controllers/client/rating.js";
 
 const router = Router();
 
 router.get('/', ratingPage);
+router.get('/:login', profileViewPage);
 
 export default router;

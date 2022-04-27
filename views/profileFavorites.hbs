@@ -10,9 +10,9 @@
         <div class="content savedGames">
             <div class="subtitle">Избранное</div>
             <div class="description">Здесь отображаются игры, которые Вам понравились</div>
-            {{#if favorites.length}}
+            {{#if user.favoritesProducts.length}}
                 <div class="list">
-                    {{#each favorites}}
+                    {{#each user.favoritesProducts}}
                         {{> game
                             id=id
                             size='small'

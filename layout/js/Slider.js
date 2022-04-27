@@ -1,5 +1,5 @@
 export default class Slider {
-  constructor(options) {
+  constructor (options) {
     const {
       mainNode,
       switchingTime,
@@ -9,8 +9,10 @@ export default class Slider {
       navigate,
       countSlidesScroll = 1,
       onSwitch,
+      carousel,
     } = options;
   
+    this.carousel = carousel;
     this.switchingTime = switchingTime;
     this.isTrack = isTrack;
     this.isVertical = isVertical;
@@ -24,9 +26,14 @@ export default class Slider {
     this.offsetSlide = 0;
   
     this.mainNode = mainNode;
+    this.tapeNode = this.mainNode.querySelector('.js-tape');
+  
+    if (this.carousel) {
+      return this.carouselMode();
+    }
+    
     this.prevBtnNode = this.mainNode.querySelector('.js-prevBtn');
     this.nextBtnNode = this.mainNode.querySelector('.js-nextBtn');
-    this.tapeNode = this.mainNode.querySelector('.js-tape');
     this.slideNodes = this.mainNode.querySelectorAll('.js-slide');
     
     this.countSlides = this.slideNodes.length;
@@ -50,8 +57,10 @@ export default class Slider {
       if (this.countSlidesScroll > this.countVisibleSlides) {
         this.countSlidesScroll = this.countVisibleSlides;
       }
-      
-      this.countScreens = Math.ceil((this.countSlides - (this.countVisibleSlides - this.countSlidesScroll)) / this.countSlidesScroll);
+  
+      //Количество фрагментов = считаем, сколько слайдов еще не отображено, делим на количество, которое скроллим за раз и прибавляем первый фрагмент
+      this.countScreens = Math.ceil((this.countSlides - this.countVisibleSlides) / this.countSlidesScroll + 1);
+      //this.countScreens = Math.ceil((this.countSlides - (this.countVisibleSlides - this.countSlidesScroll)) / this.countSlidesScroll);
     }
   
     if (this.progress) {
@@ -149,8 +158,13 @@ export default class Slider {
   }
   
   setActiveClass = (screen, action) => {
-    let start = screen * this.countVisibleSlides - this.offsetSlide;
-    let end = screen * this.countVisibleSlides + this.countVisibleSlides - this.offsetSlide;
+    let start = screen * this.countSlidesScroll - this.offsetSlide;
+    let end = start + this.countSlidesScroll;
+    
+    if (action === 'add') {
+      end = start + this.countVisibleSlides;
+    }
+    
     const members = [];
     
     if (this.activeScreen === 0 && this.offsetSlide) {
@@ -184,13 +198,13 @@ export default class Slider {
       if (this.activeScreen + 1 === this.countScreens) {
         this.positionTape = ((this.countSlides - this.countVisibleSlides) * this.shareSlide) * -1;
       } else {
-        this.positionTape -= this.countVisibleSlides * this.shareSlide;
+        this.positionTape -= this.countSlidesScroll * this.shareSlide;
       }
     } else {
       if (this.activeScreen === 0) {
         this.positionTape = 0;
       } else {
-        this.positionTape += this.countVisibleSlides * this.shareSlide;
+        this.positionTape += this.countSlidesScroll * this.shareSlide;
       }
     }
     
@@ -206,6 +220,32 @@ export default class Slider {
     this.timeOutId = setTimeout(() => {
       this.switchScreen(this.activeScreen + 1);
     }, time);
+  }
+  
+  carouselMode = () => {
+    window.addEventListener('load', () => {
+      this.space = this.tapeNode.scrollWidth - this.mainNode.offsetWidth;
+  
+      if (this.space <= 0) {
+        return;
+      }
+  
+      this.direction = 'left';
+      this.time = 15 * this.space;
+      this.tapeNode.style.transform = `translateX(0px)`;
+      this.tapeNode.style.transition = `transform ${this.time}ms cubic-bezier(0.45, 0.05, 0.55, 0.95)`;
+      this.tapeNode.style.transform = `translateX(-${this.space}px)`;
+  
+      setInterval(() => {
+        if (this.direction === 'right') {
+          this.tapeNode.style.transform = `translateX(-${this.space}px)`;
+          this.direction = 'left';
+        } else {
+          this.tapeNode.style.transform = `translateX(0px)`;
+          this.direction = 'right';
+        }
+      }, this.time);
+    })
   }
   
   /*moveTape = (click) => {

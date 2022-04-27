@@ -4,9 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="description" content="IceGames -- Магазин Ключей Steam">
-    <meta name="keywords" content="IceGames -- Магазин Ключей Steam">
-    <link rel="stylesheet" href="/styles/bundle.css">
+{{#if noIndex}}
+    <meta name="robots" content="noindex, nofollow">
+{{/if}}
+{{#if metaDescription}}
+    <meta name="description" content="{{metaDescription}}">
+{{/if}}
+    <link rel="stylesheet" href="{{websiteAddress}}styles/bundle.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,600;1,300;1,600&display=swap" rel="stylesheet">
@@ -19,13 +23,19 @@
 <header class="header js-header">
     <div class="contentContainer">
         {{#if isHome}}
-            <div class="logo link">
-                <img src="/img/logo.png" class="img" alt="Логотип Ice Games" title="Логотип Ice Games">
+            <div class="logo">
+                <div class="imgContainer">
+                    <img src="{{websiteAddress}}img/logo.svg" class="img" alt="Логотип Ice Games" title="Логотип Ice Games">
+                    <span class="eye"></span>
+                </div>
                 <div class="name">Ice Games<br>Store</div>
             </div>
         {{else}}
-            <a class="logo link" href="/">
-                <img src="/img/logo.png" class="img" alt="Логотип Ice Games" title="Логотип Ice Games">
+            <a class="logo" href="/">
+                <div class="imgContainer">
+                    <img src="{{websiteAddress}}img/logo.svg" class="img" alt="Логотип Ice Games" title="Логотип Ice Games">
+                    <span class="eye"></span>
+                </div>
                 <div class="name">Ice Games<br>Store</div>
             </a>
         {{/if}}
@@ -41,7 +51,7 @@
             {{#if isRating}}
                 <span title="Рейтинг пользователей Ice Games" class="btn round border hover-color-pink hover-border-pink">Рейтинг</span>
             {{else}}
-                <a href="/rating" title="Рейтинг пользователей Ice Games" class="btn round border hover-color-pink hover-border-pink">Рейтинг</a>
+                <a href="{{websiteAddress}}rating" title="Рейтинг пользователей Ice Games" class="btn round border hover-color-pink hover-border-pink">Рейтинг</a>
             {{/if}}
         </div>
         <div class="profile">
@@ -51,7 +61,7 @@
                         <span class="icon icon-profile"></span>
                     </div>
                 {{else}}
-                    <a href="/profile" class="btn" title="Перейти в профиль">
+                    <a href="{{websiteAddress}}profile" class="btn" title="Перейти в профиль">
                         <span class="icon icon-profile"></span>
                     </a>
                 {{/if}}
@@ -60,7 +70,7 @@
                     <span class="icon icon-profile"></span>
                 </button>
             {{/if}}
-            <a href="/cart" class="btn cart" title="Перейти в корзину с товарами">
+            <a href="{{websiteAddress}}cart" class="btn cart" title="Перейти в корзину с товарами">
                 <span class="icon icon-cart"></span>
             </a>
         </div>
@@ -71,81 +81,87 @@
 
 <footer class="contentContainer homeSection footer">
     <div class="navigation">
-        <a class="link" href="#">
-            <img class="logo" src="/img/logoFull.png" alt="Ice Games полный логотип" title="Ice Games полный логотип">
-        </a>
+        {{#if isHome}}
+            <div class="link">
+                <img class="logo" src="{{websiteAddress}}img/logoFull.png" alt="ICE Games полный логотип" title="ICE Games полный логотип">
+            </div>
+        {{else}}
+            <a class="link" href="/">
+                <img class="logo" src="{{websiteAddress}}img/logoFull.png" alt="ICE Games полный логотип" title="ICE Games полный логотип">
+            </a>
+        {{/if}}
         <div class="social">
-            <a href="#" class="link" title="Перейти на страницу Ice Games во Вконтакте">
-                <img class="img" src="/img/vkSocial.png" alt="Логотип вконтакте" title="Перейти на страницу Ice Games во Вконтакте">
+            <a href="#" rel="nofollow" class="link" title="Перейти на страницу Ice Games во Вконтакте">
+                <img class="img" src="{{websiteAddress}}img/vkSocial.png" alt="Логотип вконтакте" title="Перейти на страницу Ice Games во Вконтакте">
             </a>
-            <a href="#" class="link" title="Перейти на страницу Ice Games в TikTok">
-                <img class="img" src="/img/tiktokSocial.png" alt="Логотип TikTok" title="Перейти на страницу Ice Games в TikTok">
+            <a href="#" rel="nofollow" class="link" title="Перейти на страницу Ice Games в TikTok">
+                <img class="img" src="{{websiteAddress}}img/tiktokSocial.png" alt="Логотип TikTok" title="Перейти на страницу Ice Games в TikTok">
             </a>
-            <a href="#" class="link" title="Перейти на страницу Ice Games в Instagram">
-                <img class="img" src="/img/instagramSocial.png" alt="Логотип Instagram" title="Перейти на страницу Ice Games в Instagram">
+            <a href="#" rel="nofollow" class="link" title="Перейти на страницу Ice Games в Instagram">
+                <img class="img" src="{{websiteAddress}}img/instagramSocial.png" alt="Логотип Instagram" title="Перейти на страницу Ice Games в Instagram">
             </a>
-            <a href="#" class="link" title="Перейти на страницу Ice Games в Twitch">
-                <img class="img" src="/img/twitchSocial.png" alt="Логотип Twitch" title="Перейти на страницу Ice Games в Twitch">
+            <a href="#" rel="nofollow" class="link" title="Перейти на страницу Ice Games в Twitch">
+                <img class="img" src="{{websiteAddress}}img/twitchSocial.png" alt="Логотип Twitch" title="Перейти на страницу Ice Games в Twitch">
             </a>
-            <a href="#" class="link" title="Перейти на страницу Ice Games в Twitter">
-                <img class="img" src="/img/twitterSocial.png" alt="Логотип Twitter" title="Перейти на страницу Ice Games в Twitter">
+            <a href="#" rel="nofollow" class="link" title="Перейти на страницу Ice Games в Twitter">
+                <img class="img" src="{{websiteAddress}}img/twitterSocial.png" alt="Логотип Twitter" title="Перейти на страницу Ice Games в Twitter">
             </a>
-            <a href="#" class="link" title="Перейти на страницу Ice Games в FaceBook">
-                <img class="img" src="/img/fbSocial.png" alt="Логотип FaceBook" title="Перейти на страницу Ice Games в FaceBook">
+            <a href="#" rel="nofollow" class="link" title="Перейти на страницу Ice Games в FaceBook">
+                <img class="img" src="{{websiteAddress}}img/fbSocial.png" alt="Логотип FaceBook" title="Перейти на страницу Ice Games в FaceBook">
             </a>
         </div>
         <div class="menu">
             {{#if isCatalog}}
                 <span class="link">Все игры</span>
             {{else}}
-                <a href="/games" class="link">Все игры</a>
+                <a href="{{websiteAddress}}games" class="link">Все игры</a>
             {{/if}}
             {{#if isSupport}}
                 <span class="link">Поддержка</span>
             {{else}}
-                <a href="/support" class="link">Поддержка</a>
+                <a href="{{websiteAddress}}support" class="link">Поддержка</a>
             {{/if}}
             {{#if isPayment}}
                 <span class="link">Доставка и оплата</span>
             {{else}}
-                <a href="/payment" class="link">Доставка и оплата</a>
+                <a href="{{websiteAddress}}payment" class="link">Доставка и оплата</a>
             {{/if}}
             {{#if isReviews}}
                 <span class="link">Отзывы</span>
             {{else}}
-                <a href="/reviews" class="link">Отзывы</a>
+                <a href="{{websiteAddress}}reviews" class="link">Отзывы</a>
             {{/if}}
             {{#if isAbout}}
                 <span class="link">О магазине</span>
             {{else}}
-                <a href="/about" class="link">О магазине</a>
+                <a href="{{websiteAddress}}about" class="link">О магазине</a>
             {{/if}}
             {{#if isBlog}}
                 <span class="link">Блог</span>
             {{else}}
-                <a href="/blog" class="link">Блог</a>
+                <a href="{{websiteAddress}}blog" class="link">Блог</a>
             {{/if}}
             {{#if isDiscounts}}
                 <span class="link">Скидки</span>
             {{else}}
-                <a href="/discounts" class="link">Скидки</a>
+                <a href="{{websiteAddress}}discounts" class="link">Скидки</a>
             {{/if}}
             {{#if isNovelty}}
                 <span class="link">Новинки</span>
             {{else}}
-                <a href="/novelty" class="link">Новинки</a>
+                <a href="{{websiteAddress}}novelty" class="link">Новинки</a>
             {{/if}}
             {{#if isPreorders}}
                 <span class="link">Предзаказы</span>
             {{else}}
-                <a href="/preorders" class="link">Предзаказы</a>
+                <a href="{{websiteAddress}}preorders" class="link">Предзаказы</a>
             {{/if}}
         </div>
     </div>
     <div class="info">
-        <img class="payments" src="/img/payments.png" alt="Способы оплаты" title="Способы оплаты">
+        <img class="payments" src="{{websiteAddress}}img/payments.png" alt="Способы оплаты" title="Способы оплаты">
         <a class="link legalInfo" href="#" title="Перейти на страницу правовой информации">Правовая информация</a>
-        <a class="link designBy" href="#" title="Перейти на сайт студии" target="_blank">Дизайн: дизайн студия ган михаила</a>
+        <a class="link designBy" href="#" rel="nofollow" title="Перейти на сайт студии" target="_blank">Дизайн: дизайн студия ган михаила</a>
     </div>
     <div class="copy">
         Все права защищены. Копирование любых материалов сайта запрещено! Все названия продуктов и игр,
@@ -154,6 +170,6 @@
         Battle.net, Origin и другие. Выгодно, надежно и быстро!
     </div>
 </footer>
-<script src="/js/bundle.js"></script>
+<script src="{{websiteAddress}}js/bundle.js"></script>
 </body>
 </html>

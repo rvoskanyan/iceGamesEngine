@@ -1,13 +1,13 @@
 <main class="blogPage">
     <div class="breadcrumbs contentContainer">
         <div class="item">
-            <a class="btn link" href="/">Главная</a>
+            <a class="btn link" href="{{websiteAddress}}">Главная</a>
         </div>
         <div class="current">Блог</div>
     </div>
     {{#if fixArticle}}
         <div class="cover blackout blackout-bottomMax slide active js-slide">
-            <img class="img" src="{{fixArticle.coverImg}}" alt="Phoenix Point: Year One Edition" title="Phoenix Point: Year One Edition">
+            <img class="img" src="{{websiteAddress}}{{fixArticle.coverImg}}" alt="Постер записи в блоге - {{fixArticle.name}}" title="Постер записи в блоге - {{fixArticle.name}}">
             <div class="textContent">
                 <div class="title">{{fixArticle.name}}</div>
                 <div class="description">
@@ -20,8 +20,8 @@
     <div class="contentContainer">
         <div class="articles">
             {{#each articles}}
-                <a class="article{{#if rightImg}} right{{/if}}" href="/blog/{{alias}}" style="background: linear-gradient(94.29deg, {{blockColor}} 35.06%, rgba(196, 196, 196, 0) 88.75%);">
-                    <img class="img" src="{{img}}" alt="Sims">
+                <a class="article{{#if rightImg}} right{{/if}}" href="{{websiteAddress}}/blog/{{alias}}" style="background: linear-gradient(94.29deg, {{blockColor}} 35.06%, rgba(196, 196, 196, 0) 88.75%);">
+                    <img class="img" src="{{@root.websiteAddress}}{{img}}" alt="Изображение записи в блоге - {{name}}">
                     <div class="info">
                         <div class="content">
                             <div class="title">{{name}}</div>

@@ -23,14 +23,18 @@
 
     & .tape
       display: flex
+      transition: 1s ease
 
       & .newsPreview
         padding: 18px 25px 0 25px
         min-width: calc(1132px / 3) //width visibleArea / count slides
         visibility: hidden
+        opacity: 0
+        transition: 1s ease
 
         &.active
           visibility: visible
+          opacity: 1
 
         @include for-big-desktop-up
           min-width: calc(1306px / 3) //width visibleArea / count slides

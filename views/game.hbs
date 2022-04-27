@@ -41,14 +41,14 @@
                     {{/each}}
                 </div>
             {{/if}}
-            <div class="name">{{product.name}}</div>
+            <h1 class="name">{{product.name}}</h1>
             <div class="statuses">
                 <div class="status positive">В наличии</div>
                 <div class="status positive">Данный товар купили сегодня 30 раз</div>
             </div>
-            <div class="description">
+            <p class="description">
                 {{product.description}}
-            </div>
+            </p>
             <div class="price">
                 <div class="toPrice">
                     <span class="value">
@@ -83,7 +83,7 @@
                     {{#each product.extends}}
                         <div class="tooltip">
                             <button class="btn extend">
-                                <img  class="img" src="{{@root.websiteAddress}}{{icon}}" alt="{{text}}" title="{{text}}">
+                                <img  class="img" src="{{@root.websiteAddress}}{{icon}}" alt="{{text}}" title="{{name}}">
                             </button>
                             <div class="prompt">
                                 {{name}}
@@ -168,25 +168,17 @@
                             {{#if product.trailerLink}}
                                 <div class="slide js-slide active">
                                     <button class="btn increase video js-playYouTubeVideo" title="Посмотреть трейлер игры" data-link="{{trailerId}}">
-                                        <img class="img" src="https://img.youtube.com/vi/{{trailerId}}/maxresdefault.jpg" alt="Трейлер игры {{game.name}}">
+                                        <img class="img" src="https://img.youtube.com/vi/{{trailerId}}/maxresdefault.jpg" alt="Трейлер игры {{game.name}}" title="Трейлер игр {{game.name}}">
                                     </button>
                                 </div>
-                                {{#each images}}
-                                    <div class="slide js-slide{{#if (isLess @index 1)}} active{{/if}}">
-                                        <button class="btn increase" title="Открыть на весь экран">
-                                            <img class="img" src="{{@root.websiteAddress}}{{name}}" alt="Фото из галереи игы">
-                                        </button>
-                                    </div>
-                                {{/each}}
-                            {{else}}
-                                {{#each images}}
-                                    <div class="slide js-slide{{#if (isLess @index 2)}} active{{/if}}">
-                                        <button class="btn increase" title="Открыть на весь экран">
-                                            <img class="img" src="{{@root.websiteAddress}}{{name}}" alt="Фото из галереи игы">
-                                        </button>
-                                    </div>
-                                {{/each}}
                             {{/if}}
+                            {{#each images}}
+                                <div class="slide js-slide{{#if (isLess @index 1)}} active{{/if}}">
+                                    <button class="btn increase" title="Открыть на весь экран">
+                                        <img class="img" src="{{@root.websiteAddress}}{{name}}" alt="Изображение-{{@index}} из игры {{@root.product.name}}">
+                                    </button>
+                                </div>
+                            {{/each}}
                         </div>
                     </div>
                 </div>

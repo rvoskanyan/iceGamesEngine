@@ -4,7 +4,7 @@
             {{#each sliderProducts}}
                 <div class="cover blackout blackout-left blackout-bottom slide{{#if @first}} active{{/if}} js-slide" data-video-name="{{coverVideo}}">
                     <video class="video" muted></video>
-                    <img class="img" src="{{@root.websiteAddress}}{{coverImg}}" alt="{{name}}" title="{{name}}">
+                    <img class="img" src="{{@root.websiteAddress}}{{coverImg}}" alt="Постер игры {{name}}" title="Постер игры {{name}}">
                     <div class="offer">
                         <div class="name">
                             {{name}}
@@ -45,7 +45,7 @@
                 {{#each sliderProducts}}
                     <button class="cardGame big{{#if @first}} active{{/if}} js-itemNavigate" title="Переключить слайд">
                         <div class="head">
-                            <img class="img" src="{{@root.websiteAddress}}{{img}}" alt="{{name}}" title="{{name}}">
+                            <img class="img" src="{{@root.websiteAddress}}{{img}}" alt="Изображение игры {{name}}" title="{{name}}">
                             <div class="name">
                                 {{name}}
                             </div>
@@ -99,7 +99,7 @@
                                         </button>
                                     </div>
                                     <div class="head">
-                                        <img class="img" src="{{@root.websiteAddress}}{{img}}" alt="Изображение {{name}}" title="{{name}}">
+                                        <img class="img" src="{{@root.websiteAddress}}{{img}}" alt="Изображение игры {{name}}" title="{{name}}">
                                         <div class="name">
                                             {{name}}
                                         </div>
@@ -138,7 +138,7 @@
                         <div class="slide js-slide active">
                             {{#each genres}}
                                 <a class="genre" href="{{websiteAddress}}{{url}}" title="Открыть игры с жанром {{name}}">
-                                    <img class="img" src="{{@root.websiteAddress}}{{img}}" alt="Картинка жанра {{name}}">
+                                    <img class="img" src="{{@root.websiteAddress}}{{img}}" alt="Изображение жанра {{name}}" title="Изображение жанра {{name}}">
                                     <div class="name">
                                         {{name}}
                                     </div>
@@ -160,15 +160,15 @@
         </div>
         <div class="homeSection">
             <div class="homeTitle">Новости и статьи</div>
-            <div class="newsSlider">
-                <button class="btn prev increase">
+            <div class="newsSlider js-newsSlider">
+                <button class="btn prev increase js-prevBtn">
                     <span class="icon-static icon-static-arrow"></span>
                 </button>
-                <div class="visibleArea">
-                    <div class="tape">
+                <div class="visibleArea js-visibleArea">
+                    <div class="tape js-tape">
                         {{#each articles}}
-                            <a href="{{websiteAddress}}blog/{{alias}}" class="newsPreview{{#iff @index '<' 3}} active{{/iff}}">
-                                <img class="img" src="{{websiteAddress}}{{img}}" alt="Изображение {{name}}" title="{{name}}">
+                            <a href="{{websiteAddress}}blog/{{alias}}" class="newsPreview js-slide{{#iff @index '<' 3}} active{{/iff}}">
+                                <img class="img" src="{{websiteAddress}}{{img}}" alt="Изображение записи из блога {{name}}" title="Изображение записи из блога {{name}}">
                                 <div class="attributes">
                                     <div class="btn small round border small bg-darkLilac">
                                         {{#iff type '===' 'news'}}Новости{{else}}Статьи{{/iff}}
@@ -187,7 +187,7 @@
                         {{/each}}
                     </div>
                 </div>
-                <button class="btn next increase">
+                <button class="btn next increase js-nextBtn">
                     <span class="icon-static icon-static-arrow"></span>
                 </button>
             </div>
@@ -195,19 +195,31 @@
         </div>
         <div class="homeSection">
             <div class="homeTitle">Медиа о нас</div>
-            <div class="homeMedia">
-                <div class="items">
-                    <a href="#" class="item" title="Медиа о нас 1">
-                        <img class="img" src="./img/homeMedia-1.png" alt="Медиа о нас 1" title="Медиа о нас 1">
+            <div class="homeMediaSlider js-homeMediaSlider">
+                <div class="tape js-tape">
+                    <a href="#" rel="nofollow" class="slide" title="Медиа о нас 1">
+                        <img class="img" src="{{websiteAddress}}img/homeMedia-1.png" alt="Медиа о нас 1" title="Медиа о нас 1">
                     </a>
-                    <a href="#" class="item" title="Медиа о нас 2">
-                        <img class="img" src="./img/homeMedia-2.png" alt="Медиа о нас 2" title="Медиа о нас 2">
+                    <a href="#" rel="nofollow" class="slide" title="Медиа о нас 2">
+                        <img class="img" src="{{websiteAddress}}img/homeMedia-2.png" alt="Медиа о нас 2" title="Медиа о нас 2">
                     </a>
-                    <a href="#" class="item" title="Медиа о нас 3">
-                        <img class="img" src="./img/homeMedia-3.png" alt="Медиа о нас 3" title="Медиа о нас 3">
+                    <a href="#" rel="nofollow" class="slide" title="Медиа о нас 3">
+                        <img class="img" src="{{websiteAddress}}img/homeMedia-3.png" alt="Медиа о нас 3" title="Медиа о нас 3">
                     </a>
-                    <a href="#" class="item" title="Медиа о нас 4">
-                        <img class="img" src="./img/homeMedia-4.png" alt="Медиа о нас 4" title="Медиа о нас 4">
+                    <a href="#" rel="nofollow" class="slide" title="Медиа о нас 4">
+                        <img class="img" src="{{websiteAddress}}img/homeMedia-4.png" alt="Медиа о нас 4" title="Медиа о нас 4">
+                    </a>
+                    <a href="#" rel="nofollow" class="slide" title="Медиа о нас 1">
+                        <img class="img" src="{{websiteAddress}}img/homeMedia-1.png" alt="Медиа о нас 1" title="Медиа о нас 1">
+                    </a>
+                    <a href="#" rel="nofollow" class="slide" title="Медиа о нас 2">
+                        <img class="img" src="{{websiteAddress}}img/homeMedia-2.png" alt="Медиа о нас 2" title="Медиа о нас 2">
+                    </a>
+                    <a href="#" rel="nofollow" class="slide" title="Медиа о нас 3">
+                        <img class="img" src="{{websiteAddress}}img/homeMedia-3.png" alt="Медиа о нас 3" title="Медиа о нас 3">
+                    </a>
+                    <a href="#" rel="nofollow" class="slide" title="Медиа о нас 4">
+                        <img class="img" src="{{websiteAddress}}img/homeMedia-4.png" alt="Медиа о нас 4" title="Медиа о нас 4">
                     </a>
                 </div>
             </div>

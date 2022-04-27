@@ -1,20 +1,20 @@
 <main class="blogPage article">
     <div class="breadcrumbs contentContainer">
         <div class="item">
-            <a class="btn link" href="/">Главная</a>
+            <a class="btn link" href="{{websiteAddress}}">Главная</a>
         </div>
         <div class="item">
-            <a class="btn link" href="/blog">Блог</a>
+            <a class="btn link" href="{{websiteAddress}}blog">Блог</a>
         </div>
         <div class="current">{{article.name}}</div>
     </div>
     <div class="cover blackout blackout-bottomMax slide active js-slide">
-        <img class="img" src="/{{article.coverImg}}" alt="Phoenix Point: Year One Edition" title="Phoenix Point: Year One Edition">
+        <img class="img" src="{{websiteAddress}}{{article.coverImg}}" alt="Постер для записи в блоге - {{article.name}}" title="Постер для записи в блоге - {{article.name}}">
         <div class="textContent">
             <h1 class="title">{{article.name}}</h1>
-            <div class="description">
+            <p class="description">
                 {{article.introText}}
-            </div>
+            </p>
         </div>
         <button class="btn translucent js-scroller" data-target="articleContent">
             <span class="icon icon-arrowBottom"></span>
@@ -24,7 +24,7 @@
         <div class="content">
             {{#each article.blocks}}
                 <div class="block {{imgPosition}}">
-                    <img class="img" src="/{{img}}" alt="1">
+                    <img class="img" src="{{@root.websiteAddress}}{{img}}" alt="Изображение для контент-блока {{@index}}">
                     <div class="text">
                         {{text}}
                     </div>

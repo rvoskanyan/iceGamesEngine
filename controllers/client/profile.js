@@ -11,7 +11,8 @@ export const profilePage = async (req, res) => {
     const ratingPosition = await user.getRatingPosition();
     
     res.render('profile', {
-      title: "ICE Games -- Мой профиль",
+      title: "ICE Games — Мой профиль",
+      noIndex: true,
       isProfileHome: true,
       user,
       countUsers,
@@ -30,7 +31,8 @@ export const profileEditPage = async (req, res) => {
     const user = await User.findById(userId);
   
     res.render('profileEdit', {
-      title: "ICE Games -- Редактирование профиля",
+      title: "ICE Games — Редактирование профиля",
+      noIndex: true,
       isProfileEdit: true,
       user,
     })
@@ -94,7 +96,8 @@ export const profileEdit = async (req, res) => {
 
 export const profileAchievementsPage = async (req, res) => {
   try {
-    const {achievements} = await res.locals.person.populate('achievements');
+    const user = res.locals.person;
+    const {achievements} = await user.populate('achievements');
     const achievementIds = achievements.map(achievement => achievement._id.toString());
     let restFilter = {};
     
@@ -107,8 +110,10 @@ export const profileAchievementsPage = async (req, res) => {
     const percent = 100 / achievementCount * achievements.length;
     
     res.render('profileAchievements', {
-      title: 'ICE Games -- Мои достижения',
+      title: 'ICE Games — Мои достижения',
+      noIndex: true,
       isProfileAchievements: true,
+      user,
       achievements,
       restAchievements,
       achievementCount,
@@ -129,7 +134,8 @@ export const profileInvitePage = async (req, res) => {
       .populate('invitedUsers', ['login']);
     
     res.render('profileInvite', {
-      title: 'ICE Games -- Приглашенные друзья',
+      title: 'ICE Games — Приглашенные друзья',
+      noIndex: true,
       isProfileInvite: true,
       userId: req.session.userId,
       invitedUsers: user.invitedUsers,
@@ -147,7 +153,8 @@ export const profileOrdersPage = async (req, res) => {
     const user = await User.findById(req.session.userId);
     
     res.render('profileOrders', {
-      title: 'ICE Games -- Приобретенные товары',
+      title: 'ICE Games — Приобретенные товары',
+      noIndex: true,
       isProfileOrders: true,
       user,
     });
@@ -159,34 +166,13 @@ export const profileOrdersPage = async (req, res) => {
 
 export const profileFavoritesPage = async (req, res) => {
   try {
-    const user = await User
-      .findById(req.session.userId)
-      .select(['favoritesProducts'])
-      .populate('favoritesProducts', ['name', 'alias', 'img', 'priceTo', 'priceFrom']);
+    const user = await res.locals.person.populate('favoritesProducts', ['name', 'alias', 'img', 'priceTo', 'priceFrom']);
     
     res.render('profileFavorites', {
-      title: 'ICE Games -- Товары в избранном',
+      title: 'ICE Games — Товары в избранном',
+      noIndex: true,
       isProfileFavorites: true,
-      favorites: user.favoritesProducts,
-    })
-  } catch (e) {
-    console.log(e);
-    res.redirect('/');
-  }
-}
-
-export const profileViewPage = async (req, res) => {
-  try {
-    const {login} = req.params;
-    const user = await User.findOne({login}).select(['rating', 'invitedUsers', 'viewedArticles', 'createdAt']);
-    const countUsers = await User.estimatedDocumentCount();
-    
-    user.login = login;
-    
-    res.render('profileViewPage', {
-      title: 'ICE Games -- Профиль пользователя',
       user,
-      countUsers,
     })
   } catch (e) {
     console.log(e);

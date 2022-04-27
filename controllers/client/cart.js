@@ -13,7 +13,8 @@ export const cartPage = async (req, res) => {
     }
     
     res.render('cart', {
-      title: 'ICE Games -- корзина покупок',
+      title: 'ICE Games — корзина покупок',
+      metaDescription: 'Быстрая покупайте игры со скидками, добавленных сюда!',
       cart: {
         items: cart,
         priceToTotal,

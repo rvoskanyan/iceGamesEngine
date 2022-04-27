@@ -75,6 +75,10 @@ const fields = {
     unique: true,
     index: true,
   },
+  metaDescription: {
+    type: String,
+    required: true,
+  },
   dsId: {
     type: Number,
     unique: true,
@@ -256,5 +260,11 @@ const options = {
 };
 
 const productSchema = new Schema(fields, options);
+
+productSchema.virtual('releaseDateForInput').get(function () {
+  const product = this;
+  const date = new Date(product.releaseDate);
+  return `${date.getFullYear()}-${date.getMonth() < 9 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1}-${date.getDate() < 10 ? '0' + date.getDate() : date.getDate()}`;
+});
 
 export default model('Product', productSchema);

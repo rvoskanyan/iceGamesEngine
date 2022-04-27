@@ -7,7 +7,6 @@ import {
   profileInvitePage,
   profileOrdersPage,
   profileFavoritesPage,
-  profileViewPage,
 } from "../../controllers/client/profile.js";
 import {editProfileValidator} from "../../utils/validators.js";
 
@@ -25,7 +24,5 @@ router.get('/invite', profileInvitePage);
 router.get('/orders', profileOrdersPage);
 
 router.get('/favorites', profileFavoritesPage);
-
-router.get('/view/:login', profileViewPage);
 
 export default router;

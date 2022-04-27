@@ -1,17 +1,17 @@
 {{#if isEdit}}
-    <a href="/admin/products/{{game.id}}/addElement">Добавить элемент</a>
-    {{#if gameElements}}
+    <a href="/admin/products/{{product.id}}/addElement">Добавить элемент</a>
+    {{#if productElements}}
         <br>
         <br>
         Список элементов игры:
         <ul>
-            {{#each gameElements}}
+            {{#each productElements}}
                 <li>
-                    <a href="/admin/products/{{../game.id}}/{{id}}">
+                    <a href="/admin/products/{{@root.product.id}}/{{id}}">
                         {{name}}
                     </a>
-                    {{#if gameId}}
-                        --- <a href="/admin/products/edit/{{gameId}}">Перейти к игре</a>
+                    {{#if productId}}
+                        --- <a href="/admin/products/edit/{{productId}}">Перейти к игре</a>
                     {{else}}
                         {{#if description}}
                             <p>
@@ -28,10 +28,16 @@
     <br>
     <br>
 {{/if}}
-<form method="post" action="/admin/products/{{#if isEdit}}edit/{{game.id}}{{else}}add{{/if}}" enctype="multipart/form-data">
+<form method="post" action="/admin/products/{{#if isEdit}}edit/{{product.id}}{{else}}add{{/if}}" enctype="multipart/form-data">
     <label>
         Название:
         <input type="text" name="name" value="{{product.name}}">
+    </label>
+    <br>
+    <br>
+    <label>
+        Meta-description:
+        <textarea name="metaDescription" cols="30" rows="10">{{product.metaDescription}}</textarea>
     </label>
     <br>
     <br>
@@ -160,7 +166,7 @@
     <br>
     <label>
         Дата выхода:
-        <input type="date" name="releaseDate" value="{{product.releaseDate}}">
+        <input type="date" name="releaseDate" value="{{product.releaseDateForInput}}">
     </label>
     <br>
     <br>

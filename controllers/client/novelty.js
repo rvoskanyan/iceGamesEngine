@@ -26,7 +26,8 @@ export const noveltyPage = async (req, res) => {
     }
     
     res.render('selection', {
-      title: 'ICE Games -- Новинки',
+      title: 'ICE Games — Новинки',
+      metaDescription: 'Подборка лучших новинок от ICE Games',
       isNovelty: true,
       selectionName: 'Новинки',
       products,

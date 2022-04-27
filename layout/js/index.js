@@ -13,6 +13,8 @@ import './../styles/index.sass';
 const postman = new Postman();
 
 const homeSliderNode = document.querySelector('.js-homeSlider');
+const newsSliderNode = document.querySelector('.js-newsSlider');
+const homeMediaSliderNode = document.querySelector('.js-homeMediaSlider');
 const homeCatalogTabsNode = document.querySelector('.js-homeCatalogTabs');
 const genresSliderNode = document.querySelector('.js-genresSlider');
 const gameGallerySliderNode = document.querySelector('.js-gameGallerySlider');
@@ -825,18 +827,34 @@ if (likeArticleNode) {
   })
 }
 
+if (newsSliderNode) {
+  new Slider({
+    mainNode: newsSliderNode,
+    switchingTime: 1000000000,
+    isTrack: true,
+    countSlidesScroll: 2
+  })
+}
+
+if (homeMediaSliderNode) {
+  new Slider({
+    mainNode: homeMediaSliderNode,
+    carousel: true,
+  })
+}
+
 if (homeSliderNode) {
   let playVideoTimeOutId;
   
   const homeSlider = new Slider({
     mainNode: homeSliderNode,
-    //onSwitch: switchHomeSlider,
+    onSwitch: switchHomeSlider,
     progress: true,
     navigate: true,
     switchingTime: 5000,
   });
   
-  /*function switchHomeSlider(slides, prevSlides = []) {
+  function switchHomeSlider(slides, prevSlides = []) {
     clearTimeout(playVideoTimeOutId);
     const slideNode = slides[0];
     const prevSlideNode = prevSlides[0];
@@ -872,7 +890,7 @@ if (homeSliderNode) {
     
     videoNode.addEventListener('canplaythrough', onCanplaythrough);
     videoNode.setAttribute('src',`${websiteAddress}${videoName}`);
-  }*/
+  }
 }
 
 if (homeCatalogTabsNode) {
@@ -888,7 +906,7 @@ if (genresSliderNode) {
     isTrack: true,
     isVertical: true,
     countSlidesScroll: 2,
-    switchingTime: 1000000,
+    switchingTime: 7000,
   });
 }
 

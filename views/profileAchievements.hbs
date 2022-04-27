@@ -19,14 +19,14 @@
                 <div class="list">
                     {{#each achievements}}
                         <div class="achievement">
-                            <img src="{{@root.websiteAddress}}{{icon}}" alt="{{name}}" class="achievementIcon">
+                            <img src="{{@root.websiteAddress}}{{icon}}" alt="Иконка достижения {{name}}" title="Иконка достижения {{name}}" class="achievementIcon">
                             <div class="name">{{name}}</div>
                             <div class="description">{{description}}</div>
                         </div>
                     {{/each}}
                     {{#each restAchievements}}
                         <div class="achievement">
-                            <img src="{{@root.websiteAddress}}{{icon}}" alt="{{name}}" class="achievementIcon">
+                            <img src="{{@root.websiteAddress}}{{icon}}" alt="Иконка достижения {{name}}" title="Иконка достижения {{name}}" class="achievementIcon">
                             <div class="name">{{name}}</div>
                             <div class="description">{{description}}</div>
                             <div class="lock" title="Достижение еще не получено">

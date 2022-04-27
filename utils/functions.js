@@ -12,8 +12,58 @@ export const getDiscount = (priceTo, priceFrom) => {
   return Math.floor(100 - priceTo / (priceFrom / 100));
 }
 
+export const getFormatDate = (date, separator, pattern) => {
+  const dateObject = new Date(Date.parse(date));
+  let newDate = '';
+  
+  pattern.forEach(item => {
+    let value;
+    
+    switch (item) {
+      case 'y': {
+        value = dateObject.getFullYear();
+        break;
+      }
+      case 'm': {
+        value = date.getMonth() < 9 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
+        break;
+      }
+      case 'd': {
+        value = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+        break;
+      }
+    }
+    
+    value && newDate.length ? newDate += `${separator + value}` : newDate += `${value}`;
+  })
+  
+  return newDate;
+}
+
+export const getSitemapUrlTag = ({url, lastMod, changeFreq, priority}) => {
+  return `
+    <url>
+        <loc>${url}</loc>
+        ${lastMod ? `<lastmod>${lastMod}</lastmod>` : ''}
+        <changefreq>${changeFreq}</changefreq>
+        <priority>${priority}</priority>
+    </url>
+  `;
+}
+
+export const getSitemap = (params) => {
+  let siteMap = `<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="/main-style.xml"?>
+  <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd http://www.google.com/schemas/sitemap-image/1.1 http://www.google.com/schemas/sitemap-image/1.1/sitemap-image.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`;
+  
+  params.forEach(param => {
+    siteMap += getSitemapUrlTag(param);
+  })
+  
+  return siteMap += '</urlset>';
+}
+
 /*
-  GetArray - Используется для преобразования в массив данных,
+  getArray - Используется для преобразования в массив данных,
   приходящих из полей multiple, если выбран был только один элемент
 */
 export const getArray = (value) => {
