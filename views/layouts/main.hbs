@@ -31,7 +31,7 @@
                 <div class="name">Ice Games<br>Store</div>
             </div>
         {{else}}
-            <a class="logo" href="/">
+            <a class="logo" href="{{websiteAddress}}">
                 <div class="imgContainer">
                     <img src="{{websiteAddress}}img/logo.svg" class="img" alt="Логотип Ice Games" title="Логотип Ice Games">
                     <span class="eye"></span>
@@ -72,6 +72,7 @@
             {{/if}}
             <a href="{{websiteAddress}}cart" class="btn cart" title="Перейти в корзину с товарами">
                 <span class="icon icon-cart"></span>
+                <span class="icon icon-fillDiamond"></span>
             </a>
         </div>
     </div>
@@ -82,12 +83,18 @@
 <footer class="contentContainer homeSection footer">
     <div class="navigation">
         {{#if isHome}}
-            <div class="link">
-                <img class="logo" src="{{websiteAddress}}img/logoFull.png" alt="ICE Games полный логотип" title="ICE Games полный логотип">
+            <div class="logo">
+                <div class="imgContainer">
+                    <img src="{{websiteAddress}}img/logo.svg" class="img" alt="Логотип Ice Games" title="Логотип Ice Games">
+                    <span class="eye"></span>
+                </div>
             </div>
         {{else}}
-            <a class="link" href="/">
-                <img class="logo" src="{{websiteAddress}}img/logoFull.png" alt="ICE Games полный логотип" title="ICE Games полный логотип">
+            <a class="logo" href="{{websiteAddress}}">
+                <div class="imgContainer">
+                    <img src="{{websiteAddress}}img/logo.svg" class="img" alt="Логотип Ice Games" title="Логотип Ice Games">
+                    <span class="eye"></span>
+                </div>
             </a>
         {{/if}}
         <div class="social">

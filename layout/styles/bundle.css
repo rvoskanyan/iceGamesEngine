@@ -715,48 +715,7 @@
     justify-content: space-between;
     align-items: center; }
   .header .logo {
-    display: flex;
-    text-decoration: none;
-    position: relative; }
-    .header .logo:hover .imgContainer:before {
-      left: 21px;
-      transform: translateX(-2px) rotate(-15deg); }
-    .header .logo:hover .imgContainer:after {
-      right: 21px;
-      transform: translateY(7px) rotate(15deg); }
-    .header .logo:hover .imgContainer .eye {
-      top: 16px;
-      height: 0; }
-    .header .logo .imgContainer {
-      position: relative; }
-      .header .logo .imgContainer:before, .header .logo .imgContainer:after {
-        content: '';
-        position: absolute;
-        width: 25px;
-        height: 7px;
-        top: 3px;
-        background-color: #FA00FF;
-        transition: transform .3s ease-in; }
-      .header .logo .imgContainer:before {
-        left: 21px;
-        transform: translateY(0) rotate(15deg); }
-      .header .logo .imgContainer:after {
-        right: 21px;
-        transform: translateY(0) rotate(-15deg); }
-      .header .logo .imgContainer .eye {
-        display: block;
-        position: absolute;
-        top: 5px;
-        right: 24px;
-        width: 16px;
-        height: 22px;
-        background-color: #fff;
-        z-index: -1;
-        border-radius: 50px/65px;
-        transition: .3s ease-in; }
-      .header .logo .imgContainer .img {
-        width: 100px;
-        min-width: 100px; }
+    display: flex; }
     .header .logo .name {
       color: #fff;
       text-transform: uppercase;
@@ -867,6 +826,34 @@
     align-items: center;
     width: 100px;
     padding-right: 10px; }
+    .header .profile .btn .icon {
+      transition: background-color .3s ease-in; }
+      .header .profile .btn .icon:hover {
+        background-color: #FF00E5; }
+    .header .profile .btn.cart {
+      position: relative; }
+      .header .profile .btn.cart:hover .icon-fillDiamond {
+        animation-play-state: paused; }
+      .header .profile .btn.cart .icon-fillDiamond {
+        position: absolute;
+        transition: transform .3s ease-in;
+        background-color: #FF00E5;
+        width: 27px;
+        height: 23px;
+        z-index: -1;
+        top: 2px;
+        right: 2px;
+        animation: move 2s infinite linear; }
+
+@keyframes move {
+  10% {
+    transform: translate(4px, 3px) rotate(-10deg); }
+  20% {
+    transform: translate(-3px, -2px) rotate(-20deg); }
+  35% {
+    transform: translate(-1px, 4px) rotate(15deg); }
+  50% {
+    transform: translate(0, 0) rotate(0); } }
 
 .searchBar {
   flex-grow: 1;
@@ -1302,9 +1289,6 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start; }
-    .footer .navigation .logo {
-      width: 75px;
-      height: 75px; }
     .footer .navigation .social {
       display: flex;
       order: 1; }
@@ -1444,6 +1428,55 @@
     -webkit-mask-image: url("./../img/allResults.svg");
     width: 78px;
     height: 59px; }
+  .icon-fillDiamond {
+    mask-image: url("./../img/fillDiamond.svg");
+    -webkit-mask-image: url("./../img/fillDiamond.svg");
+    width: 34px;
+    height: 29px; }
+
+.logo {
+  text-decoration: none;
+  position: relative; }
+  .logo:hover .imgContainer:before, .logo:focus-visible .imgContainer:before {
+    left: 21px;
+    transform: translateX(-2px) rotate(-15deg); }
+  .logo:hover .imgContainer:after, .logo:focus-visible .imgContainer:after {
+    right: 21px;
+    transform: translateY(7px) rotate(15deg); }
+  .logo:hover .imgContainer .eye, .logo:focus-visible .imgContainer .eye {
+    top: 16px;
+    height: 0; }
+  .logo .imgContainer {
+    position: relative;
+    width: 100px;
+    min-width: 100px; }
+    .logo .imgContainer:before, .logo .imgContainer:after {
+      content: '';
+      position: absolute;
+      width: 25px;
+      height: 7px;
+      top: 3px;
+      background-color: #FA00FF;
+      transition: transform .3s ease-in; }
+    .logo .imgContainer:before {
+      left: 21px;
+      transform: translateY(0) rotate(15deg); }
+    .logo .imgContainer:after {
+      right: 21px;
+      transform: translateY(0) rotate(-15deg); }
+    .logo .imgContainer .eye {
+      display: block;
+      position: absolute;
+      top: 5px;
+      right: 24px;
+      width: 16px;
+      height: 22px;
+      background-color: #fff;
+      z-index: -1;
+      border-radius: 50px/65px;
+      transition: .3s ease-in; }
+    .logo .imgContainer .img {
+      width: 100%; }
 
 .textField {
   color: #fff;
