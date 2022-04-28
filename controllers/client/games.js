@@ -41,7 +41,15 @@ export const gamePage = async (req, res) => {
         'platformId',
         'activationServiceId',
         'publisherId',
-        'reviews.userId'
+        'reviews.userId',
+        'editionId',
+        {
+          path: 'elements',
+          populate: {
+            path: 'productId',
+            select: ['name', 'alias', 'img'],
+          }
+        }
       ]);
     const comments = await Comment
       .find({subjectId: product.id, ref: 'product'})
@@ -140,8 +148,8 @@ export const gamePage = async (req, res) => {
       bundleProducts = await Product
         .find({bundleId: product.bundleId})
         .sort({'priceFrom': 1})
-        .populate('editionId', ['name'])
         .select(['name', 'alias', 'elements', 'editionId'])
+        .populate('editionId', ['name'])
         .lean();
   
       bundleProducts = bundleProducts.map(bundleProduct => {

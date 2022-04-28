@@ -421,53 +421,50 @@ export const editProduct = async (req, res) => {
   }
 }
 
-export const pageAddGameElement = async (req, res) => {
-  const {gameId} = req.params;
+export const pageAddProductElement = async (req, res) => {
+  const {productId} = req.params;
   
   try {
-    const games = await Product.findAll({
-      attributes: ['id', 'name'],
-      where: {
-        id: {
-          [Op.notIn]: [gameId],
-        }
-      }
-    });
+    const products = await Product.find({_id: {$ne: productId}}).select(['name']).lean();
     
     res.render('addProductElement', {
       layout: 'admin',
-      title: 'Добавление элемента к игре',
-      games: games.map(item => item.dataValues),
-      gameId,
+      title: 'Добавление элемента к товару',
+      products,
+      productId,
     });
   } catch (e) {
     console.log(e);
-    res.redirect(`/admin/products/edit/${gameId}`);
+    res.redirect(`/admin/products/edit/${productId}`);
   }
 }
 
-export const addGameElement = async (req, res) => {
-  const {gameId} = req.params;
+export const addProductElement = async (req, res) => {
+  const {productId} = req.params;
   
   try {
-    const {name, description, productId} = req.body;
-    const game = await Product.findByPk(gameId);
-    const values = {
+    const {name, description, attachProductId} = req.body;
+    const product = await Product.findById(productId);
+    const element = {
       name,
       description,
     }
     
-    if (+productId) {
-      values.productId = +productId;
+    if (attachProductId !== '0') {
+      element.productId = attachProductId;
     }
     
-    const gameElement = await GameElement.create(values);
+    product.elements.push({
+      $each: [element],
+      $sort: {
+        productId: -1,
+      },
+    });
+    await product.save();
     
-    await game.addGameElement(gameElement.dataValues.id);
-    
-    res.redirect(`/admin/products/edit/${gameId}`);
+    res.redirect(`/admin/products/edit/${productId}`);
   } catch (e) {
     console.log(e);
-    req.redirect(`/admin/products/${gameId}/addElement`);
+    req.redirect(`/admin/products/${productId}/addElement`);
   }
 }

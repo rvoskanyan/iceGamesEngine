@@ -231,9 +231,11 @@
   color: #fff; }
   .bulletedList .item {
     display: flex;
-    align-items: flex-start; }
+    align-items: flex-start;
+    padding-top: 12px;
+    padding-bottom: 10.5px; }
     .bulletedList .item:not(:last-child) {
-      margin-bottom: 20px; }
+      border-bottom: 1.5px solid rgba(255, 255, 255, 0.3); }
     .bulletedList .item:before {
       content: '';
       display: block;
@@ -246,6 +248,22 @@
       background-position: center;
       margin-right: 8px;
       margin-top: -3px; }
+    .bulletedList .item .name {
+      font-family: 'Montserrat';
+      font-weight: 600;
+      font-size: 16px; }
+    .bulletedList .item.product:before {
+      content: initial; }
+    .bulletedList .item.product .link {
+      display: flex;
+      align-items: center; }
+      .bulletedList .item.product .link .img {
+        object-fit: cover;
+        border: 1px solid #fff;
+        border-radius: 5px;
+        width: 50px;
+        height: 72px;
+        margin-right: 10px; }
 
 .breadcrumbs {
   position: absolute;

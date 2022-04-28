@@ -246,15 +246,23 @@
                                 {{/if}}
                                 <ul class="bulletedList">
                                     {{#each product.elements}}
-                                        <li class="item">
-                                            {{#if gameId}}
-                                                <a href="/games/{{gameId}}">
-                                                    {{name}}
+                                        {{#if productId}}
+                                            <li class="item product">
+                                                <a href="/games/{{productId.alias}}" class="link underlined name" title="Перейти к игре {{productId.name}}">
+                                                    <img
+                                                        src="{{@root.websiteAddress}}{{productId.img}}"
+                                                        alt="Обложка к игре {{productId.name}}"
+                                                        title="Обложка к игре {{productId.name}}"
+                                                        class="img"
+                                                    >
+                                                    <span class="name">{{productId.name}}</span>
                                                 </a>
-                                            {{else}}
-                                                {{name}}
-                                            {{/if}}
-                                        </li>
+                                            </li>
+                                        {{else}}
+                                            <li class="item">
+                                                <span class="name">{{name}}</span>
+                                            </li>
+                                        {{/if}}
                                     {{/each}}
                                 </ul>
                             </div>

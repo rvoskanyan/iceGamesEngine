@@ -5,8 +5,8 @@ import {
   addProduct,
   pageEditProduct,
   editProduct,
-  pageAddGameElement,
-  addGameElement,
+  pageAddProductElement,
+  addProductElement,
 } from '../../controllers/admin/products.js';
 
 const router = Router();
@@ -17,7 +17,7 @@ router.post('/add', addProduct);
 router.get('/edit/:productId', pageEditProduct);
 router.post('/edit/:productId', editProduct);
 
-router.get('/:productId/addElement', pageAddGameElement);
-router.post('/:productId/addElement', addGameElement);
+router.get('/:productId/addElement', pageAddProductElement);
+router.post('/:productId/addElement', addProductElement);
 
 export default router;

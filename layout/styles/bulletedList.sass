@@ -6,9 +6,11 @@
   & .item
     display: flex
     align-items: flex-start
+    padding-top: 12px
+    padding-bottom: 10.5px
 
     &:not(:last-child)
-      margin-bottom: 20px
+      border-bottom: 1.5px solid rgba(255, 255, 255, 0.3)
 
     &:before
       content: ''
@@ -22,3 +24,24 @@
       background-position: center
       margin-right: 8px
       margin-top: -3px
+
+    & .name
+      font-family: 'Montserrat'
+      font-weight: 600
+      font-size: 16px
+
+    &.product
+      &:before
+        content: initial
+
+      & .link
+        display: flex
+        align-items: center
+
+        & .img
+          object-fit: cover
+          border: 1px solid #fff
+          border-radius: 5px
+          width: 50px
+          height: 72px
+          margin-right: 10px
