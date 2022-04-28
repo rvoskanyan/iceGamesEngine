@@ -433,9 +433,12 @@ if (collapseNodes.length) {
 }
 
 if (cartNode) {
-  const products = cartNode.querySelectorAll('.js-product');
-  const checkNode = cartNode.querySelector('.js-check');
-  if (products && checkNode) {
+  const cartListNode = cartNode.querySelector('.js-cartList');
+  const cartTitleNode = cartNode.querySelector('.js-cartTitle');
+  
+  if (cartListNode) {
+    const products = cartListNode.querySelectorAll('.js-product');
+    const checkNode = cartListNode.querySelector('.js-check');
     const totalPriceToNode = checkNode.querySelector('.js-totalTo');
     const totalPriceFromNode = checkNode.querySelector('.js-totalFrom');
     const totalProductsNode = checkNode.querySelector('.js-totalProducts');
@@ -461,7 +464,7 @@ if (cartNode) {
           return;
         }
       
-        const payFormNode = cartNode.querySelector('.js-payForm');
+        const payFormNode = cartListNode.querySelector('.js-payForm');
         payFormNode.submit();
       })
     }
@@ -527,7 +530,19 @@ if (cartNode) {
           countProducts -= 1;
         
           if (countProducts === 0)   {
-            return cartNode.innerHTML = '<p style="color: #fff">Вы еще не добавили ни одного товара в корзину покупок</p>';
+            cartListNode.remove();
+            cartTitleNode.remove();
+            
+            return cartNode.innerHTML += `
+              <div class="notFound">
+                <img src="${websiteAddress}img/notFound.svg" class="img" alt="Иконка расстроенного смайла" title="Корзина пуста :(">
+                <div class="text">
+                    <span class="title">Корзина пуста</span>
+                    <p class="description">Воспользуйтесь каталогом, чтобы найти все, что нужно!</p>
+                </div>
+                <a href="${websiteAddress}games" class="btn big border round hover-border-pink hover-color-pink" title="Перейти в каталог">В каталог</a>
+              </div>
+            `;
           }
         
           const priceTo = +productNode.querySelector('.js-priceTo').innerText;
@@ -1173,7 +1188,16 @@ if (catalogNode) {
   
     loadMoreNode.dataset.skip = 1;
     result.isLast ? loadMoreNode.classList.add('hide') : loadMoreNode.classList.remove('hide');
+    productGridNode.classList.remove('notFound');
     productGridNode.innerHTML = '';
+    
+    if (!result.products.length) {
+      productGridNode.classList.add ('notFound');
+      productGridNode.innerHTML = `
+        <img class="img" src="${websiteAddress}img/notFound.svg">
+        <span class="text">Ничего не найдено...</span>
+      `;
+    }
     
     result.products.forEach(product => {
       productGridNode.innerHTML += `
@@ -1250,8 +1274,11 @@ if (inputLabelInFieldNodes.length) {
 }
 
 if (loginFormNode) {
+  const resultLoginNode = document.querySelector('.js-resultLogin');
+  
   new AsyncForm({
     mainNode: loginFormNode,
+    resultMessageNode: resultLoginNode,
     successHandler: () => {
       setTimeout(() => {
         window.location.reload();

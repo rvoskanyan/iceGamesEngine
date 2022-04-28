@@ -21,7 +21,9 @@ export const blogHomePage = async (req, res) => {
 
 export const blogArticlePage = async (req, res) => {
   try {
-    const article = await Article.findOne({alias: req.params.alias});
+    const article = await Article
+      .findOne({alias: req.params.alias})
+      .populate('products', ['name', 'alias', 'priceTo', 'priceFrom', 'img']);
     
     if (req.session.isAuth) {
       const user = res.locals.person;
@@ -29,10 +31,11 @@ export const blogArticlePage = async (req, res) => {
       
       if (!isArticleRead) {
         user.viewedArticles.push(article._id);
+        await user.save();
+        
         user.increaseRating(2);
         article.views += 1;
         
-        await user.save();
         await article.save();
         await achievementEvent('articlesRead', user);
       }

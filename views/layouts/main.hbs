@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="{{websiteAddress}}styles/bundle.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,600;1,300;1,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <title>{{title}}</title>
 </head>
 <body {{#if @root.person.dsCartId}}data-ds-cart-id="{{@root.person.dsCartId}}"{{/if}}>
@@ -31,7 +31,7 @@
                 <div class="name">Ice Games<br>Store</div>
             </div>
         {{else}}
-            <a class="logo" href="{{websiteAddress}}">
+            <a class="logo" href="{{websiteAddress}}" title="Перейти на главную страницу">
                 <div class="imgContainer">
                     <img src="{{websiteAddress}}img/logo.svg" class="img" alt="Логотип Ice Games" title="Логотип Ice Games">
                     <span class="eye"></span>
@@ -70,10 +70,17 @@
                     <span class="icon icon-profile"></span>
                 </button>
             {{/if}}
-            <a href="{{websiteAddress}}cart" class="btn cart" title="Перейти в корзину с товарами">
-                <span class="icon icon-cart"></span>
-                <span class="icon icon-fillDiamond"></span>
-            </a>
+            {{#if isCart}}
+                <div class="btn cart isCart{{#if person.cart.length}} full{{/if}}">
+                    <span class="icon icon-cart"></span>
+                    <span class="icon icon-fillDiamond"></span>
+                </div>
+            {{else}}
+                <a href="{{websiteAddress}}cart" class="btn cart{{#if person.cart.length}} full{{/if}}" title="Перейти в корзину с товарами">
+                    <span class="icon icon-cart"></span>
+                    <span class="icon icon-fillDiamond"></span>
+                </a>
+            {{/if}}
         </div>
     </div>
 </header>
@@ -90,7 +97,7 @@
                 </div>
             </div>
         {{else}}
-            <a class="logo" href="{{websiteAddress}}">
+            <a class="logo" href="{{websiteAddress}}" title="Перейти на главную страницу">
                 <div class="imgContainer">
                     <img src="{{websiteAddress}}img/logo.svg" class="img" alt="Логотип Ice Games" title="Логотип Ice Games">
                     <span class="eye"></span>

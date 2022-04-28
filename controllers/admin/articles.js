@@ -6,7 +6,7 @@ import Product from '../../models/Product.js';
 import {
   getArray,
   getAlias,
-  getExtendFile,
+  getExtendFile, mergeParams,
 } from "./../../utils/functions.js";
 
 export const articlesPage = async (req, res) => {
@@ -84,18 +84,12 @@ export const addArticle = async (req, res) => {
 
 export const editArticlePage = async (req, res) => {
   try {
-    const article = await Article.findById(req.params.id);
-    let products = await Product.find().select(['name']);
+    let article = await Article.findById(req.params.id);
+    const restProducts = await Product.find({_id: {$nin: article.products}}).select(['name']).lean();
     
-    if (article.products.length) {
-      products = products.map(item => {
-        if (article.products.includes(item.id)) {
-          item._doc.selected = true;
-        }
+    article = await article.populate('products', ['name']);
     
-        return item;
-      })
-    }
+    const products = mergeParams(article.products, restProducts);
     
     res.render('addArticle', {
       layout: 'admin',
@@ -117,38 +111,42 @@ export const editArticle = async (req, res) => {
     const {name, introText, metaDescription, rightImg, blockColor, type, products, fixed} = req.body;
     const article = await Article.findById(id);
     const mustFix = fixed === "on";
-    let img = null;
-    let coverImg = null;
     
     if (req.files) {
-      img = req.files.img;
-      coverImg = req.files.coverImg;
-    }
-    
-    if (img) {
-      const imgExtend = getExtendFile(img.name);
-      const imgName = `${uuidv4()}.${imgExtend}`;
-      
-      await img.mv(path.join(__dirname, '/uploadedFiles', imgName));
-      article.img = imgName;
-    }
-    
-    if (coverImg) {
-      const coverImgExtend = getExtendFile(coverImg.name);
-      const coverImgName = `${uuidv4()}.${coverImgExtend}`;
+      const {
+        img,
+        coverImg,
+      } = req.files;
   
-      await coverImg.mv(path.join(__dirname, '/uploadedFiles', coverImgName));
-      article.coverImg = coverImgName;
+      if (img) {
+        const imgExtend = getExtendFile(img.name);
+        const imgName = `${uuidv4()}.${imgExtend}`;
+    
+        await img.mv(path.join(__dirname, '/uploadedFiles', imgName));
+        article.img = imgName;
+      }
+  
+      if (coverImg) {
+        const coverImgExtend = getExtendFile(coverImg.name);
+        const coverImgName = `${uuidv4()}.${coverImgExtend}`;
+    
+        await coverImg.mv(path.join(__dirname, '/uploadedFiles', coverImgName));
+        article.coverImg = coverImgName;
+      }
     }
     
-    article.name = name;
-    article.introText = introText;
-    article.metaDescription = metaDescription;
-    article.rightImg = rightImg === "on";
-    article.blockColor = blockColor;
-    article.type = type;
-    article.fixed = mustFix;
-    //article.products = products;
+    Object.assign(article, {
+      name,
+      alias: getAlias(name),
+      introText,
+      metaDescription,
+      rightImg: rightImg === "on",
+      blockColor,
+      type,
+      mustFix,
+      lastEditorId: req.session.userId,
+      products,
+    });
     
     if (mustFix) {
       await Article.findOneAndUpdate({_id: {$ne: id}, fixed: true}, {fixed: false});

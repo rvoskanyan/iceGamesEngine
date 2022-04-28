@@ -11,12 +11,13 @@ import Developer from './../../models/Developer.js';
 import Publisher from './../../models/Publisher.js';
 import ActivationService from './../../models/ActivationService.js';
 import Platform from './../../models/Platform.js';
-import Edition from './../../models/Edition.js';
 import Series from './../../models/Series.js';
 import {
   getExtendFile,
   getArray,
-  getAlias, getDiscount, getAllProductParams,
+  getAlias,
+  getDiscount,
+  mergeParams,
 } from "../../utils/functions.js";
 
 export const pageProducts = async (req, res) => {
@@ -229,15 +230,15 @@ export const pageEditProduct = async (req, res) => {
         'platformId',
       ]);
     
-    const categories = getAllProductParams(product.categories, restCategories);
-    const genres = getAllProductParams(product.genres, restGenres);
-    const allExtends = getAllProductParams(product.extends, restExtends);
-    const languages = getAllProductParams(product.languages, restLanguages);
-    const activationRegions = getAllProductParams(product.activationRegions, restActivationRegions);
-    const developers = getAllProductParams(product.developers, restDevelopers);
-    const publishers = getAllProductParams([product.publisherId], restPublishers);
-    const activationServices = getAllProductParams([product.activationServiceId], restActivationServices);
-    const platforms = getAllProductParams([product.platformId], restPlatforms);
+    const categories = mergeParams(product.categories, restCategories);
+    const genres = mergeParams(product.genres, restGenres);
+    const allExtends = mergeParams(product.extends, restExtends);
+    const languages = mergeParams(product.languages, restLanguages);
+    const activationRegions = mergeParams(product.activationRegions, restActivationRegions);
+    const developers = mergeParams(product.developers, restDevelopers);
+    const publishers = mergeParams([product.publisherId], restPublishers);
+    const activationServices = mergeParams([product.activationServiceId], restActivationServices);
+    const platforms = mergeParams([product.platformId], restPlatforms);
     
     res.render('addProducts', {
       layout: 'admin',

@@ -6,7 +6,7 @@ export default class AsyncForm {
     this.fields = this.mainNode.querySelectorAll('input');
     this.autoSizeInputNodes = this.mainNode.querySelectorAll('.autoSizeInput');
     this.mainNode.addEventListener('submit', this.handleSubmit);
-    this.messageNode = this.mainNode.querySelector('.responseMessage');
+    this.messageNode = options.resultMessageNode;
     this.successHandler = options.successHandler;
     this.extraParams = options.extraParams || [];
     this.validationMethods = {};

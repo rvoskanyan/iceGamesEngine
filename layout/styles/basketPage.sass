@@ -42,7 +42,10 @@
             margin-right: 35px
 
           & .main
-            align-self: flex-start
+            display: flex
+            flex-direction: column
+            justify-content: space-between
+            align-self: stretch
 
             & .name
               font-size: 24px
@@ -78,6 +81,17 @@
 
               & .date
                 font-weight: 600
+
+            & .bottom
+              font-family: 'Montserrat'
+              color: #fff
+
+              & .item
+                font-size: 14px
+                font-weight: 400
+
+                &:not(:last-child)
+                  margin-bottom: 5px
 
     & .check
       background: #320065
@@ -149,3 +163,22 @@
 
           & .toPrice
             margin-left: 5px
+
+  & .notFound
+    display: flex
+    flex-direction: column
+    align-items: center
+    text-align: center
+    color: #fff
+
+    & .img
+      margin-top: 60px
+
+    & .text
+      margin-top: 35px
+
+      & .description
+        margin-top: 10px
+
+    & .btn
+      margin-top: 30px

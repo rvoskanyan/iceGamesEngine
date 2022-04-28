@@ -1,13 +1,13 @@
-<main class="contentContainer withoutCover basketPage">
+<main class="contentContainer withoutCover basketPage js-cart">
     <div class="breadcrumbs contentContainer">
         <div class="item">
-            <a class="btn link" href="/">Главная</a>
+            <a class="btn link" href="{{websiteAddress}}">Главная</a>
         </div>
         <div class="current">Корзина</div>
     </div>
-    <h1 class="title">Список покупок</h1>
-    <div class="info js-cart">
-        {{#if cart.items.length}}
+    {{#if cart.items.length}}
+        <h1 class="title js-cartTitle">Список покупок</h1>
+        <div class="info js-cartList">
             <div class="listGames">
                 {{#each cart.items}}
                     <div class="game js-product" data-product-id="{{_id}}" data-ds-id="{{dsId}}">
@@ -17,25 +17,44 @@
                             </button>
                             <img class="img" src="{{@root.websiteAddress}}{{img}}" alt="{{name}}" title="{{name}}">
                             <div class="main">
-                                <div class="name">
-                                    {{name}}
-                                </div>
-                                <div class="price">
-                                    <span class="toPrice">
-                                        <span class="value js-priceTo">
-                                            {{priceTo}}
+                                <div class="top">
+                                    <div class="name">
+                                        {{name}}
+                                    </div>
+                                    <div class="price">
+                                        <span class="toPrice">
+                                            <span class="value js-priceTo">
+                                                {{priceTo}}
+                                            </span>
                                         </span>
-                                    </span>
-                                    <span class="fromPrice">
-                                        <span class="value js-priceFrom">
-                                            {{priceFrom}}
+                                        <span class="fromPrice">
+                                            <span class="value js-priceFrom">
+                                                {{priceFrom}}
+                                            </span>
                                         </span>
-                                    </span>
-                                    <span class="discount">30</span>
+                                        <span class="discount">{{discount}}</span>
+                                    </div>
+                                    <!--<div class="preOrder">
+                                        Внимание! Это предзаказ. Ключ будет доставлен Вам <span class="date">21.02.3045</span>
+                                    </div>-->
                                 </div>
-                                <!--<div class="preOrder">
-                                    Внимание! Это предзаказ. Ключ будет доставлен Вам <span class="date">21.02.3045</span>
-                                </div>-->
+                                <div class="bottom">
+                                    <div class="item">
+                                        Сервис активации:
+                                        <a
+                                            href="{{@root.websiteAddress}}games?activationServices={{activationServiceId._id}}"
+                                            class="link underlined"
+                                        >
+                                            {{activationServiceId.name}}
+                                        </a>
+                                    </div>
+                                    <div class="item">
+                                        Регионы активации:
+                                        {{#each activationRegions}}
+                                            {{name}}{{#unless @last}}, {{/unless}}
+                                        {{/each}}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -48,23 +67,23 @@
                         {{cart.priceToTotal}}
                     </span>
                     <span class="fromPrice">
-                    <span class="value js-totalFrom">
-                        {{cart.priceFromTotal}}
-                    </span>
+                <span class="value js-totalFrom">
+                    {{cart.priceFromTotal}}
                 </span>
+            </span>
                 </div>
                 <p style="color: #fff; margin-top: 10px" class="js-totalProducts">Всего товаров: {{cart.items.length}}</p>
                 <button class="btn round border bg-darkPurple js-payBtn">
                     Оплатить
                     {{#if cart.saving}}
                         <span class="saving js-saving">
-                            с экономией
-                            <span class="toPrice">
-                                <span class="value js-savingValue">
-                                    {{cart.saving}}
-                                </span>
+                        с экономией
+                        <span class="toPrice">
+                            <span class="value js-savingValue">
+                                {{cart.saving}}
                             </span>
                         </span>
+                    </span>
                     {{/if}}
                 </button>
             </div>
@@ -78,8 +97,15 @@
                 <input type="hidden" name="typecurr" value="RUB" />
                 <input type="hidden" name="dsCartId" value="{{@root.person.dsCartId}}" />
             </form>
-        {{else}}
-            <p style="color: #fff">Вы еще не добавили ни одного товара в корзину покупок</p>
-        {{/if}}
-    </div>
+        </div>
+    {{else}}
+        <div class="notFound">
+            <img src="{{websiteAddress}}img/notFound.svg" class="img" alt="Иконка расстроенного смайла" title="Корзина пуста :(">
+            <div class="text">
+                <span class="title">Корзина пуста</span>
+                <p class="description">Воспользуйтесь каталогом, чтобы найти все, что нужно!</p>
+            </div>
+            <a href="{{websiteAddress}}games" class="btn big border round hover-border-pink hover-color-pink" title="Перейти в каталог">В каталог</a>
+        </div>
+    {{/if}}
 </main>

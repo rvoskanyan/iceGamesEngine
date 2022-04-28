@@ -133,7 +133,7 @@ export const getAlias = (str) => {
   return resultStr;
 }
 
-export const getAllProductParams = (relatedItems, restItems) => {
+export const mergeParams = (relatedItems, restItems) => {
   return [
     ...relatedItems.map(item => {
       return {

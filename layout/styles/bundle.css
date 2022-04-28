@@ -832,20 +832,25 @@
         background-color: #FF00E5; }
     .header .profile .btn.cart {
       position: relative; }
-      .header .profile .btn.cart:hover .icon-fillDiamond {
-        animation-play-state: paused; }
+      .header .profile .btn.cart.full .icon:hover {
+        background-color: #fff; }
+      .header .profile .btn.cart.full:hover .icon-fillDiamond, .header .profile .btn.cart.full.isCart .icon-fillDiamond {
+        animation: initial;
+        transform: translateY(-2px); }
+      .header .profile .btn.cart.full .icon-fillDiamond {
+        animation: jumpDiamond 2s infinite linear;
+        opacity: 1; }
       .header .profile .btn.cart .icon-fillDiamond {
         position: absolute;
-        transition: transform .3s ease-in;
         background-color: #FF00E5;
         width: 27px;
         height: 23px;
         z-index: -1;
         top: 2px;
         right: 2px;
-        animation: move 2s infinite linear; }
+        opacity: 0; }
 
-@keyframes move {
+@keyframes jumpDiamond {
   10% {
     transform: translate(4px, 3px) rotate(-10deg); }
   20% {
@@ -990,37 +995,42 @@
       line-height: 18px;
       max-height: calc(18px * 3); }
     .cover .offer .price {
-      margin-top: 25px;
-      display: flex;
-      align-items: flex-end; }
-      .cover .offer .price .toPrice:after, .cover .offer .price .fromPrice:after {
-        font-size: 14px;
-        font-weight: 600;
-        font-family: 'Montserrat'; }
-        @media (min-width: 1650px) {
-          .cover .offer .price .toPrice:after, .cover .offer .price .fromPrice:after {
-            font-size: 16px; } }
-      .cover .offer .price .toPrice .value, .cover .offer .price .fromPrice .value {
-        font-size: 36px;
-        line-height: 1;
-        font-family: 'Lemon Milk'; }
-        @media (min-width: 1650px) {
-          .cover .offer .price .toPrice .value, .cover .offer .price .fromPrice .value {
-            font-size: 43px; } }
+      display: block;
+      margin-top: 25px; }
+      .cover .offer .price .toPrice, .cover .offer .price .fromPrice {
+        font-family: 'Montserrat';
+        font-weight: 800;
+        line-height: 1; }
+      .cover .offer .price .rowDiscount {
+        display: flex;
+        align-items: center; }
+        .cover .offer .price .rowDiscount .fromPrice {
+          margin-right: 10px;
+          color: #984BFB;
+          font-size: 29px; }
+          .cover .offer .price .rowDiscount .fromPrice:after {
+            font-size: 16px; }
+            @media (min-width: 1650px) {
+              .cover .offer .price .rowDiscount .fromPrice:after {
+                font-size: 19px; } }
+        .cover .offer .price .rowDiscount .discount {
+          display: block;
+          color: #fff;
+          font-weight: 700;
+          font-size: 16px;
+          background-color: rgba(147, 73, 242, 0.8);
+          border-radius: 20px;
+          padding: 5px 8px;
+          line-height: 1; }
       .cover .offer .price .toPrice {
-        margin-right: 20px;
-        color: #C745CB; }
-        .cover .offer .price .toPrice .value:after {
-          color: rgba(199, 69, 203, 0.8); }
-      .cover .offer .price .fromPrice {
-        margin-right: 50px;
-        color: #984BFB; }
-        .cover .offer .price .fromPrice .value:before {
-          background-color: #954AF6; }
-      .cover .offer .price .discount {
-        display: block;
-        color: #fff;
-        background-color: rgba(147, 73, 242, 0.8); }
+        color: #C745CB;
+        font-size: 48px;
+        margin-top: 5px; }
+        .cover .offer .price .toPrice:after {
+          font-size: 25px; }
+          @media (min-width: 1650px) {
+            .cover .offer .price .toPrice:after {
+              font-size: 31px; } }
     .cover .offer .actions {
       display: flex;
       margin-top: 25px; }
@@ -1582,6 +1592,9 @@
     .btn.rounded.small {
       padding: 9px 12px;
       font-size: 16px; }
+  .btn.elongated {
+    padding-left: 30px;
+    padding-right: 30px; }
   .btn.fillFromCenter {
     position: relative; }
     .btn.fillFromCenter:focus-visible {
@@ -1635,7 +1648,7 @@
 .link {
   color: #fff;
   text-decoration: none; }
-  .link:hover {
+  .link:hover, .link.underlined {
     text-decoration: underline; }
 
 .checkbox {
@@ -2206,6 +2219,19 @@
         margin-left: 35px; }
     .catalog .list .gameGrid {
       margin-top: 70px; }
+      .catalog .list .gameGrid.notFound {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #fff;
+        font-weight: 700;
+        font-size: 18px;
+        row-gap: initial;
+        column-gap: initial; }
+        .catalog .list .gameGrid.notFound .img {
+          margin-top: 50px; }
+        .catalog .list .gameGrid.notFound .text {
+          margin-top: 20px; }
     .catalog .list .loadMore {
       margin: 35px auto 0 auto; }
       .catalog .list .loadMore.hide {
@@ -2751,7 +2777,10 @@
             border-radius: 22px;
             margin-right: 35px; }
           .basketPage .info .listGames .game .content .main {
-            align-self: flex-start; }
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-self: stretch; }
             .basketPage .info .listGames .game .content .main .name {
               font-size: 24px;
               color: #fff;
@@ -2779,6 +2808,14 @@
               color: #fff; }
               .basketPage .info .listGames .game .content .main .preOrder .date {
                 font-weight: 600; }
+            .basketPage .info .listGames .game .content .main .bottom {
+              font-family: 'Montserrat';
+              color: #fff; }
+              .basketPage .info .listGames .game .content .main .bottom .item {
+                font-size: 14px;
+                font-weight: 400; }
+                .basketPage .info .listGames .game .content .main .bottom .item:not(:last-child) {
+                  margin-bottom: 5px; }
     .basketPage .info .check {
       background: #320065;
       border: 1px solid #fff;
@@ -2836,6 +2873,20 @@
           font-weight: 300; }
           .basketPage .info .check .btn .saving .toPrice {
             margin-left: 5px; }
+  .basketPage .notFound {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    color: #fff; }
+    .basketPage .notFound .img {
+      margin-top: 60px; }
+    .basketPage .notFound .text {
+      margin-top: 35px; }
+      .basketPage .notFound .text .description {
+        margin-top: 10px; }
+    .basketPage .notFound .btn {
+      margin-top: 30px; }
 
 .profilePage {
   width: 100%; }

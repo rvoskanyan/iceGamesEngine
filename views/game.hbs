@@ -50,26 +50,24 @@
                 {{product.description}}
             </p>
             <div class="price">
+                <div class="rowDiscount">
+                    <div class="fromPrice">
+                        <span class="value">
+                            {{product.priceFrom}}
+                        </span>
+                    </div>
+                    <div class="discount">{{product.discount}}</div>
+                </div>
                 <div class="toPrice">
                     <span class="value">
                         {{product.priceTo}}
                     </span>
                 </div>
-                <div class="fromPrice">
-                    <span class="value">
-                        {{product.priceFrom}}
-                    </span>
-                </div>
-                {{#if product.discount}}
-                    <div class="discount">
-                        {{product.discount}}
-                    </div>
-                {{/if}}
             </div>
             <div class="actions">
                 <button
                     title="{{#if currentProductInCart}}Перейти в корзину покупок{{else}}Добавить данный товар в корзину покупок{{/if}}"
-                    class="btn rounded increase bg-pink hover-backlight-blue js-addToCartBtn{{#if currentProductInCart}} js-active{{/if}}"
+                    class="btn elongated rounded increase bg-pink hover-backlight-blue js-addToCartBtn{{#if currentProductInCart}} js-active{{/if}}"
                     {{#unless currentProductInCart}}
                         data-ds-id="{{product.dsId}}"
                         data-product-id="{{product.id}}"

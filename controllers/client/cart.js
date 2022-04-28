@@ -6,7 +6,22 @@ export const cartPage = async (req, res) => {
     let cart = null;
     
     if (person) {
-      const result = await person.populate('cart', ['img', 'dsId', 'name', 'priceTo', 'priceFrom']);
+      const result = await person
+        .populate({
+          path: 'cart',
+          select: ['img', 'dsId', 'name', 'priceTo', 'priceFrom', 'discount', 'activationServiceId', 'activationRegions'],
+          populate: [
+            {
+              path: 'activationServiceId',
+              select: 'name',
+            },
+            {
+              path: 'activationRegions',
+              select: 'name',
+            }
+          ]
+        });
+      
       cart = result.cart;
       priceToTotal = cart.reduce((priceToTotal, item) => priceToTotal + item.priceTo, 0);
       priceFromTotal = cart.reduce((priceFromTotal, item) => priceFromTotal + item.priceFrom, 0);
@@ -15,6 +30,7 @@ export const cartPage = async (req, res) => {
     res.render('cart', {
       title: 'ICE Games — корзина покупок',
       metaDescription: 'Быстрая покупайте игры со скидками, добавленных сюда!',
+      isCart: true,
       cart: {
         items: cart,
         priceToTotal,

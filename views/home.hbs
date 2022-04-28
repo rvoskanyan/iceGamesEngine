@@ -13,23 +13,23 @@
                             {{description}}
                         </div>
                         <div class="price">
+                            <div class="rowDiscount">
+                                <div class="fromPrice">
+                                    <span class="value">
+                                        {{priceFrom}}
+                                    </span>
+                                </div>
+                                <div class="discount">{{discount}}</div>
+                            </div>
                             <div class="toPrice">
                                 <span class="value">
                                     {{priceTo}}
                                 </span>
                             </div>
-                            <div class="fromPrice">
-                                <span class="value">
-                                    {{priceFrom}}
-                                </span>
-                            </div>
-                            <div class="discount">
-                                {{discount}}
-                            </div>
                         </div>
                         <div class="actions">
-                            <button title="Добавить товар в корзину покупок" class="btn rounded increase bg-pink hover-backlight-blue">В корзину</button>
-                            <a href="/games/{{alias}}" title="Перейти к странице товара" class="btn rounded translucent bg-pink">Подробнее</a>
+                            <button title="Добавить товар в корзину покупок" class="btn elongated rounded increase bg-pink hover-backlight-blue">В корзину</button>
+                            <a href="/games/{{alias}}" title="Перейти к странице товара" class="btn elongated rounded translucent bg-pink">Подробнее</a>
                         </div>
                     </div>
                 </div>

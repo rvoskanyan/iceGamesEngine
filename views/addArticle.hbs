@@ -28,10 +28,20 @@
     </label>
     <br>
     <br>
+    {{#if article.coverImg}}
+        <img src="{{websiteAddress}}{{article.coverImg}}" style="max-width: 300px">
+    {{/if}}
+    <br>
+    <br>
     <label>
         Картинка:
         <input type="file" name="img">
     </label>
+    <br>
+    <br>
+    {{#if article.img}}
+        <img src="{{websiteAddress}}{{article.img}}" style="max-width: 300px">
+    {{/if}}
     <br>
     <br>
     <label>
