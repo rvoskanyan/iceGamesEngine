@@ -166,7 +166,7 @@
     <br>
     <label>
         Дата выхода:
-        <input type="date" name="releaseDate" value="{{product.releaseDateForInput}}">
+        <input type="date" name="releaseDate" value="{{product.hyphenReleaseDate}}">
     </label>
     <br>
     <br>
@@ -250,8 +250,8 @@
     <br>
     <label>
         Регионы активации:
-        <select name="regions" multiple>
-            {{#each regions}}
+        <select name="activationRegions" multiple>
+            {{#each activationRegions}}
                 <option value="{{id}}" {{#if selected}}selected{{/if}}>
                     {{name}}
                 </option>

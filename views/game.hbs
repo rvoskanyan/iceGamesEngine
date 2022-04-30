@@ -75,6 +75,12 @@
                 >
                     {{#if currentProductInCart}}В корзине ✔{{else}}В корзину{{/if}}
                 </button>
+                {{#if product.preOrder}}
+                    <div class="preOrderInfo">
+                        Внимание! Это предзаказ. Ключ будет доставлен Вам
+                        <span class="date">{{product.pointReleaseDate}}</span>
+                    </div>
+                {{/if}}
             </div>
             {{#if product.extends.length}}
                 <div class="extends">
@@ -152,7 +158,7 @@
                 <li class="item">
                     <div class="name">Дата выхода:</div>
                     <div class="value">
-                        {{product.releaseDate}}
+                        {{product.strMonthReleaseDate}}
                     </div>
                 </li>
             </ul>

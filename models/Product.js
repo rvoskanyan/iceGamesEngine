@@ -1,4 +1,5 @@
 import Mongoose from "mongoose";
+import {getFormatDate} from "../utils/functions.js";
 
 const {Schema, model} = Mongoose;
 const keySchema = new Schema({
@@ -261,10 +262,16 @@ const options = {
 
 const productSchema = new Schema(fields, options);
 
-productSchema.virtual('releaseDateForInput').get(function () {
-  const product = this;
-  const date = new Date(product.releaseDate);
-  return `${date.getFullYear()}-${date.getMonth() < 9 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1}-${date.getDate() < 10 ? '0' + date.getDate() : date.getDate()}`;
+productSchema.virtual('hyphenReleaseDate').get(function () {
+  return getFormatDate(this.releaseDate, '-', ['y', 'm', 'd']);
+});
+
+productSchema.virtual('pointReleaseDate').get(function () {
+  return getFormatDate(this.releaseDate, '.', ['d', 'm', 'y']);
+});
+
+productSchema.virtual('strMonthReleaseDate').get(function () {
+  return getFormatDate(this.releaseDate, ' ', ['d', 'm', 'y'], true);
 });
 
 export default model('Product', productSchema);

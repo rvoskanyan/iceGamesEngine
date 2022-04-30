@@ -9,7 +9,7 @@ export const cartPage = async (req, res) => {
       const result = await person
         .populate({
           path: 'cart',
-          select: ['img', 'dsId', 'name', 'priceTo', 'priceFrom', 'discount', 'activationServiceId', 'activationRegions'],
+          select: ['img', 'dsId', 'name', 'priceTo', 'priceFrom', 'discount', 'activationServiceId', 'activationRegions', 'preOrder', 'releaseDate'],
           populate: [
             {
               path: 'activationServiceId',

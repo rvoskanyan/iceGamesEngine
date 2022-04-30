@@ -34,6 +34,11 @@
                                         </span>
                                         <span class="discount">{{discount}}</span>
                                     </div>
+                                    {{#if preOrder}}
+                                        <div class="preOrderInfo">
+                                            Внимание! Это предзаказ. Ключ будет доставлен Вам <span class="date">{{pointReleaseDate}}</span>
+                                        </div>
+                                    {{/if}}
                                     <!--<div class="preOrder">
                                         Внимание! Это предзаказ. Ключ будет доставлен Вам <span class="date">21.02.3045</span>
                                     </div>-->

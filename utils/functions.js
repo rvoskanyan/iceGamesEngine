@@ -1,3 +1,5 @@
+import {strMonths} from "./constants.js";
+
 export const getExtendFile = (fileName) => {
   const parts = fileName.split('.');
   
@@ -12,7 +14,7 @@ export const getDiscount = (priceTo, priceFrom) => {
   return Math.floor(100 - priceTo / (priceFrom / 100));
 }
 
-export const getFormatDate = (date, separator, pattern) => {
+export const getFormatDate = (date, separator, pattern, monthString) => {
   const dateObject = new Date(Date.parse(date));
   let newDate = '';
   
@@ -25,7 +27,14 @@ export const getFormatDate = (date, separator, pattern) => {
         break;
       }
       case 'm': {
-        value = date.getMonth() < 9 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
+        value = date.getMonth();
+        
+        if (monthString) {
+          value = strMonths[value];
+          break;
+        }
+        
+        value = value < 9 ? '0' + (value + 1) : value + 1;
         break;
       }
       case 'd': {
