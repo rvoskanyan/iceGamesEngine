@@ -35,7 +35,7 @@
                                         <span class="discount">{{discount}}</span>
                                     </div>
                                     {{#if preOrder}}
-                                        <div class="preOrderInfo">
+                                        <div class="moreInfo preOrderInfo">
                                             Внимание! Это предзаказ. Ключ будет доставлен Вам <span class="date">{{pointReleaseDate}}</span>
                                         </div>
                                     {{/if}}
@@ -78,7 +78,7 @@
             </span>
                 </div>
                 <p style="color: #fff; margin-top: 10px" class="js-totalProducts">Всего товаров: {{cart.items.length}}</p>
-                <button class="btn round border bg-darkPurple js-payBtn">
+                <button class="btn round border bg-darkPurple js-payBtn hover-bg-violet">
                     Оплатить
                     {{#if cart.saving}}
                         <span class="saving js-saving">

@@ -143,8 +143,16 @@ export const getAlias = (str) => {
 }
 
 export const mergeParams = (relatedItems, restItems) => {
+  let newRelatedItems = [];
+  
+  if (Array.isArray(relatedItems)) {
+    newRelatedItems = relatedItems;
+  } else if (relatedItems) {
+    newRelatedItems = [relatedItems];
+  }
+  
   return [
-    ...relatedItems.map(item => {
+    ...newRelatedItems.map(item => {
       return {
         id: item._id,
         name: item.name,

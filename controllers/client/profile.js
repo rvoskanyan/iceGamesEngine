@@ -166,7 +166,7 @@ export const profileOrdersPage = async (req, res) => {
 
 export const profileFavoritesPage = async (req, res) => {
   try {
-    const user = await res.locals.person.populate('favoritesProducts', ['name', 'alias', 'img', 'priceTo', 'priceFrom']);
+    const user = await res.locals.person.populate('favoritesProducts', ['name', 'alias', 'img', 'priceTo', 'priceFrom', 'dsId', 'dlc']);
     
     res.render('profileFavorites', {
       title: 'ICE Games — Товары в избранном',

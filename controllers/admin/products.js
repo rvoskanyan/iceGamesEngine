@@ -86,7 +86,7 @@ export const addProduct = async (req, res) => {
       dlc,
       dlcForFree,
       dlcForName,
-      dlcFor,
+      dlcForId,
       preOrder,
       releaseDate,
       os,
@@ -123,8 +123,8 @@ export const addProduct = async (req, res) => {
       trailerLink,
       images: [],
       inHomeSlider: inHomeSlider === "on",
-      dlc,
-      dlcForFree,
+      dlc: dlc === 'on',
+      dlcForFree: dlcForFree === 'on',
       dlcForName,
       preOrder: preOrder === 'on',
       releaseDate,
@@ -181,15 +181,15 @@ export const addProduct = async (req, res) => {
       }
     }
     
-    if (+dlcFor) {
-      product.dlcForId = dlcFor;
+    if (dlcForId !== '0') {
+      product.dlcForId = dlcForId;
     }
     
-    if (+series) {
+    if (series !== '0') {
       product.seriesId = series;
     }
     
-    if (+dsId) {
+    if (dsId !== '0') {
       product.dsId = dsId;
     }
     
@@ -216,6 +216,7 @@ export const pageEditProduct = async (req, res) => {
     const restPublishers = await Publisher.find({_id: {$nin: product.publisherId}}).select('name').lean();
     const restActivationServices = await ActivationService.find({_id: {$nin: product.activationServiceId}}).select('name').lean();
     const restPlatforms = await Platform.find({_id: {$nin: product.platformId}}).select('name').lean();
+    const restProductsDLC = await Product.find({_id: {$nin: product.dlcForId}}).select('name').lean();
   
     product = await product
       .populate([
@@ -228,6 +229,10 @@ export const pageEditProduct = async (req, res) => {
         'publisherId',
         'activationServiceId',
         'platformId',
+        {
+          path: 'dlcForId',
+          select: ['_id', 'name'],
+        }
       ]);
     
     const categories = mergeParams(product.categories, restCategories);
@@ -236,15 +241,17 @@ export const pageEditProduct = async (req, res) => {
     const languages = mergeParams(product.languages, restLanguages);
     const activationRegions = mergeParams(product.activationRegions, restActivationRegions);
     const developers = mergeParams(product.developers, restDevelopers);
-    const publishers = mergeParams([product.publisherId], restPublishers);
-    const activationServices = mergeParams([product.activationServiceId], restActivationServices);
-    const platforms = mergeParams([product.platformId], restPlatforms);
+    const publishers = mergeParams(product.publisherId, restPublishers);
+    const activationServices = mergeParams(product.activationServiceId, restActivationServices);
+    const platforms = mergeParams(product.platformId, restPlatforms);
+    const products = mergeParams(product.dlcForId, restProductsDLC);
     
     res.render('addProducts', {
       layout: 'admin',
       title: "Редактирование игры",
       isEdit: true,
       product,
+      products,
       /*gameImages: gameImages.map(item => item.dataValues),
       gameElements: gameElements.map(item => {
         const dataValues = item.dataValues;
@@ -294,7 +301,7 @@ export const editProduct = async (req, res) => {
       dlc,
       dlcForFree,
       dlcForName,
-      dlcFor,
+      dlcForId,
       preOrder,
       releaseDate,
       os,
@@ -328,8 +335,8 @@ export const editProduct = async (req, res) => {
       trailerLink,
       images: [],
       inHomeSlider: inHomeSlider === "on",
-      dlc,
-      dlcForFree,
+      dlc: dlc === 'on',
+      dlcForFree: dlcForFree === 'on',
       dlcForName,
       preOrder: preOrder === 'on',
       releaseDate,
@@ -400,15 +407,21 @@ export const editProduct = async (req, res) => {
       }
     }
   
-    if (+dlcFor) {
-      product.dlcForId = dlcFor;
+    if (dlcForId === '0') {
+      product.dlcForId = null;
+    } else {
+      product.dlcForId = dlcForId;
     }
   
-    if (+series) {
+    if (series === '0') {
+      product.seriesId = null;
+    } else {
       product.seriesId = series;
     }
   
-    if (+dsId) {
+    if (dsId === '0') {
+      product.dsId = null;
+    } else {
       product.dsId = dsId;
     }
   

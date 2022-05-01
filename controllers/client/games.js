@@ -43,6 +43,7 @@ export const gamePage = async (req, res) => {
         'publisherId',
         'reviews.userId',
         'editionId',
+        'dlcForId',
         {
           path: 'elements',
           populate: {
@@ -90,50 +91,46 @@ export const gamePage = async (req, res) => {
       if (order) {
         isProductNotPurchased = false;
       }
-      
-      lastViewedProducts = await User.aggregate([
-        {$match: {_id: res.locals.person._id}},
-        {$project: {_id: 0, viewedProducts: 1}},
-        {$unwind: '$viewedProducts'},
-        {$match: {viewedProducts: {$ne: product._id}}},
-        {$group: {_id: '$viewedProducts'}},
-        {$limit: 7},
-        {
-          $lookup: {
-            from: 'products',
-            localField: '_id',
-            foreignField: '_id',
-            as: 'viewedProduct',
-          },
-        },
-        {
-          $project: {
-            'viewedProduct._id': 1,
-            'viewedProduct.alias': 1,
-            'viewedProduct.name': 1,
-            'viewedProduct.img': 1,
-            'viewedProduct.priceTo': 1,
-            'viewedProduct.priceFrom': 1,
-            'viewedProduct.dsId': 1,
-          },
-        },
-        {$unwind: '$viewedProduct'},
-      ]);
   
-      lastViewedProducts = lastViewedProducts.map(product => {
-        if (favoritesProducts && favoritesProducts.includes(product._id.toString())) {
-          product.viewedProduct.inFavorites = true;
+      const viewedProductsResult = await User
+        .findById(person._id)
+        .select('viewedProducts')
+        .slice('viewedProducts', 7)
+        .populate('viewedProducts', ['alias', 'name', 'img', 'priceTo', 'priceFrom', 'dsId', 'dlc'])
+        .lean();
+  
+      lastViewedProducts = viewedProductsResult.viewedProducts;
+  
+      lastViewedProducts = lastViewedProducts && lastViewedProducts.map(viewedProduct => {
+        if (favoritesProducts && favoritesProducts.includes(viewedProduct._id.toString())) {
+          viewedProduct.inFavorites = true;
         }
     
-        if (cart && cart.includes(product._id.toString())) {
-          product.viewedProduct.inCart = true;
+        if (cart && cart.includes(viewedProduct._id.toString())) {
+          viewedProduct.inCart = true;
+        }
+        
+        if (viewedProduct._id.toString() === product._id.toString()) {
+          viewedProduct.currentPorductPage = true;
         }
     
-        return product;
+        return viewedProduct;
       });
       
       isProductNoReview = product.reviews.findIndex(review => review.userId.id === res.locals.person.id) === -1;
-      person.viewedProducts.push(product._id);
+      
+      let viewedProducts = person.viewedProducts;
+      const viewedProductIndex = viewedProducts.findIndex(viewedProductId => {
+        return viewedProductId.toString() === product._id.toString();
+      });
+      
+      if (viewedProductIndex !== -1) {
+        viewedProducts.splice(viewedProductIndex, 1);
+      }
+  
+      viewedProducts.unshift(product._id);
+      
+      person.viewedProducts = viewedProducts;
       await person.save();
     }
     

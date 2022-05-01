@@ -14,7 +14,7 @@
                 <div class="list">
                     {{#each user.favoritesProducts}}
                         {{> game
-                            id=id
+                            id=_id
                             size='small'
                             alias=alias
                             img=img
@@ -22,6 +22,8 @@
                             priceTo=priceTo
                             priceFrom=priceFrom
                             inFavorites=true
+                            dlc=dlc
+                            dsId=dsId
                         }}
                     {{/each}}
                 </div>

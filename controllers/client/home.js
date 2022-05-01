@@ -20,7 +20,7 @@ export const homepage = async (req, res) => {
   for (let category of categories) {
     const products = await Product
       .find({categories: {$in: category._id.toString()}})
-      .select(['name', 'alias', 'img', 'priceTo', 'priceFrom'])
+      .select(['name', 'alias', 'img', 'priceTo', 'priceFrom', 'dlc', 'dsId'])
       .lean()
       .limit(10);
   

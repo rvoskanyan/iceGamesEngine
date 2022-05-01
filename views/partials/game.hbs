@@ -4,11 +4,11 @@
     data-id="{{id}}"
     data-ds-id="{{dsId}}"
     {{#if inCart}}data-in-cart="true"{{/if}}
-    title="Перейти к странице игры"
+    title="Перейти к странице товара"
 >
     <div class="actions">
         {{#if @root.isAuth}}
-            <button class="btn like js-favoritesBtn{{#if inFavorites}} js-active{{/if}}" title="{{#if inFavorites}}Удалить игру из избранного{{else}}Добавить игру в избранное{{/if}}">
+            <button class="btn like js-favoritesBtn{{#if inFavorites}} js-active{{/if}}" title="{{#if inFavorites}}Удалить товар из избранного{{else}}Добавить товар в избранное{{/if}}">
                 <span class="icon-static icon-static-actionLike js-icon {{#if inFavorites}} active{{/if}}"></span>
             </button>
         {{/if}}
@@ -19,6 +19,9 @@
             {{#if inCart}}В корзине ✔{{else}}В корзину{{/if}}
         </button>
     </div>
+    {{#if dlc}}
+        <div class="dlc" title="Дополнение для игры">DLC</div>
+    {{/if}}
     <div class="head">
         <img class="img" src="{{@root.websiteAddress}}{{img}}" alt="Картинка {{name}}" title="{{name}}">
         <div class="name">

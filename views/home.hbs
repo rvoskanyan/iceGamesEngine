@@ -86,37 +86,10 @@
                     <div class="item js-tabBlock-{{category._id}}{{#if @first}} active{{/if}}">
                         <div class="gameGrid">
                             {{#each products}}
-                                <a href="/games/{{alias}}" class="cardGame big js-itemNavSlider" title="Перейти к странице игры">
-                                    <div class="actions">
-                                        <button class="btn like" title="Добавить игру в избранное">
-                                            <span class="icon-static icon-static-actionLike"></span>
-                                        </button>
-                                        <button
-                                                class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart"
-                                                title="Добавить данный товар в корзину покупок"
-                                        >
-                                            В корзину
-                                        </button>
-                                    </div>
-                                    <div class="head">
-                                        <img class="img" src="{{@root.websiteAddress}}{{img}}" alt="Изображение игры {{name}}" title="{{name}}">
-                                        <div class="name">
-                                            {{name}}
-                                        </div>
-                                    </div>
-                                    <div class="price">
-                                        <div class="toPrice">
-                                            <span class="value">
-                                                {{priceTo}}
-                                            </span>
-                                        </div>
-                                        <div class="fromPrice">
-                                            <span class="value">
-                                                {{priceTo}}
-                                            </span>
-                                        </div>
-                                    </div>
-                                </a>
+                                {{> game
+                                    id=_id
+                                    size='big'
+                                }}
                             {{/each}}
                         </div>
                     </div>

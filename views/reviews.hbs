@@ -46,16 +46,8 @@
                 <div class="games">
                     {{#each lastViewedProducts}}
                         {{> game
-                                id=viewedProduct._id
-                                dsId=viewedProduct.dsId
-                                size='small'
-                                alias=viewedProduct.alias
-                                img=viewedProduct.img
-                                name=viewedProduct.name
-                                priceTo=viewedProduct.priceTo
-                                priceFrom=viewedProduct.priceFrom
-                                inFavorites=viewedProduct.inFavorites
-                                inCart=viewedProduct.inCart
+                            id=_id
+                            size='small'
                         }}
                     {{/each}}
                 </div>

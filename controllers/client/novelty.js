@@ -4,7 +4,7 @@ export const noveltyPage = async (req, res) => {
   try {
     const person = res.locals.person;
     let products = await Product.find()
-      .select(['name', 'alias', 'img', 'priceTo', 'priceFrom', 'dsId'])
+      .select(['name', 'alias', 'img', 'priceTo', 'priceFrom', 'dsId', 'dlc'])
       .limit(8)
       .lean();
     

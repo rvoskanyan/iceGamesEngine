@@ -741,6 +741,7 @@ searchStringNode.addEventListener('input', async () => {
                   ${product.inCart ? 'В корзине ✔' : 'В корзину'}
               </button>
           </div>
+          ${product.dlc ? '<div class="dlc">DLC</div>' : ''}
           <div class="head">
               <img class="img" src="${websiteAddress}${product.img}" alt="Картинка ${product.name}" title="${product.name}">
               <div class="name">
@@ -969,7 +970,11 @@ if (catalogNode) {
   const sortNode = catalogNode.querySelector('.js-sort');
   const rangePriceNode = catalogNode.querySelector('.js-priceRange');
   const loadMoreNode = catalogNode.querySelector('.js-loadMore');
-  const fields = [];
+  const fields = [{
+    name: 'searchString',
+    node: searchStringNode,
+    type: 'textInput',
+  }];
   let sortActiveBtn = null;
   
   const checkbox = [
@@ -1014,6 +1019,7 @@ if (catalogNode) {
                     ${product.inCart ? 'В корзине ✔' : 'В корзину'}
                 </button>
             </div>
+            ${product.dlc ? '<div class="dlc">DLC</div>' : ''}
             <div class="head">
                 <img class="img" src="${websiteAddress}${product.img}" alt="Картинка ${product.name}" title="${product.name}">
                 <div class="name">
@@ -1035,6 +1041,20 @@ if (catalogNode) {
         </a>
       `;
     })
+  })
+  
+  searchStringNode.addEventListener('input', () => {
+    const url = new URL(window.location.href);
+    const value = searchStringNode.value;
+    
+    url.searchParams.set('searchString', value);
+    
+    if (!value.length) {
+      url.searchParams.delete('searchString');
+    }
+    
+    history.pushState(null, null, url);
+    catalogNode.dispatchEvent(new Event('changeParams'));
   })
   
   rangePriceSliderNodes.forEach(rangePriceSliderNode => {
@@ -1153,6 +1173,10 @@ if (catalogNode) {
         field.node.innerText = searchParam[1];
         break;
       }
+      case 'textInput': {
+        field.node.value = searchParam[1];
+        break;
+      }
     }
     
     if (field.dispatch) {
@@ -1171,6 +1195,10 @@ if (catalogNode) {
       }
       case 'contentEditable': {
         param.value = field.node.innerText;
+        break;
+      }
+      case 'textInput': {
+        param.value = field.node.value;
         break;
       }
     }
@@ -1221,6 +1249,7 @@ if (catalogNode) {
                     ${product.inCart ? 'В корзине ✔' : 'В корзину'}
                 </button>
             </div>
+            ${product.dlc ? '<div class="dlc">DLC</div>' : ''}
             <div class="head">
                 <img class="img" src="${websiteAddress}${product.img}" alt="Картинка ${product.name}" title="${product.name}">
                 <div class="name">

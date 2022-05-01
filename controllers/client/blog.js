@@ -23,7 +23,7 @@ export const blogArticlePage = async (req, res) => {
   try {
     const article = await Article
       .findOne({alias: req.params.alias})
-      .populate('products', ['name', 'alias', 'priceTo', 'priceFrom', 'img']);
+      .populate('products', ['name', 'alias', 'priceTo', 'priceFrom', 'img', 'dsId', 'dlc']);
     
     if (req.session.isAuth) {
       const user = res.locals.person;
