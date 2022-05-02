@@ -4,7 +4,7 @@ export const preordersPage = async (req, res) => {
   try {
     const person = res.locals.person;
     let products = await Product.find({preOrder: true})
-      .select(['name', 'alias', 'img', 'priceTo', 'priceFrom', 'dsId', 'dlc'])
+      .select(['name', 'alias', 'img', 'priceTo', 'priceFrom', 'dsId', 'dlc', 'inStock'])
       .limit(8)
       .lean();
     

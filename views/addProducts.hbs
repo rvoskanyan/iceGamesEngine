@@ -30,6 +30,12 @@
 {{/if}}
 <form method="post" action="/admin/products/{{#if isEdit}}edit/{{product.id}}{{else}}add{{/if}}" enctype="multipart/form-data">
     <label>
+        В наличии:
+        <input type="checkbox" name="inStock"{{#if product.inStock}} checked{{/if}}>
+    </label>
+    <br>
+    <br>
+    <label>
         Название:
         <input type="text" name="name" value="{{product.name}}">
     </label>

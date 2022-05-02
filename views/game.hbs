@@ -70,14 +70,30 @@
             </div>
             <div class="actions">
                 <button
-                    title="{{#if currentProductInCart}}Перейти в корзину покупок{{else}}Добавить данный товар в корзину покупок{{/if}}"
-                    class="btn elongated rounded increase bg-pink hover-backlight-blue js-addToCartBtn{{#if currentProductInCart}} js-active{{/if}}"
+                    title="
+                        {{#if product.inStock}}
+                            {{#if currentProductInCart}}Перейти в корзину покупок{{else}}Добавить данный товар в корзину покупок{{/if}}
+                        {{else}}
+                            Подписаться на уведомление о поступлении товара
+                        {{/if}}
+                    "
+                    class="btn elongated rounded increase bg-pink hover-backlight-blue
+                        {{#if product.inStock}}
+                            js-addToCartBtn{{#if currentProductInCart}} js-active{{/if}}
+                        {{else}}
+                            js-subscribeInStock
+                        {{/if}}
+                    "
                     {{#unless currentProductInCart}}
                         data-ds-id="{{product.dsId}}"
                         data-product-id="{{product.id}}"
                     {{/unless}}
                 >
-                    {{#if currentProductInCart}}В корзине ✔{{else}}В корзину{{/if}}
+                    {{#if product.inStock}}
+                        {{#if currentProductInCart}}В корзине ✔{{else}}В корзину{{/if}}
+                    {{else}}
+                        Уведомить
+                    {{/if}}
                 </button>
                 {{#if product.preOrder}}
                     <div class="moreInfo preOrderInfo">
@@ -545,7 +561,7 @@
                     {{#each lastViewedProducts}}
                         {{#unless currentPorductPage}}
                             {{> game
-                                    id=_id
+                                id=_id
                             }}
                         {{/unless}}
                     {{/each}}

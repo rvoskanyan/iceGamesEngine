@@ -12,11 +12,30 @@
                 <span class="icon-static icon-static-actionLike js-icon {{#if inFavorites}} active{{/if}}"></span>
             </button>
         {{/if}}
+        {{#unless inStock}}
+            <div class="noInStock">Игры нет<br>в наличии :(</div>
+        {{/unless}}
         <button
-            class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart small js-addToCart{{#if inCart}} active js-active{{/if}}"
-            title="{{#if inCart}}Перейти в корзину покупок{{else}}Добавить данный товар в корзину покупок{{/if}}"
+            class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart small
+                {{#if inStock}}
+                    js-addToCart{{#if inCart}} active js-active{{/if}}
+                {{else}}
+                    js-subscribeInStock
+                {{/if}}
+            "
+            title="
+                {{#if inStock}}
+                    {{#if inCart}}Перейти в корзину покупок{{else}}Добавить данный товар в корзину покупок{{/if}}
+                {{else}}
+                    Подписаться на уведомление о поступлении товара
+                {{/if}}
+            "
         >
-            {{#if inCart}}В корзине ✔{{else}}В корзину{{/if}}
+            {{#if inStock}}
+                {{#if inCart}}В корзине ✔{{else}}В корзину{{/if}}
+            {{else}}
+                Уведомить
+            {{/if}}
         </button>
     </div>
     {{#if dlc}}

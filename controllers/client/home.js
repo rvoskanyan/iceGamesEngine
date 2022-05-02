@@ -6,7 +6,7 @@ import Article from "../../models/Article.js";
 
 export const homepage = async (req, res) => {
   const sliderProducts = await Product
-    .find({inHomeSlider: true})
+    .find({inHomeSlider: true, inStock: true})
     .limit(5)
     .select(['name', 'alias', 'description', 'priceTo', 'priceFrom', 'img', 'coverImg', 'coverVideo', 'discount'])
     .lean();
@@ -20,9 +20,9 @@ export const homepage = async (req, res) => {
   for (let category of categories) {
     const products = await Product
       .find({categories: {$in: category._id.toString()}})
-      .select(['name', 'alias', 'img', 'priceTo', 'priceFrom', 'dlc', 'dsId'])
-      .lean()
-      .limit(10);
+      .select(['name', 'alias', 'img', 'priceTo', 'priceFrom', 'dlc', 'dsId', 'inStock'])
+      .limit(10)
+      .lean();
   
     catalog.push({
       category,

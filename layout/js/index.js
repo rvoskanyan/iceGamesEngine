@@ -734,11 +734,18 @@ searchStringNode.addEventListener('input', async () => {
                     <span class="icon-static icon-static-actionLike js-icon${product.inFavorites ? ' active' : ''}"></span>
                 </button>
               ` : ''}
+              ${product.inStock ? '' : '<div class="noInStock">Игры нет<br>в наличии :(</div>'}
               <button
-                  class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart small js-addToCart${product.inCart ? ' active js-active' : ''}"
-                  title="${product.inCart ? 'Перейти в корзину покупок' : 'Добавить данный товар в корзину покупок'}"
+                  class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart small${product.inStock ? product.inCart ? ' js-addToCart active js-active' : ' js-addToCart' : ' js-subscribeInStock'}"
+                  title="${
+                    product.inStock
+                      ? product.inCart
+                        ? 'Перейти в корзину покупок'
+                        : 'Добавить данный товар в корзину покупок'
+                      : 'Подписаться на уведомление о поступлении товара'
+                  }"
               >
-                  ${product.inCart ? 'В корзине ✔' : 'В корзину'}
+                  ${product.inStock ? product.inCart ? 'В корзине ✔' : 'В корзину' : 'Уведомить'}
               </button>
           </div>
           ${product.dlc ? '<div class="dlc">DLC</div>' : ''}
@@ -1012,11 +1019,18 @@ if (catalogNode) {
                       <span class="icon-static icon-static-actionLike js-icon${product.inFavorites ? ' active' : ''}"></span>
                   </button>
                 ` : ''}
+                ${product.inStock ? '' : '<div class="noInStock">Игры нет<br>в наличии :(</div>'}
                 <button
-                    class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart small js-addToCart${product.inCart ? ' active js-active' : ''}"
-                    title="${product.inCart ? 'Перейти в корзину покупок' : 'Добавить данный товар в корзину покупок'}"
+                    class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart small${product.inStock ? product.inCart ? ' js-addToCart active js-active' : ' js-addToCart' : ' js-subscribeInStock'}"
+                    title="${
+                      product.inStock
+                        ? product.inCart
+                          ? 'Перейти в корзину покупок'
+                          : 'Добавить данный товар в корзину покупок'
+                        : 'Подписаться на уведомление о поступлении товара'
+                    }"
                 >
-                    ${product.inCart ? 'В корзине ✔' : 'В корзину'}
+                    ${product.inStock ? product.inCart ? 'В корзине ✔' : 'В корзину' : 'Уведомить'}
                 </button>
             </div>
             ${product.dlc ? '<div class="dlc">DLC</div>' : ''}
@@ -1242,11 +1256,18 @@ if (catalogNode) {
                       <span class="icon-static icon-static-actionLike js-icon${product.inFavorites ? ' active' : ''}"></span>
                   </button>
                 ` : ''}
+                ${product.inStock ? '' : '<div class="noInStock">Игры нет<br>в наличии :(</div>'}
                 <button
-                    class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart small js-addToCart${product.inCart ? ' active js-active' : ''}"
-                    title="${product.inCart ? 'Перейти в корзину покупок' : 'Добавить данный товар в корзину покупок'}"
+                    class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart small${product.inStock ? product.inCart ? ' js-addToCart active js-active' : ' js-addToCart' : ' js-subscribeInStock'}"
+                    title="${
+                      product.inStock
+                        ? product.inCart
+                          ? 'Перейти в корзину покупок'
+                          : 'Добавить данный товар в корзину покупок'
+                        : 'Подписаться на уведомление о поступлении товара'
+                    }"
                 >
-                    ${product.inCart ? 'В корзине ✔' : 'В корзину'}
+                    ${product.inStock ? product.inCart ? 'В корзине ✔' : 'В корзину' : 'Уведомить'}
                 </button>
             </div>
             ${product.dlc ? '<div class="dlc">DLC</div>' : ''}

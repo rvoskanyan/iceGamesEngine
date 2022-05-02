@@ -37,7 +37,7 @@ export const reviewsPage = async (req, res) => {
         .findById(person._id)
         .select('viewedProducts')
         .slice('viewedProducts', 7)
-        .populate('viewedProducts', ['alias', 'name', 'img', 'priceTo', 'priceFrom', 'dsId', 'dlc'])
+        .populate('viewedProducts', ['alias', 'name', 'img', 'priceTo', 'priceFrom', 'dsId', 'dlc', 'inStock'])
         .lean();
     
       lastViewedProducts = viewedProducts && viewedProducts.map(product => {
