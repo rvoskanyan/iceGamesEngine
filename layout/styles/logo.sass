@@ -7,7 +7,7 @@
   &:hover, &:focus-visible
     & .imgContainer
       &:before
-        transform: translateX(-2px) rotate(-12deg)
+        transform: translateX(-1px) rotate(-12deg)
 
         @include for-big-phone-up
           transform: translateX(-2px) rotate(-15deg)
@@ -19,18 +19,16 @@
           transform: translateY(7px) rotate(15deg)
 
       & .eye
-        top: 12px
+        top: 11px
         height: 0
 
         @include for-big-phone-up
           top: 16px
 
-
-
   & .imgContainer
     position: relative
-    max-width: 65px
-    min-width: 65px
+    max-width: 60px
+    min-width: 60px
 
     @include for-big-phone-up
       max-width: 100px
@@ -39,8 +37,8 @@
     &:before, &:after
       content: ''
       position: absolute
-      width: 16px
-      height: 5px
+      width: 15px
+      height: 4px
       top: 2px
       background-color: #FA00FF
       transition: transform .3s ease-in
@@ -51,14 +49,14 @@
         height: 7px
 
     &:before
-      left: 14px
+      left: 13px
       transform: translateY(0) rotate(15deg)
 
       @include for-big-phone-up
         left: 21px
 
     &:after
-      right: 14px
+      right: 13px
       transform: translateY(0) rotate(-15deg)
 
       @include for-big-phone-up
@@ -67,10 +65,10 @@
     & .eye
       display: block
       position: absolute
-      top: 4px
-      right: 15px
-      width: 11px
-      height: 14px
+      top: 3px
+      right: 14px
+      width: 10px
+      height: 13px
       background-color: #fff
       z-index: -1
       border-radius: 50px/65px

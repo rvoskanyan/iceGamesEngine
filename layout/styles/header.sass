@@ -26,7 +26,7 @@
     & .name
       color: #fff
       text-transform: uppercase
-      font-size: 20px
+      font-size: 16px
       font-weight: 600
       line-height: 1
       margin-left: 5px
@@ -46,19 +46,21 @@
   & .navigateMobileContainer
     display: flex
     flex-direction: column
-    row-gap: 25px
+    row-gap: 30px
     background: linear-gradient(180deg, #B800F9 0%, #49028A 29.19%, #000340 58.54%, #130270 82.24%, #3000BA 100%)
     position: absolute
     top: 0
     right: 0
     height: 100vh
-    padding: 95px 50px 30px 35px
-    width: 100%
+    padding: 25px 20px 30px 25px
+    width: 70%
+    max-width: 350px
     visibility: hidden
     opacity: 0
     transform: translateX(100%)
     transition: .5s cubic-bezier(0.6, -0.28, 0.74, 0.05)
     transition-property: visibility, opacity, transform
+    z-index: $ZIndex-NavigateMobileContainer
 
     @include for-big-phone-up
       padding: 54px 64px 30px 64px
@@ -76,6 +78,13 @@
       opacity: 1
       transform: initial
       display: contents
+
+    & .btn.rating
+      font-family: 'Lemon Milk'
+      border: none
+      padding: 0
+      font-size: 20px
+      font-weight: initial
 
   & .navigation
     justify-content: space-between
@@ -165,23 +174,30 @@
 
           & .colLink
             &:not(:last-child)
-              margin-bottom: 15px
+              margin-bottom: 10px
+
+              @include for-big-phone-up
+                margin-bottom: 15px
 
             & .link
               font-family: 'Lemon Milk'
               font-size: 20px
 
         & .categoriesMenu
-          margin-right: 70px
+          @include for-big-phone-up
+            margin-right: 70px
 
           & .colLink
             &:last-child .link
               color: #fff
 
             & .link
-              font-size: 25px
+              font-size: 20px
               color: #FF00F5
               text-shadow: 0 0 50px rgba(0, 0, 0, 0.5)
+
+              @include for-big-phone-up
+                font-size: 25px
 
         & .containerMainMenuSearch
           flex-grow: 1
@@ -228,6 +244,7 @@
   & .mobileNavBtn
     display: flex
     align-items: center
+    z-index: $ZIndex-MobileNavBtn
 
     & .openMobileMenu
       margin-left: 12px
@@ -239,9 +256,12 @@
     display: flex
     justify-content: space-between
     align-items: center
-    width: 100px
+    width: 75px
     padding-right: 10px
     order: -1
+
+    @include for-big-phone-up
+      width: 100px
 
     @include for-desktop-up
       order: initial

@@ -1,3 +1,5 @@
+@import './breakPoints'
+
 .icon
   mask-position: center
   mask-size: cover
@@ -24,7 +26,6 @@
       width: 32px
       height: 44px
 
-
   &-search
     mask-image: url("./../img/searchBtnIcon.svg")
     -webkit-mask-image: url("./../img/searchBtnIcon.svg")
@@ -35,14 +36,22 @@
   &-profile
     mask-image: url("./../img/profileIcon.svg")
     -webkit-mask-image: url("./../img/profileIcon.svg")
-    width: 28px
-    height: 35px
+    width: 24px
+    height: 30px
+
+    @include for-big-phone-up
+      width: 28px
+      height: 35px
 
   &-cart
     mask-image: url("./../img/cartIcon.svg")
     -webkit-mask-image: url("./../img/cartIcon.svg")
-    width: 40px
-    height: 38px
+    width: 33px
+    height: 31px
+
+    @include for-big-phone-up
+      width: 40px
+      height: 38px
 
   &-like
     mask-image: url("./../img/favorite.svg")

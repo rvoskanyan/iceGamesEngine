@@ -5,67 +5,69 @@
         </div>
         <div class="current">Каталог</div>
     </div>
-    <div class="filters js-filter">
-        <div class="priceBlock">
-            <div class="title">Цена:</div>
-            <div class="range js-range js-priceRange" data-min="0" data-max="3500">
-                <div class="min js-minSlider js-slider" data-name="priceFrom">0</div>
-                <div class="max js-maxSlider js-slider" data-name="priceTo">3500</div>
-            </div>
-        </div>
-        <div class="variantsBlock">
-            <div class="block">
-                <div class="title">Категория:</div>
-                <div class="variants">
-                    {{#each categories}}
-                        {{> checkbox
-                            value=id
-                            label=name
-                            name='categories'
-                        }}
-                    {{/each}}
+    <div class="main">
+        <div class="params js-filter">
+            <div class="priceBlock">
+                <div class="title">Цена:</div>
+                <div class="range js-range js-priceRange" data-min="0" data-max="3500">
+                    <div class="min js-minSlider js-slider" data-name="priceFrom">0</div>
+                    <div class="max js-maxSlider js-slider" data-name="priceTo">3500</div>
                 </div>
             </div>
-            <div class="block genres">
-                <div class="title">Жанр:</div>
+            <div class="sortBlock js-sort">
+                <div class="title">Сортировать по:</div>
                 <div class="variants">
-                    {{#each genres}}
-                        {{> checkbox
-                            value=id
-                            label=name
-                            name='genres'
-                        }}
-                    {{/each}}
+                    <button class="btn small rounded bg-lilac translucent js-variant-sort" data-sort="date">Дате выхода</button>
+                    <button class="btn small rounded bg-lilac translucent js-variant-sort" data-sort="price">Цене</button>
+                    <button class="btn small rounded bg-lilac translucent js-variant-sort" data-sort="discount">Скидке</button>
+                    <label class="checkbox inStockOnly js-checkbox">
+                        <input class="input" type="checkbox" name="onlyStock" value="true">
+                        <span class="label">Только в наличии</span>
+                    </label>
                 </div>
             </div>
-            <div class="block">
-                <div class="title">Активация:</div>
-                <div class="variants">
-                    {{#each activationServices}}
-                        {{> checkbox
-                            value=id
-                            label=name
-                            name='activationServices'
-                        }}
-                    {{/each}}
+            <div class="variantsBlock">
+                <div class="block">
+                    <div class="title">Категория:</div>
+                    <div class="variants">
+                        {{#each categories}}
+                            {{> checkbox
+                                    value=id
+                                    label=name
+                                    name='categories'
+                            }}
+                        {{/each}}
+                    </div>
+                </div>
+                <div class="block genres">
+                    <div class="title">Жанр:</div>
+                    <div class="variants">
+                        {{#each genres}}
+                            {{> checkbox
+                                    value=id
+                                    label=name
+                                    name='genres'
+                            }}
+                        {{/each}}
+                    </div>
+                </div>
+                <div class="block">
+                    <div class="title">Активация:</div>
+                    <div class="variants">
+                        {{#each activationServices}}
+                            {{> checkbox
+                                    value=id
+                                    label=name
+                                    name='activationServices'
+                            }}
+                        {{/each}}
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="list">
-        <div class="sort js-sort">
-            <div class="title">Сортировать по:</div>
-            <div class="variants">
-                <button class="btn small rounded bg-lilac translucent js-variant-sort" data-sort="date">Дате выхода</button>
-                <button class="btn small rounded bg-lilac translucent js-variant-sort" data-sort="price">Цене</button>
-                <button class="btn small rounded bg-lilac translucent js-variant-sort" data-sort="discount">Скидке</button>
-                <label class="checkbox inStockOnly js-checkbox">
-                    <input class="input" type="checkbox" name="onlyStock" value="true">
-                    <span class="label">Только в наличии</span>
-                </label>
-            </div>
+        <div class="list">
+            <div class="gameGrid js-productGrid"></div>
+            <button class="btn rounded bg-lilac translucent loadMore hide js-loadMore" data-skip="1">Загрузить ещё</button>
         </div>
-        <div class="gameGrid js-productGrid"></div>
-        <button class="btn rounded bg-lilac translucent loadMore hide js-loadMore" data-skip="1">Загрузить ещё</button>
     </div>
 </main>
