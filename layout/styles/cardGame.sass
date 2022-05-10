@@ -4,8 +4,9 @@
 .cardGame
   display: flex
   flex-direction: column
-  width: 154px
-  height: 243px
+  min-width: 175px
+  max-width: 175px
+  height: 274px
   border: 2px solid #fff
   box-shadow: 0 0 15px #0066FF
   border-radius: 22px
@@ -16,24 +17,58 @@
   cursor: pointer
   text-decoration: none
 
+  @include for-big-phone-up
+    min-width: 117px
+    max-width: 117px
+    height: 158px
+
+  @include for-desktop-up
+    min-width: 154px
+    max-width: 154px
+    height: 243px
+
+    &:hover, &.active, &:focus-visible, &:focus-within
+      transform: scale(1.1, 1.1)
+      box-shadow: 0 0 30px #00A3FF
+      outline: none
+
+      & .actions
+        bottom: 0
+        opacity: 1
+        visibility: visible
+
+        & .inCart, & .like
+          opacity: 1
+
   @include for-big-desktop-up
-    width: 171px
+    max-width: 171px
+    min-width: 171px
     height: 270px
 
   @include for-very-big-desktop-up
-    width: 197px
+    max-width: 197px
+    min-width: 197px
     height: 311px
 
   &.big
-    width: 204px
-    height: 317px
+    @include for-big-phone-up
+      max-width: 189px
+      min-width: 189px
+      height: 295px
+
+    @include for-desktop-up
+      max-width: 204px
+      min-width: 204px
+      height: 317px
 
     @include for-big-desktop-up
-      width: 220px
+      max-width: 220px
+      min-width: 220px
       height: 340px
 
     @include for-very-big-desktop-up
-      width: 233px
+      max-width: 233px
+      min-width: 233px
       height: 368px
 
     & .actions .inCart
@@ -41,7 +76,11 @@
       width: calc(100% - 20px * 2) //100% - left * 2
 
     & .head
-      height: 253px
+      @include for-big-phone-up
+        height: 230px
+
+      @include for-desktop-up
+        height: 253px
 
       @include for-big-desktop-up
         height: 272px
@@ -50,19 +89,32 @@
         height: 296px
 
   &.small
-    width: 128px
-    height: 201px
+    max-width: 124px
+    min-width: 124px
+    height: 192px
     box-shadow: 0 0 10px #00A3FF
+    border-radius: 16px
+
+    @include for-desktop-up
+      max-width: 128px
+      min-width: 128px
+      height: 201px
+
+    @include for-desktop-up
+      &:hover, &.active, &:focus-visible, &:focus-within
+        box-shadow: 0 0 15px #00A3FF
 
     @include for-big-desktop-up
-      width: 154px
+      max-width: 154px
+      min-width: 154px
       height: 243px
 
     @include for-very-big-desktop-up
-      width: 171px
+      max-width: 171px
+      min-width: 171px
       height: 270px
 
-    &:hover, &.active, &:focus-visible, &:focus-within
+    &.active
       box-shadow: 0 0 15px #00A3FF
 
     & .actions .inCart
@@ -81,14 +133,24 @@
         padding: 9px 12px
 
     & .head
-      height: 162px
-      font-size: 16px
+      height: 150px
+      font-size: 14px
+
+      @include for-big-phone-up
+        height: 162px
+        font-size: 16px
 
       @include for-big-desktop-up
         height: 195px
 
       @include for-very-big-desktop-up
         height: 217px
+
+      & .name
+        padding: 0 10px
+
+        @include for-big-phone-up
+          padding: 0 12px
 
     & .price
       font-size: 16px
@@ -100,49 +162,57 @@
       @include for-big-desktop-up
         padding: 20px 12px 0 12px
 
-  &:hover, &.active, &:focus-visible, &:focus-within
+  &.active
     transform: scale(1.1, 1.1)
     box-shadow: 0 0 30px #00A3FF
     outline: none
 
-    & .actions
-      bottom: 0
-      opacity: 1
-      visibility: visible
-
-      & .inCart, & .like
-        opacity: 1
-
   & .actions
     position: absolute
-    width: 100%
-    height: 100%
-    background-color: rgba(70, 11, 110, 0.8)
-    padding: 20px
+    top: 10px
+    right: 10px
     overflow: hidden
     z-index: $ZIndex-CardGame-Actions
-    opacity: 0
-    bottom: 100%
-    visibility: hidden
     transition: .3s ease-in
     transition-property: visibility, opacity, bottom
+    background-color: rgba(2, 4, 61, 0.6)
+    padding: 15px 11px
+    border: 1px solid #fff
+    border-radius: 15px
+
+    @include for-desktop-up
+      width: 100%
+      height: 100%
+      background-color: rgba(70, 11, 110, 0.8)
+      padding: 20px
+      visibility: hidden
+      opacity: 0
+      bottom: 100%
+      border: initial
+      border-radius: initial
+      right: initial
+      top: initial
 
     & .inCart
-      position: absolute
-      bottom: 25%
-      left: 10px //left
-      width: calc(100% - 10px * 2) //100% - left * 2
-      opacity: 0
-      font-size: 16px
+
+      @include for-desktop-up
+        position: absolute
+        bottom: 25%
+        left: 10px //left
+        width: calc(100% - 10px * 2) //100% - left * 2
+        opacity: 0
+        font-size: 16px
 
       @include for-very-big-desktop-up
         left: 20px //left
         width: calc(100% - 20px * 2) //100% - left * 2
 
     & .like
-      position: absolute
-      right: 20px
-      opacity: 0
+
+      @include for-desktop-up
+        position: absolute
+        right: 20px
+        opacity: 0
 
     & .noInStock
       font-family: 'Montserrat'
@@ -171,9 +241,13 @@
 
   & .head
     position: relative
-    height: 190px
+    height: 215px
     width: 100%
-    font-size: 18px
+    font-size: 16px
+
+    @include for-big-phone-up
+      height: 190px
+      font-size: 18px
 
     @include for-big-desktop-up
       height: 215px

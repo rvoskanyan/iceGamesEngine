@@ -7,8 +7,11 @@
   background: linear-gradient(#01033C 0%, rgba(1, 3, 60, 0.3) 75%, transparent 100%)
   left: 0
   right: 0
-  padding-top: 40px
+  padding-top: 20px
   z-index: $ZIndex-Header
+
+  @include for-big-phone-up
+    padding-top: 40px
 
   & .contentContainer
     display: flex
@@ -17,6 +20,8 @@
 
   & .logo
     display: flex
+    align-items: center
+    z-index: $ZIndex-HeaderLogo
 
     & .name
       color: #fff
@@ -24,8 +29,10 @@
       font-size: 20px
       font-weight: 600
       line-height: 1
-      margin-top: 10px
       margin-left: 5px
+
+      @include for-big-phone-up
+        margin-left: 10px
 
       @include for-tablet-portrait-up
         font-size: 26px
@@ -36,12 +43,49 @@
       @include for-desktop-up
         display: none
 
-  & .navigation
+  & .navigateMobileContainer
     display: flex
+    flex-direction: column
+    row-gap: 25px
+    background: linear-gradient(180deg, #B800F9 0%, #49028A 29.19%, #000340 58.54%, #130270 82.24%, #3000BA 100%)
+    position: absolute
+    top: 0
+    right: 0
+    height: 100vh
+    padding: 95px 50px 30px 35px
+    width: 100%
+    visibility: hidden
+    opacity: 0
+    transform: translateX(100%)
+    transition: .5s cubic-bezier(0.6, -0.28, 0.74, 0.05)
+    transition-property: visibility, opacity, transform
+
+    @include for-big-phone-up
+      padding: 54px 64px 30px 64px
+      row-gap: 35px
+      width: initial
+
+    &.active
+      transform: translateX(0%)
+      opacity: 1
+      transition: .3s ease
+      visibility: visible
+
+    @include for-desktop-up
+      visibility: visible
+      opacity: 1
+      transform: initial
+      display: contents
+
+  & .navigation
     justify-content: space-between
     position: relative
     flex-grow: 1
     margin: 0 45px
+    display: contents
+
+    @include for-desktop-up
+      display: flex
 
     @include for-very-big-desktop-up
       margin: 0 100px
@@ -64,15 +108,22 @@
       padding: 140px 0 80px 40px
       transition: .3s ease-in
       transition-property: opacity, visibility
-      opacity: 0
-      visibility: hidden
       z-index: $ZIndex-Header-ContainerMenu
+      display: contents
+
+      @include for-desktop-up
+        display: initial
+        opacity: 0
+        visibility: hidden
 
       & .menu
-        display: flex
         justify-content: space-between
         max-width: 1100px
         height: 100%
+        display: contents
+
+        @include for-desktop-up
+          display: flex
 
         &.active
           & .mainMenu, & .searchResult
@@ -90,10 +141,20 @@
           transition: transform .3s ease
 
           &::-webkit-scrollbar
-            width: $widthScrollBarSmall
+            width: 6px
 
         & .col
           list-style: none
+          display: none
+
+          @include for-desktop-up
+            display: initial
+
+          &.mobileMenu
+            display: block
+
+            & .colLink .link
+              color: #fff
 
           & .title
             font-family: 'Lemon Milk'
@@ -126,6 +187,10 @@
           flex-grow: 1
           height: 100%
           overflow: hidden
+          display: none
+
+          @include for-desktop-up
+            display: initial
 
           & .searchResult
             padding: 55px
@@ -149,6 +214,26 @@
 
     & .openMenu
       z-index: $ZIndex-Header-OpenMenu
+      display: none
+
+      @include for-desktop-up
+        display: initial
+
+    & .searchBar
+      display: none
+
+      @include for-desktop-up
+        display: flex
+
+  & .mobileNavBtn
+    display: flex
+    align-items: center
+
+    & .openMobileMenu
+      margin-left: 12px
+
+      @include for-desktop-up
+        display: none
 
   & .profile
     display: flex
@@ -156,6 +241,10 @@
     align-items: center
     width: 100px
     padding-right: 10px
+    order: -1
+
+    @include for-desktop-up
+      order: initial
 
     & .btn .icon
       transition: background-color .3s ease-in
@@ -188,6 +277,56 @@
         top: 2px
         right: 2px
         opacity: 0
+
+  & .mobileQuickSearch
+    position: absolute
+    top: 0
+    left: 0
+    height: 100%
+    min-height: 100vh
+    max-width: 100%
+    min-width: 100%
+    padding: 90px 15px 25px 15px
+    background: linear-gradient(180deg, rgba(184, 0, 249, 0.9) 0%, rgba(73, 2, 138, 0.9) 29.19%, rgba(0, 3, 64, 0.9) 58.54%, rgba(19, 2, 112, 0.9) 82.24%, rgba(48, 0, 186, 0.9) 100%)
+    visibility: hidden
+    opacity: 0
+    transform: translateY(-100%)
+    transition: .3s ease
+    transition-property: visibility, opacity, transform
+
+    @include for-big-phone-up
+      padding: 100px 100px 100px 100px
+
+    &.active
+      transform: translateX(0%)
+      opacity: 1
+      visibility: visible
+
+
+    @include for-desktop-up
+      display: none
+
+    & .searchBar
+      margin: 0
+
+      @include for-big-phone-up
+        margin: 0 140px 0 140px
+
+    & .searchResults
+      padding: 10px
+      overflow: auto
+      margin: 25px 0 0 0
+      display: grid
+      grid-template-columns: repeat(2, max-content)
+      grid-row-gap: 30px
+      justify-content: space-between
+      height: 80%
+
+      @include for-big-phone-up
+        grid-template-columns: repeat(4, max-content)
+        grid-row-gap: 50px
+        padding: 15px
+        margin: 30px 140px 0 140px
 
 @keyframes jumpDiamond
   10%

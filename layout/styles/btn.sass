@@ -67,8 +67,12 @@
       font-size: 16px
 
   &.elongated
-    padding-left: 30px
-    padding-right: 30px
+    padding-left: 20px
+    padding-right: 20px
+
+    @include for-big-phone-up
+      padding-left: 30px
+      padding-right: 30px
 
   &.fillFromCenter
     position: relative

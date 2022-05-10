@@ -1,6 +1,10 @@
+@import './breakPoints'
+
 .homeCatalog
   & .categories
     display: flex
+    max-width: max-content
+    margin: 0 auto
 
     & .btn:not(:last-child)
       margin-right: 20px
@@ -8,6 +12,7 @@
   & .blocks
     display: grid
     margin-top: 50px
+    max-width: 100%
 
     & .item
       grid-column: 1/-1
@@ -16,6 +21,18 @@
       transition-property: opacity, visibility
       opacity: 0
       visibility: hidden
+      display: flex
+      max-width: 100%
+      column-gap: 20px
+      padding: 15px
+
+      @include for-big-phone-up
+        display: grid
+        grid-template-columns: repeat(5, max-content)
+        justify-content: space-between
+        row-gap: 50px
+        column-gap: 30px
+        padding: initial
 
       &.active
         opacity: 1

@@ -4,8 +4,8 @@
     display: flex
     font-family: 'Lemon Milk'
     align-items: center
-    width: 208px
-    height: 120px
+    min-width: 208px
+    min-height: 120px
     background: linear-gradient(180.13deg, #C745CB 0.11%, rgba(199, 69, 203, 0) 94.7%)
     color: #fff
     font-size: 18px
@@ -27,3 +27,6 @@
 
     &:hover
         transform: scale(1.1, 1.1)
+
+    &:not(:last-child)
+        margin-right: 10px

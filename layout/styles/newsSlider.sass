@@ -9,10 +9,14 @@
     margin: 35px auto 0 auto
 
   & > .btn
-    margin-top: 84px
+    margin-top: 72px
+
+    @include for-big-phone-up
+      margin-top: 84px
 
   & .prev
-    margin-right: 20px
+    @include for-big-phone-up
+      margin-right: 20px
 
     &:hover
       transform: scale(1.1, 1.1)
@@ -26,11 +30,15 @@
       transition: 1s ease
 
       & .newsPreview
-        padding: 18px 25px 0 25px
-        min-width: calc(1132px / 3) //width visibleArea / count slides
         visibility: hidden
         opacity: 0
         transition: 1s ease
+        min-width: 100%
+        padding: 10px
+
+        @include for-big-phone-up
+          padding: 18px 25px 0 25px
+          min-width: calc(1132px / 3) //width visibleArea / count slides
 
         &.active
           visibility: visible
@@ -43,7 +51,8 @@
           min-width: calc(1446px / 3)
 
   & .next
-    margin-left: 20px
+    @include for-big-phone-up
+      margin-left: 20px
 
     & .icon-static
       transform: rotate(180deg)

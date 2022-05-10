@@ -41,7 +41,7 @@
                 <div class="progress js-progress"></div>
                 <button class="btn next js-nextBtn"></button>
             </div>
-            <div class="items gameGrid">
+            <div class="items gameGrid mobileScroll js-navigateItemsContainer">
                 {{#each sliderProducts}}
                     <button class="cardGame big{{#if @first}} active{{/if}} js-itemNavigate" title="Переключить слайд">
                         <div class="head">
@@ -68,13 +68,13 @@
         </div>
     </div>
     <div class="contentContainer">
-        <div class="homeSection row">
+        <div class="homeSection row mobileInvisibleScroll">
             {{#each usp}}
                 <div class="uspBlock">{{text}}</div>
             {{/each}}
         </div>
         <div class="homeSection homeCatalog js-homeCatalogTabs">
-            <div class="categories">
+            <div class="categories mobileInvisibleScroll">
                 {{#each catalog}}
                     <button class="btn round border big bg-darkLilac translucent js-tabBtn{{#if @first}} active{{/if}}" data-target-id="{{category._id}}">
                         {{category.name}}
@@ -83,15 +83,13 @@
             </div>
             <div class="blocks">
                 {{#each catalog}}
-                    <div class="item js-tabBlock-{{category._id}}{{#if @first}} active{{/if}}">
-                        <div class="gameGrid">
-                            {{#each products}}
-                                {{> game
-                                    id=_id
-                                    size='big'
-                                }}
-                            {{/each}}
-                        </div>
+                    <div class="item mobileScroll js-tabBlock-{{category._id}}{{#if @first}} active{{/if}}">
+                        {{#each products}}
+                            {{> game
+                                id=_id
+                                size='big'
+                            }}
+                        {{/each}}
                     </div>
                 {{/each}}
             </div>
@@ -108,7 +106,7 @@
             <div class="genresSlider js-genresSlider">
                 <div class="visibleArea js-visibleArea">
                     <div class="slides js-tape">
-                        <div class="slide js-slide active">
+                        <div class="slide js-slide">
                             {{#each genres}}
                                 <a class="genre" href="{{websiteAddress}}{{url}}" title="Открыть игры с жанром {{name}}">
                                     <img class="img" src="{{@root.websiteAddress}}{{img}}" alt="Изображение жанра {{name}}" title="Изображение жанра {{name}}">
@@ -118,7 +116,7 @@
                                 </a>
                                 {{#if (endOfBlock @index 2 @last)}}
                                     </div>
-                                    <div class="slide js-slide{{#if (isLess @index 3)}} active{{/if}}">
+                                    <div class="slide js-slide">
                                 {{/if}}
                             {{/each}}
                         </div>

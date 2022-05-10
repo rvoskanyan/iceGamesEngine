@@ -23,7 +23,7 @@
   &:after
     content: '₽'
     margin-left: 3px
-    font-size: 8px
+    font-size: 14px
 
     @include for-big-desktop-up
       font-size: 10px
@@ -40,7 +40,10 @@
     width: 106%
     left: -3%
     height: 3px
-    top: 45%
+    top: 35%
     transform: rotate(-14deg)
     box-shadow: 3px 2px 5px #000000
     background-color: #8043D7
+
+    @include for-big-phone-up
+      top: 45%

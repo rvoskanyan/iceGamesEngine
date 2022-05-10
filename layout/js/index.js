@@ -61,7 +61,17 @@ const popupController = new PopupController([
     id: 'navigate',
     btnSelector: '.js-toggleMainNavigation',
     popupSelector: '.js-mainNavigation',
-  }
+  },
+  {
+    id: 'mobileNavigate',
+    btnSelector: '.js-openMobileMenu',
+    popupSelector: '.js-navigateMobileContainer',
+  },
+  {
+    id: 'mobileQuickSearch',
+    btnSelector: '.js-openMobileQuickSearch',
+    popupSelector: '.js-mobileQuickSearchContainer',
+  },
 ]);
 
 if (rangeNode) {
@@ -878,29 +888,22 @@ if (homeSliderNode) {
   });
   
   function switchHomeSlider(slides, prevSlides = []) {
-    clearTimeout(playVideoTimeOutId);
     const slideNode = slides[0];
+    const videoNode = slideNode.querySelector('.video');
     const prevSlideNode = prevSlides[0];
     const videoName = slideNode.dataset.videoName;
-    const videoNode = slideNode.querySelector('.video');
     let canplaythrough = true;
     
-    if (slideNode === prevSlideNode) {
+    window.addEventListener('resize', handleResize);
+    
+    if (getComputedStyle(videoNode).display === 'none') {
       return;
     }
     
-    const onCanplaythrough = () => {
-      if (!canplaythrough) {
-        return;
-      }
-      
-      playVideoTimeOutId = setTimeout(() => {
-        slideNode.classList.add('activeVideo');
-        homeSlider.changeTimeoutOnce(videoNode.duration * 1000);
-        videoNode.play();
-      }, 2000);
-      
-      canplaythrough = false;
+    clearTimeout(playVideoTimeOutId);
+    
+    if (slideNode === prevSlideNode) {
+      return;
     }
     
     if (prevSlideNode) {
@@ -913,6 +916,34 @@ if (homeSliderNode) {
     
     videoNode.addEventListener('canplaythrough', onCanplaythrough);
     videoNode.setAttribute('src',`${websiteAddress}${videoName}`);
+  
+    function handleResize() {
+      if (getComputedStyle(videoNode).display === 'none' && videoNode.hasAttribute('src')) {
+        clearTimeout(playVideoTimeOutId);
+        slideNode.classList.remove('activeVideo');
+        homeSlider.changeTimeoutOnce(5000);
+        videoNode.removeAttribute('src');
+        videoNode.removeEventListener('canplaythrough', onCanplaythrough);
+        canplaythrough = true;
+      } else if (getComputedStyle(videoNode).display !== 'none' && !videoNode.hasAttribute('src')) {
+        videoNode.addEventListener('canplaythrough', onCanplaythrough);
+        videoNode.setAttribute('src',`${websiteAddress}${videoName}`);
+      }
+    }
+  
+    function onCanplaythrough() {
+      if (!canplaythrough) {
+        return;
+      }
+    
+      playVideoTimeOutId = setTimeout(() => {
+        slideNode.classList.add('activeVideo');
+        homeSlider.changeTimeoutOnce(videoNode.duration * 1000);
+        videoNode.play();
+      }, 2000);
+    
+      canplaythrough = false;
+    }
   }
 }
 

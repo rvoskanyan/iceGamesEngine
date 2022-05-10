@@ -21,6 +21,114 @@
     {{> loginForm}}
 {{/unless}}
 <header class="header js-header">
+    <div class="mobileQuickSearch js-mobileQuickSearchContainer">
+        <div class="searchBar">
+            <input class="textField" type="text" placeholder="Поиск...">
+            <button class="btn goSearch" title="Выполнить поиск">
+                <span class="icon icon-search"></span>
+            </button>
+        </div>
+        <div class="searchResults">
+            <a href="#" class="cardGame small js-itemNavSlider" title="Перейти к странице игры">
+                <div class="head">
+                    <img class="img" src="./img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
+                    <div class="name">Doom ETERNAL</div>
+                </div>
+                <div class="price">
+                    <div class="toPrice">
+                        <span class="value">999</span>
+                    </div>
+                    <div class="fromPrice">
+                        <span class="value">1300</span>
+                    </div>
+                </div>
+            </a>
+            <a href="#" class="cardGame small js-itemNavSlider" title="Перейти к странице игры">
+                <div class="head">
+                    <img class="img" src="./img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
+                    <div class="name">Doom ETERNAL</div>
+                </div>
+                <div class="price">
+                    <div class="toPrice">
+                        <span class="value">999</span>
+                    </div>
+                    <div class="fromPrice">
+                        <span class="value">1300</span>
+                    </div>
+                </div>
+            </a>
+            <a href="#" class="cardGame small js-itemNavSlider" title="Перейти к странице игры">
+                <div class="head">
+                    <img class="img" src="./img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
+                    <div class="name">Doom ETERNAL</div>
+                </div>
+                <div class="price">
+                    <div class="toPrice">
+                        <span class="value">999</span>
+                    </div>
+                    <div class="fromPrice">
+                        <span class="value">1300</span>
+                    </div>
+                </div>
+            </a>
+            <a href="#" class="cardGame small js-itemNavSlider" title="Перейти к странице игры">
+                <div class="head">
+                    <img class="img" src="./img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
+                    <div class="name">Doom ETERNAL</div>
+                </div>
+                <div class="price">
+                    <div class="toPrice">
+                        <span class="value">999</span>
+                    </div>
+                    <div class="fromPrice">
+                        <span class="value">1300</span>
+                    </div>
+                </div>
+            </a>
+            <a href="#" class="cardGame small js-itemNavSlider" title="Перейти к странице игры">
+                <div class="head">
+                    <img class="img" src="./img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
+                    <div class="name">Doom ETERNAL</div>
+                </div>
+                <div class="price">
+                    <div class="toPrice">
+                        <span class="value">999</span>
+                    </div>
+                    <div class="fromPrice">
+                        <span class="value">1300</span>
+                    </div>
+                </div>
+            </a>
+            <a href="#" class="cardGame small js-itemNavSlider" title="Перейти к странице игры">
+                <div class="head">
+                    <img class="img" src="./img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
+                    <div class="name">Doom ETERNAL</div>
+                </div>
+                <div class="price">
+                    <div class="toPrice">
+                        <span class="value">999</span>
+                    </div>
+                    <div class="fromPrice">
+                        <span class="value">1300</span>
+                    </div>
+                </div>
+            </a>
+            <a href="#" class="cardGame small js-itemNavSlider" title="Перейти к странице игры">
+                <div class="head">
+                    <img class="img" src="./img/CoverDoomEternal.jpg" alt="Image of Doom ETERNAL" title="Doom ETERNAL">
+                    <div class="name">Doom ETERNAL</div>
+                </div>
+                <div class="price">
+                    <div class="toPrice">
+                        <span class="value">999</span>
+                    </div>
+                    <div class="fromPrice">
+                        <span class="value">1300</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
     <div class="contentContainer">
         {{#if isHome}}
             <div class="logo">
@@ -39,48 +147,56 @@
                 <div class="name">Ice Games<br>Store</div>
             </a>
         {{/if}}
-        <div class="navigation js-mainNavigation">
-            {{> menu}}
-            <button title="Открыть каталог игр" class="btn round border hover-color-pink hover-border-pink openMenu js-toggleMainNavigation">Каталог</button>
-            <div class="searchBar">
-                <input class="textField js-searchString" type="text" placeholder="Поиск...">
-                <button class="btn goSearch" title="Выполнить поиск">
-                    <span class="icon icon-search"></span>
-                </button>
+        <div class="navigateMobileContainer js-navigateMobileContainer">
+            <div class="navigation js-mainNavigation">
+                {{> menu}}
+                <button title="Открыть каталог игр" class="btn round border hover-color-pink hover-border-pink openMenu js-toggleMainNavigation">Каталог</button>
+                <div class="searchBar">
+                    <input class="textField js-searchString" type="text" placeholder="Поиск...">
+                    <button class="btn goSearch" title="Выполнить поиск">
+                        <span class="icon icon-search"></span>
+                    </button>
+                </div>
+                {{#if isRating}}
+                    <span title="Рейтинг пользователей Ice Games" class="btn round border hover-color-pink hover-border-pink">Рейтинг</span>
+                {{else}}
+                    <a href="{{websiteAddress}}rating" title="Рейтинг пользователей Ice Games" class="btn round border hover-color-pink hover-border-pink">Рейтинг</a>
+                {{/if}}
             </div>
-            {{#if isRating}}
-                <span title="Рейтинг пользователей Ice Games" class="btn round border hover-color-pink hover-border-pink">Рейтинг</span>
-            {{else}}
-                <a href="{{websiteAddress}}rating" title="Рейтинг пользователей Ice Games" class="btn round border hover-color-pink hover-border-pink">Рейтинг</a>
-            {{/if}}
-        </div>
-        <div class="profile">
-            {{#if isAuth}}
-                {{#if isProfileHome}}
-                    <div class="btn">
+            <div class="profile">
+                {{#if isAuth}}
+                    {{#if isProfileHome}}
+                        <div class="btn">
+                            <span class="icon icon-profile"></span>
+                        </div>
+                    {{else}}
+                        <a href="{{websiteAddress}}profile" class="btn" title="Перейти в профиль">
+                            <span class="icon icon-profile"></span>
+                        </a>
+                    {{/if}}
+                {{else}}
+                    <button class="btn js-openLogin" title="Авторизация">
                         <span class="icon icon-profile"></span>
+                    </button>
+                {{/if}}
+                {{#if isCart}}
+                    <div class="btn cart isCart{{#if person.cart.length}} full{{/if}}">
+                        <span class="icon icon-cart"></span>
+                        <span class="icon icon-fillDiamond"></span>
                     </div>
                 {{else}}
-                    <a href="{{websiteAddress}}profile" class="btn" title="Перейти в профиль">
-                        <span class="icon icon-profile"></span>
+                    <a href="{{websiteAddress}}cart" class="btn cart{{#if person.cart.length}} full{{/if}}" title="Перейти в корзину с товарами">
+                        <span class="icon icon-cart"></span>
+                        <span class="icon icon-fillDiamond"></span>
                     </a>
                 {{/if}}
-            {{else}}
-                <button class="btn js-openLogin" title="Авторизация">
-                    <span class="icon icon-profile"></span>
-                </button>
-            {{/if}}
-            {{#if isCart}}
-                <div class="btn cart isCart{{#if person.cart.length}} full{{/if}}">
-                    <span class="icon icon-cart"></span>
-                    <span class="icon icon-fillDiamond"></span>
-                </div>
-            {{else}}
-                <a href="{{websiteAddress}}cart" class="btn cart{{#if person.cart.length}} full{{/if}}" title="Перейти в корзину с товарами">
-                    <span class="icon icon-cart"></span>
-                    <span class="icon icon-fillDiamond"></span>
-                </a>
-            {{/if}}
+            </div>
+        </div>
+        <div class="mobileNavBtn">
+            <button class="btn js-openMobileQuickSearch">
+                <span class="icon icon-search"></span>
+            </button>
+            <button class="btn burger openMobileMenu js-openMobileMenu"></button>
         </div>
     </div>
 </header>
@@ -138,7 +254,7 @@
             {{#if isPayment}}
                 <span class="link">Доставка и оплата</span>
             {{else}}
-                <a href="{{websiteAddress}}payment" class="link">Доставка и оплата</a>
+                <a href="{{websiteAddress}}payment" class="link">Оплата</a>
             {{/if}}
             {{#if isReviews}}
                 <span class="link">Отзывы</span>
@@ -148,7 +264,7 @@
             {{#if isAbout}}
                 <span class="link">О магазине</span>
             {{else}}
-                <a href="{{websiteAddress}}about" class="link">О магазине</a>
+                <a href="{{websiteAddress}}about" class="link">О нас</a>
             {{/if}}
             {{#if isBlog}}
                 <span class="link">Блог</span>

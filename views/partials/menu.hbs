@@ -1,9 +1,9 @@
 <div class="containerMenu">
     <nav class="menu js-menu">
-        <ul class="col categoriesMenu">
+        <ul class="col categoriesMenu mobileMenu">
             {{#each allCategories}}
                 <li class="colLink">
-                    <a href="/games?categories={{id}}" class="link" title="Топ продаж">{{name}}</a>
+                    <a href="/games?categories={{id}}" class="link" title="Открыть товары из категории {{name}}">{{name}}</a>
                 </li>
             {{/each}}
             <li class="colLink">
@@ -21,7 +21,7 @@
                     <li class="title">Жанры</li>
                     {{#each allGenres}}
                         <li class="colLink">
-                            <a href="/games?genres={{id}}" class="link" title="Шутеры">{{name}}</a>
+                            <a href="/games?genres={{id}}" class="link" title="Открыть товары жанра {{name}}">{{name}}</a>
                         </li>
                     {{/each}}
                 </ul>

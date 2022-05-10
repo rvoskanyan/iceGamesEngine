@@ -24,11 +24,14 @@
   & .img
     object-fit: cover
     width: 100%
-    height: 172px
+    height: 160px
     overflow: hidden
     border-radius: 22px
     transition: transform .3s ease-in
     box-shadow: 0 0 10px rgba(219, 0, 255, 0.8)
+
+    @include for-big-phone-up
+      height: 172px
 
     @include for-big-desktop-up
       height: 193px
@@ -39,32 +42,51 @@
   & .attributes
     display: flex
     align-items: center
-    margin-top: 20px
+    margin-top: 10px
+
+    @include for-big-phone-up
+      margin-top: 20px
 
     @include for-big-desktop-up
       margin-top: 30px
 
+    & .btn
+      font-size: 14px
+      min-height: 30px
+      padding: 0 10px
+      border-width: 1px
+
     & .date
-      margin-left: 15px
+      margin-left: 10px
+      font-size: 14px
       font-weight: 600
       color: rgba(255, 255, 255, 0.6)
 
+      @include for-big-phone-up
+        margin-left: 15px
+        font-size: 16px
+
   & .description
-    margin-top: 15px
+    margin-top: 10px
+
+    @include for-big-phone-up
+      margin-top: 15px
 
     & .title
       color: #fff
       font-weight: 600
       transition: color .3s ease-in
-      font-size: 16px
+      font-size: 14px
+
+      @include for-big-phone-up
+        font-size: 16px
 
     & .text
       color: rgba(255, 255, 255, 0.6)
       margin-top: 10px
       transition: color .3s ease-in
       text-overflow: ellipsis
-      display: -webkit-box
-      display: -moz-box
+      display: none
       -webkit-box-orient: vertical
       -moz-box-orient: vertical
       box-orient: vertical
@@ -72,3 +94,7 @@
       -webkit-line-clamp: 2 // line-count
       line-height: 18px // line-height
       max-height: calc(18px * 3) // line-height * line-count
+
+      @include for-big-phone-up
+        display: -webkit-box
+        display: -moz-box

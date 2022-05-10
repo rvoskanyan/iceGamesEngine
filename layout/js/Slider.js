@@ -71,7 +71,8 @@ export default class Slider {
     }
   
     if (this.navigate) {
-      this.navigateItemNodes = this.mainNode.querySelectorAll('.js-itemNavigate');
+      this.navigateItemsContainerNode = this.mainNode.querySelector('.js-navigateItemsContainer');
+      this.navigateItemNodes = this.navigateItemsContainerNode.querySelectorAll('.js-itemNavigate');
       
       this.navigateItemNodes.forEach((item, index) => {
         item.addEventListener('click', () => this.switchScreen(index));
@@ -90,6 +91,12 @@ export default class Slider {
     
     this.prevBtnNode.addEventListener('click', () => this.switchScreen(this.activeScreen - 1));
     this.nextBtnNode.addEventListener('click', () => this.switchScreen(this.activeScreen + 1));
+  
+    for (let i = 0; i < this.countVisibleSlides; i++) {
+      if (this.slideNodes[i]) {
+        this.slideNodes[i].classList.add('active');
+      }
+    }
   
     /*switch (this.type) {
       case 'switchClass': {
@@ -180,6 +187,18 @@ export default class Slider {
     if (this.navigate) {
       this.navigateItemNodes[screen].classList[action]('active');
       this.navigateItemNodes[screen].blur();
+      
+      if (this.navigateItemsContainerNode.clientWidth < this.navigateItemsContainerNode.scrollWidth && action === 'add') {
+        const leftOffset = parseFloat(getComputedStyle(this.navigateItemsContainerNode).paddingLeft);
+        const containerPosition = this.navigateItemsContainerNode.getBoundingClientRect().left;
+        const targetPosition = this.navigateItemNodes[screen].getBoundingClientRect().left;
+        const offsetPosition = targetPosition - leftOffset - containerPosition;
+  
+        this.navigateItemsContainerNode.scrollBy({
+          left: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
     }
     
     while (start < end) {
