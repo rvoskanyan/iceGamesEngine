@@ -4,6 +4,12 @@
   display: block
   width: 330px
   text-decoration: none
+  border: 0.3px solid #fff
+  border-radius: 8px
+
+  @include for-big-phone-up
+    border: initial
+    border-radius: initial
 
   @include for-big-desktop-up
     width: 369px
@@ -15,7 +21,8 @@
     outline: none
 
     & .img
-      transform: scale(1.1, 1.1)
+      @include for-big-phone-up
+        transform: scale(1.1, 1.1)
 
     & .description
       & .title, & .text
@@ -28,10 +35,10 @@
     overflow: hidden
     border-radius: 22px
     transition: transform .3s ease-in
-    box-shadow: 0 0 10px rgba(219, 0, 255, 0.8)
 
     @include for-big-phone-up
       height: 172px
+      box-shadow: 0 0 10px rgba(219, 0, 255, 0.8)
 
     @include for-big-desktop-up
       height: 193px

@@ -863,7 +863,7 @@ if (likeArticleNode) {
 if (newsSliderNode) {
   new Slider({
     mainNode: newsSliderNode,
-    switchingTime: 1000000000,
+    switchingTime: 5000,
     isTrack: true,
     countSlidesScroll: 2
   })

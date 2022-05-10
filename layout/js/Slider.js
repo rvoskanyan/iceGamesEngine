@@ -97,6 +97,11 @@ export default class Slider {
         this.slideNodes[i].classList.add('active');
       }
     }
+    
+    if (this.visibleAreaNode) {
+      this.visibleAreaNode.addEventListener('mousedown', this.mouseDownVisibleArea);
+      this.visibleAreaNode.addEventListener('touchstart', this.touchVisibleArea);
+    }
   
     /*switch (this.type) {
       case 'switchClass': {
@@ -265,6 +270,39 @@ export default class Slider {
         }
       }, this.time);
     })
+  }
+  
+  mouseDownVisibleArea = (e) => {
+    e.preventDefault()
+    console.log('mouseDown');
+  }
+  
+  touchVisibleArea = (e) => {
+    const visibleAreaNode = e.currentTarget;
+    const startX = e.changedTouches[0].clientX;
+    const switchScreen = this.switchScreen;
+    const activeScreen = this.activeScreen;
+    
+    if (this.isVertical) {
+      return;
+    }
+    
+    e.currentTarget.addEventListener('touchend', touchend)
+  
+    function touchend(e) {
+      visibleAreaNode.removeEventListener('touchend', touchend)
+      
+      if (visibleAreaNode === e.currentTarget) {
+        const endX = e.changedTouches[0].clientX;
+        const resultX = startX - endX;
+  
+        if (resultX > 50) {
+          switchScreen(activeScreen + 1)
+        } else if (resultX < -50) {
+          switchScreen(activeScreen - 1)
+        }
+      }
+    }
   }
   
   /*moveTape = (click) => {
