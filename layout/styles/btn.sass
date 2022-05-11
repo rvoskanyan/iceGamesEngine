@@ -2,6 +2,7 @@
 @import './zIndex'
 
 .btn
+  font-family: 'Montserrat'
   display: flex
   justify-content: center
   align-items: center
@@ -18,7 +19,7 @@
   height: max-content
   min-height: max-content
   transition: .3s ease-in
-  font-weight: bold
+  font-weight: 700
   overflow: hidden
 
   @include for-big-desktop-up
@@ -30,7 +31,10 @@
       transform: scale(1.1, 1.1)
 
   &.border
-    border: 3px solid #fff
+    border: 1px solid #fff
+
+    @include for-big-phone-up
+      border: 3px solid #fff
 
   &.uppercase
     text-transform: uppercase
@@ -56,15 +60,22 @@
       border-width: 2px
 
   &.rounded
-    border-radius: 10px
+    border-radius: 8px
     padding: 12px 15px
+
+    @include for-big-phone-up
+      border-radius: 10px
 
     &.big
       padding: 15px 18px
 
     &.small
-      padding: 9px 12px
-      font-size: 16px
+      padding: 6px 10px
+      font-size: 13px
+
+      @include for-big-phone-up
+        padding: 9px 12px
+        font-size: 16px
 
   &.elongated
     padding-left: 20px

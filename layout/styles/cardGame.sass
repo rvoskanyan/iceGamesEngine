@@ -89,7 +89,6 @@
         background: initial
         border-radius: initial
         width: initial
-        margin-top: 5px
 
       @include for-big-phone-up
 
@@ -117,6 +116,11 @@
             display: none
 
     & .like
+      margin-bottom: 5px
+
+      @include for-big-phone-up
+        margin-top: initial
+
       @include for-desktop-up
         position: absolute
         right: 20px
@@ -132,18 +136,29 @@
         @include for-big-phone-up
           display: none
 
-    & .noInStock
-      font-family: 'Montserrat'
-      color: #fff
-      text-align: center
-      font-size: 18px
-      font-weight: 700
-      position: absolute
-      bottom: 40%
-      left: 50%
-      transform: translateX(-50%)
-      max-width: max-content
-      min-width: max-content
+    &.noInStock
+      top: 0
+      right: 0
+      width: 100%
+      height: 100%
+      display: flex
+      flex-direction: column
+      justify-content: center
+      row-gap: 10px
+      align-items: center
+      border: none
+
+      & .like
+        position: absolute
+        right: 7px
+        top: 7px
+
+      & .noInStockMsg
+        font-family: 'Montserrat'
+        color: #fff
+        text-align: center
+        font-size: 18px
+        font-weight: 700
 
   & .dlc
     position: absolute
@@ -271,20 +286,36 @@
     &.active
       box-shadow: 0 0 15px #00A3FF
 
-    & .actions .inCart
-      left: 10px //left
-      width: calc(100% - 10px * 2) //100% - left * 2
-      border-width: 1px
-      padding: 7px
-      font-size: 14px
+    & .actions
+      &.noInStock
+        row-gap: 10px
 
-      @include for-big-desktop-up
-        border-width: 3px
-        font-size: 16px
-        padding: 7px 10px
+        & .like
+          position: absolute
+          right: 7px
+          top: 7px
 
-      @include for-very-big-desktop-up
-        padding: 9px 12px
+        & .noInStockMsg
+          font-family: 'Montserrat'
+          color: #fff
+          text-align: center
+          font-size: 15px
+          font-weight: 700
+
+      & .inCart
+        left: 10px //left
+        width: calc(100% - 10px * 2) //100% - left * 2
+        border-width: 1px
+        padding: 7px
+        font-size: 14px
+
+        @include for-big-desktop-up
+          border-width: 3px
+          font-size: 16px
+          padding: 7px 10px
+
+        @include for-very-big-desktop-up
+          padding: 9px 12px
 
     & .head
       height: 150px

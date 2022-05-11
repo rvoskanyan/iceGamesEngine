@@ -6,16 +6,13 @@
     {{#if inCart}}data-in-cart="true"{{/if}}
     title="Перейти к странице товара"
 >
-    <div class="actions">
+    <div class="actions{{#unless inStock}} noInStock{{/unless}}">
         {{#if @root.isAuth}}
             <button class="btn like js-favoritesBtn{{#if inFavorites}} js-active{{/if}}" title="{{#if inFavorites}}Удалить товар из избранного{{else}}Добавить товар в избранное{{/if}}">
-                <span class="desktop icon-static icon-static-actionLike js-icon-desktop {{#if inFavorites}} active{{/if}}"></span>
-                <span class="mobile icon-static icon-static-actionLike js-icon-mobile {{#if inFavorites}} active{{/if}}"></span>
+                <span class="desktop icon-static icon-static-actionLike js-icon-desktop{{#if inFavorites}} active{{/if}}"></span>
+                <span class="mobile icon-static icon-static-favoriteProduct js-icon-mobile{{#if inFavorites}} active{{/if}}"></span>
             </button>
         {{/if}}
-        {{#unless inStock}}
-            <div class="noInStock">Игры нет<br>в наличии :(</div>
-        {{/unless}}
         {{#if inStock}}
             <button
                 class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart small js-addToCart{{#if inCart}} active js-active{{/if}}"
@@ -27,10 +24,11 @@
                 <span class="mobile icon-static icon-static-cartProduct{{#if inCart}} active{{/if}}"></span>
             </button>
         {{else}}
-            <button
-                class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart small js-subscribeInStock"
-                title="Подписаться на уведомление о поступлении товара"
-            >Уведомить</button>
+                <div class="noInStockMsg">Игры нет<br>в наличии :(</div>
+                <button
+                        class="btn border rounded bg-darkPink hover-bg-pink small js-subscribeInStock"
+                        title="Подписаться на уведомление о поступлении товара"
+                >Уведомить</button>
         {{/if}}
     </div>
     {{#if dlc}}

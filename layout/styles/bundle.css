@@ -1693,11 +1693,11 @@
     background-color: initial;
     background-position: center;
     background-size: cover; }
-    .icon-static-favoriteProudct {
+    .icon-static-favoriteProduct {
       background-image: url("./../img/favoriteProduct.svg");
       width: 24px;
       height: 23px; }
-      .icon-static-favoriteProudct.active {
+      .icon-static-favoriteProduct.active {
         background-image: url("./../img/favoriteProduct-active.svg"); }
     .icon-static-cartProduct {
       background-image: url("./../img/cartProduct.svg");
@@ -1949,6 +1949,7 @@
       font-size: 14px; }
 
 .btn {
+  font-family: 'Montserrat';
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1965,7 +1966,7 @@
   height: max-content;
   min-height: max-content;
   transition: .3s ease-in;
-  font-weight: bold;
+  font-weight: 700;
   overflow: hidden; }
   @media (min-width: 1650px) {
     .btn {
@@ -1974,7 +1975,10 @@
     outline: none;
     transform: scale(1.1, 1.1); }
   .btn.border {
-    border: 3px solid #fff; }
+    border: 1px solid #fff; }
+    @media (min-width: 426px) {
+      .btn.border {
+        border: 3px solid #fff; } }
   .btn.uppercase {
     text-transform: uppercase; }
   .btn.translucent {
@@ -1993,13 +1997,20 @@
       font-size: 16px;
       border-width: 2px; }
   .btn.rounded {
-    border-radius: 10px;
+    border-radius: 8px;
     padding: 12px 15px; }
+    @media (min-width: 426px) {
+      .btn.rounded {
+        border-radius: 10px; } }
     .btn.rounded.big {
       padding: 15px 18px; }
     .btn.rounded.small {
-      padding: 9px 12px;
-      font-size: 16px; }
+      padding: 6px 10px;
+      font-size: 13px; }
+      @media (min-width: 426px) {
+        .btn.rounded.small {
+          padding: 9px 12px;
+          font-size: 16px; } }
   .btn.elongated {
     padding-left: 20px;
     padding-right: 20px; }
@@ -2185,8 +2196,7 @@
         border: initial;
         background: initial;
         border-radius: initial;
-        width: initial;
-        margin-top: 5px; } }
+        width: initial; } }
     @media (min-width: 1366px) {
       .cardGame .actions .inCart {
         position: absolute;
@@ -2207,31 +2217,45 @@
       @media (min-width: 426px) {
         .cardGame .actions .inCart .desktop .mobile {
           display: none; } }
-    @media (min-width: 1366px) {
-      .cardGame .actions .like {
-        position: absolute;
-        right: 20px;
-        opacity: 0; } }
-    .cardGame .actions .like .desktop {
-      display: none; }
+    .cardGame .actions .like {
+      margin-bottom: 5px; }
       @media (min-width: 426px) {
-        .cardGame .actions .like .desktop {
-          display: initial; } }
-    @media (min-width: 426px) {
-      .cardGame .actions .like .mobile {
-        display: none; } }
-    .cardGame .actions .noInStock {
-      font-family: 'Montserrat';
-      color: #fff;
-      text-align: center;
-      font-size: 18px;
-      font-weight: 700;
-      position: absolute;
-      bottom: 40%;
-      left: 50%;
-      transform: translateX(-50%);
-      max-width: max-content;
-      min-width: max-content; }
+        .cardGame .actions .like {
+          margin-top: initial; } }
+      @media (min-width: 1366px) {
+        .cardGame .actions .like {
+          position: absolute;
+          right: 20px;
+          opacity: 0; } }
+      .cardGame .actions .like .desktop {
+        display: none; }
+        @media (min-width: 426px) {
+          .cardGame .actions .like .desktop {
+            display: initial; } }
+      @media (min-width: 426px) {
+        .cardGame .actions .like .mobile {
+          display: none; } }
+    .cardGame .actions.noInStock {
+      top: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      row-gap: 10px;
+      align-items: center;
+      border: none; }
+      .cardGame .actions.noInStock .like {
+        position: absolute;
+        right: 7px;
+        top: 7px; }
+      .cardGame .actions.noInStock .noInStockMsg {
+        font-family: 'Montserrat';
+        color: #fff;
+        text-align: center;
+        font-size: 18px;
+        font-weight: 700; }
   .cardGame .dlc {
     position: absolute;
     top: 7px;
@@ -2345,6 +2369,18 @@
         height: 270px; } }
     .cardGame.small.active {
       box-shadow: 0 0 15px #00A3FF; }
+    .cardGame.small .actions.noInStock {
+      row-gap: 10px; }
+      .cardGame.small .actions.noInStock .like {
+        position: absolute;
+        right: 7px;
+        top: 7px; }
+      .cardGame.small .actions.noInStock .noInStockMsg {
+        font-family: 'Montserrat';
+        color: #fff;
+        text-align: center;
+        font-size: 15px;
+        font-weight: 700; }
     .cardGame.small .actions .inCart {
       left: 10px;
       width: calc(100% - 10px * 2);
