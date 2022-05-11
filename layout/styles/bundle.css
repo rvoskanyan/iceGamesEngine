@@ -105,10 +105,19 @@
 
 .gameGrid {
   display: grid;
-  grid-template-columns: repeat(5, max-content);
-  justify-content: space-between;
-  row-gap: 50px;
-  column-gap: 30px; }
+  grid-template-columns: repeat(1, max-content);
+  justify-content: center;
+  row-gap: 20px;
+  column-gap: 10px; }
+  @media (min-width: 390px) {
+    .gameGrid {
+      grid-template-columns: repeat(2, max-content);
+      justify-content: space-between; } }
+  @media (min-width: 426px) {
+    .gameGrid {
+      grid-template-columns: repeat(5, max-content);
+      row-gap: 50px;
+      column-gap: 30px; } }
 
 .row {
   display: flex;
@@ -2810,11 +2819,13 @@
   display: flex;
   width: 100%; }
   .catalog .main {
-    display: grid;
-    width: 100%;
-    grid-template-columns: 265px auto;
-    column-gap: 60px;
-    row-gap: 60px; }
+    width: 100%; }
+    @media (min-width: 426px) {
+      .catalog .main {
+        display: grid;
+        grid-template-columns: 265px auto;
+        column-gap: 60px;
+        row-gap: 60px; } }
     @media (min-width: 1650px) {
       .catalog .main {
         grid-template-columns: 315px auto; } }

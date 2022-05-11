@@ -5,11 +5,13 @@
   width: 100%
 
   & .main
-    display: grid
     width: 100%
-    grid-template-columns: 265px auto
-    column-gap: 60px
-    row-gap: 60px
+
+    @include for-big-phone-up
+      display: grid
+      grid-template-columns: 265px auto
+      column-gap: 60px
+      row-gap: 60px
 
     @include for-big-desktop-up
       grid-template-columns: 315px auto
