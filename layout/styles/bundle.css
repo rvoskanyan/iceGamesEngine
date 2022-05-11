@@ -1693,6 +1693,20 @@
     background-color: initial;
     background-position: center;
     background-size: cover; }
+    .icon-static-favoriteProudct {
+      background-image: url("./../img/favoriteProduct.svg");
+      width: 24px;
+      height: 23px; }
+      .icon-static-favoriteProudct.active {
+        background-image: url("./../img/favoriteProduct-active.svg"); }
+    .icon-static-cartProduct {
+      background-image: url("./../img/cartProduct.svg");
+      width: 24px;
+      height: 23px; }
+      .icon-static-cartProduct.active {
+        background-image: url("./../img/cartProduct-active.svg");
+        width: 24px;
+        height: 23px; }
     .icon-static-actionLike {
       background-image: url("./../img/like.svg");
       width: 24px;
@@ -2140,6 +2154,135 @@
     transform: scale(1.05, 1.05);
     box-shadow: 0 0 15px #00A3FF;
     outline: none; }
+  .cardGame .actions {
+    position: absolute;
+    top: 7px;
+    right: 7px;
+    overflow: hidden;
+    z-index: 1;
+    transition: .3s ease-in;
+    transition-property: visibility, opacity, bottom;
+    background-color: rgba(2, 4, 61, 0.6);
+    padding: 9px 7px;
+    border: 1px solid #fff;
+    border-radius: 12px; }
+    @media (min-width: 1366px) {
+      .cardGame .actions {
+        width: 100%;
+        height: 100%;
+        background-color: rgba(70, 11, 110, 0.8);
+        padding: 20px;
+        visibility: hidden;
+        opacity: 0;
+        bottom: 100%;
+        border: initial;
+        border-radius: initial;
+        right: initial;
+        top: initial; } }
+    @media (max-width: 425px) {
+      .cardGame .actions .inCart {
+        padding: 0;
+        border: initial;
+        background: initial;
+        border-radius: initial;
+        width: initial;
+        margin-top: 5px; } }
+    @media (min-width: 1366px) {
+      .cardGame .actions .inCart {
+        position: absolute;
+        bottom: 25%;
+        left: 10px;
+        width: calc(100% - 10px * 2);
+        opacity: 0;
+        font-size: 16px; } }
+    @media (min-width: 1920px) {
+      .cardGame .actions .inCart {
+        left: 20px;
+        width: calc(100% - 20px * 2); } }
+    .cardGame .actions .inCart .desktop {
+      display: none; }
+      @media (min-width: 426px) {
+        .cardGame .actions .inCart .desktop {
+          display: initial; } }
+      @media (min-width: 426px) {
+        .cardGame .actions .inCart .desktop .mobile {
+          display: none; } }
+    @media (min-width: 1366px) {
+      .cardGame .actions .like {
+        position: absolute;
+        right: 20px;
+        opacity: 0; } }
+    .cardGame .actions .like .desktop {
+      display: none; }
+      @media (min-width: 426px) {
+        .cardGame .actions .like .desktop {
+          display: initial; } }
+    @media (min-width: 426px) {
+      .cardGame .actions .like .mobile {
+        display: none; } }
+    .cardGame .actions .noInStock {
+      font-family: 'Montserrat';
+      color: #fff;
+      text-align: center;
+      font-size: 18px;
+      font-weight: 700;
+      position: absolute;
+      bottom: 40%;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: max-content;
+      min-width: max-content; }
+  .cardGame .dlc {
+    position: absolute;
+    top: 7px;
+    left: 7px;
+    background: rgba(2, 4, 61, 0.6);
+    border: 1px solid #FFFFFF;
+    border-radius: 7px;
+    z-index: 1;
+    padding: 3px 6px;
+    color: #fff;
+    font-weight: 700; }
+    @media (min-width: 426px) {
+      .cardGame .dlc {
+        top: 9px;
+        left: 9px; } }
+  .cardGame .head {
+    position: relative;
+    height: 215px;
+    width: 100%;
+    font-size: 16px; }
+    @media (min-width: 426px) {
+      .cardGame .head {
+        height: 190px;
+        font-size: 18px; } }
+    @media (min-width: 1650px) {
+      .cardGame .head {
+        height: 215px; } }
+    @media (min-width: 1920px) {
+      .cardGame .head {
+        height: 250px; } }
+    .cardGame .head:before, .cardGame .head .name {
+      position: absolute;
+      bottom: 0;
+      width: 100%; }
+    .cardGame .head:before {
+      content: '';
+      top: 35%;
+      background: linear-gradient(180deg, rgba(70, 11, 110, 0) 0%, #02043D 100%); }
+    .cardGame .head .img {
+      object-fit: cover;
+      width: 100%;
+      height: 99%; }
+    .cardGame .head .name {
+      color: #fff;
+      font-weight: 600;
+      padding: 0 12px;
+      text-align: left; }
+  .cardGame .price {
+    justify-content: space-between;
+    width: 100%;
+    padding: 20px 12px 0 12px; }
   @media (min-width: 426px) {
     .cardGame.big {
       max-width: 189px;
@@ -2160,9 +2303,10 @@
       max-width: 233px;
       min-width: 233px;
       height: 368px; } }
-  .cardGame.big .actions .inCart {
-    left: 20px;
-    width: calc(100% - 20px * 2); }
+  @media (min-width: 426px) {
+    .cardGame.big .actions .inCart {
+      left: 20px;
+      width: calc(100% - 20px * 2); } }
   @media (min-width: 426px) {
     .cardGame.big .head {
       height: 230px; } }
@@ -2242,107 +2386,6 @@
       @media (min-width: 1650px) {
         .cardGame.small .price {
           padding: 20px 12px 0 12px; } }
-  .cardGame .actions {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    overflow: hidden;
-    z-index: 1;
-    transition: .3s ease-in;
-    transition-property: visibility, opacity, bottom;
-    background-color: rgba(2, 4, 61, 0.6);
-    padding: 15px 11px;
-    border: 1px solid #fff;
-    border-radius: 15px; }
-    @media (min-width: 1366px) {
-      .cardGame .actions {
-        width: 100%;
-        height: 100%;
-        background-color: rgba(70, 11, 110, 0.8);
-        padding: 20px;
-        visibility: hidden;
-        opacity: 0;
-        bottom: 100%;
-        border: initial;
-        border-radius: initial;
-        right: initial;
-        top: initial; } }
-    @media (min-width: 1366px) {
-      .cardGame .actions .inCart {
-        position: absolute;
-        bottom: 25%;
-        left: 10px;
-        width: calc(100% - 10px * 2);
-        opacity: 0;
-        font-size: 16px; } }
-    @media (min-width: 1920px) {
-      .cardGame .actions .inCart {
-        left: 20px;
-        width: calc(100% - 20px * 2); } }
-    @media (min-width: 1366px) {
-      .cardGame .actions .like {
-        position: absolute;
-        right: 20px;
-        opacity: 0; } }
-    .cardGame .actions .noInStock {
-      font-family: 'Montserrat';
-      color: #fff;
-      text-align: center;
-      font-size: 18px;
-      font-weight: 700;
-      position: absolute;
-      bottom: 40%;
-      left: 50%;
-      transform: translateX(-50%);
-      max-width: max-content;
-      min-width: max-content; }
-  .cardGame .dlc {
-    position: absolute;
-    top: 9px;
-    left: 9px;
-    background: rgba(2, 4, 61, 0.6);
-    border: 1px solid #FFFFFF;
-    border-radius: 7px;
-    z-index: 1;
-    padding: 3px 6px;
-    color: #fff;
-    font-weight: 700; }
-  .cardGame .head {
-    position: relative;
-    height: 215px;
-    width: 100%;
-    font-size: 16px; }
-    @media (min-width: 426px) {
-      .cardGame .head {
-        height: 190px;
-        font-size: 18px; } }
-    @media (min-width: 1650px) {
-      .cardGame .head {
-        height: 215px; } }
-    @media (min-width: 1920px) {
-      .cardGame .head {
-        height: 250px; } }
-    .cardGame .head:before, .cardGame .head .name {
-      position: absolute;
-      bottom: 0;
-      width: 100%; }
-    .cardGame .head:before {
-      content: '';
-      top: 35%;
-      background: linear-gradient(180deg, rgba(70, 11, 110, 0) 0%, #02043D 100%); }
-    .cardGame .head .img {
-      object-fit: cover;
-      width: 100%;
-      height: 99%; }
-    .cardGame .head .name {
-      color: #fff;
-      font-weight: 600;
-      padding: 0 12px;
-      text-align: left; }
-  .cardGame .price {
-    justify-content: space-between;
-    width: 100%;
-    padding: 20px 12px 0 12px; }
 
 .achievement {
   border: 2px solid #fff;

@@ -56,6 +56,153 @@
     box-shadow: 0 0 15px #00A3FF
     outline: none
 
+  & .actions
+    position: absolute
+    top: 7px
+    right: 7px
+    overflow: hidden
+    z-index: $ZIndex-CardGame-Actions
+    transition: .3s ease-in
+    transition-property: visibility, opacity, bottom
+    background-color: rgba(2, 4, 61, 0.6)
+    padding: 9px 7px
+    border: 1px solid #fff
+    border-radius: 12px
+
+    @include for-desktop-up
+      width: 100%
+      height: 100%
+      background-color: rgba(70, 11, 110, 0.8)
+      padding: 20px
+      visibility: hidden
+      opacity: 0
+      bottom: 100%
+      border: initial
+      border-radius: initial
+      right: initial
+      top: initial
+
+    & .inCart
+      @include for-phone-only
+        padding: 0
+        border: initial
+        background: initial
+        border-radius: initial
+        width: initial
+        margin-top: 5px
+
+      @include for-big-phone-up
+
+
+      @include for-desktop-up
+        position: absolute
+        bottom: 25%
+        left: 10px //left
+        width: calc(100% - 10px * 2) //100% - left * 2
+        opacity: 0
+        font-size: 16px
+
+      @include for-very-big-desktop-up
+        left: 20px //left
+        width: calc(100% - 20px * 2) //100% - left * 2
+
+      & .desktop
+        display: none
+
+        @include for-big-phone-up
+          display: initial
+
+        & .mobile
+          @include for-big-phone-up
+            display: none
+
+    & .like
+      @include for-desktop-up
+        position: absolute
+        right: 20px
+        opacity: 0
+
+      & .desktop
+        display: none
+
+        @include for-big-phone-up
+          display: initial
+
+      & .mobile
+        @include for-big-phone-up
+          display: none
+
+    & .noInStock
+      font-family: 'Montserrat'
+      color: #fff
+      text-align: center
+      font-size: 18px
+      font-weight: 700
+      position: absolute
+      bottom: 40%
+      left: 50%
+      transform: translateX(-50%)
+      max-width: max-content
+      min-width: max-content
+
+  & .dlc
+    position: absolute
+    top: 7px
+    left: 7px
+    background: rgba(2, 4, 61, 0.6)
+    border: 1px solid #FFFFFF
+    border-radius: 7px
+    z-index: $ZIndex-DLCOnCartProduct
+    padding: 3px 6px
+    color: #fff
+    font-weight: 700
+
+    @include for-big-phone-up
+      top: 9px
+      left: 9px
+
+  & .head
+    position: relative
+    height: 215px
+    width: 100%
+    font-size: 16px
+
+    @include for-big-phone-up
+      height: 190px
+      font-size: 18px
+
+    @include for-big-desktop-up
+      height: 215px
+
+    @include for-very-big-desktop-up
+      height: 250px
+
+    &:before, & .name
+      position: absolute
+      bottom: 0
+      width: 100%
+
+    &:before
+      content: ''
+      top: 35%
+      background: linear-gradient(180deg, rgba(70, 11, 110, 0) 0%, #02043D 100%)
+
+    & .img
+      object-fit: cover
+      width: 100%
+      height: 99%
+
+    & .name
+      color: #fff
+      font-weight: 600
+      padding: 0 12px
+      text-align: left
+
+  & .price
+    justify-content: space-between
+    width: 100%
+    padding: 20px 12px 0 12px
+
   &.big
     @include for-big-phone-up
       max-width: 189px
@@ -78,8 +225,9 @@
       height: 368px
 
     & .actions .inCart
-      left: 20px //left
-      width: calc(100% - 20px * 2) //100% - left * 2
+      @include for-big-phone-up
+        left: 20px //left
+        width: calc(100% - 20px * 2) //100% - left * 2
 
     & .head
       @include for-big-phone-up
@@ -167,117 +315,3 @@
 
       @include for-big-desktop-up
         padding: 20px 12px 0 12px
-
-  & .actions
-    position: absolute
-    top: 10px
-    right: 10px
-    overflow: hidden
-    z-index: $ZIndex-CardGame-Actions
-    transition: .3s ease-in
-    transition-property: visibility, opacity, bottom
-    background-color: rgba(2, 4, 61, 0.6)
-    padding: 15px 11px
-    border: 1px solid #fff
-    border-radius: 15px
-
-    @include for-desktop-up
-      width: 100%
-      height: 100%
-      background-color: rgba(70, 11, 110, 0.8)
-      padding: 20px
-      visibility: hidden
-      opacity: 0
-      bottom: 100%
-      border: initial
-      border-radius: initial
-      right: initial
-      top: initial
-
-    & .inCart
-
-      @include for-desktop-up
-        position: absolute
-        bottom: 25%
-        left: 10px //left
-        width: calc(100% - 10px * 2) //100% - left * 2
-        opacity: 0
-        font-size: 16px
-
-      @include for-very-big-desktop-up
-        left: 20px //left
-        width: calc(100% - 20px * 2) //100% - left * 2
-
-    & .like
-
-      @include for-desktop-up
-        position: absolute
-        right: 20px
-        opacity: 0
-
-    & .noInStock
-      font-family: 'Montserrat'
-      color: #fff
-      text-align: center
-      font-size: 18px
-      font-weight: 700
-      position: absolute
-      bottom: 40%
-      left: 50%
-      transform: translateX(-50%)
-      max-width: max-content
-      min-width: max-content
-
-  & .dlc
-    position: absolute
-    top: 9px
-    left: 9px
-    background: rgba(2, 4, 61, 0.6)
-    border: 1px solid #FFFFFF
-    border-radius: 7px
-    z-index: $ZIndex-DLCOnCartProduct
-    padding: 3px 6px
-    color: #fff
-    font-weight: 700
-
-  & .head
-    position: relative
-    height: 215px
-    width: 100%
-    font-size: 16px
-
-    @include for-big-phone-up
-      height: 190px
-      font-size: 18px
-
-    @include for-big-desktop-up
-      height: 215px
-
-    @include for-very-big-desktop-up
-      height: 250px
-
-    &:before, & .name
-      position: absolute
-      bottom: 0
-      width: 100%
-
-    &:before
-      content: ''
-      top: 35%
-      background: linear-gradient(180deg, rgba(70, 11, 110, 0) 0%, #02043D 100%)
-
-    & .img
-      object-fit: cover
-      width: 100%
-      height: 99%
-
-    & .name
-      color: #fff
-      font-weight: 600
-      padding: 0 12px
-      text-align: left
-
-  & .price
-    justify-content: space-between
-    width: 100%
-    padding: 20px 12px 0 12px

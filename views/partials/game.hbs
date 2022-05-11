@@ -9,34 +9,29 @@
     <div class="actions">
         {{#if @root.isAuth}}
             <button class="btn like js-favoritesBtn{{#if inFavorites}} js-active{{/if}}" title="{{#if inFavorites}}Удалить товар из избранного{{else}}Добавить товар в избранное{{/if}}">
-                <span class="icon-static icon-static-actionLike js-icon {{#if inFavorites}} active{{/if}}"></span>
+                <span class="desktop icon-static icon-static-actionLike js-icon-desktop {{#if inFavorites}} active{{/if}}"></span>
+                <span class="mobile icon-static icon-static-actionLike js-icon-mobile {{#if inFavorites}} active{{/if}}"></span>
             </button>
         {{/if}}
         {{#unless inStock}}
             <div class="noInStock">Игры нет<br>в наличии :(</div>
         {{/unless}}
-        <button
-            class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart small
-                {{#if inStock}}
-                    js-addToCart{{#if inCart}} active js-active{{/if}}
-                {{else}}
-                    js-subscribeInStock
-                {{/if}}
-            "
-            title="
-                {{#if inStock}}
-                    {{#if inCart}}Перейти в корзину покупок{{else}}Добавить данный товар в корзину покупок{{/if}}
-                {{else}}
-                    Подписаться на уведомление о поступлении товара
-                {{/if}}
-            "
-        >
-            {{#if inStock}}
-                {{#if inCart}}В корзине ✔{{else}}В корзину{{/if}}
-            {{else}}
-                Уведомить
-            {{/if}}
-        </button>
+        {{#if inStock}}
+            <button
+                class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart small js-addToCart{{#if inCart}} active js-active{{/if}}"
+                title="{{#if inCart}}Перейти в корзину покупок{{else}}Добавить данный товар в корзину покупок{{/if}}"
+            >
+                <span class="desktop">
+                    {{#if inCart}}В корзине ✔{{else}}В корзину{{/if}}
+                </span>
+                <span class="mobile icon-static icon-static-cartProduct{{#if inCart}} active{{/if}}"></span>
+            </button>
+        {{else}}
+            <button
+                class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart small js-subscribeInStock"
+                title="Подписаться на уведомление о поступлении товара"
+            >Уведомить</button>
+        {{/if}}
     </div>
     {{#if dlc}}
         <div class="dlc" title="Дополнение для игры">DLC</div>
