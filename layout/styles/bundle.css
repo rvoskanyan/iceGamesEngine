@@ -108,7 +108,7 @@
   grid-template-columns: repeat(1, max-content);
   justify-content: center;
   row-gap: 20px; }
-  @media (min-width: 365px) {
+  @media (min-width: 350px) {
     .gameGrid {
       grid-template-columns: repeat(2, max-content);
       justify-content: space-between; } }
