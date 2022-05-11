@@ -107,9 +107,8 @@
   display: grid;
   grid-template-columns: repeat(1, max-content);
   justify-content: center;
-  row-gap: 20px;
-  column-gap: 10px; }
-  @media (min-width: 375px) {
+  row-gap: 20px; }
+  @media (min-width: 365px) {
     .gameGrid {
       grid-template-columns: repeat(2, max-content);
       justify-content: space-between; } }
