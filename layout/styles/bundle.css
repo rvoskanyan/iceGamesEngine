@@ -105,11 +105,11 @@
 
 .gameGrid {
   display: grid;
-  grid-template-columns: repeat(2, max-content);
-  justify-content: space-between;
+  grid-template-columns: repeat(1, max-content);
+  justify-content: center;
   row-gap: 20px;
-  column-gap: 0px; }
-  @media (min-width: 390px) {
+  column-gap: 10px; }
+  @media (min-width: 375px) {
     .gameGrid {
       grid-template-columns: repeat(2, max-content);
       justify-content: space-between; } }
@@ -2127,9 +2127,9 @@
 .cardGame {
   display: flex;
   flex-direction: column;
-  min-width: 175px;
-  max-width: 175px;
-  height: 274px;
+  min-width: 165px;
+  max-width: 165px;
+  height: 260px;
   border: 2px solid #fff;
   box-shadow: 0 0 10px #0066FF;
   border-radius: 22px;
@@ -2265,24 +2265,9 @@
         text-align: center;
         font-size: 18px;
         font-weight: 700; }
-  .cardGame .dlc {
-    position: absolute;
-    top: 7px;
-    left: 7px;
-    background: rgba(2, 4, 61, 0.6);
-    border: 1px solid #FFFFFF;
-    border-radius: 7px;
-    z-index: 1;
-    padding: 3px 6px;
-    color: #fff;
-    font-weight: 700; }
-    @media (min-width: 426px) {
-      .cardGame .dlc {
-        top: 9px;
-        left: 9px; } }
   .cardGame .head {
     position: relative;
-    height: 215px;
+    height: 206px;
     width: 100%;
     font-size: 16px; }
     @media (min-width: 426px) {
@@ -2312,6 +2297,21 @@
       font-weight: 600;
       padding: 0 12px;
       text-align: left; }
+  .cardGame .dlc {
+    position: absolute;
+    top: 7px;
+    left: 7px;
+    background: rgba(2, 4, 61, 0.6);
+    border: 1px solid #FFFFFF;
+    border-radius: 7px;
+    z-index: 1;
+    padding: 3px 6px;
+    color: #fff;
+    font-weight: 700; }
+    @media (min-width: 426px) {
+      .cardGame .dlc {
+        top: 9px;
+        left: 9px; } }
   .cardGame .price {
     justify-content: space-between;
     width: 100%;

@@ -4,9 +4,9 @@
 .cardGame
   display: flex
   flex-direction: column
-  min-width: 175px
-  max-width: 175px
-  height: 274px
+  min-width: 165px
+  max-width: 165px
+  height: 260px
   border: 2px solid #fff
   box-shadow: 0 0 10px #0066FF
   border-radius: 22px
@@ -160,25 +160,9 @@
         font-size: 18px
         font-weight: 700
 
-  & .dlc
-    position: absolute
-    top: 7px
-    left: 7px
-    background: rgba(2, 4, 61, 0.6)
-    border: 1px solid #FFFFFF
-    border-radius: 7px
-    z-index: $ZIndex-DLCOnCartProduct
-    padding: 3px 6px
-    color: #fff
-    font-weight: 700
-
-    @include for-big-phone-up
-      top: 9px
-      left: 9px
-
   & .head
     position: relative
-    height: 215px
+    height: 206px
     width: 100%
     font-size: 16px
 
@@ -212,6 +196,22 @@
       font-weight: 600
       padding: 0 12px
       text-align: left
+
+  & .dlc
+    position: absolute
+    top: 7px
+    left: 7px
+    background: rgba(2, 4, 61, 0.6)
+    border: 1px solid #FFFFFF
+    border-radius: 7px
+    z-index: $ZIndex-DLCOnCartProduct
+    padding: 3px 6px
+    color: #fff
+    font-weight: 700
+
+    @include for-big-phone-up
+      top: 9px
+      left: 9px
 
   & .price
     justify-content: space-between
