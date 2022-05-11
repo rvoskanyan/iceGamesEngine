@@ -5,17 +5,19 @@ export default class PopupController {
     if (PopupController.#instance) {
       return PopupController.#instance;
     }
-  
+    
     PopupController.#instance = this;
     
     this.popupNodes = [];
     this.openedIndex = null;
+    this.openedChildIndex = null;
     this.currentActiveStateNode = null;
     this.bodyNode = document.querySelector('body');
     
     popups.forEach((item) => {
       const popupNode = document.querySelector(item.popupSelector);
       const btnNode = document.querySelector(item.btnSelector);
+      const closeBtnNode = document.querySelector(item.closeBtnSelector);
       
       if (!popupNode || !btnNode) {
         return;
@@ -41,17 +43,56 @@ export default class PopupController {
         })
       }
       
+      if (item.children?.length) {
+        item.children.forEach(item => {
+          const popupNode = document.querySelector(item.popupSelector);
+          const btnNode = document.querySelector(item.btnSelector);
+          const closeBtnNode = document.querySelector(item.closeBtnSelector);
+          
+          if (!popupNode || !btnNode) {
+            return;
+          }
+          
+          this.popupNodes.push({
+            id: item.id,
+            popupNode,
+            btnNode,
+            closeBtnNode,
+            children: true,
+          });
+          
+          const index = this.popupNodes.length - 1;
+          
+          btnNode.addEventListener('click', () => {
+            this.handleOpenPopup(index);
+          })
+          
+          if (closeBtnNode) {
+            closeBtnNode.addEventListener('click', () => {
+              this.closePopup(index);
+            })
+          }
+        })
+      }
+      
       this.popupNodes.push({
         id: item.id,
         popupNode,
         btnNode,
+        closeBtnNode,
       });
       
       const index = this.popupNodes.length - 1;
-  
+      
       btnNode.addEventListener('click', () => {
         this.handleOpenPopup(index);
       })
+      
+      if (closeBtnNode) {
+        closeBtnNode.addEventListener('click', () => {
+          this.closePopup(index);
+        })
+      }
     });
   }
   
@@ -66,27 +107,34 @@ export default class PopupController {
   }
   
   handleOpenPopup = (index) => {
+    const popup = this.popupNodes[index];
+    
     if (this.openedIndex === index) {
       return this.closePopup(this.openedIndex);
     }
     
-    if (this.openedIndex !== null) {
+    if (this.openedIndex !== null && !popup.children) {
       this.closePopup(this.openedIndex);
     }
-  
+    
     this.openPopup(index);
   }
   
   openPopup = (index) => {
-    const popupNode = this.popupNodes[index].popupNode;
-    const btnNode = this.popupNodes[index].btnNode;
-  
-    this.openedIndex = index;
-    this.bodyNode.classList.add('noScrolling');
+    const popup = this.popupNodes[index];
+    const popupNode = popup.popupNode;
+    const btnNode = popup.btnNode;
     
     popupNode.classList.add('active');
     btnNode.classList.add('active');
-  
+    
+    if (popup.children) {
+      return this.openedChildIndex = index;
+    }
+    
+    this.openedIndex = index;
+    this.bodyNode.classList.add('noScrolling');
+    
     document.removeEventListener('click', this.docClickListener);
     
     this.docClickListener = (e) => {
@@ -99,8 +147,22 @@ export default class PopupController {
   }
   
   closePopup = (index) => {
-    this.popupNodes[index].popupNode.classList.remove('active');
-    this.popupNodes[index].btnNode.classList.remove('active');
+    const popup = this.popupNodes[index];
+    
+    popup.popupNode.classList.remove('active');
+    popup.btnNode.classList.remove('active');
+    
+    if (popup.children) {
+      return this.openedChildIndex = null;
+    }
+    
+    if (this.openedChildIndex) {
+      const childPopup = this.popupNodes[this.openedChildIndex];
+      
+      childPopup.popupNode.classList.remove('active');
+      childPopup.btnNode.classList.remove('active');
+      this.openedChildIndex = null;
+    }
     
     this.openedIndex = null;
     this.bodyNode.classList.remove('noScrolling');

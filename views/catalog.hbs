@@ -6,30 +6,54 @@
         <div class="current">Каталог</div>
     </div>
     <div class="main">
-        <div class="params js-filter">
-            <div class="priceBlock">
+        <button class="btn openParams js-openParams">
+            <span class="icon icon-filterParams"></span>
+        </button>
+        <div class="paramContainer params js-filter js-filterMobile">
+            <button class="btn js-closeParams">
+                <span class="icon icon-back"></span>
+            </button>
+            <div class="title">Параметры</div>
+            <div class="paramElements categories">
+                <button class="btn uppercase js-openPriceParams">Цена</button>
+                <button class="btn uppercase js-openSortParams">Сортировка</button>
+                <button class="btn uppercase js-openCategoriesParams">Категории</button>
+                <button class="btn uppercase js-openGenresParams">Жанры</button>
+                <button class="btn uppercase js-openActivationParams">Активация</button>
+            </div>
+            <div class="paramContainer priceBlock js-priceParams">
+                <button class="btn js-closePriceParams">
+                    <span class="icon icon-back"></span>
+                </button>
                 <div class="title">Цена:</div>
                 <div class="range js-range js-priceRange" data-min="0" data-max="3500">
-                    <div class="min js-minSlider js-slider" data-name="priceFrom">0</div>
-                    <div class="max js-maxSlider js-slider" data-name="priceTo">3500</div>
+                    <div class="min js-minSlider js-slider" data-name="priceFrom" data-default="0"></div>
+                    <div class="max js-maxSlider js-slider" data-name="priceTo" data-default="3500">3500</div>
                 </div>
             </div>
-            <div class="sortBlock js-sort">
+            <div class="paramContainer sortBlock js-sort js-sortParams">
+                <button class="btn js-closeSortParams">
+                    <span class="icon icon-back"></span>
+                </button>
                 <div class="title">Сортировать по:</div>
-                <div class="variants">
+                <div class="variants paramElements">
                     <button class="btn small rounded bg-lilac translucent js-variant-sort" data-sort="date">Дате выхода</button>
                     <button class="btn small rounded bg-lilac translucent js-variant-sort" data-sort="price">Цене</button>
                     <button class="btn small rounded bg-lilac translucent js-variant-sort" data-sort="discount">Скидке</button>
-                    <label class="checkbox inStockOnly js-checkbox">
-                        <input class="input" type="checkbox" name="onlyStock" value="true">
-                        <span class="label">Только в наличии</span>
-                    </label>
+                    {{> checkbox
+                            value='true'
+                            label='Только в наличии'
+                            name='onlyStock'
+                    }}
                 </div>
             </div>
-            <div class="variantsBlock">
-                <div class="block">
-                    <div class="title">Категория:</div>
-                    <div class="variants">
+            <div class="variants">
+                <div class="paramContainer categoriesBlock block js-categoriesParams">
+                    <button class="btn js-closeCategoriesParams">
+                        <span class="icon icon-back"></span>
+                    </button>
+                    <div class="title">Категории:</div>
+                    <div class="elements paramElements">
                         {{#each categories}}
                             {{> checkbox
                                     value=id
@@ -39,9 +63,12 @@
                         {{/each}}
                     </div>
                 </div>
-                <div class="block genres">
-                    <div class="title">Жанр:</div>
-                    <div class="variants">
+                <div class="paramContainer genresBlock block genres js-genresParams">
+                    <button class="btn js-closeGenresParams">
+                        <span class="icon icon-back"></span>
+                    </button>
+                    <div class="title">Жанры:</div>
+                    <div class="elements paramElements">
                         {{#each genres}}
                             {{> checkbox
                                     value=id
@@ -51,9 +78,12 @@
                         {{/each}}
                     </div>
                 </div>
-                <div class="block">
+                <div class="paramContainer activationBlock block js-activationParams">
+                    <button class="btn js-closeActivationParams">
+                        <span class="icon icon-back"></span>
+                    </button>
                     <div class="title">Активация:</div>
-                    <div class="variants">
+                    <div class="elements paramElements">
                         {{#each activationServices}}
                             {{> checkbox
                                     value=id

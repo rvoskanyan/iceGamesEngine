@@ -16,46 +16,118 @@
     @include for-big-desktop-up
       grid-template-columns: 315px auto
 
-    & .params
-      display: none
+    & .openParams
+      margin: 0 auto 20px auto
 
+      @include for-big-phone-up
+        display: none
+
+    & .paramContainer
+      position: absolute
+      visibility: hidden
+      opacity: 0
+      background-color: rgba(1, 4, 61, 0.9)
+      top: 0
+      left: 0
+      width: 100%
+      height: 100vh
+      z-index: 2
+      padding: 85px 0 20px 0
+      display: flex
+      flex-direction: column
+      align-items: center
+      transform: translateX(100%)
+      transition: 0.5s cubic-bezier(0.6, -0.28, 0.74, 0.05)
+      transition-property: visibility, opacity, transform
+
+      @include for-big-phone-up
+        position: initial
+        visibility: initial
+        opacity: initial
+        background-color: initial
+        top: initial
+        left: initial
+        width: initial
+        height: initial
+        z-index: initial
+        padding: initial
+        display: initial
+        flex-direction: initial
+        align-items: initial
+        transform: initial
+        transition: initial
+        transition-property: initial
+
+      &.active
+        visibility: initial
+        opacity: initial
+        transform: translateX(0%)
+        transition: .3s ease
+        transition-property: visibility, opacity, transform
+
+      & .btn
+        @include for-big-phone-up
+          display: none
+
+      & .title
+        font-family: 'Lemon Milk'
+        font-weight: 400
+        font-size: 18px
+        margin-top: 10px
+
+        @include for-big-phone-up
+          display: none
+
+      & .paramElements
+        margin-top: 40px
+        display: flex
+        flex-direction: column
+        row-gap: 20px
+        overflow: auto
+        padding-right: 10px
+        max-height: 60%
+
+    & .params
       @include for-big-phone-up
         display: contents
 
+      & .categories
+        align-items: center
+
       & .priceBlock .range
-        margin-top: 25px
+          margin-top: 25px
 
-      & .sortBlock
-        & .variants
-          display: flex
-          align-items: center
-          margin-top: 20px
+      & .sortBlock .variants
+        display: flex
+        align-items: center
+        margin-top: 20px
+        column-gap: 20px
 
-        & .btn:not(:first-child)
-          margin-left: 20px
+      & .variants
+        display: contents
 
-        & .inStockOnly
-          margin-left: 35px
+        @include for-big-phone-up
+          display: initial
 
-      & .variantsBlock .block
-        @include for-big-desktop-up
-          &.genres
-            & .variants
-              display: flex
-              flex-wrap: wrap
-              align-items: center
+        & .block
+          @include for-big-desktop-up
+            &.genres
+              & .elements
+                display: flex
+                flex-wrap: wrap
+                align-items: center
 
-              & .checkbox
-                min-width: 50%
+                & .checkbox
+                  min-width: 50%
 
-        &:not(:last-child)
-          margin-bottom: 40px
+          &:not(:last-child)
+            margin-bottom: 40px
 
-        & .title
-          margin-bottom: 10px
+          & .title
+            margin-bottom: 10px
 
-        & .variants .checkbox:not(:first-child)
-          margin-top: 8px
+          & .variants .checkbox:not(:first-child)
+            margin-top: 8px
 
     & .list
       flex-grow: 1

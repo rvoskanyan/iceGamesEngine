@@ -1,29 +1,49 @@
+@import './breakPoints'
+
 .checkbox
-  display: block
+  display: flex
+  align-items: center
   max-width: max-content
+  column-gap: 8px
   cursor: pointer
+
+  &:hover .label
+    @include for-big-phone-up
+      color: rgba(255, 255, 255, 0.8)
 
   & .input
     display: none
 
-    &:checked + .label
-      color: rgba(255, 255, 255, 0.8)
+    &:checked
+      & ~ .figure
+        @include for-phone-only
+          background-color: #9B00AD
 
-      &:before
-        background-image: url("./../img/checkboxDecoration.png")
+        @include for-big-phone-up
+          background-image: url("./../img/checkboxDecoration.png")
 
-  & .label
-    color: rgba(255, 255, 255, 0.5)
-    font-weight: 600
-    font-size: 16px
+        &:before
+          left: 21px
+
+      & ~ .label
+        @include for-big-phone-up
+          color: rgba(255, 255, 255, 0.8)
+
+  & .figure
     display: flex
-    align-items: flex-end
-    line-height: 1
-    user-select: none
-    transition: color .3s ease-in
+    align-items: center
+    position: relative
+    min-width: 40px
+    max-width: 40px
+    min-height: 21px
+    max-height: 21px
+    border-radius: 27px
+    background-color: #afafaf
+    background-size: cover
+    background-position: center
+    transition: background-color .3s ease-in
 
-    &:before
-      content: ''
+    @include for-big-phone-up
       display: block
       min-width: 16px
       max-width: 16px
@@ -32,11 +52,35 @@
       border-radius: 5px
       background-color: rgba(155, 0, 173, 0.6)
       box-shadow: inset 0 0 10px 2px rgba(219, 0, 255, 0.6)
-      background-size: cover
-      background-position: center
-      margin-right: 8px
-      margin-bottom: 1px
+      transition: initial
 
+    &:before
+      content: ''
+      position: absolute
+      left: 2px
+      display: block
+      border-radius: 100%
+      background-color: #fff
+      min-width: 17px
+      max-width: 17px
+      min-height: 17px
+      max-height: 17px
+      transition: left .3s ease-in
 
-  &:hover .label
-    color: rgba(255, 255, 255, 0.8)
+      @include for-big-phone-up
+        content: initial
+
+  & .label
+    font-family: 'Montserrat'
+    color: #fff
+    font-weight: 600
+    font-size: 16px
+    display: flex
+    align-items: flex-end
+    line-height: 1
+    user-select: none
+    transition: color .3s ease-in
+
+    @include for-big-phone-up
+      color: rgba(255, 255, 255, 0.5)
+      transition: color .3s ease-in

@@ -72,6 +72,50 @@ const popupController = new PopupController([
     btnSelector: '.js-openMobileQuickSearch',
     popupSelector: '.js-mobileQuickSearchContainer',
   },
+  {
+    id: 'paramsCatalog',
+    btnSelector: '.js-openParams',
+    closeBtnSelector: '.js-closeParams',
+    popupSelector: '.js-filterMobile',
+    children: [
+      {
+        id: 'priceParamsCatalog',
+        btnSelector: '.js-openPriceParams',
+        closeBtnSelector: '.js-closePriceParams',
+        popupSelector: '.js-priceParams',
+      },
+      {
+        id: 'sortParamsCatalog',
+        btnSelector: '.js-openSortParams',
+        closeBtnSelector: '.js-closeSortParams',
+        popupSelector: '.js-sortParams',
+      },
+      {
+        id: 'categoriesParamsCatalog',
+        btnSelector: '.js-openCategoriesParams',
+        closeBtnSelector: '.js-closeCategoriesParams',
+        popupSelector: '.js-categoriesParams',
+      },
+      {
+        id: 'categoriesParamsCatalog',
+        btnSelector: '.js-openCategoriesParams',
+        closeBtnSelector: '.js-closeCategoriesParams',
+        popupSelector: '.js-categoriesParams',
+      },
+      {
+        id: 'genresParamsCatalog',
+        btnSelector: '.js-openGenresParams',
+        closeBtnSelector: '.js-closeGenresParams',
+        popupSelector: '.js-genresParams',
+      },
+      {
+        id: 'activationParamsCatalog',
+        btnSelector: '.js-openActivationParams',
+        closeBtnSelector: '.js-closeActivationParams',
+        popupSelector: '.js-activationParams',
+      },
+    ],
+  },
 ]);
 
 if (rangeNode) {
@@ -80,9 +124,19 @@ if (rangeNode) {
   const max = +rangeNode.dataset.max;
   const minSliderNode = rangeNode.querySelector('.js-minSlider');
   const maxSliderNode = rangeNode.querySelector('.js-maxSlider');
+  let loadInit = true;
+  
   const initialSliders = () => {
     let minSliderValue = +minSliderNode.innerText;
     let maxSliderValue = +maxSliderNode.innerText;
+    
+    if (loadInit) {
+      loadInit = false;
+      minSliderValue = +minSliderNode.dataset.default;
+      maxSliderValue = +maxSliderNode.dataset.default;
+    }
+  
+    console.log(maxSliderValue);
     
     if (minSliderValue > maxSliderValue) {
       const saveMin = minSliderValue;
@@ -732,51 +786,56 @@ searchStringNode.addEventListener('input', async () => {
   result.products.forEach(product => {
     searchResultNode.innerHTML += `
       <a
-          href="/games/${product.alias}"
-          class="cardGame small js-cardGame"
-          data-id="${product._id}"
-          data-ds-id="${product.dsId}"
-          title="Перейти к странице игры"
+        href="/games/${product.alias}"
+        class="cardGame small js-cardGame"
+        data-id="${product._id}"
+        data-ds-id="${product.dsId}"
+        title="Перейти к странице товара"
       >
-          <div class="actions">
-              ${result.isAuth ? `
-                <button class="btn like js-favoritesBtn${product.inFavorites ? ' js-active' : ''}" title="${product.inFavorites ? 'Удалить игру из избранного' : 'Добавить игру в избранное'}">
-                    <span class="icon-static icon-static-actionLike js-icon${product.inFavorites ? ' active' : ''}"></span>
-                </button>
-              ` : ''}
-              ${product.inStock ? '' : '<div class="noInStock">Игры нет<br>в наличии :(</div>'}
-              <button
-                  class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart small${product.inStock ? product.inCart ? ' js-addToCart active js-active' : ' js-addToCart' : ' js-subscribeInStock'}"
-                  title="${
-                    product.inStock
-                      ? product.inCart
-                        ? 'Перейти в корзину покупок'
-                        : 'Добавить данный товар в корзину покупок'
-                      : 'Подписаться на уведомление о поступлении товара'
-                  }"
-              >
-                  ${product.inStock ? product.inCart ? 'В корзине ✔' : 'В корзину' : 'Уведомить'}
-              </button>
+        <div class="actions${!product.inStock ? ' noInStock' : ''}">
+          ${result.isAuth ? `
+            <button class="btn like js-favoritesBtn${product.inFavorites ? ' js-active' : ''}" title="${product.inFavorites ? 'Удалить игру из избранного' : 'Добавить игру в избранное'}">
+              <span class="desktop icon-static icon-static-actionLike js-icon-desktop${product.inFavorites ? ' active' : ''}"></span>
+              <span class="mobile icon-static icon-static-favoriteProduct js-icon-mobile${product.inFavorites ? ' active' : ''}"></span>
+            </button>
+          ` : ''}
+          ${product.inStock ? `
+            <button
+              class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart small js-addToCart${product.inCart ? ' active js-active' : ''}"
+              title="${product.inCart ? 'Перейти в корзину покупок' : 'Добавить данный товар в корзину покупок'}"
+            >
+              <span class="desktop">
+                ${product.inCart ? 'В корзине ✔' : 'В корзину'}
+              </span>
+              <span class="mobile icon-static icon-static-cartProduct${product.inCart ? ' active' : ''}"></span>
+            </button>
+          ` : `
+            <div class="noInStockMsg">Игры нет<br>в наличии :(</div>
+            <button
+              class="btn border rounded bg-darkPink hover-bg-pink small js-subscribeInStock"
+              title="Подписаться на уведомление о поступлении товара"
+            >Уведомить</button>
+          `}
+        </div>
+        ${product.dlc ? '<div class="dlc" title="Дополнение для игры">DLC</div>' : ''}
+        <div class="head">
+          <img class="img" src="${websiteAddress}${product.img}" alt="Картинка ${product.name}" title="${product.name}">
+          <div class="name">
+            ${product.name}
           </div>
-          ${product.dlc ? '<div class="dlc">DLC</div>' : ''}
-          <div class="head">
-              <img class="img" src="${websiteAddress}${product.img}" alt="Картинка ${product.name}" title="${product.name}">
-              <div class="name">
-                  ${product.name}
-              </div>
+        </div>
+        <div class="price">
+          <div class="toPrice">
+            <span class="value">
+              ${product.priceTo}
+            </span>
           </div>
-          <div class="price">
-              <div class="toPrice">
-                  <span class="value">
-                      ${product.priceTo}
-                  </span>
-              </div>
-              <div class="fromPrice">
-                  <span class="value">
-                      ${product.priceFrom}
-                  </span>
-              </div>
+          <div class="fromPrice">
+            <span class="value">
+              ${product.priceFrom}
+            </span>
           </div>
+        </div>
       </a>
     `;
   });
@@ -1038,51 +1097,56 @@ if (catalogNode) {
     result.products.forEach(product => {
       productGridNode.innerHTML += `
         <a
-            href="/games/${product.alias}"
-            class="cardGame js-cardGame"
-            data-id="${product._id}"
-            data-ds-id="${product.dsId}"
-            title="Перейти к странице игры"
+          href="/games/${product.alias}"
+          class="cardGame js-cardGame"
+          data-id="${product._id}"
+          data-ds-id="${product.dsId}"
+          title="Перейти к странице товара"
         >
-            <div class="actions">
-                ${result.isAuth ? `
-                  <button class="btn like js-favoritesBtn${product.inFavorites ? ' js-active' : ''}" title="${product.inFavorites ? 'Удалить игру из избранного' : 'Добавить игру в избранное'}">
-                      <span class="icon-static icon-static-actionLike js-icon${product.inFavorites ? ' active' : ''}"></span>
-                  </button>
-                ` : ''}
-                ${product.inStock ? '' : '<div class="noInStock">Игры нет<br>в наличии :(</div>'}
-                <button
-                    class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart small${product.inStock ? product.inCart ? ' js-addToCart active js-active' : ' js-addToCart' : ' js-subscribeInStock'}"
-                    title="${
-                      product.inStock
-                        ? product.inCart
-                          ? 'Перейти в корзину покупок'
-                          : 'Добавить данный товар в корзину покупок'
-                        : 'Подписаться на уведомление о поступлении товара'
-                    }"
-                >
-                    ${product.inStock ? product.inCart ? 'В корзине ✔' : 'В корзину' : 'Уведомить'}
-                </button>
+          <div class="actions${!product.inStock ? ' noInStock' : ''}">
+            ${result.isAuth ? `
+              <button class="btn like js-favoritesBtn${product.inFavorites ? ' js-active' : ''}" title="${product.inFavorites ? 'Удалить игру из избранного' : 'Добавить игру в избранное'}">
+                <span class="desktop icon-static icon-static-actionLike js-icon-desktop${product.inFavorites ? ' active' : ''}"></span>
+                <span class="mobile icon-static icon-static-favoriteProduct js-icon-mobile${product.inFavorites ? ' active' : ''}"></span>
+              </button>
+            ` : ''}
+            ${product.inStock ? `
+              <button
+                class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart small js-addToCart${product.inCart ? ' active js-active' : ''}"
+                title="${product.inCart ? 'Перейти в корзину покупок' : 'Добавить данный товар в корзину покупок'}"
+              >
+                <span class="desktop">
+                  ${product.inCart ? 'В корзине ✔' : 'В корзину'}
+                </span>
+                <span class="mobile icon-static icon-static-cartProduct${product.inCart ? ' active' : ''}"></span>
+              </button>
+            ` : `
+              <div class="noInStockMsg">Игры нет<br>в наличии :(</div>
+              <button
+                class="btn border rounded bg-darkPink hover-bg-pink small js-subscribeInStock"
+                title="Подписаться на уведомление о поступлении товара"
+              >Уведомить</button>
+            `}
+          </div>
+          ${product.dlc ? '<div class="dlc" title="Дополнение для игры">DLC</div>' : ''}
+          <div class="head">
+            <img class="img" src="${websiteAddress}${product.img}" alt="Картинка ${product.name}" title="${product.name}">
+            <div class="name">
+              ${product.name}
             </div>
-            ${product.dlc ? '<div class="dlc">DLC</div>' : ''}
-            <div class="head">
-                <img class="img" src="${websiteAddress}${product.img}" alt="Картинка ${product.name}" title="${product.name}">
-                <div class="name">
-                    ${product.name}
-                </div>
+          </div>
+          <div class="price">
+            <div class="toPrice">
+              <span class="value">
+                ${product.priceTo}
+              </span>
             </div>
-            <div class="price">
-                <div class="toPrice">
-                    <span class="value">
-                        ${product.priceTo}
-                    </span>
-                </div>
-                <div class="fromPrice">
-                    <span class="value">
-                        ${product.priceFrom}
-                    </span>
-                </div>
+            <div class="fromPrice">
+              <span class="value">
+                ${product.priceFrom}
+              </span>
             </div>
+          </div>
         </a>
       `;
     })
@@ -1275,51 +1339,56 @@ if (catalogNode) {
     result.products.forEach(product => {
       productGridNode.innerHTML += `
         <a
-            href="/games/${product.alias}"
-            class="cardGame js-cardGame"
-            data-id="${product._id}"
-            data-ds-id="${product.dsId}"
-            title="Перейти к странице игры"
+          href="/games/${product.alias}"
+          class="cardGame js-cardGame"
+          data-id="${product._id}"
+          data-ds-id="${product.dsId}"
+          title="Перейти к странице товара"
         >
-            <div class="actions">
-                ${result.isAuth ? `
-                  <button class="btn like js-favoritesBtn${product.inFavorites ? ' js-active' : ''}" title="${product.inFavorites ? 'Удалить игру из избранного' : 'Добавить игру в избранное'}">
-                      <span class="icon-static icon-static-actionLike js-icon${product.inFavorites ? ' active' : ''}"></span>
-                  </button>
-                ` : ''}
-                ${product.inStock ? '' : '<div class="noInStock">Игры нет<br>в наличии :(</div>'}
-                <button
-                    class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart small${product.inStock ? product.inCart ? ' js-addToCart active js-active' : ' js-addToCart' : ' js-subscribeInStock'}"
-                    title="${
-                      product.inStock
-                        ? product.inCart
-                          ? 'Перейти в корзину покупок'
-                          : 'Добавить данный товар в корзину покупок'
-                        : 'Подписаться на уведомление о поступлении товара'
-                    }"
-                >
-                    ${product.inStock ? product.inCart ? 'В корзине ✔' : 'В корзину' : 'Уведомить'}
-                </button>
+          <div class="actions${!product.inStock ? ' noInStock' : ''}">
+            ${result.isAuth ? `
+              <button class="btn like js-favoritesBtn${product.inFavorites ? ' js-active' : ''}" title="${product.inFavorites ? 'Удалить игру из избранного' : 'Добавить игру в избранное'}">
+                <span class="desktop icon-static icon-static-actionLike js-icon-desktop${product.inFavorites ? ' active' : ''}"></span>
+                <span class="mobile icon-static icon-static-favoriteProduct js-icon-mobile${product.inFavorites ? ' active' : ''}"></span>
+              </button>
+            ` : ''}
+            ${product.inStock ? `
+              <button
+                class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart small js-addToCart${product.inCart ? ' active js-active' : ''}"
+                title="${product.inCart ? 'Перейти в корзину покупок' : 'Добавить данный товар в корзину покупок'}"
+              >
+                <span class="desktop">
+                  ${product.inCart ? 'В корзине ✔' : 'В корзину'}
+                </span>
+                <span class="mobile icon-static icon-static-cartProduct${product.inCart ? ' active' : ''}"></span>
+              </button>
+            ` : `
+              <div class="noInStockMsg">Игры нет<br>в наличии :(</div>
+              <button
+                class="btn border rounded bg-darkPink hover-bg-pink small js-subscribeInStock"
+                title="Подписаться на уведомление о поступлении товара"
+              >Уведомить</button>
+            `}
+          </div>
+          ${product.dlc ? '<div class="dlc" title="Дополнение для игры">DLC</div>' : ''}
+          <div class="head">
+            <img class="img" src="${websiteAddress}${product.img}" alt="Картинка ${product.name}" title="${product.name}">
+            <div class="name">
+              ${product.name}
             </div>
-            ${product.dlc ? '<div class="dlc">DLC</div>' : ''}
-            <div class="head">
-                <img class="img" src="${websiteAddress}${product.img}" alt="Картинка ${product.name}" title="${product.name}">
-                <div class="name">
-                    ${product.name}
-                </div>
+          </div>
+          <div class="price">
+            <div class="toPrice">
+              <span class="value">
+                ${product.priceTo}
+              </span>
             </div>
-            <div class="price">
-                <div class="toPrice">
-                    <span class="value">
-                        ${product.priceTo}
-                    </span>
-                </div>
-                <div class="fromPrice">
-                    <span class="value">
-                        ${product.priceFrom}
-                    </span>
-                </div>
+            <div class="fromPrice">
+              <span class="value">
+                ${product.priceFrom}
+              </span>
             </div>
+          </div>
         </a>
       `
     });
