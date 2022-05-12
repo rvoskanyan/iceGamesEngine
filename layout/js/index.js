@@ -124,24 +124,15 @@ if (rangeNode) {
   const max = +rangeNode.dataset.max;
   const minSliderNode = rangeNode.querySelector('.js-minSlider');
   const maxSliderNode = rangeNode.querySelector('.js-maxSlider');
-  let loadInit = true;
   
   const initialSliders = () => {
-    let minSliderValue = +minSliderNode.innerText;
-    let maxSliderValue = +maxSliderNode.innerText;
-    
-    if (loadInit) {
-      loadInit = false;
-      minSliderValue = +minSliderNode.dataset.default;
-      maxSliderValue = +maxSliderNode.dataset.default;
-    }
-  
-    console.log(maxSliderValue);
+    let minSliderValue = +minSliderNode.dataset.default;
+    let maxSliderValue = +maxSliderNode.dataset.default;
     
     if (minSliderValue > maxSliderValue) {
       const saveMin = minSliderValue;
       
-      minSliderValue = maxSliderValue
+      minSliderValue = maxSliderValue;
       maxSliderValue = saveMin;
   
       minSliderNode.style.zIndex = '0';
@@ -161,11 +152,13 @@ if (rangeNode) {
     maxSliderNode.style.left = `${(maxSliderValue - min) / step}px`;
     minSliderNode.innerText = minSliderValue;
     maxSliderNode.innerText = maxSliderValue;
+    minSliderNode.dataset.default = minSliderValue;
+    maxSliderNode.dataset.default = maxSliderValue;
     minSliderNode.dispatchEvent(new Event('initialSlider'));
     maxSliderNode.dispatchEvent(new Event('initialSlider'));
   }
   
-  let maxSliderValue = +maxSliderNode.innerText;
+  let maxSliderValue = +maxSliderNode.dataset.default;
   let activeSlide = null;
   
   maxSliderNode.innerText = max;
@@ -227,6 +220,7 @@ if (rangeNode) {
           }
         }
         const blurSlider = () => {
+          sliderNode.dataset.default = sliderNode.innerText;
           initialSliders();
           e.target.removeEventListener('mouseup', listenerMouseup);
           e.target.removeEventListener('blur', blurSlider);
@@ -293,6 +287,7 @@ if (rangeNode) {
   
     sliderNode.style.left = `${position}px`;
     sliderNode.innerText = sliderValue;
+    sliderNode.dataset.default = `${sliderValue}`;
   }
 }
 
@@ -1171,7 +1166,7 @@ if (catalogNode) {
     
     rangePriceSliderNode.addEventListener('initialSlider', () => {
       const url = new URL(window.location.href);
-      const value = rangePriceSliderNode.innerText;
+      const value = rangePriceSliderNode.dataset.default;
       
       url.searchParams.set(name, value);
       history.pushState(null, null, url);
@@ -1280,6 +1275,7 @@ if (catalogNode) {
       }
       case 'contentEditable': {
         field.node.innerText = searchParam[1];
+        field.node.dataset.default = searchParam[1];
         break;
       }
       case 'textInput': {
@@ -1303,7 +1299,7 @@ if (catalogNode) {
         break;
       }
       case 'contentEditable': {
-        param.value = field.node.innerText;
+        param.value = field.node.dataset.value;
         break;
       }
       case 'textInput': {
