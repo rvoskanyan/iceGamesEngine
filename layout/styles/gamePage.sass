@@ -109,6 +109,127 @@
             font-weight: 600
             box-shadow: 0 0 15px rgba(204, 0, 255, 0.69)
 
+    &.productPage
+      display: flex
+      flex-direction: column
+      padding-top: 130px
+      align-items: center
+
+      &:before, &:after
+        content: initial
+
+      & .img
+        display: none
+
+        @include for-big-phone-up
+          display: initial
+
+      & .mobileImgContainer
+        display: flex
+        align-items: center
+        justify-content: center
+        background-size: cover
+        background-position: center
+        background-image: url('./../img/mobilePorductPageImgDecore.svg')
+        height: 424px
+        width: 100%
+        margin: -40px 0
+
+        @include for-middle-phone-up
+          height: 502px
+          margin: -45px 0
+
+        @include for-big-phone-up
+          display: none
+
+        & .mobileImg
+          object-fit: cover
+          width: 175px
+          height: 274px
+          border: 2px solid #fff
+          border-radius: 20px
+
+          @include for-middle-phone-up
+            width: 210px
+            height: 325px
+
+      & .offer
+        display: contents
+
+        &:after, &:before
+          content: initial
+
+      & .packages
+        margin: 0
+        order: -1
+
+      & .name
+        padding: 0 40px
+        font-weight: 100
+
+        @include for-middle-phone-up
+          padding: 0 45px
+
+      & .statuses
+        margin-top: 12px
+
+        & .status
+          font-size: 10px
+
+          &:not(:last-child)
+            margin-right: 15px
+
+          &:before
+            margin-right: 5px
+
+      & .description
+        display: -webkit-box
+        display: -moz-box
+        font-family: 'Montserrat'
+        font-style: normal
+        padding: 0 40px
+        font-weight: 400
+        font-size: 12px
+        line-height: 15px
+        max-height: calc(15px * 3) //lineHeight * countRows
+
+        @include for-middle-phone-up
+          padding: 0 45px
+
+      & .mobileBuyContainer
+        display: flex
+        flex-wrap: wrap
+        align-items: end
+        justify-content: space-between
+        padding: 15px
+        row-gap: 15px
+
+        @include for-big-phone-up
+          display: contents
+
+        & .price
+          align-items: start
+
+        & .actions
+          display: contents
+
+          & .moreInfoBlocks
+            display: flex
+            column-gap: 10px
+
+            @include for-big-phone-up
+              display: contents
+
+            & .moreInfo
+              min-width: initial
+              font-size: 11px
+              padding: 5px
+              border-radius: 7px
+              font-weight: 300
+
+              &.preOrderInfo
+                align-self: flex-start
+
   & .main
     display: flex
     align-items: center

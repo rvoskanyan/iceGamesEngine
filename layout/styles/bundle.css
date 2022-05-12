@@ -250,58 +250,6 @@
         height: 72px;
         margin-right: 10px; }
 
-.breadcrumbs {
-  position: absolute;
-  display: flex;
-  top: 90px;
-  width: 100%;
-  align-items: center;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 2; }
-  @media (min-width: 426px) {
-    .breadcrumbs {
-      top: 150px; } }
-  .breadcrumbs:before, .breadcrumbs:after {
-    content: '';
-    height: 1px;
-    flex-grow: 1;
-    background: linear-gradient(270deg, #FFFFFF 0%, transparent 100%);
-    display: block;
-    margin-right: 10px; }
-    @media (min-width: 426px) {
-      .breadcrumbs:before, .breadcrumbs:after {
-        margin-right: 35px; } }
-  .breadcrumbs:after {
-    transform: matrix(-1, 0, 0, 1, 0, 0);
-    margin-right: initial;
-    margin-left: 10px; }
-    @media (min-width: 426px) {
-      .breadcrumbs:after {
-        margin-left: 35px; } }
-  .breadcrumbs .item {
-    display: flex;
-    align-items: center; }
-    .breadcrumbs .item:after {
-      content: '';
-      display: block;
-      width: 20px;
-      height: 1px;
-      background: #fff;
-      margin: 0 10px; }
-      @media (min-width: 426px) {
-        .breadcrumbs .item:after {
-          width: 50px;
-          margin: 0 35px; } }
-    .breadcrumbs .item .link {
-      font-size: 14px;
-      color: rgba(255, 255, 255, 0.8);
-      font-weight: 300; }
-  .breadcrumbs .current {
-    font-size: 14px;
-    font-weight: bold;
-    color: rgba(255, 255, 255, 0.5); }
-
 .fieldedList {
   list-style: none;
   color: rgba(255, 255, 255, 0.8);
@@ -1989,7 +1937,7 @@
   cursor: pointer;
   line-height: 1;
   background: none;
-  font-size: 16px;
+  font-size: 15px;
   text-decoration: none;
   color: #fff;
   width: max-content;
@@ -1997,8 +1945,11 @@
   height: max-content;
   min-height: max-content;
   transition: .3s ease-in;
-  font-weight: 700;
+  font-weight: 600;
   overflow: hidden; }
+  @media (min-width: 426px) {
+    .btn {
+      font-weight: 700; } }
   @media (min-width: 1650px) {
     .btn {
       font-size: 18px; } }
@@ -2029,9 +1980,10 @@
       border-width: 2px; }
   .btn.rounded {
     border-radius: 8px;
-    padding: 12px 15px; }
+    padding: 9px 12px; }
     @media (min-width: 426px) {
       .btn.rounded {
+        padding: 12px 15px;
         border-radius: 10px; } }
     .btn.rounded.big {
       padding: 15px 18px; }
@@ -2820,13 +2772,15 @@
   align-items: center;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 2; }
+  z-index: 2;
+  white-space: nowrap; }
   @media (min-width: 426px) {
     .breadcrumbs {
       top: 150px; } }
   .breadcrumbs:before, .breadcrumbs:after {
     content: '';
     height: 1px;
+    min-width: 30px;
     flex-grow: 1;
     background: linear-gradient(270deg, #FFFFFF 0%, transparent 100%);
     display: block;
@@ -3109,6 +3063,108 @@
     font-size: 14px;
     font-weight: 600;
     box-shadow: 0 0 15px rgba(204, 0, 255, 0.69); }
+
+.gamePage .cover.productPage {
+  display: flex;
+  flex-direction: column;
+  padding-top: 130px;
+  align-items: center; }
+  .gamePage .cover.productPage:before, .gamePage .cover.productPage:after {
+    content: initial; }
+  .gamePage .cover.productPage .img {
+    display: none; }
+    @media (min-width: 426px) {
+      .gamePage .cover.productPage .img {
+        display: initial; } }
+  .gamePage .cover.productPage .mobileImgContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+    background-position: center;
+    background-image: url("./../img/mobilePorductPageImgDecore.svg");
+    height: 424px;
+    width: 100%;
+    margin: -40px 0; }
+    @media (min-width: 360px) {
+      .gamePage .cover.productPage .mobileImgContainer {
+        height: 502px;
+        margin: -45px 0; } }
+    @media (min-width: 426px) {
+      .gamePage .cover.productPage .mobileImgContainer {
+        display: none; } }
+    .gamePage .cover.productPage .mobileImgContainer .mobileImg {
+      object-fit: cover;
+      width: 175px;
+      height: 274px;
+      border: 2px solid #fff;
+      border-radius: 20px; }
+      @media (min-width: 360px) {
+        .gamePage .cover.productPage .mobileImgContainer .mobileImg {
+          width: 210px;
+          height: 325px; } }
+  .gamePage .cover.productPage .offer {
+    display: contents; }
+    .gamePage .cover.productPage .offer:after, .gamePage .cover.productPage .offer:before {
+      content: initial; }
+  .gamePage .cover.productPage .packages {
+    margin: 0;
+    order: -1; }
+  .gamePage .cover.productPage .name {
+    padding: 0 40px;
+    font-weight: 100; }
+    @media (min-width: 360px) {
+      .gamePage .cover.productPage .name {
+        padding: 0 45px; } }
+  .gamePage .cover.productPage .statuses {
+    margin-top: 12px; }
+    .gamePage .cover.productPage .statuses .status {
+      font-size: 10px; }
+      .gamePage .cover.productPage .statuses .status:not(:last-child) {
+        margin-right: 15px; }
+      .gamePage .cover.productPage .statuses .status:before {
+        margin-right: 5px; }
+  .gamePage .cover.productPage .description {
+    display: -webkit-box;
+    display: -moz-box;
+    font-family: 'Montserrat';
+    font-style: normal;
+    padding: 0 40px;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+    max-height: calc(15px * 3); }
+    @media (min-width: 360px) {
+      .gamePage .cover.productPage .description {
+        padding: 0 45px; } }
+  .gamePage .cover.productPage .mobileBuyContainer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    justify-content: space-between;
+    padding: 15px;
+    row-gap: 15px; }
+    @media (min-width: 426px) {
+      .gamePage .cover.productPage .mobileBuyContainer {
+        display: contents; } }
+    .gamePage .cover.productPage .mobileBuyContainer .price {
+      align-items: start; }
+    .gamePage .cover.productPage .mobileBuyContainer .actions {
+      display: contents; }
+      .gamePage .cover.productPage .mobileBuyContainer .actions .moreInfoBlocks {
+        display: flex;
+        column-gap: 10px; }
+        @media (min-width: 426px) {
+          .gamePage .cover.productPage .mobileBuyContainer .actions .moreInfoBlocks {
+            display: contents; } }
+        .gamePage .cover.productPage .mobileBuyContainer .actions .moreInfoBlocks .moreInfo {
+          min-width: initial;
+          font-size: 11px;
+          padding: 5px;
+          border-radius: 7px;
+          font-weight: 300; }
+          .gamePage .cover.productPage .mobileBuyContainer .actions .moreInfoBlocks .moreInfo.preOrderInfo {
+            align-self: flex-start; }
 
 .gamePage .main {
   display: flex;

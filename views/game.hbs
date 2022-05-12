@@ -1,5 +1,5 @@
 <main class="gamePage js-gamePage">
-    <div class="breadcrumbs contentContainer">
+    <div class="breadcrumbs contentContainer mobileInvisibleScroll">
         <div class="item">
             <a class="btn link" href="/">Главная</a>
         </div>
@@ -10,11 +10,14 @@
             {{product.name}}
         </div>
     </div>
-    <div class="cover blackout blackout-left blackout-bottom slide active js-slide">
+    <div class="cover blackout blackout-left blackout-bottom slide active productPage js-slide">
+        <div class="mobileImgContainer">
+            <img class="mobileImg" src="{{websiteAddress}}{{product.img}}" alt="{{product.name}}" title="{{product.name}}">
+        </div>
         <img class="img" src="{{websiteAddress}}{{product.coverImg}}" alt="{{product.name}}" title="{{product.name}}">
         <div class="offer">
             {{#if bundleProducts}}
-                <div class="packages">
+                <div class="packages mobileInvisibleScroll">
                     {{#each bundleProducts}}
                         {{#if isCurrent}}
                             <div class="btn rounded translucent bg-paleBlue active package">
@@ -48,81 +51,85 @@
                 {{else}}
                     <div class="status negative">Нет в наличии</div>
                 {{/if}}
-                <div class="status positive">Данный товар купили сегодня 30 раз</div>
+                <div class="status positive">Приобрели сегодня 30 раз</div>
             </div>
             <p class="description">
                 {{product.description}}
             </p>
-            <div class="price">
-                <div class="rowDiscount">
-                    <div class="fromPrice">
+            <div class="mobileBuyContainer">
+                <div class="price">
+                    <div class="rowDiscount">
+                        <div class="fromPrice">
                         <span class="value">
                             {{product.priceFrom}}
                         </span>
+                        </div>
+                        <div class="discount">{{product.discount}}</div>
                     </div>
-                    <div class="discount">{{product.discount}}</div>
-                </div>
-                <div class="toPrice">
+                    <div class="toPrice">
                     <span class="value">
                         {{product.priceTo}}
                     </span>
+                    </div>
                 </div>
-            </div>
-            <div class="actions">
-                <button
-                    title="
+                <div class="actions">
+                    <button
+                            title="
                         {{#if product.inStock}}
-                            {{#if currentProductInCart}}Перейти в корзину покупок{{else}}Добавить данный товар в корзину покупок{{/if}}
-                        {{else}}
+                                {{#if currentProductInCart}}Перейти в корзину покупок{{else}}Добавить данный товар в корзину покупок{{/if}}
+                            {{else}}
                             Подписаться на уведомление о поступлении товара
                         {{/if}}
                     "
-                    class="btn elongated rounded increase bg-pink hover-backlight-blue
+                            class="btn elongated rounded increase bg-pink hover-backlight-blue
                         {{#if product.inStock}}
                             js-addToCartBtn{{#if currentProductInCart}} js-active{{/if}}
-                        {{else}}
+                            {{else}}
                             js-subscribeInStock
                         {{/if}}
                     "
-                    {{#unless currentProductInCart}}
-                        data-ds-id="{{product.dsId}}"
-                        data-product-id="{{product.id}}"
-                    {{/unless}}
-                >
-                    {{#if product.inStock}}
-                        {{#if currentProductInCart}}В корзине ✔{{else}}В корзину{{/if}}
-                    {{else}}
-                        Уведомить
-                    {{/if}}
-                </button>
-                {{#if product.preOrder}}
-                    <div class="moreInfo preOrderInfo">
-                        Внимание! Это предзаказ. Ключ будет доставлен Вам
-                        <span class="date">{{product.pointReleaseDate}}</span>
-                    </div>
-                {{/if}}
-                {{#if product.dlc}}
-                    <div class="moreInfo dlcInfo">
-                        Для активации дополнения требуется наличие
-                        {{#if product.dlcForFree}}
-                            бесплатной
-                        {{/if}}
-                        <br>игры
-                        {{#if product.dlcForId}}
-                            <a
-                                href="{{websiteAddress}}{{product.dlcForId.alias}}"
-                                title="Перейти к product.dlcForId.name"
-                                class="link underlined"
-                            >
-                                {{product.dlcForId.name}}
-                            </a>
+                        {{#unless currentProductInCart}}
+                            data-ds-id="{{product.dsId}}"
+                            data-product-id="{{product.id}}"
+                        {{/unless}}
+                    >
+                        {{#if product.inStock}}
+                            {{#if currentProductInCart}}В корзине ✔{{else}}В корзину{{/if}}
                         {{else}}
-                            {{product.dlcForName}}
+                            Уведомить
                         {{/if}}
-                        на аккаунте
-                        {{product.activationServiceId.name}}
+                    </button>
+                    <div class="moreInfoBlocks">
+                        {{#if product.preOrder}}
+                            <div class="moreInfo preOrderInfo">
+                                Внимание! Это предзаказ. Ключ будет доставлен Вам
+                                <span class="date">{{product.pointReleaseDate}}</span>
+                            </div>
+                        {{/if}}
+                        {{#if product.dlc}}
+                            <div class="moreInfo dlcInfo">
+                                Для активации дополнения требуется наличие
+                                {{#if product.dlcForFree}}
+                                    бесплатной
+                                {{/if}}
+                                <br>игры
+                                {{#if product.dlcForId}}
+                                    <a
+                                            href="{{websiteAddress}}{{product.dlcForId.alias}}"
+                                            title="Перейти к product.dlcForId.name"
+                                            class="link underlined"
+                                    >
+                                        {{product.dlcForId.name}}
+                                    </a>
+                                {{else}}
+                                    {{product.dlcForName}}
+                                {{/if}}
+                                на аккаунте
+                                {{product.activationServiceId.name}}
+                            </div>
+                        {{/if}}
                     </div>
-                {{/if}}
+                </div>
             </div>
             {{#if product.extends.length}}
                 <div class="extends">

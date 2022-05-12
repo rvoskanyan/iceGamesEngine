@@ -5,11 +5,12 @@
   position: absolute
   display: flex
   top: 90px
-  width: 100%
+  width: 100% //calc(100% - 30px) //100% - contentContainerPaddingLeftAndRight
   align-items: center
   left: 50%
   transform: translateX(-50%)
   z-index: $ZIndex-BreadCrumbs
+  white-space: nowrap
 
   @include for-big-phone-up
     top: 150px
@@ -17,6 +18,7 @@
   &:before, &:after
     content: ''
     height: 1px
+    min-width: 30px
     flex-grow: 1
     background: linear-gradient(270deg, #FFFFFF 0%, transparent 100%)
     display: block
