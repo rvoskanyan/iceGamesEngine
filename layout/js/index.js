@@ -12,6 +12,7 @@ import './../styles/index.sass';
 
 const postman = new Postman();
 
+const profileMenuNode = document.querySelector('.js-profileMenu');
 const homeSliderNode = document.querySelector('.js-homeSlider');
 const newsSliderNode = document.querySelector('.js-newsSlider');
 const homeMediaSliderNode = document.querySelector('.js-homeMediaSlider');
@@ -1449,4 +1450,27 @@ if (profileEditFormNode) {
 
 if (promptNodes.length) {
   promptNodes.forEach(item => new Prompt({mainNode: item}));
+}
+
+if (profileMenuNode) {
+  const markerNode = profileMenuNode.querySelector('.js-marker');
+  const listBtnNodes = profileMenuNode.querySelectorAll('.btn');
+  const activeBtnNode = profileMenuNode.querySelector('.btn.active');
+  
+  function moveIndicator(e) {
+    markerNode.style.top = e.offsetTop+'px';
+    markerNode.style.display = 'flex';
+  }
+  
+  moveIndicator(activeBtnNode);
+  
+  profileMenuNode.addEventListener('mouseleave', () => {
+    moveIndicator(activeBtnNode);
+  })
+  
+  listBtnNodes.forEach(link => {
+    link.addEventListener('mouseover', (e) => {
+      moveIndicator(e.target)
+    })
+  })
 }

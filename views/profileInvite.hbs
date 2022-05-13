@@ -22,7 +22,7 @@
                     <div class="list">
                         {{#each invitedUsers}}
                             <div class="item">
-                                <div class="name">{{login}}</div>
+                                <a href="{{@root.websiteAddress}}rating/{{login}}" class="name link">{{login}}</a>
                                 <div class="ratingPosition">Позиция {{ratingPosition}} \ {{@root.countUsers}}</div>
                             </div>
                         {{/each}}

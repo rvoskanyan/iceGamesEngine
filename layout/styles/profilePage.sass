@@ -135,7 +135,10 @@
           height: 34px
           background-position: center
           background-size: cover
-          background-image: url("./../img/markerMenu.svg")
+          background-image: url("./../img/markerMenu-mobile.svg")
+
+          @include for-big-phone-up
+            background-image: url("./../img/markerMenu.svg")
 
         &:after
           transform: matrix(-1, 0, 0, 1, 0, 0)
@@ -565,6 +568,9 @@
             font-weight: 600
             font-size: 14px
             margin-left: 50px
+
+            @include for-big-phone-down
+              text-decoration: underline
 
             @include for-big-phone-up
               margin-left: 150px

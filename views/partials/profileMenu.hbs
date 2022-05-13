@@ -4,7 +4,7 @@
         Меню профиля
     </button>
     <div class="menu js-mobileProfileMenu">
-        <div class="profileMenu">
+        <div class="profileMenu js-profileMenu">
             {{#if isProfileHome}}
                 <div class="btn translucent active">Профиль</div>
             {{else}}
@@ -35,7 +35,7 @@
             {{else}}
                 <a class="btn translucent" href="/profile/favorites">Избранное</a>
             {{/if}}
-            <div class="marker">
+            <div class="marker js-marker">
                 <span class="center"></span>
             </div>
         </div>
@@ -43,26 +43,3 @@
         <a href="/logout" class="btn link exit">Выход</a>
     </div>
 </div>
-<script>
-    let marker = document.querySelector('.marker');
-    let menu = document.querySelector('.profileMenu');
-    let list = document.querySelectorAll('.profileMenu .btn');
-    let currentMenu = document.querySelector('.profileMenu .btn.active');
-
-    function moveIndicator(e) {
-        marker.style.top = e.offsetTop+'px';
-        marker.style.display = 'flex';
-    }
-
-    moveIndicator(currentMenu);
-
-    menu.addEventListener('mouseleave', () => {
-        moveIndicator(currentMenu);
-    })
-
-    list.forEach(link => {
-        link.addEventListener('mouseover', (e) => {
-            moveIndicator(e.target)
-        })
-    })
-</script>

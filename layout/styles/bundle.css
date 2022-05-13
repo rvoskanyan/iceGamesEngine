@@ -4092,7 +4092,10 @@
         height: 34px;
         background-position: center;
         background-size: cover;
-        background-image: url("./../img/markerMenu.svg"); }
+        background-image: url("./../img/markerMenu-mobile.svg"); }
+        @media (min-width: 431px) {
+          .profilePage .nav .profileMenu .marker:before, .profilePage .nav .profileMenu .marker:after {
+            background-image: url("./../img/markerMenu.svg"); } }
       .profilePage .nav .profileMenu .marker:after {
         transform: matrix(-1, 0, 0, 1, 0, 0); }
       .profilePage .nav .profileMenu .marker .center {
@@ -4457,6 +4460,9 @@
             font-weight: 600;
             font-size: 14px;
             margin-left: 50px; }
+            @media (max-width: 430px) {
+              .profilePage .content .friends .list .item .name {
+                text-decoration: underline; } }
             @media (min-width: 431px) {
               .profilePage .content .friends .list .item .name {
                 margin-left: 150px;
