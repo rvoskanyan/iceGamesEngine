@@ -11,7 +11,7 @@
   cursor: pointer
   line-height: 1
   background: none
-  font-size: 15px
+  font-size: 14px
   text-decoration: none
   color: #fff
   width: max-content
@@ -24,6 +24,7 @@
 
   @include for-big-phone-up
     font-weight: 700
+    font-size: 16px
 
   @include for-big-desktop-up
     font-size: 18px
@@ -52,10 +53,16 @@
   &.round
     border-radius: 100px
     padding: 8px 15px
-    min-height: 40px
+    min-height: 35px
+
+    @include for-big-phone-up
+      min-height: 40px
 
     &.big
-      padding: 10px 17px
+      padding: 9px 12px
+
+      @include for-big-phone-up
+        padding: 10px 17px
 
     &.small
       padding: 4px 12px

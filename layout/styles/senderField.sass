@@ -1,9 +1,15 @@
+@import './breakPoints'
+
 .senderField
   border: 1px solid #fff
-  border-radius: 50px
+  border-radius: 25px
   display: flex
   align-items: flex-end
-  padding: 13px 12px
+  padding: 9px 7px
+
+  @include for-big-phone-up
+    border-radius: 50px
+    padding: 13px 12px
 
   &.error
     border-color: #FF00F5
@@ -16,14 +22,23 @@
     & .btn .icon
       background-color: #FF00F5
 
-
   & .autoSizeInput
     display: flex
     align-items: center
     color: #fff
-    margin: 0 10px 9px 10px
+    margin: 0 5px 6px 5px
     flex-grow: 1
+
+    @include for-big-phone-up
+      margin: 0 10px 9px 10px
+
+    @include for-big-phone-up
+      margin: 0 10px 9px 10px
 
     & .value
       flex-grow: 1
-      min-height: 20px
+      min-height: 18px
+      word-break: break-all
+
+      @include for-big-phone-up
+        min-height: 20px

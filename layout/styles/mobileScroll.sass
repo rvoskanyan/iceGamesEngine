@@ -1,14 +1,17 @@
+@import './breakPoints'
+
 .mobileScroll
-  overflow: auto
+  @include for-big-phone-down
+    overflow: auto
 
-  &::-webkit-scrollbar
-    width: 2px
-    height: 2px
-    background-color: rgba(255, 0, 245, 0.2)
+    &::-webkit-scrollbar
+      width: 2px
+      height: 2px
+      background-color: rgba(255, 0, 245, 0.2)
 
-  &::-webkit-scrollbar-thumb
-    background-color: rgba(255, 0, 245, 0.8)
-    border-radius: 10px
+    &::-webkit-scrollbar-thumb
+      background-color: rgba(255, 0, 245, 0.8)
+      border-radius: 10px
 
-  &::-webkit-scrollbar-thumb:hover
-    background-color: #FF00F5
+    &::-webkit-scrollbar-thumb:hover
+      background-color: #FF00F5

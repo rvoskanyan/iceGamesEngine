@@ -1,6 +1,6 @@
 <div class="item review">
     <div class="head">
-        <a class="btn link userName" href="/profile/view/{{userLogin}}" title="Перейти на страницу пользователя {{userLogin}}">{{userLogin}}</a>
+        <a class="btn link userName" href="{{@root.websiteAddress}}rating/{{userLogin}}" title="Перейти на страницу пользователя {{userLogin}}">{{userLogin}}</a>
         {{#if forGameName}}
             <div class="forGame">
                 Отзыв на игру: {{#if forGameAlias}}<a class="link gameName" href="/games/{{forGameAlias}}">{{forGameName}}</a>{{else}}<span class="gameName">{{forGameName}}</span>{{/if}}

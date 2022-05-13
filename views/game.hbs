@@ -10,7 +10,7 @@
             {{product.name}}
         </div>
     </div>
-    <div class="cover blackout blackout-left blackout-bottom slide active productPage js-slide">
+    <div class="cover blackout blackout-left blackout-bottom slide active js-slide">
         <div class="mobileImgContainer">
             <img class="mobileImg" src="{{websiteAddress}}{{product.img}}" alt="{{product.name}}" title="{{product.name}}">
         </div>
@@ -112,7 +112,7 @@
                                 {{#if product.dlcForFree}}
                                     бесплатной
                                 {{/if}}
-                                <br>игры
+                                игры
                                 {{#if product.dlcForId}}
                                     <a
                                             href="{{websiteAddress}}{{product.dlcForId.alias}}"
@@ -136,7 +136,7 @@
                     {{#each product.extends}}
                         <div class="tooltip">
                             <button class="btn extend">
-                                <img  class="img" src="{{@root.websiteAddress}}{{icon}}" alt="{{text}}" title="{{name}}">
+                                <img  class="extendIcon" src="{{@root.websiteAddress}}{{icon}}" alt="{{text}}" title="{{name}}">
                             </button>
                             <div class="prompt">
                                 {{name}}
@@ -149,6 +149,30 @@
     </div>
     <div class="contentContainer">
         <div class="main infoBlock">
+            <div class="gallerySlider js-gameGallerySlider">
+                <button class="btn prev increase js-prevBtn">
+                    <span class="icon-static icon-static-arrow"></span>
+                </button>
+                <div class="visibleAreaWrapper">
+                    <div class="visibleArea js-visibleArea">
+                        <div class="tape js-tape">
+                            {{#if product.trailerLink}}
+                                <button class="slide js-slide btn video js-playYouTubeVideo" title="Посмотреть трейлер игры" data-link="{{trailerId}}">
+                                    <img class="img" src="https://img.youtube.com/vi/{{trailerId}}/maxresdefault.jpg" alt="Трейлер игры {{game.name}}" title="Трейлер игр {{game.name}}">
+                                </button>
+                            {{/if}}
+                            {{#each product.images}}
+                                <button class="btn slide js-slide" title="Увеличить">
+                                    <img class="img" src="{{@root.websiteAddress}}{{name}}" alt="Изображение-{{@index}} из игры {{@root.product.name}}">
+                                </button>
+                            {{/each}}
+                        </div>
+                    </div>
+                </div>
+                <button class="btn next increase js-nextBtn">
+                    <span class="icon-static icon-static-arrow"></span>
+                </button>
+            </div>
             <ul class="fieldedList">
                 <li class="item">
                     <div class="name">Язык:</div>
@@ -211,34 +235,6 @@
                     </div>
                 </li>
             </ul>
-            <div class="gallerySlider js-gameGallerySlider">
-                <button class="btn prev increase js-prevBtn">
-                    <span class="icon-static icon-static-arrow"></span>
-                </button>
-                <div class="visibleAreaWrapper">
-                    <div class="visibleArea js-visibleArea">
-                        <div class="tape js-tape">
-                            {{#if product.trailerLink}}
-                                <div class="slide js-slide active">
-                                    <button class="btn increase video js-playYouTubeVideo" title="Посмотреть трейлер игры" data-link="{{trailerId}}">
-                                        <img class="img" src="https://img.youtube.com/vi/{{trailerId}}/maxresdefault.jpg" alt="Трейлер игры {{game.name}}" title="Трейлер игр {{game.name}}">
-                                    </button>
-                                </div>
-                            {{/if}}
-                            {{#each images}}
-                                <div class="slide js-slide{{#if (isLess @index 1)}} active{{/if}}">
-                                    <button class="btn increase" title="Открыть на весь экран">
-                                        <img class="img" src="{{@root.websiteAddress}}{{name}}" alt="Изображение-{{@index}} из игры {{@root.product.name}}">
-                                    </button>
-                                </div>
-                            {{/each}}
-                        </div>
-                    </div>
-                </div>
-                <button class="btn next increase js-nextBtn">
-                    <span class="icon-static icon-static-arrow"></span>
-                </button>
-            </div>
         </div>
         <div class="fullInfo">
             <div class="sideBar">
@@ -269,7 +265,7 @@
             </div>
             <div class="info">
                 <div class="generalInfo tabs js-gameInfoTabs">
-                    <div class="nav">
+                    <div class="nav mobileInvisibleScroll">
                         <button class="btn round border big translucent active js-tabBtn" data-target-id="1">Об игре</button>
                         <button class="btn round border big translucent js-tabBtn" data-target-id="2">Активация</button>
                         {{#if product.elements.length}}
@@ -493,7 +489,7 @@
                                     {{#each comments}}
                                         <div class="item comment">
                                             <div class="head">
-                                                <a class="btn link" href="/profile/view/{{author.login}}" title="Перейти в профиль пользователя {{author.login}}">{{author.login}}</a>
+                                                <a class="btn link" href="{{@root.websiteAddress}}rating/{{author.login}}" title="Перейти в профиль пользователя {{author.login}}">{{author.login}}</a>
                                                 <!--<div class="reactions">
                                                     <button class="btn active positive">
                                                         <span class="icon icon-thumbsUp"></span> 54
@@ -564,7 +560,7 @@
         {{#if lastViewedProducts.length}}
             <div class="lastViews">
                 <div class="title">Вы недавно смотрели</div>
-                <div class="games">
+                <div class="games mobileInvisibleScroll">
                     {{#each lastViewedProducts}}
                         {{#unless currentPorductPage}}
                             {{> game

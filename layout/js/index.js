@@ -294,7 +294,7 @@ if (rangeNode) {
 if (gamePageNode) {
   const addToCartBtnNode = gamePageNode.querySelector('.js-addToCartBtn');
   
-  addToCartBtnNode.addEventListener('click', async () => {
+  addToCartBtnNode && addToCartBtnNode.addEventListener('click', async () => {
     if (addToCartBtnNode.classList.contains('js-active')) {
       window.location.href = '/cart';
       return;
@@ -1023,7 +1023,7 @@ if (gameGallerySliderNode) {
     mainNode: gameGallerySliderNode,
     isTrack: true,
     countSlidesScroll: 2,
-    switchingTime: 1000000,
+    switchingTime: 3000,
   });
 }
 

@@ -273,7 +273,9 @@
 
     & .extends
       display: flex
-      margin-top: 20px
+
+      @include for-big-phone-up
+        margin-top: 20px
 
       & .item
         width: 47px

@@ -1,7 +1,13 @@
+@import './breakPoints'
+
 .review
   border: 1px solid #fff
-  border-radius: 40px
-  padding: 20px
+  border-radius: 25px
+  padding: 15px
+
+  @include for-big-phone-up
+    border-radius: 40px
+    padding: 20px
 
   & .head
     display: flex
@@ -13,7 +19,10 @@
 
   & .grade
     display: flex
-    margin-top: 20px
+    margin-top: 10px
+
+    @include for-big-phone-up
+      margin-top: 20px
 
     & .icon
       background-color: #00D1FF
@@ -24,3 +33,7 @@
   & .text
     color: #fff
     margin-top: 15px
+    font-size: 13px
+
+    @include for-big-phone-up
+      font-size: 16px

@@ -1,3 +1,5 @@
+@import './breakPoints'
+
 .bulletedList
   list-style: none
   font-weight: 600
@@ -15,20 +17,30 @@
     &:before
       content: ''
       display: block
-      width: 25px
-      min-width: 25px
-      height: 25px
-      min-height: 25px
+      width: 20px
+      min-width: 20px
+      height: 20px
+      min-height: 20px
       background-image: url("./../img/listDecoration.png")
       background-size: cover
       background-position: center
-      margin-right: 8px
+      margin-right: 5px
       margin-top: -3px
+
+      @include for-big-phone-up
+        margin-right: 8px
+        width: 25px
+        min-width: 25px
+        height: 25px
+        min-height: 25px
 
     & .name
       font-family: 'Montserrat'
       font-weight: 600
-      font-size: 16px
+      font-size: 13px
+
+      @include for-big-phone-up
+        font-size: 16px
 
     &.product
       &:before
@@ -42,6 +54,10 @@
           object-fit: cover
           border: 1px solid #fff
           border-radius: 5px
-          width: 50px
-          height: 72px
+          width: 45px
+          height: 65px
           margin-right: 10px
+
+          @include for-big-phone-up
+            width: 50px
+            height: 72px

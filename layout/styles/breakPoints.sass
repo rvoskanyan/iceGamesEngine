@@ -6,8 +6,12 @@
   @media (min-width: 360px)
     @content
 
+@mixin for-big-phone-down
+  @media (max-width: 430px)
+    @content
+
 @mixin for-big-phone-up
-  @media (min-width: 426px)
+  @media (min-width: 431px)
     @content
 
 @mixin for-tablet-portrait-up
