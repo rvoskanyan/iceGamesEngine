@@ -1575,7 +1575,8 @@
 .newsSlider {
   margin-top: 10px;
   position: relative;
-  display: flex; }
+  display: flex;
+  z-index: -1; }
   .newsSlider + .all {
     margin: 35px auto 0 auto; }
   .newsSlider > .btn {
@@ -1992,7 +1993,10 @@
     padding: 0 15px;
     color: #fff;
     font-size: 15px;
-    margin-bottom: 7px; }
+    margin-bottom: 4px; }
+    @media (min-width: 431px) {
+      .input-frame .label {
+        margin-bottom: 7px; } }
   .input-frame .textField {
     border: 1px solid #fff;
     border-radius: 100px;
@@ -2573,7 +2577,8 @@
   min-width: 120px;
   max-width: 120px;
   min-height: 158px;
-  max-height: 158px; }
+  max-height: 158px;
+  z-index: -1; }
   @media (min-width: 431px) {
     .achievement {
       padding: 0 20px;
@@ -3977,26 +3982,42 @@
   width: 100%; }
   .profilePage .title {
     color: #fff;
-    font-size: 36px;
+    font-size: 20px;
     font-weight: 600; }
+    @media (min-width: 431px) {
+      .profilePage .title {
+        font-size: 36px; } }
   .profilePage .description {
     color: #fff; }
+  .profilePage .noItems {
+    color: #fff;
+    margin-top: 30px;
+    font-size: 13px;
+    text-align: center; }
+    @media (min-width: 431px) {
+      .profilePage .noItems {
+        font-size: 16px; } }
   .profilePage .subtitle {
     color: #fff;
-    font-size: 24px;
+    font-size: 18px;
     font-weight: 600; }
+    @media (min-width: 431px) {
+      .profilePage .subtitle {
+        font-size: 24px; } }
   @media (min-width: 431px) {
     .profilePage .profile {
       display: flex; } }
   @media (max-width: 430px) {
     .profilePage .newsSliderContainer {
-      margin-top: 30px; } }
+      margin-top: 30px; }
+      .profilePage .newsSliderContainer .newsSlider {
+        z-index: -1; } }
   @media (max-width: 430px) {
     .profilePage .nav {
       position: relative;
       max-width: max-content;
       margin: 0 auto;
-      z-index: 1; } }
+      z-index: 2; } }
   @media (max-width: 430px) {
     .profilePage .nav .mobileOpenProfileMenu {
       display: flex;
@@ -4308,9 +4329,15 @@
             padding-bottom: initial;
             margin-top: 30px; } }
     .profilePage .content.personalDataForm .personalData .input-frame, .profilePage .content.personalDataForm .password .input-frame {
-      margin-top: 16px; }
+      margin-top: 10px; }
+      @media (min-width: 431px) {
+        .profilePage .content.personalDataForm .personalData .input-frame, .profilePage .content.personalDataForm .password .input-frame {
+          margin-top: 16px; } }
     .profilePage .content.personalDataForm .password {
-      margin-top: 30px; }
+      margin-top: 20px; }
+      @media (min-width: 431px) {
+        .profilePage .content.personalDataForm .password {
+          margin-top: 30px; } }
     .profilePage .content.personalDataForm .btn {
       margin-top: 24px; }
     .profilePage .content .progressBar {
@@ -4349,7 +4376,10 @@
         color: #fff;
         right: 20px;
         font-weight: 600;
-        font-size: 15px; }
+        font-size: 13px; }
+        @media (min-width: 431px) {
+          .profilePage .content .progressBar .value {
+            font-size: 15px; } }
       .profilePage .content .progressBar.zero:before, .profilePage .content .progressBar.zero:after {
         background-image: url("./../img/achievements_zeroProgress.svg"); }
       .profilePage .content .progressBar.zero .progressWrapper .progressScale {
@@ -4357,21 +4387,30 @@
       .profilePage .content .progressBar.start:after {
         background-image: url("./../img/achievements_zeroProgress.svg"); }
     .profilePage .content .achievementsList {
-      margin-top: 50px; }
+      margin-top: 30px; }
+      @media (min-width: 431px) {
+        .profilePage .content .achievementsList {
+          margin-top: 50px; } }
       .profilePage .content .achievementsList .list {
         display: grid;
         grid-template-columns: repeat(2, max-content);
         justify-content: space-between;
-        row-gap: 50px;
+        row-gap: 20px;
         column-gap: 30px;
         margin-top: 20px; }
         @media (min-width: 431px) {
           .profilePage .content .achievementsList .list {
-            grid-template-columns: repeat(4, max-content); } }
+            grid-template-columns: repeat(4, max-content);
+            row-gap: 50px; } }
         .profilePage .content .achievementsList .list .achievement:not(:last-child) {
           margin-right: 20px; }
     .profilePage .content .referralLink .description {
-      margin-top: 14px; }
+      font-size: 13px;
+      margin-top: 6px; }
+      @media (min-width: 431px) {
+        .profilePage .content .referralLink .description {
+          font-size: 16px;
+          margin-top: 14px; } }
     .profilePage .content .referralLink .linkBlock {
       border: 1px solid #FFFFFF;
       border-radius: 50px;
@@ -4380,11 +4419,24 @@
       align-items: center;
       padding: 5px 5px 5px 12px;
       max-width: 650px;
-      margin-top: 25px; }
+      margin-top: 20px; }
+      @media (min-width: 431px) {
+        .profilePage .content .referralLink .linkBlock {
+          margin-top: 25px; } }
       .profilePage .content .referralLink .linkBlock .refLink {
-        color: #fff; }
+        color: #fff;
+        font-size: 10px;
+        white-space: nowrap; }
+        @media (min-width: 431px) {
+          .profilePage .content .referralLink .linkBlock .refLink {
+            font-size: 15px; } }
+      .profilePage .content .referralLink .linkBlock .btn {
+        margin-left: 5px; }
     .profilePage .content .friends {
-      margin-top: 60px; }
+      margin-top: 30px; }
+      @media (min-width: 431px) {
+        .profilePage .content .friends {
+          margin-top: 60px; } }
       .profilePage .content .friends .list {
         max-width: 650px; }
         .profilePage .content .friends .list .item {
@@ -4395,29 +4447,60 @@
           justify-content: space-between;
           align-items: center;
           color: #fff;
-          padding: 8px 25px;
-          margin-top: 35px; }
+          padding: 5px 15px;
+          margin-top: 15px; }
+          @media (min-width: 431px) {
+            .profilePage .content .friends .list .item {
+              padding: 8px 25px;
+              margin-top: 35px; } }
           .profilePage .content .friends .list .item .name {
             font-weight: 600;
-            font-size: 18px;
-            margin-left: 150px; }
+            font-size: 14px;
+            margin-left: 50px; }
+            @media (min-width: 431px) {
+              .profilePage .content .friends .list .item .name {
+                margin-left: 150px;
+                font-size: 18px; } }
+          .profilePage .content .friends .list .item .ratingPosition {
+            font-size: 12px; }
+            @media (min-width: 431px) {
+              .profilePage .content .friends .list .item .ratingPosition {
+                font-size: 16px; } }
           .profilePage .content .friends .list .item:before {
             content: '';
             position: absolute;
-            left: 35px;
-            width: 70px;
-            height: 58px;
+            left: 15px;
+            width: 40px;
+            height: 34px;
             background-position: center;
             background-size: cover;
             background-image: url("./../img/hungryDiamond.png"); }
+            @media (min-width: 431px) {
+              .profilePage .content .friends .list .item:before {
+                left: 35px;
+                width: 70px;
+                height: 58px; } }
     .profilePage .content.savedGames .description {
-      margin-top: 16px; }
+      margin-top: 5px;
+      font-size: 13px; }
+      @media (min-width: 431px) {
+        .profilePage .content.savedGames .description {
+          margin-top: 16px;
+          font-size: 16px; } }
     .profilePage .content.savedGames .list {
-      margin-top: 40px;
+      margin-top: 10px;
       display: flex;
-      flex-wrap: wrap; }
+      flex-wrap: wrap;
+      justify-content: space-between; }
+      @media (min-width: 431px) {
+        .profilePage .content.savedGames .list {
+          justify-content: initial;
+          margin-top: 40px; } }
       .profilePage .content.savedGames .list .cardGame {
-        margin: 15px; }
+        margin: 10px; }
+        @media (min-width: 431px) {
+          .profilePage .content.savedGames .list .cardGame {
+            margin: 15px; } }
 
 .ratingPage .title {
   font-size: 48px;
@@ -4955,7 +5038,11 @@ img {
 .responseMessage {
   color: #00af56;
   text-align: center;
-  margin-top: 15px; }
+  margin-top: 15px;
+  font-size: 14px; }
+  @media (min-width: 431px) {
+    .responseMessage {
+      font-size: 16px; } }
   .responseMessage.error {
     color: #ff0000; }
 

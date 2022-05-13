@@ -1439,8 +1439,11 @@ if (loginFormNode) {
 }
 
 if (profileEditFormNode) {
+  const resultEditNode = document.querySelector('.js-resultEditProfile');
+  
   new AsyncForm({
     mainNode: profileEditFormNode,
+    resultMessageNode: resultEditNode,
   })
 }
 

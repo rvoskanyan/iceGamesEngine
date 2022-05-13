@@ -6,16 +6,31 @@
 
   .title
     color: #fff
-    font-size: 36px
+    font-size: 20px
     font-weight: 600
+
+    @include for-big-phone-up
+      font-size: 36px
 
   .description
     color: #fff
 
+  .noItems
+    color: #fff
+    margin-top: 30px
+    font-size: 13px
+    text-align: center
+
+    @include for-big-phone-up
+      font-size: 16px
+
   .subtitle
     color: #fff
-    font-size: 24px
+    font-size: 18px
     font-weight: 600
+
+    @include for-big-phone-up
+      font-size: 24px
 
   .profile
     @include for-big-phone-up
@@ -25,12 +40,15 @@
     @include for-big-phone-down
       margin-top: 30px
 
+      & .newsSlider
+        z-index: -1
+
   .nav
     @include for-big-phone-down
       position: relative
       max-width: max-content
       margin: 0 auto
-      z-index: 1
+      z-index: 2
 
     .mobileOpenProfileMenu
       @include for-big-phone-down
@@ -393,10 +411,16 @@
     &.personalDataForm
       .personalData, .password
         .input-frame
-          margin-top: 16px
+          margin-top: 10px
+
+          @include for-big-phone-up
+            margin-top: 16px
 
       .password
-        margin-top: 30px
+        margin-top: 20px
+
+        @include for-big-phone-up
+          margin-top: 30px
 
       .btn
         margin-top: 24px
@@ -443,7 +467,10 @@
         color: #fff
         right: 20px
         font-weight: 600
-        font-size: 15px
+        font-size: 13px
+
+        @include for-big-phone-up
+          font-size: 15px
 
       &.zero
         &:before, &:after
@@ -457,25 +484,34 @@
           background-image: url("./../img/achievements_zeroProgress.svg")
 
     .achievementsList
-      margin-top: 50px
+      margin-top: 30px
+
+      @include for-big-phone-up
+        margin-top: 50px
 
       & .list
         display: grid
         grid-template-columns: repeat(2, max-content)
         justify-content: space-between
-        row-gap: 50px
+        row-gap: 20px
         column-gap: 30px
         margin-top: 20px
 
         @include for-big-phone-up
           grid-template-columns: repeat(4, max-content)
+          row-gap: 50px
 
         & .achievement:not(:last-child)
           margin-right: 20px
 
     .referralLink
       .description
-        margin-top: 14px
+        font-size: 13px
+        margin-top: 6px
+
+        @include for-big-phone-up
+          font-size: 16px
+          margin-top: 14px
 
       .linkBlock
         border: 1px solid #FFFFFF
@@ -485,13 +521,27 @@
         align-items: center
         padding: 5px 5px 5px 12px
         max-width: 650px
-        margin-top: 25px
+        margin-top: 20px
+
+        @include for-big-phone-up
+          margin-top: 25px
 
         .refLink
           color: #fff
+          font-size: 10px
+          white-space: nowrap
+
+          @include for-big-phone-up
+            font-size: 15px
+
+        & .btn
+          margin-left: 5px
 
     .friends
-      margin-top: 60px
+      margin-top: 30px
+
+      @include for-big-phone-up
+        margin-top: 60px
 
       .list
         max-width: 650px
@@ -504,32 +554,64 @@
           justify-content: space-between
           align-items: center
           color: #fff
-          padding: 8px 25px
-          margin-top: 35px
+          padding: 5px 15px
+          margin-top: 15px
+
+          @include for-big-phone-up
+            padding: 8px 25px
+            margin-top: 35px
 
           .name
             font-weight: 600
-            font-size: 18px
-            margin-left: 150px
+            font-size: 14px
+            margin-left: 50px
+
+            @include for-big-phone-up
+              margin-left: 150px
+              font-size: 18px
+
+          .ratingPosition
+            font-size: 12px
+
+            @include for-big-phone-up
+              font-size: 16px
 
           &:before
             content: ''
             position: absolute
-            left: 35px
-            width: 70px
-            height: 58px
+            left: 15px
+            width: 40px
+            height: 34px
             background-position: center
             background-size: cover
             background-image: url("./../img/hungryDiamond.png")
 
+            @include for-big-phone-up
+              left: 35px
+              width: 70px
+              height: 58px
+
     &.savedGames
       .description
-        margin-top: 16px
+        margin-top: 5px
+        font-size: 13px
+
+        @include for-big-phone-up
+          margin-top: 16px
+          font-size: 16px
 
       .list
-        margin-top: 40px
+        margin-top: 10px
         display: flex
         flex-wrap: wrap
+        justify-content: space-between
+
+        @include for-big-phone-up
+          justify-content: initial
+          margin-top: 40px
 
         .cardGame
-          margin: 15px
+          margin: 10px
+
+          @include for-big-phone-up
+            margin: 15px

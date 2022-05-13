@@ -6,7 +6,6 @@ import Article from './../../models/Article.js';
 
 export const profilePage = async (req, res) => {
   try {
-    const countAchievements = res.locals.person.achievements.length;
     const user = await res.locals.person.populate({path: 'achievements', options: {limit: 4}});
     const countUsers = await User.estimatedDocumentCount();
     const ratingPosition = await user.getRatingPosition();
@@ -15,7 +14,8 @@ export const profilePage = async (req, res) => {
       .select(['name', 'alias', 'introText', 'type', 'createdAt', 'img'])
       .limit(9)
       .lean();
-    
+    const countAchievements = res.locals.person.achievements ? res.locals.person.achievements.length : 0;
+  
     res.render('profile', {
       title: "ICE Games — Мой профиль",
       noIndex: true,
@@ -137,15 +137,25 @@ export const profileInvitePage = async (req, res) => {
     const countUsers = await User.estimatedDocumentCount();
     const user = await User
       .findById(req.session.userId)
-      .select(['login', 'invitedUsers'])
-      .populate('invitedUsers', ['login']);
+      .select(['login', 'invitedUsers']);
+    const invitedUsers = await User.find({_id: user.invitedUsers}).select('login');
+    let invitedUsersWithRatingPosition = [];
+    
+    for (let invitedUser of invitedUsers) {
+      const ratingPosition = await invitedUser.getRatingPosition();
+  
+      invitedUsersWithRatingPosition.push({
+        ratingPosition,
+        login: invitedUser.login,
+      })
+    }
     
     res.render('profileInvite', {
       title: 'ICE Games — Приглашенные друзья',
       noIndex: true,
       isProfileInvite: true,
       userId: req.session.userId,
-      invitedUsers: user.invitedUsers,
+      invitedUsers: invitedUsersWithRatingPosition,
       countUsers,
       user,
     })

@@ -443,7 +443,7 @@
                                     </div>
                                     <div class="senderField textReview js-error-text">
                                         <div class="autoSizeInput js-autoSizeInput" data-name="text">
-                                            <span class="placeholder js-placeholder">Напишите отзыв до 1000 символов</span>
+                                            <span class="placeholder js-placeholder">До 1000 символов</span>
                                             <div class="value js-value"{{#unless isProductNotPurchased}} contentEditable{{/unless}}></div>
                                         </div>
                                         <button class="btn" type="submit"{{#if isProductNotPurchased}} disabled{{/if}}>
@@ -480,7 +480,7 @@
                             <form action="/api/comments" method="post" data-skip="3" data-ref="product" data-subject-id="{{product.id}}" class="addNew infoBlock js-commentProductForm{{#unless @root.isAuth}} locked{{/unless}}">
                                 <div class="senderField textReview">
                                     <div class="autoSizeInput js-autoSizeInput" data-name="text">
-                                        <span class="placeholder js-placeholder">Напишите комментарий до 1000 символов</span>
+                                        <span class="placeholder js-placeholder">До 1000 символов</span>
                                         <div class="value js-value"{{#if @root.isAuth}} contentEditable{{/if}}></div>
                                     </div>
                                     <button class="btn" type="submit"{{#unless @root.isAuth}} disabled{{/unless}}>

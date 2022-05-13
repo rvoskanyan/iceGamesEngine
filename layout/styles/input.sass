@@ -1,3 +1,4 @@
+@import './breakPoints'
 @import './zIndex'
 
 .textField
@@ -19,7 +20,10 @@
       padding: 0 15px
       color: #fff
       font-size: 15px
-      margin-bottom: 7px
+      margin-bottom: 4px
+
+      @include for-big-phone-up
+        margin-bottom: 7px
 
     .textField
       border: 1px solid #fff

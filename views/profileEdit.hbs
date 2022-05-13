@@ -8,7 +8,6 @@
     <div class="profile">
         {{> profileMenu}}
         <form class="content personalDataForm js-profileEditForm" method="post" action="/profile/edit">
-            <div class="responseMessage"></div>
             <div class="personalData">
                 <div class="subtitle">Личные данные</div>
                 <label class="input-frame">
@@ -31,5 +30,6 @@
             </div>
             <button class="btn small round border hover-color-pink hover-border-pink" type="submit">Сохранить</button>
         </form>
+        <div class="responseMessage js-resultEditProfile"></div>
     </div>
 </main>
