@@ -229,6 +229,18 @@
                     </div>
                 </li>
                 <li class="item">
+                    <div class="name">Разработчики:</div>
+                    <div class="value">
+                        {{#each product.developers}}
+                            {{#if @last}}
+                                {{name}}
+                            {{else}}
+                                {{name}},
+                            {{/if}}
+                        {{/each}}
+                    </div>
+                </li>
+                <li class="item">
                     <div class="name">Дата выхода:</div>
                     <div class="value">
                         {{product.strMonthReleaseDate}}

@@ -73,6 +73,11 @@ const popupController = new PopupController([
     popupSelector: '.js-mobileQuickSearchContainer',
   },
   {
+    id: 'mobileProfileMenu',
+    btnSelector: '.js-mobileOpenProfileMenu',
+    popupSelector: '.js-mobileProfileMenu',
+  },
+  {
     id: 'paramsCatalog',
     btnSelector: '.js-openParams',
     closeBtnSelector: '.js-closeParams',

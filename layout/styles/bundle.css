@@ -3960,12 +3960,72 @@
     color: #fff;
     font-size: 24px;
     font-weight: 600; }
-  .profilePage .profile {
-    display: flex; }
+  @media (min-width: 431px) {
+    .profilePage .profile {
+      display: flex; } }
+  @media (max-width: 430px) {
+    .profilePage .nav {
+      position: relative;
+      max-width: max-content;
+      margin: 0 auto;
+      z-index: 1; } }
+  @media (max-width: 430px) {
+    .profilePage .nav .mobileOpenProfileMenu {
+      display: flex;
+      column-gap: 5px;
+      border: 1px solid #fff;
+      border-radius: 10px;
+      padding: 7px;
+      height: 30px; }
+      .profilePage .nav .mobileOpenProfileMenu .decor {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: end;
+        width: 30px;
+        height: 100%; }
+        .profilePage .nav .mobileOpenProfileMenu .decor:before, .profilePage .nav .mobileOpenProfileMenu .decor:after {
+          content: '';
+          display: block;
+          width: 100%;
+          height: 1px;
+          background-color: #fff;
+          transition: width .3s ease-in; }
+        .profilePage .nav .mobileOpenProfileMenu .decor:before {
+          width: 60%; }
+      .profilePage .nav .mobileOpenProfileMenu.active .decor:before {
+        width: 100%; }
+      .profilePage .nav .mobileOpenProfileMenu.active .decor:after {
+        width: 60%; } }
+  @media (min-width: 431px) {
+    .profilePage .nav .mobileOpenProfileMenu {
+      display: none; } }
+  @media (max-width: 430px) {
+    .profilePage .nav .menu {
+      position: absolute;
+      background-color: rgba(255, 0, 245, 0.9);
+      top: -10px;
+      padding: 55px 20px 20px 20px;
+      z-index: -1;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 8px;
+      opacity: 0;
+      visibility: hidden;
+      transition: .3s ease-in;
+      transition-property: opacity, visibility; }
+      .profilePage .nav .menu.active {
+        opacity: 1;
+        visibility: visible; } }
   .profilePage .nav .profileMenu {
+    display: flex;
+    flex-direction: column;
     position: relative;
     max-width: max-content;
     padding: 0 20px; }
+    @media (min-width: 431px) {
+      .profilePage .nav .profileMenu {
+        row-gap: 10px; } }
     .profilePage .nav .profileMenu .marker {
       position: absolute;
       top: 0;
@@ -3988,30 +4048,51 @@
         transform: matrix(-1, 0, 0, 1, 0, 0); }
       .profilePage .nav .profileMenu .marker .center {
         height: 100%;
-        background: linear-gradient(270deg, #EB00FF 0%, transparent 50%, #EB00FF 100%);
+        background: #950398;
         flex-grow: 1; }
+        @media (min-width: 431px) {
+          .profilePage .nav .profileMenu .marker .center {
+            background: linear-gradient(270deg, #EB00FF 0%, transparent 50%, #EB00FF 100%); } }
     .profilePage .nav .profileMenu .btn {
-      padding: 6px;
+      padding: 0 6px;
       min-height: 30px;
       width: 100%;
-      justify-content: flex-start; }
-      .profilePage .nav .profileMenu .btn:not(:first-child) {
-        margin-top: 10px; }
+      justify-content: center; }
+      @media (max-width: 430px) {
+        .profilePage .nav .profileMenu .btn {
+          opacity: initial;
+          font-weight: initial; }
+          .profilePage .nav .profileMenu .btn.active {
+            font-weight: 600; } }
+      @media (min-width: 431px) {
+        .profilePage .nav .profileMenu .btn {
+          padding: 6px;
+          justify-content: flex-start; } }
   .profilePage .nav .viewProfile {
-    margin-top: 50px;
+    margin-top: 15px;
     border-width: 1px;
     font-weight: 300;
-    font-size: 16px;
+    font-size: 13px;
     max-width: min-content;
     width: 100%;
     min-width: 100%; }
+    @media (min-width: 431px) {
+      .profilePage .nav .viewProfile {
+        font-size: 16px;
+        margin-top: 50px; } }
   .profilePage .nav .exit {
-    margin-top: 50px;
-    margin-left: 25px; }
+    margin: 25px auto 0 auto; }
+    @media (min-width: 431px) {
+      .profilePage .nav .exit {
+        margin: 50px 0 0 25px; } }
   .profilePage .content {
-    margin-left: 150px;
+    margin-top: 30px;
     max-width: 820px;
     flex-grow: 1; }
+    @media (min-width: 431px) {
+      .profilePage .content {
+        margin-top: initial;
+        margin-left: 150px; } }
     @media (min-width: 1650px) {
       .profilePage .content {
         max-width: 930px; } }

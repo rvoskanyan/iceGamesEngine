@@ -1,39 +1,68 @@
 <div class="nav">
-    <div class="profileMenu">
-        {{#if isProfileHome}}
-            <div class="btn translucent active">Профиль</div>
-        {{else}}
-            <a class="btn translucent" href="/profile">Профиль</a>
-        {{/if}}
-        {{#if isProfileEdit}}
-            <div class="btn translucent active">Личные данные</div>
-        {{else}}
-            <a class="btn translucent" href="/profile/edit">Личные данные</a>
-        {{/if}}
-        {{#if isProfileAchievements}}
-            <div class="btn translucent active">Достижения</div>
-        {{else}}
-            <a class="btn translucent" href="/profile/achievements">Достижения</a>
-        {{/if}}
-        {{#if isProfileInvite}}
-            <div class="btn translucent active">Пригласи друга</div>
-        {{else}}
-            <a class="btn translucent" href="/profile/invite">Пригласи друга</a>
-        {{/if}}
-        {{#if isProfileOrders}}
-            <div class="btn translucent active">Мои игры</div>
-        {{else}}
-            <a class="btn translucent" href="/profile/orders">Мои игры</a>
-        {{/if}}
-        {{#if isProfileFavorites}}
-            <div class="btn translucent active">Избранное</div>
-        {{else}}
-            <a class="btn translucent" href="/profile/favorites">Избранное</a>
-        {{/if}}
-        <div class="marker">
-            <span class="center"></span>
+    <button class="btn mobileOpenProfileMenu js-mobileOpenProfileMenu">
+        <span class="decor"></span>
+        Меню профиля
+    </button>
+    <div class="menu js-mobileProfileMenu">
+        <div class="profileMenu">
+            {{#if isProfileHome}}
+                <div class="btn translucent active">Профиль</div>
+            {{else}}
+                <a class="btn translucent" href="/profile">Профиль</a>
+            {{/if}}
+            {{#if isProfileEdit}}
+                <div class="btn translucent active">Личные данные</div>
+            {{else}}
+                <a class="btn translucent" href="/profile/edit">Личные данные</a>
+            {{/if}}
+            {{#if isProfileAchievements}}
+                <div class="btn translucent active">Достижения</div>
+            {{else}}
+                <a class="btn translucent" href="/profile/achievements">Достижения</a>
+            {{/if}}
+            {{#if isProfileInvite}}
+                <div class="btn translucent active">Пригласи друга</div>
+            {{else}}
+                <a class="btn translucent" href="/profile/invite">Пригласи друга</a>
+            {{/if}}
+            {{#if isProfileOrders}}
+                <div class="btn translucent active">Мои игры</div>
+            {{else}}
+                <a class="btn translucent" href="/profile/orders">Мои игры</a>
+            {{/if}}
+            {{#if isProfileFavorites}}
+                <div class="btn translucent active">Избранное</div>
+            {{else}}
+                <a class="btn translucent" href="/profile/favorites">Избранное</a>
+            {{/if}}
+            <div class="marker">
+                <span class="center"></span>
+            </div>
         </div>
+        <a href="/rating/{{user.login}}" class="btn border round viewProfile">Как видят мою страницу</a>
+        <a href="/logout" class="btn link exit">Выход</a>
     </div>
-    <a href="/rating/{{user.login}}" class="btn border round viewProfile">Как видят мою страницу</a>
-    <a href="/logout" class="btn link exit">Выход</a>
 </div>
+<script>
+    let marker = document.querySelector('.marker');
+    let menu = document.querySelector('.profileMenu');
+    let list = document.querySelectorAll('.profileMenu .btn');
+    let currentMenu = document.querySelector('.profileMenu .btn.active');
+
+    function moveIndicator(e) {
+        marker.style.top = e.offsetTop+'px';
+        marker.style.display = 'flex';
+    }
+
+    moveIndicator(currentMenu);
+
+    menu.addEventListener('mouseleave', () => {
+        moveIndicator(currentMenu);
+    })
+
+    list.forEach(link => {
+        link.addEventListener('mouseover', (e) => {
+            moveIndicator(e.target)
+        })
+    })
+</script>
