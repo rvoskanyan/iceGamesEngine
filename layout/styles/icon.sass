@@ -150,8 +150,12 @@
   &-prompt
     mask-image: url("./../img/prompt.svg")
     -webkit-mask-image: url("./../img/prompt.svg")
-    width: 64px
-    height: 55px
+    width: 35px
+    height: 30px
+
+    @include for-big-phone-up
+      width: 64px
+      height: 55px
 
   &-triangle
     mask-image: url("./../img/triangle.svg")

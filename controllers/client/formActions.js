@@ -31,8 +31,8 @@ export const registration = async (req, res) => {
       
       if (inviter) {
         inviter.invitedUsers.push(user._id);
-        inviter.increaseRating(5);
-  
+        
+        await inviter.increaseRating(5);
         await inviter.save();
         await achievementEvent('friendInvitation', inviter);
         

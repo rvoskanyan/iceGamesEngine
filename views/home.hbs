@@ -129,41 +129,9 @@
                 </div>
             </div>
         </div>
-        <div class="homeSection">
-            <div class="homeTitle">Новости и статьи</div>
-            <div class="newsSlider js-newsSlider">
-                <button class="btn prev increase js-prevBtn">
-                    <span class="icon-static icon-static-arrow"></span>
-                </button>
-                <div class="visibleArea js-visibleArea">
-                    <div class="tape js-tape">
-                        {{#each articles}}
-                            <a href="{{websiteAddress}}blog/{{alias}}" class="newsPreview js-slide{{#iff @index '<' 3}} active{{/iff}}">
-                                <img class="img" src="{{websiteAddress}}{{img}}" alt="Изображение записи из блога {{name}}" title="Изображение записи из блога {{name}}">
-                                <div class="attributes">
-                                    <div class="btn small round border small bg-darkLilac">
-                                        {{#iff type '===' 'news'}}Новости{{else}}Статьи{{/iff}}
-                                    </div>
-                                    <div class="date">12.01.21</div>
-                                </div>
-                                <div class="description">
-                                    <div class="title">
-                                        {{name}}
-                                    </div>
-                                    <div class="text">
-                                        {{introText}}
-                                    </div>
-                                </div>
-                            </a>
-                        {{/each}}
-                    </div>
-                </div>
-                <button class="btn next increase js-nextBtn">
-                    <span class="icon-static icon-static-arrow"></span>
-                </button>
-            </div>
-            <a class="btn round border backlight-pink hover-bg-palePink all" href="{{websiteAddress}}blog">Все новости</a>
-        </div>
+        {{> newsSlider
+                aricles=articles
+        }}
         <div class="homeSection">
             <div class="homeTitle">Медиа о нас</div>
             <div class="homeMediaSlider js-homeMediaSlider">

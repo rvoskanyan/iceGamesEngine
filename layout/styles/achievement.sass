@@ -9,14 +9,21 @@
   flex-direction: column
   justify-content: center
   align-items: center
-  padding: 0 20px
+  padding: 0 10px
   color: #fff
   text-align: center
   border-radius: 22px
-  min-width: 160px
-  max-width: 160px
-  min-height: 211px
-  max-height: 211px
+  min-width: 120px
+  max-width: 120px
+  min-height: 158px
+  max-height: 158px
+
+  @include for-big-phone-up
+    padding: 0 20px
+    min-width: 160px
+    max-width: 160px
+    min-height: 211px
+    max-height: 211px
 
   @include for-big-desktop-up
     min-width: 181px
@@ -25,17 +32,27 @@
     max-height: 238px
 
   & .achievementIcon
-    width: 70px
+    width: 35px
+
+    @include for-big-phone-up
+      width: 70px
 
   & .name
     margin-top: 10px
-    font-weight: 900
-    font-size: 14px
+    font-weight: 700
+    font-size: 12px
+
+    @include for-big-phone-up
+      font-weight: 700
+      font-size: 14px
 
   & .description
     font-size: 10px
     font-weight: normal
-    margin-top: 10px
+    margin-top: 5px
+
+    @include for-big-phone-up
+      margin-top: 10px
 
   & .lock
     position: absolute

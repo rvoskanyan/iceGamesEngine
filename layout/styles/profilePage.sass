@@ -21,6 +21,10 @@
     @include for-big-phone-up
       display: flex
 
+  & .newsSliderContainer
+    @include for-big-phone-down
+      margin-top: 30px
+
   .nav
     @include for-big-phone-down
       position: relative
@@ -174,29 +178,55 @@
     @include for-big-desktop-up
       max-width: 930px
 
-    & .head
+    & .headProfile
       display: flex
-      justify-content: space-between
+      max-width: max-content
+      margin: 0 auto
+      transform: translateX(16px)
+
+      @include for-big-phone-up
+        justify-content: space-between
+        max-width: initial
+        margin: initial
+        transform: initial
 
       & .info
+        display: flex
+        flex-direction: column
+        align-items: center
+
+        @include for-big-phone-up
+          align-items: initial
+
         & .name
           color: #fff
-          font-size: 36px
+          font-size: 30px
           font-weight: 600
           text-shadow: 0 0 20px #0F1339
+
+          @include for-big-phone-up
+            font-size: 36px
 
         & .rating
           text-shadow: 0 0 10px #000000
           color: #fff
-          font-size: 15px
-          margin-top: 6px
+          font-size: 13px
+          margin-top: 3px
           line-height: 1
 
           &:not(:last-child)
-            margin-top: 10px
+            margin-top: 5px
+
+          @include for-big-phone-up
+            font-size: 15px
+            margin-top: 6px
+
+            &:not(:last-child)
+              margin-top: 10px
 
       & .prompt
         position: relative
+        margin-top: 5px
 
         & .block
           position: absolute
@@ -205,9 +235,9 @@
           border-radius: 22px
           padding: 22px 33px
           width: max-content
-          max-width: 320px
+          max-width: 300px
           top: -10px
-          right: 0
+          right: -70px
           color: #fff
           text-shadow: 0 0 60px #000000
           opacity: 0
@@ -215,35 +245,57 @@
           transition: .3s ease-in
           transition-property: visibility, opacity
 
+          @include for-big-phone-up
+            right: 0
+
           &.active
             visibility: visible
             opacity: 1
 
           & .head
+            display: flex
+
             & .title
-              font-size: 24px
+              font-size: 20px
               font-weight: bold
+
+              @include for-big-phone-up
+                font-size: 24px
 
             & .btn
               margin-top: 10px
 
           & .description
-            margin-top: 20px
+            font-size: 13px
+            margin-top: 10px
+
+            @include for-big-phone-up
+              font-size: 16px
+              margin-top: 20px
 
           & .listActions
             margin-top: 15px
 
             & .title
-              font-size: 24px
+              font-size: 18px
+
+              @include for-big-phone-up
+                font-size: 24px
 
           & .list
             list-style: none
-            margin-top: 15px
+            margin-top: 10px
+
+            @include for-big-phone-up
+              margin-top: 15px
 
             & .item
-              font-size: 14px
+              font-size: 13px
               display: flex
               align-items: center
+
+              @include for-big-phone-up
+                font-size: 14px
 
               &:before
                 content: ''
@@ -258,52 +310,85 @@
                 margin-bottom: 3px
 
     & .statistics
-      width: max-content
-      margin-top: 40px
+      max-width: max-content
+      margin-top: 30px
 
-      &:before
-        content: ''
-        display: block
-        height: 2px
-        background: linear-gradient(270deg, transparent 0%, rgba(255, 255, 255, 0.3) 50%, transparent 100%)
+      @include for-big-phone-up
+        margin-top: 40px
+
+        &:before
+          content: ''
+          display: block
+          height: 2px
+          background: linear-gradient(270deg, transparent 0%, rgba(255, 255, 255, 0.3) 50%, transparent 100%)
 
       & .items
         display: flex
-        margin-top: 35px
+        justify-content: center
+        flex-wrap: wrap
+        column-gap: 26px
+        row-gap: 12px
+
+        @include for-middle-phone-up
+          column-gap: 35px
+
+        @include for-big-phone-up
+          column-gap: 15px
+          margin-top: 35px
 
         & .item
-          max-width: 97px
+          max-width: 79px
           text-align: center
 
-          &:not(:last-child)
-            margin-right: 15px
+          @include for-big-phone-up
+            max-width: 97px
 
           & .value
             color: #fff
-            font-size: 48px
+            font-size: 30px
             font-weight: 600
+
+            @include for-big-phone-up
+              font-size: 48px
 
           & .name
             color: #fff
-            font-size: 15px
+            font-size: 12px
             text-shadow: 0 0 100px #000000
 
+            @include for-big-phone-up
+              font-size: 15px
+
     & .achievements
-      margin-top: 90px
+      margin-top: 30px
+
+      @include for-big-phone-up
+        margin-top: 90px
 
       & .head
+        display: flex
+        justify-content: space-between
         align-items: center
 
         & .title
-          font-size: 36px
+          font-size: 20px
           font-weight: 600
           color: #fff
           line-height: 1
 
+          @include for-big-phone-up
+            font-size: 36px
+
       & .list
         display: flex
         justify-content: space-between
-        margin-top: 30px
+        margin-top: 15px
+        padding-bottom: 10px
+        column-gap: 10px
+
+        @include for-big-phone-up
+          padding-bottom: initial
+          margin-top: 30px
 
     &.personalDataForm
       .personalData, .password
@@ -376,11 +461,14 @@
 
       & .list
         display: grid
-        grid-template-columns: repeat(4, max-content)
+        grid-template-columns: repeat(2, max-content)
         justify-content: space-between
         row-gap: 50px
         column-gap: 30px
         margin-top: 20px
+
+        @include for-big-phone-up
+          grid-template-columns: repeat(4, max-content)
 
         & .achievement:not(:last-child)
           margin-right: 20px

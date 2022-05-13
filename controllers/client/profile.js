@@ -2,6 +2,7 @@ import {validationResult} from 'express-validator';
 import bcrypt from 'bcryptjs';
 import User from '../../models/User.js';
 import Achievement from './../../models/Achievement.js';
+import Article from './../../models/Article.js';
 
 export const profilePage = async (req, res) => {
   try {
@@ -9,6 +10,11 @@ export const profilePage = async (req, res) => {
     const user = await res.locals.person.populate({path: 'achievements', options: {limit: 4}});
     const countUsers = await User.estimatedDocumentCount();
     const ratingPosition = await user.getRatingPosition();
+    const articles = await Article
+      .find({active: true})
+      .select(['name', 'alias', 'introText', 'type', 'createdAt', 'img'])
+      .limit(9)
+      .lean();
     
     res.render('profile', {
       title: "ICE Games — Мой профиль",
@@ -18,6 +24,7 @@ export const profilePage = async (req, res) => {
       countUsers,
       ratingPosition,
       countAchievements,
+      articles,
     });
   } catch (e) {
     console.log(e);

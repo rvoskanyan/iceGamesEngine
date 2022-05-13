@@ -1859,8 +1859,12 @@
   .icon-prompt {
     mask-image: url("./../img/prompt.svg");
     -webkit-mask-image: url("./../img/prompt.svg");
-    width: 64px;
-    height: 55px; }
+    width: 35px;
+    height: 30px; }
+    @media (min-width: 431px) {
+      .icon-prompt {
+        width: 64px;
+        height: 55px; } }
   .icon-triangle {
     mask-image: url("./../img/triangle.svg");
     -webkit-mask-image: url("./../img/triangle.svg");
@@ -2078,9 +2082,13 @@
         .btn.round.big {
           padding: 10px 17px; } }
     .btn.round.small {
-      padding: 4px 12px;
-      font-size: 16px;
+      padding: 9px;
+      font-size: 13px;
       border-width: 2px; }
+      @media (min-width: 431px) {
+        .btn.round.small {
+          font-size: 16px;
+          padding: 4px 12px; } }
   .btn.rounded {
     border-radius: 8px;
     padding: 9px 12px; }
@@ -2558,14 +2566,21 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 0 20px;
+  padding: 0 10px;
   color: #fff;
   text-align: center;
   border-radius: 22px;
-  min-width: 160px;
-  max-width: 160px;
-  min-height: 211px;
-  max-height: 211px; }
+  min-width: 120px;
+  max-width: 120px;
+  min-height: 158px;
+  max-height: 158px; }
+  @media (min-width: 431px) {
+    .achievement {
+      padding: 0 20px;
+      min-width: 160px;
+      max-width: 160px;
+      min-height: 211px;
+      max-height: 211px; } }
   @media (min-width: 1650px) {
     .achievement {
       min-width: 181px;
@@ -2573,15 +2588,25 @@
       min-height: 238px;
       max-height: 238px; } }
   .achievement .achievementIcon {
-    width: 70px; }
+    width: 35px; }
+    @media (min-width: 431px) {
+      .achievement .achievementIcon {
+        width: 70px; } }
   .achievement .name {
     margin-top: 10px;
-    font-weight: 900;
-    font-size: 14px; }
+    font-weight: 700;
+    font-size: 12px; }
+    @media (min-width: 431px) {
+      .achievement .name {
+        font-weight: 700;
+        font-size: 14px; } }
   .achievement .description {
     font-size: 10px;
     font-weight: normal;
-    margin-top: 10px; }
+    margin-top: 5px; }
+    @media (min-width: 431px) {
+      .achievement .description {
+        margin-top: 10px; } }
   .achievement .lock {
     position: absolute;
     top: 0;
@@ -3964,6 +3989,9 @@
     .profilePage .profile {
       display: flex; } }
   @media (max-width: 430px) {
+    .profilePage .newsSliderContainer {
+      margin-top: 30px; } }
+  @media (max-width: 430px) {
     .profilePage .nav {
       position: relative;
       max-width: max-content;
@@ -4096,62 +4124,109 @@
     @media (min-width: 1650px) {
       .profilePage .content {
         max-width: 930px; } }
-    .profilePage .content .head {
+    .profilePage .content .headProfile {
       display: flex;
-      justify-content: space-between; }
-      .profilePage .content .head .info .name {
-        color: #fff;
-        font-size: 36px;
-        font-weight: 600;
-        text-shadow: 0 0 20px #0F1339; }
-      .profilePage .content .head .info .rating {
-        text-shadow: 0 0 10px #000000;
-        color: #fff;
-        font-size: 15px;
-        margin-top: 6px;
-        line-height: 1; }
-        .profilePage .content .head .info .rating:not(:last-child) {
-          margin-top: 10px; }
-      .profilePage .content .head .prompt {
-        position: relative; }
-        .profilePage .content .head .prompt .block {
+      max-width: max-content;
+      margin: 0 auto;
+      transform: translateX(16px); }
+      @media (min-width: 431px) {
+        .profilePage .content .headProfile {
+          justify-content: space-between;
+          max-width: initial;
+          margin: initial;
+          transform: initial; } }
+      .profilePage .content .headProfile .info {
+        display: flex;
+        flex-direction: column;
+        align-items: center; }
+        @media (min-width: 431px) {
+          .profilePage .content .headProfile .info {
+            align-items: initial; } }
+        .profilePage .content .headProfile .info .name {
+          color: #fff;
+          font-size: 30px;
+          font-weight: 600;
+          text-shadow: 0 0 20px #0F1339; }
+          @media (min-width: 431px) {
+            .profilePage .content .headProfile .info .name {
+              font-size: 36px; } }
+        .profilePage .content .headProfile .info .rating {
+          text-shadow: 0 0 10px #000000;
+          color: #fff;
+          font-size: 13px;
+          margin-top: 3px;
+          line-height: 1; }
+          .profilePage .content .headProfile .info .rating:not(:last-child) {
+            margin-top: 5px; }
+          @media (min-width: 431px) {
+            .profilePage .content .headProfile .info .rating {
+              font-size: 15px;
+              margin-top: 6px; }
+              .profilePage .content .headProfile .info .rating:not(:last-child) {
+                margin-top: 10px; } }
+      .profilePage .content .headProfile .prompt {
+        position: relative;
+        margin-top: 5px; }
+        .profilePage .content .headProfile .prompt .block {
           position: absolute;
           background: #8B00CC;
           box-shadow: 0 0 100px #000000;
           border-radius: 22px;
           padding: 22px 33px;
           width: max-content;
-          max-width: 320px;
+          max-width: 300px;
           top: -10px;
-          right: 0;
+          right: -70px;
           color: #fff;
           text-shadow: 0 0 60px #000000;
           opacity: 0;
           visibility: hidden;
           transition: .3s ease-in;
           transition-property: visibility, opacity; }
-          .profilePage .content .head .prompt .block.active {
+          @media (min-width: 431px) {
+            .profilePage .content .headProfile .prompt .block {
+              right: 0; } }
+          .profilePage .content .headProfile .prompt .block.active {
             visibility: visible;
             opacity: 1; }
-          .profilePage .content .head .prompt .block .head .title {
-            font-size: 24px;
-            font-weight: bold; }
-          .profilePage .content .head .prompt .block .head .btn {
+          .profilePage .content .headProfile .prompt .block .head {
+            display: flex; }
+            .profilePage .content .headProfile .prompt .block .head .title {
+              font-size: 20px;
+              font-weight: bold; }
+              @media (min-width: 431px) {
+                .profilePage .content .headProfile .prompt .block .head .title {
+                  font-size: 24px; } }
+            .profilePage .content .headProfile .prompt .block .head .btn {
+              margin-top: 10px; }
+          .profilePage .content .headProfile .prompt .block .description {
+            font-size: 13px;
             margin-top: 10px; }
-          .profilePage .content .head .prompt .block .description {
-            margin-top: 20px; }
-          .profilePage .content .head .prompt .block .listActions {
+            @media (min-width: 431px) {
+              .profilePage .content .headProfile .prompt .block .description {
+                font-size: 16px;
+                margin-top: 20px; } }
+          .profilePage .content .headProfile .prompt .block .listActions {
             margin-top: 15px; }
-            .profilePage .content .head .prompt .block .listActions .title {
-              font-size: 24px; }
-          .profilePage .content .head .prompt .block .list {
+            .profilePage .content .headProfile .prompt .block .listActions .title {
+              font-size: 18px; }
+              @media (min-width: 431px) {
+                .profilePage .content .headProfile .prompt .block .listActions .title {
+                  font-size: 24px; } }
+          .profilePage .content .headProfile .prompt .block .list {
             list-style: none;
-            margin-top: 15px; }
-            .profilePage .content .head .prompt .block .list .item {
-              font-size: 14px;
+            margin-top: 10px; }
+            @media (min-width: 431px) {
+              .profilePage .content .headProfile .prompt .block .list {
+                margin-top: 15px; } }
+            .profilePage .content .headProfile .prompt .block .list .item {
+              font-size: 13px;
               display: flex;
               align-items: center; }
-              .profilePage .content .head .prompt .block .list .item:before {
+              @media (min-width: 431px) {
+                .profilePage .content .headProfile .prompt .block .list .item {
+                  font-size: 14px; } }
+              .profilePage .content .headProfile .prompt .block .list .item:before {
                 content: '';
                 display: block;
                 width: 4px;
@@ -4159,45 +4234,79 @@
                 border-radius: 100%;
                 background-color: #fff;
                 margin-right: 8px; }
-              .profilePage .content .head .prompt .block .list .item:not(:last-child) {
+              .profilePage .content .headProfile .prompt .block .list .item:not(:last-child) {
                 margin-bottom: 3px; }
     .profilePage .content .statistics {
-      width: max-content;
-      margin-top: 40px; }
-      .profilePage .content .statistics:before {
-        content: '';
-        display: block;
-        height: 2px;
-        background: linear-gradient(270deg, transparent 0%, rgba(255, 255, 255, 0.3) 50%, transparent 100%); }
+      max-width: max-content;
+      margin-top: 30px; }
+      @media (min-width: 431px) {
+        .profilePage .content .statistics {
+          margin-top: 40px; }
+          .profilePage .content .statistics:before {
+            content: '';
+            display: block;
+            height: 2px;
+            background: linear-gradient(270deg, transparent 0%, rgba(255, 255, 255, 0.3) 50%, transparent 100%); } }
       .profilePage .content .statistics .items {
         display: flex;
-        margin-top: 35px; }
+        justify-content: center;
+        flex-wrap: wrap;
+        column-gap: 26px;
+        row-gap: 12px; }
+        @media (min-width: 360px) {
+          .profilePage .content .statistics .items {
+            column-gap: 35px; } }
+        @media (min-width: 431px) {
+          .profilePage .content .statistics .items {
+            column-gap: 15px;
+            margin-top: 35px; } }
         .profilePage .content .statistics .items .item {
-          max-width: 97px;
+          max-width: 79px;
           text-align: center; }
-          .profilePage .content .statistics .items .item:not(:last-child) {
-            margin-right: 15px; }
+          @media (min-width: 431px) {
+            .profilePage .content .statistics .items .item {
+              max-width: 97px; } }
           .profilePage .content .statistics .items .item .value {
             color: #fff;
-            font-size: 48px;
+            font-size: 30px;
             font-weight: 600; }
+            @media (min-width: 431px) {
+              .profilePage .content .statistics .items .item .value {
+                font-size: 48px; } }
           .profilePage .content .statistics .items .item .name {
             color: #fff;
-            font-size: 15px;
+            font-size: 12px;
             text-shadow: 0 0 100px #000000; }
+            @media (min-width: 431px) {
+              .profilePage .content .statistics .items .item .name {
+                font-size: 15px; } }
     .profilePage .content .achievements {
-      margin-top: 90px; }
+      margin-top: 30px; }
+      @media (min-width: 431px) {
+        .profilePage .content .achievements {
+          margin-top: 90px; } }
       .profilePage .content .achievements .head {
+        display: flex;
+        justify-content: space-between;
         align-items: center; }
         .profilePage .content .achievements .head .title {
-          font-size: 36px;
+          font-size: 20px;
           font-weight: 600;
           color: #fff;
           line-height: 1; }
+          @media (min-width: 431px) {
+            .profilePage .content .achievements .head .title {
+              font-size: 36px; } }
       .profilePage .content .achievements .list {
         display: flex;
         justify-content: space-between;
-        margin-top: 30px; }
+        margin-top: 15px;
+        padding-bottom: 10px;
+        column-gap: 10px; }
+        @media (min-width: 431px) {
+          .profilePage .content .achievements .list {
+            padding-bottom: initial;
+            margin-top: 30px; } }
     .profilePage .content.personalDataForm .personalData .input-frame, .profilePage .content.personalDataForm .password .input-frame {
       margin-top: 16px; }
     .profilePage .content.personalDataForm .password {
@@ -4251,11 +4360,14 @@
       margin-top: 50px; }
       .profilePage .content .achievementsList .list {
         display: grid;
-        grid-template-columns: repeat(4, max-content);
+        grid-template-columns: repeat(2, max-content);
         justify-content: space-between;
         row-gap: 50px;
         column-gap: 30px;
         margin-top: 20px; }
+        @media (min-width: 431px) {
+          .profilePage .content .achievementsList .list {
+            grid-template-columns: repeat(4, max-content); } }
         .profilePage .content .achievementsList .list .achievement:not(:last-child) {
           margin-right: 20px; }
     .profilePage .content .referralLink .description {

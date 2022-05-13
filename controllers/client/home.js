@@ -13,7 +13,11 @@ export const homepage = async (req, res) => {
   const usp = await Usp.find().select('text').lean();
   const categories = await Category.find().select('name').lean();
   const genres = await Genre.find().select(['id', 'name', 'img', 'url']).lean();
-  const articles = await Article.find({active: true}).select(['name', 'alias', 'introText', 'type', 'createdAt', 'img']).lean();
+  const articles = await Article
+    .find({active: true})
+    .select(['name', 'alias', 'introText', 'type', 'createdAt', 'img'])
+    .limit(9)
+    .lean();
   const inviter = req.query.inviter;
   const catalog = [];
   

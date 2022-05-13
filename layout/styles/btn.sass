@@ -65,9 +65,13 @@
         padding: 10px 17px
 
     &.small
-      padding: 4px 12px
-      font-size: 16px
+      padding: 9px
+      font-size: 13px
       border-width: 2px
+
+      @include for-big-phone-up
+        font-size: 16px
+        padding: 4px 12px
 
   &.rounded
     border-radius: 8px

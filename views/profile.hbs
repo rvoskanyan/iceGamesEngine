@@ -8,7 +8,7 @@
     <div class="profile">
         {{> profileMenu}}
         <div class="content">
-            <div class="head">
+            <div class="headProfile">
                 <div class="info">
                     <div class="name">{{user.login}}</div>
                     <div class="rating">Рейтинг {{user.rating}}</div>
@@ -71,7 +71,7 @@
                         <div class="title">Мои достижения</div>
                         <a href="/profile/achievements" class="btn round border small">Смотреть все</a>
                     </div>
-                    <div class="list">
+                    <div class="list mobileScroll">
                         {{#each user.achievements}}
                             <div class="achievement">
                                 <img src="{{@root.websiteAddress}}{{icon}}" alt="Иконка достижения {{name}}" title="Иконка достижения {{name}}" class="achievementIcon">
@@ -84,64 +84,7 @@
             {{/if}}
         </div>
     </div>
-    <div class="homeSection">
-        <div class="homeTitle">Новости и статьи</div>
-        <div class="newsSlider">
-            <button class="btn prev increase">
-                <span class="icon-static icon-static-arrow"></span>
-            </button>
-            <div class="visibleArea">
-                <div class="tape">
-                    <a href="#" class="newsPreview active">
-                        <img class="img" src="./img/newPreview-1.png" alt="Новость 1" title="Новость 1">
-                        <div class="attributes">
-                            <div class="btn small round border small bg-darkLilac">Новости</div>
-                            <div class="date">12.01.21</div>
-                        </div>
-                        <div class="description">
-                            <div class="title">8 Миллионов продаж</div>
-                            <div class="text">CDPR похвастались в своем твиттере, что количество предзаказов...</div>
-                        </div>
-                    </a>
-                    <a href="#" class="newsPreview active">
-                        <img class="img" src="./img/newPreview-2.png" alt="Новость 1" title="Новость 1">
-                        <div class="attributes">
-                            <div class="btn small round border small bg-darkLilac">Новости</div>
-                            <div class="date">12.01.21</div>
-                        </div>
-                        <div class="description">
-                            <div class="title">8 Миллионов продаж</div>
-                            <div class="text">CDPR похвастались в своем твиттере, что количество предзаказов...</div>
-                        </div>
-                    </a>
-                    <a href="#" class="newsPreview active">
-                        <img class="img" src="./img/newPreview-3.png" alt="Новость 1" title="Новость 1">
-                        <div class="attributes">
-                            <div class="btn small round border small bg-darkLilac">Новости</div>
-                            <div class="date">12.01.21</div>
-                        </div>
-                        <div class="description">
-                            <div class="title">8 Миллионов продаж</div>
-                            <div class="text">CDPR похвастались в своем твиттере, что количество предзаказов...</div>
-                        </div>
-                    </a>
-                    <a href="#" class="newsPreview">
-                        <img class="img" src="./img/newPreview-3.png" alt="Новость 1" title="Новость 1">
-                        <div class="attributes">
-                            <div class="btn small round border small bg-darkLilac">Новости</div>
-                            <div class="date">12.01.21</div>
-                        </div>
-                        <div class="description">
-                            <div class="title">8 Миллионов продаж</div>
-                            <div class="text">CDPR похвастались в своем твиттере, что количество предзаказов...</div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <button class="btn next increase">
-                <span class="icon-static icon-static-arrow"></span>
-            </button>
-        </div>
-        <a class="btn round border backlight-pink hover-bg-palePink all" href="#">Все новости</a>
-    </div>
+    {{> newsSlider
+            aricles=articles
+    }}
 </main>
