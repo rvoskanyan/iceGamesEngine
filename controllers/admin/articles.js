@@ -114,8 +114,8 @@ export const editArticle = async (req, res) => {
     
     if (req.files) {
       const {
-        img,
-        coverImg,
+        img = null,
+        coverImg = null,
       } = req.files;
   
       if (img) {
@@ -175,17 +175,22 @@ export const addBlock = async (req, res) => {
   try {
     const article = await Article.findById(id);
     const {text, imgPosition} = req.body;
-    const {img} = req.files;
     const block = {text};
     
-    if (img) {
-      const imgExtend = getExtendFile(img.name);
-      const imgName = `${uuidv4()}.${imgExtend}`;
+    if (req.files) {
+      const {
+        img = null,
+      } = req.files;
   
-      await img.mv(path.join(__dirname, '/uploadedFiles', imgName));
-      
-      block.img = imgName;
-      block.imgPosition = imgPosition;
+      if (img) {
+        const imgExtend = getExtendFile(img.name);
+        const imgName = `${uuidv4()}.${imgExtend}`;
+    
+        await img.mv(path.join(__dirname, '/uploadedFiles', imgName));
+    
+        block.img = imgName;
+        block.imgPosition = imgPosition;
+      }
     }
     
     article.blocks.push(block);

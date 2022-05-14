@@ -164,10 +164,11 @@ img
 
 
 .likes, .views
-  font-size: 20px
   font-weight: 600
   display: flex
+  align-items: center
   padding: 0 3px
+  font-size: 13px
 
   &:before
     content: ''
@@ -176,17 +177,31 @@ img
     -webkit-mask-position: center
     -webkit-mask-size: cover
     display: block
-    margin-right: 8px
+    margin-right: 5px
     background-color: rgba(255, 255, 255, 0.7)
 
+  @include for-big-phone-up
+    font-size: 20px
+
+    &:before
+      margin-right: 8px
+
 .likes:before
+  width: 16px
+  height: 15px
+  mask-image: url("./../img/favorite.svg")
+  -webkit-mask-image: url("./../img/favorite.svg")
+
+  @include for-big-phone-up
     width: 26px
     height: 25px
-    mask-image: url("./../img/favorite.svg")
-    -webkit-mask-image: url("./../img/favorite.svg")
 
 .views:before
+  width: 20px
+  height: 15px
+  mask-image: url("./../img/views.svg")
+  -webkit-mask-image: url("./../img/views.svg")
+
+  @include for-big-phone-up
     width: 34px
     height: 25px
-    mask-image: url("./../img/views.svg")
-    -webkit-mask-image: url("./../img/views.svg")

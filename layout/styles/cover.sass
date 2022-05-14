@@ -323,6 +323,7 @@
     z-index: $ZIndex-Cover-Content
     width: 100%
     max-width: 1000px
+    padding: 0 30px
 
     & > .title, & > .description
       color: #fff
@@ -334,8 +335,11 @@
 
     & > .title
       font-family: 'Lemon Milk'
-      font-size: 40px
+      font-size: 20px
       font-weight: 500
+
+      @include for-big-phone-up
+        font-size: 40px
 
     & > .description
       margin-top: 15px
@@ -346,14 +350,21 @@
       -webkit-box-orient: vertical
       -moz-box-orient: vertical
       box-orient: vertical
+      font-size: 13px
       line-clamp: 3 // line-count
       -webkit-line-clamp: 3 // line-count
       line-height: 18px // line-height
       max-height: calc(18px * 3) // line-height * line-count
 
+      @include for-big-phone-up
+        font-size: 16px
+
   & > .btn
     position: absolute
-    bottom: 200px
+    bottom: 150px
     left: 50%
     transform: translateX(-50%)
     z-index: $ZIndex-Cover-Btn
+
+    @include for-big-phone-up
+      bottom: 200px

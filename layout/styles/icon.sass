@@ -74,20 +74,32 @@
   &-like
     mask-image: url("./../img/favorite.svg")
     -webkit-mask-image: url("./../img/favorite.svg")
-    width: 26px
-    height: 25px
+    width: 21px
+    height: 20px
+
+    @include for-big-phone-up
+      width: 26px
+      height: 25px
 
   &-reply
     mask-image: url("./../img/reply.svg")
     -webkit-mask-image: url("./../img/reply.svg")
-    width: 30px
-    height: 25px
+    width: 24px
+    height: 20px
+
+    @include for-big-phone-up
+      width: 30px
+      height: 25px
 
   &-arrowBottom
     mask-image: url("./../img/arrowBottom.svg")
     -webkit-mask-image: url("./../img/arrowBottom.svg")
-    width: 67px
-    height: 39px
+    width: 40px
+    height: 23px
+
+    @include for-big-phone-up
+      width: 67px
+      height: 39px
 
   &-star
     mask-image: url("./../img/star.svg")

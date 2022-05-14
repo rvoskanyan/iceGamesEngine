@@ -4,13 +4,32 @@
 .blogPage
   & .articles
     & .article
-      border-radius: 40px
+      display: block
+      border-radius: 20px
       overflow: hidden
-      display: flex
       max-width: 1000px
       margin: 0 auto
       text-decoration: none
       transition: transform .3s ease-in
+
+      @include for-big-phone-up
+        background: linear-gradient(94.29deg, var(--bgColor) 35.06%, transparent 88.75%)
+        border-radius: 40px
+        display: flex
+
+        &.right
+          flex-direction: row-reverse
+          background: linear-gradient(270deg, var(--bgColor) 67.19%, transparent 100%)
+
+          & .info
+            padding: 17px 25px 17px 150px
+            text-align: right
+            align-items: flex-end
+
+      @include for-desktop-up
+        &:hover, &:focus-visible
+          outline: none
+          transform: scale(1.1, 1.1)
 
       @include for-big-desktop-up
         max-width: 1200px
@@ -18,17 +37,6 @@
       @include for-very-big-desktop-up
         max-width: 1400px
 
-      &:hover, &:focus-visible
-        outline: none
-        transform: scale(1.1, 1.1)
-
-      &.right
-        flex-direction: row-reverse
-
-        & .info
-          padding: 17px 25px 17px 150px
-          text-align: right
-          align-items: flex-end
 
       &:not(:first-child)
         margin-top: 65px
@@ -37,24 +45,39 @@
           margin-top: 75px
 
       & .img
+        display: block
         object-fit: cover
+
+        @include for-big-phone-down
+          width: 100%
 
       & .info
         flex-grow: 1
-        padding: 17px 150px 17px 25px
+        padding: 17px 25px 17px 25px
         display: flex
         flex-direction: column
+
+        @include for-big-phone-down
+          background: linear-gradient(175deg, var(--bgColor) 0.03%, transparent 99.97%)
+          text-align: center
+
+        @include for-big-phone-up
+          padding: 17px 150px 17px 25px
 
         & .content
           flex-grow: 1
 
           & .title
-            font-size: 36px
+            font-size: 20px
             font-family: 'Lemon Milk'
             color: #fff
 
+            @include for-big-phone-up
+              font-size: 36px
+
           & .description
             color: #fff
+            font-size: 13px
             margin-top: 10px
             overflow: hidden
             text-overflow: ellipsis
@@ -68,19 +91,32 @@
             line-height: 18px // line-height
             max-height: calc(18px * 3) // line-height * line-count
 
+            @include for-big-phone-up
+              font-size: 16px
+
         & .activity
           margin-top: 20px
           display: flex
           color: #fff
+          justify-content: center
+
+          @include for-big-phone-up
+            justify-content: initial
 
           & .likes, & .views
             text-shadow: 0 0 10px #938083
 
           & .views
-            margin-left: 20px
+            margin-left: 10px
+
+            @include for-big-phone-up
+              margin-left: 20px
 
   & .more
-    margin: 70px auto 0 auto
+    margin: 30px auto 0 auto
+
+    @include for-big-phone-up
+      margin: 70px auto 0 auto
 
     & .icon
       background-color: #00C2FF
@@ -98,23 +134,37 @@
           max-width: 1400px
 
         & .block
+          overflow: hidden
           background: linear-gradient(275deg, transparent 0.16%, #29005C 41.17%, rgba(41, 0, 92, 0.969925) 67.13%, transparent 99.84%)
 
           &:not(:first-child)
-            margin-top: 70px
+            margin-top: 30px
+
+            @include for-big-phone-up
+              margin-top: 70px
 
             @include for-big-desktop-up
               margin-top: 80px
 
           & .img
-            border-radius: 40px
-            object-fit: cover
+            display: block
+            width: 100%
+
+            @include for-big-phone-up
+              border-radius: 40px
+              object-fit: cover
+              width: initial
 
           & .text
-            padding: 70px 170px
+            padding: 25px 30px
             color: #fff
             text-align: center
             line-height: 1.5
+            font-size: 13px
+
+            @include for-big-phone-up
+              padding: 70px 170px
+              font-size: 16px
 
           &.top
             background: linear-gradient(179.81deg, #29005C 28%, rgba(41, 0, 92, 0) 99.84%)
@@ -124,52 +174,79 @@
               width: 100%
 
             & .text
-              padding: 45px 100px 170px 100px
+              padding: 10px 20px 30px 20px
+
+              @include for-big-phone-up
+                padding: 45px 100px 170px 100px
 
           &.left
-            display: flex
-            align-items: center
-            border-radius: 40px 0 0 40px
-            background: linear-gradient(89.81deg, #29005C 28%, rgba(41, 0, 92, 0) 99.84%)
+            background: linear-gradient(179.81deg, #29005C 28%, rgba(41, 0, 92, 0) 99.84%)
+            border-radius: 20px 20px 0 0
 
             & .text
-              padding: 60px 170px 60px 45px
-              text-align: left
+              padding: 10px 20px 30px 20px
+              text-align: center
+
+            @include for-big-phone-up
+              display: flex
+              align-items: center
+              border-radius: 40px 0 0 40px
+              background: linear-gradient(89.81deg, #29005C 28%, rgba(41, 0, 92, 0) 99.84%)
+
+              .text
+                padding: 60px 170px 60px 45px
+                text-align: left
 
           &.right
-            display: flex
-            align-items: center
-            flex-direction: row-reverse
-            border-radius: 0 40px 40px 0
-            background: linear-gradient(269.81deg, #29005C 28%, rgba(41, 0, 92, 0) 99.84%)
+            background: linear-gradient(179.81deg, #29005C 28%, rgba(41, 0, 92, 0) 99.84%)
+            border-radius: 20px 20px 0 0
 
             & .text
-              padding: 60px 54px 60px 170px
-              text-align: right
+              padding: 10px 20px 30px 20px
+              text-align: center
+
+            @include for-big-phone-up
+              display: flex
+              align-items: center
+              flex-direction: row-reverse
+              border-radius: 0 40px 40px 0
+              background: linear-gradient(269.81deg, #29005C 28%, rgba(41, 0, 92, 0) 99.84%)
+
+              & .text
+                padding: 60px 54px 60px 170px
+                text-align: right
 
       & .activity
         display: flex
         background: linear-gradient(170.66deg, #270067 7.12%, rgba(94, 0, 151, 0) 104.75%)
         border-radius: 20px
-        padding: 10px 40px
+        padding: 10px 20px
         justify-content: space-between
-        margin-top: 80px
+        margin-top: 30px
+
+        @include for-big-phone-up
+          padding: 10px 40px
+          margin-top: 80px
 
         & .actions
           display: flex
+          column-gap: 20px
+
+          @include for-big-phone-up
+            column-gap: 30px
 
           & .block
             display: flex
             align-items: center
+            column-gap: 6px
 
-            &:not(:last-child)
-              margin-right: 30px
+            @include for-big-phone-up
+              column-gap: 12px
 
             & .icon
-                background-color: #DB00FF
+              background-color: #DB00FF
 
             & .count
-              margin-left: 12px
               color: #fff
               font-weight: 600
 
@@ -177,16 +254,25 @@
           color: #fff
 
       & .gamesBlock
-        margin-top: 100px
+        margin-top: 40px
+
+        @include for-big-phone-up
+          margin-top: 100px
 
         & .title
-          font-size: 40px
-          color: #fff
           font-family: 'Lemon Milk'
+          font-size: 20px
+          color: #fff
+
+          @include for-big-phone-up
+            font-size: 40px
 
         & .games
           display: flex
-          margin-top: 35px
+          padding: 10px
+          column-gap: 10px
 
-          & .cardGame:not(:last-child)
-            margin-right: 20px
+          @include for-big-phone-up
+            padding: initial
+            margin-top: 35px
+            column-gap: 20px

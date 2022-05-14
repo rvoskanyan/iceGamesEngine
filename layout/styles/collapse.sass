@@ -1,3 +1,5 @@
+@import './breakPoints'
+
 .collapse
   background: #320065
   border-radius: 21px
@@ -7,18 +9,12 @@
   transition-property: max-height
   display: flex
   flex-direction: column
-  padding: 15px 25px //paddingTop&Bottom
-  max-height: 15px + 15px + 16px //paddingTop&Bottom + maxHeightHead
+  padding: 10px 15px //paddingTop&Bottom
+  max-height: 20px + 16px //paddingTop&Bottom + maxHeightHead
 
-  &.active
-    max-height: 500px
-
-    & .head .control
-      &:before, &:after
-        transform: rotate(0deg)
-
-    & .content
-      overflow: auto
+  @include for-big-phone-up
+    padding: 15px 25px //paddingTop&Bottom
+    max-height: 30px + 16px //paddingTop&Bottom + maxHeightHead
 
   & .head
     line-height: 1
@@ -27,37 +23,68 @@
     justify-content: space-between
     align-items: center
     width: 100%
+    max-width: 100%
+    min-width: 100%
     max-height: 16px //maxHeightHead
     min-height: 16px //maxHeightHead
+    column-gap: 10px
 
     & .title
-      font-size: 16px
+      font-size: 13px
+      overflow: hidden
+      white-space: nowrap
+      text-overflow: ellipsis
+
+      @include for-big-phone-up
+        font-size: 16px
 
     & .control
       display: flex
       min-height: 10px
-      min-width: 22px
+      min-width: 16px
       position: relative
+
+      @include for-big-phone-up
+        min-width: 20px
 
       &:before, &:after
         position: absolute
-        top: 0
+        bottom: 50%
         left: 0
         content: ''
         display: block
-        min-width: 13px
-        height: 3px
+        min-width: 10px
+        height: 2px
         background-color: #fff
-        transform: rotate(40deg)
+        transform: rotate(40deg) translateY(50%)
         transition: transform .3s ease-in
+
+        @include for-big-phone-up
+          height: 3px
+          min-width: 13px
 
       &:after
         left: initial
         right: 0
-        transform: rotate(-40deg)
+        transform: rotate(-40deg) translateY(50%)
 
   & .content
     line-height: 1.5
     flex-grow: 1
-    margin-top: 20px
+    margin-top: 10px
     overflow: hidden
+    font-size: 13px
+
+    @include for-big-phone-up
+      margin-top: 20px
+      font-size: 16px
+
+  &.active
+    max-height: 500px
+
+    & .head .control
+      &:before, &:after
+        transform: rotate(0deg) translateY(50%)
+
+    & .content
+      overflow: auto

@@ -14,11 +14,18 @@
     <div class="description">Тут Вы можете увидеть рейтинг среди всех пользователей на сайте</div>
     <div class="list">
         {{#each users}}
-            <div class="item">
+            <a href="{{@root.websiteAddress}}rating/{{login}}" class="item">
+                {{#iff @index '<' 3}}
+                    <div class="crownContainer">
+                        <div class="mask">
+                            <div class="crown"></div>
+                        </div>
+                    </div>
+                {{/iff}}
                 <div class="position">{{inc @index}} \ {{@root.countUsers}}</div>
                 <div class="name">{{login}}</div>
                 <div class="rating">{{rating}}</div>
-            </div>
+            </a>
         {{/each}}
     </div>
 </main>

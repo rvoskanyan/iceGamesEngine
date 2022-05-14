@@ -38,12 +38,12 @@
             {{/each}}
         </div>
         {{#iff countReviews '>' 3}}
-            <div class="btn link translucent loadMore js-loadMoreReviewsBtn">Загрузить еще</div>
+            <button class="btn link translucent loadMore js-loadMoreReviewsBtn">Загрузить еще</button>
         {{/iff}}
         {{#if lastViewedProducts.length}}
             <div class="lastViews">
                 <div class="title">Вы недавно смотрели</div>
-                <div class="games">
+                <div class="games mobileScroll">
                     {{#each lastViewedProducts}}
                         {{> game
                             id=_id

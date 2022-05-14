@@ -1,16 +1,23 @@
+@import './breakPoints'
+
 .supportPage
   & .titlePage
-    font-size: 36px
+    font-size: 20px
     color: #fff
     font-family: 'Lemon Milk'
-    margin: 0 auto
-    width: max-content
+    text-align: center
+
+    @include for-big-phone-up
+      font-size: 36px
 
   & .faq
     margin-top: 30px
 
     & .item:not(:last-child)
-      margin-bottom: 12px
+      margin-bottom: 8px
+
+      @include for-big-phone-up
+        margin-bottom: 12px
 
   & .chatBlock
     background-color: #320065

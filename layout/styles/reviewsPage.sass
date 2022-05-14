@@ -1,10 +1,21 @@
+@import './breakPoints'
+
 .reviewsPage
   & .reviewsList
     & .review:not(:last-child)
-      margin-bottom: 30px
+      margin-bottom: 15px
 
-  & .pagination
-    margin-top: 45px
+      @include for-big-phone-up
+        margin-bottom: 30px
+
+  & .loadMore
+    margin: 30px auto 0 auto
+
+    @include for-big-phone-up
+      margin: 45px auto 0 auto
 
   & .lastViews
-    margin-top: 100px
+    margin-top: 40px
+
+    @include for-big-phone-up
+      margin-top: 100px

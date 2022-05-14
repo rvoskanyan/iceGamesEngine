@@ -1,3 +1,4 @@
+@import './breakPoints'
 @import './zIndex'
 
 .ratingPageBg
@@ -66,9 +67,13 @@
         background-image: linear-gradient(360deg, #01033C 0%, rgba(43, 0, 99, 0.3) 100%)
 
   .coverImg
-    min-height: 100vh
-    max-height: 100vh
+    min-height: 40vh
+    max-height: 40vh
     position: relative
+
+    @include for-big-phone-up
+      min-height: 100vh
+      max-height: 100vh
 
     &:before, &:after
       content: ''

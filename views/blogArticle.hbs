@@ -1,5 +1,5 @@
 <main class="blogPage article">
-    <div class="breadcrumbs contentContainer">
+    <div class="breadcrumbs contentContainer mobileInvisibleScroll">
         <div class="item">
             <a class="btn link" href="{{websiteAddress}}">Главная</a>
         </div>
@@ -23,8 +23,10 @@
     <div class="info contentContainer js-articleContent">
         <div class="content">
             {{#each article.blocks}}
-                <div class="block {{imgPosition}}">
-                    <img class="img" src="{{@root.websiteAddress}}{{img}}" alt="Изображение для контент-блока {{@index}}">
+                <div class="block{{#if imgPosition}} {{imgPosition}}{{/if}}">
+                    {{#if img}}
+                        <img class="img" src="{{@root.websiteAddress}}{{img}}" alt="Изображение для контент-блока {{@index}}">
+                    {{/if}}
                     <div class="text">
                         {{text}}
                     </div>
@@ -54,7 +56,7 @@
         {{#if article.products.length}}
             <div class="gamesBlock">
                 <div class="title">Игры из статьи</div>
-                <div class="games">
+                <div class="games mobileScroll">
                     {{#each article.products}}
                         {{> game
                             id=_id

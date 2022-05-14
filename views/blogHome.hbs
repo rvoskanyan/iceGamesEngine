@@ -20,7 +20,7 @@
     <div class="contentContainer">
         <div class="articles">
             {{#each articles}}
-                <a class="article{{#if rightImg}} right{{/if}}" href="{{websiteAddress}}/blog/{{alias}}" style="background: linear-gradient(94.29deg, {{blockColor}} 35.06%, rgba(196, 196, 196, 0) 88.75%);">
+                <a class="article{{#if rightImg}} right{{/if}}" href="{{websiteAddress}}/blog/{{alias}}" style="--bgColor: {{blockColor}}">
                     <img class="img" src="{{@root.websiteAddress}}{{img}}" alt="Изображение записи в блоге - {{name}}">
                     <div class="info">
                         <div class="content">
@@ -37,8 +37,8 @@
                 </a>
             {{/each}}
         </div>
-        <!--<button class="btn more increase" title="Показать еще статьи">
+        <button class="btn more increase" title="Показать еще статьи">
             <span class="icon icon-arrowBottom"></span>
-        </button>-->
+        </button>
     </div>
 </main>

@@ -4,14 +4,20 @@
   width: 100%
 
   .subtitle
-    font-size: 35px
-    font-weight: 600
+    font-family: 'Lemon Milk'
+    font-size: 18px
     color: #fff
     text-align: center
 
+    @include for-big-phone-up
+      font-size: 35px
+
   & > .head
     max-width: 1250px
-    margin: 40px auto 0 auto
+    margin: 10px auto 0 auto
+
+    @include for-big-phone-up
+      margin: 40px auto 0 auto
 
     .main
       text-align: center
@@ -28,41 +34,82 @@
         background-image: linear-gradient(90deg, transparent 0%, #00E0FF 50%, transparent 100%)
 
       &:before
-        margin-bottom: 30px
+        margin-bottom: 15px
+
+        @include for-big-phone-up
+          margin-bottom: 30px
 
       &:after
-        margin-top: 30px
+        margin-top: 15px
+
+        @include for-big-phone-up
+          margin-top: 30px
 
       & .name
-        font-size: 48px
+        font-size: 20px
         text-shadow: 0 0 35px #000000
 
+        @include for-big-phone-up
+          font-size: 48px
+
       & .rating
-        margin-top: 20px
+        margin-top: 10px
+        font-size: 13px
+
+        @include for-big-phone-up
+          margin-top: 20px
+          font-size: 16px
 
     .statistics
       display: flex
-      justify-content: space-between
+      column-gap: 10px
+      row-gap: 10px
+      flex-wrap: wrap
+      justify-content: center
       margin-top: 20px
 
+      @include for-big-phone-up
+        justify-content: space-between
+
       .item
-        max-width: 125px
         text-align: center
         color: #fff
         text-shadow: 0 0 35px #000000
+        display: flex
+        flex-direction: column
+        align-items: center
 
         .value
           font-family: 'Lemon Milk'
-          font-size: 40px
+          font-size: 20px
+          min-width: 90px
+
+          @include for-big-phone-up
+            font-size: 40px
+            min-width: 125px
+
+        .name
+          font-size: 13px
+          max-width: 90px
+
+          @include for-big-phone-up
+            font-size: 16px
+            max-width: 125px
 
   .achievements
-    margin-top: 100px
+    margin-top: 40px
+
+    @include for-big-phone-up
+      margin-top: 100px
 
     .slider
       display: flex
       align-items: center
       justify-content: space-between
-      margin-top: 35px
+      margin-top: 15px
+
+      @include for-big-phone-up
+        margin-top: 35px
 
       .next .icon-static
         transform: rotateY(180deg)
@@ -109,12 +156,18 @@
                 opacity: 1
 
   .games
-    margin: 100px auto 0 auto
+    margin: 40px auto 0 auto
     width: max-content
 
+    @include for-big-phone-up
+      margin: 100px auto 0 auto
+
     .items
-      margin-top: 35px
+      margin-top: 15px
       display: flex
+
+      @include for-big-phone-up
+        margin-top: 35px
 
       .cardGame
         margin: 0 15px

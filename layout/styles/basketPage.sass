@@ -1,15 +1,23 @@
+@import './breakPoints'
+
 .basketPage
   width: 100%
 
   & .title
-    color: #fff
-    font-size: 36px
     font-family: 'Lemon Milk'
+    font-size: 20px
+    color: #fff
+    font-weight: 100
+
+    @include for-big-phone-up
+      font-size: 36px
 
   & .info
     margin-top: 30px
-    display: flex
     justify-content: space-between
+
+    @include for-big-phone-up
+      display: flex
 
     & .listGames
       flex-grow: 1
@@ -22,24 +30,34 @@
         background: linear-gradient(270deg, transparent 0%, #fff 100%)
 
       & .game
-        margin-top: 33px
+        margin-top: 15px
+
+        @include for-big-phone-up
+          margin-top: 33px
 
         & .content
           display: flex
+          column-gap: 15px
           align-items: center
-          margin-bottom: 33px
+          margin-bottom: 15px
 
-          & .btn
-            margin-right: 35px
+          @include for-big-phone-up
+            margin-bottom: 33px
+            column-gap: 35px
 
           & .img
             object-fit: cover
-            width: 156px
-            height: 242px
+            width: 114px
+            height: 177px
             border: 2px solid #fff
-            box-shadow: 0 0 20px #0066FF
-            border-radius: 22px
-            margin-right: 35px
+            box-shadow: 0 0 10px #0066FF
+            border-radius: 17px
+
+            @include for-big-phone-up
+              border-radius: 22px
+              width: 156px
+              height: 242px
+              box-shadow: 0 0 20px #0066FF
 
           & .main
             display: flex
@@ -48,29 +66,65 @@
             align-self: stretch
 
             & .name
-              font-size: 24px
-              color: #fff
               font-family: 'Lemon Milk'
+              font-size: 18px
+              color: #fff
+
+              @include for-big-phone-up
+                font-size: 24px
 
             & .price
-              margin-top: 22px
-              font-size: 24px
+              display: block
+              margin-top: 5px
+              font-size: 20px
               line-height: 1
 
-              & .toPrice, & .fromPrice
+              @include for-big-phone-up
+                margin-top: 22px
+                font-size: 24px
+
+              .rowDiscount
+                display: flex
+                column-gap: 10px
+                align-items: center
+
+                @include for-big-phone-up
+                  margin-bottom: 5px
+
+              & .toPrice
+                font-size: 26px
+
                 &:after
-                  font-size: 15px
+                  font-size: 16px
+
+                @include for-big-phone-up
+                  font-size: 32px
+
+                  &:after
+                    font-size: 18px
 
               & .fromPrice
-                margin-left: 35px
-                margin-right: 16px
+                font-size: 15px
+
+                &:after
+                  font-size: 12px
+
+                @include for-big-phone-up
+                  font-size: 17px
+
+                  &:after
+                    font-size: 14px
 
               & .discount
                 background: #984BFB
                 border-radius: 12px
                 color: #fff
-                font-size: 15px
-                padding: 5px 6px
+                font-size: 13px
+                padding: 4px 5px
+
+                @include for-big-phone-up
+                  font-size: 13px
+                  padding: 5px 6px
 
             & .preOrderInfo
               margin-top: 15px
@@ -80,8 +134,11 @@
               color: #fff
 
               & .item
-                font-size: 14px
+                font-size: 12px
                 font-weight: 400
+
+                @include for-big-phone-up
+                  font-size: 14px
 
                 &:not(:last-child)
                   margin-bottom: 5px
@@ -91,17 +148,25 @@
       border: 1px solid #fff
       border-radius: 22px
       align-self: flex-start
-      padding: 20px 23px
-      position: sticky
+      padding: 15px 18px
       top: 180px
-      min-width: 320px
+      margin-top: 30px
+
+      @include for-big-phone-up
+        min-width: 320px
+        padding: 20px 23px
+        margin-top: initial
+        position: sticky
 
       & .total
         color: #fff
-        font-size: 24px
+        font-size: 18px
         text-transform: uppercase
         font-weight: 600
         display: flex
+
+        @include for-big-phone-up
+          font-size: 24px
 
         & .toValue
           margin: 0 20px
@@ -115,30 +180,13 @@
           & .value:before
             background-color: #B590D2
 
-      & .list
-        margin-top: 25px
-        list-style: none
+      .totalProducts
         color: #fff
+        margin-top: 10px
+        font-size: 13px
 
-        & .item
-          display: flex
-          align-items: center
-
-          &:not(:last-child)
-            margin-bottom: 10px
-
-          &:before
-            content: ''
-            display: block
-            min-width: 5px
-            min-height: 5px
-            border-radius: 100%
-            background-color: #fff
-            margin-right: 15px
-            margin-left: 7px
-
-          & .value
-            margin-left: 30px
+        @include for-big-phone-up
+          font-size: 16px
 
       & .btn
         border-width: 1px
@@ -150,12 +198,22 @@
 
         & .saving
           display: flex
+          align-items: center
           margin-top: 3px
-          font-size: 14px
+          font-size: 12px
           font-weight: 300
+
+          @include for-big-phone-up
+            font-size: 14px
 
           & .toPrice
             margin-left: 5px
+
+            &:after
+              font-size: 12px
+
+              @include for-big-phone-up
+                font-size: 14px
 
   & .notFound
     display: flex
@@ -165,13 +223,29 @@
     color: #fff
 
     & .img
-      margin-top: 60px
+      width: 90px
+      margin-top: 10px
+
+      @include for-big-phone-up
+        width: 111px
+        margin-top: 60px
 
     & .text
-      margin-top: 35px
+      margin-top: 25px
+
+      @include for-big-phone-up
+        margin-top: 35px
 
       & .description
-        margin-top: 10px
+        margin-top: 5px
+        font-size: 13px
+
+        @include for-big-phone-up
+          margin-top: 10px
+          font-size: 16px
 
     & .btn
-      margin-top: 30px
+      margin-top: 20px
+
+      @include for-big-phone-up
+        margin-top: 30px
