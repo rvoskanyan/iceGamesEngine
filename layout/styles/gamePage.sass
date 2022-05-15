@@ -272,20 +272,20 @@
         @include for-big-phone-up
           padding: 9px 19px //paddingWrapper
 
-        @include for-big-desktop-up
+        @include for-middle-desktop-up
           padding: 11px 22px //paddingWrapper
 
-        @include for-very-big-desktop-up
+        @include for-big-desktop-up
           padding: 12px 24px //paddingWrapper
 
         & .visibleArea
           @include for-big-phone-up
             max-width: calc((287px + 15px * 2) * 2) //(widthSlide + marginSlide * 2) * countSlides
 
-          @include for-big-desktop-up
+          @include for-middle-desktop-up
             max-width: calc((346px + 15px * 2) * 2) //(widthSlide + marginSlide * 2) * countSlides
 
-          @include for-very-big-desktop-up
+          @include for-big-desktop-up
             max-width: calc((403px + 15px * 2) * 2) //(widthSlide + marginSlide * 2) * countSlides
 
           & .tape
@@ -345,14 +345,14 @@
                 &:hover, &:focus-visible
                   transform: scale(1.1, 1.1)
 
-              @include for-big-desktop-up
+              @include for-middle-desktop-up
                 min-width: 346px //widthSlide
                 max-width: 346px
                 height: 213px
                 min-height: 213px
                 max-height: 213px
 
-              @include for-very-big-desktop-up
+              @include for-big-desktop-up
                 min-width: 403px //widthSlide
                 max-width: 403px
                 height: 248px
@@ -424,19 +424,19 @@
                 overflow: hidden
                 padding: 26px 13px
 
-                @include for-big-desktop-up
+                @include for-middle-desktop-up
                   padding: 30px 11px
 
-                @include for-very-big-desktop-up
+                @include for-big-desktop-up
                   padding: 33px 10px
 
                 & .visibleArea
                   max-width: calc((128px + 10px * 2) * 4)
 
-                  @include for-big-desktop-up
+                  @include for-middle-desktop-up
                     max-width: calc((154px + 15px * 2) * 4)
 
-                  @include for-very-big-desktop-up
+                  @include for-big-desktop-up
                     max-width: calc((171px + 20px * 2) * 4)
 
                   & .tape
@@ -450,14 +450,14 @@
                       max-height: 201px
                       margin: 0 10px
 
-                      @include for-big-desktop-up
+                      @include for-middle-desktop-up
                         min-width: 154px
                         max-width: 154px
                         min-height: 243px
                         max-height: 243px
                         margin: 0 15px
 
-                      @include for-very-big-desktop-up
+                      @include for-big-desktop-up
                         min-width: 171px
                         max-width: 171px
                         min-height: 270px

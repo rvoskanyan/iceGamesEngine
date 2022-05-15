@@ -31,17 +31,17 @@
           outline: none
           transform: scale(1.1, 1.1)
 
-      @include for-big-desktop-up
+      @include for-middle-desktop-up
         max-width: 1200px
 
-      @include for-very-big-desktop-up
+      @include for-big-desktop-up
         max-width: 1400px
 
 
       &:not(:first-child)
         margin-top: 65px
 
-        @include for-big-desktop-up
+        @include for-middle-desktop-up
           margin-top: 75px
 
       & .img
@@ -127,10 +127,10 @@
         max-width: 1000px
         margin: 0 auto
 
-        @include for-big-desktop-up
+        @include for-middle-desktop-up
           max-width: 1200px
 
-        @include for-very-big-desktop-up
+        @include for-big-desktop-up
           max-width: 1400px
 
         & .block
@@ -143,7 +143,7 @@
             @include for-big-phone-up
               margin-top: 70px
 
-            @include for-big-desktop-up
+            @include for-middle-desktop-up
               margin-top: 80px
 
           & .img

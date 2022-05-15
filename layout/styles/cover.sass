@@ -18,10 +18,10 @@
   @include for-desktop-up
     grid-template-rows: minmax(770px, 100vh)
 
-  @include for-big-desktop-up
+  @include for-middle-desktop-up
     grid-template-rows: minmax(800px, 100vh)
 
-  @include for-very-big-desktop-up
+  @include for-big-desktop-up
     grid-template-rows: minmax(900px, 100vh)
 
   &.blackout
@@ -40,7 +40,7 @@
       @include for-big-phone-up
         background: linear-gradient(90deg, #01033C 0%, transparent 100%)
 
-      @include for-very-big-desktop-up
+      @include for-big-desktop-up
         background: linear-gradient(90deg, #01033C 0%, transparent 70%, #01033C 100%)
         right: 0
 
@@ -149,7 +149,7 @@
       @include for-big-phone-up
         font-size: 36px
 
-      @include for-big-desktop-up
+      @include for-middle-desktop-up
         font-size: 43px
 
     & .description
@@ -203,7 +203,7 @@
             @include for-big-phone-up
               font-size: 16px
 
-            @include for-big-desktop-up
+            @include for-middle-desktop-up
               font-size: 19px
 
         & .discount
@@ -234,7 +234,7 @@
           @include for-big-phone-up
             font-size: 25px
 
-          @include for-big-desktop-up
+          @include for-middle-desktop-up
             font-size: 31px
 
     & .actions

@@ -90,11 +90,11 @@
 
         .name
           font-size: 13px
-          max-width: 90px
+          max-width: 85px
 
           @include for-big-phone-up
             font-size: 16px
-            max-width: 125px
+            max-width: 105px
 
   .achievements
     margin-top: 40px
@@ -105,59 +105,72 @@
     .slider
       display: flex
       align-items: center
-      justify-content: space-between
-      margin-top: 15px
+      justify-content: center
+      margin: 15px auto 0 auto
 
-      @include for-big-phone-up
-        margin-top: 35px
+      @include for-big-phone-down
+        & .prev, & .next
+          display: none
+
+      @include for-desktop-up
+        justify-content: space-between
+        margin: 35px auto 0 auto
+        max-width: 1100px
+
+      @include for-middle-desktop-up
+        max-width: 1270px
+
+      @include for-big-desktop-up
+        max-width: 1500px
 
       .next .icon-static
         transform: rotateY(180deg)
 
-      .visibleAreaWrapper
+      .visibleArea
         overflow: hidden
-        padding: 15px 0
+        max-width: (130px + 5px * 2) * 2 //(widthSlide + marginSlide * 2) * countSlides
 
-        .visibleArea
-          max-width: (204px + 15px * 2) * 5 //(widthSlide + marginSlide * 2) * countSlides
+        @include for-middle-phone-up
+          max-width: (150px + 7px * 2) * 2 //(widthSlide + marginSlide * 2) * countSlides
 
-          @include for-big-desktop-up
-            max-width: (220px + 15px * 2) * 5 //(widthSlide + marginSlide * 2) * countSlides
+        @include for-desktop-up
+          max-width: (171px + 15px * 2) * 5 //(widthSlide + marginSlide * 2) * countSlides
+          padding: 15px 0
 
-          @include for-very-big-desktop-up
-            max-width: (233px + 20px * 2) * 5 //(widthSlide + marginSlide * 2) * countSlides
+        @include for-middle-desktop-up
+          max-width: (207px + 15px * 2) * 5 //(widthSlide + marginSlide * 2) * countSlides
 
-          .tape
-            display: flex
+        @include for-big-desktop-up
+          max-width: (241px + 20px * 2) * 5 //(widthSlide + marginSlide * 2) * countSlides
 
-            .slide
-              background-color: #460B6E
-              border-radius: 22px
-              box-shadow: 0 0 15px #0066ff
-              border: 2px solid #fff
-              opacity: 0
-              visibility: hidden
+        .tape
+          display: flex
+          transition: transform .5s ease-in
+
+          .slide
+            opacity: 0
+            visibility: hidden
+            margin: 0 5px //marginSlide
+            transition: .5s ease-in
+            transition-property: opacity, visibility
+
+            @include for-middle-phone-up
+              margin: 0 7px //marginSlide
+
+            @include for-desktop-up
               margin: 0 15px //marginSlide
-              min-width: 204px //widthSlide
-              height: 317px
+              background-color: #460B6E
+              box-shadow: 0 0 15px rgba(250, 0, 255, 0.9)
 
-              @include for-big-desktop-up
-                margin: 0 15px //marginSlide
-                min-width: 220px //widthSlide
-                height: 340px
+            @include for-big-desktop-up
+              margin: 0 20px //marginSlide
 
-              @include for-very-big-desktop-up
-                margin: 0 20px //marginSlide
-                min-width: 233px //widthSlide
-                height: 368px
-
-              &.active
-                visibility: visible
-                opacity: 1
+            &.active
+              visibility: visible
+              opacity: 1
 
   .games
     margin: 40px auto 0 auto
-    width: max-content
 
     @include for-big-phone-up
       margin: 100px auto 0 auto
@@ -165,12 +178,11 @@
     .items
       margin-top: 15px
       display: flex
+      column-gap: 10px
+      padding-bottom: 15px
 
       @include for-big-phone-up
         margin-top: 35px
-
-      .cardGame
-        margin: 0 15px
-
-        @include for-very-big-desktop-up
-          margin: 0 20px
+        column-gap: 20px
+        justify-content: center
+        padding-bottom: initial

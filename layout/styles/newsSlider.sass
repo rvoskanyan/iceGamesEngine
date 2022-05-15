@@ -2,9 +2,7 @@
 
 .newsSlider
   margin-top: 10px
-  position: relative
   display: flex
-  z-index: -1
 
   & + .all
     margin: 35px auto 0 auto
@@ -46,10 +44,10 @@
           visibility: visible
           opacity: 1
 
-        @include for-big-desktop-up
+        @include for-middle-desktop-up
           min-width: calc(1306px / 3) //width visibleArea / count slides
 
-        @include for-very-big-desktop-up
+        @include for-big-desktop-up
           min-width: calc(1446px / 3)
 
   & .next

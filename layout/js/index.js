@@ -15,6 +15,7 @@ const postman = new Postman();
 const profileMenuNode = document.querySelector('.js-profileMenu');
 const homeSliderNode = document.querySelector('.js-homeSlider');
 const newsSliderNode = document.querySelector('.js-newsSlider');
+const achievementViewProfileSliderNode = document.querySelector('.js-achievementViewProfileSlider');
 const homeMediaSliderNode = document.querySelector('.js-homeMediaSlider');
 const homeCatalogTabsNode = document.querySelector('.js-homeCatalogTabs');
 const genresSliderNode = document.querySelector('.js-genresSlider');
@@ -926,6 +927,15 @@ if (newsSliderNode) {
     switchingTime: 5000,
     isTrack: true,
     countSlidesScroll: 2
+  })
+}
+
+if (achievementViewProfileSliderNode) {
+  new Slider({
+    mainNode: achievementViewProfileSliderNode,
+    switchingTime: 3000,
+    isTrack: true,
+    countSlidesScroll: 5,
   })
 }
 

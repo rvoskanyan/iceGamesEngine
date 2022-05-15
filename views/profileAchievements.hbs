@@ -1,9 +1,12 @@
 <main class="contentContainer withoutCover profilePage">
-    <div class="breadcrumbs contentContainer">
+    <div class="breadcrumbs contentContainer mobileInvisibleScroll">
         <div class="item">
-            <a class="btn link" href="/">Главная</a>
+            <a class="btn link" href="{{websiteAddress}}">Главная</a>
         </div>
-        <div class="current">Профиль</div>
+        <div class="item">
+            <a class="btn link" href="{{websiteAddress}}profile">Профиль</a>
+        </div>
+        <div class="current">Достижения</div>
     </div>
     <div class="profile">
         {{> profileMenu}}

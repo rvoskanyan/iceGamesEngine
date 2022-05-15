@@ -196,7 +196,7 @@
       margin-top: initial
       margin-left: 150px
 
-    @include for-big-desktop-up
+    @include for-middle-desktop-up
       max-width: 930px
 
     & .headProfile
@@ -495,7 +495,7 @@
       & .list
         display: grid
         grid-template-columns: repeat(2, max-content)
-        justify-content: space-between
+        justify-content: space-around
         row-gap: 20px
         column-gap: 30px
         margin-top: 20px
@@ -503,9 +503,6 @@
         @include for-big-phone-up
           grid-template-columns: repeat(4, max-content)
           row-gap: 50px
-
-        & .achievement:not(:last-child)
-          margin-right: 20px
 
     .referralLink
       .description

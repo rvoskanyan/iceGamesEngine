@@ -1626,9 +1626,7 @@
 
 .newsSlider {
   margin-top: 10px;
-  position: relative;
-  display: flex;
-  z-index: -1; }
+  display: flex; }
   .newsSlider + .all {
     margin: 35px auto 0 auto; }
   .newsSlider > .btn {
@@ -2641,11 +2639,17 @@
   color: #fff;
   text-align: center;
   border-radius: 22px;
-  min-width: 120px;
-  max-width: 120px;
-  min-height: 158px;
-  max-height: 158px;
+  min-width: 130px;
+  max-width: 130px;
+  min-height: 168px;
+  max-height: 168px;
   z-index: -1; }
+  @media (min-width: 360px) {
+    .achievement {
+      min-width: 150px;
+      max-width: 150px;
+      min-height: 190px;
+      max-height: 190px; } }
   @media (min-width: 431px) {
     .achievement {
       padding: 0 20px;
@@ -2661,9 +2665,6 @@
       max-height: 238px; } }
   .achievement .achievementIcon {
     width: 35px; }
-    @media (min-width: 431px) {
-      .achievement .achievementIcon {
-        width: 70px; } }
   .achievement .name {
     margin-top: 10px;
     font-weight: 700;
@@ -2689,6 +2690,32 @@
     justify-content: center;
     align-items: center;
     background: rgba(50, 0, 101, 0.6); }
+  @media (min-width: 1366px) {
+    .achievement.big {
+      min-width: 171px;
+      max-width: 171px;
+      min-height: 225px;
+      max-height: 225px; }
+      .achievement.big .achievementIcon {
+        width: 60px; }
+      .achievement.big .name {
+        margin-top: 15px; } }
+  @media (min-width: 1650px) {
+    .achievement.big {
+      min-width: 207px;
+      max-width: 207px;
+      min-height: 272px;
+      max-height: 272px; } }
+  @media (min-width: 1920px) {
+    .achievement.big {
+      min-width: 241px;
+      max-width: 241px;
+      min-height: 317px;
+      max-height: 317px; }
+      .achievement.big .achievementIcon {
+        width: 70px; }
+      .achievement.big .name {
+        margin-top: 20px; } }
 
 .articleBlock {
   display: flex;
@@ -4635,7 +4662,7 @@
       .profilePage .content .achievementsList .list {
         display: grid;
         grid-template-columns: repeat(2, max-content);
-        justify-content: space-between;
+        justify-content: space-around;
         row-gap: 20px;
         column-gap: 30px;
         margin-top: 20px; }
@@ -4643,8 +4670,6 @@
           .profilePage .content .achievementsList .list {
             grid-template-columns: repeat(4, max-content);
             row-gap: 50px; } }
-        .profilePage .content .achievementsList .list .achievement:not(:last-child) {
-          margin-right: 20px; }
     .profilePage .content .referralLink .description {
       font-size: 13px;
       margin-top: 6px; }
@@ -4925,11 +4950,11 @@
               min-width: 125px; } }
         .viewProfilePage > .head .statistics .item .name {
           font-size: 13px;
-          max-width: 90px; }
+          max-width: 85px; }
           @media (min-width: 431px) {
             .viewProfilePage > .head .statistics .item .name {
               font-size: 16px;
-              max-width: 125px; } }
+              max-width: 105px; } }
   .viewProfilePage .achievements {
     margin-top: 40px; }
     @media (min-width: 431px) {
@@ -4938,66 +4963,79 @@
     .viewProfilePage .achievements .slider {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      margin-top: 15px; }
-      @media (min-width: 431px) {
+      justify-content: center;
+      margin: 15px auto 0 auto; }
+      @media (max-width: 430px) {
+        .viewProfilePage .achievements .slider .prev, .viewProfilePage .achievements .slider .next {
+          display: none; } }
+      @media (min-width: 1366px) {
         .viewProfilePage .achievements .slider {
-          margin-top: 35px; } }
+          justify-content: space-between;
+          margin: 35px auto 0 auto;
+          max-width: 1100px; } }
+      @media (min-width: 1650px) {
+        .viewProfilePage .achievements .slider {
+          max-width: 1270px; } }
+      @media (min-width: 1920px) {
+        .viewProfilePage .achievements .slider {
+          max-width: 1500px; } }
       .viewProfilePage .achievements .slider .next .icon-static {
         transform: rotateY(180deg); }
-      .viewProfilePage .achievements .slider .visibleAreaWrapper {
+      .viewProfilePage .achievements .slider .visibleArea {
         overflow: hidden;
-        padding: 15px 0; }
-        .viewProfilePage .achievements .slider .visibleAreaWrapper .visibleArea {
-          max-width: 1170px; }
-          @media (min-width: 1650px) {
-            .viewProfilePage .achievements .slider .visibleAreaWrapper .visibleArea {
-              max-width: 1250px; } }
-          @media (min-width: 1920px) {
-            .viewProfilePage .achievements .slider .visibleAreaWrapper .visibleArea {
-              max-width: 1365px; } }
-          .viewProfilePage .achievements .slider .visibleAreaWrapper .visibleArea .tape {
-            display: flex; }
-            .viewProfilePage .achievements .slider .visibleAreaWrapper .visibleArea .tape .slide {
-              background-color: #460B6E;
-              border-radius: 22px;
-              box-shadow: 0 0 15px #0066ff;
-              border: 2px solid #fff;
-              opacity: 0;
-              visibility: hidden;
-              margin: 0 15px;
-              min-width: 204px;
-              height: 317px; }
-              @media (min-width: 1650px) {
-                .viewProfilePage .achievements .slider .visibleAreaWrapper .visibleArea .tape .slide {
-                  margin: 0 15px;
-                  min-width: 220px;
-                  height: 340px; } }
-              @media (min-width: 1920px) {
-                .viewProfilePage .achievements .slider .visibleAreaWrapper .visibleArea .tape .slide {
-                  margin: 0 20px;
-                  min-width: 233px;
-                  height: 368px; } }
-              .viewProfilePage .achievements .slider .visibleAreaWrapper .visibleArea .tape .slide.active {
-                visibility: visible;
-                opacity: 1; }
+        max-width: 280px; }
+        @media (min-width: 360px) {
+          .viewProfilePage .achievements .slider .visibleArea {
+            max-width: 328px; } }
+        @media (min-width: 1366px) {
+          .viewProfilePage .achievements .slider .visibleArea {
+            max-width: 1005px;
+            padding: 15px 0; } }
+        @media (min-width: 1650px) {
+          .viewProfilePage .achievements .slider .visibleArea {
+            max-width: 1185px; } }
+        @media (min-width: 1920px) {
+          .viewProfilePage .achievements .slider .visibleArea {
+            max-width: 1405px; } }
+        .viewProfilePage .achievements .slider .visibleArea .tape {
+          display: flex;
+          transition: transform .5s ease-in; }
+          .viewProfilePage .achievements .slider .visibleArea .tape .slide {
+            opacity: 0;
+            visibility: hidden;
+            margin: 0 5px;
+            transition: .5s ease-in;
+            transition-property: opacity, visibility; }
+            @media (min-width: 360px) {
+              .viewProfilePage .achievements .slider .visibleArea .tape .slide {
+                margin: 0 7px; } }
+            @media (min-width: 1366px) {
+              .viewProfilePage .achievements .slider .visibleArea .tape .slide {
+                margin: 0 15px;
+                background-color: #460B6E;
+                box-shadow: 0 0 15px rgba(250, 0, 255, 0.9); } }
+            @media (min-width: 1920px) {
+              .viewProfilePage .achievements .slider .visibleArea .tape .slide {
+                margin: 0 20px; } }
+            .viewProfilePage .achievements .slider .visibleArea .tape .slide.active {
+              visibility: visible;
+              opacity: 1; }
   .viewProfilePage .games {
-    margin: 40px auto 0 auto;
-    width: max-content; }
+    margin: 40px auto 0 auto; }
     @media (min-width: 431px) {
       .viewProfilePage .games {
         margin: 100px auto 0 auto; } }
     .viewProfilePage .games .items {
       margin-top: 15px;
-      display: flex; }
+      display: flex;
+      column-gap: 10px;
+      padding-bottom: 15px; }
       @media (min-width: 431px) {
         .viewProfilePage .games .items {
-          margin-top: 35px; } }
-      .viewProfilePage .games .items .cardGame {
-        margin: 0 15px; }
-        @media (min-width: 1920px) {
-          .viewProfilePage .games .items .cardGame {
-            margin: 0 20px; } }
+          margin-top: 35px;
+          column-gap: 20px;
+          justify-content: center;
+          padding-bottom: initial; } }
 
 .aboutPage {
   color: #fff; }

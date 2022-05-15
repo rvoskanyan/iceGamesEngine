@@ -13,11 +13,17 @@
   color: #fff
   text-align: center
   border-radius: 22px
-  min-width: 120px
-  max-width: 120px
-  min-height: 158px
-  max-height: 158px
+  min-width: 130px
+  max-width: 130px
+  min-height: 168px
+  max-height: 168px
   z-index: -1
+
+  @include for-middle-phone-up
+    min-width: 150px
+    max-width: 150px
+    min-height: 190px
+    max-height: 190px
 
   @include for-big-phone-up
     padding: 0 20px
@@ -26,7 +32,7 @@
     min-height: 211px
     max-height: 211px
 
-  @include for-big-desktop-up
+  @include for-middle-desktop-up
     min-width: 181px
     max-width: 181px
     min-height: 238px
@@ -34,9 +40,6 @@
 
   & .achievementIcon
     width: 35px
-
-    @include for-big-phone-up
-      width: 70px
 
   & .name
     margin-top: 10px
@@ -65,3 +68,36 @@
     justify-content: center
     align-items: center
     background: rgba(50, 0, 101, 0.60)
+
+  @include for-desktop-up
+    &.big
+      min-width: 171px
+      max-width: 171px
+      min-height: 225px
+      max-height: 225px
+
+      .achievementIcon
+        width: 60px
+
+      .name
+        margin-top: 15px
+
+  @include for-middle-desktop-up
+    &.big
+      min-width: 207px
+      max-width: 207px
+      min-height: 272px
+      max-height: 272px
+
+  @include for-big-desktop-up
+    &.big
+      min-width: 241px
+      max-width: 241px
+      min-height: 317px
+      max-height: 317px
+
+      .achievementIcon
+        width: 70px
+
+      .name
+        margin-top: 20px
