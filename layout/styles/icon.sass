@@ -172,8 +172,12 @@
   &-triangle
     mask-image: url("./../img/triangle.svg")
     -webkit-mask-image: url("./../img/triangle.svg")
-    width: 83px
-    height: 73px
+    width: 45px
+    height: 39px
+
+    @include for-desktop-up
+      width: 83px
+      height: 73px
 
   &-allResults
     mask-image: url("./../img/allResults.svg")

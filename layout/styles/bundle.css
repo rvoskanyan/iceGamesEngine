@@ -661,6 +661,39 @@
       height: 100%;
       object-fit: cover; }
 
+.agreementPage {
+  color: #fff;
+  font-size: 13px; }
+  .agreementPage h1 {
+    font-family: 'Lemon Milk';
+    font-size: 20px;
+    font-weight: 100;
+    text-align: center;
+    margin-bottom: 20px; }
+  .agreementPage p {
+    font-family: 'Montserrat';
+    margin-bottom: 10px; }
+  .agreementPage ol {
+    list-style: none;
+    counter-reset: li; }
+    .agreementPage ol > li > p:first-child:before {
+      counter-increment: li;
+      content: counters(li, ".") ". "; }
+  .agreementPage ul {
+    list-style: none; }
+    .agreementPage ul > li > p:before {
+      content: '- '; }
+  @media (min-width: 1366px) {
+    .agreementPage {
+      font-size: 16px; }
+      .agreementPage h1 {
+        font-size: 40px;
+        text-align: initial;
+        margin-bottom: 40px; }
+      .agreementPage p {
+        margin-bottom: 20px;
+        line-height: 1.3; } }
+
 .modal {
   position: fixed;
   top: 0;
@@ -1931,8 +1964,12 @@
   .icon-triangle {
     mask-image: url("./../img/triangle.svg");
     -webkit-mask-image: url("./../img/triangle.svg");
-    width: 83px;
-    height: 73px; }
+    width: 45px;
+    height: 39px; }
+    @media (min-width: 1366px) {
+      .icon-triangle {
+        width: 83px;
+        height: 73px; } }
   .icon-allResults {
     mask-image: url("./../img/allResults.svg");
     -webkit-mask-image: url("./../img/allResults.svg");
@@ -5040,57 +5077,123 @@
 .aboutPage {
   color: #fff; }
   .aboutPage .title {
-    font-size: 48px;
-    font-weight: 600; }
+    font-family: 'Lemon Milk';
+    font-size: 20px;
+    font-weight: 100; }
+    @media (min-width: 1366px) {
+      .aboutPage .title {
+        font-size: 48px; } }
   .aboutPage .description {
-    font-size: 18px; }
+    font-size: 14px; }
+    @media (min-width: 1366px) {
+      .aboutPage .description {
+        font-size: 18px; } }
   .aboutPage .rocket {
-    width: 1060px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
-    text-align: center; }
-    .aboutPage .rocket .img {
-      width: 170px;
-      margin: 0 auto; }
-    .aboutPage .rocket .content {
+    text-align: center;
+    position: relative; }
+    @media (min-width: 1366px) {
+      .aboutPage .rocket {
+        width: 1060px; } }
+    .aboutPage .rocket:before {
+      content: '';
+      display: block;
+      position: absolute;
       background-image: url("./../img/aboutPage-rocket-bg.svg");
       background-size: cover;
       background-position: center;
-      padding-top: 100px;
-      padding-bottom: 210px;
-      margin-top: -15px;
-      margin-right: 25px;
+      width: calc(100% + 30px);
+      height: 300px;
+      top: 145px;
+      z-index: -1;
+      left: 50%;
+      transform: translateX(-50%); }
+      @media (min-width: 1366px) {
+        .aboutPage .rocket:before {
+          left: calc(50% - 8px);
+          width: 950px;
+          height: 420px;
+          top: 204px; } }
+    .aboutPage .rocket .img {
+      width: 135px;
+      margin: 0 auto;
+      padding-left: 15px; }
+      @media (min-width: 1366px) {
+        .aboutPage .rocket .img {
+          padding-left: initial;
+          width: 170px; } }
+    .aboutPage .rocket .content {
+      padding-top: 25px;
       z-index: -1; }
+      @media (min-width: 1366px) {
+        .aboutPage .rocket .content {
+          padding-top: 100px;
+          padding-bottom: 210px;
+          margin-right: 25px; } }
       .aboutPage .rocket .content .description {
-        margin-top: 15px; }
+        margin-top: 10px; }
+        @media (min-width: 1366px) {
+          .aboutPage .rocket .content .description {
+            margin-top: 15px; } }
   .aboutPage .history {
     max-width: 1200px;
-    margin: 100px auto 0 auto; }
-    .aboutPage .history .infoBlock {
-      display: flex; }
-      .aboutPage .history .infoBlock .img {
-        width: 150px;
-        margin-right: 80px; }
-      .aboutPage .history .infoBlock:first-child .description {
-        margin-top: 25px; }
-      .aboutPage .history .infoBlock:nth-child(even) {
-        flex-direction: row-reverse; }
-        .aboutPage .history .infoBlock:nth-child(even) .img {
-          margin-right: initial;
-          margin-left: 80px; }
-      .aboutPage .history .infoBlock:not(:last-child) {
-        margin-bottom: 70px; }
+    margin: 60px auto 0 auto; }
+    @media (min-width: 1366px) {
+      .aboutPage .history {
+        margin: 100px auto 0 auto; } }
+    @media (min-width: 1366px) {
+      .aboutPage .history .infoBlock {
+        display: flex; }
+        .aboutPage .history .infoBlock:first-child .description {
+          margin-top: 25px; }
+        .aboutPage .history .infoBlock:nth-child(even) {
+          flex-direction: row-reverse; }
+          .aboutPage .history .infoBlock:nth-child(even) .img {
+            margin-right: initial;
+            margin-left: 80px; } }
+    @media (max-width: 430px) {
+      .aboutPage .history .infoBlock .title {
+        margin-top: 15px; }
+      .aboutPage .history .infoBlock .description {
+        margin-top: 20px;
+        text-align: center; } }
+    .aboutPage .history .infoBlock .img {
+      width: 100px;
+      margin: 0 auto;
+      display: block; }
+      @media (min-width: 1366px) {
+        .aboutPage .history .infoBlock .img {
+          margin: 0 80px 0 0;
+          width: 150px; } }
+    .aboutPage .history .infoBlock:not(:last-child) {
+      margin-bottom: 50px; }
+      @media (min-width: 1366px) {
+        .aboutPage .history .infoBlock:not(:last-child) {
+          margin-bottom: 70px; } }
   .aboutPage .Earth {
     max-width: 1200px;
-    margin: 150px auto 0 auto;
+    margin: 80px auto 0 auto;
     display: flex;
+    flex-direction: column-reverse;
     justify-content: space-between; }
+    @media (min-width: 1366px) {
+      .aboutPage .Earth {
+        flex-direction: initial;
+        margin: 150px auto 0 auto; } }
     .aboutPage .Earth .content {
-      margin-right: 110px; }
+      text-align: center; }
+      @media (min-width: 1366px) {
+        .aboutPage .Earth .content {
+          margin-right: 110px;
+          text-align: initial; } }
       .aboutPage .Earth .content .description {
-        margin-top: 30px; }
+        margin-top: 20px; }
+        @media (min-width: 1366px) {
+          .aboutPage .Earth .content .description {
+            margin-top: 30px; } }
     .aboutPage .Earth .bgBlock {
       position: relative; }
       .aboutPage .Earth .bgBlock:before {
@@ -5099,35 +5202,67 @@
         position: absolute;
         background-size: cover;
         background-position: center;
-        background-image: url("./../img/aboutPage-Earth-bg.svg");
-        right: calc(100% - 106px);
-        top: -20px;
+        background-image: url("./../img/aboutPage-Earth-mobile-bg.svg");
+        top: 50px;
+        right: -15px;
         z-index: -1;
-        width: 1040px;
-        height: 230px; }
+        width: calc(100% + 30px);
+        height: 280px; }
+        @media (min-width: 360px) {
+          .aboutPage .Earth .bgBlock:before {
+            height: 330px;
+            top: 59px; } }
+        @media (min-width: 1366px) {
+          .aboutPage .Earth .bgBlock:before {
+            right: calc(100% - 106px);
+            width: 1040px;
+            height: 230px;
+            top: -20px;
+            background-image: url("./../img/aboutPage-Earth-bg.svg"); } }
       .aboutPage .Earth .bgBlock .img {
-        width: 200px; }
+        width: 110px;
+        margin: 0 auto;
+        display: block; }
+        @media (min-width: 360px) {
+          .aboutPage .Earth .bgBlock .img {
+            width: 130px; } }
+        @media (min-width: 1366px) {
+          .aboutPage .Earth .bgBlock .img {
+            width: 200px;
+            margin: initial; } }
   .aboutPage .weMade {
-    margin: 150px auto 0 auto;
+    margin: 80px auto 0 auto;
     max-width: 850px;
     text-align: center; }
+    @media (min-width: 1366px) {
+      .aboutPage .weMade {
+        margin: 150px auto 0 auto; } }
     .aboutPage .weMade .list {
-      margin-top: 70px;
+      margin-top: 50px;
       text-shadow: 0 0 60px #938083; }
+      @media (min-width: 1366px) {
+        .aboutPage .weMade .list {
+          margin-top: 70px; } }
       .aboutPage .weMade .list .item {
-        padding: 70px 90px;
+        padding: 40px 30px;
         position: relative; }
+        @media (min-width: 1366px) {
+          .aboutPage .weMade .list .item {
+            padding: 70px 90px; } }
         .aboutPage .weMade .list .item:not(:last-child):before {
           content: '';
           display: block;
           position: absolute;
           height: 100%;
-          width: 42%;
+          width: 35%;
           border: 2px solid #fff;
           top: 0;
           left: 0;
           border-right-color: transparent;
           border-radius: 100px 0 0 100px; }
+          @media (min-width: 1366px) {
+            .aboutPage .weMade .list .item:not(:last-child):before {
+              width: 42%; } }
         .aboutPage .weMade .list .item:not(:last-child):nth-child(odd):before {
           border-left-color: transparent;
           border-right-color: #fff;
@@ -5139,17 +5274,31 @@
           position: absolute;
           left: 50%;
           transform: translateX(-50%);
-          width: 73px;
-          height: 63px;
-          bottom: calc(100% - 30px); }
+          width: 45px;
+          height: 40px;
+          bottom: calc(100% - 20px); }
+          @media (min-width: 1366px) {
+            .aboutPage .weMade .list .item .decorationIcon {
+              width: 73px;
+              height: 63px;
+              bottom: calc(100% - 30px); } }
         .aboutPage .weMade .list .item .title {
-          font-size: 30px; }
+          font-size: 18px; }
+          @media (min-width: 1366px) {
+            .aboutPage .weMade .list .item .title {
+              font-size: 30px; } }
         .aboutPage .weMade .list .item .description {
-          margin-top: 15px; }
+          margin-top: 10px; }
+          @media (min-width: 1366px) {
+            .aboutPage .weMade .list .item .description {
+              margin-top: 15px; } }
   .aboutPage .companyValues {
     text-align: center;
-    margin-top: 150px;
+    margin-top: 80px;
     position: relative; }
+    @media (min-width: 1366px) {
+      .aboutPage .companyValues {
+        margin-top: 150px; } }
     .aboutPage .companyValues:before {
       content: '';
       display: block;
@@ -5157,21 +5306,33 @@
       background-size: cover;
       background-position: center;
       background-image: url("./../img/aboutPage-companyValues-bg.svg");
-      width: 1305px;
-      height: 1258px;
-      top: 140px;
-      left: calc(50% + 12px);
+      width: calc(100% + 30px);
+      height: 790px;
+      top: 77px;
+      left: 50%;
       transform: translateX(-50%);
       z-index: -1; }
+      @media (min-width: 1366px) {
+        .aboutPage .companyValues:before {
+          left: calc(50% + 10px);
+          width: 1305px;
+          height: 1258px; } }
     .aboutPage .companyValues .title {
-      margin: 30px 0 50px 0; }
+      margin: 15px 0 30px 0; }
+      @media (min-width: 1366px) {
+        .aboutPage .companyValues .title {
+          margin: 30px 0 50px 0; } }
     .aboutPage .companyValues .trianglePuzzleWrapper {
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 175px;
-      height: 155px;
+      width: 100px;
+      height: 90px;
       margin: 0 auto; }
+      @media (min-width: 1366px) {
+        .aboutPage .companyValues .trianglePuzzleWrapper {
+          width: 175px;
+          height: 155px; } }
       .aboutPage .companyValues .trianglePuzzleWrapper .trianglePuzzle {
         width: 0;
         height: 0;
@@ -5179,66 +5340,124 @@
         .aboutPage .companyValues .trianglePuzzleWrapper .trianglePuzzle .icon {
           position: absolute;
           bottom: 5px;
-          left: -42px; }
+          left: -31px; }
           .aboutPage .companyValues .trianglePuzzleWrapper .trianglePuzzle .icon:nth-child(2) {
-            transform: rotate(60deg) translate(36px, -20px); }
+            transform: rotate(60deg) translate(21px, -12px); }
           .aboutPage .companyValues .trianglePuzzleWrapper .trianglePuzzle .icon:nth-child(3) {
-            transform: rotate(120deg) translate(36px, -61px); }
+            transform: rotate(120deg) translate(21px, -36px); }
           .aboutPage .companyValues .trianglePuzzleWrapper .trianglePuzzle .icon:nth-child(4) {
-            transform: rotate(180deg) translate(0px, -82px); }
+            transform: rotate(180deg) translate(0px, -47px); }
           .aboutPage .companyValues .trianglePuzzleWrapper .trianglePuzzle .icon:nth-child(5) {
-            transform: rotate(240deg) translate(-36px, -62px); }
+            transform: rotate(240deg) translate(-20px, -35px); }
           .aboutPage .companyValues .trianglePuzzleWrapper .trianglePuzzle .icon:nth-child(6) {
-            transform: rotate(300deg) translate(-36px, -20px); }
+            transform: rotate(300deg) translate(-20px, -12px); }
+          @media (min-width: 1366px) {
+            .aboutPage .companyValues .trianglePuzzleWrapper .trianglePuzzle .icon {
+              left: -42px; }
+              .aboutPage .companyValues .trianglePuzzleWrapper .trianglePuzzle .icon:nth-child(2) {
+                transform: rotate(60deg) translate(36px, -20px); }
+              .aboutPage .companyValues .trianglePuzzleWrapper .trianglePuzzle .icon:nth-child(3) {
+                transform: rotate(120deg) translate(36px, -61px); }
+              .aboutPage .companyValues .trianglePuzzleWrapper .trianglePuzzle .icon:nth-child(4) {
+                transform: rotate(180deg) translate(0px, -82px); }
+              .aboutPage .companyValues .trianglePuzzleWrapper .trianglePuzzle .icon:nth-child(5) {
+                transform: rotate(240deg) translate(-36px, -62px); }
+              .aboutPage .companyValues .trianglePuzzleWrapper .trianglePuzzle .icon:nth-child(6) {
+                transform: rotate(300deg) translate(-36px, -20px); } }
     .aboutPage .companyValues .description {
-      margin: 15px 0 50px 0; }
+      margin: 10px 0 25px 0; }
+      @media (min-width: 1366px) {
+        .aboutPage .companyValues .description {
+          margin: 15px 0 50px 0; } }
   .aboutPage .quote {
-    margin: 150px auto 0 auto;
+    margin: 120px auto 0 auto;
     max-width: 350px;
     text-shadow: 0 0 60px #938083;
     text-align: center;
     position: relative; }
+    @media (min-width: 360px) {
+      .aboutPage .quote {
+        margin: 150px auto 0 auto; } }
     .aboutPage .quote .decorationIcon {
       position: absolute;
       background-color: rgba(255, 255, 255, 0.3); }
       .aboutPage .quote .decorationIcon:nth-child(2) {
-        left: -100px;
         transform: rotate(90deg);
-        width: 33px;
-        height: 30px; }
+        width: 20px;
+        height: 17px;
+        left: -15px; }
+        @media (min-width: 360px) {
+          .aboutPage .quote .decorationIcon:nth-child(2) {
+            bottom: -30px; } }
+        @media (min-width: 1366px) {
+          .aboutPage .quote .decorationIcon:nth-child(2) {
+            left: -100px;
+            width: 33px;
+            height: 30px; } }
       .aboutPage .quote .decorationIcon:nth-child(3) {
-        width: 65px;
-        height: 58px;
-        top: -50px;
-        left: -115px;
+        width: 40px;
+        height: 36px;
+        top: -40px;
+        left: -10px;
         transform: rotate(100deg); }
+        @media (min-width: 360px) {
+          .aboutPage .quote .decorationIcon:nth-child(3) {
+            top: -50px; } }
+        @media (min-width: 1366px) {
+          .aboutPage .quote .decorationIcon:nth-child(3) {
+            width: 65px;
+            height: 58px;
+            left: -115px;
+            top: -50px; } }
       .aboutPage .quote .decorationIcon:nth-child(4) {
-        width: 33px;
-        height: 30px;
-        top: -80px;
-        left: 100px;
+        width: 25px;
+        height: 22px;
+        top: -70px;
+        left: 90px;
         transform: rotate(130deg); }
+        @media (min-width: 1366px) {
+          .aboutPage .quote .decorationIcon:nth-child(4) {
+            width: 33px;
+            height: 30px;
+            top: -80px;
+            left: 100px; } }
       .aboutPage .quote .decorationIcon:nth-child(5) {
-        width: 53px;
-        height: 48px;
-        top: -80px;
-        left: 250px;
+        width: 45px;
+        height: 40px;
+        top: -70px;
+        left: 240px;
         transform: rotate(110deg); }
+        @media (min-width: 1366px) {
+          .aboutPage .quote .decorationIcon:nth-child(5) {
+            width: 53px;
+            height: 48px;
+            top: -80px;
+            left: 250px; } }
       .aboutPage .quote .decorationIcon:nth-child(6) {
-        width: 65px;
-        height: 58px;
-        top: -10px;
-        left: 360px;
+        width: 50px;
+        height: 43px;
+        top: 36px;
+        left: 225px;
         transform: rotate(135deg); }
+        @media (min-width: 360px) {
+          .aboutPage .quote .decorationIcon:nth-child(6) {
+            left: 280px; } }
+        @media (min-width: 1366px) {
+          .aboutPage .quote .decorationIcon:nth-child(6) {
+            width: 65px;
+            height: 58px;
+            top: -10px;
+            left: 360px; } }
   .aboutPage .end {
     text-align: center;
     margin-top: 100px; }
-    .aboutPage .end .name {
-      font-weight: 300;
-      font-family: 'Lemon Milk'; }
     .aboutPage .end .img {
-      margin-top: 50px;
-      width: 159px; }
+      margin-top: 25px;
+      width: 100px; }
+      @media (min-width: 1366px) {
+        .aboutPage .end .img {
+          margin-top: 50px;
+          width: 159px; } }
 
 .deliveryPage .cover .textContent .coverIcon {
   height: 150px;
@@ -5269,15 +5488,28 @@
 .categoriesCatalogPage .title {
   font-family: 'Lemon Milk';
   color: #fff;
-  font-size: 40px; }
+  font-weight: 100;
+  font-size: 20px;
+  text-align: center; }
+  @media (min-width: 1366px) {
+    .categoriesCatalogPage .title {
+      font-size: 40px;
+      text-align: initial; } }
 
 .categoriesCatalogPage .list {
-  margin-top: 30px;
+  margin-top: 20px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between; }
-  .categoriesCatalogPage .list .cardGame {
-    margin: 20px; }
+  justify-content: center;
+  row-gap: 10px; }
+  @media (min-width: 360px) {
+    .categoriesCatalogPage .list {
+      justify-content: space-around; } }
+  @media (min-width: 1366px) {
+    .categoriesCatalogPage .list {
+      margin-top: 30px;
+      column-gap: 20px;
+      row-gap: 20px; } }
 
 .categoriesCatalogPage .inCatalog {
   margin: 30px auto 0 auto; }
@@ -5286,22 +5518,46 @@
   width: 100%; }
   .legalInfoPage .title {
     font-family: 'Lemon Milk';
-    font-size: 40px;
-    color: #fff; }
+    font-size: 20px;
+    color: #fff;
+    text-align: center; }
+    @media (min-width: 1366px) {
+      .legalInfoPage .title {
+        font-size: 40px;
+        text-align: initial; } }
   .legalInfoPage .description {
     max-width: 600px;
     color: #fff;
-    margin-top: 15px; }
+    margin-top: 10px;
+    font-size: 13px; }
+    @media (min-width: 1366px) {
+      .legalInfoPage .description {
+        margin-top: 15px;
+        font-size: 16px; } }
   .legalInfoPage .links {
-    margin-top: 30px; }
+    margin-top: 20px; }
+    @media (min-width: 1366px) {
+      .legalInfoPage .links {
+        margin-top: 30px; } }
     .legalInfoPage .links .link {
       display: block;
       max-width: max-content;
       color: #01C2FF;
-      font-weight: 600; }
+      font-weight: 600;
+      text-decoration: underline;
+      font-size: 13px; }
+      @media (min-width: 1366px) {
+        .legalInfoPage .links .link {
+          font-size: 16px;
+          text-decoration: initial; } }
   .legalInfoPage .entity {
-    margin-top: 50px;
-    color: #fff; }
+    margin-top: 30px;
+    color: #fff;
+    font-size: 14px; }
+    @media (min-width: 1366px) {
+      .legalInfoPage .entity {
+        margin-top: 50px;
+        font-size: 16px; } }
     .legalInfoPage .entity .row:not(:last-child) {
       margin-bottom: 15px; }
 

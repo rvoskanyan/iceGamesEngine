@@ -1410,12 +1410,15 @@ if (catalogNode) {
 }
 
 if (loginFormNode && btnSwitchAuthNode && btnSwitchRegNode && submitLoginNode) {
+  const resultNode = document.querySelector('.js-resultLogin');
+  
   btnSwitchAuthNode.addEventListener('click', () => {
     btnSwitchAuthNode.classList.add('active');
     btnSwitchRegNode.classList.remove('active');
     loginFormNode.classList.add('auth');
     loginFormNode.action = '/auth';
     submitLoginNode.innerText = 'Войти';
+    resultNode.innerText = '';
   });
   
   btnSwitchRegNode.addEventListener('click', () => {
@@ -1424,6 +1427,7 @@ if (loginFormNode && btnSwitchAuthNode && btnSwitchRegNode && submitLoginNode) {
     loginFormNode.classList.remove('auth');
     loginFormNode.action = '/reg';
     submitLoginNode.innerText = 'Далее';
+    resultNode.innerText = '';
   });
 }
 

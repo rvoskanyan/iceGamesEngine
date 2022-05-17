@@ -1,75 +1,146 @@
+@import './breakPoints'
 @import './zIndex'
 
 .aboutPage
   color: #fff
 
   .title
-    font-size: 48px
-    font-weight: 600
+    font-family: 'Lemon Milk'
+    font-size: 20px
+    font-weight: 100
+
+    @include for-desktop-up
+      font-size: 48px
 
   .description
-    font-size: 18px
+    font-size: 14px
+
+    @include for-desktop-up
+      font-size: 18px
 
   .rocket
-    width: 1060px
     margin: 0 auto
     display: flex
     flex-direction: column
     align-items: center
     text-align: center
+    position: relative
 
-    .img
-      width: 170px
-      margin: 0 auto
+    @include for-desktop-up
+      width: 1060px
 
-    .content
+    &:before
+      content: ''
+      display: block
+      position: absolute
       background-image: url("./../img/aboutPage-rocket-bg.svg")
       background-size: cover
       background-position: center
-      padding-top: 100px
-      padding-bottom: 210px
-      margin-top: -15px
-      margin-right: 25px
+      width: calc(100% + 30px)
+      height: 300px
+      top: 145px
+      z-index: -1
+      left: 50%
+      transform: translateX(-50%)
+
+      @include for-desktop-up
+        left: calc(50% - 8px)
+        width: 950px
+        height: 420px
+        top: 204px
+
+    .img
+      width: 135px
+      margin: 0 auto
+      padding-left: 15px
+
+      @include for-desktop-up
+        padding-left: initial
+        width: 170px
+
+    .content
+      padding-top: 25px
       z-index: $ZIndex-AboutPage-BgBlocks
 
+      @include for-desktop-up
+        padding-top: 100px
+        padding-bottom: 210px
+        margin-right: 25px
+
       .description
-        margin-top: 15px
+        margin-top: 10px
+
+        @include for-desktop-up
+          margin-top: 15px
 
   .history
     max-width: 1200px
-    margin: 100px auto 0 auto
+    margin: 60px auto 0 auto
+
+    @include for-desktop-up
+      margin: 100px auto 0 auto
 
     .infoBlock
-      display: flex
+
+      @include for-desktop-up
+        display: flex
+
+        &:first-child .description
+          margin-top: 25px
+
+        &:nth-child(even)
+          flex-direction: row-reverse
+
+          .img
+            margin-right: initial
+            margin-left: 80px
+
+      @include for-big-phone-down
+        .title
+          margin-top: 15px
+
+        .description
+          margin-top: 20px
+          text-align: center
 
       .img
-        width: 150px
-        margin-right: 80px
+        width: 100px
+        margin: 0 auto
+        display: block
 
-      &:first-child .description
-        margin-top: 25px
-
-      &:nth-child(even)
-        flex-direction: row-reverse
-
-        .img
-          margin-right: initial
-          margin-left: 80px
+        @include for-desktop-up
+          margin: 0 80px 0 0
+          width: 150px
 
       &:not(:last-child)
-        margin-bottom: 70px
+        margin-bottom: 50px
+
+        @include for-desktop-up
+          margin-bottom: 70px
 
   .Earth
     max-width: 1200px
-    margin: 150px auto 0 auto
+    margin: 80px auto 0 auto
     display: flex
+    flex-direction: column-reverse
     justify-content: space-between
 
+    @include for-desktop-up
+      flex-direction: initial
+      margin: 150px auto 0 auto
+
     .content
-      margin-right: 110px
+      text-align: center
+
+      @include for-desktop-up
+        margin-right: 110px
+        text-align: initial
 
       .description
-        margin-top: 30px
+        margin-top: 20px
+
+        @include for-desktop-up
+          margin-top: 30px
 
     .bgBlock
       position: relative
@@ -80,28 +151,57 @@
         position: absolute
         background-size: cover
         background-position: center
-        background-image: url("./../img/aboutPage-Earth-bg.svg")
-        right: calc(100% - 106px)
-        top: -20px
+        background-image: url("./../img/aboutPage-Earth-mobile-bg.svg")
+        top: 50px
+        right: -15px
         z-index: $ZIndex-AboutPage-BgBlocks
-        width: 1040px
-        height: 230px
+        width: calc(100% + 30px)
+        height: 280px
+
+        @include for-middle-phone-up
+          height: 330px
+          top: 59px
+
+        @include for-desktop-up
+          right: calc(100% - 106px)
+          width: 1040px
+          height: 230px
+          top: -20px
+          background-image: url("./../img/aboutPage-Earth-bg.svg")
 
       .img
-        width: 200px
+        width: 110px
+        margin: 0 auto
+        display: block
+
+        @include for-middle-phone-up
+          width: 130px
+
+        @include for-desktop-up
+          width: 200px
+          margin: initial
 
   .weMade
-    margin: 150px auto 0 auto
+    margin: 80px auto 0 auto
     max-width: 850px
     text-align: center
 
+    @include for-desktop-up
+      margin: 150px auto 0 auto
+
     .list
-      margin-top: 70px
+      margin-top: 50px
       text-shadow: 0 0 60px #938083
 
+      @include for-desktop-up
+        margin-top: 70px
+
       .item
-        padding: 70px 90px
+        padding: 40px 30px
         position: relative
+
+        @include for-desktop-up
+          padding: 70px 90px
 
         &:not(:last-child)
           &:before
@@ -109,12 +209,15 @@
             display: block
             position: absolute
             height: 100%
-            width: 42%
+            width: 35%
             border: 2px solid #fff
             top: 0
             left: 0
             border-right-color: transparent
             border-radius: 100px 0 0 100px
+
+            @include for-desktop-up
+              width: 42%
 
           &:nth-child(odd):before
             border-left-color: transparent
@@ -128,20 +231,34 @@
           position: absolute
           left: 50%
           transform: translateX(-50%)
-          width: 73px
-          height: 63px
-          bottom: calc(100% - 30px)
+          width: 45px
+          height: 40px
+          bottom: calc(100% - 20px)
+
+          @include for-desktop-up
+            width: 73px
+            height: 63px
+            bottom: calc(100% - 30px)
 
         .title
-          font-size: 30px
+          font-size: 18px
+
+          @include for-desktop-up
+            font-size: 30px
 
         .description
-          margin-top: 15px
+          margin-top: 10px
+
+          @include for-desktop-up
+            margin-top: 15px
 
   .companyValues
     text-align: center
-    margin-top: 150px
+    margin-top: 80px
     position: relative
+
+    @include for-desktop-up
+      margin-top: 150px
 
     &:before
       content: ''
@@ -150,23 +267,35 @@
       background-size: cover
       background-position: center
       background-image: url("./../img/aboutPage-companyValues-bg.svg")
-      width: 1305px
-      height: 1258px
-      top: 140px
-      left: calc(50% + 12px)
+      width: calc(100% + 30px)
+      height: 790px
+      top: 77px
+      left: 50%
       transform: translateX(-50%)
       z-index: $ZIndex-AboutPage-BgBlocks
 
+      @include for-desktop-up
+        left: calc(50% + 10px)
+        width: 1305px
+        height: 1258px
+
     .title
-      margin: 30px 0 50px 0
+      margin: 15px 0 30px 0
+
+      @include for-desktop-up
+        margin: 30px 0 50px 0
 
     .trianglePuzzleWrapper
       display: flex
       justify-content: center
       align-items: center
-      width: 175px
-      height: 155px
+      width: 100px
+      height: 90px
       margin: 0 auto
+
+      @include for-desktop-up
+        width: 175px
+        height: 155px
 
       .trianglePuzzle
         width: 0
@@ -176,79 +305,141 @@
         .icon
           position: absolute
           bottom: 5px
-          left: -42px
+          left: -31px
 
           &:nth-child(2)
-            transform: rotate(60deg) translate(36px, -20px)
+            transform: rotate(60deg) translate(21px, -12px)
 
           &:nth-child(3)
-            transform: rotate(120deg) translate(36px, -61px)
+            transform: rotate(120deg) translate(21px, -36px)
 
           &:nth-child(4)
-            transform: rotate(180deg) translate(0px, -82px)
+            transform: rotate(180deg) translate(0px, -47px)
 
           &:nth-child(5)
-            transform: rotate(240deg) translate(-36px, -62px)
+            transform: rotate(240deg) translate(-20px, -35px)
 
           &:nth-child(6)
-            transform: rotate(300deg) translate(-36px, -20px)
+            transform: rotate(300deg) translate(-20px, -12px)
+
+          @include for-desktop-up
+            left: -42px
+
+            &:nth-child(2)
+              transform: rotate(60deg) translate(36px, -20px)
+
+            &:nth-child(3)
+              transform: rotate(120deg) translate(36px, -61px)
+
+            &:nth-child(4)
+              transform: rotate(180deg) translate(0px, -82px)
+
+            &:nth-child(5)
+              transform: rotate(240deg) translate(-36px, -62px)
+
+            &:nth-child(6)
+              transform: rotate(300deg) translate(-36px, -20px)
 
     .description
-      margin: 15px 0 50px 0
+      margin: 10px 0 25px 0
+
+      @include for-desktop-up
+        margin: 15px 0 50px 0
 
   .quote
-    margin: 150px auto 0 auto
+    margin: 120px auto 0 auto
     max-width: 350px
     text-shadow: 0 0 60px #938083
     text-align: center
     position: relative
+
+    @include for-middle-phone-up
+      margin: 150px auto 0 auto
 
     .decorationIcon
       position: absolute
       background-color: rgba(255, 255, 255, 0.3)
 
       &:nth-child(2)
-        left: -100px
         transform: rotate(90deg)
-        width: 33px
-        height: 30px
+        width: 20px
+        height: 17px
+        left: -15px
+
+        @include for-middle-phone-up
+          bottom: -30px
+
+        @include for-desktop-up
+          left: -100px
+          width: 33px
+          height: 30px
 
       &:nth-child(3)
-        width: 65px
-        height: 58px
-        top: -50px
-        left: -115px
+        width: 40px
+        height: 36px
+        top: -40px
+        left: -10px
         transform: rotate(100deg)
 
+        @include for-middle-phone-up
+          top: -50px
+
+        @include for-desktop-up
+          width: 65px
+          height: 58px
+          left: -115px
+          top: -50px
+
       &:nth-child(4)
-        width: 33px
-        height: 30px
-        top: -80px
-        left: 100px
+        width: 25px
+        height: 22px
+        top: -70px
+        left: 90px
         transform: rotate(130deg)
 
+        @include for-desktop-up
+          width: 33px
+          height: 30px
+          top: -80px
+          left: 100px
+
       &:nth-child(5)
-        width: 53px
-        height: 48px
-        top: -80px
-        left: 250px
+        width: 45px
+        height: 40px
+        top: -70px
+        left: 240px
         transform: rotate(110deg)
 
+        @include for-desktop-up
+          width: 53px
+          height: 48px
+          top: -80px
+          left: 250px
+
       &:nth-child(6)
-        width: 65px
-        height: 58px
-        top: -10px
-        left: 360px
+        width: 50px
+        height: 43px
+        top: 36px
+        left: 225px
         transform: rotate(135deg)
+
+        @include for-middle-phone-up
+          left: 280px
+
+        @include for-desktop-up
+          width: 65px
+          height: 58px
+          top: -10px
+          left: 360px
 
   .end
     text-align: center
     margin-top: 100px
 
-    .name
-      font-weight: 300
-      font-family: 'Lemon Milk'
-
     .img
-      margin-top: 50px
-      width: 159px
+      margin-top: 25px
+      width: 100px
+
+      @include for-desktop-up
+        margin-top: 50px
+        width: 159px

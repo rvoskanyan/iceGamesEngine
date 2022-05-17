@@ -1,17 +1,31 @@
+@import './breakPoints'
+
 .categoriesCatalogPage
   .title
     font-family: 'Lemon Milk'
     color: #fff
-    font-size: 40px
+    font-weight: 100
+    font-size: 20px
+    text-align: center
+
+    @include for-desktop-up
+      font-size: 40px
+      text-align: initial
 
   .list
-    margin-top: 30px
+    margin-top: 20px
     display: flex
     flex-wrap: wrap
-    justify-content: space-between
+    justify-content: center
+    row-gap: 10px
 
-    .cardGame
-      margin: 20px
+    @include for-middle-phone-up
+      justify-content: space-around
+
+    @include for-desktop-up
+      margin-top: 30px
+      column-gap: 20px
+      row-gap: 20px
 
   .inCatalog
     margin: 30px auto 0 auto

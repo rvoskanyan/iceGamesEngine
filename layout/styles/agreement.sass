@@ -1,0 +1,42 @@
+@import './breakPoints'
+
+.agreementPage
+  color: #fff
+  font-size: 13px
+
+  h1
+    font-family: 'Lemon Milk'
+    font-size: 20px
+    font-weight: 100
+    text-align: center
+    margin-bottom: 20px
+
+  p
+    font-family: 'Montserrat'
+    margin-bottom: 10px
+
+  & ol
+    list-style: none
+    counter-reset: li
+
+    & > li > p:first-child:before
+      counter-increment: li
+      content: counters(li, ".") ". "
+
+  ul
+    list-style: none
+
+    & > li > p:before
+      content: '- '
+
+  @include for-desktop-up
+    font-size: 16px
+
+    h1
+      font-size: 40px
+      text-align: initial
+      margin-bottom: 40px
+
+    p
+      margin-bottom: 20px
+      line-height: 1.3
