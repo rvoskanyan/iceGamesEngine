@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs';
 import User from '../../models/User.js';
 import Achievement from './../../models/Achievement.js';
 import Article from './../../models/Article.js';
+import Order from './../../models/Order.js';
 
 export const profilePage = async (req, res) => {
   try {
@@ -167,12 +168,18 @@ export const profileInvitePage = async (req, res) => {
 
 export const profileOrdersPage = async (req, res) => {
   try {
-    const user = await User.findById(req.session.userId);
+    const user = res.locals.person;
+    const orders = await Order
+      .find({userId: user._id, status: 'paid'})
+      .sort({'createdAt': -1})
+      .select('products')
+      .populate('products.productId', ['name', 'alias', 'priceTo', 'priceFrom', 'img', 'dsId', 'inStock']);
     
     res.render('profileOrders', {
       title: 'ICE Games — Приобретенные товары',
       noIndex: true,
       isProfileOrders: true,
+      orders,
       user,
     });
   } catch (e) {

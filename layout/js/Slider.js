@@ -147,6 +147,8 @@ export default class Slider {
   
     const prevSlides = this.setActiveClass(prevScreen, 'remove');
     const slides = this.setActiveClass(this.activeScreen, 'add');
+  
+    console.log(prevSlides);
     
     if (this.progress) {
       this.progressNode.style.setProperty('--progress', `${this.shareProgress * (this.activeScreen)}%`);
@@ -171,11 +173,7 @@ export default class Slider {
   
   setActiveClass = (screen, action) => {
     let start = screen * this.countSlidesScroll - this.offsetSlide;
-    let end = start + this.countSlidesScroll;
-    
-    if (action === 'add') {
-      end = start + this.countVisibleSlides;
-    }
+    let end = start + this.countVisibleSlides;
     
     const members = [];
     
@@ -183,7 +181,7 @@ export default class Slider {
       this.offsetSlide = 0;
     }
     
-    if (this.isTrack && end > this.countSlides) {
+    if (this.isTrack && (end > this.countSlides)) {
       this.offsetSlide = end - this.countSlides;
       start -= this.offsetSlide;
       end = this.countSlides;

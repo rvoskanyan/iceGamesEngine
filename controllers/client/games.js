@@ -182,6 +182,8 @@ export const gamePage = async (req, res) => {
       {$sample: {size: 8}},
     ]);
   
+    const seriesIsSlider = seriesProducts && seriesProducts.length > 5
+    
     res.render('game', {
       title: `ICE Games — ${product.name}`,
       metaDescription: product.metaDescription,
@@ -196,6 +198,7 @@ export const gamePage = async (req, res) => {
       bundleProducts,
       seriesProducts,
       recProducts,
+      seriesIsSlider,
     });
   } catch (e) {
     console.log(e);

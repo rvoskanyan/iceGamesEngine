@@ -8,7 +8,6 @@
   max-width: 160px
   height: 250px
   border: 2px solid #fff
-  box-shadow: 0 0 10px #0066FF
   border-radius: 22px
   background-color: #02043D
   overflow: hidden
@@ -17,8 +16,11 @@
   cursor: pointer
   text-decoration: none
 
+  &.active
+    transform: scale(1.05, 1.05)
+    outline: none
+
   @include for-big-phone-up
-    box-shadow: 0 0 15px #0066FF
     min-width: 117px
     max-width: 117px
     height: 158px
@@ -30,7 +32,6 @@
 
     &:hover, &.active, &:focus-visible, &:focus-within
       transform: scale(1.1, 1.1)
-      box-shadow: 0 0 30px #00A3FF
       outline: none
 
       & .actions
@@ -50,11 +51,6 @@
     max-width: 197px
     min-width: 197px
     height: 311px
-
-  &.active
-    transform: scale(1.05, 1.05)
-    box-shadow: 0 0 15px #00A3FF
-    outline: none
 
   & .actions
     position: absolute
@@ -111,9 +107,9 @@
         @include for-big-phone-up
           display: initial
 
-        & .mobile
-          @include for-big-phone-up
-            display: none
+      & .mobile
+        @include for-big-phone-up
+          display: none
 
     & .like
       margin-bottom: 5px
@@ -162,7 +158,7 @@
 
   & .head
     position: relative
-    height: 200px
+    height: 195px
     width: 100%
     font-size: 16px
 
@@ -218,60 +214,55 @@
     width: 100%
     padding: 20px 12px 0 12px
 
-  &.big
-    @include for-big-phone-up
+  @include for-big-phone-up
+    &.big
       max-width: 189px
       min-width: 189px
       height: 295px
 
-    @include for-desktop-up
-      max-width: 204px
-      min-width: 204px
-      height: 317px
-
-    @include for-middle-desktop-up
-      max-width: 220px
-      min-width: 220px
-      height: 340px
-
-    @include for-big-desktop-up
-      max-width: 233px
-      min-width: 233px
-      height: 368px
-
-    & .actions .inCart
-      @include for-big-phone-up
-        left: 20px //left
-        width: calc(100% - 20px * 2) //100% - left * 2
-
-    & .head
-      @include for-big-phone-up
-        height: 230px
-
       @include for-desktop-up
-        height: 253px
+        max-width: 204px
+        min-width: 204px
+        height: 317px
 
       @include for-middle-desktop-up
-        height: 272px
+        max-width: 220px
+        min-width: 220px
+        height: 340px
 
       @include for-big-desktop-up
-        height: 296px
+        max-width: 233px
+        min-width: 233px
+        height: 368px
+
+      & .actions .inCart
+        @include for-big-phone-up
+          left: 20px //left
+          width: calc(100% - 20px * 2) //100% - left * 2
+
+      & .head
+        @include for-big-phone-up
+          height: 230px
+
+        @include for-desktop-up
+          height: 253px
+
+        @include for-middle-desktop-up
+          height: 272px
+
+        @include for-big-desktop-up
+          height: 296px
 
   &.small
     max-width: 124px
     min-width: 124px
     height: 192px
-    box-shadow: 0 0 10px #00A3FF
     border-radius: 16px
 
     @include for-desktop-up
       max-width: 128px
       min-width: 128px
       height: 201px
-
-    @include for-desktop-up
-      &:hover, &.active, &:focus-visible, &:focus-within
-        box-shadow: 0 0 15px #00A3FF
 
     @include for-middle-desktop-up
       max-width: 154px
@@ -282,9 +273,6 @@
       max-width: 171px
       min-width: 171px
       height: 270px
-
-    &.active
-      box-shadow: 0 0 15px #00A3FF
 
     & .actions
       &.noInStock

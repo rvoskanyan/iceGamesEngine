@@ -31,14 +31,18 @@
 
         & .tape
           display: flex
+          transition: transform .3s ease-in
 
           & .slide
             visibility: hidden
+            opacity: 0
             min-width: 128px
             max-width: 128px
             min-height: 201px
             max-height: 201px
             margin: 0 10px
+            transition: .3s ease-in
+            transition-property: opacity, visibility
 
             @include for-middle-desktop-up
               min-width: 154px
@@ -56,3 +60,4 @@
 
             &.active
               visibility: visible
+              opacity: 1

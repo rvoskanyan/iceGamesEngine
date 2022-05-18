@@ -94,7 +94,7 @@
                         {{/unless}}
                     >
                         {{#if product.inStock}}
-                            {{#if currentProductInCart}}В корзине ✔{{else}}В корзину{{/if}}
+                            {{#if currentProductInCart}}Добавлено{{else}}В корзину{{/if}}
                         {{else}}
                             Уведомить
                         {{/if}}
@@ -252,12 +252,12 @@
             <div class="sideBar">
                 <div class="doubleGameSlider">
                     <div class="title">Вам может понравится</div>
-                    <div class="slider">
+                    <div class="slider js-recProductSlider">
                         <div class="visibleAreaWrapper">
-                            <div class="visibleArea">
-                                <div class="tape">
+                            <div class="visibleArea js-visibleArea">
+                                <div class="tape js-tape">
                                     {{#each recProducts}}
-                                        <div class="slide{{#iff @index '<=' 2}} active{{/iff}}">
+                                        <div class="slide js-slide">
                                             {{> game
                                                 id=_id
                                                 size='small'
@@ -268,9 +268,9 @@
                             </div>
                         </div>
                         <div class="slideControls">
-                            <button class="btn prev"></button>
-                            <div class="progress"></div>
-                            <button class="btn next"></button>
+                            <button class="btn prev js-prevBtn"></button>
+                            <div class="progress js-progress"></div>
+                            <button class="btn next js-nextBtn"></button>
                         </div>
                     </div>
                 </div>
@@ -293,10 +293,10 @@
                                 {{product.description}}
                             </p>
                         </div>
-                        <ul class="item bulletedList js-tabBlock-2">
-                            {{#each stages}}
+                        <ul class="item bulletedList notSeparator js-tabBlock-2">
+                            {{#each product.activationServiceId.stages}}
                                 <li class="item">
-                                    {{text}}
+                                    {{name}}
                                 </li>
                             {{/each}}
                         </ul>
@@ -331,27 +331,27 @@
                             </div>
                         {{/if}}
                         {{#if seriesProducts.length}}
-                            <div class="item js-tabBlock-4">
+                            <div class="item js-tabBlock-4 productSeries">
                                 {{#if seriesIsSlider}}
-                                    <div class="slider">
-                                        <button class="btn prev increase">
+                                    <div class="slider js-seriesSlider">
+                                        <button class="btn prev increase js-prevBtn">
                                             <span class="icon-static icon-static-arrow"></span>
                                         </button>
                                         <div class="visibleAreaWrapper">
-                                            <div class="visibleArea">
-                                                <div class="tape">
+                                            <div class="visibleArea js-visibleArea">
+                                                <div class="tape js-tape">
                                 {{else}}
-                                    <div class="row-game">
+                                    <div class="rowProducts mobileScroll">
                                 {{/if}}
                                 {{#each seriesProducts}}
-                                    {{#if seriesIsSlider}}
-                                        <div class="slide{{#if (isLess @index 4)}} active{{/if}}">
+                                    {{#if @root.seriesIsSlider}}
+                                        <div class="slide js-slide">
                                     {{/if}}
                                         {{> game
                                             size='small'
                                             id=_id
                                         }}
-                                    {{#if seriesIsSlider}}
+                                    {{#if @root.seriesIsSlider}}
                                         </div>
                                     {{/if}}
                                 {{/each}}
@@ -359,7 +359,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <button class="btn next increase">
+                                        <button class="btn next increase js-nextBtn">
                                             <span class="icon-static icon-static-arrow"></span>
                                         </button>
                                     </div>

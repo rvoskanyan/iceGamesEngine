@@ -1,7 +1,13 @@
-<form action="/admin/activation-services/{{activationService.id}}/add-activation-stage" method="post">
+<form action="/admin/activation-services/{{activationService._id}}/add-activation-stage" method="post">
     <label>
-        Этапа для сервиса {{activationService.name}}:
-        <input type="text" name="text">
+        *Этапа для сервиса {{activationService.name}}:
+        <input type="text" name="name">
+    </label>
+    <br>
+    <br>
+    <label>
+        *Порядок этапа:
+        <input type="number" name="order">
     </label>
     <br>
     <br>

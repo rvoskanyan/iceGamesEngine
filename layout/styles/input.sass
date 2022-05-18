@@ -38,29 +38,46 @@
   &-labelInField
     position: relative
     display: block
-    border-bottom: 2px solid #fff
-    padding-top: 20px
+    border-bottom: 1px solid #fff
+    padding-top: 12px
+
+    @include for-desktop-up
+      padding-top: 16px
+      border-bottom: 2px solid #fff
 
     .label, & .textField
       color: #fff
-      font-size: 16px
+      font-size: 13px
       padding: 5px
+
+      @include for-desktop-up
+        font-size: 16px
 
     .label
       position: absolute
       left: 0
-      top: 20px
+      top: 12px
       z-index: $ZIndex-LabelInTextFiled-Label
       transition: .3s ease-in
-      transition-property: left, top, transform, font-size
+      transition-property: left, top, transform, font-size, padding
+
+      @include for-desktop-up
+        top: 16px
 
     .textField
       width: 100%
-      font-size: 18px
+      font-size: 13px
+
+      @include for-desktop-up
+        font-size: 16px
 
       &:focus, &.active
         & + .label
+          padding: 0px
           top: 0
           left: 50%
           transform: translate(-50%)
-          font-size: 14px
+          font-size: 11px
+
+          @include for-desktop-up
+            font-size: 14px

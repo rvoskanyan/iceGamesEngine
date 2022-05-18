@@ -14,6 +14,8 @@ const postman = new Postman();
 
 const profileMenuNode = document.querySelector('.js-profileMenu');
 const homeSliderNode = document.querySelector('.js-homeSlider');
+const recProductSliderNode = document.querySelector('.js-recProductSlider');
+const seriesSliderNode = document.querySelector('.js-seriesSlider');
 const newsSliderNode = document.querySelector('.js-newsSlider');
 const achievementViewProfileSliderNode = document.querySelector('.js-achievementViewProfileSlider');
 const homeMediaSliderNode = document.querySelector('.js-homeMediaSlider');
@@ -46,6 +48,7 @@ const popupController = new PopupController([
   {
     id: 'loginFrom',
     btnSelector: '.js-openLogin',
+    closeBtnSelector: '.js-closeLoginForms',
     popupSelector: '.js-login',
     states: [
       {
@@ -179,6 +182,8 @@ if (rangeNode) {
   
   maxSliderNode.addEventListener('mousedown', listenerMousedownSlider);
   minSliderNode.addEventListener('mousedown', listenerMousedownSlider);
+  maxSliderNode.addEventListener('touchstart', listenerMousedownSlider);
+  minSliderNode.addEventListener('touchstart', listenerMousedownSlider);
   
   maxSliderNode.addEventListener('startInitial', initialSliders);
   minSliderNode.addEventListener('startInitial', initialSliders);
@@ -195,10 +200,12 @@ if (rangeNode) {
       const timeout = setTimeout(() => {
         holder = true;
         e.target.removeEventListener('mouseup', listenerMouseup);
+        e.target.removeEventListener('touchend', listenerMouseup);
         resolve();
       }, 150);
       
       e.target.addEventListener('mouseup', listenerMouseup);
+      e.target.addEventListener('touchend', listenerMouseup);
   
       function listenerMouseup () {
         clearTimeout(timeout);
@@ -230,6 +237,7 @@ if (rangeNode) {
           sliderNode.dataset.default = sliderNode.innerText;
           initialSliders();
           e.target.removeEventListener('mouseup', listenerMouseup);
+          e.target.removeEventListener('touchend', listenerMouseup);
           e.target.removeEventListener('blur', blurSlider);
           sliderNode.removeAttribute('contenteditable');
         }
@@ -249,7 +257,7 @@ if (rangeNode) {
       return;
     }
   
-    const cursorStartPosition = e.pageX;
+    const cursorStartPosition = e.pageX || e.changedTouches[0].clientX;
     const sliderStartPosition = parseInt(getComputedStyle(e.target).left);
     const sliderNode = e.target;
     const listenerMousemove = (e) => {
@@ -257,7 +265,9 @@ if (rangeNode) {
     }
     const listenerMouseup = () => {
       document.removeEventListener('mousemove', listenerMousemove);
+      document.removeEventListener('touchmove', listenerMousemove);
       document.removeEventListener('mouseup', listenerMouseup);
+      document.removeEventListener('touchend', listenerMouseup);
       sliderNode.dispatchEvent(new Event('blur'));
       initialSliders();
       sliderNode.style.cursor = 'initial';
@@ -266,7 +276,9 @@ if (rangeNode) {
     sliderNode.style.cursor = 'pointer';
   
     document.addEventListener('mousemove', listenerMousemove);
+    document.addEventListener('touchmove', listenerMousemove);
     document.addEventListener('mouseup', listenerMouseup);
+    document.addEventListener('touchend', listenerMouseup);
   
     if (activeSlide) {
       activeSlide.style.zIndex = '0';
@@ -277,7 +289,13 @@ if (rangeNode) {
   }
   
   function moveSlider(e, sliderNode, cursorStartPosition, currentPositionSlider) {
-    const offset = e.pageX - cursorStartPosition;
+    let offset = 0;
+    
+    if (e.pageX) {
+      offset = e.pageX - cursorStartPosition;
+    } else {
+      offset = e.changedTouches[0].clientX - cursorStartPosition
+    }
     const sliderWidth = parseFloat(getComputedStyle(sliderNode).width);
     let position = offset + currentPositionSlider;
     let sliderValue = Math.round(position * step + min);
@@ -346,7 +364,7 @@ if (gamePageNode) {
       document.querySelector('body').dataset.dsCartId = resultAddCartDS.cart_uid;
     }
     
-    addToCartBtnNode.innerText = 'В корзине ✔';
+    addToCartBtnNode.innerText = 'Добавлено';
     addToCartBtnNode.classList.add('js-active');
     addToCartBtnNode.setAttribute('title', 'Перейти в корзину покупок');
   })
@@ -649,6 +667,8 @@ document.addEventListener('click', async (e) => {
     const dsId = productCardNode.dataset.dsId;
     const addToFavoriteBtnNode = target.closest('.js-favoritesBtn');
     const addToCartBtnNode = target.closest('.js-addToCart');
+    const addToCartBtnText = addToCartBtnNode.querySelector('.js-text');
+    const addToCartBtnIcon = addToCartBtnNode.querySelector('.js-icon');
   
     if (addToFavoriteBtnNode) {
       e.preventDefault();
@@ -726,7 +746,8 @@ document.addEventListener('click', async (e) => {
         document.querySelector('body').dataset.dsCartId = resultAddCartDS.cart_uid;
       }
   
-      addToCartBtnNode.innerText = 'В корзине ✔';
+      addToCartBtnText.innerText = 'Добавлено';
+      addToCartBtnIcon.classList.add('active');
       addToCartBtnNode.classList.add('js-active', 'active');
       addToCartBtnNode.setAttribute('title', 'Перейти в корзину покупок');
     }
@@ -806,10 +827,10 @@ searchStringNode.addEventListener('input', async () => {
               class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart small js-addToCart${product.inCart ? ' active js-active' : ''}"
               title="${product.inCart ? 'Перейти в корзину покупок' : 'Добавить данный товар в корзину покупок'}"
             >
-              <span class="desktop">
-                ${product.inCart ? 'В корзине ✔' : 'В корзину'}
+              <span class="desktop js-text">
+                ${product.inCart ? 'Добавлено' : 'В корзину'}
               </span>
-              <span class="mobile icon-static icon-static-cartProduct${product.inCart ? ' active' : ''}"></span>
+              <span class="mobile icon-static icon-static-cartProduct${product.inCart ? ' active' : ''} js-icon"></span>
             </button>
           ` : `
             <div class="noInStockMsg">Игры нет<br>в наличии :(</div>
@@ -1126,10 +1147,10 @@ if (catalogNode) {
                 class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart small js-addToCart${product.inCart ? ' active js-active' : ''}"
                 title="${product.inCart ? 'Перейти в корзину покупок' : 'Добавить данный товар в корзину покупок'}"
               >
-                <span class="desktop">
-                  ${product.inCart ? 'В корзине ✔' : 'В корзину'}
+                <span class="desktop js-text">
+                  ${product.inCart ? 'Добавлено' : 'В корзину'}
                 </span>
-                <span class="mobile icon-static icon-static-cartProduct${product.inCart ? ' active' : ''}"></span>
+                <span class="mobile icon-static icon-static-cartProduct${product.inCart ? ' active' : ''} js-icon"></span>
               </button>
             ` : `
               <div class="noInStockMsg">Игры нет<br>в наличии :(</div>
@@ -1369,10 +1390,10 @@ if (catalogNode) {
                 class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart small js-addToCart${product.inCart ? ' active js-active' : ''}"
                 title="${product.inCart ? 'Перейти в корзину покупок' : 'Добавить данный товар в корзину покупок'}"
               >
-                <span class="desktop">
-                  ${product.inCart ? 'В корзине ✔' : 'В корзину'}
+                <span class="desktop js-text">
+                  ${product.inCart ? 'Добавлено' : 'В корзину'}
                 </span>
-                <span class="mobile icon-static icon-static-cartProduct${product.inCart ? ' active' : ''}"></span>
+                <span class="mobile icon-static icon-static-cartProduct${product.inCart ? ' active' : ''} js-icon"></span>
               </button>
             ` : `
               <div class="noInStockMsg">Игры нет<br>в наличии :(</div>
@@ -1486,5 +1507,24 @@ if (profileMenuNode) {
     link.addEventListener('mouseover', (e) => {
       moveIndicator(e.target)
     })
+  })
+}
+
+if (recProductSliderNode) {
+  new Slider({
+    mainNode: recProductSliderNode,
+    switchingTime: 3000,
+    progress: true,
+    isTrack: true,
+    countSlidesScroll: 1,
+  });
+}
+
+if (seriesSliderNode) {
+  new Slider({
+    mainNode: seriesSliderNode,
+    switchingTime: 3000,
+    isTrack: true,
+    countSlidesScroll: 4
   })
 }

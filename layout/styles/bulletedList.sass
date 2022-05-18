@@ -5,11 +5,18 @@
   font-weight: 600
   color: #fff
 
+  &.notSeparator .item:not(:last-child)
+    border-bottom: initial
+
   & .item
     display: flex
     align-items: flex-start
-    padding-top: 12px
-    padding-bottom: 10.5px
+    padding-top: 8px
+    padding-bottom: 6.5px
+
+    @include for-desktop-up
+      padding-top: 12px
+      padding-bottom: 10.5px
 
     &:not(:last-child)
       border-bottom: 1.5px solid rgba(255, 255, 255, 0.3)

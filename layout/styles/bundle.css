@@ -118,15 +118,6 @@
       row-gap: 50px;
       column-gap: 30px; } }
 
-.row {
-  display: flex;
-  justify-content: space-between; }
-  .row-game {
-    display: grid;
-    grid-auto-flow: column;
-    grid-template-columns: max-content;
-    grid-column-gap: 30px; }
-
 .homeTitle {
   font-family: 'Lemon Milk';
   color: #fff;
@@ -179,14 +170,18 @@
         .doubleGameSlider .slider .visibleAreaWrapper .visibleArea {
           max-width: calc((171px + 20px * 2) * 2); } }
       .doubleGameSlider .slider .visibleAreaWrapper .visibleArea .tape {
-        display: flex; }
+        display: flex;
+        transition: transform .3s ease-in; }
         .doubleGameSlider .slider .visibleAreaWrapper .visibleArea .tape .slide {
           visibility: hidden;
+          opacity: 0;
           min-width: 128px;
           max-width: 128px;
           min-height: 201px;
           max-height: 201px;
-          margin: 0 10px; }
+          margin: 0 10px;
+          transition: .3s ease-in;
+          transition-property: opacity, visibility; }
           @media (min-width: 1650px) {
             .doubleGameSlider .slider .visibleAreaWrapper .visibleArea .tape .slide {
               min-width: 154px;
@@ -202,7 +197,8 @@
               max-height: 270px;
               margin: 0 20px; } }
           .doubleGameSlider .slider .visibleAreaWrapper .visibleArea .tape .slide.active {
-            visibility: visible; }
+            visibility: visible;
+            opacity: 1; }
 
 .paragraph {
   color: #fff;
@@ -214,11 +210,17 @@
   list-style: none;
   font-weight: 600;
   color: #fff; }
+  .bulletedList.notSeparator .item:not(:last-child) {
+    border-bottom: initial; }
   .bulletedList .item {
     display: flex;
     align-items: flex-start;
-    padding-top: 12px;
-    padding-bottom: 10.5px; }
+    padding-top: 8px;
+    padding-bottom: 6.5px; }
+    @media (min-width: 1366px) {
+      .bulletedList .item {
+        padding-top: 12px;
+        padding-bottom: 10.5px; } }
     .bulletedList .item:not(:last-child) {
       border-bottom: 1.5px solid rgba(255, 255, 255, 0.3); }
     .bulletedList .item:before {
@@ -746,13 +748,36 @@
   overflow: hidden;
   background-color: rgba(20, 0, 46, 0.96);
   box-shadow: 0 0 10px #000000;
-  width: 380px;
+  max-width: 380px;
   right: -380px;
   transition: 0.5s cubic-bezier(0.6, -0.28, 0.74, 0.05);
   transition-property: right, opacity;
   opacity: 0;
   padding: 68px 40px;
   display: grid; }
+  .login .close {
+    top: 15px;
+    right: 15px;
+    width: 30px;
+    height: 35px;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center; }
+    .login .close:before, .login .close:after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 3px;
+      background-color: #fff;
+      transition: inherit; }
+    .login .close:after {
+      transform: translateY(0) rotate(45deg); }
+    .login .close:before {
+      transform: translateY(0) rotate(-45deg); }
+    @media (min-width: 1366px) {
+      .login .close {
+        display: none; } }
   .login .formContainer {
     grid-column: 1/-1;
     grid-row: 1/2;
@@ -764,9 +789,15 @@
       opacity: 1;
       visibility: visible; }
     .login .formContainer .form {
-      margin-top: 30px; }
+      margin-top: 15px; }
+      @media (min-width: 1366px) {
+        .login .formContainer .form {
+          margin-top: 30px; } }
       .login .formContainer .form .submit {
-        margin: 25px auto 0 auto; }
+        margin: 15px auto 0 auto; }
+        @media (min-width: 1366px) {
+          .login .formContainer .form .submit {
+            margin: 25px auto 0 auto; } }
   .login.active {
     opacity: 1;
     right: 0px;
@@ -783,15 +814,21 @@
       justify-content: flex-end;
       transition: height .3s ease-in;
       transition-delay: 0s;
-      height: 248px; }
+      height: 197px;
+      row-gap: 10px; }
+      @media (min-width: 1366px) {
+        .login .auth .form {
+          row-gap: 15px;
+          height: 251px; } }
       .login .auth .form .input-labelInField:first-child {
         transition: .3s ease-in;
         transition-delay: .35s;
         transition-property: opacity, visibility; }
-      .login .auth .form .input-labelInField:not(:first-child) {
-        margin-top: 15px; }
       .login .auth .form.auth {
-        height: 182px; }
+        height: 148px; }
+        @media (min-width: 1366px) {
+          .login .auth .form.auth {
+            height: 189px; } }
         .login .auth .form.auth .input-labelInField:first-child {
           transition-delay: 0s;
           opacity: 0;
@@ -800,23 +837,38 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      margin-top: 30px; }
+      margin-top: 20px; }
+      @media (min-width: 1366px) {
+        .login .auth .canRestore {
+          margin-top: 30px; } }
       .login .auth .canRestore .text {
         color: rgba(255, 255, 255, 0.5);
-        font-size: 16px;
+        font-size: 13px;
         margin-bottom: 10px; }
+        @media (min-width: 1366px) {
+          .login .auth .canRestore .text {
+            font-size: 16px; } }
   .login .restore {
     text-align: center; }
     .login .restore .title {
       color: #fff;
-      font-size: 21px;
+      font-size: 16px;
       font-weight: 600; }
+      @media (min-width: 1366px) {
+        .login .restore .title {
+          font-size: 21px; } }
     .login .restore .description {
       margin-top: 10px;
       color: rgba(255, 255, 255, 0.5);
-      font-size: 16px; }
+      font-size: 13px; }
+      @media (min-width: 1366px) {
+        .login .restore .description {
+          font-size: 16px; } }
     .login .restore .btn {
-      margin: 30px auto 0 auto; }
+      margin: 20px auto 0 auto; }
+      @media (min-width: 1366px) {
+        .login .restore .btn {
+          margin: 30px auto 0 auto; } }
 
 .header {
   position: fixed;
@@ -839,7 +891,7 @@
     .header .logo .name {
       color: #fff;
       text-transform: uppercase;
-      font-size: 16px;
+      font-size: 8px;
       font-weight: 600;
       line-height: 1;
       margin-left: 5px; }
@@ -1024,6 +1076,9 @@
     display: flex;
     align-items: center;
     z-index: 2; }
+    @media (min-width: 1366px) {
+      .header .mobileNavBtn {
+        display: none; } }
     .header .mobileNavBtn .openMobileMenu {
       margin-left: 12px; }
       @media (min-width: 1366px) {
@@ -1755,11 +1810,16 @@
             margin-right: 10px; } }
       .footer .navigation .social .link .img {
         width: 30px;
-        height: 30px; }
+        height: 30px;
+        display: block; }
+        @media (min-width: 1366px) {
+          .footer .navigation .social .link .img {
+            width: 33px;
+            height: 33px; } }
     .footer .navigation .menu {
       display: grid;
       grid-template-columns: repeat(3, max-content);
-      column-gap: 20px;
+      column-gap: 26px;
       row-gap: 10px;
       max-width: 100%;
       margin-top: 15px; }
@@ -2108,27 +2168,44 @@
 .input-labelInField {
   position: relative;
   display: block;
-  border-bottom: 2px solid #fff;
-  padding-top: 20px; }
+  border-bottom: 1px solid #fff;
+  padding-top: 12px; }
+  @media (min-width: 1366px) {
+    .input-labelInField {
+      padding-top: 16px;
+      border-bottom: 2px solid #fff; } }
   .input-labelInField .label, .input-labelInField .textField {
     color: #fff;
-    font-size: 16px;
+    font-size: 13px;
     padding: 5px; }
+    @media (min-width: 1366px) {
+      .input-labelInField .label, .input-labelInField .textField {
+        font-size: 16px; } }
   .input-labelInField .label {
     position: absolute;
     left: 0;
-    top: 20px;
+    top: 12px;
     z-index: -1;
     transition: .3s ease-in;
-    transition-property: left, top, transform, font-size; }
+    transition-property: left, top, transform, font-size, padding; }
+    @media (min-width: 1366px) {
+      .input-labelInField .label {
+        top: 16px; } }
   .input-labelInField .textField {
     width: 100%;
-    font-size: 18px; }
+    font-size: 13px; }
+    @media (min-width: 1366px) {
+      .input-labelInField .textField {
+        font-size: 16px; } }
     .input-labelInField .textField:focus + .label, .input-labelInField .textField.active + .label {
+      padding: 0px;
       top: 0;
       left: 50%;
       transform: translate(-50%);
-      font-size: 14px; }
+      font-size: 11px; }
+      @media (min-width: 1366px) {
+        .input-labelInField .textField:focus + .label, .input-labelInField .textField.active + .label {
+          font-size: 14px; } }
 
 .btn {
   font-family: 'Montserrat';
@@ -2362,7 +2439,6 @@
   max-width: 160px;
   height: 250px;
   border: 2px solid #fff;
-  box-shadow: 0 0 10px #0066FF;
   border-radius: 22px;
   background-color: #02043D;
   overflow: hidden;
@@ -2370,9 +2446,11 @@
   transition: transform .3s ease-in;
   cursor: pointer;
   text-decoration: none; }
+  .cardGame.active {
+    transform: scale(1.05, 1.05);
+    outline: none; }
   @media (min-width: 431px) {
     .cardGame {
-      box-shadow: 0 0 15px #0066FF;
       min-width: 117px;
       max-width: 117px;
       height: 158px; } }
@@ -2383,7 +2461,6 @@
       height: 243px; }
       .cardGame:hover, .cardGame.active, .cardGame:focus-visible, .cardGame:focus-within {
         transform: scale(1.1, 1.1);
-        box-shadow: 0 0 30px #00A3FF;
         outline: none; }
         .cardGame:hover .actions, .cardGame.active .actions, .cardGame:focus-visible .actions, .cardGame:focus-within .actions {
           bottom: 0;
@@ -2401,10 +2478,6 @@
       max-width: 197px;
       min-width: 197px;
       height: 311px; } }
-  .cardGame.active {
-    transform: scale(1.05, 1.05);
-    box-shadow: 0 0 15px #00A3FF;
-    outline: none; }
   .cardGame .actions {
     position: absolute;
     top: 7px;
@@ -2454,9 +2527,9 @@
       @media (min-width: 431px) {
         .cardGame .actions .inCart .desktop {
           display: initial; } }
-      @media (min-width: 431px) {
-        .cardGame .actions .inCart .desktop .mobile {
-          display: none; } }
+    @media (min-width: 431px) {
+      .cardGame .actions .inCart .mobile {
+        display: none; } }
     .cardGame .actions .like {
       margin-bottom: 5px; }
       @media (min-width: 431px) {
@@ -2498,7 +2571,7 @@
         font-weight: 700; }
   .cardGame .head {
     position: relative;
-    height: 200px;
+    height: 195px;
     width: 100%;
     font-size: 16px; }
     @media (min-width: 431px) {
@@ -2552,51 +2625,47 @@
       max-width: 189px;
       min-width: 189px;
       height: 295px; } }
-  @media (min-width: 1366px) {
+  @media (min-width: 431px) and (min-width: 1366px) {
     .cardGame.big {
       max-width: 204px;
       min-width: 204px;
       height: 317px; } }
-  @media (min-width: 1650px) {
+  @media (min-width: 431px) and (min-width: 1650px) {
     .cardGame.big {
       max-width: 220px;
       min-width: 220px;
       height: 340px; } }
-  @media (min-width: 1920px) {
+  @media (min-width: 431px) and (min-width: 1920px) {
     .cardGame.big {
       max-width: 233px;
       min-width: 233px;
       height: 368px; } }
-  @media (min-width: 431px) {
+  @media (min-width: 431px) and (min-width: 431px) {
     .cardGame.big .actions .inCart {
       left: 20px;
       width: calc(100% - 20px * 2); } }
-  @media (min-width: 431px) {
+  @media (min-width: 431px) and (min-width: 431px) {
     .cardGame.big .head {
       height: 230px; } }
-  @media (min-width: 1366px) {
+  @media (min-width: 431px) and (min-width: 1366px) {
     .cardGame.big .head {
       height: 253px; } }
-  @media (min-width: 1650px) {
+  @media (min-width: 431px) and (min-width: 1650px) {
     .cardGame.big .head {
       height: 272px; } }
-  @media (min-width: 1920px) {
+  @media (min-width: 431px) and (min-width: 1920px) {
     .cardGame.big .head {
       height: 296px; } }
   .cardGame.small {
     max-width: 124px;
     min-width: 124px;
     height: 192px;
-    box-shadow: 0 0 10px #00A3FF;
     border-radius: 16px; }
     @media (min-width: 1366px) {
       .cardGame.small {
         max-width: 128px;
         min-width: 128px;
         height: 201px; } }
-    @media (min-width: 1366px) {
-      .cardGame.small:hover, .cardGame.small.active, .cardGame.small:focus-visible, .cardGame.small:focus-within {
-        box-shadow: 0 0 15px #00A3FF; } }
     @media (min-width: 1650px) {
       .cardGame.small {
         max-width: 154px;
@@ -2607,8 +2676,6 @@
         max-width: 171px;
         min-width: 171px;
         height: 270px; } }
-    .cardGame.small.active {
-      box-shadow: 0 0 15px #00A3FF; }
     .cardGame.small .actions.noInStock {
       row-gap: 10px; }
       .cardGame.small .actions.noInStock .like {
@@ -2830,14 +2897,15 @@
     position: absolute;
     width: 106%;
     left: -3%;
-    height: 3px;
-    top: 35%;
+    height: 2px;
+    top: 40%;
     transform: rotate(-14deg);
     box-shadow: 3px 2px 5px #000000;
     background-color: #8043D7; }
-    @media (min-width: 431px) {
+    @media (min-width: 1366px) {
       .fromPrice .value:before {
-        top: 45%; } }
+        top: 45%;
+        height: 3px; } }
 
 .discount {
   display: block;
@@ -3077,13 +3145,19 @@
           width: 50px;
           margin: 0 35px; } }
     .breadcrumbs .item .link {
-      font-size: 14px;
+      font-size: 12px;
       color: rgba(255, 255, 255, 0.8);
       font-weight: 300; }
+      @media (min-width: 1366px) {
+        .breadcrumbs .item .link {
+          font-size: 14px; } }
   .breadcrumbs .current {
-    font-size: 14px;
+    font-size: 12px;
     font-weight: bold;
     color: rgba(255, 255, 255, 0.5); }
+    @media (min-width: 1366px) {
+      .breadcrumbs .current {
+        font-size: 14px; } }
 
 .range {
   min-width: 250px;
@@ -3614,6 +3688,12 @@
         display: flex;
         flex-direction: column;
         justify-content: center; }
+        .gamePage .fullInfo .info .generalInfo .blocks > .item.productSeries .rowProducts {
+          display: flex;
+          column-gap: 20px; }
+          @media (max-width: 430px) {
+            .gamePage .fullInfo .info .generalInfo .blocks > .item.productSeries .rowProducts {
+              padding: 20px 10px; } }
         .gamePage .fullInfo .info .generalInfo .blocks > .item .package {
           margin-bottom: 10px;
           cursor: initial; }
@@ -3622,19 +3702,32 @@
               margin-bottom: 25px; } }
         .gamePage .fullInfo .info .generalInfo .blocks > .item .slider {
           display: flex;
+          justify-content: space-between;
           align-items: center;
           margin: 0 auto; }
+          @media (min-width: 1366px) {
+            .gamePage .fullInfo .info .generalInfo .blocks > .item .slider {
+              margin: initial; } }
           .gamePage .fullInfo .info .generalInfo .blocks > .item .slider .visibleAreaWrapper {
             overflow: hidden;
-            padding: 26px 13px; }
+            padding: 15px 0; }
+            @media (min-width: 1366px) {
+              .gamePage .fullInfo .info .generalInfo .blocks > .item .slider .visibleAreaWrapper {
+                padding: 26px 5px; } }
             @media (min-width: 1650px) {
               .gamePage .fullInfo .info .generalInfo .blocks > .item .slider .visibleAreaWrapper {
-                padding: 30px 11px; } }
+                padding: 30px 5px; } }
             @media (min-width: 1920px) {
               .gamePage .fullInfo .info .generalInfo .blocks > .item .slider .visibleAreaWrapper {
                 padding: 33px 10px; } }
             .gamePage .fullInfo .info .generalInfo .blocks > .item .slider .visibleAreaWrapper .visibleArea {
-              max-width: calc((128px + 10px * 2) * 4); }
+              max-width: calc((124px + 10px * 2) * 1); }
+              @media (min-width: 360px) {
+                .gamePage .fullInfo .info .generalInfo .blocks > .item .slider .visibleAreaWrapper .visibleArea {
+                  max-width: calc((124px + 10px * 2) * 2); } }
+              @media (min-width: 1366px) {
+                .gamePage .fullInfo .info .generalInfo .blocks > .item .slider .visibleAreaWrapper .visibleArea {
+                  max-width: calc((128px + 15px * 2) * 4); } }
               @media (min-width: 1650px) {
                 .gamePage .fullInfo .info .generalInfo .blocks > .item .slider .visibleAreaWrapper .visibleArea {
                   max-width: calc((154px + 15px * 2) * 4); } }
@@ -3642,30 +3735,26 @@
                 .gamePage .fullInfo .info .generalInfo .blocks > .item .slider .visibleAreaWrapper .visibleArea {
                   max-width: calc((171px + 20px * 2) * 4); } }
               .gamePage .fullInfo .info .generalInfo .blocks > .item .slider .visibleAreaWrapper .visibleArea .tape {
-                display: flex; }
+                display: flex;
+                transition: transform .3s ease-in; }
                 .gamePage .fullInfo .info .generalInfo .blocks > .item .slider .visibleAreaWrapper .visibleArea .tape .slide {
                   visibility: hidden;
-                  min-width: 128px;
-                  max-width: 128px;
-                  min-height: 201px;
-                  max-height: 201px;
+                  opacity: 0;
+                  transition: .3s ease-in;
+                  transition-property: visibility, opacity;
                   margin: 0 10px; }
-                  @media (min-width: 1650px) {
+                  @media (min-width: 1366px) {
                     .gamePage .fullInfo .info .generalInfo .blocks > .item .slider .visibleAreaWrapper .visibleArea .tape .slide {
-                      min-width: 154px;
-                      max-width: 154px;
-                      min-height: 243px;
-                      max-height: 243px;
                       margin: 0 15px; } }
                   @media (min-width: 1920px) {
                     .gamePage .fullInfo .info .generalInfo .blocks > .item .slider .visibleAreaWrapper .visibleArea .tape .slide {
-                      min-width: 171px;
-                      max-width: 171px;
-                      min-height: 270px;
-                      max-height: 270px;
                       margin: 0 20px; } }
                   .gamePage .fullInfo .info .generalInfo .blocks > .item .slider .visibleAreaWrapper .visibleArea .tape .slide.active {
-                    visibility: visible; }
+                    visibility: visible;
+                    opacity: 1; }
+          @media (max-width: 430px) {
+            .gamePage .fullInfo .info .generalInfo .blocks > .item .slider .next, .gamePage .fullInfo .info .generalInfo .blocks > .item .slider .prev {
+              display: none; } }
           .gamePage .fullInfo .info .generalInfo .blocks > .item .slider .next .icon-static {
             transform: rotate(180deg); }
   .gamePage .fullInfo .systemInfo {
@@ -5460,26 +5549,40 @@
           width: 159px; } }
 
 .deliveryPage .cover .textContent .coverIcon {
-  height: 150px;
+  height: 120px;
   margin: 0 auto -30px auto; }
+  @media (min-width: 1366px) {
+    .deliveryPage .cover .textContent .coverIcon {
+      height: 150px; } }
 
 .deliveryPage .contentContainer {
   text-shadow: 0 0 60px #938083;
   color: #fff; }
 
-.deliveryPage .title {
-  font-size: 40px;
+.deliveryPage .subTitle {
+  font-size: 18px;
   color: #fff;
+  font-weight: 100;
   font-family: 'Lemon Milk'; }
+  @media (min-width: 1366px) {
+    .deliveryPage .subTitle {
+      font-size: 36px; } }
 
 .deliveryPage .deliveryBlock {
   margin-top: 60px; }
   .deliveryPage .deliveryBlock .description {
     margin-top: 15px;
-    line-height: 1.5; }
+    line-height: 1.5;
+    font-size: 13px; }
+    @media (min-width: 1366px) {
+      .deliveryPage .deliveryBlock .description {
+        font-size: 16px; } }
 
 .deliveryPage .paymentMethods {
-  margin-top: 100px; }
+  margin-top: 40px; }
+  @media (min-width: 1366px) {
+    .deliveryPage .paymentMethods {
+      margin-top: 100px; } }
   .deliveryPage .paymentMethods .list {
     margin-top: 15px; }
     .deliveryPage .paymentMethods .list .item:not(:last-child) {
@@ -5520,7 +5623,8 @@
     font-family: 'Lemon Milk';
     font-size: 20px;
     color: #fff;
-    text-align: center; }
+    text-align: center;
+    font-weight: 100; }
     @media (min-width: 1366px) {
       .legalInfoPage .title {
         font-size: 40px;

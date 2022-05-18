@@ -13,10 +13,25 @@
         <div class="content savedGames">
             <div class="subtitle">Мои игры</div>
             <div class="description">Тут Вы можете увидеть игры, которые уже приобрели</div>
-            <div class="noItems">Вы не приобрели еще ни одной игры</div>
-            <!--<div class="list">
-                {{> game}}
-            </div>-->
+            {{#if orders.length}}
+                <div class="list">
+                    {{#each orders}}
+                        {{#each products}}
+                            {{> game
+                                    id=productId._id
+                                    img=productId.img
+                                    dsId=productId.dsId
+                                    name=productId.name
+                                    priceTo=productId.priceTo
+                                    priceFrom=productId.priceFrom
+                                    size='small'
+                            }}
+                        {{/each}}
+                    {{/each}}
+                </div>
+            {{else}}
+                <div class="noItems">Вы не приобрели еще ни одной игры</div>
+            {{/if}}
         </div>
     </div>
 </main>

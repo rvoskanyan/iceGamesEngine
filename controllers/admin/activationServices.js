@@ -37,15 +37,13 @@ export const addActivationService = async (req, res) => {
 export const pageEditActivationService = async (req, res) => {
   try {
     const {id} = req.params;
-    const activationService = await ActivationService.findByPk(id);
-    const activationStages = await activationService.getActivationStages();
+    const activationService = await ActivationService.findById(id).lean();
   
     res.render('addActivationService', {
       layout: 'admin',
       title: 'Редактирование сервиса активации',
       isEdit: true,
-      activationService: activationService.dataValues,
-      activationStages: activationStages.map(item => item.dataValues),
+      activationService,
     });
   } catch (e) {
     console.log(e);
@@ -58,14 +56,10 @@ export const editActivationService = async (req, res) => {
   
   try {
     const {name} = req.body;
+    const activationService = await ActivationService.findById(id);
   
-    await ActivationService.update({name},
-      {
-        where: {
-          id: id,
-        },
-      },
-    );
+    activationService.name = name;
+    await activationService.save();
     
     res.redirect('/admin/activation-services');
   } catch (e) {
@@ -78,12 +72,12 @@ export const pageAddActivationStage = async (req, res) => {
   const {id} = req.params;
   
   try {
-    const activationService = await ActivationService.findByPk(id, {attributes: ['id', 'name']});
+    const activationService = await ActivationService.findById(id).lean();
     
     res.render('addActivationStage', {
       layout: 'admin',
       title: 'Добавление этапа в сервис активации',
-      activationService: activationService.dataValues,
+      activationService,
     })
   } catch (e) {
     console.log(e);
@@ -95,12 +89,16 @@ export const addActivationStage = async (req, res) => {
   const {id} = req.params;
   
   try {
-    const {text} = req.body;
-    
-    await ActivationStage.create({
-      text,
-      activationServiceId: id,
+    const {name, order} = req.body;
+    const activationService = await ActivationService.findById(id);
+  
+    activationService.stages.push({
+      $each: [{name, order}],
+      $sort: {
+        order: 1,
+      },
     });
+    await activationService.save();
     
     res.redirect(`/admin/activation-services/edit/${id}`);
   } catch (e) {
