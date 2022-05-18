@@ -890,9 +890,10 @@
     z-index: 1; }
     .header .logo .name {
       color: #fff;
+      font-family: 'Lemon Milk';
       text-transform: uppercase;
       font-size: 8px;
-      font-weight: 600;
+      font-weight: 100;
       line-height: 1;
       margin-left: 5px; }
       @media (min-width: 431px) {
@@ -2084,8 +2085,8 @@
         top: 16px; } }
   .logo .imgContainer {
     position: relative;
-    max-width: 60px;
-    min-width: 60px; }
+    max-width: 35px;
+    min-width: 35px; }
     @media (min-width: 431px) {
       .logo .imgContainer {
         max-width: 100px;
