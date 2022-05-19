@@ -1625,9 +1625,11 @@
       margin-top: 40px; } }
   .genresSlider .visibleArea {
     overflow: hidden;
-    max-height: calc(150px + 120px + 5px * 4); }
-    @media (min-width: 431px) {
+    max-height: calc(150px + 120px + 5px * 4);
+    min-width: 100%; }
+    @media (min-width: 1366px) {
       .genresSlider .visibleArea {
+        min-width: initial;
         max-height: calc((283px + 18px * 2) * 2);
         padding: 0 14px; } }
     @media (min-width: 1650px) {

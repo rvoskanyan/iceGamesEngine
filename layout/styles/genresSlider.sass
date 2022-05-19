@@ -13,8 +13,10 @@
   & .visibleArea
     overflow: hidden
     max-height: calc(150px + 120px + 5px * 4) //heightFirstGenre + heightSecondGenre + margin * 4
+    min-width: 100%
 
-    @include for-big-phone-up
+    @include for-desktop-up
+      min-width: initial
       max-height: calc((283px + 18px * 2) * 2) //(height + margin * 2) * 2
       padding: 0 14px
 
