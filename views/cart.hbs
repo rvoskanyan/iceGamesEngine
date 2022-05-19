@@ -24,14 +24,14 @@
                                     <div class="price">
                                         <div class="rowDiscount">
                                             <div class="fromPrice">
-                                                <span class="value">
+                                                <span class="value js-priceFrom">
                                                     {{priceFrom}}
                                                 </span>
                                             </div>
                                             <div class="discount">{{discount}}</div>
                                         </div>
                                         <div class="toPrice">
-                                            <span class="value">
+                                            <span class="value js-priceTo">
                                                 {{priceTo}}
                                             </span>
                                         </div>
@@ -65,31 +65,26 @@
                 {{/each}}
             </div>
             <div class="check js-check">
-                <div class="total">
-                    Итого:
-                    <span class="toValue js-totalTo">
-                        {{cart.priceToTotal}}
-                    </span>
-                    <span class="fromPrice">
-                <span class="value js-totalFrom">
-                    {{cart.priceFromTotal}}
-                </span>
-            </span>
+                <div class="title">Ваша корзина</div>
+                <div class="body">
+                    <div class="param">
+                        <div class="name">
+                            Товары (<span class="js-totalProducts">{{cart.items.length}}</span>)
+                        </div>
+                        <div class="value"><span class="js-totalFrom">{{cart.priceFromTotal}}</span> ₽</div>
+                    </div>
+                    <div class="param">
+                        <div class="name">Скидка</div>
+                        <div class="value saving">-<span class="js-saving">{{cart.saving}}</span> ₽</div>
+                    </div>
                 </div>
-                <p class="totalProducts js-totalProducts">Всего товаров: {{cart.items.length}}</p>
-                <button class="btn round border bg-darkPurple js-payBtn hover-bg-violet">
-                    Оплатить
-                    {{#if cart.saving}}
-                        <span class="saving js-saving">
-                        с экономией в
-                        <span class="toPrice">
-                            <span class="value js-savingValue">
-                                {{cart.saving}}
-                            </span>
-                        </span>
-                    </span>
-                    {{/if}}
-                </button>
+                <div class="total">
+                    <div class="param">
+                        <div class="name">Общая стоимость</div>
+                        <div class="value"><span class="js-totalTo">{{cart.priceToTotal}}</span> ₽</div>
+                    </div>
+                </div>
+                <button class="btn round border bg-darkPurple js-payBtn hover-bg-violet">Оплатить</button>
             </div>
             <form action="https://oplata.info/asp2/pay.asp" class="js-payForm" method="post" style="display: none">
                 <input type="hidden" name="cart_uid" value="{{@root.person.dsCartId}}" />

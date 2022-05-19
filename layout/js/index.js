@@ -37,6 +37,7 @@ const scrollerNode = document.querySelector('.js-scroller');
 const likeArticleNode = document.querySelector('.js-likeArticle');
 const copyBtnNode = document.querySelector('.js-copyBtn');
 const searchStringNode = document.querySelector('.js-searchString');
+const mobileSearchStringNode = document.querySelector('.js-mobileSearchString');
 const cartNode = document.querySelector('.js-cart');
 const collapseNodes = document.querySelectorAll('.js-collapse');
 const autoSizeInputNodes = document.querySelectorAll('.js-autoSizeInput');
@@ -527,17 +528,11 @@ if (cartNode) {
     const totalPriceFromNode = checkNode.querySelector('.js-totalFrom');
     const totalProductsNode = checkNode.querySelector('.js-totalProducts');
     const payBtnNode = checkNode.querySelector('.js-payBtn');
-    const savingNode = checkNode.querySelector('.js-saving');
+    const savingValueNode = checkNode.querySelector('.js-saving');
+    let savingValue = +savingValueNode.innerText;
     let countProducts = products.length;
     let totalPriceToValue = +totalPriceToNode.innerText;
     let totalPriceFromValue = +totalPriceFromNode.innerText;
-    let savingValueNode = null;
-    let savingValue = null;
-  
-    if (savingNode) {
-      savingValueNode = checkNode.querySelector('.js-savingValue');
-      savingValue = +savingValueNode.innerText;
-    }
   
     if (payBtnNode) {
       payBtnNode.addEventListener('click', async () => {
@@ -634,18 +629,12 @@ if (cartNode) {
         
           totalPriceToValue -= priceTo;
           totalPriceFromValue -= priceFrom;
+          savingValue -= priceFrom - priceTo;
         
           totalPriceToNode.innerText = totalPriceToValue;
           totalPriceFromNode.innerText = totalPriceFromValue;
           totalProductsNode.innerText = countProducts;
-        
-          if (savingValue) {
-            savingValue -= priceFrom - priceTo;
-          
-            if (!savingValue) {
-              savingNode.remove();
-            }
-          }
+          savingValueNode.innerText = savingValue;
         
           productNode.remove();
         })
@@ -782,6 +771,90 @@ document.addEventListener('click', async (e) => {
   new Menu(menu);*/
 })
 
+mobileSearchStringNode.addEventListener('input', async () => {
+  const response = await postman.get(`${websiteAddress}api/products`, {searchString: mobileSearchStringNode.value, limit: 7});
+  const result = await response.json();
+  const searchResultNode = document.querySelector('.js-mobileSearchResult');
+  
+  if (result.error) {
+    return;
+  }
+  
+  if (result.products?.length === 0) {
+    return searchResultNode.innerHTML = '<p class="textInfo">Ни чего не найдено</p>';
+  }
+  
+  searchResultNode.innerHTML = '';
+  
+  result.products.forEach(product => {
+    searchResultNode.innerHTML += `
+      <a
+        href="/games/${product.alias}"
+        class="cardGame small js-cardGame"
+        data-id="${product._id}"
+        data-ds-id="${product.dsId}"
+        title="Перейти к странице товара"
+      >
+        <div class="actions${!product.inStock ? ' noInStock' : ''}">
+          ${result.isAuth ? `
+            <button class="btn like js-favoritesBtn${product.inFavorites ? ' js-active' : ''}" title="${product.inFavorites ? 'Удалить игру из избранного' : 'Добавить игру в избранное'}">
+              <span class="desktop icon-static icon-static-actionLike js-icon-desktop${product.inFavorites ? ' active' : ''}"></span>
+              <span class="mobile icon-static icon-static-favoriteProduct js-icon-mobile${product.inFavorites ? ' active' : ''}"></span>
+            </button>
+          ` : ''}
+          ${product.inStock ? `
+            <button
+              class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart small js-addToCart${product.inCart ? ' active js-active' : ''}"
+              title="${product.inCart ? 'Перейти в корзину покупок' : 'Добавить данный товар в корзину покупок'}"
+            >
+              <span class="desktop js-text">
+                ${product.inCart ? 'Добавлено' : 'В корзину'}
+              </span>
+              <span class="mobile icon-static icon-static-cartProduct${product.inCart ? ' active' : ''} js-icon"></span>
+            </button>
+          ` : `
+            <div class="noInStockMsg">Игры нет<br>в наличии :(</div>
+            <button
+              class="btn border rounded bg-darkPink hover-bg-pink small js-subscribeInStock"
+              title="Подписаться на уведомление о поступлении товара"
+            >Уведомить</button>
+          `}
+        </div>
+        ${product.dlc ? '<div class="dlc" title="Дополнение для игры">DLC</div>' : ''}
+        <div class="head">
+          <img class="img" src="${websiteAddress}${product.img}" alt="Картинка ${product.name}" title="${product.name}">
+          <div class="name">
+            ${product.name}
+          </div>
+        </div>
+        <div class="price">
+          <div class="toPrice">
+            <span class="value">
+              ${product.priceTo}
+            </span>
+          </div>
+          <div class="fromPrice">
+            <span class="value">
+              ${product.priceFrom}
+            </span>
+          </div>
+        </div>
+      </a>
+    `;
+  });
+  
+  if (!result.isLast) {
+    searchResultNode.innerHTML += `
+        <a class="goToAllSearchResults" href="/games${mobileSearchStringNode.value ? `?searchString=${mobileSearchStringNode.value}` : ''}">
+            <div class="">
+                <span class="icon icon-allResults"></span>
+            </div>
+            <div class="text">Все результаты</div>
+        </a>
+    `;
+  }
+})
+
 searchStringNode.addEventListener('input', async () => {
   if (catalogNode) {
     return;
@@ -865,7 +938,7 @@ searchStringNode.addEventListener('input', async () => {
   
   if (!result.isLast) {
     searchResultNode.innerHTML += `
-        <a class="btn cardGame small goToAllSearchResults" href="/games?searchString=${searchStringNode.value}">
+        <a class="goToAllSearchResults" href="/games?searchString=${searchStringNode.value}">
             <div class="">
                 <span class="icon icon-allResults"></span>
             </div>

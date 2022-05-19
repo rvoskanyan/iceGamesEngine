@@ -3,13 +3,16 @@
 
 .textField
   color: #fff
-  font-size: 16px
+  font-size: 13px
   border: none
   outline: none
   padding: 0
   margin: 0
   transition: .3s ease-in
   background: none
+
+  @include for-desktop-up
+    font-size: 16px
 
 .input
   &-frame
@@ -33,7 +36,10 @@
 
       &::-webkit-input-placeholder
         color: rgba(255, 255, 255, 0.5)
-        font-size: 16px
+        font-size: 13px
+
+        @include for-desktop-up
+          font-size: 16px
 
   &-labelInField
     position: relative

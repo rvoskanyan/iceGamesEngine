@@ -1,0 +1,48 @@
+@import './breakPoints'
+
+.goToAllSearchResults
+  min-width: 135px
+  max-width: 135px
+  min-height: 205px
+  max-height: 205px
+  display: flex
+  flex-direction: column
+  justify-content: center
+  align-items: center
+  border: 2px dashed #fff
+  text-decoration: none
+  color: #fff
+  border-radius: 16px
+
+  @include for-middle-phone-up
+    min-width: 150px
+    max-width: 150px
+    min-height: 235px
+    max-height: 235px
+
+  @include for-desktop-up
+    border: 2px solid #fff
+    min-width: 124px
+    max-width: 124px
+    min-height: 197px
+    max-height: 197px
+    transition: transform .3s ease-in
+
+    &:hover
+      transform: scale(1.1, 1.1)
+
+  @include for-middle-desktop-up
+    min-width: 150px
+    max-width: 150px
+    min-height: 239px
+    max-height: 239px
+
+  @include for-big-desktop-up
+    min-width: 171px
+    max-width: 171px
+    min-height: 270px
+    max-height: 270px
+
+  & .text
+    font-size: 14px
+    margin-top: 10px

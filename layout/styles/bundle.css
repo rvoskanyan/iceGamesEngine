@@ -723,6 +723,51 @@
       height: 600px;
       width: 1100px; }
 
+.goToAllSearchResults {
+  min-width: 135px;
+  max-width: 135px;
+  min-height: 205px;
+  max-height: 205px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 2px dashed #fff;
+  text-decoration: none;
+  color: #fff;
+  border-radius: 16px; }
+  @media (min-width: 360px) {
+    .goToAllSearchResults {
+      min-width: 150px;
+      max-width: 150px;
+      min-height: 235px;
+      max-height: 235px; } }
+  @media (min-width: 1366px) {
+    .goToAllSearchResults {
+      border: 2px solid #fff;
+      min-width: 124px;
+      max-width: 124px;
+      min-height: 197px;
+      max-height: 197px;
+      transition: transform .3s ease-in; }
+      .goToAllSearchResults:hover {
+        transform: scale(1.1, 1.1); } }
+  @media (min-width: 1650px) {
+    .goToAllSearchResults {
+      min-width: 150px;
+      max-width: 150px;
+      min-height: 239px;
+      max-height: 239px; } }
+  @media (min-width: 1920px) {
+    .goToAllSearchResults {
+      min-width: 171px;
+      max-width: 171px;
+      min-height: 270px;
+      max-height: 270px; } }
+  .goToAllSearchResults .text {
+    font-size: 14px;
+    margin-top: 10px; }
+
 @keyframes animActive {
   0% {
     display: none;
@@ -1052,13 +1097,6 @@
             grid-template-columns: repeat(4, max-content);
             grid-row-gap: 50px;
             justify-content: space-between; }
-            .header .navigation .containerMenu .menu .containerMainMenuSearch .searchResult .goToAllSearchResults {
-              background: initial;
-              justify-content: space-between;
-              padding-top: 85px;
-              padding-bottom: 55px; }
-              .header .navigation .containerMenu .menu .containerMainMenuSearch .searchResult .goToAllSearchResults .text {
-                font-size: 14px; }
           .header .navigation .containerMenu .menu .containerMainMenuSearch .mainMenu {
             display: flex;
             justify-content: space-between; }
@@ -1152,14 +1190,22 @@
         .header .mobileQuickSearch .searchBar {
           margin: 0 140px 0 140px; } }
     .header .mobileQuickSearch .searchResults {
-      padding: 10px;
+      padding-right: 10px;
       overflow: auto;
       margin: 25px 0 0 0;
       display: grid;
       grid-template-columns: repeat(2, max-content);
-      grid-row-gap: 30px;
-      justify-content: space-between;
+      grid-row-gap: 15px;
+      justify-content: space-around;
       height: 80%; }
+      .header .mobileQuickSearch .searchResults .textInfo {
+        color: #fff;
+        font-size: 13px;
+        text-align: center;
+        grid-column: 1/-1; }
+      @media (min-width: 360px) {
+        .header .mobileQuickSearch .searchResults {
+          grid-row-gap: 25px; } }
       @media (min-width: 431px) {
         .header .mobileQuickSearch .searchResults {
           grid-template-columns: repeat(4, max-content);
@@ -1185,21 +1231,30 @@
   background-color: rgba(0, 190, 255, 0.4);
   border-radius: 100px;
   box-shadow: 0 0 60px #000000;
-  height: 42px;
+  height: 35px;
   z-index: 1;
   transition: background-color .3s ease-in; }
+  @media (min-width: 1366px) {
+    .searchBar {
+      height: 42px; } }
   .searchBar .textField {
     flex-grow: 1;
     background-color: transparent;
     padding: 10px 10px 10px 15px;
     border-radius: 100px 0 0 100px;
-    height: 100%; }
+    height: 100%;
+    font-size: 14px; }
+    @media (min-width: 1366px) {
+      .searchBar .textField {
+        font-size: 18px; } }
     .searchBar .textField::-webkit-input-placeholder {
       color: #fff;
-      font-size: 18px; }
+      font-size: 14px; }
+      @media (min-width: 1366px) {
+        .searchBar .textField::-webkit-input-placeholder {
+          font-size: 18px; } }
     .searchBar .textField:focus::-webkit-input-placeholder, .searchBar .textField:focus-visible::-webkit-input-placeholder {
-      color: #000;
-      font-size: 18px; }
+      color: #000; }
     .searchBar .textField:focus {
       background-color: #fff;
       color: #000; }
@@ -1214,6 +1269,9 @@
     padding-right: 10px;
     width: 40px;
     height: 100%; }
+    .searchBar .goSearch .icon {
+      width: 25px;
+      height: 25px; }
 
 .cover {
   overflow: hidden;
@@ -2054,8 +2112,12 @@
   .icon-allResults {
     mask-image: url("./../img/allResults.svg");
     -webkit-mask-image: url("./../img/allResults.svg");
-    width: 78px;
-    height: 59px; }
+    width: 66px;
+    height: 50px; }
+    @media (min-width: 1366px) {
+      .icon-allResults {
+        width: 78px;
+        height: 59px; } }
   .icon-fillDiamond {
     mask-image: url("./../img/fillDiamond.svg");
     -webkit-mask-image: url("./../img/fillDiamond.svg");
@@ -2158,13 +2220,16 @@
 
 .textField {
   color: #fff;
-  font-size: 16px;
+  font-size: 13px;
   border: none;
   outline: none;
   padding: 0;
   margin: 0;
   transition: .3s ease-in;
   background: none; }
+  @media (min-width: 1366px) {
+    .textField {
+      font-size: 16px; } }
 
 .input-frame {
   display: block; }
@@ -2184,7 +2249,10 @@
     display: block; }
     .input-frame .textField::-webkit-input-placeholder {
       color: rgba(255, 255, 255, 0.5);
-      font-size: 16px; }
+      font-size: 13px; }
+      @media (min-width: 1366px) {
+        .input-frame .textField::-webkit-input-placeholder {
+          font-size: 16px; } }
 
 .input-labelInField {
   position: relative;
@@ -2678,10 +2746,15 @@
     .cardGame.big .head {
       height: 296px; } }
   .cardGame.small {
-    max-width: 124px;
-    min-width: 124px;
-    height: 192px;
+    max-width: 135px;
+    min-width: 135px;
+    height: 205px;
     border-radius: 16px; }
+    @media (min-width: 360px) {
+      .cardGame.small {
+        max-width: 150px;
+        min-width: 150px;
+        height: 235px; } }
     @media (min-width: 1366px) {
       .cardGame.small {
         max-width: 128px;
@@ -2713,8 +2786,10 @@
       left: 10px;
       width: calc(100% - 10px * 2);
       border-width: 1px;
-      padding: 7px;
       font-size: 14px; }
+      @media (min-width: 1366px) {
+        .cardGame.small .actions .inCart {
+          padding: 7px; } }
       @media (min-width: 1650px) {
         .cardGame.small .actions .inCart {
           border-width: 3px;
@@ -2724,8 +2799,11 @@
         .cardGame.small .actions .inCart {
           padding: 9px 12px; } }
     .cardGame.small .head {
-      height: 150px;
+      height: 160px;
       font-size: 14px; }
+      @media (min-width: 360px) {
+        .cardGame.small .head {
+          height: 190px; } }
       @media (min-width: 431px) {
         .cardGame.small .head {
           height: 162px;
@@ -4298,66 +4376,87 @@
                 .basketPage .info .listGames .game .content .main .bottom .item:not(:last-child) {
                   margin-bottom: 5px; }
     .basketPage .info .check {
-      background: transparent;
       border: 1px solid #fff;
-      border-radius: 22px;
+      border-radius: 20px;
       align-self: flex-start;
-      padding: 15px 18px;
-      top: 180px;
-      margin-top: 30px; }
-      @media (min-width: 431px) {
+      padding: 13px 14px;
+      margin-top: 30px;
+      color: #fff; }
+      @media (min-width: 1366px) {
         .basketPage .info .check {
-          min-width: 320px;
-          padding: 20px 23px;
           margin-top: initial;
-          position: sticky; } }
-      .basketPage .info .check .total {
-        color: #fff;
-        font-size: 18px;
-        text-transform: uppercase;
-        font-weight: 600;
-        display: flex; }
-        @media (min-width: 431px) {
-          .basketPage .info .check .total {
+          position: sticky;
+          top: 180px;
+          padding: 20px 30px;
+          min-width: 400px;
+          max-width: 400px; } }
+      @media (min-width: 1650px) {
+        .basketPage .info .check {
+          min-width: 460px;
+          max-width: 460px; } }
+      .basketPage .info .check .param {
+        display: flex;
+        justify-content: space-between; }
+      .basketPage .info .check .saving {
+        color: #FA00FF; }
+      .basketPage .info .check .title {
+        font-family: 'Montserrat';
+        font-weight: 700;
+        font-size: 14px; }
+        @media (min-width: 1366px) {
+          .basketPage .info .check .title {
+            font-size: 18px; } }
+        @media (min-width: 1650px) {
+          .basketPage .info .check .title {
             font-size: 24px; } }
-        .basketPage .info .check .total .toValue {
-          margin: 0 20px; }
-        .basketPage .info .check .total .fromPrice {
-          color: #B590D2; }
-          .basketPage .info .check .total .fromPrice:after {
-            display: none; }
-          .basketPage .info .check .total .fromPrice .value:before {
-            background-color: #B590D2; }
-      .basketPage .info .check .totalProducts {
-        color: #fff;
+      .basketPage .info .check .body {
+        display: flex;
+        flex-direction: column;
+        row-gap: 5px;
+        font-size: 12px;
+        margin-top: 10px; }
+        @media (min-width: 1366px) {
+          .basketPage .info .check .body {
+            font-size: 14px;
+            margin-top: 18px;
+            row-gap: 7px; } }
+        @media (min-width: 1650px) {
+          .basketPage .info .check .body {
+            font-size: 16px;
+            margin-top: 25px; } }
+        .basketPage .info .check .body .name {
+          font-weight: 400; }
+        .basketPage .info .check .body .value {
+          font-weight: 700; }
+      .basketPage .info .check .total {
+        font-size: 14px;
+        font-weight: 700;
         margin-top: 10px;
-        font-size: 13px; }
-        @media (min-width: 431px) {
-          .basketPage .info .check .totalProducts {
-            font-size: 16px; } }
+        padding-top: 10px;
+        border-top: 1px solid rgba(255, 255, 255, 0.5); }
+        @media (min-width: 1366px) {
+          .basketPage .info .check .total {
+            font-size: 18px;
+            margin-top: 18px;
+            padding-top: 18px; } }
+        @media (min-width: 1650px) {
+          .basketPage .info .check .total {
+            font-size: 24px;
+            margin-top: 25px;
+            padding-top: 25px; } }
       .basketPage .info .check .btn {
         border-width: 1px;
         white-space: initial;
-        flex-direction: column;
         width: 100%;
         padding: 10px 0;
-        margin-top: 20px; }
-        .basketPage .info .check .btn .saving {
-          display: flex;
-          align-items: center;
-          margin-top: 3px;
-          font-size: 12px;
-          font-weight: 300; }
-          @media (min-width: 431px) {
-            .basketPage .info .check .btn .saving {
-              font-size: 14px; } }
-          .basketPage .info .check .btn .saving .toPrice {
-            margin-left: 5px; }
-            .basketPage .info .check .btn .saving .toPrice:after {
-              font-size: 12px; }
-              @media (min-width: 431px) {
-                .basketPage .info .check .btn .saving .toPrice:after {
-                  font-size: 14px; } }
+        margin-top: 10px; }
+        @media (min-width: 1366px) {
+          .basketPage .info .check .btn {
+            margin-top: 18px; } }
+        @media (min-width: 1650px) {
+          .basketPage .info .check .btn {
+            margin-top: 25px;
+            padding: 15px 0; } }
   .basketPage .notFound {
     display: flex;
     flex-direction: column;

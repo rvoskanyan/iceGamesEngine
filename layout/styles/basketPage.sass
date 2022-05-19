@@ -144,76 +144,95 @@
                   margin-bottom: 5px
 
     & .check
-      background: transparent
       border: 1px solid #fff
-      border-radius: 22px
+      border-radius: 20px
       align-self: flex-start
-      padding: 15px 18px
-      top: 180px
+      padding: 13px 14px
       margin-top: 30px
+      color: #fff
 
-      @include for-big-phone-up
-        min-width: 320px
-        padding: 20px 23px
+      @include for-desktop-up
         margin-top: initial
         position: sticky
+        top: 180px
+        padding: 20px 30px
+        min-width: 400px
+        max-width: 400px
 
-      & .total
-        color: #fff
-        font-size: 18px
-        text-transform: uppercase
-        font-weight: 600
+      @include for-middle-desktop-up
+        min-width: 460px
+        max-width: 460px
+
+      .param
         display: flex
+        justify-content: space-between
 
-        @include for-big-phone-up
+      .saving
+        color: #FA00FF
+
+      .title
+        font-family: 'Montserrat'
+        font-weight: 700
+        font-size: 14px
+
+        @include for-desktop-up
+          font-size: 18px
+
+        @include for-middle-desktop-up
           font-size: 24px
 
-        & .toValue
-          margin: 0 20px
-
-        & .fromPrice
-          color: #B590D2
-
-          &:after
-            display: none
-
-          & .value:before
-            background-color: #B590D2
-
-      .totalProducts
-        color: #fff
+      .body
+        display: flex
+        flex-direction: column
+        row-gap: 5px
+        font-size: 12px
         margin-top: 10px
-        font-size: 13px
 
-        @include for-big-phone-up
+        @include for-desktop-up
+          font-size: 14px
+          margin-top: 18px
+          row-gap: 7px
+
+        @include for-middle-desktop-up
           font-size: 16px
+          margin-top: 25px
+
+        .name
+          font-weight: 400
+
+        .value
+          font-weight: 700
+
+      .total
+        font-size: 14px
+        font-weight: 700
+        margin-top: 10px
+        padding-top: 10px
+        border-top: 1px solid rgba(255, 255, 255, 0.5)
+
+        @include for-desktop-up
+          font-size: 18px
+          margin-top: 18px
+          padding-top: 18px
+
+        @include for-middle-desktop-up
+          font-size: 24px
+          margin-top: 25px
+          padding-top: 25px
 
       & .btn
         border-width: 1px
         white-space: initial
-        flex-direction: column
         width: 100%
         padding: 10px 0
-        margin-top: 20px
+        margin-top: 10px
 
-        & .saving
-          display: flex
-          align-items: center
-          margin-top: 3px
-          font-size: 12px
-          font-weight: 300
+        @include for-desktop-up
+          margin-top: 18px
 
-          @include for-big-phone-up
-            font-size: 14px
-
-          & .toPrice
-            margin-left: 5px
-
-            &:after
-              font-size: 12px
-
-              @include for-big-phone-up
-                font-size: 14px
+        @include for-middle-desktop-up
+          margin-top: 25px
+          padding: 15px 0
 
   & .notFound
     display: flex

@@ -216,15 +216,6 @@
             grid-row-gap: 50px
             justify-content: space-between
 
-            & .goToAllSearchResults
-              background: initial
-              justify-content: space-between
-              padding-top: 85px
-              padding-bottom: 55px
-
-              & .text
-                font-size: 14px
-
           & .mainMenu
             display: flex
             justify-content: space-between
@@ -337,14 +328,23 @@
         margin: 0 140px 0 140px
 
     & .searchResults
-      padding: 10px
+      padding-right: 10px
       overflow: auto
       margin: 25px 0 0 0
       display: grid
       grid-template-columns: repeat(2, max-content)
-      grid-row-gap: 30px
-      justify-content: space-between
+      grid-row-gap: 15px
+      justify-content: space-around
       height: 80%
+
+      & .textInfo
+        color: #fff
+        font-size: 13px
+        text-align: center
+        grid-column: 1/-1
+
+      @include for-middle-phone-up
+        grid-row-gap: 25px
 
       @include for-big-phone-up
         grid-template-columns: repeat(4, max-content)

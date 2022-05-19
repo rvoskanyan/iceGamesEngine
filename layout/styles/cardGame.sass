@@ -254,10 +254,15 @@
           height: 296px
 
   &.small
-    max-width: 124px
-    min-width: 124px
-    height: 192px
+    max-width: 135px
+    min-width: 135px
+    height: 205px
     border-radius: 16px
+
+    @include for-middle-phone-up
+      max-width: 150px
+      min-width: 150px
+      height: 235px
 
     @include for-desktop-up
       max-width: 128px
@@ -294,8 +299,10 @@
         left: 10px //left
         width: calc(100% - 10px * 2) //100% - left * 2
         border-width: 1px
-        padding: 7px
         font-size: 14px
+
+        @include for-desktop-up
+          padding: 7px
 
         @include for-middle-desktop-up
           border-width: 3px
@@ -306,8 +313,11 @@
           padding: 9px 12px
 
     & .head
-      height: 150px
+      height: 160px
       font-size: 14px
+
+      @include for-middle-phone-up
+        height: 190px
 
       @include for-big-phone-up
         height: 162px
