@@ -2,20 +2,27 @@
 
 .newsPreview
   display: block
-  width: 330px
+  min-width: 100%
+  max-width: 100%
   text-decoration: none
   border: 0.3px solid #fff
-  border-radius: 8px
+  border-radius: 22px
 
   @include for-big-phone-up
     border: initial
     border-radius: initial
 
+  @include for-desktop-up
+    min-width: 375px
+    max-width: 375px
+
   @include for-middle-desktop-up
-    width: 369px
+    min-width: 432px
+    max-width: 432px
 
   @include for-big-desktop-up
-    width: 396px
+    min-width: 482px
+    max-width: 482px
 
   &:hover, &:focus-visible
     outline: none

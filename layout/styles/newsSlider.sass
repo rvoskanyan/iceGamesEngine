@@ -8,10 +8,10 @@
     margin: 35px auto 0 auto
 
   & > .btn
-    display: none
+    @include for-big-phone-down
+      display: none
 
     @include for-big-phone-up
-      display: initial
       margin-top: 84px
 
   & .prev
@@ -24,31 +24,33 @@
   & .visibleArea
     flex-grow: 1
     overflow: hidden
+    max-width: 100%
+
+    @include for-desktop-up
+      max-width: 375px * 3 //slideWidth * countSlides
+
+    @include for-middle-desktop-up
+      max-width: 432px * 3 //slideWidth * countSlides
+
+    @include for-big-desktop-up
+      max-width: 482px * 3 //slideWidth * countSlides
 
     & .tape
       display: flex
       transition: 1s ease
 
-      & .newsPreview
+      & .slide
         visibility: hidden
         opacity: 0
         transition: 1s ease
-        min-width: 100%
         padding: 10px
 
         @include for-big-phone-up
           padding: 18px 25px 0 25px
-          min-width: calc(1132px / 3) //width visibleArea / count slides
 
         &.active
           visibility: visible
           opacity: 1
-
-        @include for-middle-desktop-up
-          min-width: calc(1306px / 3) //width visibleArea / count slides
-
-        @include for-big-desktop-up
-          min-width: calc(1446px / 3)
 
   & .next
     @include for-big-phone-up

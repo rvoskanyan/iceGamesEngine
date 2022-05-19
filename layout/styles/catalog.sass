@@ -23,40 +23,23 @@
         display: none
 
     & .paramContainer
-      display: flex
-      flex-direction: column
-      background-color: rgba(1, 4, 61, 0.9)
-      position: fixed
-      top: 0
-      right: 0
-      height: 100vh
-      padding: 85px 0 20px 0
-      width: 100%
-      visibility: hidden
-      opacity: 0
-      transform: translateX(100%)
-      transition: .5s cubic-bezier(0.6, -0.28, 0.74, 0.05)
-      transition-property: visibility, opacity, transform
-      z-index: 2
-      align-items: center
-
-      @include for-big-phone-up
-        position: initial
-        visibility: initial
-        opacity: initial
-        background-color: initial
-        top: initial
-        left: initial
-        width: initial
-        height: initial
-        z-index: initial
-        padding: initial
-        display: initial
-        flex-direction: initial
-        align-items: initial
-        transform: initial
-        transition: initial
-        transition-property: initial
+      @include for-big-phone-down
+        display: flex
+        flex-direction: column
+        background-color: rgba(1, 4, 61, 0.9)
+        position: fixed
+        top: 0
+        right: 0
+        height: 100vh
+        padding: 85px 0 20px 0
+        width: 100%
+        visibility: hidden
+        opacity: 0
+        transform: translateX(100%)
+        transition: .5s cubic-bezier(0.6, -0.28, 0.74, 0.05)
+        transition-property: visibility, opacity, transform
+        z-index: 2
+        align-items: center
 
       &.active
         visibility: initial
@@ -69,23 +52,35 @@
         @include for-big-phone-up
           display: none
 
+          &.sort
+            display: flex
+
       & .title
         font-family: 'Lemon Milk'
-        font-weight: 400
+        font-weight: 100
         font-size: 18px
         margin-top: 10px
+        color: #fff
 
         @include for-big-phone-up
-          display: none
+          margin-top: initial
+
+          &.params
+            display: none
 
       & .paramElements
-        margin-top: 40px
-        display: flex
-        flex-direction: column
-        row-gap: 20px
-        overflow: auto
-        padding-right: 10px
-        max-height: 60%
+        @include for-big-phone-down
+          margin-top: 40px
+          display: flex
+          flex-direction: column
+          row-gap: 20px
+          overflow: auto
+          padding-right: 10px
+          max-height: 60%
+
+        @include for-desktop-up
+          &.categories
+            display: none
 
     & .params
       @include for-big-phone-up
@@ -110,10 +105,16 @@
           display: initial
 
         & .block
+          @include for-desktop-up
+            & .elements
+              display: flex
+              flex-direction: column
+              row-gap: 8px
+
           @include for-middle-desktop-up
             &.genres
               & .elements
-                display: flex
+                flex-direction: row
                 flex-wrap: wrap
                 align-items: center
 
@@ -154,8 +155,3 @@
 
         &.hide
           display: none
-
-  & .title
-    font-weight: bold
-    font-size: 18px
-    color: #fff

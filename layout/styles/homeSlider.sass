@@ -25,18 +25,17 @@
       margin-top: -160px
 
     & .slideControls
-      display: none
       position: relative
       max-width: 440px
       left: calc(100% - 440px)
 
-      @include for-big-phone-up
-        display: initial
+      @include for-big-phone-down
+        display: none
 
     & .items
       overflow: hidden
       overflow-x: auto
-      padding: 22px 17px
+      padding: 8px 5px 15px 5px
       display: flex
       column-gap: 25px
       justify-content: space-between

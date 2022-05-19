@@ -13,7 +13,7 @@
             <button class="btn js-closeParams">
                 <span class="icon icon-back"></span>
             </button>
-            <div class="title">Параметры</div>
+            <div class="title params">Параметры</div>
             <div class="paramElements categories">
                 <button class="btn uppercase js-openPriceParams">Цена</button>
                 <button class="btn uppercase js-openSortParams">Сортировка</button>
@@ -37,9 +37,9 @@
                 </button>
                 <div class="title">Сортировать по:</div>
                 <div class="variants paramElements">
-                    <button class="btn small rounded bg-lilac translucent js-variant-sort" data-sort="date">Дате выхода</button>
-                    <button class="btn small rounded bg-lilac translucent js-variant-sort" data-sort="price">Цене</button>
-                    <button class="btn small rounded bg-lilac translucent js-variant-sort" data-sort="discount">Скидке</button>
+                    <button class="btn small rounded bg-lilac translucent js-variant-sort sort" data-sort="date">Дате выхода</button>
+                    <button class="btn small rounded bg-lilac translucent js-variant-sort sort" data-sort="price">Цене</button>
+                    <button class="btn small rounded bg-lilac translucent js-variant-sort sort" data-sort="discount">Скидке</button>
                     {{> checkbox
                             value='true'
                             label='Только в наличии'

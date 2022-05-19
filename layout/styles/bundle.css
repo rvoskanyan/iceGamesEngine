@@ -890,10 +890,9 @@
     z-index: 1; }
     .header .logo .name {
       color: #fff;
-      font-family: 'Lemon Milk';
       text-transform: uppercase;
-      font-size: 8px;
-      font-weight: 100;
+      font-size: 16px;
+      font-weight: 600;
       line-height: 1;
       margin-left: 5px; }
       @media (min-width: 431px) {
@@ -942,12 +941,13 @@
         opacity: 1;
         transform: initial;
         display: contents; } }
-    .header .navigateMobileContainer .btn.rating {
-      font-family: 'Lemon Milk';
-      border: none;
-      padding: 0;
-      font-size: 20px;
-      font-weight: initial; }
+    @media (max-width: 430px) {
+      .header .navigateMobileContainer .btn.rating {
+        font-family: 'Lemon Milk';
+        border: none;
+        padding: 0;
+        font-size: 20px;
+        font-weight: initial; } }
   .header .navigation {
     justify-content: space-between;
     position: relative;
@@ -1317,7 +1317,9 @@
         width: 600px;
         height: 515px;
         padding: 70px 0 0 110px;
-        background-image: url("./../img/headOfferBorder.svg"); } }
+        background-image: url("./../img/headOfferBorder.svg");
+        text-align: initial;
+        align-items: initial; } }
     .cover .offer:before, .cover .offer:after {
       content: '';
       width: 225px;
@@ -1372,7 +1374,8 @@
       margin-top: 10px; }
       @media (min-width: 431px) {
         .cover .offer .price {
-          margin-top: 25px; } }
+          margin-top: 25px;
+          align-items: initial; } }
       .cover .offer .price .toPrice, .cover .offer .price .fromPrice {
         font-family: 'Montserrat';
         font-weight: 800;
@@ -1570,12 +1573,18 @@
   max-width: max-content;
   margin: 0 auto; }
   .homeCatalog .categories .btn:not(:last-child) {
-    margin-right: 20px; }
+    margin-right: 10px; }
+    @media (min-width: 1366px) {
+      .homeCatalog .categories .btn:not(:last-child) {
+        margin-right: 20px; } }
 
 .homeCatalog .blocks {
   display: grid;
-  margin-top: 50px;
+  margin-top: 25px;
   max-width: 100%; }
+  @media (min-width: 1366px) {
+    .homeCatalog .blocks {
+      margin-top: 50px; } }
   .homeCatalog .blocks .item {
     grid-column: 1/-1;
     grid-row: 1/-1;
@@ -1586,7 +1595,7 @@
     display: flex;
     max-width: 100%;
     column-gap: 20px;
-    padding: 15px; }
+    padding-bottom: 15px; }
     @media (min-width: 431px) {
       .homeCatalog .blocks .item {
         display: grid;
@@ -1594,13 +1603,16 @@
         justify-content: space-between;
         row-gap: 50px;
         column-gap: 30px;
-        padding: initial; } }
+        padding-bottom: initial; } }
     .homeCatalog .blocks .item.active {
       opacity: 1;
       visibility: visible; }
 
 .homeCatalog .more {
-  margin: 60px auto 0 auto; }
+  margin: 30px auto 0 auto; }
+  @media (min-width: 1366px) {
+    .homeCatalog .more {
+      margin: 60px auto 0 auto; } }
 
 .genresSlider {
   display: flex;
@@ -1718,12 +1730,12 @@
   display: flex; }
   .newsSlider + .all {
     margin: 35px auto 0 auto; }
-  .newsSlider > .btn {
-    display: none; }
-    @media (min-width: 431px) {
-      .newsSlider > .btn {
-        display: initial;
-        margin-top: 84px; } }
+  @media (max-width: 430px) {
+    .newsSlider > .btn {
+      display: none; } }
+  @media (min-width: 431px) {
+    .newsSlider > .btn {
+      margin-top: 84px; } }
   @media (min-width: 431px) {
     .newsSlider .prev {
       margin-right: 20px; } }
@@ -1731,29 +1743,31 @@
     transform: scale(1.1, 1.1); }
   .newsSlider .visibleArea {
     flex-grow: 1;
-    overflow: hidden; }
+    overflow: hidden;
+    max-width: 100%; }
+    @media (min-width: 1366px) {
+      .newsSlider .visibleArea {
+        max-width: 1125px; } }
+    @media (min-width: 1650px) {
+      .newsSlider .visibleArea {
+        max-width: 1296px; } }
+    @media (min-width: 1920px) {
+      .newsSlider .visibleArea {
+        max-width: 1446px; } }
     .newsSlider .visibleArea .tape {
       display: flex;
       transition: 1s ease; }
-      .newsSlider .visibleArea .tape .newsPreview {
+      .newsSlider .visibleArea .tape .slide {
         visibility: hidden;
         opacity: 0;
         transition: 1s ease;
-        min-width: 100%;
         padding: 10px; }
         @media (min-width: 431px) {
-          .newsSlider .visibleArea .tape .newsPreview {
-            padding: 18px 25px 0 25px;
-            min-width: calc(1132px / 3); } }
-        .newsSlider .visibleArea .tape .newsPreview.active {
+          .newsSlider .visibleArea .tape .slide {
+            padding: 18px 25px 0 25px; } }
+        .newsSlider .visibleArea .tape .slide.active {
           visibility: visible;
           opacity: 1; }
-        @media (min-width: 1650px) {
-          .newsSlider .visibleArea .tape .newsPreview {
-            min-width: calc(1306px / 3); } }
-        @media (min-width: 1920px) {
-          .newsSlider .visibleArea .tape .newsPreview {
-            min-width: calc(1446px / 3); } }
   @media (min-width: 431px) {
     .newsSlider .next {
       margin-left: 20px; } }
@@ -1820,13 +1834,15 @@
     .footer .navigation .menu {
       display: grid;
       grid-template-columns: repeat(3, max-content);
-      column-gap: 26px;
       row-gap: 10px;
-      max-width: 100%;
+      width: 100%;
+      justify-content: space-between;
       margin-top: 15px; }
       @media (min-width: 431px) {
         .footer .navigation .menu {
           margin-top: initial;
+          width: initial;
+          justify-content: initial;
           max-width: 800px;
           column-gap: 50px;
           row-gap: 30px; } }
@@ -2085,8 +2101,8 @@
         top: 16px; } }
   .logo .imgContainer {
     position: relative;
-    max-width: 35px;
-    min-width: 35px; }
+    max-width: 60px;
+    min-width: 60px; }
     @media (min-width: 431px) {
       .logo .imgContainer {
         max-width: 100px;
@@ -2562,8 +2578,8 @@
       border: none; }
       .cardGame .actions.noInStock .like {
         position: absolute;
-        right: 7px;
-        top: 7px; }
+        right: 10px;
+        top: 10px; }
       .cardGame .actions.noInStock .noInStockMsg {
         font-family: 'Montserrat';
         color: #fff;
@@ -2925,20 +2941,27 @@
 
 .newsPreview {
   display: block;
-  width: 330px;
+  min-width: 100%;
+  max-width: 100%;
   text-decoration: none;
   border: 0.3px solid #fff;
-  border-radius: 8px; }
+  border-radius: 22px; }
   @media (min-width: 431px) {
     .newsPreview {
       border: initial;
       border-radius: initial; } }
+  @media (min-width: 1366px) {
+    .newsPreview {
+      min-width: 375px;
+      max-width: 375px; } }
   @media (min-width: 1650px) {
     .newsPreview {
-      width: 369px; } }
+      min-width: 432px;
+      max-width: 432px; } }
   @media (min-width: 1920px) {
     .newsPreview {
-      width: 396px; } }
+      min-width: 482px;
+      max-width: 482px; } }
   .newsPreview:hover, .newsPreview:focus-visible {
     outline: none; }
     @media (min-width: 431px) {
@@ -3079,17 +3102,16 @@
     .homeSlider .navigate {
       margin-top: -160px; } }
   .homeSlider .navigate .slideControls {
-    display: none;
     position: relative;
     max-width: 440px;
     left: calc(100% - 440px); }
-    @media (min-width: 431px) {
+    @media (max-width: 430px) {
       .homeSlider .navigate .slideControls {
-        display: initial; } }
+        display: none; } }
   .homeSlider .navigate .items {
     overflow: hidden;
     overflow-x: auto;
-    padding: 22px 17px;
+    padding: 8px 5px 15px 5px;
     display: flex;
     column-gap: 25px;
     justify-content: space-between; }
@@ -3206,58 +3228,47 @@
       @media (min-width: 431px) {
         .catalog .main .openParams {
           display: none; } }
-    .catalog .main .paramContainer {
-      display: flex;
-      flex-direction: column;
-      background-color: rgba(1, 4, 61, 0.9);
-      position: fixed;
-      top: 0;
-      right: 0;
-      height: 100vh;
-      padding: 85px 0 20px 0;
-      width: 100%;
-      visibility: hidden;
-      opacity: 0;
-      transform: translateX(100%);
-      transition: 0.5s cubic-bezier(0.6, -0.28, 0.74, 0.05);
-      transition-property: visibility, opacity, transform;
-      z-index: 2;
-      align-items: center; }
+    @media (max-width: 430px) {
+      .catalog .main .paramContainer {
+        display: flex;
+        flex-direction: column;
+        background-color: rgba(1, 4, 61, 0.9);
+        position: fixed;
+        top: 0;
+        right: 0;
+        height: 100vh;
+        padding: 85px 0 20px 0;
+        width: 100%;
+        visibility: hidden;
+        opacity: 0;
+        transform: translateX(100%);
+        transition: 0.5s cubic-bezier(0.6, -0.28, 0.74, 0.05);
+        transition-property: visibility, opacity, transform;
+        z-index: 2;
+        align-items: center; } }
+    .catalog .main .paramContainer.active {
+      visibility: initial;
+      opacity: initial;
+      transform: translateX(0%);
+      transition: .3s ease;
+      transition-property: visibility, opacity, transform; }
+    @media (min-width: 431px) {
+      .catalog .main .paramContainer .btn {
+        display: none; }
+        .catalog .main .paramContainer .btn.sort {
+          display: flex; } }
+    .catalog .main .paramContainer .title {
+      font-family: 'Lemon Milk';
+      font-weight: 100;
+      font-size: 18px;
+      margin-top: 10px;
+      color: #fff; }
       @media (min-width: 431px) {
-        .catalog .main .paramContainer {
-          position: initial;
-          visibility: initial;
-          opacity: initial;
-          background-color: initial;
-          top: initial;
-          left: initial;
-          width: initial;
-          height: initial;
-          z-index: initial;
-          padding: initial;
-          display: initial;
-          flex-direction: initial;
-          align-items: initial;
-          transform: initial;
-          transition: initial;
-          transition-property: initial; } }
-      .catalog .main .paramContainer.active {
-        visibility: initial;
-        opacity: initial;
-        transform: translateX(0%);
-        transition: .3s ease;
-        transition-property: visibility, opacity, transform; }
-      @media (min-width: 431px) {
-        .catalog .main .paramContainer .btn {
-          display: none; } }
-      .catalog .main .paramContainer .title {
-        font-family: 'Lemon Milk';
-        font-weight: 400;
-        font-size: 18px;
-        margin-top: 10px; }
-        @media (min-width: 431px) {
-          .catalog .main .paramContainer .title {
+        .catalog .main .paramContainer .title {
+          margin-top: initial; }
+          .catalog .main .paramContainer .title.params {
             display: none; } }
+    @media (max-width: 430px) {
       .catalog .main .paramContainer .paramElements {
         margin-top: 40px;
         display: flex;
@@ -3265,7 +3276,10 @@
         row-gap: 20px;
         overflow: auto;
         padding-right: 10px;
-        max-height: 60%; }
+        max-height: 60%; } }
+    @media (min-width: 1366px) {
+      .catalog .main .paramContainer .paramElements.categories {
+        display: none; } }
     @media (min-width: 431px) {
       .catalog .main .params {
         display: contents; } }
@@ -3283,9 +3297,14 @@
       @media (min-width: 431px) {
         .catalog .main .params .variants {
           display: initial; } }
+      @media (min-width: 1366px) {
+        .catalog .main .params .variants .block .elements {
+          display: flex;
+          flex-direction: column;
+          row-gap: 8px; } }
       @media (min-width: 1650px) {
         .catalog .main .params .variants .block.genres .elements {
-          display: flex;
+          flex-direction: row;
           flex-wrap: wrap;
           align-items: center; }
           .catalog .main .params .variants .block.genres .elements .checkbox {
@@ -3315,10 +3334,6 @@
         margin: 35px auto 0 auto; }
         .catalog .main .list .loadMore.hide {
           display: none; }
-  .catalog .title {
-    font-weight: bold;
-    font-size: 18px;
-    color: #fff; }
 
 @media (max-width: 430px) {
   .gamePage .cover {
@@ -3420,13 +3435,13 @@
       margin-top: -70px;
       margin-bottom: 25px;
       order: initial; }
-      .gamePage .cover .offer .packages.tooltip .prompt {
+      .gamePage .cover .offer .packages .tooltip .prompt {
         background-color: #2F305E;
         color: #fff;
         padding: 10px 25px;
         border-radius: 20px;
         margin-top: 12px; }
-        .gamePage .cover .offer .packages.tooltip .prompt:before {
+        .gamePage .cover .offer .packages .tooltip .prompt:before {
           content: '';
           position: absolute;
           bottom: 100%;
@@ -3434,14 +3449,14 @@
           transform: translateX(-50%);
           border: 10px solid transparent;
           border-bottom-color: #2F305E; }
-        .gamePage .cover .offer .packages.tooltip .prompt .list {
+        .gamePage .cover .offer .packages .tooltip .prompt .list {
           list-style: none; }
-          .gamePage .cover .offer .packages.tooltip .prompt .list .item {
+          .gamePage .cover .offer .packages .tooltip .prompt .list .item {
             white-space: nowrap;
             padding: 10px 3px;
             line-height: 1;
             font-weight: 600; }
-            .gamePage .cover .offer .packages.tooltip .prompt .list .item:not(:last-child) {
+            .gamePage .cover .offer .packages .tooltip .prompt .list .item:not(:last-child) {
               border-bottom: 1px solid #fff; } }
 
 .gamePage .cover .offer .name {
@@ -5789,7 +5804,7 @@ img {
         padding-top: 200px; } }
 
 .homeSection {
-  margin-top: 50px; }
+  margin-top: 40px; }
   @media (min-width: 431px) {
     .homeSection {
       margin-top: 100px; } }

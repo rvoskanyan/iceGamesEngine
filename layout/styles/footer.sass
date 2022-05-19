@@ -44,13 +44,15 @@
     & .menu
       display: grid
       grid-template-columns: repeat(3, max-content)
-      column-gap: 26px
       row-gap: 10px
-      max-width: 100%
+      width: 100%
+      justify-content: space-between
       margin-top: 15px
 
       @include for-big-phone-up
         margin-top: initial
+        width: initial
+        justify-content: initial
         max-width: 800px
         column-gap: 50px
         row-gap: 30px

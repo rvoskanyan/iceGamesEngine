@@ -7,7 +7,7 @@
         <div class="visibleArea js-visibleArea">
             <div class="tape js-tape">
                 {{#each articles}}
-                    <a href="{{@root.websiteAddress}}blog/{{alias}}" class="newsPreview js-slide{{#iff @index '<' 3}} active{{/iff}}">
+                    <a href="{{@root.websiteAddress}}blog/{{alias}}" class="slide newsPreview js-slide{{#iff @index '<' 3}} active{{/iff}}">
                         <img class="img" src="{{@root.websiteAddress}}{{img}}" alt="Изображение записи из блога {{name}}" title="Изображение записи из блога {{name}}">
                         <div class="attributes">
                             <div class="btn small round border small bg-darkLilac">
