@@ -1758,7 +1758,9 @@
         max-width: 1446px; } }
     .newsSlider .visibleArea .tape {
       display: flex;
-      transition: 1s ease; }
+      transition: 1s ease;
+      position: relative;
+      z-index: -1; }
       .newsSlider .visibleArea .tape .slide {
         visibility: hidden;
         opacity: 0;

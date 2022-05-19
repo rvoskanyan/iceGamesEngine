@@ -147,8 +147,6 @@ export default class Slider {
   
     const prevSlides = this.setActiveClass(prevScreen, 'remove');
     const slides = this.setActiveClass(this.activeScreen, 'add');
-  
-    console.log(prevSlides);
     
     if (this.progress) {
       this.progressNode.style.setProperty('--progress', `${this.shareProgress * (this.activeScreen)}%`);
