@@ -96,7 +96,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
   \**********************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"websiteAddress\": () => (/* binding */ websiteAddress)\n/* harmony export */ });\n//export const websiteAddress = 'http://141.8.194.196:4000/';\r\nconst websiteAddress = 'http://localhost:4000/';\n\n//# sourceURL=webpack:///./js/config.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"websiteAddress\": () => (/* binding */ websiteAddress)\n/* harmony export */ });\nconst websiteAddress = 'http://141.8.194.196:4000/';\r\n//export const websiteAddress = 'http://localhost:4000/';\n\n//# sourceURL=webpack:///./js/config.js?");
 
 /***/ }),
 
