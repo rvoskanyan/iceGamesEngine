@@ -1992,9 +1992,8 @@
   .icon-search {
     mask-image: url("./../img/searchBtnIcon.svg");
     -webkit-mask-image: url("./../img/searchBtnIcon.svg");
-    transform: rotateY(180deg);
-    width: 30px;
-    height: 30px; }
+    width: 22px;
+    height: 23px; }
   .icon-profile {
     mask-image: url("./../img/profileIcon.svg");
     -webkit-mask-image: url("./../img/profileIcon.svg");
