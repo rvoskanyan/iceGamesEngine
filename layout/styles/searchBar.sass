@@ -19,12 +19,13 @@
   & .textField
     flex-grow: 1
     background-color: transparent
-    padding: 10px 10px 10px 15px
+    padding: 10px 10px 10px 12px
     border-radius: 100px 0 0 100px
     height: 100%
     font-size: 14px
 
     @include for-desktop-up
+      padding: 10px 10px 10px 15px
       font-size: 18px
 
     &::-webkit-input-placeholder
@@ -54,9 +55,16 @@
   & .goSearch
     border-radius: 0 100px 100px 0
     padding-right: 10px
-    width: 40px
+    width: 20px
     height: 100%
 
+    @include for-desktop-up
+      width: 40px
+
     & .icon
-      width: 25px
-      height: 25px
+      width: 19px
+      height: 20px
+
+      @include for-desktop-up
+        width: 24px
+        height: 25px

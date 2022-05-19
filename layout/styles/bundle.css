@@ -1240,12 +1240,13 @@
   .searchBar .textField {
     flex-grow: 1;
     background-color: transparent;
-    padding: 10px 10px 10px 15px;
+    padding: 10px 10px 10px 12px;
     border-radius: 100px 0 0 100px;
     height: 100%;
     font-size: 14px; }
     @media (min-width: 1366px) {
       .searchBar .textField {
+        padding: 10px 10px 10px 15px;
         font-size: 18px; } }
     .searchBar .textField::-webkit-input-placeholder {
       color: #fff;
@@ -1267,11 +1268,18 @@
   .searchBar .goSearch {
     border-radius: 0 100px 100px 0;
     padding-right: 10px;
-    width: 40px;
+    width: 20px;
     height: 100%; }
+    @media (min-width: 1366px) {
+      .searchBar .goSearch {
+        width: 40px; } }
     .searchBar .goSearch .icon {
-      width: 25px;
-      height: 25px; }
+      width: 19px;
+      height: 20px; }
+      @media (min-width: 1366px) {
+        .searchBar .goSearch .icon {
+          width: 24px;
+          height: 25px; } }
 
 .cover {
   overflow: hidden;
