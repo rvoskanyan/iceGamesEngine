@@ -47,6 +47,8 @@ jspm_packages/
 uploadedFiles/
 
 layout/js/config.js
+layout/js/bundle.js
+layout/styles/bundle.css
 
 # TypeScript v1 declaration files
 typings/
