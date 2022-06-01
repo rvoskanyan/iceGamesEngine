@@ -7,6 +7,11 @@ const fields = {
     type: Boolean,
     default: false,
   },
+  successSaveProduct: {
+    type: Boolean,
+    default: true,
+  },
+  productDsName: String,
   needFill: [],
   status: {
     type: String,

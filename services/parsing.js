@@ -44,8 +44,9 @@ export const startParsingProducts = async () => {
     pages = resultProducts.pages;
     
     for (const product of products) {
+      const name = product.name_goods;
+      
       try {
-        const name = product.name_goods;
         const inStock = product.in_stock;
         const dsId = product.id_goods;
         const priceTo = parseFloat(product.price_rur);
@@ -76,6 +77,12 @@ export const startParsingProducts = async () => {
         await newProduct.save();
         await newParsingTask.save();
       } catch (e) {
+        const newParsingTask = new ParsingTask({
+          successSaveProduct: false,
+          productDsName: name,
+        });
+        
+        await newParsingTask.save();
         console.log(e);
       }
     }
