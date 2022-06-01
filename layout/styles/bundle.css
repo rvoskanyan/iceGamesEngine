@@ -768,6 +768,32 @@
     font-size: 14px;
     margin-top: 10px; }
 
+.crown {
+  display: block;
+  filter: drop-shadow(-1px 3px 10px #000);
+  -webkit-filter: drop-shadow(-1px 3px 10px #000);
+  -moz-filter: drop-shadow(-1px 3px 10px #000);
+  -o-filter: drop-shadow(-1px 3px 10px #000);
+  -ms-filter: drop-shadow(-1px 3px 10px #000);
+  width: 45px;
+  height: 38px; }
+  @media (min-width: 431px) {
+    .crown {
+      width: 65px;
+      height: 55px; } }
+  .crown .crownMask {
+    width: 100%;
+    height: 100%;
+    mask-position: center;
+    mask-size: cover;
+    -webkit-mask-position: center;
+    -webkit-mask-size: cover;
+    mask-image: url("./../img/crown.svg");
+    -webkit-mask-image: url("./../img/crown.svg"); }
+    .crown .crownMask .crownColor {
+      width: 100%;
+      height: 100%; }
+
 @keyframes animActive {
   0% {
     display: none;
@@ -1991,8 +2017,11 @@
       background-image: url("./../img/like.svg");
       width: 24px;
       height: 23px; }
-      .icon-static-actionLike.active, .icon-static-actionLike:hover {
+      .icon-static-actionLike.active {
         background-image: url("./../img/likeActive.svg"); }
+      @media (min-width: 1366px) {
+        .icon-static-actionLike:hover, .icon-static-actionLike:focus-visible {
+          background-image: url("./../img/likeActive.svg"); } }
     .icon-static-arrow {
       background-image: url("./../img/arrow.svg");
       width: 32px;
@@ -4370,7 +4399,9 @@
                     font-size: 13px;
                     padding: 5px 6px; } }
             .basketPage .info .listGames .game .content .main .preOrderInfo {
-              margin-top: 15px; }
+              margin: 15px 0 10px 0;
+              font-size: 12px;
+              padding: 6px 8px; }
             .basketPage .info .listGames .game .content .main .bottom {
               font-family: 'Montserrat';
               color: #fff; }
@@ -4497,6 +4528,9 @@
 
 .profilePage {
   width: 100%; }
+  @media (min-width: 1366px) {
+    .profilePage .responseMessage {
+      text-align: initial; } }
   .profilePage .title {
     color: #fff;
     font-size: 20px;
@@ -5076,38 +5110,17 @@
     .ratingPage .list .item:nth-child(-n+3) {
       position: relative;
       margin-bottom: 25px; }
-      .ratingPage .list .item:nth-child(-n+3) .crownContainer {
-        display: block;
+      .ratingPage .list .item:nth-child(-n+3) .crown {
         position: absolute;
-        filter: drop-shadow(-1px 3px 10px #000);
-        -webkit-filter: drop-shadow(-1px 3px 10px #000);
-        -moz-filter: drop-shadow(-1px 3px 10px #000);
-        -o-filter: drop-shadow(-1px 3px 10px #000);
-        -ms-filter: drop-shadow(-1px 3px 10px #000);
         transform: rotate(-25deg);
         left: 10px;
-        top: -15px;
-        width: 45px;
-        height: 38px; }
+        top: -15px; }
         @media (min-width: 431px) {
-          .ratingPage .list .item:nth-child(-n+3) .crownContainer {
+          .ratingPage .list .item:nth-child(-n+3) .crown {
             left: 15px;
-            top: -25px;
-            width: 65px;
-            height: 55px; } }
-        .ratingPage .list .item:nth-child(-n+3) .crownContainer .mask {
-          width: 100%;
-          height: 100%;
-          mask-position: center;
-          mask-size: cover;
-          -webkit-mask-position: center;
-          -webkit-mask-size: cover;
-          mask-image: url("./../img/crown.svg");
-          -webkit-mask-image: url("./../img/crown.svg"); }
-          .ratingPage .list .item:nth-child(-n+3) .crownContainer .mask .crown {
-            width: 100%;
-            height: 100%;
-            background-color: #FF00F5; }
+            top: -25px; } }
+        .ratingPage .list .item:nth-child(-n+3) .crown .crownColor {
+          background-color: #FF00F5; }
       @media (min-width: 431px) {
         .ratingPage .list .item:nth-child(-n+3) {
           margin-bottom: 50px; }
@@ -5118,7 +5131,7 @@
       background-image: radial-gradient(75% 250% at 55% 75%, #43FFFF -10%, #B85DFF 45%, #FC53F5 75%); }
     .ratingPage .list .item:nth-child(1n+2) {
       background: radial-gradient(40% 250% at 56% 80%, #00E0FF 0%, #8F00FF 80%); }
-      .ratingPage .list .item:nth-child(1n+2) .crownContainer .mask .crown {
+      .ratingPage .list .item:nth-child(1n+2) .crown .crownColor {
         background-color: #8C03F8; }
     .ratingPage .list .item:nth-child(1n+4) {
       background: #08CCF4; }
@@ -5162,9 +5175,14 @@
         @media (min-width: 431px) {
           .viewProfilePage > .head .main:after {
             margin-top: 30px; } }
+      .viewProfilePage > .head .main .crown {
+        margin: 0 auto; }
+        .viewProfilePage > .head .main .crown .crownColor {
+          background-color: #fff; }
       .viewProfilePage > .head .main .name {
         font-size: 20px;
-        text-shadow: 0 0 35px #000000; }
+        text-shadow: 0 0 35px #000000;
+        margin-top: 10px; }
         @media (min-width: 431px) {
           .viewProfilePage > .head .main .name {
             font-size: 48px; } }
@@ -5288,6 +5306,14 @@
           column-gap: 20px;
           justify-content: center;
           padding-bottom: initial; } }
+  .viewProfilePage.firstPlace > .head .main .crown {
+    filter: drop-shadow(0 0 2px #01D7F5);
+    -webkit-filter: drop-shadow(0 0 2px #01D7F5);
+    -moz-filter: drop-shadow(0 0 2px #01D7F5);
+    -o-filter: drop-shadow(0 0 2px #01D7F5);
+    -ms-filter: drop-shadow(0px 0px 2px #01D7F5); }
+    .viewProfilePage.firstPlace > .head .main .crown .crownColor {
+      background-color: #01D7F5; }
 
 .aboutPage {
   color: #fff; }
@@ -5730,7 +5756,8 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  row-gap: 10px; }
+  row-gap: 10px;
+  column-gap: 5px; }
   @media (min-width: 360px) {
     .categoriesCatalogPage .list {
       justify-content: space-around; } }

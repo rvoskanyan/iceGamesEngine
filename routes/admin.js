@@ -18,6 +18,7 @@ import editionsRoute from './admin/editions.js';
 import seriesRoute from './admin/series.js';
 import articlesRoute from './admin/articles.js';
 import achievementsRoute from './admin/achievements.js';
+import parsingRoute from './admin/parsing.js';
 
 const router = Router();
 
@@ -40,5 +41,6 @@ router.use('/editions', editionsRoute);
 router.use('/series', seriesRoute);
 router.use('/articles', articlesRoute);
 router.use('/achievements', achievementsRoute);
+router.use('/parsing', parsingRoute);
 
 export default router;

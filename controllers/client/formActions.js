@@ -18,8 +18,9 @@ export const registration = async (req, res) => {
     }
     
     const hashPassword = await bcrypt.hash(password, 10);
+    const newLogin = login.toLowerCase();
     const user = new User({
-      login,
+      login: newLogin[0].toUpperCase() + newLogin.slice(1),
       email,
       password: hashPassword,
     });

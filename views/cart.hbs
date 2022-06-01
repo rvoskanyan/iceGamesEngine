@@ -84,7 +84,7 @@
                         <div class="value"><span class="js-totalTo">{{cart.priceToTotal}}</span> ₽</div>
                     </div>
                 </div>
-                <button class="btn round border bg-darkPurple js-payBtn hover-bg-violet">Оплатить</button>
+                <button class="btn round border bg-darkPurple uppercase js-payBtn hover-bg-violet">Оплатить</button>
             </div>
             <form action="https://oplata.info/asp2/pay.asp" class="js-payForm" method="post" style="display: none">
                 <input type="hidden" name="cart_uid" value="{{@root.person.dsCartId}}" />

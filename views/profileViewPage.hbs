@@ -26,7 +26,7 @@
         </div>
     </div>
 {{/iff}}
-<main class="contentContainer withoutCover viewProfilePage">
+<main class="contentContainer withoutCover viewProfilePage{{#iff ratingPosition '===' 1}} firstPlace{{/iff}}">
     <div class="breadcrumbs contentContainer mobileInvisibleScroll">
         <div class="item">
             <a class="btn link" href="/">Главная</a>
@@ -38,7 +38,11 @@
     </div>
     <div class="head">
         <div class="main">
-            <span class="icon"></span>
+            <div class="crown">
+                <div class="crownMask">
+                    <div class="crownColor"></div>
+                </div>
+            </div>
             <h1 class="name">{{user.login}}</h1>
             <div class="rating">
                 <div class="value">Рейтинг {{user.rating}}</div>

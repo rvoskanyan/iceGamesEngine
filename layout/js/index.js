@@ -656,13 +656,11 @@ document.addEventListener('click', async (e) => {
     const dsId = productCardNode.dataset.dsId;
     const addToFavoriteBtnNode = target.closest('.js-favoritesBtn');
     const addToCartBtnNode = target.closest('.js-addToCart');
-    const addToCartBtnText = addToCartBtnNode.querySelector('.js-text');
-    const addToCartBtnIcon = addToCartBtnNode.querySelector('.js-icon');
   
     if (addToFavoriteBtnNode) {
-      e.preventDefault();
-      
       const addToFavoriteIconNode = addToFavoriteBtnNode.querySelector('.js-icon');
+      
+      e.preventDefault();
   
       if (addToFavoriteBtnNode.classList.contains('js-active')) {
         const response = await postman.delete(`/api/products/${productId}/favorites`);
@@ -691,6 +689,9 @@ document.addEventListener('click', async (e) => {
     }
     
     if (addToCartBtnNode) {
+      const addToCartBtnText = addToCartBtnNode.querySelector('.js-text');
+      const addToCartBtnIcon = addToCartBtnNode.querySelector('.js-icon');
+      
       e.preventDefault();
   
       if (addToCartBtnNode.classList.contains('js-active')) {
@@ -798,8 +799,7 @@ mobileSearchStringNode.addEventListener('input', async () => {
         <div class="actions${!product.inStock ? ' noInStock' : ''}">
           ${result.isAuth ? `
             <button class="btn like js-favoritesBtn${product.inFavorites ? ' js-active' : ''}" title="${product.inFavorites ? 'Удалить игру из избранного' : 'Добавить игру в избранное'}">
-              <span class="desktop icon-static icon-static-actionLike js-icon-desktop${product.inFavorites ? ' active' : ''}"></span>
-              <span class="mobile icon-static icon-static-favoriteProduct js-icon-mobile${product.inFavorites ? ' active' : ''}"></span>
+              <span class="icon-static icon-static-actionLike js-icon${product.inFavorites ? ' active' : ''}"></span>
             </button>
           ` : ''}
           ${product.inStock ? `
@@ -891,8 +891,7 @@ searchStringNode.addEventListener('input', async () => {
         <div class="actions${!product.inStock ? ' noInStock' : ''}">
           ${result.isAuth ? `
             <button class="btn like js-favoritesBtn${product.inFavorites ? ' js-active' : ''}" title="${product.inFavorites ? 'Удалить игру из избранного' : 'Добавить игру в избранное'}">
-              <span class="desktop icon-static icon-static-actionLike js-icon-desktop${product.inFavorites ? ' active' : ''}"></span>
-              <span class="mobile icon-static icon-static-favoriteProduct js-icon-mobile${product.inFavorites ? ' active' : ''}"></span>
+              <span class="icon-static icon-static-actionLike js-icon${product.inFavorites ? ' active' : ''}"></span>
             </button>
           ` : ''}
           ${product.inStock ? `
@@ -1211,8 +1210,7 @@ if (catalogNode) {
           <div class="actions${!product.inStock ? ' noInStock' : ''}">
             ${result.isAuth ? `
               <button class="btn like js-favoritesBtn${product.inFavorites ? ' js-active' : ''}" title="${product.inFavorites ? 'Удалить игру из избранного' : 'Добавить игру в избранное'}">
-                <span class="desktop icon-static icon-static-actionLike js-icon-desktop${product.inFavorites ? ' active' : ''}"></span>
-                <span class="mobile icon-static icon-static-favoriteProduct js-icon-mobile${product.inFavorites ? ' active' : ''}"></span>
+                <span class="icon-static icon-static-actionLike js-icon${product.inFavorites ? ' active' : ''}"></span>
               </button>
             ` : ''}
             ${product.inStock ? `
@@ -1454,8 +1452,7 @@ if (catalogNode) {
           <div class="actions${!product.inStock ? ' noInStock' : ''}">
             ${result.isAuth ? `
               <button class="btn like js-favoritesBtn${product.inFavorites ? ' js-active' : ''}" title="${product.inFavorites ? 'Удалить игру из избранного' : 'Добавить игру в избранное'}">
-                <span class="desktop icon-static icon-static-actionLike js-icon-desktop${product.inFavorites ? ' active' : ''}"></span>
-                <span class="mobile icon-static icon-static-favoriteProduct js-icon-mobile${product.inFavorites ? ' active' : ''}"></span>
+                <span class="icon-static icon-static-actionLike js-icon${product.inFavorites ? ' active' : ''}"></span>
               </button>
             ` : ''}
             ${product.inStock ? `

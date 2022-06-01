@@ -1,2 +1,5 @@
-export const websiteAddress = 'http://141.8.194.196:4000/';
-//export const websiteAddress = 'http://localhost:4000/';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+export const websiteAddress = process.env.WEB_SITE_ADDRESS;

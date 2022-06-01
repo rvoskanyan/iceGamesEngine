@@ -7,10 +7,10 @@ const fields = {
     required: true,
     unique: true,
   },
+  steamBuyName: String,
   icon: {
     type: String,
-    required: true,
-    unique: true,
+    //required: true,
   },
 };
 

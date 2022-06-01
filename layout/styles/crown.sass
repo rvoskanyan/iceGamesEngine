@@ -1,0 +1,29 @@
+@import './breakPoints'
+
+.crown
+  display: block
+  filter: drop-shadow(-1px 3px 10px #000)
+  -webkit-filter: drop-shadow(-1px 3px 10px #000)
+  -moz-filter: drop-shadow(-1px 3px 10px #000)
+  -o-filter: drop-shadow(-1px 3px 10px #000)
+  -ms-filter: drop-shadow(-1px 3px 10px #000)
+  width: 45px
+  height: 38px
+
+  @include for-big-phone-up
+    width: 65px
+    height: 55px
+
+  .crownMask
+    width: 100%
+    height: 100%
+    mask-position: center
+    mask-size: cover
+    -webkit-mask-position: center
+    -webkit-mask-size: cover
+    mask-image: url("./../img/crown.svg")
+    -webkit-mask-image: url("./../img/crown.svg")
+
+    .crownColor
+      width: 100%
+      height: 100%

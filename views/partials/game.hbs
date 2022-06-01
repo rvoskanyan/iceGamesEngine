@@ -9,8 +9,7 @@
     <div class="actions{{#unless inStock}} noInStock{{/unless}}">
         {{#if @root.isAuth}}
             <button class="btn like js-favoritesBtn{{#if inFavorites}} js-active{{/if}}" title="{{#if inFavorites}}Удалить товар из избранного{{else}}Добавить товар в избранное{{/if}}">
-                <span class="desktop icon-static icon-static-actionLike js-icon-desktop{{#if inFavorites}} active{{/if}}"></span>
-                <span class="mobile icon-static icon-static-favoriteProduct js-icon-mobile{{#if inFavorites}} active{{/if}}"></span>
+                <span class="icon-static icon-static-actionLike js-icon{{#if inFavorites}} active{{/if}}"></span>
             </button>
         {{/if}}
         {{#if inStock}}

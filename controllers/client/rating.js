@@ -23,8 +23,9 @@ export const ratingPage = async (req, res) => {
 export const profileViewPage = async (req, res) => {
   try {
     const {login} = req.params;
+    const normalizeLogin = login.toLowerCase();
     const user = await User
-      .findOne({login})
+      .findOne({login: normalizeLogin[0].toUpperCase() + normalizeLogin.slice(1)})
       .select(['rating', 'login', 'invitedUsers', 'viewedArticles', 'createdAt', 'achievements', 'purchasedProducts'])
       .populate('achievements', ['icon', 'name', 'description']);
     const ratingPosition = await user.getRatingPosition();

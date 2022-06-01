@@ -5,8 +5,9 @@ const fields = {
   name: {
     type: String,
     required: true,
-    unique: true,
+    //unique: true,
   },
+  steamBuyName: String,
 };
 
 const options = {

@@ -4,18 +4,18 @@ const {Schema, model} = Mongoose;
 const fields = {
   name: {
     type: String,
-    required: true,
-    unique: true,
+    //required: true,
+    //unique: true,
   },
+  steamBuyName: String,
   img: {
     type: String,
-    required: true,
-    unique: true,
+    //required: true,
   },
   url: {
     type: String,
-    required: true,
-    unique: true,
+    //required: true,
+    //unique: true,
   },
 };
 

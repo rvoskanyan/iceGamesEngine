@@ -80,7 +80,8 @@ export const profileEdit = async (req, res) => {
     }
     
     if (login !== user.login) {
-      user.login = login;
+      const newLogin = login.toLowerCase();
+      user.login = newLogin[0].toUpperCase() + newLogin.slice(1);
     }
   
     if (email !== user.email) {

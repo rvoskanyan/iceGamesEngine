@@ -7,6 +7,7 @@ const fields = {
     unique: true,
     required: true,
   },
+  steamBuyName: String,
   stages: [{
     name: {
       type: String,

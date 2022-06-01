@@ -18,10 +18,7 @@ const elementSchema = new Schema({
     type: String,
     required: true,
   },
-  description: {
-    type: String,
-    required: true,
-  },
+  description: String,
   productId: {
     type: Schema.Types.ObjectId,
     ref: 'Product',
@@ -66,19 +63,15 @@ const reviews = new Schema({
 const fields = {
   name: {
     type: String,
-    required: true,
-    unique: true,
-    index: true,
+    //required: true,
+    //unique: true,
+    //index: true,
   },
   alias: {
     type: String,
-    require: true,
-    unique: true,
-    index: true,
-  },
-  metaDescription: {
-    type: String,
-    required: true,
+    //require: true,
+    //unique: true,
+    //index: true,
   },
   dsId: {
     type: Number,
@@ -86,20 +79,23 @@ const fields = {
   },
   description: {
     type: String,
-    required: true,
+    //required: true,
   },
   priceTo: {
     type: Number,
-    required: true,
+    //required: true,
   },
-  priceFrom: Number,
+  priceFrom: {
+    type: Number,
+    //required: true,
+  },
   discount: {
     type: Number,
     default: 0,
   },
   img: {
     type: String,
-    required: true,
+    //required: true,
   },
   coverImg: String,
   coverVideo: String,
@@ -127,31 +123,27 @@ const fields = {
   },
   releaseDate: {
     type: Date,
-    required: true,
+    //required: true,
   },
   os: {
     type: String,
-    required: true,
+    //required: true,
   },
   cpu: {
     type: String,
-    required: true,
+    //required: true,
   },
   graphicsCard: {
     type: String,
-    required: true,
+    //required: true,
   },
   ram: {
     type: String,
-    required: true,
+    //required: true,
   },
   diskMemory: {
     type: String,
-    required: true,
-  },
-  rating: {
-    type: Number,
-    default: 0,
+    //required: true,
   },
   images: {
     type: [imageSchema],
@@ -188,12 +180,12 @@ const fields = {
   activationServiceId: {
     type: Schema.Types.ObjectId,
     ref: 'ActivationService',
-    required: true,
+    //required: true,
   },
   publisherId: {
     type: Schema.Types.ObjectId,
     ref: 'Publisher',
-    required: true,
+    //required: true,
   },
   seriesId: {
     type: Schema.Types.ObjectId,
@@ -214,22 +206,19 @@ const fields = {
   authorId: {
     type: Schema.Types.ObjectId,
     ref: 'User',
-    required: true,
+    //required: true,
   },
   lastEditorId: {
     type: Schema.Types.ObjectId,
     ref: 'User',
-    required: true,
+    //required: true,
   },
   platformId: {
     type: Schema.Types.ObjectId,
     ref: 'Platform',
-    required: true,
+    //required: true,
   },
-  languages: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Language',
-  }],
+  languages: String,
   activationRegions: [{
     type: Schema.Types.ObjectId,
     ref: 'Region',
@@ -238,13 +227,9 @@ const fields = {
     type: Schema.Types.ObjectId,
     ref: 'Category',
   }],
-  genres: [{
+    genres: [{
     type: Schema.Types.ObjectId,
     ref: 'Genre',
-  }],
-  developers: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Developer',
   }],
   extends: [{
     type: Schema.Types.ObjectId,
@@ -252,7 +237,7 @@ const fields = {
   }],
   active: {
     type: Boolean,
-    default: true,
+    default: false,
   },
 };
 

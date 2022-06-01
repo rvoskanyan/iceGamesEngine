@@ -46,6 +46,8 @@ tmp/
 jspm_packages/
 uploadedFiles/
 
+layout/js/config.js
+
 # TypeScript v1 declaration files
 typings/
 

@@ -1,0 +1,6 @@
+<form action="{{webSiteAddress}}/admin/parsing/start" method="post">
+    <input type="submit" value="Запустить парсинг">
+    {{#if parsing}}
+        <p style="color: red">Парсинг запущен</p>
+    {{/if}}
+</form>

@@ -7,6 +7,7 @@ const fields = {
     required: true,
     unique: true,
   },
+  steamBuyName: String,
 };
 
 const options = {
