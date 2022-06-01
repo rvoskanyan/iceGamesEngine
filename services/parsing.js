@@ -64,6 +64,9 @@ export const startParsingProducts = async () => {
         }
   
         const {productData, parsingTaskData} = await parseProduct(name, priceTo);
+  
+        console.log(productData)
+        console.log(parsingTaskData)
         const newProduct = new Product({
           ...productData,
           dsId,
