@@ -14,6 +14,7 @@ export default class Browser {
   }
   
   LAUNCH_PUPPETEER_OPTS = {
+    executablePath: '/usr/bin/chromium-browser',
     args: [
       '--no-sandbox',
       '--disable-setuid-sandbox',
