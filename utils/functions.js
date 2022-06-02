@@ -270,6 +270,8 @@ export const getSoundIndex = (inputStr) => {
           j = k + 1;
         }
       }
+  
+      console.log(str[i + k]);
       
       if (!i) {
         code = last[0][0];
