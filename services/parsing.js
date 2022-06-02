@@ -213,7 +213,7 @@ async function parseProduct(searchProductName, price) {
       return item.name === platformName;
     });
     let currentMedia = 0;
-    let activationName = productNode('.product-price .product-price__activation .product-price__activation-value .product-price__activation-title').text();
+    let activationName = productNode('.product-price .product-price__activation .product-price__activation-value .product-price__activation-title').text().trim();
   
     parsingTask.productFound = true;
     parsingTask.needFill = ['Игра серии', 'Трейлер с ютуба', 'Состав (при наличии)', 'Название издания (при наличии)', 'Связка (при наличии)'];
@@ -266,23 +266,20 @@ async function parseProduct(searchProductName, price) {
             const region = regions.find(item => {
               return item.steamBuyName.toLowerCase() === regionName.toLowerCase();
             });
-          
-            if (!region) {
-              try {
-                const newRegion = new Region({name: regionName, steamBuyName: regionName});
-  
-                await newRegion.save();
-                regions.push({
-                  _id: newRegion._id,
-                  steamBuyName: newRegion.steamBuyName,
-                });
-                product.activationRegions.push(newRegion._id);
-              } catch (e) {
-                console.log(e);
-                parsingTask.needFill.push(`Создать регион ${regionName} и добавить к товару`);
-              }
-            } else {
+            
+            if (region) {
               product.activationRegions.push(region._id);
+              break;
+            }
+  
+            try {
+              const newRegion = new Region({name: regionName, steamBuyName: regionName});
+    
+              await newRegion.save();
+              product.activationRegions.push(newRegion._id);
+            } catch (e) {
+              console.log(e);
+              parsingTask.needFill.push(`Создать регион ${regionName} и добавить к товару`);
             }
           }
         
@@ -307,6 +304,7 @@ async function parseProduct(searchProductName, price) {
           const productGalleryNameImg = `${uuidv4()}.${extend}`;
           const res = await fetch(imageUrl);
           const fileStream = fs.createWriteStream(path.join(__dirname, `/uploadedFiles/${productGalleryNameImg}`));
+          
           await new Promise((resolve, reject) => {
             res.body.pipe(fileStream);
             res.body.on("error", (err) => {
@@ -343,27 +341,24 @@ async function parseProduct(searchProductName, price) {
           const genreNodes = valueNode.find('.product-detail__value-item a.product-detail__value-link').toArray();
         
           for (const genreNode of genreNodes) {
-            const genreName = productNode(genreNode).text();
+            const genreName = productNode(genreNode).text().trim();
             const genre = genres.find(item => {
               return item.steamBuyName === genreName;
             });
-          
-            if (!genre) {
-              try {
-                const newGenre = new Genre({name: genreName, steamBuyName: genreName});
-  
-                await newGenre.save();
-                genres.push({
-                  _id: newGenre._id,
-                  steamBuyName: newGenre.steamBuyName,
-                });
-                product.genres.push(newGenre._id);
-              } catch (e) {
-                console.log(e);
-                parsingTask.needFill.push(`Создать жанр ${genreName} и добавить к товару`);
-              }
-            } else {
+            
+            if (genre) {
               product.genres.push(genre._id);
+              break;
+            }
+  
+            try {
+              const newGenre = new Genre({name: genreName, steamBuyName: genreName});
+    
+              await newGenre.save();
+              product.genres.push(newGenre._id);
+            } catch (e) {
+              console.log(e);
+              parsingTask.needFill.push(`Создать жанр ${genreName} и добавить к товару`);
             }
           }
           break;
@@ -387,27 +382,30 @@ async function parseProduct(searchProductName, price) {
           break;
         }
         case 'Издатель:': {
-          const publisherName = valueNode.find('.product-detail__value-item a.product-detail__value-link').first().text();
+          const publisherName = valueNode.find('.product-detail__value-item a.product-detail__value-link').first().text().trim();
+          
+          if (!publisherName.length) {
+            parsingTask.needFill.push(`Издателя`);
+            break;
+          }
+  
           const publisher = publishers.find(item => {
             return item.steamBuyName === publisherName;
           });
-        
-          if (!publisher) {
-            try {
-              const newPublisher = new Publisher({name: publisherName, steamBuyName: publisherName});
-  
-              await newPublisher.save();
-              publishers.push({
-                _id: newPublisher._id,
-                steamBuyName: newPublisher.steamBuyName,
-              });
-              product.publisherId = newPublisher._id;
-            } catch (e) {
-              console.log(e);
-              parsingTask.needFill.push(`Создать издателя ${publisherName} и добавить к товару`);
-            }
-          } else {
+          
+          if (publisher) {
             product.publisherId = publisher._id;
+            break;
+          }
+          
+          try {
+            const newPublisher = new Publisher({name: publisherName, steamBuyName: publisherName});
+
+            await newPublisher.save();
+            product.publisherId = newPublisher._id;
+          } catch (e) {
+            console.log(e);
+            parsingTask.needFill.push(`Издателя ${publisherName}`);
           }
         
           break;
@@ -416,32 +414,25 @@ async function parseProduct(searchProductName, price) {
           const extendNodes = valueNode.find('.product-detail__value-item a.product-detail__value-link').toArray();
         
           for (const extendNode of extendNodes) {
-            const extendName = productNode(extendNode).text();
-            let extendId;
-          
+            const extendName = productNode(extendNode).text().trim();
             const extend = extendsItems.find(item => {
               return item.steamBuyName === extendName;
             });
-          
-            if (!extend) {
-              try {
-                const newExtend = new Extend({name: extendName, steamBuyName: extendName});
-  
-                await newExtend.save();
-                extendsItems.push({
-                  _id: newExtend._id,
-                  steamBuyName: newExtend.steamBuyName,
-                });
-                extendId = newExtend._id;
-              } catch (e) {
-                console.log(e);
-                parsingTask.needFill.push(`Создать расширение ${extendName} и добавить к товару`);
-              }
-            } else {
-              extendId = extend._id;
+            
+            if (extend) {
+              product.extends.push(extend._id);
+              break;
             }
-          
-            product.extends.push(extendId);
+  
+            try {
+              const newExtend = new Extend({name: extendName, steamBuyName: extendName});
+    
+              await newExtend.save();
+              product.extends.push(newExtend._id);
+            } catch (e) {
+              console.log(e);
+              parsingTask.needFill.push(`Расширение ${extendName}`);
+            }
           }
           break;
         }
@@ -449,54 +440,47 @@ async function parseProduct(searchProductName, price) {
           const extendNodes = valueNode.find('.product-detail__value-item a.product-detail__value-link').toArray();
         
           for (const extendNode of extendNodes) {
-            const extendName = productNode(extendNode).text();
+            const extendName = productNode(extendNode).text().trim();
             const extend = extendsItems.find(item => {
               return item.steamBuyName === extendName;
             });
-          
-            if (!extend) {
-              try {
-                const newExtend = new Extend({name: extendName, steamBuyName: extendName});
-  
-                await newExtend.save();
-                extendsItems.push({
-                  _id: newExtend._id,
-                  steamBuyName: newExtend.steamBuyName,
-                });
-                product.extends.push(newExtend._id);
-              } catch (e) {
-                console.log(e);
-                parsingTask.needFill.push(`Создать расширение ${extendName} и добавить к товару`);
-              }
-            } else {
+            
+            if (extend) {
               product.extends.push(extend._id);
+              break;
+            }
+  
+            try {
+              const newExtend = new Extend({name: extendName, steamBuyName: extendName});
+    
+              await newExtend.save();
+              product.extends.push(newExtend._id);
+            } catch (e) {
+              console.log(e);
+              parsingTask.needFill.push(`Расширение ${extendName}`);
             }
           }
           break;
         }
         case 'Достижения Steam:': {
           const extendName = 'Достижения Steam';
-        
           const extend = extendsItems.find(item => {
             return item.steamBuyName === extendName;
           });
-        
-          if (!extend) {
-            try {
-              const newExtend = new Extend({name: extendName, steamBuyName: extendName});
-  
-              await newExtend.save();
-              extendsItems.push({
-                _id: newExtend._id,
-                steamBuyName: newExtend.steamBuyName,
-              });
-              product.extends.push(newExtend._id);
-            } catch (e){
-              console.log(e);
-              parsingTask.needFill.push(`Создать расширение ${extendName} и добавить к товару`);
-            }
-          } else {
+          
+          if (extend) {
             product.extends.push(extend._id);
+            break;
+          }
+  
+          try {
+            const newExtend = new Extend({name: extendName, steamBuyName: extendName});
+    
+            await newExtend.save();
+            product.extends.push(newExtend._id);
+          } catch (e){
+            console.log(e);
+            parsingTask.needFill.push(`Расширение ${extendName}`);
           }
           break;
         }
@@ -513,18 +497,16 @@ async function parseProduct(searchProductName, price) {
           const newActivationService = new ActivationService({name: activationName, steamBuyName: activationName});
   
           await newActivationService.save();
-          activationServices.push({
-            _id: newActivationService._id,
-            steamBuyName: newActivationService.steamBuyName,
-          });
           product.activationServiceId = newActivationService._id;
         } catch (e) {
           console.log(e);
-          parsingTask.needFill.push(`Создать сервис активации ${activationName} и добавить к товару`);
+          parsingTask.needFill.push(`Сервис активации ${activationName}`);
         }
       } else {
         product.activationServiceId = activationService._id;
       }
+    } else {
+      parsingTask.needFill.push('Сервис активации');
     }
   
     if (isGroup) {
@@ -539,14 +521,10 @@ async function parseProduct(searchProductName, price) {
         const newPlatform = new Platform({name: platformName});
   
         await newPlatform.save();
-        platforms.push({
-          _id: newPlatform._id,
-          name: newPlatform.name,
-        });
         product.platformId = newPlatform._id;
       } catch (e) {
         console.log(e);
-        parsingTask.needFill.push(`Создать платформу ${platformName} и добавить к товару`);
+        parsingTask.needFill.push(`Добавить платформу ${platformName}`);
       }
     } else {
       product.platformId = platform._id;
