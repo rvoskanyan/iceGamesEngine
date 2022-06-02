@@ -308,6 +308,7 @@ export const getSoundIndex = (inputStr) => {
   
   console.log(str);
   str = str.replace(/\s\+\s/g, ' AND ');
+  console.log(str);
   
   for (const letter in accented) {
     str.replace(accented[letter], letter);
