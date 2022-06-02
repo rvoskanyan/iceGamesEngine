@@ -114,7 +114,7 @@ async function parseProduct(searchProductName, price) {
   }
   
   try { //Загрузка главной картинки с https://www.igdb.com/
-    const searchIgDb = await browser.getPageContent(`https://www.igdb.com/search?&type=1&q=${searchProductName}`);
+    const searchIgDb = await browser.getPageContent(encodeURI(`https://www.igdb.com/search?&type=1&q=${searchProductName}`));
     const searchIgDbNode = cheerio.load(searchIgDb);
     const searchIgDbResults = searchIgDbNode('.media .media-body a.link-dark').first();
   
@@ -152,8 +152,6 @@ async function parseProduct(searchProductName, price) {
       throw new Error();
     }
   
-    console.log(productImg);
-  
     await new Promise((resolve, reject) => {
       res.body.pipe(fileStream);
       res.body.on("error", (err) => {
@@ -164,12 +162,13 @@ async function parseProduct(searchProductName, price) {
       });
     });
     product.img = productImg;
-  } catch {
+  } catch (e) {
+    console.log(e);
     parsingTask.needFill.push('Главная картинка');
   }
   
   try { //Загрузка материалов с https://steambuy.com/
-    const searchContent = await browser.getPageContent(`https://steambuy.com/catalog/?q=${searchProductName}`);
+    const searchContent = await browser.getPageContent(encodeURI(`https://steambuy.com/catalog/?q=${searchProductName}`));
     const searchNode = cheerio.load(searchContent);
     const results = searchNode('a.product-item__title-link');
   
