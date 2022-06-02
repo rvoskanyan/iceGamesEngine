@@ -302,11 +302,12 @@ export const getSoundIndex = (inputStr) => {
   const nums = str.match(/\d/g);
   let iscyr = false;
   
-  str = str.replaceAll(/\s\+\s/g, ' and ');
-  
   if (nums) {
     str = toRoman(str, nums);
   }
+  
+  console.log(str);
+  str = str.replaceAll(/\s\+\s/g, ' and ');
   
   for (const letter in accented) {
     str.replace(accented[letter], letter);
