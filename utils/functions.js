@@ -297,7 +297,7 @@ export const getSoundIndex = (inputStr) => {
     return output;
   };
   
-  let str = inputStr.toUpperCase().toString().trim();
+  let str = inputStr.toUpperCase().trim();
   const trans = str.match(/[А-Я]/ig);
   const nums = str.match(/\d/g);
   let iscyr = false;
@@ -307,7 +307,7 @@ export const getSoundIndex = (inputStr) => {
   }
   
   console.log(str);
-  str = str.replaceAll(/\s\+\s/g, ' and ');
+  str = str.replace(/\s\+\s/g, ' and ');
   
   for (const letter in accented) {
     str.replace(accented[letter], letter);
