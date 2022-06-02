@@ -135,8 +135,6 @@ async function parseProduct(searchProductName, price) {
       throw new Error();
     }
   
-    console.log(productUrl);
-  
     const productIgDb = await browser.getPageContent(`https://www.igdb.com${productUrl}`);
     const productIgDbNode = cheerio.load(productIgDb);
     const productIgDbImg = productIgDbNode('.gamepage-header-info img.img-responsive.cover_big').attr('src');
@@ -144,12 +142,10 @@ async function parseProduct(searchProductName, price) {
     if (!productIgDbImg) {
       throw new Error();
     }
-  
-    console.log(productIgDbImg);
 
     const extend = getExtendFile(productIgDbImg);
     const productImg = `${uuidv4()}.${extend}`;
-    const res = await fetch(`https:${productIgDbImg}`);
+    const res = await fetch(productIgDbImg.includes('https:') ? productIgDbImg : `https:${productIgDbImg}`);
     const fileStream = fs.createWriteStream(path.join(__dirname, `/uploadedFiles/${productImg}`));
   
     if (!productImg) {
