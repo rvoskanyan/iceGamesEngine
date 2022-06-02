@@ -330,8 +330,6 @@ export const getSoundIndex = (inputStr) => {
   for (let i = 0, l = matches.length; i < l; i++) {
     const word = matches[i];
   
-    console.log(word);
-  
     matches[i] = wordCalc(word, iscyr);
   }
   
