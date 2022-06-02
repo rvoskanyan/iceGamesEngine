@@ -321,7 +321,7 @@ export const getSoundIndex = (inputStr) => {
   
   str = str.replace(/[^\s^A-Z]/g, '').replace(/\s{2,}/g, ' ').replace(/^\s+|\s+$/g, '');
   
-  if (!str) {
+  if (!str.length) {
     return null;
   }
   
