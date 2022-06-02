@@ -252,8 +252,6 @@ export const getSoundIndex = (inputStr) => {
     let previous = -1;
     let power = 6;
     let last;
-  
-    console.log(str);
     
     while (i < str.length) {
       let current = last = codes[str[i]];
@@ -304,8 +302,6 @@ export const getSoundIndex = (inputStr) => {
   const nums = str.match(/\d/g);
   let iscyr = false;
   
-  console.log(str);
-  
   if (nums) {
     str = toRoman(str, nums);
   }
@@ -327,7 +323,7 @@ export const getSoundIndex = (inputStr) => {
     return null;
   }
   
-  const matches = str.split(' ');
+  const matches = str.split(/\s/);
   
   for (let i = 0, l = matches.length; i < l; i++) {
     const word = matches[i];
