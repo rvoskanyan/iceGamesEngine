@@ -139,7 +139,7 @@ async function parseProduct(searchProductName, price) {
   
     const productIgDb = await browser.getPageContent(`https://www.igdb.com${productUrl}`);
     const productIgDbNode = cheerio.load(productIgDb);
-    const productIgDbImg = productIgDbNode('img.img-responsive.cover_big').attr('src');
+    const productIgDbImg = productIgDbNode('.gamepage-header-info img.img-responsive.cover_big').attr('src');
   
     if (!productIgDbImg) {
       throw new Error();
