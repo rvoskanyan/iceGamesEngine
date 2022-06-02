@@ -9,7 +9,6 @@ export default class Browser {
     }
   
     this.browser = null;
-    this.page = null;
     Browser.#instance = this;
   }
   
@@ -28,7 +27,7 @@ export default class Browser {
   PAGE_PUPPETEER_OPTS = {
     networkIdle2Timeout: 5000,
     waitUntil: 'networkidle2',
-    timeout: 3000000
+    timeout: 3000000,
   };
   
   async init() {
@@ -40,15 +39,16 @@ export default class Browser {
       await this.init();
     }
     
-    if (this.page) {
-      await this.page.close();
-    }
-    
     try {
-      this.page = await this.browser.newPage();
-      await this.page.goto(url, this.PAGE_PUPPETEER_OPTS);
+      const page = await this.browser.newPage();
       
-      return await this.page.content();
+      await page.goto(url, this.PAGE_PUPPETEER_OPTS);
+      
+      const content = await page.content();
+  
+      await page.close();
+      
+      return content;
     } catch (e) {
       throw e;
     }
