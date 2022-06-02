@@ -306,9 +306,7 @@ export const getSoundIndex = (inputStr) => {
     str = toRoman(str, nums);
   }
   
-  console.log(str);
   str = str.replace(/\s\+\s/g, ' AND ');
-  console.log(str);
   
   for (const letter in accented) {
     str.replace(accented[letter], letter);
@@ -329,6 +327,8 @@ export const getSoundIndex = (inputStr) => {
   
   for (let i = 0, l = matches.length; i < l; i++) {
     const word = matches[i];
+  
+    console.log(word);
   
     matches[i] = wordCalc(word, iscyr);
   }
