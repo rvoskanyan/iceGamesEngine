@@ -33,10 +33,8 @@ export const gamePage = async (req, res) => {
       .findOne({alias})
       .populate([
         'extends',
-        'languages',
         'activationRegions',
         'genres',
-        'developers',
         'categories',
         'platformId',
         'activationServiceId',
@@ -186,7 +184,6 @@ export const gamePage = async (req, res) => {
     
     res.render('game', {
       title: `ICE Games — ${product.name}`,
-      metaDescription: product.metaDescription,
       product,
       trailerId,
       isProductNotPurchased,

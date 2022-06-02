@@ -1,0 +1,55 @@
+{{#if tasks}}
+    <ul>
+        {{#each tasks}}
+            <li>
+                {{#if successSaveProduct}}
+                    {{#if productFound}}
+                        <h4>Дополнить данные к игре</h4>
+                    {{else}}
+                        <h4>Не удалось найти игру в STEAMBUY</h4>
+                    {{/if}}
+                {{else}}
+                    <h4>Ошибка при сохранении данных игры</h4>
+                {{/if}}
+                <form method="post" action="/admin/parsing/tasks/in-work">
+                    <input type="hidden" name="taskId" value="{{_id}}">
+                    <input type="submit" value="Взять в работу">
+                </form>
+            </li>
+        {{/each}}
+    </ul>
+{{else}}
+    {{#if taskInWork}}
+        {{#if taskInWork.successSaveProduct}}
+            {{#if taskInWork.productFound}}
+                <h4>
+                    Дополнить данные к игре - <a href="/admin/products/edit/{{taskInWork.product._id}}" target="_blank">{{taskInWork.product.name}}</a>
+                </h4>
+                Необходимо дополнить:
+                <ul>
+                    {{#each taskInWork.needFill}}
+                        <li>{{this}}</li>
+                    {{/each}}
+                </ul>
+                <br>
+                Игра на <a href="{{taskInWork.sourceLink}}" target="_blank">STEAMBUY</a>
+                <br>
+                <br>
+                <form method="post" action="/admin/parsing/tasks/performed">
+                    <input type="hidden" name="taskId" value="{{taskInWork._id}}">
+                    <input type="submit" value="Готово">
+                </form>
+            {{else}}
+                <h4>
+                    Не удалось найти игру в STEAMBUY - {{taskInWork.product.name}}
+                </h4>
+            {{/if}}
+        {{else}}
+            <h4>
+                Ошибка при сохранении данных игры - {{taskInWork.productDsName}}
+            </h4>
+        {{/if}}
+    {{else}}
+        <p>Задач не найдено</p>
+    {{/if}}
+{{/if}}

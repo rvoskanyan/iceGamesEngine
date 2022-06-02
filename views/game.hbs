@@ -176,15 +176,7 @@
             <ul class="fieldedList">
                 <li class="item">
                     <div class="name">Язык:</div>
-                    <div class="value">
-                        {{#each product.languages}}
-                            {{#if @last}}
-                                {{name}}
-                            {{else}}
-                                {{name}},
-                            {{/if}}
-                        {{/each}}
-                    </div>
+                    <div class="value">{{product.languages}}</div>
                 </li>
                 <li class="item">
                     <div class="name">Регион активации:</div>
@@ -226,18 +218,6 @@
                     <div class="name">Издатель:</div>
                     <div class="value">
                         {{product.publisherId.name}}
-                    </div>
-                </li>
-                <li class="item">
-                    <div class="name">Разработчики:</div>
-                    <div class="value">
-                        {{#each product.developers}}
-                            {{#if @last}}
-                                {{name}}
-                            {{else}}
-                                {{name}},
-                            {{/if}}
-                        {{/each}}
                     </div>
                 </li>
                 <li class="item">

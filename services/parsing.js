@@ -148,6 +148,10 @@ async function parseProduct(searchProductName, price) {
     const res = await fetch(`https:${productIgDbImg}`);
     const fileStream = fs.createWriteStream(path.join(__dirname, `/uploadedFiles/${productImg}`));
   
+    if (!productImg) {
+      throw new Error();
+    }
+  
     await new Promise((resolve, reject) => {
       res.body.pipe(fileStream);
       res.body.on("error", (err) => {

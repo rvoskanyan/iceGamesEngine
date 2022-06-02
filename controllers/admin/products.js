@@ -5,9 +5,7 @@ import Product from './../../models/Product.js';
 import Category from './../../models/Category.js';
 import Genre from './../../models/Genre.js';
 import Extend from './../../models/Extend.js';
-import Language from './../../models/Language.js';
 import Region from './../../models/Region.js';
-import Developer from './../../models/Developer.js';
 import Publisher from './../../models/Publisher.js';
 import ActivationService from './../../models/ActivationService.js';
 import Platform from './../../models/Platform.js';
@@ -42,9 +40,7 @@ export const pageAddProduct = async (req, res) => {
     const categories = await Category.find().select(['name']);
     const genres = await Genre.find().select(['name']);
     const allExtends = await Extend.find().select(['name']);
-    const languages = await Language.find().select(['name']);
     const regions = await Region.find().select(['name']);
-    const developers = await Developer.find().select(['name']);
     const publishers = await Publisher.find().select(['name']);
     const activationServices = await ActivationService.find().select(['name']);
     const platforms = await Platform.find().select(['name']);
@@ -55,11 +51,9 @@ export const pageAddProduct = async (req, res) => {
       layout: 'admin',
       title: "Добавление новой игры",
       extends: allExtends,
-      languages,
       categories,
       genres,
       regions,
-      developers,
       publishers,
       activationServices,
       platforms,
@@ -100,7 +94,6 @@ export const addProduct = async (req, res) => {
       gameExtends,
       languages,
       activationRegions,
-      developers,
       series,
       publisher,
       activationService,
@@ -135,12 +128,11 @@ export const addProduct = async (req, res) => {
       graphicsCard,
       ram,
       diskMemory,
+      languages,
       categories: getArray(categories),
       genres: getArray(genres),
       extends: getArray(gameExtends),
-      languages: getArray(languages),
       activationRegions: getArray(activationRegions),
-      developers: getArray(developers),
       publisherId: publisher,
       activationServiceId: activationService,
       platformId: platform,
@@ -212,9 +204,7 @@ export const pageEditProduct = async (req, res) => {
     const restCategories = await Category.find({_id: {$nin: product.categories}}).select('name').lean();
     const restGenres = await Genre.find({_id: {$nin: product.genres}}).select('name').lean();
     const restExtends = await Extend.find({_id: {$nin: product.extends}}).select('name').lean();
-    const restLanguages = await Language.find({_id: {$nin: product.languages}}).select('name').lean();
     const restActivationRegions = await Region.find({_id: {$nin: product.activationRegions}}).select('name').lean();
-    const restDevelopers = await Developer.find({_id: {$nin: product.developers}}).select('name').lean();
     const restPublishers = await Publisher.find({_id: {$nin: product.publisherId}}).select('name').lean();
     const restActivationServices = await ActivationService.find({_id: {$nin: product.activationServiceId}}).select('name').lean();
     const restPlatforms = await Platform.find({_id: {$nin: product.platformId}}).select('name').lean();
@@ -225,9 +215,7 @@ export const pageEditProduct = async (req, res) => {
         'categories',
         'genres',
         'extends',
-        'languages',
         'activationRegions',
-        'developers',
         'publisherId',
         'activationServiceId',
         'platformId',
@@ -240,9 +228,7 @@ export const pageEditProduct = async (req, res) => {
     const categories = mergeParams(product.categories, restCategories);
     const genres = mergeParams(product.genres, restGenres);
     const allExtends = mergeParams(product.extends, restExtends);
-    const languages = mergeParams(product.languages, restLanguages);
     const activationRegions = mergeParams(product.activationRegions, restActivationRegions);
-    const developers = mergeParams(product.developers, restDevelopers);
     const publishers = mergeParams(product.publisherId, restPublishers);
     const activationServices = mergeParams(product.activationServiceId, restActivationServices);
     const platforms = mergeParams(product.platformId, restPlatforms);
@@ -273,9 +259,7 @@ export const pageEditProduct = async (req, res) => {
       categories,
       genres,
       extends: allExtends,
-      languages,
       activationRegions,
-      developers,
       activationServices,
       publishers,
       platforms,
@@ -317,7 +301,6 @@ export const editProduct = async (req, res) => {
       gameExtends,
       languages,
       activationRegions,
-      developers,
       series,
       publisher,
       activationService,
@@ -349,12 +332,11 @@ export const editProduct = async (req, res) => {
       graphicsCard,
       ram,
       diskMemory,
+      languages,
       categories: getArray(categories),
       genres: getArray(genres),
       extends: getArray(gameExtends),
-      languages: getArray(languages),
       activationRegions: getArray(activationRegions),
-      developers: getArray(developers),
       publisherId: publisher,
       activationServiceId: activationService,
       platformId: platform,

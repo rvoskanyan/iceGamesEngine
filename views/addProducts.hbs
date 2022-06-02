@@ -42,12 +42,6 @@
     <br>
     <br>
     <label>
-        Meta-description:
-        <textarea name="metaDescription" cols="30" rows="10">{{product.metaDescription}}</textarea>
-    </label>
-    <br>
-    <br>
-    <label>
         Id на Digiseller:
         <input type="number" name="dsId" value="{{product.dsId}}">
     </label>
@@ -125,6 +119,10 @@
         Ссылка на трейлер в YouTube:
         <input type="text" name="trailerLink"{{#if product.trailerLink}} value="{{product.trailerLink}}"{{/if}}>
     </label>
+    <br>
+    {{#if product.trailerLink}}
+        <a href="{{product.trailerLink}}" target="_blank">Открыть трейлер на YouTube</a>
+    {{/if}}
     <br>
     <br>
     <label>
@@ -207,6 +205,12 @@
     <br>
     <br>
     <label>
+        Языки игры:
+        <input type="text" name="languages" value="{{product.languages}}">
+    </label>
+    <br>
+    <br>
+    <label>
         Категории игры:
         <select name="categories" multiple>
             {{#each categories}}
@@ -234,18 +238,6 @@
         Расширения игры:
         <select name="gameExtends" multiple>
             {{#each extends}}
-                <option value="{{id}}" {{#if selected}}selected{{/if}}>
-                    {{name}}
-                </option>
-            {{/each}}
-        </select>
-    </label>
-    <br>
-    <br>
-    <label>
-        Языки игры:
-        <select name="languages" multiple>
-            {{#each languages}}
                 <option value="{{id}}" {{#if selected}}selected{{/if}}>
                     {{name}}
                 </option>
