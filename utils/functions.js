@@ -297,7 +297,7 @@ export const getSoundIndex = (inputStr) => {
     return output;
   };
   
-  let str = inputStr.toUpperCase();
+  let str = inputStr.toUpperCase().toString().trim();
   const trans = str.match(/[А-Я]/ig);
   const nums = str.match(/\d/g);
   let iscyr = false;
