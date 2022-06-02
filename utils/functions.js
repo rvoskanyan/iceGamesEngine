@@ -302,7 +302,7 @@ export const getSoundIndex = (inputStr) => {
   const nums = str.match(/\d/g);
   let iscyr = false;
   
-  str.replaceAll(/\s\+\s/g, ' and ');
+  str = str.replaceAll(/\s\+\s/g, ' and ');
   
   if (nums) {
     str = toRoman(str, nums);
