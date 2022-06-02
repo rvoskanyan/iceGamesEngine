@@ -216,7 +216,7 @@ async function parseProduct(searchProductName, price) {
     let activationName = productNode('.product-price .product-price__activation .product-price__activation-value .product-price__activation-title').text().trim();
   
     parsingTask.productFound = true;
-    parsingTask.needFill = ['Игра серии', 'Трейлер с ютуба', 'Состав (при наличии)', 'Название издания (при наличии)', 'Связка (при наличии)'];
+    parsingTask.needFill = [...parsingTask.needFill, 'Игра серии', 'Трейлер с ютуба', 'Состав (при наличии)', 'Название издания (при наличии)', 'Связка (при наличии)'];
   
     description.each((i, el) => {
       product.description += `<p>${productNode(el).text()}</p>`;
@@ -279,7 +279,7 @@ async function parseProduct(searchProductName, price) {
               product.activationRegions.push(newRegion._id);
             } catch (e) {
               console.log(e);
-              parsingTask.needFill.push(`Создать регион ${regionName} и добавить к товару`);
+              parsingTask.needFill.push(`Регион ${regionName}`);
             }
           }
         
@@ -358,7 +358,7 @@ async function parseProduct(searchProductName, price) {
               product.genres.push(newGenre._id);
             } catch (e) {
               console.log(e);
-              parsingTask.needFill.push(`Создать жанр ${genreName} и добавить к товару`);
+              parsingTask.needFill.push(`Жанр ${genreName}`);
             }
           }
           break;
