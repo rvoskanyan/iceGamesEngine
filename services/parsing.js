@@ -64,8 +64,6 @@ export const startParsingProducts = async () => {
         }
   
         const {productData, parsingTaskData} = await parseProduct(name, priceTo);
-  
-        console.log(productData);
 
         const newProduct = new Product({
           ...productData,
@@ -137,6 +135,8 @@ async function parseProduct(searchProductName, price) {
       throw new Error();
     }
   
+    console.log(productUrl);
+  
     const productIgDb = await browser.getPageContent(`https://www.igdb.com${productUrl}`);
     const productIgDbNode = cheerio.load(productIgDb);
     const productIgDbImg = productIgDbNode('img.img-responsive.cover_big').attr('src');
@@ -144,6 +144,8 @@ async function parseProduct(searchProductName, price) {
     if (!productIgDbImg) {
       throw new Error();
     }
+  
+    console.log(productIgDbImg);
 
     const extend = getExtendFile(productIgDbImg);
     const productImg = `${uuidv4()}.${extend}`;
@@ -153,6 +155,8 @@ async function parseProduct(searchProductName, price) {
     if (!productImg) {
       throw new Error();
     }
+  
+    console.log(productImg);
   
     await new Promise((resolve, reject) => {
       res.body.pipe(fileStream);
