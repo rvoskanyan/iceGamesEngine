@@ -55,10 +55,7 @@
                 </form>
             {{else}}
                 <h4>
-                    Не удалось найти игру
-                    <a href="/admin/products/edit/{{taskInWork.product._id}}" target="_blank">
-                        {{taskInWork.product.name}}
-                    </a> на STEAMBUY
+                    Не удалось найти игру {{taskInWork.product._id}} на STEAMBUY
                 </h4>
                 <form method="post" action="/admin/parsing/tasks/pars-product">
                     <label>
