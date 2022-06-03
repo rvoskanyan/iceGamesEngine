@@ -17,6 +17,8 @@ import {
   getDiscount,
   mergeParams,
 } from "../../utils/functions.js";
+import Bundle from "../../models/Bundle.js";
+import Edition from "../../models/Edition.js";
 
 export const pageProducts = async (req, res) => {
   try {
@@ -46,6 +48,8 @@ export const pageAddProduct = async (req, res) => {
     const platforms = await Platform.find().select(['name']);
     const products = await Product.find().select(['name']);
     const series = await Series.find().select(['name']);
+    const bundles = await Bundle.find().select(['name']);
+    const editions = await Edition.find().select(['name']);
   
     res.render('addProducts', {
       layout: 'admin',
@@ -59,6 +63,8 @@ export const pageAddProduct = async (req, res) => {
       platforms,
       products,
       series,
+      bundles,
+      editions,
     });
   } catch (e) {
     console.log(e);
@@ -95,6 +101,8 @@ export const addProduct = async (req, res) => {
       languages,
       activationRegions,
       series,
+      bundle,
+      edition,
       publisher,
       activationService,
       platform,
@@ -185,6 +193,14 @@ export const addProduct = async (req, res) => {
       product.seriesId = series;
     }
     
+    if (bundle !== '0') {
+      product.bundleId =  bundle;
+    }
+    
+    if (edition !== '0') {
+      product.editionId = edition;
+    }
+    
     if (dsId !== '0') {
       product.dsId = dsId;
     }
@@ -208,6 +224,9 @@ export const pageEditProduct = async (req, res) => {
     const restExtends = await Extend.find({_id: {$nin: product.extends}}).select('name').lean();
     const restActivationRegions = await Region.find({_id: {$nin: product.activationRegions}}).select('name').lean();
     const restPublishers = await Publisher.find({_id: {$nin: product.publisherId}}).select('name').lean();
+    const restSeries = await Series.find({_id: {$nin: product.seriesId}}).select('name').lean();
+    const restBundles = await Bundle.find({_id: {$nin: product.bundleId}}).select('name').lean();
+    const restEditions = await Edition.find({_id: {$nin: product.editionId}}).select('name').lean();
     const restActivationServices = await ActivationService.find({_id: {$nin: product.activationServiceId}}).select('name').lean();
     const restPlatforms = await Platform.find({_id: {$nin: product.platformId}}).select('name').lean();
     const restProductsDLC = await Product.find({_id: {$nin: product.dlcForId}}).select('name').lean();
@@ -219,6 +238,9 @@ export const pageEditProduct = async (req, res) => {
         'extends',
         'activationRegions',
         'publisherId',
+        'seriesId',
+        'bundleId',
+        'editionId',
         'activationServiceId',
         'platformId',
         {
@@ -232,6 +254,9 @@ export const pageEditProduct = async (req, res) => {
     const allExtends = mergeParams(product.extends, restExtends);
     const activationRegions = mergeParams(product.activationRegions, restActivationRegions);
     const publishers = mergeParams(product.publisherId, restPublishers);
+    const series = mergeParams(product.seriesId, restSeries);
+    const bundles = mergeParams(product.bundleId, restBundles);
+    const editions = mergeParams(product.editionId, restEditions);
     const activationServices = mergeParams(product.activationServiceId, restActivationServices);
     const platforms = mergeParams(product.platformId, restPlatforms);
     const products = mergeParams(product.dlcForId, restProductsDLC);
@@ -264,6 +289,9 @@ export const pageEditProduct = async (req, res) => {
       activationRegions,
       activationServices,
       publishers,
+      series,
+      bundles,
+      editions,
       platforms,
     });
   } catch (e) {
@@ -304,6 +332,8 @@ export const editProduct = async (req, res) => {
       languages,
       activationRegions,
       series,
+      bundle,
+      edition,
       publisher,
       activationService,
       platform,
@@ -407,6 +437,18 @@ export const editProduct = async (req, res) => {
       product.seriesId = null;
     } else {
       product.seriesId = series;
+    }
+    
+    if (bundle === '0') {
+      product.bundleId = null;
+    } else {
+      product.bundleId = bundle;
+    }
+    
+    if (edition === '0') {
+      product.editionId = null
+    } else {
+      product.editionId = edition;
     }
   
     if (dsId === '0') {

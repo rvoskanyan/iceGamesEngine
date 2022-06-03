@@ -272,6 +272,32 @@
     <br>
     <br>
     <label>
+        Связка игры:
+        <select name="bundle">
+            <option value="0">Не выбрано</option>
+            {{#each bundles}}
+                <option value="{{id}}" {{#if selected}}selected{{/if}}>
+                    {{name}}
+                </option>
+            {{/each}}
+        </select>
+    </label>
+    <br>
+    <br>
+    <label>
+        Версия игры:
+        <select name="edition">
+            <option value="0">Не выбрано</option>
+            {{#each editions}}
+                <option value="{{id}}" {{#if selected}}selected{{/if}}>
+                    {{name}}
+                </option>
+            {{/each}}
+        </select>
+    </label>
+    <br>
+    <br>
+    <label>
         Издатель:
         <select name="publisher">
             {{#each publishers}}
