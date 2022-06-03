@@ -39,15 +39,65 @@
                     <input type="hidden" name="taskId" value="{{taskInWork._id}}">
                     <input type="submit" value="Готово">
                 </form>
+                <br>
+                <form method="post" action="/admin/parsing/tasks/refusal">
+                    <input type="hidden" name="taskId" value="{{taskInWork._id}}">
+                    <input type="submit" value="Отказаться">
+                </form>
             {{else}}
                 <h4>
-                    Не удалось найти игру в STEAMBUY - {{taskInWork.product.name}}
+                    Не удалось найти игру
+                    <a href="/admin/products/edit/{{taskInWork.product._id}}" target="_blank">
+                        {{taskInWork.product.name}}
+                    </a> на STEAMBUY
                 </h4>
+                <form method="post" action="/admin/parsing/tasks/pars-product">
+                    <label>
+                        Название игры (точно, как в результатах поиска на STEAMBUY):
+                        <input type="text" name="productName">
+                    </label>
+                    <br>
+                    <br>
+                    <input type="hidden" name="taskId" value="{{taskInWork._id}}">
+                    <input type="submit" value="Спарсить">
+                </form>
+                <br>
+                <form method="post" action="/admin/parsing/tasks/refusal">
+                    <input type="hidden" name="taskId" value="{{taskInWork._id}}">
+                    <input type="submit" value="Отказаться">
+                </form>
             {{/if}}
         {{else}}
             <h4>
                 Ошибка при сохранении данных игры - {{taskInWork.productDsName}}
             </h4>
+            <form method="post" action="/admin/parsing/tasks/pars-product">
+                <label>
+                    Название игры (точно, как в результатах поиска на STEAMBUY):
+                    <input type="text" name="productName">
+                </label>
+                <br>
+                <br>
+                <label>
+                    id товара с digiseller:
+                    <input type="text" name="dsId">
+                </label>
+                <br>
+                <br>
+                <label>
+                    Цена товара с digiseller:
+                    <input type="text" name="priceTo">
+                </label>
+                <br>
+                <br>
+                <input type="hidden" name="taskId" value="{{taskInWork._id}}">
+                <input type="submit" value="Спарсить">
+            </form>
+            <br>
+            <form method="post" action="/admin/parsing/tasks/refusal">
+                <input type="hidden" name="taskId" value="{{taskInWork._id}}">
+                <input type="submit" value="Отказаться">
+            </form>
         {{/if}}
     {{else}}
         <p>Задач не найдено</p>

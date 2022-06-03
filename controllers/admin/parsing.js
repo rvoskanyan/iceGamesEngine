@@ -1,5 +1,6 @@
-import {startParsingProducts} from "../../services/parsing.js";
+import {parseProduct, startParsingProducts} from "../../services/parsing.js";
 import ParsingTask from "../../models/ParsingTask.js";
+import Product from "../../models/Product.js";
 
 export const parsingPage = (req, res) => {
   res.render('parsing', {
@@ -47,7 +48,22 @@ export const tasksInWork = async (req, res) => {
     task.executor = res.locals.person._id;
     
     await task.save();
+    res.redirect('/admin/parsing/tasks');
+  } catch (e) {
+    console.log(e);
+    res.redirect('/admin/parsing/tasks');
+  }
+}
+
+export const tasksRefusal = async (req, res) => {
+  try {
+    const {taskId} = req.body;
+    const task = await ParsingTask.findById(taskId);
     
+    task.status = 'queue';
+    task.executor = undefined;
+    
+    await task.save();
     res.redirect('/admin/parsing/tasks');
   } catch (e) {
     console.log(e);
@@ -56,5 +72,53 @@ export const tasksInWork = async (req, res) => {
 }
 
 export const tasksPerformed = async (req, res) => {
+  try {
+    const {taskId} = req.body;
+    const task = await ParsingTask.findById(taskId);
+    
+    task.status = 'performed';
+    
+    await task.save();
+    
+    res.redirect('/admin/parsing/tasks');
+  } catch (e) {
+    console.log(e);
+    res.redirect('/admin/parsing/tasks');
+  }
+}
 
+export const tasksParsProduct = async (req, res) => {
+  try {
+    const {
+      dsId = null,
+      priceTo = null,
+      taskId,
+      productName,
+    } = req.body;
+    
+    const task = await ParsingTask.findById(taskId);
+    let product;
+    
+    if (task.successSaveProduct) {
+      product = await Product.findById(task.product);
+    } else {
+      product = new Product({priceTo, dsId});
+    }
+    
+    const {productData, parsingTaskData} = await parseProduct(productName, product.priceTo);
+  
+    Object.assign(product, productData);
+    Object.assign(task, parsingTaskData);
+  
+    task.successSaveProduct = true;
+    task.product = product._id;
+    
+    await product.save();
+    await task.save();
+  
+    res.redirect('/admin/parsing/tasks');
+  } catch (e) {
+    console.log(e);
+    res.redirect('/admin/parsing/tasks');
+  }
 }

@@ -55,6 +55,13 @@ export const startParsingProducts = async () => {
         if (productOnSite) {
           productOnSite.inStock = inStock;
           productOnSite.priceTo = priceTo;
+          
+          if (!productOnSite.coverImg) {
+            const indexCover = Math.floor(Math.random() * (productOnSite.images.length - 1)) + 1;
+  
+            productOnSite.coverImg = product.images[indexCover] && product.images[indexCover].name;
+          }
+          
           await productOnSite.save();
           continue;
         }
@@ -94,7 +101,7 @@ export const startParsingProducts = async () => {
   process.env.PARSING = '';
 }
 
-async function parseProduct(searchProductName, price) {
+export async function parseProduct(searchProductName, price) {
   const browser = new Browser();
   const product = {
     name: searchProductName,
@@ -204,7 +211,6 @@ async function parseProduct(searchProductName, price) {
     const discount = parseFloat(productNode('.product-price .product-price__discount-cost').first().text());
     const isDlc = productNode('.product-desc .accent_purple .accent__title').text() === 'Дополнительный контент';
     const mediaNodes = productNode('.product-media .product-media__item a.product-media__link').toArray();
-    const indexCover = Math.floor(Math.random() * (mediaNodes.length - 1)) + 1;
     const systemRequirements = productNode('.product-os .product-os__tabs .os-tabs-content.os-tabs-content_active .os-option__unit');
     const productDetails = productNode('.product-detail .product-detail__section .product-detail__unit').toArray();
     const productAbouts = productNode('.product-about .product-about__option .product-about__option-unit').toArray();
@@ -315,17 +321,9 @@ async function parseProduct(searchProductName, price) {
             });
           });
           product.images.push({name: productGalleryNameImg});
-          
-          if (currentMedia === indexCover) {
-            product.coverImg = productGalleryNameImg;
-          }
         } catch (e) {
           console.log(e);
           parsingTask.needFill.push(`Загрузить скриншот № ${currentMedia + 1}`);
-  
-          if (currentMedia === indexCover) {
-            parsingTask.needFill.push('Загрузить обложку (cover)');
-          }
         }
       }
   
@@ -487,6 +485,10 @@ async function parseProduct(searchProductName, price) {
       }
     }
   
+    const indexCover = Math.floor(Math.random() * (product.images.length - 1)) + 1;
+  
+    product.coverImg = product.images[indexCover] && product.images[indexCover].name;
+  
     if (activationName.length) {
       const activationService = activationServices.find(item => {
         return item.steamBuyName === activationName;
@@ -569,6 +571,10 @@ async function parseProduct(searchProductName, price) {
   
     if (!product.languages) {
       parsingTask.needFill.push('Языки');
+    }
+    
+    if (!product.coverImg) {
+      parsingTask.needFill.push('Загрузить обложку (cover)');
     }
   } catch (e) {
     console.log(e);
