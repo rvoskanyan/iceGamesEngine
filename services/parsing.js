@@ -40,6 +40,7 @@ export const startParsingProducts = async () => {
     });
     const resultProducts = await responseProducts.json();
     const products = resultProducts.rows;
+    let rf = false;
     
     pages = resultProducts.pages;
     
@@ -61,6 +62,11 @@ export const startParsingProducts = async () => {
   
             console.log(productOnSite.images);
             console.log(indexCover);
+            
+            if (productOnSite.name === '007 Legends') {
+              rf = true;
+              break;
+            }
   
             productOnSite.coverImg = product.images[indexCover] && product.images[indexCover].name;
           }
@@ -96,6 +102,10 @@ export const startParsingProducts = async () => {
         await newParsingTask.save();
         console.log(e);
       }
+    }
+    
+    if (rf) {
+      break;
     }
     
     page++;
