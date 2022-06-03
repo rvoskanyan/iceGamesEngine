@@ -362,7 +362,13 @@ export async function parseProduct(searchProductName, price) {
           break;
         }
         case 'Дата выхода:': {
-          const dateArr = valueNode.first().text().trim().split(' ');
+          const date = valueNode.first().text().trim();
+          
+          if (date.toLowerCase() === 'уточняется') {
+            break;
+          }
+          
+          const dateArr = date.split(' ');
           const monthIndex = strMonths.indexOf(dateArr[1]) + 1;
           let currentDate = new Date();
         
@@ -575,6 +581,10 @@ export async function parseProduct(searchProductName, price) {
     
     if (!product.coverImg) {
       parsingTask.needFill.push('Загрузить обложку (cover)');
+    }
+    
+    if (!product.releaseDate) {
+      parsingTask.needFill.push('Дата выхода');
     }
   } catch (e) {
     console.log(e);

@@ -98,6 +98,7 @@ export const addProduct = async (req, res) => {
       publisher,
       activationService,
       platform,
+      active,
     } = req.body;
     
     const {img, coverImg, coverVideo, gameImages} = req.files;
@@ -136,6 +137,7 @@ export const addProduct = async (req, res) => {
       publisherId: publisher,
       activationServiceId: activationService,
       platformId: platform,
+      active: active === 'on',
     });
     
     await img.mv(path.join(__dirname, '/uploadedFiles', imgName));
@@ -305,6 +307,7 @@ export const editProduct = async (req, res) => {
       publisher,
       activationService,
       platform,
+      active,
     } = req.body;
     const product = await Product.findById(productId);
     const lastEditorId = req.session.userId;
@@ -340,6 +343,7 @@ export const editProduct = async (req, res) => {
       publisherId: publisher,
       activationServiceId: activationService,
       platformId: platform,
+      active: active === 'on',
     })
     
     if (req.files) {
