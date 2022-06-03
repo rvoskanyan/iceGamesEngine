@@ -48,19 +48,15 @@ export const getProducts = async (req, res) => {
       filter.genres = {$in: genres};
     }
   
-    if (genres.length) {
-      filter.genres = {$in: genres};
-    }
-  
     if (activationServices.length) {
-      filter.activationServices = {$in: activationServices};
+      filter.activationServiceId = {$in: activationServices};
     }
     
-    if (+priceFrom && +priceFrom >= 0) {
+    if (priceFrom && +priceFrom >= 0) {
       filter.priceTo = {$gte: +priceFrom};
     }
   
-    if (priceTo && +priceFrom >= 0) {
+    if (priceTo && +priceTo >= 0) {
       filter.priceTo = {
         ...filter.priceTo,
         $lte: +priceTo,
