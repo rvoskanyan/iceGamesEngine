@@ -94,6 +94,7 @@ export const tasksParsProduct = async (req, res) => {
       priceTo = null,
       taskId,
       productName,
+      sourceLink,
     } = req.body;
     
     const task = await ParsingTask.findById(taskId);
@@ -105,7 +106,7 @@ export const tasksParsProduct = async (req, res) => {
       product = new Product({priceTo, dsId});
     }
     
-    const {productData, parsingTaskData} = await parseProduct(productName, product.priceTo);
+    const {productData, parsingTaskData} = await parseProduct(productName, product.priceTo, sourceLink);
   
     Object.assign(product, productData);
     Object.assign(task, parsingTaskData);

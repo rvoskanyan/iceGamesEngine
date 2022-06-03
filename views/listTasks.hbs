@@ -4,7 +4,15 @@
             <li>
                 {{#if successSaveProduct}}
                     {{#if productFound}}
-                        <h4>Дополнить данные к игре</h4>
+                        <h4>
+                            Дополнить данные к игре - {{product.name}}
+                        </h4>
+                        Необходимо дополнить:
+                        <ul>
+                            {{#each needFill}}
+                                <li>{{this}}</li>
+                            {{/each}}
+                        </ul>
                     {{else}}
                         <h4>Не удалось найти игру в STEAMBUY</h4>
                     {{/if}}
@@ -53,8 +61,14 @@
                 </h4>
                 <form method="post" action="/admin/parsing/tasks/pars-product">
                     <label>
-                        Название игры (точно, как в результатах поиска на STEAMBUY):
+                        Название игры (как в результатах поиска на STEAMBUY):
                         <input type="text" name="productName">
+                    </label>
+                    <br>
+                    <br>
+                    <label>
+                        Ссылка на страницу игры в STEAMBUY:
+                        <input type="text" name="sourceLink">
                     </label>
                     <br>
                     <br>
@@ -73,8 +87,14 @@
             </h4>
             <form method="post" action="/admin/parsing/tasks/pars-product">
                 <label>
-                    Название игры (точно, как в результатах поиска на STEAMBUY):
+                    Название игры (как в результатах поиска на STEAMBUY):
                     <input type="text" name="productName">
+                </label>
+                <br>
+                <br>
+                <label>
+                    Ссылка на страницу игры в STEAMBUY:
+                    <input type="text" name="sourceLink">
                 </label>
                 <br>
                 <br>

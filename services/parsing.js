@@ -101,7 +101,7 @@ export const startParsingProducts = async () => {
   process.env.PARSING = '';
 }
 
-export async function parseProduct(searchProductName, price) {
+export async function parseProduct(searchProductName, price, sourceLink = null) {
   const browser = new Browser();
   const product = {
     name: searchProductName,
@@ -175,23 +175,27 @@ export async function parseProduct(searchProductName, price) {
   }
   
   try { //Загрузка материалов с https://steambuy.com/
-    const searchContent = await browser.getPageContent(encodeURI(`https://steambuy.com/catalog/?q=${searchProductName}`));
-    const searchNode = cheerio.load(searchContent);
-    const results = searchNode('a.product-item__title-link');
+    if (!sourceLink) {
+      const searchContent = await browser.getPageContent(encodeURI(`https://steambuy.com/catalog/?q=${searchProductName}`));
+      const searchNode = cheerio.load(searchContent);
+      const results = searchNode('a.product-item__title-link');
   
-    if (!results || !results.length) {
-      throw new Error();
-    }
-  
-    for (const item of results) {
-      const itemName = searchNode(item).text();
-    
-      if (getAlias(itemName) === product.alias || isEqualBySound(itemName, searchProductName)) {
-        product.name = itemName;
-        product.alias = getAlias(itemName);
-        parsingTask.sourceLink = `https://steambuy.com${searchNode(item).attr('href')}`;
-        break;
+      if (!results || !results.length) {
+        throw new Error();
       }
+  
+      for (const item of results) {
+        const itemName = searchNode(item).text();
+    
+        if (getAlias(itemName) === product.alias || isEqualBySound(itemName, searchProductName)) {
+          product.name = itemName;
+          product.alias = getAlias(itemName);
+          parsingTask.sourceLink = `https://steambuy.com${searchNode(item).attr('href')}`;
+          break;
+        }
+      }
+    } else {
+      parsingTask.sourceLink = sourceLink;
     }
   
     if (!parsingTask.sourceLink) {
