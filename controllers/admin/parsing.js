@@ -27,7 +27,7 @@ export const tasksPage = async (req, res) => {
       });
     }
     
-    const tasks = await ParsingTask.find({status: 'queue'}).limit(10).populate('product').lean();
+    const tasks = await ParsingTask.find({status: 'queue'}).limit(100).populate('product').lean();
     
     res.render('listTasks', {
       layout: 'admin',
