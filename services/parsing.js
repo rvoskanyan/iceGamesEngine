@@ -59,6 +59,9 @@ export const startParsingProducts = async () => {
           if (!productOnSite.coverImg) {
             const indexCover = Math.floor(Math.random() * (productOnSite.images.length - 1)) + 1;
   
+            console.log(productOnSite.images);
+            console.log(indexCover);
+  
             productOnSite.coverImg = product.images[indexCover] && product.images[indexCover].name;
           }
           
