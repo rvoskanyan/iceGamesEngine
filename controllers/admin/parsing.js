@@ -19,6 +19,7 @@ export const tasksPage = async (req, res) => {
   try {
     const id = res.locals.person._id.toString();
     const taskInWork = await ParsingTask.findOne({status: 'inWork', executor: id}).populate('product').lean();
+    const completedCount = await ParsingTask.countDocuments({status: 'performed', executor: id});
     
     if (taskInWork) {
       return res.render('listTasks', {
@@ -32,6 +33,7 @@ export const tasksPage = async (req, res) => {
     res.render('listTasks', {
       layout: 'admin',
       tasks,
+      completedCount,
     });
   } catch (e) {
     console.log(e);
