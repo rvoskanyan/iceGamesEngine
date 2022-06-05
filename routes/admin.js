@@ -19,6 +19,7 @@ import seriesRoute from './admin/series.js';
 import articlesRoute from './admin/articles.js';
 import achievementsRoute from './admin/achievements.js';
 import parsingRoute from './admin/parsing.js';
+import exportsRoute from './admin/exports.js';
 
 const router = Router();
 
@@ -42,5 +43,6 @@ router.use('/series', seriesRoute);
 router.use('/articles', articlesRoute);
 router.use('/achievements', achievementsRoute);
 router.use('/parsing', parsingRoute);
+router.use('/exports', exportsRoute);
 
 export default router;
