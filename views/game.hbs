@@ -269,9 +269,7 @@
                     </div>
                     <div class="blocks totalHeight infoBlock">
                         <div class="item active js-tabBlock-1">
-                            <p class="paragraph">
-                                {{product.description}}
-                            </p>
+                            {{encodeString product.description}}
                         </div>
                         <ul class="item bulletedList notSeparator js-tabBlock-2">
                             {{#each product.activationServiceId.stages}}

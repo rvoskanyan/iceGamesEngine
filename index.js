@@ -42,6 +42,9 @@ const hbs = exphbs.create({
     inc: (value) => {
       return parseInt(value) + 1;
     },
+    encodeString: (str) => {
+      return new Handlebars.SafeString(str);
+    },
     iff: function (a, operator, b, opts) {
       let bool = false;
       
