@@ -18,7 +18,7 @@ export const startParsing = (req, res) => {
 export const tasksPage = async (req, res) => {
   try {
     const id = res.locals.person._id.toString();
-    const taskInWork = await ParsingTask.findOne({status: 'inWork', executor: id}).populate('product').lean().sort({productFound: -1});
+    const taskInWork = await ParsingTask.findOne({status: 'inWork', executor: id}).populate('product').lean();
     const completedCount = await ParsingTask.countDocuments({status: 'performed', executor: id});
     
     if (taskInWork) {
@@ -28,7 +28,7 @@ export const tasksPage = async (req, res) => {
       });
     }
     
-    const tasks = await ParsingTask.find({status: 'queue'}).limit(500).populate('product').lean();
+    const tasks = await ParsingTask.find({status: 'queue'}).limit(500).populate('product').sort({productFound: -1}).lean();
     
     res.render('listTasks', {
       layout: 'admin',
