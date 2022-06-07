@@ -1195,7 +1195,7 @@ if (catalogNode) {
       return;
     }
   
-    loadMoreNode.dataset.skip = parseInt(loadMoreNode.dataset.skip) + 1;
+    loadMoreNode.dataset.skip = parseInt(loadMoreNode.dataset.skip) + 10;
     result.isLast ? loadMoreNode.classList.add('hide') : loadMoreNode.classList.remove('hide');
   
     result.products.forEach(product => {
@@ -1427,7 +1427,7 @@ if (catalogNode) {
       return;
     }
   
-    loadMoreNode.dataset.skip = 1;
+    loadMoreNode.dataset.skip = 10;
     result.isLast ? loadMoreNode.classList.add('hide') : loadMoreNode.classList.remove('hide');
     productGridNode.classList.remove('notFound');
     productGridNode.innerHTML = '';
