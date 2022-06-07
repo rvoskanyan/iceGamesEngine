@@ -248,6 +248,10 @@ const options = {
 const productSchema = new Schema(fields, options);
 
 productSchema.virtual('hyphenReleaseDate').get(function () {
+  if (!this.releaseDate) {
+    return null;
+  }
+  
   return getFormatDate(this.releaseDate, '-', ['y', 'm', 'd']);
 });
 
