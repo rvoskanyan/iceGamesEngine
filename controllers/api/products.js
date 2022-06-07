@@ -37,7 +37,7 @@ export const getProducts = async (req, res) => {
       skip = 0,
     } = req.query;
     const name = new RegExp(searchString, 'i');
-    const filter = {name};
+    const filter = {name, active: true};
     const person = res.locals.person;
     
     if (categories.length) {

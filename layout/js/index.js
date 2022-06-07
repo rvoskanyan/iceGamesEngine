@@ -1187,7 +1187,7 @@ if (catalogNode) {
   
   loadMoreNode.addEventListener('click', async () => {
     const url = new URL(window.location.href);
-    const response = await postman.get(`${websiteAddress}api/products${url.search ? url.search : '?'}&skip=${loadMoreNode.dataset.skip}&limit=1`);
+    const response = await postman.get(`${websiteAddress}api/products${url.search ? url.search : '?'}&skip=${loadMoreNode.dataset.skip}&limit=10`);
     const result = await response.json();
     const productGridNode = catalogNode.querySelector('.js-productGrid');
     
@@ -1419,7 +1419,7 @@ if (catalogNode) {
   
   catalogNode.addEventListener('changeParams', async () => {
     const url = new URL(window.location.href);
-    const response = await postman.get(`${websiteAddress}api/products${url.search ? url.search : '?'}&limit=1`);
+    const response = await postman.get(`${websiteAddress}api/products${url.search ? url.search : '?'}&limit=10`);
     const result = await response.json();
     const productGridNode = catalogNode.querySelector('.js-productGrid');
     
