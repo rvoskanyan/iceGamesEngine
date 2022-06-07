@@ -13,6 +13,10 @@ const fields = {
   },
   productDsName: String,
   needFill: [],
+  byHand: {
+    type: Boolean,
+    default: false,
+  },
   status: {
     type: String,
     enum: ['queue', 'inWork', 'performed'],

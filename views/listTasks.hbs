@@ -55,30 +55,51 @@
                     <input type="submit" value="Отказаться">
                 </form>
             {{else}}
-                <h4>
-                    Не удалось найти игру {{taskInWork.product.name}} на STEAMBUY
-                </h4>
-                <form method="post" action="/admin/parsing/tasks/pars-product">
-                    <label>
-                        Название игры (как в результатах поиска на STEAMBUY):
-                        <input type="text" name="productName">
-                    </label>
+                {{#if taskInWork.byHand}}
+                    <h4>
+                        Заполните данные для игры <a href="/admin/products/edit/{{taskInWork.product._id}}" target="_blank">{{taskInWork.product.name}}</a>
+                    </h4>
+                    <form method="post" action="/admin/parsing/tasks/performed">
+                        <input type="hidden" name="taskId" value="{{taskInWork._id}}">
+                        <input type="submit" value="Готово">
+                    </form>
                     <br>
+                    <form method="post" action="/admin/parsing/tasks/refusal">
+                        <input type="hidden" name="taskId" value="{{taskInWork._id}}">
+                        <input type="submit" value="Отказаться">
+                    </form>
+                {{else}}
+                    <h4>
+                        Не удалось найти игру {{taskInWork.product.name}} на STEAMBUY
+                    </h4>
+                    <form method="post" action="/admin/parsing/tasks/pars-product">
+                        <label>
+                            Название игры (как в результатах поиска на STEAMBUY):
+                            <input type="text" name="productName">
+                        </label>
+                        <br>
+                        <br>
+                        <label>
+                            Ссылка на страницу игры в STEAMBUY:
+                            <input type="text" name="sourceLink">
+                        </label>
+                        <br>
+                        <br>
+                        <label>
+                            Заполнить в ручную
+                            <input type="checkbox" name="byHand">
+                        </label>
+                        <br>
+                        <br>
+                        <input type="hidden" name="taskId" value="{{taskInWork._id}}">
+                        <input type="submit" value="Спарсить">
+                    </form>
                     <br>
-                    <label>
-                        Ссылка на страницу игры в STEAMBUY:
-                        <input type="text" name="sourceLink">
-                    </label>
-                    <br>
-                    <br>
-                    <input type="hidden" name="taskId" value="{{taskInWork._id}}">
-                    <input type="submit" value="Спарсить">
-                </form>
-                <br>
-                <form method="post" action="/admin/parsing/tasks/refusal">
-                    <input type="hidden" name="taskId" value="{{taskInWork._id}}">
-                    <input type="submit" value="Отказаться">
-                </form>
+                    <form method="post" action="/admin/parsing/tasks/refusal">
+                        <input type="hidden" name="taskId" value="{{taskInWork._id}}">
+                        <input type="submit" value="Отказаться">
+                    </form>
+                {{/if}}
             {{/if}}
         {{else}}
             <h4>

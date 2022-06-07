@@ -64,6 +64,7 @@ export const tasksRefusal = async (req, res) => {
     
     task.status = 'queue';
     task.executor = undefined;
+    task.byHand = false;
     
     await task.save();
     res.redirect('/admin/parsing/tasks');
@@ -97,10 +98,18 @@ export const tasksParsProduct = async (req, res) => {
       taskId,
       productName,
       sourceLink,
+      byHand,
     } = req.body;
     
     const task = await ParsingTask.findById(taskId);
     let product;
+    
+    if (byHand) {
+      task.byHand = true;
+      await task.save();
+      
+      return res.redirect('/admin/parsing/tasks');
+    }
     
     if (task.successSaveProduct) {
       product = await Product.findById(task.product);
