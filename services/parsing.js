@@ -85,6 +85,7 @@ export const startParsingProducts = async () => {
         await newProduct.save();
         await newParsingTask.save();
       } catch (e) {
+        console.log(e);
         const newParsingTask = new ParsingTask({
           successSaveProduct: false,
           productDsName: name,
