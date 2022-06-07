@@ -22,7 +22,7 @@ import Edition from "../../models/Edition.js";
 
 export const pageProducts = async (req, res) => {
   try {
-    const products = await Product.find().select(['name']);
+    const products = await Product.find().select(['name', 'active']);
   
     res.render('listElements', {
       layout: 'admin',
