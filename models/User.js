@@ -31,6 +31,10 @@ const fields = {
     type: Number,
     default: 0,
   },
+  inviter: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+  },
   invitedUsers: [{
     type: Schema.Types.ObjectId,
     ref: 'User',
@@ -38,6 +42,7 @@ const fields = {
   role: {
     type: String,
     required: true,
+    enum: ['client', 'admin'],
     default: 'client',
   },
   dsCartId: String,

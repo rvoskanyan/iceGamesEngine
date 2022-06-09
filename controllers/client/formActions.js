@@ -2,7 +2,8 @@ import {validationResult} from 'express-validator';
 import bcrypt from 'bcryptjs';
 
 import User from './../../models/User.js';
-import {achievementEvent} from "../../services/achievement.js";
+import {registrationMail} from "../../services/mailer.js";
+import {v4 as uuidv4} from "uuid";
 
 export const registration = async (req, res) => {
   try {
@@ -19,10 +20,13 @@ export const registration = async (req, res) => {
     
     const hashPassword = await bcrypt.hash(password, 10);
     const newLogin = login.toLowerCase();
+    const checkEmailHash = uuidv4();
     const user = new User({
       login: newLogin[0].toUpperCase() + newLogin.slice(1),
       email,
       password: hashPassword,
+      checkEmailHash,
+      inviter: inviterId,
     });
       
     await user.save();
@@ -32,19 +36,17 @@ export const registration = async (req, res) => {
       
       if (inviter) {
         inviter.invitedUsers.push(user._id);
-        
-        await inviter.increaseRating(5);
         await inviter.save();
-        await achievementEvent('friendInvitation', inviter);
-        
         res.clearCookie('inviterId')
       }
     }
-    
+  
     res.json({
       success: true,
       message: 'Вы успешно зарегистрировались'
     });
+  
+    await registrationMail(email, checkEmailHash);
   } catch (e) {
     console.log(e);
     res.json({

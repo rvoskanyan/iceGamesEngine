@@ -1,4 +1,7 @@
 <main>
+    {{#if checkedEmail}}
+        <div class="modalMessage js-modalMessage">E-mail успешно подтвержден! ✔</div>
+    {{/if}}
     <div class="homeSlider js-homeSlider">
         <div class="tape js-tapeSlider">
             {{#each sliderProducts}}

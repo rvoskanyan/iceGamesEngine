@@ -73,32 +73,34 @@
                     </div>
                 </div>
                 <div class="actions">
-                    <button
-                            title="
-                        {{#if product.inStock}}
-                                {{#if currentProductInCart}}Перейти в корзину покупок{{else}}Добавить данный товар в корзину покупок{{/if}}
-                            {{else}}
-                            Подписаться на уведомление о поступлении товара
-                        {{/if}}
-                    "
-                            class="btn elongated rounded increase bg-pink hover-backlight-blue
-                        {{#if product.inStock}}
-                            js-addToCartBtn{{#if currentProductInCart}} js-active{{/if}}
-                            {{else}}
-                            js-subscribeInStock
-                        {{/if}}
-                    "
-                        {{#unless currentProductInCart}}
-                            data-ds-id="{{product.dsId}}"
-                            data-product-id="{{product.id}}"
-                        {{/unless}}
-                    >
-                        {{#if product.inStock}}
-                            {{#if currentProductInCart}}Добавлено{{else}}В корзину{{/if}}
+                    {{#if product.inStock}}
+                        {{#if currentProductInCart}}
+                            <button
+                                title="Перейти в корзину покупок"
+                                class="btn elongated rounded increase bg-pink hover-backlight-blue js-addToCartBtn js-active"
+                            >Добавлено</button>
                         {{else}}
-                            Уведомить
+                            <button
+                                title="Добавить данный товар в корзину покупок"
+                                class="btn elongated rounded increase bg-pink hover-backlight-blue js-addToCartBtn"
+                                data-ds-id="{{product.dsId}}"
+                                data-product-id="{{product.id}}"
+                            >В корзину</button>
                         {{/if}}
-                    </button>
+                    {{else}}
+                        {{#if subscribed}}
+                            <div
+                                title="Когда товар появится в наличии, на Ваш E-mail придет уведомление."
+                                class="btn elongated rounded bg-pink"
+                            >Подписка оформлена</div>
+                        {{else}}
+                            <div
+                                title="Подписаться на уведомление о поступлении товара"
+                                class="btn elongated rounded increase bg-pink hover-backlight-blue js-subscribeInStock"
+                                data-product-id="{{product.id}}"
+                            >Уведомить</div>
+                        {{/if}}
+                    {{/if}}
                     <div class="moreInfoBlocks">
                         {{#if product.preOrder}}
                             <div class="moreInfo preOrderInfo">

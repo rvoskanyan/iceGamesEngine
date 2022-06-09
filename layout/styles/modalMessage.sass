@@ -1,0 +1,18 @@
+.modalMessage
+  background-color: rgba(39, 39, 39, 0.95)
+  position: fixed
+  left: 50%
+  transform: translate(-50%, -100%)
+  z-index: 3
+  padding: 10px 25px
+  border-radius: 20px
+  color: #00af56
+  opacity: 0
+  visibility: hidden
+  transition: .3s cubic-bezier(0.68, -0.55, 0.27, 2)
+  transition-property: transform, opacity, visibility
+
+  &.active
+    opacity: 1
+    visibility: visible
+    transform: translate(-50%, 80px)

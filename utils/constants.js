@@ -1,11 +1,11 @@
 export const typesAchievements = {
   //daysWithUs: 'Дней с ICE Games',
-  articlesRead: 'Прочитано статей+',
-  topRanking: 'Попасть в топ рейтинга+',
-  friendInvitation: 'Пригласить друзей+',
-  addProductFavorites: 'Добавление товара в избранное+',
-  productPurchase: 'Покупка товаров+',
-  likeArticle: 'Лайки статей+',
+  articlesRead: 'Прочитано статей',
+  topRanking: 'Попасть в топ рейтинга',
+  friendInvitation: 'Пригласить друзей',
+  addProductFavorites: 'Добавление товара в избранное',
+  productPurchase: 'Покупка товаров',
+  likeArticle: 'Лайки статей',
 };
 
 export const strMonths = [

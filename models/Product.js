@@ -235,6 +235,7 @@ const fields = {
     type: Schema.Types.ObjectId,
     ref: 'Extend',
   }],
+  subscribesInStock: [],
   active: {
     type: Boolean,
     default: false,

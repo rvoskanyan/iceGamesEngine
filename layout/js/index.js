@@ -45,6 +45,7 @@ const addReviewFormNode = document.querySelector('.js-addReviewForm');
 const commentProductFormNode = document.querySelector('.js-commentProductForm');
 const gamePageNode = document.querySelector('.js-gamePage');
 const rangeNode = document.querySelector('.js-range');
+const modalMessageNode = document.querySelector('.js-modalMessage');
 const popupController = new PopupController([
   {
     id: 'loginFrom',
@@ -129,6 +130,13 @@ const popupController = new PopupController([
   },
 ]);
 
+if (modalMessageNode) {
+  setTimeout(() => {
+    modalMessageNode.classList.add('active');
+    setTimeout(() => modalMessageNode.classList.remove('active'), 5000);
+  }, 300);
+}
+
 if (rangeNode) {
   const rangeWidth = parseFloat(getComputedStyle(rangeNode).width);
   const min = +rangeNode.dataset.min;
@@ -136,7 +144,7 @@ if (rangeNode) {
   const minSliderNode = rangeNode.querySelector('.js-minSlider');
   const maxSliderNode = rangeNode.querySelector('.js-maxSlider');
   
-  const initialSliders = () => {
+  const initialSliders = (e = null) => {
     let minSliderValue = +minSliderNode.dataset.default;
     let maxSliderValue = +maxSliderNode.dataset.default;
     
@@ -165,6 +173,15 @@ if (rangeNode) {
     maxSliderNode.innerText = maxSliderValue;
     minSliderNode.dataset.default = minSliderValue;
     maxSliderNode.dataset.default = maxSliderValue;
+    
+    if (e && e.target === minSliderNode) {
+      return minSliderNode.dispatchEvent(new Event('initialSlider'));
+    }
+  
+    if (e && e.target === maxSliderNode) {
+      return maxSliderNode.dispatchEvent(new Event('initialSlider'));
+    }
+  
     minSliderNode.dispatchEvent(new Event('initialSlider'));
     maxSliderNode.dispatchEvent(new Event('initialSlider'));
   }
@@ -236,7 +253,7 @@ if (rangeNode) {
         }
         const blurSlider = () => {
           sliderNode.dataset.default = sliderNode.innerText;
-          initialSliders();
+          initialSliders(e);
           e.target.removeEventListener('mouseup', listenerMouseup);
           e.target.removeEventListener('touchend', listenerMouseup);
           e.target.removeEventListener('blur', blurSlider);
@@ -270,7 +287,7 @@ if (rangeNode) {
       document.removeEventListener('mouseup', listenerMouseup);
       document.removeEventListener('touchend', listenerMouseup);
       sliderNode.dispatchEvent(new Event('blur'));
-      initialSliders();
+      initialSliders(e);
       sliderNode.style.cursor = 'initial';
     }
   
