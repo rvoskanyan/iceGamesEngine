@@ -16,7 +16,7 @@ const transporter = nodemailer.createTransport({
 
 export async function registrationMail(to, hash) {
   await transporter.sendMail({
-    from: 'ICE Games <info@icegames.store>',
+    from: 'ICE GAMES <info@icegames.store>',
     to: to,//'user@example.com, user@example.com',
     subject: 'Подтверждение E-mail',
     html: `
@@ -49,7 +49,7 @@ export async function mailingInStockProduct(productId, emails) {
     .toFile(path.join(__dirname, `/uploadedFiles/${product.darkenCover}`));
   
   await transporter.sendMail({
-    from: 'ICE Games <info@icegames.store>',
+    from: 'ICE GAMES <info@icegames.store>',
     to: emails.join(', '),
     subject: `${product.name} снова в наличии!`,
     html: `
