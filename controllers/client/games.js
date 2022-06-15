@@ -5,6 +5,7 @@ import ActivationService from '../../models/ActivationService.js';
 import Order from '../../models/Order.js';
 import Comment from '../../models/Comment.js';
 import User from '../../models/User.js';
+import {mailingInStockProduct} from "../../services/mailer.js";
 
 export const gamesPage = async (req, res) => {
   try {
@@ -50,6 +51,8 @@ export const gamePage = async (req, res) => {
           }
         }
       ]);
+  
+    await mailingInStockProduct(product.id, ['razm1998@yandex.ru']);
     const comments = await Comment
       .find({subjectId: product.id, ref: 'product'})
       .populate(['author'])
@@ -72,12 +75,18 @@ export const gamePage = async (req, res) => {
     let currentProductInCart = false;
     let bundleProducts = null;
     let seriesProducts = null;
+    let subscribed = false;
   
     if (person) {
       const cart = person.cart;
+      const email = person.email;
       
       if (cart && cart.includes(product._id.toString())) {
         currentProductInCart = true;
+      }
+      
+      if (product.subscribesInStock.includes(email)) {
+        subscribed = true;
       }
     }
   
@@ -196,6 +205,7 @@ export const gamePage = async (req, res) => {
       seriesProducts,
       recProducts,
       seriesIsSlider,
+      subscribed,
     });
   } catch (e) {
     console.log(e);

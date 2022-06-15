@@ -1,4 +1,26 @@
 <main class="gamePage js-gamePage">
+    {{#unless product.inStock}}
+        {{#unless @root.isAuth}}
+            <div class="subscribeModalContainer js-subscribeModal">
+                <div class="subscribeModalBlock">
+                    <div class="title">Укажите Ваш E-mail</div>
+                    <p class="text">
+                        Когда товар появится в наличии, на указанный E-mail придет уведомление. Благодарим за ожидание!
+                    </p>
+                    <div class="senderField small email js-senderField">
+                        <div class="autoSizeInput js-autoSizeInput" data-name="text">
+                            <span class="placeholder js-placeholder">example@icegames.store</span>
+                            <div class="value js-value" contentEditable></div>
+                        </div>
+                        <button class="btn js-submit">
+                            <span class="icon icon-send"></span>
+                        </button>
+                    </div>
+                    <div class="msgResult js-msgResult"></div>
+                </div>
+            </div>
+        {{/unless}}
+    {{/unless}}
     <div class="breadcrumbs contentContainer mobileInvisibleScroll">
         <div class="item">
             <a class="btn link" href="/">Главная</a>
@@ -92,13 +114,16 @@
                             <div
                                 title="Когда товар появится в наличии, на Ваш E-mail придет уведомление."
                                 class="btn elongated rounded bg-pink"
-                            >Подписка оформлена</div>
+                            >Уведомление оформлено</div>
                         {{else}}
-                            <div
+                            <button
                                 title="Подписаться на уведомление о поступлении товара"
-                                class="btn elongated rounded increase bg-pink hover-backlight-blue js-subscribeInStock"
+                                class="
+                                    btn elongated rounded increase bg-pink hover-backlight-blue js-subscribeInStock
+                                    {{#unless @root.isAuth}} js-notAuth{{/unless}}
+                                "
                                 data-product-id="{{product.id}}"
-                            >Уведомить</div>
+                            >Уведомить</button>
                         {{/if}}
                     {{/if}}
                     <div class="moreInfoBlocks">

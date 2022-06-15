@@ -1,5 +1,6 @@
 import Mongoose from "mongoose";
 import {getFormatDate} from "../utils/functions.js";
+import {mailingInStockProduct} from "../services/mailer.js";
 
 const {Schema, model} = Mongoose;
 const keySchema = new Schema({
@@ -235,6 +236,7 @@ const fields = {
     type: Schema.Types.ObjectId,
     ref: 'Extend',
   }],
+  darkenCover: String,
   subscribesInStock: [],
   active: {
     type: Boolean,
@@ -263,5 +265,20 @@ productSchema.virtual('pointReleaseDate').get(function () {
 productSchema.virtual('strMonthReleaseDate').get(function () {
   return getFormatDate(this.releaseDate, ' ', ['d', 'm', 'y'], true);
 });
+
+productSchema.methods.changeInStock = async function (inStock) {
+  try {
+    this.inStock = inStock;
+    
+    if (inStock) {
+      mailingInStockProduct(this._id, this.subscribesInStock).then();
+      this.subscribesInStock = [];
+    }
+  
+    await this.save();
+  } catch (e) {
+    console.log(e);
+  }
+}
 
 export default model('Product', productSchema);

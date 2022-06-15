@@ -98,3 +98,7 @@ export const editProfileValidator = [
       }
     }),
 ];
+
+export const subscribeInStockValidator = [
+  body('email', 'Некорректно указан E-mail').optional().normalizeEmail().isEmail(),
+];

@@ -336,6 +336,89 @@ if (rangeNode) {
 
 if (gamePageNode) {
   const addToCartBtnNode = gamePageNode.querySelector('.js-addToCartBtn');
+  const subscribeInStockBtnNode = gamePageNode.querySelector('.js-subscribeInStock');
+  
+  if (subscribeInStockBtnNode) {
+    const subscribeModalNode = gamePageNode.querySelector('.js-subscribeModal');
+    const closeSubscribeModal = () => {
+      document.querySelector('body').classList.remove('noScrolling');
+      subscribeModalNode.classList.remove('active');
+      subscribeModalNode.removeEventListener('click', handleCloseSubscribeModal);
+    }
+    const openSubscribeModal = () => {
+      document.querySelector('body').classList.add('noScrolling');
+      subscribeModalNode.classList.add('active');
+      subscribeModalNode.addEventListener('click', handleCloseSubscribeModal);
+    }
+    const sendSubscribe = async (email = null) => {
+      const productId = subscribeInStockBtnNode.dataset.productId;
+      const params = email ? {email} : {};
+      const response = await postman.post(`${websiteAddress}api/products/${productId}/subscribeInStock`, params);
+    
+      return await response.json();
+    }
+    const replaceSubscribeBtn = () => {
+      const div = document.createElement('div');
+      
+      div.setAttribute('title', 'Когда товар появится в наличии, на Ваш E-mail придет уведомление.');
+      div.className = 'btn elongated rounded bg-pink';
+      div.innerText = 'Уведомление оформлено';
+  
+      subscribeInStockBtnNode.after(div);
+      subscribeInStockBtnNode.remove();
+    }
+  
+    if (subscribeModalNode) {
+      const senderField = subscribeModalNode.querySelector('.js-senderField');
+      const msgResultNode = subscribeModalNode.querySelector('.js-msgResult');
+    
+      if (senderField) {
+        const submitBtnNode = senderField.querySelector('.js-submit');
+        const valueNode = senderField.querySelector('.js-value');
+      
+        submitBtnNode.addEventListener('click', handleSendSubscribe);
+        valueNode.addEventListener('keypress', async (e) => {
+          if (e.key === 'Enter') {
+            e.returnValue = false;
+            await handleSendSubscribe();
+          }
+        });
+      
+        async function handleSendSubscribe() {
+          const email = valueNode.innerText;
+          const result = await sendSubscribe(email);
+        
+          if (result.error) {
+            msgResultNode.classList.add('error');
+            msgResultNode.innerText = result.msg;
+          
+            return;
+          }
+        
+          closeSubscribeModal();
+          replaceSubscribeBtn();
+        }
+      }
+    }
+  
+    subscribeInStockBtnNode.addEventListener('click',  async () => {
+      if (subscribeInStockBtnNode.classList.contains('js-notAuth')) {
+        return openSubscribeModal();
+      }
+  
+      const result = await sendSubscribe();
+  
+      if (!result.error) {
+        replaceSubscribeBtn();
+      }
+    });
+  
+    function handleCloseSubscribeModal(e) {
+      if (e.target === e.currentTarget) {
+        closeSubscribeModal();
+      }
+    }
+  }
   
   addToCartBtnNode && addToCartBtnNode.addEventListener('click', async () => {
     if (addToCartBtnNode.classList.contains('js-active')) {
@@ -385,7 +468,7 @@ if (gamePageNode) {
     addToCartBtnNode.innerText = 'Добавлено';
     addToCartBtnNode.classList.add('js-active');
     addToCartBtnNode.setAttribute('title', 'Перейти в корзину покупок');
-  })
+  });
 }
 
 if (autoSizeInputNodes) {

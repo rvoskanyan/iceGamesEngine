@@ -52,6 +52,7 @@ export default class AsyncForm {
   
   handleSubmit = async (e) => {
     e.preventDefault();
+    this.sendParams = {};
   
     this.fields.forEach(field => {
       const {

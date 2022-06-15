@@ -3,6 +3,7 @@ import User from "../../models/User.js";
 import Guest from "../../models/Guest.js";
 import Order from "../../models/Order.js";
 import {achievementEvent} from "../../services/achievement.js";
+import {validationResult} from "express-validator";
 /*
   Articles.find({_id: {$ne: article._id}})
  */
@@ -327,6 +328,48 @@ export const addReview = async (req, res) => {
     console.log(e);
     res.json({
       error: true,
+    });
+  }
+}
+
+export const subscribeInStock = async (req, res) => {
+  try {
+    const errors = validationResult(req);
+    const {productId} = req.params;
+    let {email = null} = req.body;
+  
+    if (!errors.isEmpty()) {
+      return res.status(422).json({
+        error: true,
+        msg: errors.array()[0].msg,
+      });
+    }
+    
+    if (res.locals.isAuth) {
+      email = res.locals.person.email;
+    }
+    
+    if (!email) {
+      return res.json({
+        error: true,
+        msg: 'Не указан E-mail'
+      });
+    }
+    
+    const product = await Product.findById(productId).select(['subscribesInStock', 'inStock']);
+    
+    if (!product || product.inStock) {
+      throw new Error();
+    }
+  
+    product.subscribesInStock.addToSet(email);
+    await product.save();
+    res.json({success: true});
+  } catch (e) {
+    console.log(e);
+    res.json({
+      error: true,
+      msg: 'Неизвестная ошибка, попробуйте позже или обратитесь в поддержку.'
     });
   }
 }

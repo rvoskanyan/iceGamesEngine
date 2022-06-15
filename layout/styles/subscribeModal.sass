@@ -1,0 +1,46 @@
+.subscribeModalContainer
+  position: fixed
+  z-index: 3
+  top: 0
+  left: 0
+  width: 100%
+  height: 100vh
+  backdrop-filter: blur(5px)
+  display: flex
+  justify-content: center
+  align-items: center
+  opacity: 0
+  visibility: hidden
+  transition: .3s ease-in
+  transition-property: visibility, opacity
+
+  &.active
+    opacity: 1
+    visibility: visible
+
+  .subscribeModalBlock
+    background: #320065
+    border: 1px solid #FFFFFF
+    border-radius: 22px
+    padding: 25px 40px
+    color: #fff
+    max-width: 555px
+
+    .title
+      font-family: 'Lemon Milk'
+      font-size: 24px
+
+    .text
+      font-size: 16px
+      margin-top: 16px
+
+    .email
+      margin-top: 16px
+
+  .msgResult
+    text-align: center
+    margin-top: 18px
+    color: #00af56
+
+    &.error
+      color: #ff0000
