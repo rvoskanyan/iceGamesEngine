@@ -5,9 +5,7 @@
             <li>
                 {{#if successSaveProduct}}
                     {{#if productFound}}
-                        <h4>
-                            Дополнить данные к игре - {{product.name}}
-                        </h4>
+                        <h4>Дополнить данные к игре - {{product.name}} - {{product.priceTo}} р.</h4>
                         Необходимо дополнить:
                         <ul>
                             {{#each needFill}}
@@ -16,7 +14,7 @@
                         </ul>
                         <br>
                     {{else}}
-                        <h4>Не удалось найти игру {{product.name}} на STEAMBUY</h4>
+                        <h4>Не удалось найти игру {{product.name}} на STEAMBUY - {{product.priceTo}} р.</h4>
                     {{/if}}
                 {{else}}
                     <h4>Ошибка при сохранении данных игры</h4>
@@ -33,7 +31,7 @@
         {{#if taskInWork.successSaveProduct}}
             {{#if taskInWork.productFound}}
                 <h4>
-                    Дополнить данные к игре - <a href="/admin/products/edit/{{taskInWork.product._id}}" target="_blank">{{taskInWork.product.name}}</a>
+                    Дополнить данные к игре - <a href="/admin/products/edit/{{taskInWork.product._id}}" target="_blank">{{taskInWork.product.name}}</a> - {{taskInWork.product.priceTo}} р.
                 </h4>
                 Необходимо дополнить:
                 <ul>
@@ -57,7 +55,7 @@
             {{else}}
                 {{#if taskInWork.byHand}}
                     <h4>
-                        Заполните данные для игры <a href="/admin/products/edit/{{taskInWork.product._id}}" target="_blank">{{taskInWork.product.name}}</a>
+                        Заполните данные для игры <a href="/admin/products/edit/{{taskInWork.product._id}}" target="_blank">{{taskInWork.product.name}}</a> - {{taskInWork.product.priceTo}} р.
                     </h4>
                     <form method="post" action="/admin/parsing/tasks/performed">
                         <input type="hidden" name="taskId" value="{{taskInWork._id}}">
@@ -70,7 +68,7 @@
                     </form>
                 {{else}}
                     <h4>
-                        Не удалось найти игру {{taskInWork.product.name}} на STEAMBUY
+                        Не удалось найти игру {{taskInWork.product.name}} на STEAMBUY - {{taskInWork.product.priceTo}} р.
                     </h4>
                     <form method="post" action="/admin/parsing/tasks/pars-product">
                         <label>
