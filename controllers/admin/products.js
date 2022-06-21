@@ -352,7 +352,6 @@ export const editProduct = async (req, res) => {
       discount: getDiscount(priceTo, priceFrom),
       trailerLink,
       inHomeSlider: inHomeSlider === "on",
-      inStock: inStock === 'on',
       dlc: dlc === 'on',
       dlcForFree: dlcForFree === 'on',
       dlcForName,
@@ -456,10 +455,11 @@ export const editProduct = async (req, res) => {
     }
   
     await product.save();
+    product.changeInStock(inStock === 'on').then();
     res.redirect('/admin/products');
   } catch (e) {
     console.log(e);
-    res.redirect(`/admin/products/edit/${gameId}`);
+    res.redirect(`/admin/products/edit/${productId}`);
     res.json({error: true});
   }
 }

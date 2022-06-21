@@ -449,6 +449,40 @@ if (gamePageNode) {
     });
     
     const resultAddCartDS = await responseAddCartDS.json();
+  
+  
+    if (resultAddCartDS.cart_err === "Товар закончился или временно отключен.") {
+      const mainNode = document.querySelector('.js-gamePage');
+      const modalNode = document.createElement('div');
+      const modalBlockNode = document.createElement('div');
+      const titleModalNode = document.createElement('div');
+      const textModalNode = document.createElement('p');
+      const btnNode = document.createElement('button');
+  
+      modalNode.setAttribute('class', 'subscribeModalContainer js-subscribeModal');
+      modalBlockNode.setAttribute('class', 'subscribeModalBlock');
+      titleModalNode.setAttribute('class', 'title');
+      textModalNode.setAttribute('class', 'text');
+      btnNode.setAttribute('class', 'ok btn small border rounded translucent bg-darkLilac');
+    
+      titleModalNode.innerText = 'Игры нет в наличии!';
+      textModalNode.innerText = 'К сожалению, данной игры пока нет в наличии. Как-только Вы закроете данное уведомление - обновится страница и у Вас будет возможность подписаться на уведомление о поступлении';
+      btnNode.innerText = 'OK';
+  
+      btnNode.addEventListener('click', async () => {
+        await postman.put(`/api/products/${productId}/reviseInStock`);
+        window.location.reload();
+      });
+      
+      modalBlockNode.append(titleModalNode);
+      modalBlockNode.append(textModalNode);
+      modalBlockNode.append(btnNode);
+      modalNode.append(modalBlockNode);
+      mainNode.prepend(modalNode);
+      modalNode.classList.add('active');
+    
+      return;
+    }
     
     if (resultAddCartDS.cart_err_num !== '0') {
       return;
@@ -820,6 +854,31 @@ document.addEventListener('click', async (e) => {
       });
   
       const resultAddCartDS = await responseAddCartDS.json();
+      
+      if (resultAddCartDS.cart_err === "Товар закончился или временно отключен.") {
+        const mainNode = document.querySelector('.js-gamePage');
+        console.log(mainNode);
+        const modalNode = document.createElement('div');
+        const modalBlockNode = document.createElement('div');
+        const titleModalNode = document.createElement('div');
+        const textModalNode = document.createElement('p');
+        
+        modalNode.setAttribute('class', 'subscribeModalContainer js-subscribeModal');
+        modalBlockNode.setAttribute('class', 'subscribeModalBlock');
+        titleModalNode.setAttribute('class', 'title');
+        textModalNode.setAttribute('class', 'text');
+  
+        titleModalNode.innerText = 'Игры нет в наличии!';
+        textModalNode.innertText = 'К сожалению, данная игра пропала из наличия. Но, у Вас есть отличная возможность - узнать одним из первых, как только она появится в наличии. Для этого достаточно всего-лишь указать в поле ниже Ваш E-mail и мы обязательно пришлем на него уведомление, как только игра снова появится в наличии!';
+  
+        modalBlockNode.append(titleModalNode);
+        modalBlockNode.append(textModalNode);
+        modalNode.append(modalBlockNode);
+        mainNode.prepend(modalNode);
+        modalNode.classList.add('active');
+        
+        return;
+      }
   
       if (resultAddCartDS.cart_err_num !== '0') {
         return;
@@ -1271,6 +1330,7 @@ if (catalogNode) {
   const sortNode = catalogNode.querySelector('.js-sort');
   const rangePriceNode = catalogNode.querySelector('.js-priceRange');
   const loadMoreNode = catalogNode.querySelector('.js-loadMore');
+  const countLoad = 500;
   const fields = [{
     name: 'searchString',
     node: searchStringNode,
@@ -1287,7 +1347,7 @@ if (catalogNode) {
   
   loadMoreNode.addEventListener('click', async () => {
     const url = new URL(window.location.href);
-    const response = await postman.get(`${websiteAddress}api/products${url.search ? url.search : '?'}&skip=${loadMoreNode.dataset.skip}&limit=10`);
+    const response = await postman.get(`${websiteAddress}api/products${url.search ? url.search : '?'}&skip=${loadMoreNode.dataset.skip}&limit=${countLoad}`);
     const result = await response.json();
     const productGridNode = catalogNode.querySelector('.js-productGrid');
     
@@ -1295,7 +1355,7 @@ if (catalogNode) {
       return;
     }
   
-    loadMoreNode.dataset.skip = parseInt(loadMoreNode.dataset.skip) + 10;
+    loadMoreNode.dataset.skip = parseInt(loadMoreNode.dataset.skip) + countLoad;
     result.isLast ? loadMoreNode.classList.add('hide') : loadMoreNode.classList.remove('hide');
   
     result.products.forEach(product => {
@@ -1519,7 +1579,7 @@ if (catalogNode) {
   
   catalogNode.addEventListener('changeParams', async () => {
     const url = new URL(window.location.href);
-    const response = await postman.get(`${websiteAddress}api/products${url.search ? url.search : '?'}&limit=10`);
+    const response = await postman.get(`${websiteAddress}api/products${url.search ? url.search : '?'}&limit=${countLoad}`);
     const result = await response.json();
     const productGridNode = catalogNode.querySelector('.js-productGrid');
     
@@ -1527,7 +1587,7 @@ if (catalogNode) {
       return;
     }
   
-    loadMoreNode.dataset.skip = 10;
+    loadMoreNode.dataset.skip = countLoad;
     result.isLast ? loadMoreNode.classList.add('hide') : loadMoreNode.classList.remove('hide');
     productGridNode.classList.remove('notFound');
     productGridNode.innerHTML = '';

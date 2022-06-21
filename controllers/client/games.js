@@ -5,7 +5,6 @@ import ActivationService from '../../models/ActivationService.js';
 import Order from '../../models/Order.js';
 import Comment from '../../models/Comment.js';
 import User from '../../models/User.js';
-import {mailingInStockProduct} from "../../services/mailer.js";
 
 export const gamesPage = async (req, res) => {
   try {
@@ -51,8 +50,7 @@ export const gamePage = async (req, res) => {
           }
         }
       ]);
-  
-    await mailingInStockProduct(product.id, ['razm1998@yandex.ru']);
+    
     const comments = await Comment
       .find({subjectId: product.id, ref: 'product'})
       .populate(['author'])

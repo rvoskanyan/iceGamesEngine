@@ -4,6 +4,7 @@ import Guest from "../../models/Guest.js";
 import Order from "../../models/Order.js";
 import {achievementEvent} from "../../services/achievement.js";
 import {validationResult} from "express-validator";
+import fetch from "node-fetch";
 /*
   Articles.find({_id: {$ne: article._id}})
  */
@@ -198,31 +199,25 @@ export const addToCart = async (req, res) => {
   try {
     const productId = req.params.productId;
     const dsCartId = req.body.dsCartId;
-    const userId = req.session.userId;
-    let person = null;
+    let person = res.locals.person;
   
     if (!productId || !dsCartId) {
       throw new Error('No productId or dsCartId');
     }
   
-    const product = await Product.findById(productId).select(['_id']).lean();
+    const product = await Product.findById(productId).select(['_id', 'inStock']).lean();
   
     if (!product) {
       throw new Error('Product not found in DB');
     }
+
+    if (!product.inStock) {
+      throw new Error('Product not in stock');
+    }
     
-    if (userId) {
-      person = await User.findById(userId);
-    } else {
-      const guestId = req.cookies.guestId;
-      
-      if (guestId) {
-        person = await Guest.findById(guestId);
-      } else {
-        person = new Guest();
-        person.products = [];
-        res.cookie('guestId', person.id);
-      }
+    if (!person) {
+      person = new Guest();
+      res.cookie('guestId', person.id);
     }
   
     if (person['cart'].includes(productId)) {
@@ -321,6 +316,33 @@ export const addReview = async (req, res) => {
     
     await product.save();
     
+    res.json({
+      success: true,
+    });
+  } catch (e) {
+    console.log(e);
+    res.json({
+      error: true,
+    });
+  }
+}
+
+export const reviseInStock = async (req, res) => {
+  try {
+    const productId = req.params.productId;
+    const product = await Product.findById(productId).select(['dsId', 'inStock']);
+    const responseProducts = await fetch('https://api.digiseller.ru/api/products/list', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: JSON.stringify({ids: [product.dsId]}),
+    });
+    const resultProducts = await responseProducts.json();
+    
+    await product.changeInStock(!!resultProducts[0].in_stock);
+  
     res.json({
       success: true,
     });

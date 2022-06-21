@@ -33,7 +33,7 @@ export async function registrationMail(to, hash) {
 
 export async function mailingInStockProduct(productId, emails) {
   const product = await Product.findById(productId);
-  const websiteAddress = 'http://prod.icegames.store/'//process.env.WEB_SITE_ADDRESS;
+  const websiteAddress = process.env.WEB_SITE_ADDRESS;
   
   if (!product.darkenCover) {
     product.darkenCover = `${uuidv4()}.jpg`;

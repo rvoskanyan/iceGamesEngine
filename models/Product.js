@@ -267,18 +267,26 @@ productSchema.virtual('strMonthReleaseDate').get(function () {
 });
 
 productSchema.methods.changeInStock = async function (inStock) {
-  try {
-    this.inStock = inStock;
+  return new Promise(async function(resolve, reject) {
+    try {
+      if (this.inStock === inStock) {
+        return;
+      }
     
-    if (inStock) {
-      mailingInStockProduct(this._id, this.subscribesInStock).then();
-      this.subscribesInStock = [];
+      this.inStock = inStock;
+    
+      if (inStock) {
+        mailingInStockProduct(this._id, this.subscribesInStock).then();
+        this.subscribesInStock = [];
+      }
+    
+      await this.save();
+      resolve();
+    } catch (e) {
+      console.log(e);
+      reject();
     }
-  
-    await this.save();
-  } catch (e) {
-    console.log(e);
-  }
+  });
 }
 
 export default model('Product', productSchema);

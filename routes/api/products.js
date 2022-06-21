@@ -7,6 +7,7 @@ import {
   addToCart,
   deleteFromCart,
   addReview,
+  reviseInStock,
   subscribeInStock,
 } from "../../controllers/api/products.js";
 
@@ -21,6 +22,8 @@ router.post('/:productId/cart', addToCart);
 router.delete('/:productId/cart', deleteFromCart);
 
 router.post('/:productId/review', addReview);
+
+router.put('/:productId/reviseInStock', reviseInStock);
 
 router.post('/:productId/subscribeInStock', subscribeInStockValidator, subscribeInStock);
 
