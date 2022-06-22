@@ -266,11 +266,11 @@ productSchema.virtual('strMonthReleaseDate').get(function () {
   return getFormatDate(this.releaseDate, ' ', ['d', 'm', 'y'], true);
 });
 
-productSchema.methods.changeInStock = async function (inStock) {
+productSchema.methods.changeInStock = async function(inStock) {
   return new Promise(async function(resolve, reject) {
     try {
       if (this.inStock === inStock) {
-        return;
+        return resolve();
       }
     
       this.inStock = inStock;
@@ -286,7 +286,7 @@ productSchema.methods.changeInStock = async function (inStock) {
       console.log(e);
       reject();
     }
-  });
+  }.bind(this));
 }
 
 export default model('Product', productSchema);
