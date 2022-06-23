@@ -46,6 +46,7 @@ const commentProductFormNode = document.querySelector('.js-commentProductForm');
 const gamePageNode = document.querySelector('.js-gamePage');
 const rangeNode = document.querySelector('.js-range');
 const modalMessageNode = document.querySelector('.js-modalMessage');
+const acceptAgreementNode = document.querySelector('.js-acceptAgreement');
 const popupController = new PopupController([
   {
     id: 'loginFrom',
@@ -129,6 +130,15 @@ const popupController = new PopupController([
     ],
   },
 ]);
+
+if (acceptAgreementNode) {
+  const btnSendNode = acceptAgreementNode.querySelector('.js-sendAcceptAgreement');
+  
+  btnSendNode.addEventListener('click', async () => {
+    await postman.post(`${websiteAddress}api/external/acceptAgreement`);
+    acceptAgreementNode.classList.remove('active');
+  })
+}
 
 if (modalMessageNode) {
   setTimeout(() => {

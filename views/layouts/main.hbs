@@ -103,6 +103,15 @@
         </div>
     </div>
 </header>
+{{#unless agreementAccepted}}
+    <div class="acceptanceAgreement contentContainer active js-acceptAgreement">
+        <span class="text">
+            Наш сайт использует куки. Просматривая сайт и его контент вы соглашаетесь с
+            <a class="link" href="{{websiteAddress}}legal-info/agreement">Пользовательским соглашением</a>
+        </span>
+        <button class="btn small round border hover-color-pink hover-border-pink js-sendAcceptAgreement">Принять</button>
+    </div>
+{{/unless}}
 
 {{{body}}}
 

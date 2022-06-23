@@ -144,6 +144,37 @@ img
     @include for-big-phone-up
       padding-top: 200px
 
+.acceptanceAgreement
+  position: fixed
+  background-color: #2E0A63
+  bottom: 0
+  display: flex
+  align-items: center
+  min-width: 100%
+  color: #fff
+  height: 70px
+  transform: translateY(100%)
+  transition: transform .3s cubic-bezier(0.7, -0.58, 0.74, 0.05)
+  line-height: 1
+  z-index: 1
+  font-size: 9px
+
+  @include for-desktop-up
+    font-size: 16px
+
+  &.active
+    transform: translateY(0%)
+
+  .text
+    margin-right: 10px
+
+    @include for-desktop-up
+      margin-right: 50px
+
+  .link
+    color: #F804FF
+    text-decoration: underline
+
 .homeSection
   margin-top: 40px
 

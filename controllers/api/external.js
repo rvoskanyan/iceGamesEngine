@@ -78,3 +78,10 @@ export const assignOrderPay = async (req, res) => {
     });
   }
 }
+
+export const acceptAgreement = (req, res) => {
+  res.cookie('agreementAccepted', 1);
+  res.json({
+    success: true,
+  });
+}

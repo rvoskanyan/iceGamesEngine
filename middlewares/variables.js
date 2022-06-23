@@ -4,6 +4,7 @@ import Guest from './../models/Guest.js';
 
 export default async (req, res, next) => {
   let person = null;
+  let agreementAccepted = false;
   
   if (req.session.isAuth) {
     person = await User.findById(req.session.userId);
@@ -15,11 +16,16 @@ export default async (req, res, next) => {
     }
   }
   
+  if (req.cookies.agreementAccepted) {
+    agreementAccepted = true;
+  }
+  
   res.locals = {
     ...res.locals,
     websiteAddress,
     isAuth: req.session.isAuth,
     person,
+    agreementAccepted,
   }
   
   next();
