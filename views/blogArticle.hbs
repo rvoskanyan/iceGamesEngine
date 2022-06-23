@@ -28,7 +28,7 @@
                         <img class="img" src="{{@root.websiteAddress}}{{img}}" alt="Изображение для контент-блока {{@index}}">
                     {{/if}}
                     <div class="text">
-                        {{text}}
+                        {{encodeString text}}
                     </div>
                 </div>
             {{/each}}
