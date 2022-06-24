@@ -14,7 +14,7 @@ export const homepage = async (req, res) => {
     .lean();
   const usp = await Usp.find().select('text').lean();
   const categories = await Category.find().select('name').lean();
-  const genres = await Genre.find().select(['id', 'name', 'img', 'url']).lean();
+  const genres = await Genre.find().select(['name', 'img', 'bgColor']).lean();
   const articles = await Article
     .find({active: true})
     .select(['name', 'alias', 'introText', 'type', 'createdAt', 'img'])
