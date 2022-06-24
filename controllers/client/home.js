@@ -50,7 +50,7 @@ export const homepage = async (req, res) => {
   }
   
   const noveltiesProduct = await Product
-    .find({active: true})
+    .find({preOrder: false, active: true})
     .select(['name', 'alias', 'img', 'priceTo', 'priceFrom', 'dlc', 'dsId', 'inStock'])
     .sort({'releaseDate': -1})
     .limit(10)
