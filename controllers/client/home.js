@@ -62,9 +62,21 @@ export const homepage = async (req, res) => {
     .limit(10)
     .lean();
   
+  const discounts = await Product
+    .find({discount: {$gt: 60}, active: true})
+    .select(['name', 'alias', 'img', 'priceTo', 'priceFrom', 'dlc', 'dsId', 'inStock'])
+    .sort({'priceFrom': -1})
+    .limit(10)
+    .lean();
+  
   catalog.push({
     category: {name: 'Новинки'},
     products: noveltiesProduct,
+  })
+  
+  catalog.push({
+    category: {name: 'Скидки'},
+    products: discounts,
   })
   
   catalog.push({
