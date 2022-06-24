@@ -12,10 +12,9 @@ const fields = {
     type: String,
     //required: true,
   },
-  url: {
+  bgColor: {
     type: String,
     //required: true,
-    //unique: true,
   },
 };
 

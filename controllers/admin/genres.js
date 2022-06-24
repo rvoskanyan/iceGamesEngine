@@ -27,19 +27,63 @@ export const pageAddGenres = async (req, res) => {
 
 export const addGenres = async (req, res) => {
   try {
-    const {name, url} = req.body;
+    const {name, bgColor} = req.body;
     const {img} = req.files;
     const imgExtend = getExtendFile(img.name);
     const imgName = `${uuidv4()}.${imgExtend}`;
   
     await img.mv(path.join(__dirname, '/uploadedFiles', imgName));
-  
-    await Genre.create({name, img: imgName, url});
+    await Genre.create({name, img: imgName, bgColor});
   
     res.redirect('/admin/genres');
   } catch (e) {
     console.log(e);
     res.redirect('/admin/genres/add');
-    res.json({error: true});
+  }
+}
+
+export const pageEditGenres = async (req, res) => {
+  try {
+    const {genreId} = req.params;
+    const genre = await Genre.findById(genreId);
+    
+    res.render('addGenres', {
+      layout: 'admin',
+      isEdit: true,
+      genre,
+    });
+  } catch (e) {
+    console.log(e);
+    res.redirect('/admin/genres');
+  }
+}
+
+export const editGenres = async (req, res) => {
+  const {genreId} = req.params;
+  
+  try {
+    const genre = await Genre.findById(genreId);
+    const {name, bgColor} = req.body;
+    
+    Object.assign(genre, {
+      name,
+      bgColor,
+    })
+    
+    if (req.files.img) {
+      const {img} = req.files;
+      const imgExtend = getExtendFile(img.name);
+      const imgName = `${uuidv4()}.${imgExtend}`;
+  
+      await img.mv(path.join(__dirname, '/uploadedFiles', imgName));
+      genre.img = imgName;
+    }
+    
+    await genre.save();
+    
+    res.redirect('/admin/genres');
+  } catch (e) {
+    console.log(e);
+    res.redirect(`/admin/genres/edit/${genreId}`);
   }
 }

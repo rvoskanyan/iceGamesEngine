@@ -106,7 +106,8 @@
                     <div class="slides js-tape">
                         <div class="slide js-slide">
                             {{#each genres}}
-                                <a class="genre" href="{{websiteAddress}}{{url}}" title="Открыть игры с жанром {{name}}">
+                                <a class="genre" href="{{websiteAddress}}games?genres={{_id}}" title="Открыть игры с жанром {{name}}">
+                                    <span class="blackout" style="background-color: {{bgColor}}"></span>
                                     <img class="img" src="{{@root.websiteAddress}}{{img}}" alt="Изображение жанра {{name}}" title="Изображение жанра {{name}}">
                                     <div class="name">
                                         {{name}}

@@ -1,21 +1,26 @@
-<form method="post" action="/admin/genres/add" enctype="multipart/form-data">
+<form method="post" action="/admin/genres/{{#if isEdit}}edit/{{genre.id}}{{else}}add{{/if}}" enctype="multipart/form-data">
     <label>
-        Название:
-        <input type="text" name="name">
+        *Название:
+        <input type="text" name="name"{{#if genre.name}} value="{{genre.name}}"{{/if}}>
     </label>
     <br>
     <br>
     <label>
-        Изображение:
+        *Изображение:
         <input type="file" name="img">
     </label>
+    {{#if genre.img}}
+        <br>
+        <br>
+        <img src="{{websiteAddress}}{{genre.img}}" style="max-width: 300px">
+    {{/if}}
     <br>
     <br>
     <label>
-        URL:
-        <input type="text" name="url">
+        *Цвет фона:
+        <input type="color" name="bgColor"{{#if genre.bgColor}} value="{{genre.bgColor}}"{{/if}}>
     </label>
     <br>
     <br>
-    <input type="submit" name="add" value="Добавить">
+    <input type="submit" name="add" value="{{#if isEdit}}Сохранить изменения{{else}}Добавить{{/if}}">
 </form>
