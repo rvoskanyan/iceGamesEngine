@@ -74,14 +74,14 @@
         <div class="homeSection homeCatalog js-homeCatalogTabs">
             <div class="categories mobileInvisibleScroll">
                 {{#each catalog}}
-                    <button class="btn round border big bg-darkLilac translucent js-tabBtn{{#if @first}} active{{/if}}" data-target-id="{{category._id}}">
+                    <button class="btn round border big bg-darkLilac translucent js-tabBtn{{#if @first}} active{{/if}}" data-target-id="{{@index}}">
                         {{category.name}}
                     </button>
                 {{/each}}
             </div>
             <div class="blocks">
                 {{#each catalog}}
-                    <div class="item mobileScroll js-tabBlock-{{category._id}}{{#if @first}} active{{/if}}">
+                    <div class="item mobileScroll js-tabBlock-{{@index}}{{#if @first}} active{{/if}}">
                         {{#each products}}
                             {{> game
                                 id=_id

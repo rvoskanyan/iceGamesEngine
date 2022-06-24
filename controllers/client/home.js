@@ -49,9 +49,32 @@ export const homepage = async (req, res) => {
     }
   }
   
+  const noveltiesProduct = await Product
+    .find({active: true})
+    .select(['name', 'alias', 'img', 'priceTo', 'priceFrom', 'dlc', 'dsId', 'inStock'])
+    .sort({'releaseDate': -1})
+    .limit(10)
+    .lean();
+  
+  const preOrders = await Product
+    .find({preOrder: true, active: true})
+    .select(['name', 'alias', 'img', 'priceTo', 'priceFrom', 'dlc', 'dsId', 'inStock'])
+    .limit(10)
+    .lean();
+  
+  catalog.push({
+    category: {name: 'Новинки'},
+    products: noveltiesProduct,
+  })
+  
+  catalog.push({
+    category: {name: 'Предзаказы'},
+    products: preOrders,
+  })
+  
   for (let category of categories) {
     const products = await Product
-      .find({categories: {$in: category._id.toString()}})
+      .find({categories: {$in: category._id.toString()}, active: true})
       .select(['name', 'alias', 'img', 'priceTo', 'priceFrom', 'dlc', 'dsId', 'inStock'])
       .limit(10)
       .lean();

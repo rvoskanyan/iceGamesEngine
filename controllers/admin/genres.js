@@ -70,13 +70,16 @@ export const editGenres = async (req, res) => {
       bgColor,
     })
     
-    if (req.files.img) {
-      const {img} = req.files;
-      const imgExtend = getExtendFile(img.name);
-      const imgName = `${uuidv4()}.${imgExtend}`;
+    if (req.files) {
+      const {img = null} = req.files;
+      
+      if (img) {
+        const imgExtend = getExtendFile(img.name);
+        const imgName = `${uuidv4()}.${imgExtend}`;
   
-      await img.mv(path.join(__dirname, '/uploadedFiles', imgName));
-      genre.img = imgName;
+        await img.mv(path.join(__dirname, '/uploadedFiles', imgName));
+        genre.img = imgName;
+      }
     }
     
     await genre.save();
