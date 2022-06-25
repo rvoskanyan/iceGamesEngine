@@ -1,4 +1,4 @@
-<form method="post" action="/admin/genres/{{#if isEdit}}edit/{{partner.id}}{{else}}add{{/if}}" enctype="multipart/form-data">
+<form method="post" action="/admin/partners/{{#if isEdit}}edit/{{partner.id}}{{else}}add{{/if}}" enctype="multipart/form-data">
     <label>
         *Название:
         <input type="text" name="name"{{#if partner.name}} value="{{partner.name}}"{{/if}}>
