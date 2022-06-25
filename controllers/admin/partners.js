@@ -33,7 +33,7 @@ export const addPartner = async (req, res) => {
     const imgName = `${uuidv4()}.${imgExtend}`;
     
     await img.mv(path.join(__dirname, '/uploadedFiles', imgName));
-    await Genre.create({name, img: imgName, link});
+    await Partner.create({name, img: imgName, link});
     
     res.redirect('/admin/partners');
   } catch (e) {
