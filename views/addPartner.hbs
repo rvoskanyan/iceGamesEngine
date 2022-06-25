@@ -1,0 +1,26 @@
+<form method="post" action="/admin/genres/{{#if isEdit}}edit/{{partner.id}}{{else}}add{{/if}}" enctype="multipart/form-data">
+    <label>
+        *Название:
+        <input type="text" name="name"{{#if partner.name}} value="{{partner.name}}"{{/if}}>
+    </label>
+    <br>
+    <br>
+    <label>
+        *Изображение:
+        <input type="file" name="img">
+    </label>
+    {{#if partner.img}}
+        <br>
+        <br>
+        <img src="{{websiteAddress}}{{partner.img}}" style="max-width: 300px">
+    {{/if}}
+    <br>
+    <br>
+    <label>
+        *Ссылка:
+        <input type="text" name="bgColor"{{#if partner.link}} value="{{partner.link}}"{{/if}}>
+    </label>
+    <br>
+    <br>
+    <input type="submit" name="add" value="{{#if isEdit}}Сохранить изменения{{else}}Добавить{{/if}}">
+</form>

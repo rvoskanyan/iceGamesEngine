@@ -4,6 +4,7 @@ import Category from "../../models/Category.js";
 import Genre from "../../models/Genre.js";
 import Article from "../../models/Article.js";
 import User from "../../models/User.js";
+import Partner from "../../models/Partner.js";
 import {achievementEvent} from "../../services/achievement.js";
 
 export const homepage = async (req, res) => {
@@ -15,6 +16,7 @@ export const homepage = async (req, res) => {
   const usp = await Usp.find().select('text').lean();
   const categories = await Category.find().select('name').lean();
   const genres = await Genre.find().select(['name', 'img', 'bgColor']).lean();
+  const partners = await Partner.find().select(['name', 'img', 'link']).lean();
   const articles = await Article
     .find({active: true})
     .select(['name', 'alias', 'introText', 'type', 'createdAt', 'img'])
@@ -111,5 +113,6 @@ export const homepage = async (req, res) => {
     genres,
     articles,
     checkedEmail,
+    partners,
   });
 }

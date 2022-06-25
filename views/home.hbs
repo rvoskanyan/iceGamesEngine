@@ -135,30 +135,11 @@
             <div class="homeTitle">Медиа о нас</div>
             <div class="homeMediaSlider js-homeMediaSlider">
                 <div class="tape js-tape">
-                    <a href="#" rel="nofollow" class="slide" title="Медиа о нас 1">
-                        <img class="img" src="{{websiteAddress}}img/homeMedia-1.png" alt="Медиа о нас 1" title="Медиа о нас 1">
-                    </a>
-                    <a href="#" rel="nofollow" class="slide" title="Медиа о нас 2">
-                        <img class="img" src="{{websiteAddress}}img/homeMedia-2.png" alt="Медиа о нас 2" title="Медиа о нас 2">
-                    </a>
-                    <a href="#" rel="nofollow" class="slide" title="Медиа о нас 3">
-                        <img class="img" src="{{websiteAddress}}img/homeMedia-3.png" alt="Медиа о нас 3" title="Медиа о нас 3">
-                    </a>
-                    <a href="#" rel="nofollow" class="slide" title="Медиа о нас 4">
-                        <img class="img" src="{{websiteAddress}}img/homeMedia-4.png" alt="Медиа о нас 4" title="Медиа о нас 4">
-                    </a>
-                    <a href="#" rel="nofollow" class="slide" title="Медиа о нас 1">
-                        <img class="img" src="{{websiteAddress}}img/homeMedia-1.png" alt="Медиа о нас 1" title="Медиа о нас 1">
-                    </a>
-                    <a href="#" rel="nofollow" class="slide" title="Медиа о нас 2">
-                        <img class="img" src="{{websiteAddress}}img/homeMedia-2.png" alt="Медиа о нас 2" title="Медиа о нас 2">
-                    </a>
-                    <a href="#" rel="nofollow" class="slide" title="Медиа о нас 3">
-                        <img class="img" src="{{websiteAddress}}img/homeMedia-3.png" alt="Медиа о нас 3" title="Медиа о нас 3">
-                    </a>
-                    <a href="#" rel="nofollow" class="slide" title="Медиа о нас 4">
-                        <img class="img" src="{{websiteAddress}}img/homeMedia-4.png" alt="Медиа о нас 4" title="Медиа о нас 4">
-                    </a>
+                    {{#each partners}}
+                        <a href="{{link}}" rel="nofollow" class="slide" title="Логотип {{name}}">
+                            <img class="img" src="{{websiteAddress}}{{img}}" alt="Логотип {{name}}" title="Логотип {{name}}">
+                        </a>
+                    {{/each}}
                 </div>
             </div>
         </div>
