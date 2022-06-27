@@ -55,6 +55,13 @@ export const startParsingProducts = async () => {
         if (productOnSite) {
           productOnSite.inStock = inStock;
           productOnSite.priceTo = priceTo;
+          productOnSite.name = productOnSite.name.split(' ').map(item => {
+            if (item === '-') {
+              return '—';
+            }
+  
+            return item[0].toUpperCase() + item.slice(1).toLowerCase();
+          }).join(' ');
           
           if (!productOnSite.coverImg) {
             const indexCover = Math.floor(Math.random() * (productOnSite.images.length - 1)) + 1;
