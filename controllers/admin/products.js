@@ -106,6 +106,7 @@ export const addProduct = async (req, res) => {
       publisher,
       activationService,
       platform,
+      top,
       active,
     } = req.body;
     
@@ -144,6 +145,7 @@ export const addProduct = async (req, res) => {
       publisherId: publisher,
       activationServiceId: activationService,
       platformId: platform,
+      top: top === 'on',
       active: active === 'on',
     });
     
@@ -340,6 +342,7 @@ export const editProduct = async (req, res) => {
       publisher,
       activationService,
       platform,
+      top,
       active,
     } = req.body;
     const product = await Product.findById(productId);
@@ -374,6 +377,7 @@ export const editProduct = async (req, res) => {
       publisherId: publisher,
       activationServiceId: activationService,
       platformId: platform,
+      top: top === 'on',
       active: active === 'on',
     })
     

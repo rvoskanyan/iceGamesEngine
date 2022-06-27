@@ -25,12 +25,6 @@
 {{/if}}
 <form method="post" action="/admin/products/{{#if isEdit}}edit/{{product.id}}{{else}}add{{/if}}" enctype="multipart/form-data">
     <label>
-        В наличии:
-        <input type="checkbox" name="inStock"{{#if product.inStock}} checked{{/if}}>
-    </label>
-    <br>
-    <br>
-    <label>
         Название:
         <input type="text" name="name" value="{{product.name}}">
     </label>
@@ -118,12 +112,6 @@
     {{#if product.trailerLink}}
         <a href="{{product.trailerLink}}" target="_blank">Открыть трейлер на YouTube</a>
     {{/if}}
-    <br>
-    <br>
-    <label>
-        Добавить в слайдер на главной странице:
-        <input type="checkbox" name="inHomeSlider"{{#if product.inHomeSlider}} checked{{/if}}>
-    </label>
     <br>
     <br>
     <label>
@@ -325,6 +313,24 @@
                 </option>
             {{/each}}
         </select>
+    </label>
+    <br>
+    <br>
+    <label>
+        В наличии:
+        <input type="checkbox" name="inStock"{{#if product.inStock}} checked{{/if}}>
+    </label>
+    <br>
+    <br>
+    <label>
+        Добавить в слайдер на главной странице:
+        <input type="checkbox" name="inHomeSlider"{{#if product.inHomeSlider}} checked{{/if}}>
+    </label>
+    <br>
+    <br>
+    <label>
+        Топ:
+        <input type="checkbox" name="active"{{#if product.top}} checked{{/if}}>
     </label>
     <br>
     <br>

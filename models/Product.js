@@ -238,6 +238,10 @@ const fields = {
   }],
   darkenCover: String,
   subscribesInStock: [],
+  top: {
+    type: Boolean,
+    default: false,
+  },
   active: {
     type: Boolean,
     default: false,
