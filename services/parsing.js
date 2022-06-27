@@ -56,8 +56,8 @@ export const startParsingProducts = async () => {
           productOnSite.inStock = inStock;
           productOnSite.priceTo = priceTo;
           productOnSite.name = productOnSite.name.split(' ').map(item => {
-            if (item === '—' || item === '--') {
-              return '-';
+            if (item === '-' || item === '--') {
+              return '—';
             }
   
             return item[0].toUpperCase() + item.slice(1).toLowerCase();
