@@ -245,6 +245,10 @@ export const pageEditProduct = async (req, res) => {
         {
           path: 'dlcForId',
           select: ['_id', 'name'],
+        },
+        {
+          path: 'elements.productId',
+          select: ['_id', 'name'],
         }
       ]);
     
@@ -509,5 +513,24 @@ export const addProductElement = async (req, res) => {
   } catch (e) {
     console.log(e);
     req.redirect(`/admin/products/${productId}/addElement`);
+  }
+}
+
+export const deleteProductElement = async (req, res) => {
+  const {
+    productId,
+    elementId,
+  } = req.params;
+  
+  try {
+    const product = await Product.findById(productId).select('elements');
+    
+    product.elements.id(elementId).remove();
+    product.save();
+  
+    res.redirect(`/admin/products/edit/${productId}`);
+  } catch (e) {
+    console.log(e);
+    res.redirect(`/admin/products/edit/${productId}`);
   }
 }
