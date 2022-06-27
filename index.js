@@ -16,6 +16,7 @@ import constClientMiddleware from './middlewares/constClientData.js';
 import clientRoutes from './routes/client.js';
 import adminRoutes from './routes/admin.js';
 import apiRoutes from'./routes/api.js';
+import {admin} from "./middlewares/routeProtection.js";
 
 dotenv.config();
 
@@ -101,7 +102,7 @@ app.use(express.json());
 app.use(fileUpload({}));
 
 app.use('/', constClientMiddleware, clientRoutes);
-app.use('/admin', adminRoutes);
+app.use('/admin', admin, adminRoutes);
 app.use('/api', apiRoutes);
 
 const PORT = process.env.PORT || 4000;
