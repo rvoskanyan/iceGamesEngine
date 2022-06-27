@@ -8,10 +8,11 @@ import Partner from "../../models/Partner.js";
 import {achievementEvent} from "../../services/achievement.js";
 
 export const homepage = async (req, res) => {
-  const sliderProducts = await Product
+  const person = res.locals.person;
+  let sliderProducts = await Product
     .find({inHomeSlider: true, inStock: true})
     .limit(5)
-    .select(['name', 'alias', 'description', 'priceTo', 'priceFrom', 'img', 'coverImg', 'coverVideo', 'discount'])
+    .select(['name', 'alias', 'description', 'priceTo', 'priceFrom', 'img', 'coverImg', 'coverVideo', 'discount', 'dsId'])
     .lean();
   const usp = await Usp.find().select('text').lean();
   const categories = await Category.find().select('name').lean();
@@ -26,6 +27,18 @@ export const homepage = async (req, res) => {
   const checkEmailHash = req.query.confirmEmail;
   const catalog = [];
   let checkedEmail = false;
+  
+  if (person) {
+    const cart = person.cart;
+    
+    sliderProducts = sliderProducts.map(product => {
+      if (cart && cart.includes(product._id.toString())) {
+        product.inCart = true;
+      }
+      
+      return product;
+    });
+  }
   
   if (checkEmailHash) {
     const user = await User.findOne({checkEmailHash});

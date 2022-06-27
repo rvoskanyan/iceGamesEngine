@@ -1209,6 +1209,7 @@ if (homeMediaSliderNode) {
 }
 
 if (homeSliderNode) {
+  const addToCartBtn = homeSliderNode.querySelectorAll('.js-addToCart');
   let playVideoTimeOutId;
   
   const homeSlider = new Slider({
@@ -1277,6 +1278,92 @@ if (homeSliderNode) {
       canplaythrough = false;
     }
   }
+  
+  addToCartBtn.forEach(btn => {
+    btn.addEventListener('click', async () => {
+      if (btn.classList.contains('js-active')) {
+        window.location.href = '/cart';
+        return;
+      }
+  
+      const dsCartId = document.querySelector('body').dataset.dsCartId;
+      const formData = new FormData();
+      const dsId = btn.dataset.dsId;
+      const productId = btn.dataset.productId;
+  
+      formData.append('product_id', dsId);
+      formData.append('product_cnt', '1');
+      formData.append('typecurr', 'wmr');
+      formData.append('lang', 'ru-RU');
+  
+      if (dsCartId) {
+        formData.append('cart_uid', dsCartId);
+      }
+  
+      const responseAddCartDS = await fetch('https://shop.digiseller.ru/xml/shop_cart_add.asp', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: urlEncodeFormData(formData),
+      });
+  
+      const resultAddCartDS = await responseAddCartDS.json();
+  
+  
+      if (resultAddCartDS.cart_err === "Товар закончился или временно отключен.") {
+        const mainNode = document.querySelector('.js-gamePage');
+        const modalNode = document.createElement('div');
+        const modalBlockNode = document.createElement('div');
+        const titleModalNode = document.createElement('div');
+        const textModalNode = document.createElement('p');
+        const btnNode = document.createElement('button');
+    
+        modalNode.setAttribute('class', 'subscribeModalContainer js-subscribeModal');
+        modalBlockNode.setAttribute('class', 'subscribeModalBlock');
+        titleModalNode.setAttribute('class', 'title');
+        textModalNode.setAttribute('class', 'text');
+        btnNode.setAttribute('class', 'ok btn small border rounded translucent bg-darkLilac');
+    
+        titleModalNode.innerText = 'Игры нет в наличии!';
+        textModalNode.innerText = 'К сожалению, данной игры пока нет в наличии. Как-только Вы закроете данное уведомление - обновится страница и у Вас будет возможность подписаться на уведомление о поступлении';
+        btnNode.innerText = 'OK';
+    
+        btnNode.addEventListener('click', async () => {
+          await postman.put(`/api/products/${productId}/reviseInStock`);
+          window.location.reload();
+        });
+    
+        modalBlockNode.append(titleModalNode);
+        modalBlockNode.append(textModalNode);
+        modalBlockNode.append(btnNode);
+        modalNode.append(modalBlockNode);
+        mainNode.prepend(modalNode);
+        modalNode.classList.add('active');
+    
+        return;
+      }
+  
+      if (resultAddCartDS.cart_err_num !== '0') {
+        return;
+      }
+  
+      const response = await postman.post(`/api/products/${productId}/cart`, {dsCartId: resultAddCartDS.cart_uid});
+      const result = await response.json();
+  
+      if (result.error) {
+        return;
+      }
+  
+      if (!dsCartId) {
+        document.querySelector('body').dataset.dsCartId = resultAddCartDS.cart_uid;
+      }
+  
+      btn.innerText = 'Добавлено';
+      btn.classList.add('js-active');
+      btn.setAttribute('title', 'Перейти в корзину покупок');
+    })
+  })
 }
 
 if (homeCatalogTabsNode) {

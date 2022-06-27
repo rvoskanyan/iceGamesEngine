@@ -31,7 +31,21 @@
                             </div>
                         </div>
                         <div class="actions">
-                            <button title="Добавить товар в корзину покупок" class="btn elongated rounded increase bg-pink hover-backlight-blue">В корзину</button>
+                            {{#if inCart}}
+                                <button
+                                    title="Перейти в корзину покупок"
+                                    class="btn elongated rounded increase bg-pink hover-backlight-blue  js-addToCart js-active"
+                                >Добавлено</button>
+                            {{else}}
+                                <button
+                                    title="Добавить товар в корзину покупок"
+                                    class="btn elongated rounded increase bg-pink hover-backlight-blue js-addToCart"
+                                    data-product-id="{{_id}}"
+                                    data-ds-id="{{dsId}}"
+                                >
+                                    В корзину
+                                </button>
+                            {{/if}}
                             <a href="/games/{{alias}}" title="Перейти к странице товара" class="btn elongated rounded translucent bg-pink">Подробнее</a>
                         </div>
                     </div>
