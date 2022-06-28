@@ -22,14 +22,16 @@ import Edition from "../../models/Edition.js";
 
 export const pageProducts = async (req, res) => {
   try {
-    const products = await Product.find().select(['name', 'active']);
+    const active = await Product.find({active: true}).select(['name']).lean();
+    const top = await Product.find({top: true}).select(['name', 'active']).lean();
+    const other = await Product.find({active: false, top: false}).select(['name']).lean();
   
     res.render('listElements', {
       layout: 'admin',
       title: 'Список игр',
-      section: 'products',
-      elements: products,
-      addTitle: "Добавить игру",
+      active,
+      top,
+      other,
     });
   } catch (e) {
     console.log(e);

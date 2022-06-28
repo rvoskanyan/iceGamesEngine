@@ -1,0 +1,38 @@
+<a href="/admin/products/add/">Добавить товар</a>
+
+<tabel>
+    <tr>
+        <th>Активные</th>
+        <th>Остальные</th>
+        <th>ТОП</th>
+    </tr>
+    <tr>
+        <td>
+            <ul>
+                {{#each active}}
+                    <li>
+                        <a href="/admin/products/edit/{{_id}}">{{name}}</a>
+                    </li>
+                {{/each}}
+            </ul>
+        </td>
+        <td>
+            <ul>
+                {{#each other}}
+                    <li>
+                        <a href="/admin/products/edit/{{_id}}">{{name}}</a>
+                    </li>
+                {{/each}}
+            </ul>
+        </td>
+        <td>
+            <ul>
+                {{#each top}}
+                    <li>
+                        <a href="/admin/products/edit/{{_id}}">{{name}}{{#if active}}<span style="color: red"> *</span>{{/if}}</a>
+                    </li>
+                {{/each}}
+            </ul>
+        </td>
+    </tr>
+</tabel>
