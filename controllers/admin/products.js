@@ -26,7 +26,7 @@ export const pageProducts = async (req, res) => {
     const top = await Product.find({top: true}).select(['name', 'active']).lean();
     const other = await Product.find({active: false, top: false}).select(['name']).lean();
   
-    res.render('listElements', {
+    res.render('admListProducts', {
       layout: 'admin',
       title: 'Список игр',
       active,
