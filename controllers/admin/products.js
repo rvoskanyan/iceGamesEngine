@@ -22,9 +22,9 @@ import Edition from "../../models/Edition.js";
 
 export const pageProducts = async (req, res) => {
   try {
-    const active = await Product.find({active: true}).select(['name']).lean();
-    const top = await Product.find({top: true}).select(['name', 'active']).lean();
-    const other = await Product.find({active: false}).select(['name']).lean();
+    const active = await Product.find({active: true}).select(['name', 'dsId']).lean();
+    const top = await Product.find({top: true}).select(['name', 'active', 'dsId']).lean();
+    const other = await Product.find({active: false}).select(['name', 'dsId']).lean();
   
     res.render('admListProducts', {
       layout: 'admin',
