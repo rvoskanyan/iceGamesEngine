@@ -2,14 +2,15 @@
 
 <table>
     <tr>
+        <th>Не активные</th>
+        <th>Имеют дубли</th>
         <th>Активные</th>
-        <th>Остальные</th>
         <th>ТОП</th>
     </tr>
     <tr style="vertical-align: top">
         <td>
             <ul>
-                {{#each active}}
+                {{#each other}}
                     <li>
                         <a href="/admin/products/edit/{{_id}}">{{name}} - {{dsId}}</a>
                     </li>
@@ -18,7 +19,16 @@
         </td>
         <td>
             <ul>
-                {{#each other}}
+                {{#each doubles}}
+                    <li>
+                       {{this}}
+                    </li>
+                {{/each}}
+            </ul>
+        </td>
+        <td>
+            <ul>
+                {{#each active}}
                     <li>
                         <a href="/admin/products/edit/{{_id}}">{{name}} - {{dsId}}</a>
                     </li>

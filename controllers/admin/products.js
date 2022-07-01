@@ -25,6 +25,22 @@ export const pageProducts = async (req, res) => {
     const active = await Product.find({active: true}).select(['name', 'dsId']).lean();
     const top = await Product.find({top: true}).select(['name', 'active', 'dsId']).lean();
     const other = await Product.find({active: false}).select(['name', 'dsId']).lean();
+    const all = await Product.find().select(['name', 'dsId']).lean();
+  
+    function foo(arr, copies) {
+      let map = new Map();
+      for (let elem of arr) {
+        let counter = map.get(elem.name);
+        map.set(elem.name, counter ? counter + 1 : 1);
+      }
+      let res = [];
+      for (let [elem, counter] of map.entries())
+        if (counter >= copies)
+          res.push(elem);
+      return res;
+    }
+    
+    const doubles = foo(all, 2);
   
     res.render('admListProducts', {
       layout: 'admin',
@@ -32,6 +48,7 @@ export const pageProducts = async (req, res) => {
       active,
       top,
       other,
+      doubles,
     });
   } catch (e) {
     console.log(e);
