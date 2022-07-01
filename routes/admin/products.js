@@ -8,6 +8,8 @@ import {
   pageAddProductElement,
   addProductElement,
   deleteProductElement,
+  pageAddProductElements,
+  addProductElements,
 } from '../../controllers/admin/products.js';
 
 const router = Router();
@@ -23,5 +25,8 @@ router.post('/edit/:productId', editProduct);
 router.get('/:productId/addElement', pageAddProductElement);
 router.post('/:productId/addElement', addProductElement);
 router.post('/:productId/deleteElement/:elementId', deleteProductElement);
+
+router.get('/:productId/addElements', pageAddProductElements);
+router.post('/:productId/addElements', addProductElements);
 
 export default router;

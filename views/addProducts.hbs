@@ -7,7 +7,8 @@
                     {{#if productId}}
                         <a href="/admin/products/edit/{{productId._id}}">{{productId.name}}</a>
                     {{else}}
-                        {{name}} - {{description}}
+                        <b>Название:</b> {{name}}
+                        <p><b>Описание:</b> {{description}}</p>
                     {{/if}}
                     <form action="/admin/products/{{@root.product._id}}/deleteElement/{{_id}}" method="post" style="display: inline-block">
                         <input type="submit" value="Удалить">
@@ -20,6 +21,8 @@
         <br>
     {{/if}}
     <a href="/admin/products/{{product.id}}/addElement">Добавить элемент</a>
+    <br>
+    <a href="/admin/products/{{product.id}}/addElements">Добавить несколько элементов</a>
     <br>
     <br>
 {{/if}}

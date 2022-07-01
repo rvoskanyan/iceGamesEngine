@@ -557,3 +557,40 @@ export const deleteProductElement = async (req, res) => {
     res.redirect(`/admin/products/edit/${productId}`);
   }
 }
+
+export const pageAddProductElements = async (req, res) => {
+  const {productId} = req.params;
+  
+  try {
+    res.render('addProductElements', {
+      layout: 'admin',
+      title: 'Добавление элементов к товару',
+      productId,
+    });
+  } catch (e) {
+    console.log(e);
+    res.redirect(`/admin/products/edit/${productId}`);
+  }
+}
+
+export const addProductElements = async (req, res) => {
+  const {productId} = req.params;
+  
+  try {
+    const product = await Product.findById(productId);
+    let elements = req.body.elements.split('\n');
+    
+    elements.forEach(element => {
+      product.elements.push({
+        name: element.trim(),
+        description: element.trim(),
+      });
+    });
+    
+    await product.save();
+    res.redirect(`/admin/products/edit/${productId}`);
+  } catch (e) {
+    console.log(e);
+    req.redirect(`/admin/products/${productId}/addElement`);
+  }
+}
