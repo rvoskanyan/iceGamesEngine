@@ -811,7 +811,7 @@ if (cartNode) {
                   productId,
                 })
                 
-                return deleteFromCartBtn.dispatchEvent(new Event('click'));
+                //return deleteFromCartBtn.dispatchEvent(new Event('click'));
               }
             })
           })
@@ -901,7 +901,6 @@ document.addEventListener('click', async (e) => {
       
       if (resultAddCartDS.cart_err === "Товар закончился или временно отключен.") {
         const mainNode = document.querySelector('.js-gamePage');
-        console.log(mainNode);
         const modalNode = document.createElement('div');
         const modalBlockNode = document.createElement('div');
         const titleModalNode = document.createElement('div');
