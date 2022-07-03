@@ -16,6 +16,7 @@ const fields = {
     type: String,
     //required: true,
   },
+  order: Number,
 };
 
 const options = {

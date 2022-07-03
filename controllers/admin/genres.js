@@ -27,13 +27,13 @@ export const pageAddGenres = async (req, res) => {
 
 export const addGenres = async (req, res) => {
   try {
-    const {name, bgColor} = req.body;
+    const {name, bgColor, order} = req.body;
     const {img} = req.files;
     const imgExtend = getExtendFile(img.name);
     const imgName = `${uuidv4()}.${imgExtend}`;
   
     await img.mv(path.join(__dirname, '/uploadedFiles', imgName));
-    await Genre.create({name, img: imgName, bgColor});
+    await Genre.create({name, img: imgName, bgColor, order: +order});
   
     res.redirect('/admin/genres');
   } catch (e) {
@@ -63,11 +63,12 @@ export const editGenres = async (req, res) => {
   
   try {
     const genre = await Genre.findById(genreId);
-    const {name, bgColor} = req.body;
+    const {name, bgColor, order} = req.body;
     
     Object.assign(genre, {
       name,
       bgColor,
+      order: +order,
     })
     
     if (req.files) {
