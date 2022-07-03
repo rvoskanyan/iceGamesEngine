@@ -693,96 +693,130 @@ if (cartNode) {
     }
   
     if (countProducts) {
-      products.forEach(productNode => {
-        const deleteFromCartBtn = productNode.querySelector('.js-deleteFromCart');
-        const dsCartId = document.querySelector('body').dataset.dsCartId;
-        const productId = productNode.dataset.productId;
-        const dsId = productNode.dataset.dsId;
+      const dsCartId = document.querySelector('body').dataset.dsCartId;
       
-        deleteFromCartBtn.addEventListener('click', async () => {
-          if (!dsCartId || !dsId || !productId) {
-            return;
-          }
+      if (dsCartId) {
+        const formData = new FormData();
+  
+        formData.append('cart_uid', dsCartId);
+        formData.append('cart_curr', 'RUR');
         
-          let formData = new FormData();
+        fetch('https://shop.digiseller.ru/xml/shop_cart_lst.asp', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: urlEncodeFormData(formData),
+        }).then(result => {
+          result.json().then(result => {
+            const dsCartProducts = result.products;
+            const changes = [];
+  
+            console.log(result.products);
+  
+            products.forEach(productNode => {
+              const deleteFromCartBtn = productNode.querySelector('.js-deleteFromCart');
+              const productId = productNode.dataset.productId;
+              const dsId = productNode.dataset.dsId;
+              const dsCartProduct = dsCartProducts.find(product => +product.id === +dsId)
+    
+              deleteFromCartBtn.addEventListener('click', async () => {
+                if (!dsCartId || !dsId || !productId) {
+                  return;
+                }
+      
+                let formData = new FormData();
+      
+                formData.append('cart_uid', dsCartId);
+                formData.append('cart_curr', 'RUR');
+                formData.append('lang', 'ru-RU');
+      
+                const responseCartDS = await fetch('https://shop.digiseller.ru/xml/shop_cart_lst.asp', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                  },
+                  body: urlEncodeFormData(formData),
+                });
+      
+                const resultCartDS = await responseCartDS.json();
+      
+                if (!resultCartDS.products) {
+                  return;
+                }
+      
+                const {item_id} = resultCartDS.products.find(item => item.id === dsId);
+      
+                formData.append('item_id', item_id);
+                formData.append('product_cnt', '0');
+      
+                let responseUpdateCartDS = await fetch('https://shop.digiseller.ru/xml/shop_cart_lst.asp', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                  },
+                  body: urlEncodeFormData(formData),
+                });
+      
+                let resultUpdateCartDS = await responseUpdateCartDS.json();
+      
+                if (resultUpdateCartDS.cart_err !== '0' && resultUpdateCartDS.cart_err !== '5') {
+                  return;
+                }
+      
+                const response = await postman.delete(`/api/products/${productId}/cart`);
+                const result = await response.json();
+      
+                if (result.error) {
+                  return;
+                }
+      
+                countProducts -= 1;
+      
+                if (countProducts === 0)   {
+                  cartListNode.remove();
+                  cartTitleNode.remove();
         
-          formData.append('cart_uid', dsCartId);
-          formData.append('cart_curr', 'RUR');
-          formData.append('lang', 'ru-RU');
-        
-          const responseCartDS = await fetch('https://shop.digiseller.ru/xml/shop_cart_lst.asp', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: urlEncodeFormData(formData),
-          });
-        
-          const resultCartDS = await responseCartDS.json();
-        
-          if (!resultCartDS.products) {
-            return;
-          }
-        
-          const {item_id} = resultCartDS.products.find(item => item.id === dsId);
-        
-          formData.append('item_id', item_id);
-          formData.append('product_cnt', '0');
-        
-          let responseUpdateCartDS = await fetch('https://shop.digiseller.ru/xml/shop_cart_lst.asp', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: urlEncodeFormData(formData),
-          });
-        
-          let resultUpdateCartDS = await responseUpdateCartDS.json();
-        
-          if (resultUpdateCartDS.cart_err !== '0' && resultUpdateCartDS.cart_err !== '5') {
-            return;
-          }
-        
-          const response = await postman.delete(`/api/products/${productId}/cart`);
-          const result = await response.json();
-        
-          if (result.error) {
-            return;
-          }
-        
-          countProducts -= 1;
-        
-          if (countProducts === 0)   {
-            cartListNode.remove();
-            cartTitleNode.remove();
-            
-            return cartNode.innerHTML += `
-              <div class="notFound">
-                <img src="${websiteAddress}img/notFound.svg" class="img" alt="Иконка расстроенного смайла" title="Корзина пуста :(">
-                <div class="text">
-                    <span class="title">Корзина пуста</span>
-                    <p class="description">Воспользуйтесь каталогом, чтобы найти все, что нужно!</p>
-                </div>
-                <a href="${websiteAddress}games" class="btn big border round hover-border-pink hover-color-pink" title="Перейти в каталог">В каталог</a>
-              </div>
-            `;
-          }
-        
-          const priceTo = +productNode.querySelector('.js-priceTo').innerText;
-          const priceFrom = +productNode.querySelector('.js-priceFrom').innerText;
-        
-          totalPriceToValue -= priceTo;
-          totalPriceFromValue -= priceFrom;
-          savingValue -= priceFrom - priceTo;
-        
-          totalPriceToNode.innerText = totalPriceToValue;
-          totalPriceFromNode.innerText = totalPriceFromValue;
-          totalProductsNode.innerText = countProducts;
-          savingValueNode.innerText = savingValue;
-        
-          productNode.remove();
+                  return cartNode.innerHTML += `
+                    <div class="notFound">
+                      <img src="${websiteAddress}img/notFound.svg" class="img" alt="Иконка расстроенного смайла" title="Корзина пуста :(">
+                      <div class="text">
+                          <span class="title">Корзина пуста</span>
+                          <p class="description">Воспользуйтесь каталогом, чтобы найти все, что нужно!</p>
+                      </div>
+                      <a href="${websiteAddress}games" class="btn big border round hover-border-pink hover-color-pink" title="Перейти в каталог">В каталог</a>
+                    </div>
+                  `;
+                }
+      
+                const priceTo = +productNode.querySelector('.js-priceTo').innerText;
+                const priceFrom = +productNode.querySelector('.js-priceFrom').innerText;
+      
+                totalPriceToValue -= priceTo;
+                totalPriceFromValue -= priceFrom;
+                savingValue -= priceFrom - priceTo;
+      
+                totalPriceToNode.innerText = totalPriceToValue;
+                totalPriceFromNode.innerText = totalPriceFromValue;
+                totalProductsNode.innerText = countProducts;
+                savingValueNode.innerText = savingValue;
+      
+                productNode.remove();
+              })
+      
+              if (!dsCartProduct) {
+                changes.push({
+                  name: productNode.querySelector('.name'),
+                  notInStock: true,
+                  productId,
+                })
+                
+                return deleteFromCartBtn.dispatchEvent(new Event('click'));
+              }
+            })
+          })
         })
-      })
+      }
     }
   }
 }

@@ -6,7 +6,7 @@ import {getExtendFile} from "../../utils/functions.js";
 
 export const pageGenres = async (req, res) => {
   try {
-    const genres = await Genre.find().select(['name']).sort({order: 1});
+    const genres = await Genre.find().select(['name']).sort({order: -1});
     
     res.render('listElements', {
       layout: 'admin',
