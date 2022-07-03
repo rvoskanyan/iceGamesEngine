@@ -1,15 +1,13 @@
-import Category from '../models/Category.js';
 import Genre from '../models/Genre.js';
-import Publisher from '../models/Publisher.js';
-import Developer from '../models/Developer.js';
+import ActivationService from '../models/ActivationService.js';
+import Category from '../models/Category.js';
 
 export default async (req, res, next) => {
   res.locals = {
     ...res.locals,
-    allCategories: await Category.find().select(['name']),
-    allPublishers: await Publisher.find().select(['name']),
-    allDevelopers: await Developer.find().select(['name']),
-    allGenres: await Genre.find().select(['name']),
+    allActivationServices: await ActivationService.find().select(['name']).lean(),
+    allGenres: await Genre.find().select(['name']).lean(),
+    allCategories: await Category.find().select(['name']).lean(),
   }
   
   next();

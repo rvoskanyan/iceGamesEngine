@@ -26,18 +26,10 @@
                     {{/each}}
                 </ul>
                 <ul class="col">
-                    <li class="title">Издатели</li>
-                    {{#each allPublishers}}
+                    <li class="title">Активация</li>
+                    {{#each allActivationServices}}
                         <li class="colLink">
-                            <a href="#" class="link" title="2К">{{name}}</a>
-                        </li>
-                    {{/each}}
-                </ul>
-                <ul class="col">
-                    <li class="title">Разработчики</li>
-                    {{#each allDevelopers}}
-                        <li class="colLink">
-                            <a href="#" class="link" title="Gearbox Software">{{name}}</a>
+                            <a href="/games?activationServices={{id}}" class="link" title="Открыть товары с активацией в {{name}}">{{name}}</a>
                         </li>
                     {{/each}}
                 </ul>

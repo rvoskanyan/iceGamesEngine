@@ -214,6 +214,14 @@
     width: 100%
     padding: 20px 12px 0 12px
 
+    @include for-desktop-up
+      & .fromPrice .value:before
+        height: 2px
+
+    @include for-big-desktop-up
+      & .fromPrice .value:before
+        height: 3px
+
   @include for-big-phone-up
     &.big
       max-width: 189px
