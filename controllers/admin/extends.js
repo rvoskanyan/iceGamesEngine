@@ -66,14 +66,23 @@ export const editExtend = async (req, res) => {
   try {
     const extend = await Extend.findById(extendId);
     const {name} = req.body;
-    const {icon} = req.files;
-    const iconExtend = getExtendFile(icon.name);
-    const iconName = `${uuidv4()}.${iconExtend}`;
     
-    await icon.mv(path.join(__dirname, '/uploadedFiles', iconName));
+    if (req.files) {
+      const {icon = null} = req.files;
+      
+      if (icon) {
+        const iconExtend = getExtendFile(icon.name);
+        const iconName = `${uuidv4()}.${iconExtend}`;
+  
+        await icon.mv(path.join(__dirname, '/uploadedFiles', iconName));
+  
+        Object.assign(extend, {
+          icon: iconName,
+        })
+      }
+    }
     
     Object.assign(extend, {
-      icon: iconName,
       name,
     })
     
