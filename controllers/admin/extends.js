@@ -42,3 +42,46 @@ export const addExtend = async (req, res) => {
     res.redirect('/admin/extends/add');
   }
 }
+
+export const pageEditExtend = async (req, res) => {
+  try {
+    const {extendId} = req.params;
+    const extend = await Extend.findById(extendId).lean();
+  
+    res.render('addExtend', {
+      layout: 'admin',
+      isEdit: true,
+      title: 'Редактирование расширения',
+      extend,
+    });
+  } catch (e) {
+    console.log(e);
+    res.redirect('/admin/extends');
+  }
+}
+
+export const editExtend = async (req, res) => {
+  const {extendId} = req.params;
+  
+  try {
+    const extend = await Extend.findById(extendId);
+    const {name} = req.body;
+    const {icon} = req.files;
+    const iconExtend = getExtendFile(icon.name);
+    const iconName = `${uuidv4()}.${iconExtend}`;
+    
+    await icon.mv(path.join(__dirname, '/uploadedFiles', iconName));
+    
+    Object.assign(extend, {
+      icon: iconName,
+      name,
+    })
+    
+    await extend.save();
+    
+    res.redirect('/admin/extends');
+  } catch (e) {
+    console.log(e);
+    res.redirect(`/admin/extends/edit/${extendId}`);
+  }
+}

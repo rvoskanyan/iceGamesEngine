@@ -1,15 +1,20 @@
-<form action="/admin/extends/add" method="post" enctype="multipart/form-data">
+<form action="/admin/extends/{{#if isEdit}}edit/{{extend._id}}{{else}}add{{/if}}" method="post" enctype="multipart/form-data">
     <label>
-        Введите название:
-        <input type="text" name="name">
+        *Название:
+        <input type="text" name="name"{{#if extend.name}} value="{{extend.name}}"{{/if}}>
     </label>
     <br>
     <br>
     <label>
-        Выберите иконку с соотношением сторон 1:1 в формате svg:
+        *Иконка с соотношением сторон 1:1:
         <input type="file" name="icon">
     </label>
     <br>
     <br>
-    <input type="submit" name="add" value="Добавить">
+    {{#if extend.icon}}
+        <img src="{{websiteAddress}}{{extend.icon}}" alt="Иконка расширения">
+        <br>
+        <br>
+    {{/if}}
+    <input type="submit" name="add" value="{{#if isEdit}}Сохранить изменения{{else}}Добавить{{/if}}">
 </form>
