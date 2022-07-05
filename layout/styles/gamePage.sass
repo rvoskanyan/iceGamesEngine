@@ -116,17 +116,10 @@
               background-color: #2F305E
               color: #fff
               padding: 10px 25px
-              border-radius: 20px
+              border-radius: 10px
               margin-top: 12px
-
-              &:before
-                content: ''
-                position: absolute
-                bottom: 100%
-                left: 50%
-                transform: translateX(-50%)
-                border: 10px solid transparent
-                border-bottom-color: #2F305E
+              left: initial
+              transform: initial
 
               & .list
                 list-style: none
@@ -139,6 +132,9 @@
 
                   &:not(:last-child)
                     border-bottom: 1px solid #fff
+
+                  &.moreElements
+                    color: #FA00FF
 
       & .name
         padding: 0 40px
@@ -418,6 +414,22 @@
       flex-grow: 1
 
       & .generalInfo
+        & .hiddenElementsList
+          overflow: hidden
+          max-height: 0%
+          opacity: 0
+          transition: max-height .3s ease-in
+          transition-property: max-height, opacity
+          border-top: 1.5px solid hsla(0, 0%, 100%, .3)
+
+          &.active
+            max-height: 100%
+            opacity: 1
+
+        & .moreElements
+          text-decoration: underline
+          margin-top: 10px
+
         & .nav
           column-gap: 10px
 

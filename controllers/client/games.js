@@ -158,6 +158,9 @@ export const gamePage = async (req, res) => {
         if (bundleProduct._id.toString() === product.id) {
           bundleProduct.isCurrent = true;
         }
+
+        bundleProduct.moreElements = bundleProduct.elements.length - 5;
+        bundleProduct.elements = bundleProduct.elements.slice(0, 5);
         
         return bundleProduct;
       });

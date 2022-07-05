@@ -58,6 +58,9 @@
                                                     {{name}}
                                                 </li>
                                             {{/each}}
+                                            {{#iff moreElements '>' 0}}
+                                                <li class="item moreElements">И еще {{moreElements}}...</li>
+                                            {{/iff}}
                                         </ul>
                                     </div>
                                 {{/if}}
@@ -314,25 +317,52 @@
                                 {{/if}}
                                 <ul class="bulletedList">
                                     {{#each product.elements}}
-                                        {{#if productId}}
-                                            <li class="item product">
-                                                <a href="/games/{{productId.alias}}" class="link underlined name" title="Перейти к игре {{productId.name}}">
-                                                    <img
-                                                        src="{{@root.websiteAddress}}{{productId.img}}"
-                                                        alt="Обложка к игре {{productId.name}}"
-                                                        title="Обложка к игре {{productId.name}}"
-                                                        class="img"
-                                                    >
-                                                    <span class="name">{{productId.name}}</span>
-                                                </a>
-                                            </li>
+                                        {{#iff @index '<' 5}}
+                                            {{#if productId}}
+                                                <li class="item product">
+                                                    <a href="/games/{{productId.alias}}" class="link underlined name" title="Перейти к игре {{productId.name}}">
+                                                        <img
+                                                                src="{{@root.websiteAddress}}{{productId.img}}"
+                                                                alt="Обложка к игре {{productId.name}}"
+                                                                title="Обложка к игре {{productId.name}}"
+                                                                class="img"
+                                                        >
+                                                        <span class="name">{{productId.name}}</span>
+                                                    </a>
+                                                </li>
+                                            {{else}}
+                                                <li class="item">
+                                                    <span class="name">{{name}}</span>
+                                                </li>
+                                            {{/if}}
                                         {{else}}
-                                            <li class="item">
-                                                <span class="name">{{name}}</span>
-                                            </li>
-                                        {{/if}}
+                                            {{#iff @index '===' 5}}
+                                                </ul>
+                                                <ul class="bulletedList hiddenElementsList js-moreElementsList">
+                                            {{/iff}}
+                                            {{#if productId}}
+                                                <li class="item product">
+                                                    <a href="/games/{{productId.alias}}" class="link underlined name" title="Перейти к игре {{productId.name}}">
+                                                        <img
+                                                                src="{{@root.websiteAddress}}{{productId.img}}"
+                                                                alt="Обложка к игре {{productId.name}}"
+                                                                title="Обложка к игре {{productId.name}}"
+                                                                class="img"
+                                                        >
+                                                        <span class="name">{{productId.name}}</span>
+                                                    </a>
+                                                </li>
+                                            {{else}}
+                                                <li class="item">
+                                                    <span class="name">{{name}}</span>
+                                                </li>
+                                            {{/if}}
+                                        {{/iff}}
                                     {{/each}}
                                 </ul>
+                                {{#iff product.elements.length '>' 5}}
+                                    <button class="btn moreElements js-collapse" data-target=".js-moreElementsList">Еще {{sub product.elements.length 5}}...</button>
+                                {{/iff}}
                             </div>
                         {{/if}}
                         {{#if seriesProducts.length}}

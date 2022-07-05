@@ -662,14 +662,21 @@ if (collapseNodes.length) {
   
   collapseNodes.forEach(collapse => {
     collapse.addEventListener('click', (e) => {
+      const targetSelector = collapse.dataset.target;
+      let collapseContentNode = collapse;
+      
+      if (targetSelector) {
+        collapseContentNode = document.querySelector(targetSelector);
+      }
+      
       activeCollapse && activeCollapse.classList.remove('active');
       
-      if (activeCollapse === collapse) {
+      if (activeCollapse === collapseContentNode) {
         return activeCollapse = null;
       }
   
-      collapse.classList.add('active');
-      activeCollapse = collapse;
+      collapseContentNode.classList.add('active');
+      activeCollapse = collapseContentNode;
     })
   })
 }
