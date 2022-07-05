@@ -202,8 +202,26 @@
             </div>
             <ul class="fieldedList">
                 <li class="item">
+                    <div class="name">Жанр:</div>
+                    <div class="value">
+                        {{#each product.genres}}
+                            {{#if @last}}
+                                {{name}}
+                            {{else}}
+                                {{name}},
+                            {{/if}}
+                        {{/each}}
+                    </div>
+                </li>
+                <li class="item">
                     <div class="name">Язык:</div>
                     <div class="value">{{product.languages}}</div>
+                </li>
+                <li class="item">
+                    <div class="name">Сервис активации:</div>
+                    <div class="value">
+                        {{product.activationServiceId.name}}
+                    </div>
                 </li>
                 <li class="item">
                     <div class="name">Регион активации:</div>
@@ -218,36 +236,18 @@
                     </div>
                 </li>
                 <li class="item">
-                    <div class="name">Сервис активации:</div>
-                    <div class="value">
-                        {{product.activationServiceId.name}}
-                    </div>
-                </li>
-                <li class="item">
-                    <div class="name">Жанр:</div>
-                    <div class="value">
-                        {{#each product.genres}}
-                            {{#if @last}}
-                                {{name}}
-                            {{else}}
-                                {{name}},
-                            {{/if}}
-                        {{/each}}
-                    </div>
-                </li>
-                <li class="item">
                     <div class="name">Платформа:</div>
                     <div class="value">
                         {{product.platformId.name}}
                     </div>
                 </li>
-                <li class="item">
+                <li class="item secondary">
                     <div class="name">Издатель:</div>
                     <div class="value">
                         {{product.publisherId.name}}
                     </div>
                 </li>
-                <li class="item">
+                <li class="item secondary">
                     <div class="name">Дата выхода:</div>
                     <div class="value">
                         {{product.strMonthReleaseDate}}

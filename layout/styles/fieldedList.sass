@@ -2,7 +2,7 @@
 
 .fieldedList
   list-style: none
-  color: rgba(255, 255, 255, 0.8)
+  color: #fff
   font-size: 10px
   font-weight: 600
   flex-grow: 1
@@ -11,12 +11,20 @@
   & > .item
     display: flex
 
+    &.secondary
+      color: rgba(255, 255, 255, 0.5)
+
     &:not(:last-child)
-      margin-bottom: 5px
+      margin-bottom: 3px
 
     & .name, & .value
-      width: 50%
       line-height: 1.5
+
+    & .name
+      width: 45%
+
+    & .value
+      width: 55%
 
   @include for-middle-phone-up
     font-size: 12px
@@ -25,7 +33,7 @@
     font-size: 16px
 
     & > .item:not(:last-child)
-      margin-bottom: 10px
+      margin-bottom: 5px
 
   @include for-middle-desktop-up
     font-size: 18px
