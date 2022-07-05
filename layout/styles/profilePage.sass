@@ -116,10 +116,10 @@
       flex-direction: column
       position: relative
       max-width: max-content
-      padding: 0 20px
+      padding: 0 15px
 
       @include for-big-phone-up
-        row-gap: 10px
+        row-gap: 8px
 
       .marker
         position: absolute
@@ -132,34 +132,40 @@
         transition: top .3s ease
         display: none
 
-        &:before, &:after
-          content: ''
-          display: block
-          width: 20px
-          height: 34px
-          background-position: center
-          background-size: cover
-          background-image: url("./../img/markerMenu-mobile.svg")
-
-          @include for-big-phone-up
-            background-image: url("./../img/markerMenu.svg")
-
-        &:after
-          transform: matrix(-1, 0, 0, 1, 0, 0)
-
         & .center
           height: 100%
-          background: #950398
+          background-color: #950398
           flex-grow: 1
 
           @include for-big-phone-up
-            background: linear-gradient(270deg, #EB00FF 0%, transparent 50%, #EB00FF 100%)
+            height: 9px
+            width: 9px
+            background-color: #FA00FF
+            flex-grow: initial
+            border-radius: 100%
+
+        @include for-big-phone-down
+          &:before, &:after
+            content: ''
+            display: block
+            width: 20px
+            height: 34px
+            background-position: center
+            background-size: cover
+            background-image: url("./../img/markerMenu-mobile.svg")
+
+          &:after
+            transform: matrix(-1, 0, 0, 1, 0, 0)
 
       & .btn
+        font-weight: 400
         padding: 0 6px
         min-height: 30px
         width: 100%
         justify-content: center
+
+        &.active
+          font-weight: 600
 
         @include for-big-phone-down
           opacity: initial
@@ -183,7 +189,7 @@
 
       @include for-big-phone-up
         font-size: 16px
-        margin-top: 50px
+        margin-top: 35px
 
     & .exit
       margin: 25px auto 0 auto
