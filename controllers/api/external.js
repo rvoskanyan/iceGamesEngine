@@ -60,7 +60,7 @@ export const assignOrderPay = async (req, res) => {
     await order.save();
     
     if (order.userId) {
-      const user = User.findById(order.userId);
+      const user = await User.findById(order.userId);
   
       user.purchasedProducts += 1;
       await user.save();

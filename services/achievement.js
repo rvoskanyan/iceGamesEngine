@@ -34,7 +34,7 @@ export const achievementEvent = async (type, user) => {
       default: throw new Error('Unknown type achievement');
     }
   
-    const achievement = await Achievement.findOne({type, amount}).lean();
+    const achievement = await Achievement.findOne({type, amount}).select(['_id']).lean();
   
     if (!achievement) {
       return;

@@ -13,7 +13,7 @@ export default {
     path: path.resolve(__dirname, 'layout'),
   },
   optimization: {
-    minimize: true,
+    minimize: false,
     minimizer: [
       new CssMinimizerWebpackPlugin(),
       new TerserWebpackPlugin()

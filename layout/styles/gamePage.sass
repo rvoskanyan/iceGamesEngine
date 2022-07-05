@@ -159,27 +159,28 @@
           column-gap: 25px
 
         & .status
-          color: #fff
-          font-size: 10px
+          color: rgba(255, 255, 255, 0.4)
+          font-size: 12px
           display: flex
           align-items: center
+          font-weight: 600
 
           &:before
             content: ''
             display: block
-            width: 7px
-            height: 7px
+            width: 9px
+            height: 9px
             border-radius: 100%
             margin-right: 5px
 
           &.positive:before
-            background-color: #00FF38
+            background-color: rgba(0, 255, 56, 0.4)
 
           &.negative:before
-            background-color: #ff0000
+            background-color: rgba(255, 0, 0, 0.4)
 
           @include for-big-phone-up
-            font-size: 14px
+            font-size: 16px
 
             &:before
               margin-right: 7px
@@ -214,18 +215,34 @@
                 width: 33px
 
           & .prompt
-            margin-top: 8px
-            white-space: nowrap
-            color: rgba(122, 214, 255, 0.8)
-            background-color: #051770
-            padding: 12px 14px
-            border-radius: 20px
-            font-size: 14px
-            font-weight: 600
-            box-shadow: 0 0 15px rgba(204, 0, 255, 0.69)
+            filter: drop-shadow(0 0 10px #8F00FF)
 
-            @include for-big-phone-up
-              margin-top: 15px
+            &:before
+              content: ""
+              display: block
+              position: absolute
+              border: 10px solid transparent
+              border-bottom-color: #db00ff
+              bottom: calc(100% - 8px)
+              left: 50%
+              transform: translateX(-50%)
+
+              @include for-big-phone-up
+                bottom: calc(100% - 15px)
+
+            & .extendName
+              margin-top: 8px
+              white-space: nowrap
+              color: #fff
+              background-color: #DB00FF
+              padding: 6px 10px
+              font-size: 14px
+              font-weight: 600
+              clip-path: polygon(6px 0, calc(100% - 6px) 0, 100% 6px, 100% calc(100% - 6px), calc(100% - 6px) 100%, 6px 100%, 0 calc(100% - 6px), 0 6px)
+              line-height: 1.4
+
+              @include for-big-phone-up
+                margin-top: 15px
 
   & .infoBlock
     background-color: #320065

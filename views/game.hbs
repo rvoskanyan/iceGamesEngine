@@ -69,11 +69,11 @@
             <h1 class="name">{{product.name}}</h1>
             <div class="statuses">
                 {{#if product.inStock}}
-                    <div class="status positive">В наличии</div>
+                    <div class="status positive">в наличии</div>
                 {{else}}
-                    <div class="status negative">Нет в наличии</div>
+                    <div class="status negative">нет в наличии</div>
                 {{/if}}
-                <div class="status positive">Приобрели сегодня 30 раз</div>
+                <div class="status positive">приобрели сегодня 30 раз</div>
             </div>
             <p class="description">
                 {{product.description}}
@@ -166,7 +166,7 @@
                                 <img  class="extendIcon" src="{{@root.websiteAddress}}{{icon}}" alt="{{text}}" title="{{name}}">
                             </button>
                             <div class="prompt">
-                                {{name}}
+                                <div class="extendName">{{name}}</div>
                             </div>
                         </div>
                     {{/each}}
@@ -466,8 +466,8 @@
                                     {{/if}}
                                 </form>
                             {{/if}}
-                            {{#if product.reviews}}
-                                <div class="listItems js-listReviews"{{#if @root.person.login}} data-user-name="{{@root.person.login}}"{{/if}}>
+                            <div class="listItems js-listReviews"{{#if @root.person.login}} data-user-name="{{@root.person.login}}"{{/if}}>
+                                {{#if product.reviews}}
                                     {{#each product.reviews}}
                                         {{> review
                                                 userLogin=userId.login
@@ -475,11 +475,11 @@
                                                 text=text
                                         }}
                                     {{/each}}
-                                </div>
-                                {{#iff product.reviews.length '>' 3}}
-                                    <div class="btn link translucent loadMore">Загрузить еще</div>
-                                {{/iff}}
-                            {{/if}}
+                                {{/if}}
+                            </div>
+                            {{#iff product.reviews.length '>' 3}}
+                                <div class="btn link translucent loadMore">Загрузить еще</div>
+                            {{/iff}}
                         </div>
                         <div class="item comments js-tabBlock-2">
                             <form action="/api/comments" method="post" data-skip="3" data-ref="product" data-subject-id="{{product.id}}" class="addNew infoBlock js-commentProductForm{{#unless @root.isAuth}} locked{{/unless}}">
