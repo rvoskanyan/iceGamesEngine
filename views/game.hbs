@@ -189,8 +189,8 @@
                                 </button>
                             {{/if}}
                             {{#each product.images}}
-                                <button class="btn slide js-slide" title="Увеличить">
-                                    <img class="img" src="{{@root.websiteAddress}}{{name}}" alt="Изображение-{{@index}} из игры {{@root.product.name}}">
+                                <button class="btn slide js-slide js-largeImg" title="Увеличить">
+                                    <img class="img js-targetImg" src="{{@root.websiteAddress}}{{name}}" alt="Изображение-{{@index}} из игры {{@root.product.name}}">
                                 </button>
                             {{/each}}
                         </div>

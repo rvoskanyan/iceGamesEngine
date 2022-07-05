@@ -41,6 +41,7 @@ const mobileSearchStringNode = document.querySelector('.js-mobileSearchString');
 const cartNode = document.querySelector('.js-cart');
 const collapseNodes = document.querySelectorAll('.js-collapse');
 const autoSizeInputNodes = document.querySelectorAll('.js-autoSizeInput');
+const largeImgNodes = document.querySelectorAll('.js-largeImg');
 const addReviewFormNode = document.querySelector('.js-addReviewForm');
 const commentProductFormNode = document.querySelector('.js-commentProductForm');
 const gamePageNode = document.querySelector('.js-gamePage');
@@ -130,6 +131,16 @@ const popupController = new PopupController([
     ],
   },
 ]);
+
+if (largeImgNodes.length) {
+  largeImgNodes.forEach(item => {
+    item.addEventListener('click', () => {
+      const targetImgNode = item.querySelector('.js-targetImg');
+  
+      new Modal(targetImgNode.cloneNode(true));
+    })
+  })
+}
 
 if (acceptAgreementNode) {
   const btnSendNode = acceptAgreementNode.querySelector('.js-sendAcceptAgreement');
