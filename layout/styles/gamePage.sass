@@ -221,27 +221,32 @@
               content: ""
               display: block
               position: absolute
-              border: 10px solid transparent
+              border-width: 7px
+              border-style: solid
+              border-color: transparent
               border-bottom-color: #db00ff
-              bottom: calc(100% - 8px)
+              bottom: calc(100% - 12px)
               left: 50%
               transform: translateX(-50%)
 
               @include for-big-phone-up
+                border-width: 10px
                 bottom: calc(100% - 15px)
 
             & .extendName
-              margin-top: 8px
+              margin-top: 12px
               white-space: nowrap
               color: #fff
               background-color: #DB00FF
-              padding: 6px 10px
-              font-size: 14px
+              padding: 4px 8px
+              font-size: 12px
               font-weight: 600
               clip-path: polygon(6px 0, calc(100% - 6px) 0, 100% 6px, 100% calc(100% - 6px), calc(100% - 6px) 100%, 6px 100%, 0 calc(100% - 6px), 0 6px)
               line-height: 1.4
 
               @include for-big-phone-up
+                padding: 6px 10px
+                font-size: 14px
                 margin-top: 15px
 
   & .infoBlock
