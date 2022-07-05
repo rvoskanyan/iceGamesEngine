@@ -3,30 +3,19 @@
 
 .modal
   position: fixed
+  display: flex
   top: 0
   left: 0
   right: 0
-  height: 100vh
+  bottom: 0
   background-color: rgba(0, 0, 0, 0.7)
   z-index: $ZIndex-Modal
+  padding: 80px 30px
 
-  .modalContainer
-    position: relative
-    width: 100%
-    height: 100%
-    padding: 80px 30px
-    min-height: max-content
-    overflow: auto
-
-    .close
-      position: absolute
-      top: 0
-      right: 0
-      padding: 10px
-      background-color: rgba(128, 128, 128, 0.8)
-      border-radius: 5px
-
-    .modalContent
-      margin: 0 auto
-      height: 600px
-      width: 1100px
+  .close
+    position: absolute
+    top: 0
+    right: 0
+    padding: 10px
+    background-color: rgba(128, 128, 128, 0.8)
+    border-radius: 5px

@@ -269,8 +269,7 @@ export default class Slider {
   }
   
   mouseDownVisibleArea = (e) => {
-    e.preventDefault()
-    console.log('mouseDown');
+    e.preventDefault();
   }
   
   touchVisibleArea = (e) => {
