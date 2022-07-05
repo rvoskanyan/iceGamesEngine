@@ -136,8 +136,10 @@ if (largeImgNodes.length) {
   largeImgNodes.forEach(item => {
     item.addEventListener('click', () => {
       const targetImgNode = item.querySelector('.js-targetImg');
-  
-      new Modal(targetImgNode.cloneNode(true));
+      const newTargetImgNode = targetImgNode.cloneNode(true);
+      
+      newTargetImgNode.classList.add('enlargedImg');
+      new Modal(newTargetImgNode);
     })
   })
 }
