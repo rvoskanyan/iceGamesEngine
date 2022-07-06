@@ -303,7 +303,9 @@
                         </div>
                         <ul class="item bulletedList notSeparator js-tabBlock-2">
                             {{#each product.activationServiceId.stages}}
-                                <li class="item">{{encodeString name}}</li>
+                                <li class="item">
+                                    <p>{{encodeString name}}</p>
+                                </li>
                             {{/each}}
                         </ul>
                         {{#if product.elements.length}}
