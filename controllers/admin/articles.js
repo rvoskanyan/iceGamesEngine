@@ -143,7 +143,7 @@ export const editArticle = async (req, res) => {
       rightImg: rightImg === "on",
       blockColor,
       type,
-      mustFix,
+      fixed: mustFix,
       lastEditorId: req.session.userId,
       products,
     });

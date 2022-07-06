@@ -16,6 +16,7 @@
         background: linear-gradient(94.29deg, var(--bgColor) 35.06%, transparent 88.75%)
         border-radius: 40px
         display: flex
+        height: 300px
 
         &.right
           flex-direction: row-reverse
@@ -29,7 +30,7 @@
       @include for-desktop-up
         &:hover, &:focus-visible
           outline: none
-          transform: scale(1.1, 1.1)
+          transform: scale(1.05, 1.05)
 
       @include for-middle-desktop-up
         max-width: 1200px
@@ -47,9 +48,11 @@
       & .img
         display: block
         object-fit: cover
+        max-width: 40%
 
         @include for-big-phone-down
           width: 100%
+          max-width: 100%
 
       & .info
         flex-grow: 1
@@ -154,6 +157,8 @@
               border-radius: 40px
               object-fit: cover
               width: initial
+              max-width: 50%
+              height: 100%
 
           & .text
             padding: 25px 30px
@@ -171,6 +176,7 @@
             border-radius: 40px 40px 0 0
 
             & .img
+              max-width: 100%
               width: 100%
 
             & .text
