@@ -144,10 +144,10 @@
             margin-top: 30px
 
             @include for-big-phone-up
-              margin-top: 70px
+              margin-top: 50px
 
             @include for-middle-desktop-up
-              margin-top: 80px
+              margin-top: 60px
 
           & .img
             display: block
@@ -158,6 +158,7 @@
               object-fit: cover
               width: initial
               max-width: 50%
+              align-self: stretch
 
           & .text
             padding: 25px 30px
@@ -167,7 +168,7 @@
             font-size: 13px
 
             @include for-big-phone-up
-              padding: 70px 170px
+              padding: 45px 70px
               font-size: 16px
 
           &.top
@@ -182,7 +183,7 @@
               padding: 10px 20px 30px 20px
 
               @include for-big-phone-up
-                padding: 45px 100px 170px 100px
+                padding: 50px 70px 45px 70px
 
           &.left
             background: linear-gradient(179.81deg, #29005C 28%, rgba(41, 0, 92, 0) 99.84%)
@@ -194,12 +195,12 @@
 
             @include for-big-phone-up
               display: flex
-              align-items: stretch
+              align-items: center
               border-radius: 40px 0 0 40px
               background: linear-gradient(89.81deg, #29005C 28%, rgba(41, 0, 92, 0) 99.84%)
 
               .text
-                padding: 60px 170px 60px 45px
+                padding: 45px 70px 45px 50px
                 text-align: left
 
           &.right
@@ -212,13 +213,13 @@
 
             @include for-big-phone-up
               display: flex
-              align-items: stretch
+              align-items: center
               flex-direction: row-reverse
               border-radius: 0 40px 40px 0
               background: linear-gradient(269.81deg, #29005C 28%, rgba(41, 0, 92, 0) 99.84%)
 
               & .text
-                padding: 60px 54px 60px 170px
+                padding: 45px 70px 45px 50px
                 text-align: right
 
       & .activity
