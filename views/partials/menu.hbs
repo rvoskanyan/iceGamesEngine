@@ -3,7 +3,7 @@
         <ul class="col categoriesMenu mobileMenu">
             {{#each allCategories}}
                 <li class="colLink">
-                    <a href="/games?categories={{id}}" class="link" title="Открыть товары из категории {{name}}">{{name}}</a>
+                    <a href="/games?categories={{_id}}" class="link" title="Открыть товары из категории {{name}}">{{name}}</a>
                 </li>
             {{/each}}
             <li class="colLink">
@@ -21,7 +21,7 @@
                     <li class="title">Жанры</li>
                     {{#each allGenres}}
                         <li class="colLink">
-                            <a href="/games?genres={{id}}" class="link" title="Открыть товары жанра {{name}}">{{name}}</a>
+                            <a href="/games?genres={{_id}}" class="link" title="Открыть товары жанра {{name}}">{{name}}</a>
                         </li>
                     {{/each}}
                 </ul>
@@ -29,7 +29,7 @@
                     <li class="title">Активация</li>
                     {{#each allActivationServices}}
                         <li class="colLink">
-                            <a href="/games?activationServices={{id}}" class="link" title="Открыть товары с активацией в {{name}}">{{name}}</a>
+                            <a href="/games?activationServices={{_id}}" class="link" title="Открыть товары с активацией в {{name}}">{{name}}</a>
                         </li>
                     {{/each}}
                 </ul>
