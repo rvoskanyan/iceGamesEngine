@@ -13,11 +13,13 @@ export const noveltyPage = async (req, res) => {
       const cart = person.cart;
       
       products = products.map(item => {
-        if (favoritesProducts && favoritesProducts.includes(item._id.toString())) {
+        const productId = item._id.toString();
+        
+        if (favoritesProducts && favoritesProducts.includes(productId)) {
           item.inFavorites = true;
         }
         
-        if (cart && cart.includes(item._id.toString())) {
+        if (cart && cart.includes(productId)) {
           item.inCart = true;
         }
         

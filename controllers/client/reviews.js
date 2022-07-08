@@ -41,11 +41,13 @@ export const reviewsPage = async (req, res) => {
         .lean();
     
       lastViewedProducts = viewedProducts && viewedProducts.map(product => {
-        if (favoritesProducts && favoritesProducts.includes(product._id.toString())) {
+        const productId = product._id.toString();
+        
+        if (favoritesProducts && favoritesProducts.includes(productId)) {
           product.inFavorites = true;
         }
       
-        if (cart && cart.includes(product._id.toString())) {
+        if (cart && cart.includes(productId)) {
           product.inCart = true;
         }
       

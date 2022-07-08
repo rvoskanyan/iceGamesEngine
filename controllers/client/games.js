@@ -78,8 +78,9 @@ export const gamePage = async (req, res) => {
     if (person) {
       const cart = person.cart;
       const email = person.email;
+      const productId = product._id.toString();
       
-      if (cart && cart.includes(product._id.toString())) {
+      if (cart && cart.includes(productId)) {
         currentProductInCart = true;
       }
       
@@ -107,15 +108,17 @@ export const gamePage = async (req, res) => {
       lastViewedProducts = viewedProductsResult.viewedProducts;
   
       lastViewedProducts = lastViewedProducts && lastViewedProducts.map(viewedProduct => {
-        if (favoritesProducts && favoritesProducts.includes(viewedProduct._id.toString())) {
+        const productId = viewedProduct._id.toString();
+        
+        if (favoritesProducts && favoritesProducts.includes(productId)) {
           viewedProduct.inFavorites = true;
         }
     
-        if (cart && cart.includes(viewedProduct._id.toString())) {
+        if (cart && cart.includes(productId)) {
           viewedProduct.inCart = true;
         }
         
-        if (viewedProduct._id.toString() === product._id.toString()) {
+        if (productId === product._id.toString()) {
           viewedProduct.currentPorductPage = true;
         }
     

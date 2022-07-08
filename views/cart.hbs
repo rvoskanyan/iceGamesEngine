@@ -18,22 +18,18 @@
                             <img class="img" src="{{@root.websiteAddress}}{{img}}" alt="{{name}}" title="{{name}}">
                             <div class="main">
                                 <div class="top">
-                                    <div class="name">
-                                        {{name}}
-                                    </div>
+                                    <div class="name">{{name}}</div>
                                     <div class="price">
-                                        <div class="rowDiscount">
-                                            <div class="fromPrice">
-                                                <span class="value js-priceFrom">
-                                                    {{priceFrom}}
-                                                </span>
+                                        {{#iff discount '>' 0}}
+                                            <div class="rowDiscount">
+                                                <div class="fromPrice">
+                                                <span class="value js-priceFrom">{{priceFrom}}</span>
+                                                </div>
+                                                <div class="discount">{{discount}}</div>
                                             </div>
-                                            <div class="discount">{{discount}}</div>
-                                        </div>
+                                        {{/iff}}
                                         <div class="toPrice">
-                                            <span class="value js-priceTo">
-                                                {{priceTo}}
-                                            </span>
+                                            <span class="value js-priceTo">{{priceTo}}</span>
                                         </div>
                                     </div>
                                     {{#if preOrder}}
@@ -75,7 +71,7 @@
                     </div>
                     <div class="param">
                         <div class="name">Скидка</div>
-                        <div class="value saving">-<span class="js-saving">{{cart.saving}}</span> ₽</div>
+                        <div class="value saving"><span class="js-saving">{{cart.saving}}</span> ₽</div>
                     </div>
                 </div>
                 <div class="total">

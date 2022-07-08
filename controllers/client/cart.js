@@ -24,7 +24,9 @@ export const cartPage = async (req, res) => {
       
       cart = result.cart;
       priceToTotal = cart.reduce((priceToTotal, item) => priceToTotal + item.priceTo, 0);
-      priceFromTotal = cart.reduce((priceFromTotal, item) => priceFromTotal + item.priceFrom, 0);
+      priceFromTotal = cart.reduce((priceFromTotal, item) => {
+        return priceFromTotal + (item.discount > 0 ? item.priceFrom : item.priceTo);
+      }, 0);
     }
     
     res.render('cart', {
