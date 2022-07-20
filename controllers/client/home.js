@@ -6,18 +6,8 @@ import Article from "../../models/Article.js";
 import User from "../../models/User.js";
 import Partner from "../../models/Partner.js";
 import {achievementEvent} from "../../services/achievement.js";
-import {getSoundIndex, normalizeStr} from "../../utils/functions.js";
 
 export const homepage = async (req, res) => {
-  const productsAllForChange = await Product.find().select(['name', 'normalizeName', 'soundName']);
-  
-  for (const product of productsAllForChange) {
-    product.normalizeName = normalizeStr(product.name);
-    product.soundName = getSoundIndex(product.name);
-    
-    await product.save();
-  }
-  
   const person = res.locals.person;
   let sliderProducts = await Product
     .find({inHomeSlider: true, inStock: true})
