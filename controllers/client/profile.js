@@ -178,6 +178,8 @@ export const profileOrdersPage = async (req, res) => {
       .select('products')
       .populate('products.productId', ['name', 'alias', 'priceTo', 'priceFrom', 'img', 'inStock']);
   
+    console.log(orders);
+  
     orders.products = orders.products.map(item => {
       const productId = item._id.toString();
     
