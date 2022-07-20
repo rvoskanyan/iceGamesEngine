@@ -193,6 +193,8 @@ export const profileOrdersPage = async (req, res) => {
         return item;
       });
     })
+  
+    console.log(orders[0].products);
     
     res.render('profileOrders', {
       title: 'ICE Games — Приобретенные товары',
