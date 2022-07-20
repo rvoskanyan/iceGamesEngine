@@ -68,6 +68,8 @@ const fields = {
     //unique: true,
     //index: true,
   },
+  normalizeName: String,
+  soundName: [],
   alias: {
     type: String,
     //require: true,

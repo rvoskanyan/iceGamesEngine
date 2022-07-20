@@ -9,7 +9,7 @@ import Genre from "../models/Genre.js";
 import Publisher from "../models/Publisher.js";
 import Extend from "../models/Extend.js";
 import Region from "../models/Region.js";
-import {getAlias, getDiscount, getExtendFile, isEqualBySound} from "../utils/functions.js";
+import {getAlias, getDiscount, getExtendFile, getSoundIndex, isEqualBySound, normalizeStr} from "../utils/functions.js";
 import {strMonths} from "../utils/constants.js";
 import path from "path";
 import {__dirname} from "../rootPathes.js";
@@ -114,6 +114,8 @@ export async function parseProduct(searchProductName, price, sourceLink = null) 
   const product = {
     name: searchProductName,
     alias: getAlias(searchProductName),
+    normalizeName: normalizeStr(searchProductName),
+    soundName: getSoundIndex(searchProductName),
     priceTo: price,
     priceFrom: price,
     description: '',
@@ -198,6 +200,8 @@ export async function parseProduct(searchProductName, price, sourceLink = null) 
         if (getAlias(itemName) === product.alias || isEqualBySound(itemName, searchProductName)) {
           product.name = itemName;
           product.alias = getAlias(itemName);
+          product.normalizeName = normalizeStr(itemName);
+          product.soundName = getSoundIndex(itemName);
           parsingTask.sourceLink = `https://steambuy.com${searchNode(item).attr('href')}`;
           break;
         }

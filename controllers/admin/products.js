@@ -16,6 +16,8 @@ import {
   getAlias,
   getDiscount,
   mergeParams,
+  normalizeStr,
+  getSoundIndex,
 } from "../../utils/functions.js";
 import Bundle from "../../models/Bundle.js";
 import Edition from "../../models/Edition.js";
@@ -135,6 +137,8 @@ export const addProduct = async (req, res) => {
     const creator = req.session.userId;
     const product = new Product({
       name,
+      normalizeName: normalizeStr(name),
+      soundName: getSoundIndex(name),
       metaDescription,
       authorId: creator,
       lastEditorId: creator,
@@ -369,6 +373,8 @@ export const editProduct = async (req, res) => {
   
     Object.assign(product, {
       name,
+      normalizeName: normalizeStr(name),
+      soundName: getSoundIndex(name),
       metaDescription,
       lastEditorId,
       alias: getAlias(name),
