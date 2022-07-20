@@ -32,10 +32,13 @@
             {{product.name}}
         </div>
     </div>
-    <div class="cover blackout blackout-left blackout-bottom slide active js-slide">
+    <div class="cover blackout blackout-left blackout-bottom slide active js-productPageCover"{{#if product.coverVideo}} data-video-name="{{product.coverVideo}}"{{/if}}>
         <div class="mobileImgContainer">
             <img class="mobileImg" src="{{websiteAddress}}{{product.img}}" alt="{{product.name}}" title="{{product.name}}">
         </div>
+        {{#if product.coverVideo}}
+            <video class="video js-coverVideo" loop muted></video>
+        {{/if}}
         <img class="img" src="{{websiteAddress}}{{product.coverImg}}" alt="{{product.name}}" title="{{product.name}}">
         <div class="offer">
             {{#if bundleProducts}}
@@ -83,18 +86,16 @@
             </p>
             <div class="mobileBuyContainer">
                 <div class="price">
-                    <div class="rowDiscount">
-                        <div class="fromPrice">
-                        <span class="value">
-                            {{product.priceFrom}}
-                        </span>
+                    {{#iff discount '>' 0}}
+                        <div class="rowDiscount">
+                            <div class="fromPrice">
+                                <span class="value">{{product.priceFrom}}</span>
+                            </div>
+                            <div class="discount">{{product.discount}}</div>
                         </div>
-                        <div class="discount">{{product.discount}}</div>
-                    </div>
+                    {{/iff}}
                     <div class="toPrice">
-                    <span class="value">
-                        {{product.priceTo}}
-                    </span>
+                        <span class="value">{{product.priceTo}}</span>
                     </div>
                 </div>
                 <div class="actions">
@@ -296,7 +297,7 @@
                             <button class="btn round border big translucent js-tabBtn" data-target-id="4">Игры серии</button>
                         {{/if}}
                     </div>
-                    <div class="blocks totalHeight infoBlock">
+                    <div class="items totalHeight infoBlock">
                         <div class="item active js-tabBlock-1">
                             {{encodeString product.description}}
                         </div>

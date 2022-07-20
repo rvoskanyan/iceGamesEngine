@@ -13,20 +13,18 @@
         {{/if}}
         {{#if inStock}}
             <button
-                class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart small js-addToCart{{#if inCart}} active js-active{{/if}}"
+                class="btn border rounded uppercase bg-darkPink hover-bg-pink active-bg-darkBlue inCart small js-addToCart{{#if inCart}} active js-active{{/if}}"
                 title="{{#if inCart}}Перейти в корзину покупок{{else}}Добавить данный товар в корзину покупок{{/if}}"
             >
-                <span class="desktop js-text">
-                    {{#if inCart}}Добавлено{{else}}В корзину{{/if}}
-                </span>
+                <span class="desktop js-text">{{#if inCart}}Добавлено{{else}}В корзину{{/if}}</span>
                 <span class="mobile icon-static icon-static-cartProduct{{#if inCart}} active{{/if}} js-icon"></span>
             </button>
         {{else}}
-                <div class="noInStockMsg">Игры нет<br>в наличии :(</div>
-                <button
-                        class="btn border rounded bg-darkPink hover-bg-pink small js-subscribeInStock"
-                        title="Подписаться на уведомление о поступлении товара"
-                >Уведомить</button>
+            <div class="noInStockMsg">Игры нет<br>в наличии :(</div>
+            <button
+                    class="btn border rounded bg-darkPink hover-bg-pink small js-subscribeInStock"
+                    title="Подписаться на уведомление о поступлении товара"
+            >Уведомить</button>
         {{/if}}
     </div>
     {{#if dlc}}
@@ -34,20 +32,16 @@
     {{/if}}
     <div class="head">
         <img class="img" src="{{@root.websiteAddress}}{{img}}" alt="Картинка {{name}}" title="{{name}}">
-        <div class="name">
-            {{name}}
-        </div>
+        <div class="name">{{name}}</div>
     </div>
     <div class="price">
         <div class="toPrice">
-            <span class="value">
-                {{priceTo}}
-            </span>
+            <span class="value">{{priceTo}}</span>
         </div>
-        <div class="fromPrice">
-            <span class="value">
-                {{priceFrom}}
-            </span>
-        </div>
+        {{#iff priceTo '<' priceFrom}}
+            <div class="fromPrice">
+                <span class="value">{{priceFrom}}</span>
+            </div>
+        {{/iff}}
     </div>
 </a>

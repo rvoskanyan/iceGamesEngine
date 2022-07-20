@@ -9,6 +9,8 @@ import {achievementEvent} from "../../services/achievement.js";
 
 export const homepage = async (req, res) => {
   const person = res.locals.person;
+  const favoritesProducts = person.favoritesProducts;
+  const cart = person.cart;
   let sliderProducts = await Product
     .find({inHomeSlider: true, inStock: true})
     .limit(5)
@@ -86,17 +88,53 @@ export const homepage = async (req, res) => {
   
   catalog.push({
     category: {name: 'Новинки'},
-    products: noveltiesProduct,
+    products: noveltiesProduct.map(item => {
+      const productId = item._id.toString();
+  
+      if (favoritesProducts && favoritesProducts.includes(productId)) {
+        item.inFavorites = true;
+      }
+  
+      if (cart && cart.includes(productId)) {
+        item.inCart = true;
+      }
+  
+      return item;
+    }),
   })
   
   catalog.push({
     category: {name: 'Скидки'},
-    products: discounts,
+    products: discounts.map(item => {
+      const productId = item._id.toString();
+  
+      if (favoritesProducts && favoritesProducts.includes(productId)) {
+        item.inFavorites = true;
+      }
+  
+      if (cart && cart.includes(productId)) {
+        item.inCart = true;
+      }
+  
+      return item;
+    }),
   })
   
   catalog.push({
     category: {name: 'Предзаказы'},
-    products: preOrders,
+    products: preOrders.map(item => {
+      const productId = item._id.toString();
+  
+      if (favoritesProducts && favoritesProducts.includes(productId)) {
+        item.inFavorites = true;
+      }
+  
+      if (cart && cart.includes(productId)) {
+        item.inCart = true;
+      }
+  
+      return item;
+    }),
   })
   
   for (let category of categories) {

@@ -933,15 +933,15 @@ mobileSearchStringNode.addEventListener('input', async () => {
         </div>
         <div class="price">
           <div class="toPrice">
-            <span class="value">
-              ${product.priceTo}
-            </span>
+            <span class="value">${product.priceTo}</span>
           </div>
-          <div class="fromPrice">
-            <span class="value">
-              ${product.priceFrom}
-            </span>
-          </div>
+          ${
+            product.priceTo < product.priceFrom ? `
+              <div class="fromPrice">
+                <span class="value">${product.priceFrom}</span>
+              </div>
+            ` : ''
+          }
         </div>
       </a>
     `;
@@ -1024,15 +1024,15 @@ searchStringNode.addEventListener('input', async () => {
         </div>
         <div class="price">
           <div class="toPrice">
-            <span class="value">
-              ${product.priceTo}
-            </span>
+            <span class="value">${product.priceTo}</span>
           </div>
-          <div class="fromPrice">
-            <span class="value">
-              ${product.priceFrom}
-            </span>
-          </div>
+          ${
+            product.priceTo < product.priceFrom ? `
+              <div class="fromPrice">
+                <span class="value">${product.priceFrom}</span>
+              </div>
+            ` : ''
+          }
         </div>
       </a>
     `;
@@ -1140,6 +1140,40 @@ if (homeMediaSliderNode) {
     mainNode: homeMediaSliderNode,
     carousel: true,
   })
+}
+
+if (gamePageNode) {
+  const productCoverNode = gamePageNode.querySelector('.js-productPageCover');
+  
+  if (productCoverNode) {
+    const videoNode = productCoverNode.querySelector('.js-coverVideo');
+    const videoName = productCoverNode.dataset.videoName;
+    let playVideoTimeOutId;
+  
+    window.addEventListener('resize', handleResize);
+  
+    videoNode.addEventListener('canplaythrough', onCanplaythrough);
+    videoNode.setAttribute('src',`${websiteAddress}${videoName}`);
+  
+    function onCanplaythrough() {
+      playVideoTimeOutId = setTimeout(() => {
+        productCoverNode.classList.add('activeVideo');
+        videoNode.play();
+      }, 2000);
+    }
+  
+    function handleResize() {
+      if (getComputedStyle(videoNode).display === 'none' && videoNode.hasAttribute('src')) {
+        clearTimeout(playVideoTimeOutId);
+        productCoverNode.classList.remove('activeVideo');
+        videoNode.removeAttribute('src');
+        videoNode.removeEventListener('canplaythrough', onCanplaythrough);
+      } else if (getComputedStyle(videoNode).display !== 'none' && !videoNode.hasAttribute('src')) {
+        videoNode.addEventListener('canplaythrough', onCanplaythrough);
+        videoNode.setAttribute('src',`${websiteAddress}${videoName}`);
+      }
+    }
+  }
 }
 
 if (homeSliderNode) {
@@ -1365,15 +1399,15 @@ if (catalogNode) {
           </div>
           <div class="price">
             <div class="toPrice">
-              <span class="value">
-                ${product.priceTo}
-              </span>
+              <span class="value">${product.priceTo}</span>
             </div>
-            <div class="fromPrice">
-              <span class="value">
-                ${product.priceFrom}
-              </span>
-            </div>
+            ${
+              product.priceTo < product.priceFrom ? `
+                <div class="fromPrice">
+                  <span class="value">${product.priceFrom}</span>
+                </div>
+              ` : ''
+            }
           </div>
         </a>
       `;
@@ -1606,15 +1640,15 @@ if (catalogNode) {
           </div>
           <div class="price">
             <div class="toPrice">
-              <span class="value">
-                ${product.priceTo}
-              </span>
+              <span class="value">${product.priceTo}</span>
             </div>
-            <div class="fromPrice">
-              <span class="value">
-                ${product.priceFrom}
-              </span>
-            </div>
+            ${
+              product.priceTo < product.priceFrom ? `
+                <div class="fromPrice">
+                  <span class="value">${product.priceFrom}</span>
+                </div>
+              ` : ''
+            }
           </div>
         </a>
       `

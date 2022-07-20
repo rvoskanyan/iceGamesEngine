@@ -16,18 +16,16 @@
                             {{description}}
                         </div>
                         <div class="price">
-                            <div class="rowDiscount">
-                                <div class="fromPrice">
-                                    <span class="value">
-                                        {{priceFrom}}
-                                    </span>
+                            {{#iff discount '>' 0}}
+                                <div class="rowDiscount">
+                                    <div class="fromPrice">
+                                        <span class="value">{{priceFrom}}</span>
+                                    </div>
+                                    <div class="discount">{{discount}}</div>
                                 </div>
-                                <div class="discount">{{discount}}</div>
-                            </div>
+                            {{/iff}}
                             <div class="toPrice">
-                                <span class="value">
-                                    {{priceTo}}
-                                </span>
+                                <span class="value">{{priceTo}}</span>
                             </div>
                         </div>
                         <div class="actions">

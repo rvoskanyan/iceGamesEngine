@@ -187,11 +187,28 @@ export const gamePage = async (req, res) => {
       }
     }
     
-    const recProducts = await Product.aggregate([
+    let recProducts = await Product.aggregate([
       {$match: recProductsFilter},
-      {$project: {name: 1, alias: 1, dsId: 1, img: 1, priceTo: 1, priceFrom: 1}},
+      {$project: {name: 1, alias: 1, inStock: 1, img: 1, priceTo: 1, priceFrom: 1}},
       {$sample: {size: 8}},
     ]);
+  
+    const favoritesProducts = person.favoritesProducts;
+    const cart = person.cart;
+  
+    recProducts = recProducts.map(item => {
+      const productId = item._id.toString();
+  
+      if (favoritesProducts && favoritesProducts.includes(productId)) {
+        item.inFavorites = true;
+      }
+  
+      if (cart && cart.includes(productId)) {
+        item.inCart = true;
+      }
+  
+      return item;
+    })
   
     const seriesIsSlider = seriesProducts && seriesProducts.length > 5
     
