@@ -3,15 +3,16 @@ import Order from './../../models/Order.js';
 export const createOrder = async (req, res) => {
   try {
     const person = res.locals.person;
+    const dsCartId = req.body.dsCartId;
     
-    if (!person || !person.cart.length || !person.dsCartId) {
-      throw new Error('Not found person or products in cart or dsCartId');
+    if (!person || !person.cart.length) {
+      throw new Error('Not found person or products in cart');
     }
     
     const order = new Order({
-      dsCartId: person.dsCartId,
       products: [],
       status: 'notPaid',
+      dsCartId,
     });
     
     if (req.session.isAuth) {
@@ -25,12 +26,10 @@ export const createOrder = async (req, res) => {
       });
     })
     
-    await order.save();
-    
-    person.dsCartId = undefined;
     person.cart = [];
-    
+    await order.save();
     await person.save();
+    
     res.json({
       success: true,
     });

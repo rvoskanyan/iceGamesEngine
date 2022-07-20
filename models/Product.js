@@ -1,5 +1,5 @@
 import Mongoose from "mongoose";
-import {getFormatDate} from "../utils/functions.js";
+import {getDiscount, getFormatDate} from "../utils/functions.js";
 import {mailingInStockProduct} from "../services/mailer.js";
 
 const {Schema, model} = Mongoose;
@@ -291,6 +291,20 @@ productSchema.methods.changeInStock = async function(inStock) {
       reject();
     }
   }.bind(this));
+}
+
+productSchema.methods.changePrice = async function({priceTo = null, priceFrom = null}) {
+  try {
+    if (this.priceTo !== priceTo || this.priceFrom !== priceFrom) {
+      this.priceTo = priceTo ? priceTo : this.priceTo;
+      this.priceFrom = priceFrom ? priceFrom : this.priceFrom;
+      this.discount = getDiscount(this.priceTo, this.priceFrom);
+      
+      await this.save();
+    }
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 export default model('Product', productSchema);

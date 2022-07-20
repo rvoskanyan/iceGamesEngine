@@ -449,77 +449,12 @@ if (gamePageNode) {
       return;
     }
     
-    const dsCartId = document.querySelector('body').dataset.dsCartId;
-    const formData = new FormData();
-    const dsId = addToCartBtnNode.dataset.dsId;
     const productId = addToCartBtnNode.dataset.productId;
-    
-    formData.append('product_id', dsId);
-    formData.append('product_cnt', '1');
-    formData.append('typecurr', 'wmr');
-    formData.append('lang', 'ru-RU');
-    
-    if (dsCartId) {
-      formData.append('cart_uid', dsCartId);
-    }
-    
-    const responseAddCartDS = await fetch('https://shop.digiseller.ru/xml/shop_cart_add.asp', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: urlEncodeFormData(formData),
-    });
-    
-    const resultAddCartDS = await responseAddCartDS.json();
-  
-  
-    if (resultAddCartDS.cart_err === "Товар закончился или временно отключен.") {
-      const mainNode = document.querySelector('.js-gamePage');
-      const modalNode = document.createElement('div');
-      const modalBlockNode = document.createElement('div');
-      const titleModalNode = document.createElement('div');
-      const textModalNode = document.createElement('p');
-      const btnNode = document.createElement('button');
-  
-      modalNode.setAttribute('class', 'subscribeModalContainer js-subscribeModal');
-      modalBlockNode.setAttribute('class', 'subscribeModalBlock');
-      titleModalNode.setAttribute('class', 'title');
-      textModalNode.setAttribute('class', 'text');
-      btnNode.setAttribute('class', 'ok btn small border rounded translucent bg-darkLilac');
-    
-      titleModalNode.innerText = 'Игры нет в наличии!';
-      textModalNode.innerText = 'К сожалению, данной игры пока нет в наличии. Как-только Вы закроете данное уведомление - обновится страница и у Вас будет возможность подписаться на уведомление о поступлении';
-      btnNode.innerText = 'OK';
-  
-      btnNode.addEventListener('click', async () => {
-        await postman.put(`/api/products/${productId}/reviseInStock`);
-        window.location.reload();
-      });
-      
-      modalBlockNode.append(titleModalNode);
-      modalBlockNode.append(textModalNode);
-      modalBlockNode.append(btnNode);
-      modalNode.append(modalBlockNode);
-      mainNode.prepend(modalNode);
-      modalNode.classList.add('active');
-    
-      return;
-    }
-    
-    if (resultAddCartDS.cart_err_num !== '0') {
-      return;
-    }
-    
-    const response = await postman.post(`/api/products/${productId}/cart`, {dsCartId: resultAddCartDS.cart_uid});
+    const response = await postman.post(`/api/products/${productId}/cart`);
     const result = await response.json();
     
     if (result.error) {
       return;
-    }
-    
-    if (!dsCartId) {
-      document.querySelector('body').dataset.dsCartId = resultAddCartDS.cart_uid;
     }
     
     addToCartBtnNode.innerText = 'Добавлено';
@@ -686,7 +621,7 @@ if (cartNode) {
   const cartTitleNode = cartNode.querySelector('.js-cartTitle');
   
   if (cartListNode) {
-    const products = cartListNode.querySelectorAll('.js-product');
+    const productNodes = cartListNode.querySelectorAll('.js-product');
     const checkNode = cartListNode.querySelector('.js-check');
     const totalPriceToNode = checkNode.querySelector('.js-totalTo');
     const totalPriceFromNode = checkNode.querySelector('.js-totalFrom');
@@ -694,149 +629,147 @@ if (cartNode) {
     const payBtnNode = checkNode.querySelector('.js-payBtn');
     const savingValueNode = checkNode.querySelector('.js-saving');
     let savingValue = +savingValueNode.innerText;
-    let countProducts = products.length;
+    let countProducts = productNodes.length;
     let totalPriceToValue = +totalPriceToNode.innerText;
     let totalPriceFromValue = +totalPriceFromNode.innerText;
   
-    if (payBtnNode) {
-      payBtnNode.addEventListener('click', async () => {
-        const response = await postman.post('/api/order');
-        const result = await response.json();
-      
-        if (result.error) {
-          return;
-        }
-      
-        const payFormNode = cartListNode.querySelector('.js-payForm');
-        payFormNode.submit();
-      })
-    }
-  
     if (countProducts) {
-      const dsCartId = document.querySelector('body').dataset.dsCartId;
-      
-      if (dsCartId) {
-        const formData = new FormData();
+      productNodes.forEach(productNode => {
+        const deleteFromCartBtn = productNode.querySelector('.js-deleteFromCart');
+        const productId = productNode.dataset.productId;
+
+        deleteFromCartBtn.addEventListener('click', async () => {
+          if (!productId) {
+            return;
+          }
+
+          const response = await postman.delete(`/api/products/${productId}/cart`);
+          const result = await response.json();
+
+          if (result.error) {
+            return;
+          }
+
+          countProducts -= 1;
+
+          if (countProducts === 0)   {
+            cartListNode.remove();
+            cartTitleNode.remove();
   
-        formData.append('cart_uid', dsCartId);
-        formData.append('cart_curr', 'RUR');
-        
-        fetch('https://shop.digiseller.ru/xml/shop_cart_lst.asp', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-          },
-          body: urlEncodeFormData(formData),
-        }).then(result => {
-          result.json().then(result => {
-            const dsCartProducts = result.products;
-            const changes = [];
-  
-            console.log(result.products);
-  
-            products.forEach(productNode => {
-              const deleteFromCartBtn = productNode.querySelector('.js-deleteFromCart');
-              const productId = productNode.dataset.productId;
-              const dsId = productNode.dataset.dsId;
-              const dsCartProduct = dsCartProducts.find(product => +product.id === +dsId)
-    
-              deleteFromCartBtn.addEventListener('click', async () => {
-                if (!dsCartId || !dsId || !productId) {
-                  return;
-                }
-      
-                let formData = new FormData();
-      
-                formData.append('cart_uid', dsCartId);
-                formData.append('cart_curr', 'RUR');
-                formData.append('lang', 'ru-RU');
-      
-                const responseCartDS = await fetch('https://shop.digiseller.ru/xml/shop_cart_lst.asp', {
-                  method: 'POST',
-                  headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                  },
-                  body: urlEncodeFormData(formData),
-                });
-      
-                const resultCartDS = await responseCartDS.json();
-      
-                if (!resultCartDS.products) {
-                  return;
-                }
-      
-                const {item_id} = resultCartDS.products.find(item => item.id === dsId);
-      
-                formData.append('item_id', item_id);
-                formData.append('product_cnt', '0');
-      
-                let responseUpdateCartDS = await fetch('https://shop.digiseller.ru/xml/shop_cart_lst.asp', {
-                  method: 'POST',
-                  headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                  },
-                  body: urlEncodeFormData(formData),
-                });
-      
-                let resultUpdateCartDS = await responseUpdateCartDS.json();
-      
-                if (resultUpdateCartDS.cart_err !== '0' && resultUpdateCartDS.cart_err !== '5') {
-                  return;
-                }
-      
-                const response = await postman.delete(`/api/products/${productId}/cart`);
-                const result = await response.json();
-      
-                if (result.error) {
-                  return;
-                }
-      
-                countProducts -= 1;
-      
-                if (countProducts === 0)   {
-                  cartListNode.remove();
-                  cartTitleNode.remove();
-        
-                  return cartNode.innerHTML += `
-                    <div class="notFound">
-                      <img src="${websiteAddress}img/notFound.svg" class="img" alt="Иконка расстроенного смайла" title="Корзина пуста :(">
-                      <div class="text">
-                          <span class="title">Корзина пуста</span>
-                          <p class="description">Воспользуйтесь каталогом, чтобы найти все, что нужно!</p>
-                      </div>
-                      <a href="${websiteAddress}games" class="btn big border round hover-border-pink hover-color-pink" title="Перейти в каталог">В каталог</a>
-                    </div>
-                  `;
-                }
-      
-                const priceTo = +productNode.querySelector('.js-priceTo').innerText;
-                const priceFrom = +productNode.querySelector('.js-priceFrom').innerText;
-      
-                totalPriceToValue -= priceTo;
-                totalPriceFromValue -= priceFrom;
-                savingValue -= priceFrom - priceTo;
-      
-                totalPriceToNode.innerText = totalPriceToValue;
-                totalPriceFromNode.innerText = totalPriceFromValue;
-                totalProductsNode.innerText = countProducts;
-                savingValueNode.innerText = savingValue;
-      
-                productNode.remove();
-              })
-      
-              if (!dsCartProduct) {
-                changes.push({
-                  name: productNode.querySelector('.name'),
-                  notInStock: true,
-                  productId,
-                })
-                
-                //return deleteFromCartBtn.dispatchEvent(new Event('click'));
-              }
-            })
-          })
+            return cartNode.innerHTML += `
+              <div class="notFound">
+                <img src="${websiteAddress}img/notFound.svg" class="img" alt="Иконка расстроенного смайла" title="Корзина пуста :(">
+                <div class="text">
+                    <span class="title">Корзина пуста</span>
+                    <p class="description">Воспользуйтесь каталогом, чтобы найти все, что нужно!</p>
+                </div>
+                <a href="${websiteAddress}games" class="btn big border round hover-border-pink hover-color-pink" title="Перейти в каталог">В каталог</a>
+              </div>
+            `;
+          }
+
+          const priceTo = +productNode.querySelector('.js-priceTo').innerText;
+          const priceFrom = +productNode.querySelector('.js-priceFrom')?.innerText;
+
+          totalPriceToValue -= priceTo;
+          totalPriceFromValue -= priceFrom ? priceFrom : priceTo;
+          savingValue -= priceFrom ? priceFrom - priceTo : 0;
+
+          totalPriceToNode.innerText = totalPriceToValue;
+          totalPriceFromNode.innerText = totalPriceFromValue;
+          totalProductsNode.innerText = countProducts;
+          savingValueNode.innerText = savingValue;
+
+          productNode.remove();
         })
-      }
+        
+      });
+  
+      payBtnNode && payBtnNode.addEventListener('click', async () => {
+        const formData = new FormData();
+        const changes = [];
+        let dsCartId = null;
+    
+        formData.append('product_cnt', '1');
+        formData.append('typecurr', 'wmr');
+        formData.append('lang', 'ru-RU');
+    
+        for (const productNode of productNodes) {
+          const dsId = productNode.dataset.dsId;
+          const productId = productNode.dataset.productId;
+      
+          formData.set('product_id', dsId);
+      
+          const responseAddCartDs = await fetch('https://shop.digiseller.ru/xml/shop_cart_add.asp', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: urlEncodeFormData(formData),
+          });
+      
+          const resultAddCartDs = await responseAddCartDs.json();
+      
+          if (resultAddCartDs.cart_err === "Товар закончился или временно отключен.") {
+            const deleteFromCartBtn = productNode.querySelector('.js-deleteFromCart');
+  
+            deleteFromCartBtn.dispatchEvent(new Event('click'));
+            await postman.put(`/api/products/${productId}/revise`);
+            changes.push({
+              name: productNode.querySelector('.name').innerText,
+              notInStock: true,
+              productId,
+            });
+          }
+      
+          if (resultAddCartDs.cart_err_num !== '0') {
+            return;
+          }
+      
+          const product = resultAddCartDs.products.find(product => +product.id === +dsId);
+          const priceToNode = productNode.querySelector('.js-priceTo');
+          const currentPrice = +priceToNode.innerText;
+      
+          if (+product.price !== currentPrice) {
+            const priceFrom = +productNode.querySelector('.js-priceFrom').innerText;
+            const dsPrice = parseInt(product.price);
+            const discountNode = productNode.querySelector('.js-discount');
+            
+            await postman.put(`/api/products/${productId}/revise`);
+  
+            savingValueNode.innerText = +savingValueNode.innerText - (dsPrice - currentPrice);
+            totalPriceToNode.innerText = totalPriceFromNode.innerText - savingValueNode.innerText;
+            discountNode.innerText = Math.floor(100 - dsPrice / (priceFrom / 100));
+            priceToNode.innerText = dsPrice;
+            changes.push({
+              name: productNode.querySelector('.name').innerText,
+              fromPrice: currentPrice,
+              toPrice: dsPrice,
+            });
+          }
+      
+          if (!dsCartId) {
+            formData.set('cart_uid', resultAddCartDs.cart_uid);
+            dsCartId = resultAddCartDs.cart_uid;
+          }
+        }
+    
+        if (!changes.length) {
+          const response = await postman.post('/api/order', {dsCartId});
+          const result = await response.json();
+      
+          if (result.error) {
+            return;
+          }
+      
+          const payFormNode = cartListNode.querySelector('.js-payForm');
+          return payFormNode.submit();
+        }
+        
+        /*changes.forEach(item => {
+        
+        })*/
+      })
     }
   }
 }
@@ -896,66 +829,12 @@ document.addEventListener('click', async (e) => {
         window.location.href = '/cart';
         return;
       }
-  
-      const dsCartId = document.querySelector('body').dataset.dsCartId;
-      const formData = new FormData();
-  
-      formData.append('product_id', dsId);
-      formData.append('product_cnt', '1');
-      formData.append('typecurr', 'wmr');
-      formData.append('lang', 'ru-RU');
-  
-      if (dsCartId) {
-        formData.append('cart_uid', dsCartId);
-      }
-  
-      const responseAddCartDS = await fetch('https://shop.digiseller.ru/xml/shop_cart_add.asp', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: urlEncodeFormData(formData),
-      });
-  
-      const resultAddCartDS = await responseAddCartDS.json();
       
-      if (resultAddCartDS.cart_err === "Товар закончился или временно отключен.") {
-        const mainNode = document.querySelector('.js-gamePage');
-        const modalNode = document.createElement('div');
-        const modalBlockNode = document.createElement('div');
-        const titleModalNode = document.createElement('div');
-        const textModalNode = document.createElement('p');
-        
-        modalNode.setAttribute('class', 'subscribeModalContainer js-subscribeModal');
-        modalBlockNode.setAttribute('class', 'subscribeModalBlock');
-        titleModalNode.setAttribute('class', 'title');
-        textModalNode.setAttribute('class', 'text');
-  
-        titleModalNode.innerText = 'Игры нет в наличии!';
-        textModalNode.innertText = 'К сожалению, данная игра пропала из наличия. Но, у Вас есть отличная возможность - узнать одним из первых, как только она появится в наличии. Для этого достаточно всего-лишь указать в поле ниже Ваш E-mail и мы обязательно пришлем на него уведомление, как только игра снова появится в наличии!';
-  
-        modalBlockNode.append(titleModalNode);
-        modalBlockNode.append(textModalNode);
-        modalNode.append(modalBlockNode);
-        mainNode.prepend(modalNode);
-        modalNode.classList.add('active');
-        
-        return;
-      }
-  
-      if (resultAddCartDS.cart_err_num !== '0') {
-        return;
-      }
-  
-      const response = await postman.post(`/api/products/${productId}/cart`, {dsCartId: resultAddCartDS.cart_uid});
+      const response = await postman.post(`/api/products/${productId}/cart`);
       const result = await response.json();
   
       if (result.error) {
         return;
-      }
-  
-      if (!dsCartId) {
-        document.querySelector('body').dataset.dsCartId = resultAddCartDS.cart_uid;
       }
   
       addToCartBtnText.innerText = 'Добавлено';
@@ -1015,7 +894,6 @@ mobileSearchStringNode.addEventListener('input', async () => {
         href="/games/${product.alias}"
         class="cardGame small js-cardGame"
         data-id="${product._id}"
-        data-ds-id="${product.dsId}"
         title="Перейти к странице товара"
       >
         <div class="actions${!product.inStock ? ' noInStock' : ''}">
@@ -1107,7 +985,6 @@ searchStringNode.addEventListener('input', async () => {
         href="/games/${product.alias}"
         class="cardGame small js-cardGame"
         data-id="${product._id}"
-        data-ds-id="${product.dsId}"
         title="Перейти к странице товара"
       >
         <div class="actions${!product.inStock ? ' noInStock' : ''}">
@@ -1338,78 +1215,13 @@ if (homeSliderNode) {
         window.location.href = '/cart';
         return;
       }
-  
-      const dsCartId = document.querySelector('body').dataset.dsCartId;
-      const formData = new FormData();
-      const dsId = btn.dataset.dsId;
+      
       const productId = btn.dataset.productId;
-  
-      formData.append('product_id', dsId);
-      formData.append('product_cnt', '1');
-      formData.append('typecurr', 'wmr');
-      formData.append('lang', 'ru-RU');
-  
-      if (dsCartId) {
-        formData.append('cart_uid', dsCartId);
-      }
-  
-      const responseAddCartDS = await fetch('https://shop.digiseller.ru/xml/shop_cart_add.asp', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: urlEncodeFormData(formData),
-      });
-  
-      const resultAddCartDS = await responseAddCartDS.json();
-  
-  
-      if (resultAddCartDS.cart_err === "Товар закончился или временно отключен.") {
-        const mainNode = document.querySelector('.js-gamePage');
-        const modalNode = document.createElement('div');
-        const modalBlockNode = document.createElement('div');
-        const titleModalNode = document.createElement('div');
-        const textModalNode = document.createElement('p');
-        const btnNode = document.createElement('button');
-    
-        modalNode.setAttribute('class', 'subscribeModalContainer js-subscribeModal');
-        modalBlockNode.setAttribute('class', 'subscribeModalBlock');
-        titleModalNode.setAttribute('class', 'title');
-        textModalNode.setAttribute('class', 'text');
-        btnNode.setAttribute('class', 'ok btn small border rounded translucent bg-darkLilac');
-    
-        titleModalNode.innerText = 'Игры нет в наличии!';
-        textModalNode.innerText = 'К сожалению, данной игры пока нет в наличии. Как-только Вы закроете данное уведомление - обновится страница и у Вас будет возможность подписаться на уведомление о поступлении';
-        btnNode.innerText = 'OK';
-    
-        btnNode.addEventListener('click', async () => {
-          await postman.put(`/api/products/${productId}/reviseInStock`);
-          window.location.reload();
-        });
-    
-        modalBlockNode.append(titleModalNode);
-        modalBlockNode.append(textModalNode);
-        modalBlockNode.append(btnNode);
-        modalNode.append(modalBlockNode);
-        mainNode.prepend(modalNode);
-        modalNode.classList.add('active');
-    
-        return;
-      }
-  
-      if (resultAddCartDS.cart_err_num !== '0') {
-        return;
-      }
-  
-      const response = await postman.post(`/api/products/${productId}/cart`, {dsCartId: resultAddCartDS.cart_uid});
+      const response = await postman.post(`/api/products/${productId}/cart`);
       const result = await response.json();
   
       if (result.error) {
         return;
-      }
-  
-      if (!dsCartId) {
-        document.querySelector('body').dataset.dsCartId = resultAddCartDS.cart_uid;
       }
   
       btn.innerText = 'Добавлено';
@@ -1514,7 +1326,6 @@ if (catalogNode) {
           href="/games/${product.alias}"
           class="cardGame js-cardGame"
           data-id="${product._id}"
-          data-ds-id="${product.dsId}"
           title="Перейти к странице товара"
         >
           <div class="actions${!product.inStock ? ' noInStock' : ''}">
@@ -1756,7 +1567,6 @@ if (catalogNode) {
           href="/games/${product.alias}"
           class="cardGame js-cardGame"
           data-id="${product._id}"
-          data-ds-id="${product.dsId}"
           title="Перейти к странице товара"
         >
           <div class="actions${!product.inStock ? ' noInStock' : ''}">

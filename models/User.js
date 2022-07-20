@@ -45,7 +45,6 @@ const fields = {
     enum: ['client', 'admin'],
     default: 'client',
   },
-  dsCartId: String,
   cart: [{
     type: Schema.Types.ObjectId,
     ref: 'Product',

@@ -4,6 +4,7 @@ import Product from "./../../models/Product.js";
 import User from "./../../models/User.js";
 import {achievementEvent} from "../../services/achievement.js";
 import {getToken} from "../../services/digiseller.js";
+import {mailingBuyProduct} from "../../services/mailer.js";
 
 export const assignOrderPay = async (req, res) => {
   try {
@@ -67,6 +68,8 @@ export const assignOrderPay = async (req, res) => {
       await user.increaseRating(10);
       await achievementEvent('productPurchase', user);
     }
+  
+    mailingBuyProduct(product._id, buyerEmail).then();
     
     res.json({
       success: true,

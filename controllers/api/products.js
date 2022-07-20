@@ -200,11 +200,10 @@ export const deleteFromFavorites = async (req, res) => {
 export const addToCart = async (req, res) => {
   try {
     const productId = req.params.productId;
-    const dsCartId = req.body.dsCartId;
     let person = res.locals.person;
   
-    if (!productId || !dsCartId) {
-      throw new Error('No productId or dsCartId');
+    if (!productId) {
+      throw new Error('No productId');
     }
   
     const product = await Product.findById(productId).select(['_id', 'inStock']).lean();
@@ -227,7 +226,6 @@ export const addToCart = async (req, res) => {
     }
   
     person['cart'].push(productId);
-    person.dsCartId = dsCartId;
     await person.save();
     res.json({
       success: true,
@@ -329,10 +327,10 @@ export const addReview = async (req, res) => {
   }
 }
 
-export const reviseInStock = async (req, res) => {
+export const revise = async (req, res) => {
   try {
     const productId = req.params.productId;
-    const product = await Product.findById(productId).select(['dsId', 'inStock']);
+    const product = await Product.findById(productId).select(['dsId', 'inStock', 'priceTo', 'priceFrom', 'discount']);
     const responseProducts = await fetch('https://api.digiseller.ru/api/products/list', {
       method: 'POST',
       headers: {
@@ -342,8 +340,10 @@ export const reviseInStock = async (req, res) => {
       body: JSON.stringify({ids: [product.dsId]}),
     });
     const resultProducts = await responseProducts.json();
+    const dsProduct = resultProducts[0];
     
-    await product.changeInStock(!!resultProducts[0].in_stock);
+    await product.changeInStock(!!dsProduct.in_stock);
+    await product.changePrice({priceTo: parseInt(dsProduct.price_rub)});
   
     res.json({
       success: true,

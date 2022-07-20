@@ -1,4 +1,33 @@
 <main class="contentContainer withoutCover basketPage js-cart">
+    <div class="containerModalChanges">
+        <div class="modalChanges">
+            <div class="head">
+                <div class="description">
+                    <div class="title">Обратите внимание!</div>
+                    <div class="text">
+                        В связи со сложившейся ситуацией в мире, некоторых товаров из Вашей корзины временно нет в
+                        наличии, также могла измениться цена. Приносим извинения за доставленные неудобства!
+                    </div>
+                </div>
+                <button class="btn close"></button>
+            </div>
+            <div class="changes">
+                <div class="product">
+                    <div class="info">
+                        <div class="name">DOOM ETERNAL</div>
+                        <div class="info">временно нет в наличии</div>
+                    </div>
+                    <button class="btn round border small">Уведомить</button>
+                </div>
+                <div class="product">
+                    <div class="info">
+                        <div class="name">DOOM ETERNAL</div>
+                        <div class="info">цена изменилась с <span class="priceValue">999</span>₽ до <span class="priceValue">899</span>₽</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="breadcrumbs contentContainer">
         <div class="item">
             <a class="btn link" href="{{websiteAddress}}">Главная</a>
@@ -25,7 +54,7 @@
                                                 <div class="fromPrice">
                                                 <span class="value js-priceFrom">{{priceFrom}}</span>
                                                 </div>
-                                                <div class="discount">{{discount}}</div>
+                                                <div class="discount js-discount">{{discount}}</div>
                                             </div>
                                         {{/iff}}
                                         <div class="toPrice">

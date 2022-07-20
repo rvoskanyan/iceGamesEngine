@@ -2,10 +2,7 @@ import Mongoose from "mongoose";
 
 const {Schema, model} = Mongoose;
 const fields = {
-  dsCartId: {
-    type: String,
-    unique: true,
-  },
+  dsCartId: String,
   userId: {
     type: Schema.Types.ObjectId,
     ref: 'User',
