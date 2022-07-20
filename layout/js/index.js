@@ -1144,9 +1144,9 @@ if (homeMediaSliderNode) {
 
 if (gamePageNode) {
   const productCoverNode = gamePageNode.querySelector('.js-productPageCover');
+  const videoNode = productCoverNode.querySelector('.js-coverVideo');
   
-  if (productCoverNode) {
-    const videoNode = productCoverNode.querySelector('.js-coverVideo');
+  if (videoNode) {
     const videoName = productCoverNode.dataset.videoName;
     let playVideoTimeOutId;
   
