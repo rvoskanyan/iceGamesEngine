@@ -180,21 +180,19 @@ export const profileOrdersPage = async (req, res) => {
     
     orders.forEach(order => {
       order.products = order.products.map(item => {
-        const productId = item._id.toString();
+        const productId = item.productId._id.toString();
     
         if (favoritesProducts && favoritesProducts.includes(productId)) {
-          item.inFavorites = true;
+          item.productId.inFavorites = true;
         }
     
         if (cart && cart.includes(productId)) {
-          item.inCart = true;
+          item.productId.inCart = true;
         }
     
         return item;
       });
     })
-  
-    console.log(orders[0].products);
     
     res.render('profileOrders', {
       title: 'ICE Games — Приобретенные товары',
