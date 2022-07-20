@@ -5,6 +5,7 @@ import Order from "../../models/Order.js";
 import {achievementEvent} from "../../services/achievement.js";
 import {validationResult} from "express-validator";
 import fetch from "node-fetch";
+import {getChangeLayout, getSoundIndex} from "../../utils/functions.js";
 /*
   Articles.find({_id: {$ne: article._id}})
  */
@@ -39,7 +40,8 @@ export const getProducts = async (req, res) => {
       skip = 0,
     } = req.query;
     const name = new RegExp(searchString, 'i');
-    const filter = {name, active: true};
+    const changedLayoutName = new RegExp(getChangeLayout(searchString), 'i');
+    const filter = {$or: [{name}, {name: changedLayoutName}], active: true};
     const person = res.locals.person;
     
     if (categories.length) {

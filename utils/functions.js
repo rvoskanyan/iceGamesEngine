@@ -83,6 +83,52 @@ export const getArray = (value) => {
   return [value];
 }
 
+export const getChangeLayout = (str) => {
+  const replace = {
+    'q': 'й',
+    'w': 'ц',
+    'e': 'у',
+    'r': 'к',
+    't': 'е',
+    'y': 'н',
+    'u': 'г',
+    'i': 'ш',
+    'o': 'щ',
+    'p': 'з',
+    'a': 'ф',
+    's': 'ы',
+    'd': 'в',
+    'f': 'а',
+    'g': 'п',
+    'h': 'р',
+    'j': 'о',
+    'k': 'л',
+    'l': 'д',
+    'z': 'я',
+    'x': 'ч',
+    'c': 'с',
+    'v': 'м',
+    'b': 'и',
+    'n': 'т',
+    'm': 'ь',
+  };
+  
+  const cyrillic = Object.values(replace);
+  const latin = Object.keys(replace);
+  
+  let resultStr = '';
+  
+  str.split('').forEach(item => {
+    const char = item.toLowerCase();
+    const cyrillicIndex = cyrillic.indexOf(char);
+    const latinIndex = latin.indexOf(char);
+  
+    cyrillicIndex > -1 ? resultStr += latin[cyrillicIndex] : latinIndex > -1 ? resultStr += cyrillic[latinIndex] : '';
+  })
+  
+  return resultStr;
+}
+
 export const getAlias = (str) => {
   const replace = {
     'a': 'а',
