@@ -177,22 +177,22 @@ export const profileOrdersPage = async (req, res) => {
       .sort({'createdAt': -1})
       .select('products')
       .populate('products.productId', ['name', 'alias', 'priceTo', 'priceFrom', 'img', 'inStock']);
-  
-    console.log(orders);
-  
-    orders.products = orders.products.map(item => {
-      const productId = item._id.toString();
     
-      if (favoritesProducts && favoritesProducts.includes(productId)) {
-        item.inFavorites = true;
-      }
+    orders.forEach(order => {
+      order.products = order.products.map(item => {
+        const productId = item._id.toString();
     
-      if (cart && cart.includes(productId)) {
-        item.inCart = true;
-      }
+        if (favoritesProducts && favoritesProducts.includes(productId)) {
+          item.inFavorites = true;
+        }
     
-      return item;
-    });
+        if (cart && cart.includes(productId)) {
+          item.inCart = true;
+        }
+    
+        return item;
+      });
+    })
     
     res.render('profileOrders', {
       title: 'ICE Games — Приобретенные товары',
