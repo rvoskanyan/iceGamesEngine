@@ -96,7 +96,20 @@ export const getProducts = async (req, res) => {
       query = query.sort(sortObjs);
     }
     
-    let products = await query.skip(skip).limit(limit);
+    let products = await Product.aggregate([
+      {
+        $search: {
+          "index": "default",
+          "text": {
+            "query": searchString,
+            "path": "name",
+            "fuzzy": {
+              "maxEdits": 2
+            }
+          }
+        }
+      }
+    ])//query.skip(skip).limit(limit);
   
     if (person) {
       const favoritesProducts = person.favoritesProducts;
