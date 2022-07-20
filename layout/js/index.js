@@ -763,6 +763,10 @@ if (cartNode) {
           }
       
           const payFormNode = cartListNode.querySelector('.js-payForm');
+          const dsCartIdInputNodes = payFormNode.querySelectorAll('.js-dsCartId');
+  
+          dsCartIdInputNodes.forEach(item => item.value = dsCartId);
+          
           return payFormNode.submit();
         }
         
