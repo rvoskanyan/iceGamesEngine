@@ -43,10 +43,12 @@ export const getProducts = async (req, res) => {
     const changedLayoutName = new RegExp(getChangeLayout(searchString), 'i');
     const normalizeName = new RegExp(normalizeStr(searchString), 'i');
     const alias = new RegExp(getAlias(searchString), 'i');
+    const aliasChangeLayout = new RegExp(getAlias(getChangeLayout(searchString)), 'i');
     const filter = {$or: [
       {name},
       {name: changedLayoutName},
       {alias},
+      {alias: aliasChangeLayout},
       {normalizeName},
       {soundName: {$in: getSoundIndex(searchString)}},
     ], active: true};

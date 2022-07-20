@@ -170,11 +170,27 @@ export const profileInvitePage = async (req, res) => {
 export const profileOrdersPage = async (req, res) => {
   try {
     const user = res.locals.person;
+    const favoritesProducts = user.favoritesProducts;
+    const cart = user.cart;
     const orders = await Order
       .find({userId: user._id, status: 'paid'})
       .sort({'createdAt': -1})
       .select('products')
-      .populate('products.productId', ['name', 'alias', 'priceTo', 'priceFrom', 'img', 'dsId', 'inStock']);
+      .populate('products.productId', ['name', 'alias', 'priceTo', 'priceFrom', 'img', 'inStock']);
+  
+    orders.products = orders.products.map(item => {
+      const productId = item._id.toString();
+    
+      if (favoritesProducts && favoritesProducts.includes(productId)) {
+        item.inFavorites = true;
+      }
+    
+      if (cart && cart.includes(productId)) {
+        item.inCart = true;
+      }
+    
+      return item;
+    });
     
     res.render('profileOrders', {
       title: 'ICE Games — Приобретенные товары',
