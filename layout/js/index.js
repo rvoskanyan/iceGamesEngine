@@ -1753,6 +1753,6 @@ if (seriesSliderNode) {
     mainNode: seriesSliderNode,
     switchingTime: 3000,
     isTrack: true,
-    countSlidesScroll: 4
+    countSlidesScroll: 4,
   })
 }
