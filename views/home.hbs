@@ -66,15 +66,13 @@
                         </div>
                         <div class="price">
                             <div class="toPrice">
-                                <span class="value">
-                                    {{priceTo}}
-                                </span>
+                                <span class="value">{{priceTo}}</span>
                             </div>
-                            <div class="fromPrice">
-                                <span class="value">
-                                    {{priceFrom}}
-                                </span>
-                            </div>
+                            {{#iff priceTo '<' priceFrom}}
+                                <div class="fromPrice">
+                                    <span class="value">{{priceFrom}}</span>
+                                </div>
+                            {{/iff}}
                         </div>
                     </button>
                 {{/each}}
