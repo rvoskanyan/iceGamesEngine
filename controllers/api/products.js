@@ -5,7 +5,7 @@ import Order from "../../models/Order.js";
 import {achievementEvent} from "../../services/achievement.js";
 import {validationResult} from "express-validator";
 import fetch from "node-fetch";
-import {getChangeLayout, getSoundIndex} from "../../utils/functions.js";
+import {getAlias, getChangeLayout, getSoundIndex} from "../../utils/functions.js";
 /*
   Articles.find({_id: {$ne: article._id}})
  */
@@ -41,7 +41,8 @@ export const getProducts = async (req, res) => {
     } = req.query;
     const name = new RegExp(searchString, 'i');
     const changedLayoutName = new RegExp(getChangeLayout(searchString), 'i');
-    const filter = {$or: [{name}, {name: changedLayoutName}], active: true};
+    const alias = new RegExp(getAlias(searchString), 'i');
+    const filter = {$or: [{name}, {name: changedLayoutName}, {alias}], active: true};
     const person = res.locals.person;
     
     if (categories.length) {
@@ -96,20 +97,7 @@ export const getProducts = async (req, res) => {
       query = query.sort(sortObjs);
     }
     
-    let products = await Product.aggregate([
-      {
-        $search: {
-          "index": "default",
-          "text": {
-            "query": searchString,
-            "path": "name",
-            "fuzzy": {
-              "maxEdits": 2
-            }
-          }
-        }
-      }
-    ])//query.skip(skip).limit(limit);
+    let products = await query.skip(skip).limit(limit);
   
     if (person) {
       const favoritesProducts = person.favoritesProducts;

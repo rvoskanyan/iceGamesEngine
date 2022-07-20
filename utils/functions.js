@@ -123,7 +123,7 @@ export const getChangeLayout = (str) => {
     const cyrillicIndex = cyrillic.indexOf(char);
     const latinIndex = latin.indexOf(char);
   
-    cyrillicIndex > -1 ? resultStr += latin[cyrillicIndex] : latinIndex > -1 ? resultStr += cyrillic[latinIndex] : '';
+    cyrillicIndex > -1 ? resultStr += latin[cyrillicIndex] : latinIndex > -1 ? resultStr += cyrillic[latinIndex] : resultStr += char;
   })
   
   return resultStr;
