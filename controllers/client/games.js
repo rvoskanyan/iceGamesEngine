@@ -60,7 +60,8 @@ export const gamePage = async (req, res) => {
     const person = res.locals.person;
     const genreIds = product.genres.map(genre => genre._id);
     const recProductsFilter = { //Фильтры для подборки рекомендаций
-      _id: {$ne: product._id}, //Отсеивает открытый продукт
+      _id: {$ne: product._id}, //Отсеивает товар, на котором сейчас находимся
+      active: true,
       genres: {$in: genreIds}, //Находит продукты содержащие хотя бы один из жанров текущего товара
       $or: [ //"ИЛИ" для связок
         {bundleId: {$ne: null}, isOriginalInBundle: true}, //Если товар состоит в связке, то он должен быть исходным

@@ -41,7 +41,7 @@
         {{/if}}
         <img class="img" src="{{websiteAddress}}{{product.coverImg}}" alt="{{product.name}}" title="{{product.name}}">
         <div class="offer">
-            {{#if bundleProducts}}
+            {{#iff bundleProducts.length '>' 1}}
                 <div class="packages mobileInvisibleScroll">
                     {{#each bundleProducts}}
                         {{#if isCurrent}}
@@ -71,7 +71,7 @@
                         {{/if}}
                     {{/each}}
                 </div>
-            {{/if}}
+            {{/iff}}
             <h1 class="name">{{product.name}}</h1>
             <div class="statuses">
                 {{#if product.inStock}}
