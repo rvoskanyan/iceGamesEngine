@@ -9,8 +9,8 @@ import {achievementEvent} from "../../services/achievement.js";
 
 export const homepage = async (req, res) => {
   const person = res.locals.person;
-  const favoritesProducts = person.favoritesProducts;
-  const cart = person.cart;
+  let favoritesProducts;
+  let cart;
   let sliderProducts = await Product
     .find({inHomeSlider: true, inStock: true})
     .limit(5)
@@ -31,7 +31,8 @@ export const homepage = async (req, res) => {
   let checkedEmail = false;
   
   if (person) {
-    const cart = person.cart;
+    cart = person.cart;
+    favoritesProducts = person.favoritesProducts
     
     sliderProducts = sliderProducts.map(product => {
       if (cart && cart.includes(product._id.toString())) {
