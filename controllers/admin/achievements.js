@@ -63,7 +63,7 @@ export const editAchievementPage = async (req, res) => {
     const achievement = await Achievement.findById(id);
     
     res.render('addAchievement', {
-      layout: 'Admin',
+      layout: 'admin',
       title: 'Редактирование достижения',
       isEdit: true,
       types: types.map(type => type.key === achievement.type ? {...type, selected: true} : type),
