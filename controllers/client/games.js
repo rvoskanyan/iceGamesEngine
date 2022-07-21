@@ -50,7 +50,7 @@ export const gamePage = async (req, res) => {
           }
         }
       ]);
-    const countSales = Math.floor(product.priceFrom * 0.01 * (Math.floor(new Date().getHours() / 5)) * (product.top ? 1.3 : 1));
+    const countSales = Math.floor(product.priceFrom * 0.005 * (Math.floor(new Date().getHours() / 5)) * (product.top ? 1.3 : 1));
     const comments = await Comment
       .find({subjectId: product.id, ref: 'product'})
       .populate(['author'])
