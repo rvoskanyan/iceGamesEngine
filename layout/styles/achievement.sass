@@ -13,33 +13,38 @@
   color: #fff
   text-align: center
   border-radius: 22px
-  min-width: 130px
-  max-width: 130px
   min-height: 168px
   max-height: 168px
   z-index: -1
 
   @include for-middle-phone-up
-    min-width: 150px
-    max-width: 150px
     min-height: 190px
     max-height: 190px
 
   @include for-big-phone-up
     padding: 0 20px
-    min-width: 160px
-    max-width: 160px
     min-height: 211px
     max-height: 211px
 
   @include for-middle-desktop-up
-    min-width: 181px
-    max-width: 181px
     min-height: 238px
     max-height: 238px
 
   & .achievementIcon
-    width: 35px
+    min-width: 130px
+    max-width: 130px
+
+    @include for-middle-phone-up
+      min-width: 150px
+      max-width: 150px
+
+    @include for-big-phone-up
+      min-width: 160px
+      max-width: 160px
+
+    @include for-middle-desktop-up
+      min-width: 181px
+      max-width: 181px
 
   & .name
     margin-top: 10px
