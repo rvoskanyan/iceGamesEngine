@@ -50,7 +50,7 @@ export const gamePage = async (req, res) => {
           }
         }
       ]);
-    
+    const countSales = product.priceFrom * 0.01 * (Math.floor(new Date().getHours() / 3)) * (product.top ? 2 : 1);
     const comments = await Comment
       .find({subjectId: product.id, ref: 'product'})
       .populate(['author'])
@@ -228,6 +228,7 @@ export const gamePage = async (req, res) => {
       recProducts,
       seriesIsSlider,
       subscribed,
+      countSales,
     });
   } catch (e) {
     console.log(e);
