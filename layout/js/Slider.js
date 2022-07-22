@@ -12,6 +12,8 @@ export default class Slider {
       carousel,
     } = options;
   
+    console.log(mainNode);
+  
     this.carousel = carousel;
     this.switchingTime = switchingTime;
     this.isTrack = isTrack;
@@ -51,6 +53,9 @@ export default class Slider {
         this.shareSlide = this.slideNodes[0].offsetHeight + parseInt(stylesSlide.marginTop) + parseInt(stylesSlide.marginBottom);
         this.shareVisibleArea = this.visibleAreaNode.offsetHeight;
       }
+  
+      console.log(this.shareVisibleArea);
+      console.log(this.shareSlide);
       
       this.countVisibleSlides = this.shareVisibleArea / this.shareSlide;
       
