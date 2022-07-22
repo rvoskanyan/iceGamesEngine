@@ -294,7 +294,7 @@
                             <button class="btn round border big translucent js-tabBtn" data-target-id="3">Состав набора</button>
                         {{/if}}
                         {{#if seriesProducts.length}}
-                            <button class="btn round border big translucent js-tabBtn" data-target-id="4">Игры серии</button>
+                            <button class="btn round border big translucent js-tabBtn" data-target-id="4">Системные требования</button>
                         {{/if}}
                     </div>
                     <div class="items totalHeight infoBlock">
@@ -366,81 +366,119 @@
                             </div>
                         {{/if}}
                         {{#if seriesProducts.length}}
-                            <div class="item js-tabBlock-4 productSeries">
-                                {{#if seriesIsSlider}}
-                                    <div class="slider js-seriesSlider">
-                                        <button class="btn prev increase js-prevBtn">
-                                            <span class="icon-static icon-static-arrow"></span>
-                                        </button>
-                                        <div class="visibleAreaWrapper">
-                                            <div class="visibleArea js-visibleArea">
-                                                <div class="tape js-tape">
-                                {{else}}
-                                    <div class="rowProducts mobileScroll">
-                                {{/if}}
-                                {{#each seriesProducts}}
-                                    {{#if @root.seriesIsSlider}}
-                                        <div class="slide js-slide">
-                                    {{/if}}
-                                        {{> game
-                                            size='small'
-                                            id=_id
-                                        }}
-                                    {{#if @root.seriesIsSlider}}
+                            <ul class="item js-tabBlock-4 fieldedList infoBlock">
+                                {{#if product.os}}
+                                    <li class="item">
+                                        <div class="name">ОС:</div>
+                                        <div class="value">
+                                            {{product.os}}
                                         </div>
-                                    {{/if}}
-                                {{/each}}
-                                {{#if seriesIsSlider}}
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <button class="btn next increase js-nextBtn">
-                                            <span class="icon-static icon-static-arrow"></span>
-                                        </button>
-                                    </div>
-                                {{else}}
-                                    </div>
+                                    </li>
                                 {{/if}}
-                            </div>
+                                <li class="item">
+                                    <div class="name">Процессор:</div>
+                                    <div class="value">
+                                        {{product.cpu}}
+                                    </div>
+                                </li>
+                                <li class="item">
+                                    <div class="name">Видеокарта:</div>
+                                    <div class="value">
+                                        {{product.graphicsCard}}
+                                    </div>
+                                </li>
+                                <li class="item">
+                                    <div class="name">Оперативная память:</div>
+                                    <div class="value">
+                                        {{product.ram}}
+                                    </div>
+                                </li>
+                                <li class="item">
+                                    <div class="name">Место на диске:</div>
+                                    <div class="value">
+                                        {{product.diskMemory}}
+                                    </div>
+                                </li>
+                            </ul>
                         {{/if}}
                     </div>
                 </div>
                 <div class="systemInfo">
-                    <div class="btn border round big title">Системные требования</div>
-                    <ul class="fieldedList infoBlock">
-                        {{#if product.os}}
+                    {{#if seriesProducts.length}}
+                        <div class="btn border round big title">Игры серии</div>
+                        <div class="productSeries">
+                            {{#if seriesIsSlider}}
+                                <div class="slider js-seriesSlider">
+                                    <button class="btn prev increase js-prevBtn">
+                                        <span class="icon-static icon-static-arrow"></span>
+                                    </button>
+                                    <div class="visibleAreaWrapper">
+                                        <div class="visibleArea js-visibleArea">
+                                            <div class="tape js-tape">
+                            {{else}}
+                                <div class="rowProducts mobileScroll">
+                            {{/if}}
+                            {{#each seriesProducts}}
+                                {{#if @root.seriesIsSlider}}
+                                    <div class="slide js-slide">
+                                {{/if}}
+                                {{> game
+                                        size='small'
+                                        id=_id
+                                }}
+                                {{#if @root.seriesIsSlider}}
+                                    </div>
+                                {{/if}}
+                            {{/each}}
+                            {{#if seriesIsSlider}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="btn next increase js-nextBtn">
+                                        <span class="icon-static icon-static-arrow"></span>
+                                    </button>
+                                </div>
+                            {{else}}
+                                </div>
+                            {{/if}}
+                        </div>
+                    {{else}}
+                        <div class="btn border round big title">Системные требования</div>
+                        <ul class="fieldedList infoBlock">
+                            {{#if product.os}}
+                                <li class="item">
+                                    <div class="name">ОС:</div>
+                                    <div class="value">
+                                        {{product.os}}
+                                    </div>
+                                </li>
+                            {{/if}}
                             <li class="item">
-                                <div class="name">ОС:</div>
+                                <div class="name">Процессор:</div>
                                 <div class="value">
-                                    {{product.os}}
+                                    {{product.cpu}}
                                 </div>
                             </li>
-                        {{/if}}
-                        <li class="item">
-                            <div class="name">Процессор:</div>
-                            <div class="value">
-                                {{product.cpu}}
-                            </div>
-                        </li>
-                        <li class="item">
-                            <div class="name">Видеокарта:</div>
-                            <div class="value">
-                                {{product.graphicsCard}}
-                            </div>
-                        </li>
-                        <li class="item">
-                            <div class="name">Оперативная память:</div>
-                            <div class="value">
-                                {{product.ram}}
-                            </div>
-                        </li>
-                        <li class="item">
-                            <div class="name">Место на диске:</div>
-                            <div class="value">
-                                {{product.diskMemory}}
-                            </div>
-                        </li>
-                    </ul>
+                            <li class="item">
+                                <div class="name">Видеокарта:</div>
+                                <div class="value">
+                                    {{product.graphicsCard}}
+                                </div>
+                            </li>
+                            <li class="item">
+                                <div class="name">Оперативная память:</div>
+                                <div class="value">
+                                    {{product.ram}}
+                                </div>
+                            </li>
+                            <li class="item">
+                                <div class="name">Место на диске:</div>
+                                <div class="value">
+                                    {{product.diskMemory}}
+                                </div>
+                            </li>
+                        </ul>
+                    {{/if}}
                 </div>
                 <div class="feedback tabs js-feedbackProductTabs">
                     <div class="nav">

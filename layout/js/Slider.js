@@ -12,8 +12,6 @@ export default class Slider {
       carousel,
     } = options;
   
-    console.log(mainNode);
-  
     this.carousel = carousel;
     this.switchingTime = switchingTime;
     this.isTrack = isTrack;
@@ -44,9 +42,6 @@ export default class Slider {
     if (this.isTrack) {
       const stylesSlide = getComputedStyle(this.slideNodes[0]);
       this.visibleAreaNode = this.mainNode.querySelector('.js-visibleArea');
-  
-      console.log(this.visibleAreaNode);
-      console.log(this.visibleAreaNode.offsetWidth);
       
       this.shareSlide = this.slideNodes[0].offsetWidth + parseInt(stylesSlide.marginLeft) + parseInt(stylesSlide.marginRight);
       this.shareVisibleArea = this.visibleAreaNode.offsetWidth;
@@ -56,9 +51,6 @@ export default class Slider {
         this.shareSlide = this.slideNodes[0].offsetHeight + parseInt(stylesSlide.marginTop) + parseInt(stylesSlide.marginBottom);
         this.shareVisibleArea = this.visibleAreaNode.offsetHeight;
       }
-  
-      console.log(this.shareVisibleArea);
-      console.log(this.shareSlide);
       
       this.countVisibleSlides = this.shareVisibleArea / this.shareSlide;
       
@@ -100,8 +92,6 @@ export default class Slider {
     this.prevBtnNode.addEventListener('click', () => this.switchScreen(this.activeScreen - 1));
     this.nextBtnNode.addEventListener('click', () => this.switchScreen(this.activeScreen + 1));
   
-    console.log(this.countVisibleSlides);
-    
     for (let i = 0; i < this.countVisibleSlides; i++) {
       if (this.slideNodes[i]) {
         this.slideNodes[i].classList.add('active');
