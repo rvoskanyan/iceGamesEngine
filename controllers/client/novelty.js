@@ -3,9 +3,11 @@ import Product from "./../../models/Product.js";
 export const noveltyPage = async (req, res) => {
   try {
     const person = res.locals.person;
-    let products = await Product.find()
+    let products = await Product
+      .find({active: true})
       .select(['name', 'alias', 'img', 'priceTo', 'priceFrom', 'dsId', 'dlc', 'inStock'])
-      .limit(8)
+      .sort({'releaseDate': -1})
+      .limit(14)
       .lean();
     
     if (person) {
@@ -32,6 +34,7 @@ export const noveltyPage = async (req, res) => {
       metaDescription: 'Подборка лучших новинок от ICE Games',
       isNovelty: true,
       selectionName: 'Новинки',
+      sort: 'date',
       products,
     });
   } catch (e) {
