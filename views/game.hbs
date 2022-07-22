@@ -406,42 +406,40 @@
                 <div class="systemInfo">
                     {{#if seriesProducts.length}}
                         <div class="btn border round big title">Игры серии</div>
-                        <div class="productSeries infoBlock">
-                            {{#if seriesIsSlider}}
-                                <div class="slider js-seriesSlider">
-                                    <button class="btn prev increase js-prevBtn">
-                                        <span class="icon-static icon-static-arrow"></span>
-                                    </button>
-                                    <div class="visibleAreaWrapper">
-                                        <div class="visibleArea js-visibleArea">
-                                            <div class="tape js-tape">
-                            {{else}}
-                                <div class="rowProducts mobileScroll">
+                        {{#if seriesIsSlider}}
+                            <div class="productSeries infoBlock slider js-seriesSlider">
+                                <button class="btn prev increase js-prevBtn">
+                                    <span class="icon-static icon-static-arrow"></span>
+                                </button>
+                                <div class="visibleAreaWrapper">
+                                    <div class="visibleArea js-visibleArea">
+                                        <div class="tape js-tape">
+                        {{else}}
+                            <div class="productSeries infoBlock rowProducts mobileScroll">
+                        {{/if}}
+                        {{#each seriesProducts}}
+                            {{#if @root.seriesIsSlider}}
+                                <div class="slide js-slide">
                             {{/if}}
-                            {{#each seriesProducts}}
-                                {{#if @root.seriesIsSlider}}
-                                    <div class="slide js-slide">
-                                {{/if}}
-                                {{> game
-                                        size='small'
-                                        id=_id
-                                }}
-                                {{#if @root.seriesIsSlider}}
-                                    </div>
-                                {{/if}}
-                            {{/each}}
-                            {{#if seriesIsSlider}}
-                                            </div>
+                            {{> game
+                                    size='small'
+                                    id=_id
+                            }}
+                            {{#if @root.seriesIsSlider}}
+                                </div>
+                            {{/if}}
+                        {{/each}}
+                        {{#if seriesIsSlider}}
                                         </div>
                                     </div>
-                                    <button class="btn next increase js-nextBtn">
-                                        <span class="icon-static icon-static-arrow"></span>
-                                    </button>
                                 </div>
-                            {{else}}
-                                </div>
-                            {{/if}}
-                        </div>
+                                <button class="btn next increase js-nextBtn">
+                                    <span class="icon-static icon-static-arrow"></span>
+                                </button>
+                            </div>
+                        {{else}}
+                            </div>
+                        {{/if}}
                     {{else}}
                         <div class="btn border round big title">Системные требования</div>
                         <ul class="fieldedList infoBlock">
