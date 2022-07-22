@@ -2,7 +2,6 @@ import fetch from "node-fetch";
 import fs from "fs";
 import cheerio from "cheerio";
 import Product from "../models/Product.js";
-import ParsingTask from "../models/ParsingTask.js";
 import ActivationService from "../models/ActivationService.js";
 import Platform from "../models/Platform.js";
 import Genre from "../models/Genre.js";
@@ -60,8 +59,92 @@ export const startParsingProducts = async () => {
               return '—';
             }
   
-            return item[0].toUpperCase() + item.slice(1).toLowerCase();
+            return item;
+            
+            //return item[0].toUpperCase() + item.slice(1).toLowerCase();
           }).join(' ');
+          
+          if (!productOnSite.images.length) {
+            const browser = new Browser();
+            const searchContent = await browser.getPageContent(encodeURI(`https://steambuy.com/catalog/?q=${name}`));
+            const searchNode = cheerio.load(searchContent);
+            const results = searchNode('a.product-item__title-link');
+            let sourceLink;
+  
+            if (!results || !results.length) {
+              const searchContent = await browser.getPageContent(encodeURI(`https://steambuy.com/catalog/?q=${productOnSite.name}`));
+              const searchNode = cheerio.load(searchContent);
+              const results = searchNode('a.product-item__title-link');
+  
+              if (results && results.length) {
+                for (const item of results) {
+                  const itemName = searchNode(item).text();
+    
+                  if (getAlias(itemName) === getAlias(productOnSite.name) || isEqualBySound(itemName, productOnSite.name)) {
+                    sourceLink = `https://steambuy.com${searchNode(item).attr('href')}`;
+                    break;
+                  }
+                }
+              }
+            } else {
+              for (const item of results) {
+                const itemName = searchNode(item).text();
+    
+                if (getAlias(itemName) === getAlias(name) || isEqualBySound(itemName, name)) {
+                  sourceLink = `https://steambuy.com${searchNode(item).attr('href')}`;
+                  break;
+                } else {
+                  const searchContent = await browser.getPageContent(encodeURI(`https://steambuy.com/catalog/?q=${productOnSite.name}`));
+                  const searchNode = cheerio.load(searchContent);
+                  const results = searchNode('a.product-item__title-link');
+  
+                  if (results && results.length) {
+                    for (const item of results) {
+                      const itemName = searchNode(item).text();
+      
+                      if (getAlias(itemName) === getAlias(productOnSite.name) || isEqualBySound(itemName, productOnSite.name)) {
+                        sourceLink = `https://steambuy.com${searchNode(item).attr('href')}`;
+                        break;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            
+            if (sourceLink) {
+              const productContent = await browser.getPageContent(sourceLink);
+              const productNode = cheerio.load(productContent);
+              const mediaNodes = productNode('.product-media .product-media__item a.product-media__link').toArray();
+  
+              for (const mediaNode of mediaNodes) {
+                const el = productNode(mediaNode);
+    
+                if (!el.hasClass('product-media__link_video')) {
+                  try {
+                    const imageUrl = el.attr('href');
+                    const extend = getExtendFile(imageUrl);
+                    const productGalleryNameImg = `${uuidv4()}.${extend}`;
+                    const res = await fetch(imageUrl);
+                    const fileStream = fs.createWriteStream(path.join(__dirname, `/uploadedFiles/${productGalleryNameImg}`));
+    
+                    await new Promise((resolve, reject) => {
+                      res.body.pipe(fileStream);
+                      res.body.on("error", (err) => {
+                        reject(err);
+                      });
+                      fileStream.on("finish", function() {
+                        resolve();
+                      });
+                    });
+                    productOnSite.images.push({name: productGalleryNameImg});
+                  } catch (e) {
+                    console.log(e);
+                  }
+                }
+              }
+            }
+          }
           
           if (!productOnSite.coverImg) {
             const indexCover = Math.floor(Math.random() * (productOnSite.images.length - 1)) + 1;
@@ -70,35 +153,23 @@ export const startParsingProducts = async () => {
           }
           
           await productOnSite.save();
+          //continue;
+        }
+  
+        /*if (!inStock) {
           continue;
         }
   
-        if (!inStock) {
-          continue;
-        }
-  
-        const {productData, parsingTaskData} = await parseProduct(name, priceTo);
+        const productData = await parseProduct(name, priceTo);
 
         const newProduct = new Product({
           ...productData,
           dsId,
           inStock: true,
         });
-        const newParsingTask = new ParsingTask({
-          ...parsingTaskData,
-          product: newProduct._id,
-        });
   
-        await newProduct.save();
-        await newParsingTask.save();
+        await newProduct.save();*/
       } catch (e) {
-        console.log(e);
-        const newParsingTask = new ParsingTask({
-          successSaveProduct: false,
-          productDsName: name,
-        });
-        
-        await newParsingTask.save();
         console.log(e);
       }
     }
@@ -125,10 +196,6 @@ export async function parseProduct(searchProductName, price, sourceLink = null) 
     genres: [],
     extends: [],
   };
-  const parsingTask = {
-    productFound: false,
-    needFill: [],
-  }
   
   try { //Загрузка главной картинки с https://www.igdb.com/
     const searchIgDb = await browser.getPageContent(encodeURI(`https://www.igdb.com/search?&type=1&q=${searchProductName}`));
@@ -181,7 +248,6 @@ export async function parseProduct(searchProductName, price, sourceLink = null) 
     product.img = productImg;
   } catch (e) {
     console.log(e);
-    parsingTask.needFill.push('Главная картинка');
   }
   
   try { //Загрузка материалов с https://steambuy.com/
@@ -202,19 +268,17 @@ export async function parseProduct(searchProductName, price, sourceLink = null) 
           product.alias = getAlias(itemName);
           product.normalizeName = normalizeStr(itemName);
           product.soundName = getSoundIndex(itemName);
-          parsingTask.sourceLink = `https://steambuy.com${searchNode(item).attr('href')}`;
+          sourceLink = `https://steambuy.com${searchNode(item).attr('href')}`;
           break;
         }
       }
-    } else {
-      parsingTask.sourceLink = sourceLink;
     }
   
-    if (!parsingTask.sourceLink) {
+    if (!sourceLink) {
       throw new Error();
     }
   
-    const productContent = await browser.getPageContent(parsingTask.sourceLink);
+    const productContent = await browser.getPageContent(sourceLink);
     const activationServices = await ActivationService.find().select('steamBuyName').lean();
     const platforms = await Platform.find().select('name').lean();
     const genres = await Genre.find().select('steamBuyName').lean();
@@ -223,7 +287,6 @@ export async function parseProduct(searchProductName, price, sourceLink = null) 
     const regions = await Region.find().select('steamBuyName').lean();
     const productNode = cheerio.load(productContent);
     const description = productNode('.product-desc__article p');
-    const isGroup = productNode('.product-group .product-group__item').length > 0;
     const discount = parseFloat(productNode('.product-price .product-price__discount-cost').first().text());
     const isDlc = productNode('.product-desc .accent_purple .accent__title').text() === 'Дополнительный контент';
     const mediaNodes = productNode('.product-media .product-media__item a.product-media__link').toArray();
@@ -236,9 +299,6 @@ export async function parseProduct(searchProductName, price, sourceLink = null) 
     });
     let currentMedia = 0;
     let activationName = productNode('.product-price .product-price__activation .product-price__activation-value .product-price__activation-title').text().trim();
-  
-    parsingTask.productFound = true;
-    parsingTask.needFill = [...parsingTask.needFill, 'Игра серии', 'Трейлер с ютуба', 'Состав (при наличии)', 'Название издания (при наличии)', 'Связка (при наличии)'];
   
     description.each((i, el) => {
       product.description += `<p>${productNode(el).text()}</p>`;
@@ -301,7 +361,6 @@ export async function parseProduct(searchProductName, price, sourceLink = null) 
               product.activationRegions.push(newRegion._id);
             } catch (e) {
               console.log(e);
-              parsingTask.needFill.push(`Регион ${regionName}`);
             }
           }
         
@@ -339,7 +398,6 @@ export async function parseProduct(searchProductName, price, sourceLink = null) 
           product.images.push({name: productGalleryNameImg});
         } catch (e) {
           console.log(e);
-          parsingTask.needFill.push(`Загрузить скриншот № ${currentMedia + 1}`);
         }
       }
   
@@ -372,7 +430,6 @@ export async function parseProduct(searchProductName, price, sourceLink = null) 
               product.genres.push(newGenre._id);
             } catch (e) {
               console.log(e);
-              parsingTask.needFill.push(`Жанр ${genreName}`);
             }
           }
           break;
@@ -405,7 +462,6 @@ export async function parseProduct(searchProductName, price, sourceLink = null) 
           const publisherName = valueNode.find('.product-detail__value-item a.product-detail__value-link').first().text().trim();
           
           if (!publisherName.length) {
-            parsingTask.needFill.push(`Издателя`);
             break;
           }
   
@@ -425,7 +481,6 @@ export async function parseProduct(searchProductName, price, sourceLink = null) 
             product.publisherId = newPublisher._id;
           } catch (e) {
             console.log(e);
-            parsingTask.needFill.push(`Издателя ${publisherName}`);
           }
         
           break;
@@ -451,7 +506,6 @@ export async function parseProduct(searchProductName, price, sourceLink = null) 
               product.extends.push(newExtend._id);
             } catch (e) {
               console.log(e);
-              parsingTask.needFill.push(`Расширение ${extendName}`);
             }
           }
           break;
@@ -477,7 +531,6 @@ export async function parseProduct(searchProductName, price, sourceLink = null) 
               product.extends.push(newExtend._id);
             } catch (e) {
               console.log(e);
-              parsingTask.needFill.push(`Расширение ${extendName}`);
             }
           }
           break;
@@ -500,7 +553,6 @@ export async function parseProduct(searchProductName, price, sourceLink = null) 
             product.extends.push(newExtend._id);
           } catch (e){
             console.log(e);
-            parsingTask.needFill.push(`Расширение ${extendName}`);
           }
           break;
         }
@@ -524,18 +576,13 @@ export async function parseProduct(searchProductName, price, sourceLink = null) 
           product.activationServiceId = newActivationService._id;
         } catch (e) {
           console.log(e);
-          parsingTask.needFill.push(`Сервис активации ${activationName}`);
         }
       } else {
         product.activationServiceId = activationService._id;
       }
-    } else {
-      parsingTask.needFill.push('Сервис активации');
     }
   
-    if (isGroup) {
-      parsingTask.needFill.push('Цена без скидки');
-    } else if (discount) {
+    if (discount) {
       product.priceFrom += discount;
       product.discount = getDiscount(product.priceTo, product.priceFrom);
     }
@@ -548,7 +595,6 @@ export async function parseProduct(searchProductName, price, sourceLink = null) 
         product.platformId = newPlatform._id;
       } catch (e) {
         console.log(e);
-        parsingTask.needFill.push(`Добавить платформу ${platformName}`);
       }
     } else {
       product.platformId = platform._id;
@@ -558,56 +604,14 @@ export async function parseProduct(searchProductName, price, sourceLink = null) 
       const dlcForName = productNode('.product-desc .accent_purple .accent__desc a').text();
     
       product.dlc = true;
-      parsingTask.needFill.push('DLC для бесплатной игры');
-      parsingTask.needFill.push('DLC для игры, которая есть на сайте');
-      parsingTask.needFill.push('DLC для игры, если ее нет на сайте');
       
       if (dlcForName.length) {
         product.dlcForName = dlcForName;
       }
     }
-  
-    if (!product.description.length) {
-      parsingTask.needFill.push('Описание');
-    }
-  
-    if (!product.os) {
-      parsingTask.needFill.push('Системные требования - ОС');
-    }
-  
-    if (!product.cpu) {
-      parsingTask.needFill.push('Системные требования - Процессор');
-    }
-  
-    if (!product.graphicsCard) {
-      parsingTask.needFill.push('Системные требования - Видеокарта');
-    }
-  
-    if (!product.ram) {
-      parsingTask.needFill.push('Системные требования - Оперативная память');
-    }
-  
-    if (!product.diskMemory) {
-      parsingTask.needFill.push('Системные требования - Место на диске');
-    }
-  
-    if (!product.languages) {
-      parsingTask.needFill.push('Языки');
-    }
-    
-    if (!product.coverImg) {
-      parsingTask.needFill.push('Загрузить обложку (cover)');
-    }
-    
-    if (!product.releaseDate) {
-      parsingTask.needFill.push('Дата выхода');
-    }
   } catch (e) {
     console.log(e);
   }
   
-  return {
-    productData: product,
-    parsingTaskData: parsingTask,
-  }
+  return product;
 }
