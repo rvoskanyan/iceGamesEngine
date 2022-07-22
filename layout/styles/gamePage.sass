@@ -457,15 +457,6 @@
             &.active
               display: flex
 
-            &.productSeries
-
-              & .rowProducts
-                display: flex
-                column-gap: 20px
-
-                @include for-big-phone-down
-                  padding: 20px 10px
-
             & .package
               margin-bottom: 10px
               cursor: initial
@@ -473,73 +464,82 @@
               @include for-big-phone-up
                 margin-bottom: 25px
 
-            & .slider
-              display: flex
-              justify-content: space-between
-              align-items: center
-              margin: 0 auto
-
-              @include for-desktop-up
-                margin: initial
-
-              & .visibleAreaWrapper
-                overflow: hidden
-                padding: 15px 0
-
-                @include for-desktop-up
-                  padding: 26px 5px
-
-                @include for-middle-desktop-up
-                  padding: 30px 5px
-
-                @include for-big-desktop-up
-                  padding: 33px 10px
-
-                & .visibleArea
-                  max-width: calc((124px + 10px * 2) * 1)
-
-                  @include for-middle-phone-up
-                    max-width: calc((124px + 10px * 2) * 2)
-
-                  @include for-desktop-up
-                    max-width: calc((128px + 15px * 2) * 4)
-
-                  @include for-middle-desktop-up
-                    max-width: calc((154px + 15px * 2) * 4)
-
-                  @include for-big-desktop-up
-                    max-width: calc((171px + 20px * 2) * 4)
-
-                  & .tape
-                    display: flex
-                    transition: transform .3s ease-in
-
-                    & .slide
-                      visibility: hidden
-                      opacity: 0
-                      transition: .3s ease-in
-                      transition-property: visibility, opacity
-                      margin: 0 10px
-
-                      @include for-desktop-up
-                        margin: 0 15px
-
-                      @include for-big-desktop-up
-                        margin: 0 20px
-
-                      &.active
-                        visibility: visible
-                        opacity: 1
-
-              & .next, & .prev
-                @include for-big-phone-down
-                  display: none
-
-              & .next .icon-static
-                transform: rotate(180deg)
-
     & .systemInfo
       margin-top: 30px
+
+      &.productSeries
+
+        & .rowProducts
+          display: flex
+          column-gap: 20px
+
+          @include for-big-phone-down
+            padding: 20px 10px
+
+      & .slider
+        display: flex
+        justify-content: space-between
+        align-items: center
+        margin: 0 auto
+
+        @include for-desktop-up
+          margin: initial
+
+        & .visibleAreaWrapper
+          overflow: hidden
+          padding: 15px 0
+
+          @include for-desktop-up
+            padding: 26px 5px
+
+          @include for-middle-desktop-up
+            padding: 30px 5px
+
+          @include for-big-desktop-up
+            padding: 33px 10px
+
+          & .visibleArea
+            max-width: calc((124px + 10px * 2) * 1)
+
+            @include for-middle-phone-up
+              max-width: calc((124px + 10px * 2) * 2)
+
+            @include for-desktop-up
+              max-width: calc((128px + 15px * 2) * 4)
+
+            @include for-middle-desktop-up
+              max-width: calc((154px + 15px * 2) * 4)
+
+            @include for-big-desktop-up
+              max-width: calc((171px + 20px * 2) * 4)
+
+            & .tape
+              display: flex
+              transition: transform .3s ease-in
+
+              & .slide
+                visibility: hidden
+                opacity: 0
+                transition: .3s ease-in
+                transition-property: visibility, opacity
+                margin: 0 10px
+
+                @include for-desktop-up
+                  margin: 0 15px
+
+                @include for-big-desktop-up
+                  margin: 0 20px
+
+                &.active
+                  visibility: visible
+                  opacity: 1
+
+        & .next, & .prev
+          @include for-big-phone-down
+            display: none
+
+        & .next .icon-static
+          transform: rotate(180deg)
 
       @include for-big-phone-up
         margin-top: 50px
