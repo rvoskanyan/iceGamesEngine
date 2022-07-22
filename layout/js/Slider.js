@@ -44,6 +44,8 @@ export default class Slider {
     if (this.isTrack) {
       const stylesSlide = getComputedStyle(this.slideNodes[0]);
       this.visibleAreaNode = this.mainNode.querySelector('.js-visibleArea');
+  
+      console.log(this.visibleAreaNode);
       
       this.shareSlide = this.slideNodes[0].offsetWidth + parseInt(stylesSlide.marginLeft) + parseInt(stylesSlide.marginRight);
       this.shareVisibleArea = this.visibleAreaNode.offsetWidth;
