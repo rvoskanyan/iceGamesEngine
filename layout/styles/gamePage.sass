@@ -419,15 +419,17 @@
       & .generalInfo
         & .hiddenElementsList
           overflow: hidden
-          max-height: 0%
+          max-height: 0
           opacity: 0
+          visibility: hidden
           transition: max-height .3s ease-in
           transition-property: max-height, opacity
           border-top: 1.5px solid hsla(0, 0%, 100%, .3)
 
           &.active
-            max-height: 100%
+            max-height: initial
             opacity: 1
+            visibility: visible
 
         & .moreElements
           text-decoration: underline
