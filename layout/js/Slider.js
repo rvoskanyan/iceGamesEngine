@@ -46,6 +46,7 @@ export default class Slider {
       this.visibleAreaNode = this.mainNode.querySelector('.js-visibleArea');
   
       console.log(this.visibleAreaNode);
+      console.log(this.visibleAreaNode.offsetWidth);
       
       this.shareSlide = this.slideNodes[0].offsetWidth + parseInt(stylesSlide.marginLeft) + parseInt(stylesSlide.marginRight);
       this.shareVisibleArea = this.visibleAreaNode.offsetWidth;
