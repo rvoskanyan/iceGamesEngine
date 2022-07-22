@@ -92,6 +92,8 @@ export default class Slider {
     this.prevBtnNode.addEventListener('click', () => this.switchScreen(this.activeScreen - 1));
     this.nextBtnNode.addEventListener('click', () => this.switchScreen(this.activeScreen + 1));
   
+    console.log(this.countVisibleSlides);
+    
     for (let i = 0; i < this.countVisibleSlides; i++) {
       if (this.slideNodes[i]) {
         this.slideNodes[i].classList.add('active');
