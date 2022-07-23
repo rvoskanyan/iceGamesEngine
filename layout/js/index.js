@@ -1330,7 +1330,7 @@ if (catalogNode) {
   const sortNode = catalogNode.querySelector('.js-sort');
   const rangePriceNode = catalogNode.querySelector('.js-priceRange');
   const loadMoreNode = catalogNode.querySelector('.js-loadMore');
-  const countLoad = 150;
+  const countLoad = 20;
   const fields = [{
     name: 'searchString',
     node: searchStringNode,

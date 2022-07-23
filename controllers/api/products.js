@@ -104,6 +104,8 @@ export const getProducts = async (req, res) => {
       sortObjs.createdAt = -1;
       
       query = query.sort(sortObjs);
+    } else {
+      query = query.sort({priceTo: -1})
     }
     
     let products = await query.skip(skip).limit(limit);
