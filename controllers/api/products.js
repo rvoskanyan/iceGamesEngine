@@ -50,7 +50,7 @@ export const getProducts = async (req, res) => {
       {alias},
       {alias: aliasChangeLayout},
       {normalizeName},
-      {soundName: {$in: getSoundIndex(searchString)}},
+      {soundName: {$all: getSoundIndex(searchString)}},
     ], active: true};
     const person = res.locals.person;
     
