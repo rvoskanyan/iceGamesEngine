@@ -3,7 +3,10 @@ import {achievementEvent} from "./../../services/achievement.js";
 
 export const blogHomePage = async (req, res) => {
   try {
-    const articles = await Article.find({fixed: false}).limit(3);
+    const articles = await Article
+      .find({fixed: false, active: true})
+      .sort({createdAt: -1})
+      .limit(3);
     const fixArticle = await Article.findOne({fixed: true});
     
     res.render('blogHome', {

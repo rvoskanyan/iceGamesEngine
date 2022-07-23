@@ -22,6 +22,7 @@ export const homepage = async (req, res) => {
   const partners = await Partner.find().select(['name', 'img', 'link']).lean();
   const articles = await Article
     .find({active: true})
+    .sort({createdAt: -1})
     .select(['name', 'alias', 'introText', 'type', 'createdAt', 'img'])
     .limit(9)
     .lean();
