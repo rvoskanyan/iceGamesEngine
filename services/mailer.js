@@ -6,11 +6,11 @@ import {__dirname} from "../rootPathes.js";
 import {v4 as uuidv4} from "uuid";
 
 const transporter = nodemailer.createTransport({
-  host: 'smtp.icegames.store',
+  host: 'smtp.mail.ru',
   secure: true,
   auth: {
     user: 'info@icegames.store',
-    pass: 'qwertyuiop-.2020',
+    pass: 'Yr*3TiyroA1E',
   },
 });
 
