@@ -108,7 +108,7 @@ export async function mailingBuyProduct(productId, email) {
                       <tr>
                           <td align="center">
                               <a href="${websiteAddress}">
-                                  <img src="${websiteAddress}img/fullLogo.svg" alt="Логотип Ice Games">
+                                  <img src="${websiteAddress}img/fullLogo.png" alt="Логотип Ice Games">
                               </a>
                           </td>
                       </tr>
@@ -126,7 +126,7 @@ export async function mailingBuyProduct(productId, email) {
                       </tr>
                       <tr>
                           <td align="center" style="padding-bottom: 50px">
-                              <img src="${websiteAddress}img/anchorLink.svg" style="display: inline-block; width: 9px; height: 11px" alt="Иконка якоря ссылки">
+                              <img src="${websiteAddress}img/anchorLink.png" style="display: inline-block; width: 9px; height: 11px" alt="Иконка якоря ссылки">
                               <a href="${websiteAddress}" style="color: rgba(255,255,255,0.5); font-family: Montserrat, arial, sans-serif !important; font-size: 14px">Инструкция по активации ключа</a>
                           </td>
                       </tr>
@@ -152,27 +152,27 @@ export async function mailingBuyProduct(productId, email) {
                                               <tr>
                                                   <td align="center">
                                                       <a href="#">
-                                                          <img src="${websiteAddress}img/vkSocial.svg" alt="Логотип VK" title="Перейти на страницу Ice Games в VK">
+                                                          <img src="${websiteAddress}img/vkSocial.png" alt="Логотип VK" title="Перейти на страницу Ice Games в VK">
                                                       </a>
                                                   </td>
                                                   <td align="center">
                                                       <a href="#">
-                                                          <img src="${websiteAddress}img/telegramSocial.svg" alt="Логотип Telegram" title="Перейти на страницу Ice Games в Telegram">
+                                                          <img src="${websiteAddress}img/telegramSocial.png" alt="Логотип Telegram" title="Перейти на страницу Ice Games в Telegram">
                                                       </a>
                                                   </td>
                                                   <td align="center">
                                                       <a href="#">
-                                                          <img src="${websiteAddress}img/twitchSocial.svg" alt="Логотип Twitch" title="Перейти на страницу Ice Games в Twitch">
+                                                          <img src="${websiteAddress}img/twitchSocial.png" alt="Логотип Twitch" title="Перейти на страницу Ice Games в Twitch">
                                                       </a>
                                                   </td>
                                                   <td align="center">
                                                       <a href="#">
-                                                          <img src="${websiteAddress}img/tiktokSocial.svg" alt="Логотип TikTok" title="Перейти на страницу Ice Games в TikTok">
+                                                          <img src="${websiteAddress}img/tiktokSocial.png" alt="Логотип TikTok" title="Перейти на страницу Ice Games в TikTok">
                                                       </a>
                                                   </td>
                                                   <td align="center">
                                                       <a href="#">
-                                                          <img src="${websiteAddress}img/instagramSocial.svg" alt="Логотип Instagram" title="Перейти на страницу Ice Games в Instagram">
+                                                          <img src="${websiteAddress}img/instagramSocial.png" alt="Логотип Instagram" title="Перейти на страницу Ice Games в Instagram">
                                                       </a>
                                                   </td>
                                               </tr>
@@ -268,7 +268,7 @@ export async function mailingInStockProduct(productId, emails) {
                       <tr>
                           <td align="center">
                               <a href="${websiteAddress}">
-                                  <img src="${websiteAddress}img/fullLogo.svg" alt="Логотип Ice Games">
+                                  <img src="${websiteAddress}img/fullLogo.png" alt="Логотип Ice Games">
                               </a>
                           </td>
                       </tr>
@@ -305,27 +305,27 @@ export async function mailingInStockProduct(productId, emails) {
                                               <tr>
                                                   <td align="center">
                                                       <a href="#">
-                                                          <img src="${websiteAddress}img/vkSocial.svg" alt="Логотип VK" title="Перейти на страницу Ice Games в VK">
+                                                          <img src="${websiteAddress}img/vkSocial.png" alt="Логотип VK" title="Перейти на страницу Ice Games в VK">
                                                       </a>
                                                   </td>
                                                   <td align="center">
                                                       <a href="#">
-                                                          <img src="${websiteAddress}img/telegramSocial.svg" alt="Логотип Telegram" title="Перейти на страницу Ice Games в Telegram">
+                                                          <img src="${websiteAddress}img/telegramSocial.png" alt="Логотип Telegram" title="Перейти на страницу Ice Games в Telegram">
                                                       </a>
                                                   </td>
                                                   <td align="center">
                                                       <a href="#">
-                                                          <img src="${websiteAddress}img/twitchSocial.svg" alt="Логотип Twitch" title="Перейти на страницу Ice Games в Twitch">
+                                                          <img src="${websiteAddress}img/twitchSocial.png" alt="Логотип Twitch" title="Перейти на страницу Ice Games в Twitch">
                                                       </a>
                                                   </td>
                                                   <td align="center">
                                                       <a href="#">
-                                                          <img src="${websiteAddress}img/tiktokSocial.svg" alt="Логотип TikTok" title="Перейти на страницу Ice Games в TikTok">
+                                                          <img src="${websiteAddress}img/tiktokSocial.png" alt="Логотип TikTok" title="Перейти на страницу Ice Games в TikTok">
                                                       </a>
                                                   </td>
                                                   <td align="center">
                                                       <a href="#">
-                                                          <img src="${websiteAddress}img/instagramSocial.svg" alt="Логотип Instagram" title="Перейти на страницу Ice Games в Instagram">
+                                                          <img src="${websiteAddress}img/instagramSocial.png" alt="Логотип Instagram" title="Перейти на страницу Ice Games в Instagram">
                                                       </a>
                                                   </td>
                                               </tr>
