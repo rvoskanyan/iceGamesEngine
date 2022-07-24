@@ -176,17 +176,17 @@ export const gamePage = async (req, res) => {
     if (product.seriesId) {
       recProductsFilter.seriesId = {$ne: product.seriesId}; //Отсеиваем товары, которые есть в серии текущей игры
       seriesProducts = await Product
-        .find({_id: {$ne: product.id}, seriesId: product.seriesId})
-        .select(['name', 'alias', 'priceTo', 'priceFrom', 'img', 'dsId'])
+        .find({_id: {$ne: product.id}, seriesId: product.seriesId, active: true})
+        .select(['name', 'alias', 'priceTo', 'priceFrom', 'img', 'inStock'])
         .lean();
     } else if (product.bundleId) {
       const originalProduct = await Product.findOne({bundleId: product.bundleId, isOriginalInBundle: true});
       
       if (originalProduct && originalProduct.seriesId) {
-        recProductsFilter.seriesId = {$ne: originalProduct.seriesId}; //Отсеиваем товары, которые есть в серии исходной игры связки, если текущая не принадлежит серии
+        recProductsFilter.seriesId = {$ne: originalProduct.seriesId, active: true}; //Отсеиваем товары, которые есть в серии исходной игры связки, если текущая не принадлежит серии
         seriesProducts = await Product
-          .find({_id: {$ne: originalProduct.id}, seriesId: originalProduct.seriesId})
-          .select(['name', 'alias', 'priceTo', 'priceFrom', 'img'])
+          .find({_id: {$ne: originalProduct.id}, seriesId: originalProduct.seriesId, active: true})
+          .select(['name', 'alias', 'priceTo', 'priceFrom', 'img', 'inStock'])
           .lean();
       }
     }
@@ -198,6 +198,20 @@ export const gamePage = async (req, res) => {
     ]);
   
     recProducts = recProducts.map(item => {
+      const productId = item._id.toString();
+  
+      if (favoritesProducts && favoritesProducts.includes(productId)) {
+        item.inFavorites = true;
+      }
+  
+      if (cart && cart.includes(productId)) {
+        item.inCart = true;
+      }
+  
+      return item;
+    })
+  
+    seriesProducts = seriesProducts && seriesProducts.map(item => {
       const productId = item._id.toString();
   
       if (favoritesProducts && favoritesProducts.includes(productId)) {
