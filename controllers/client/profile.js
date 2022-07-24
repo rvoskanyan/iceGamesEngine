@@ -13,8 +13,7 @@ export const profilePage = async (req, res) => {
     const articles = await Article
       .find({active: true})
       .select(['name', 'alias', 'introText', 'type', 'createdAt', 'img'])
-      .limit(9)
-      .lean();
+      .limit(9);
     const countAchievements = res.locals.person.achievements ? res.locals.person.achievements.length : 0;
   
     res.render('profile', {

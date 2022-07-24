@@ -24,8 +24,7 @@ export const homepage = async (req, res) => {
     .find({active: true})
     .sort({createdAt: -1})
     .select(['name', 'alias', 'introText', 'type', 'createdAt', 'img'])
-    .limit(9)
-    .lean();
+    .limit(9);
   const inviter = req.query.inviter;
   const checkEmailHash = req.query.confirmEmail;
   const catalog = [];
