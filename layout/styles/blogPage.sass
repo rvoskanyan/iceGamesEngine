@@ -168,6 +168,18 @@
             line-height: 1.5
             font-size: 13px
 
+            & p, & ol, h3
+              margin-top: 10px
+
+            & ol li
+              text-align: left
+
+              &:not(:first-child)
+                margin-top: 10px
+
+            & h3
+              text-align: left
+
             @include for-big-phone-up
               padding: 45px 70px
               font-size: 16px
