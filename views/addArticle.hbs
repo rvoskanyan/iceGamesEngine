@@ -72,6 +72,12 @@
     <br>
     <br>
     <label>
+        Активна:
+        <input type="checkbox" name="active" {{#if article.active}}checked{{/if}}>
+    </label>
+    <br>
+    <br>
+    <label>
         Прикрепленные игры:
         <select name="products" multiple>
             {{#each products}}

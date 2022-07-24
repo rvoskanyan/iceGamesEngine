@@ -43,7 +43,7 @@ export const addArticlePage = async (req, res) => {
 
 export const addArticle = async (req, res) => {
   try {
-    const {name, introText, metaDescription, rightImg, blockColor, type, products, fixed} = req.body;
+    const {name, introText, metaDescription, rightImg, blockColor, type, products, fixed, active} = req.body;
     const {img, coverImg} = req.files;
     const mustFix = fixed === "on";
     const imgExtend = getExtendFile(img.name);
@@ -60,6 +60,7 @@ export const addArticle = async (req, res) => {
       img: imgName,
       coverImg: coverImgName,
       rightImg: rightImg === "on",
+      active: active === "on",
       alias: getAlias(name),
       products: getArray(products),
       authorId: req.session.userId,
@@ -108,7 +109,7 @@ export const editArticle = async (req, res) => {
   const id = req.params.id;
   
   try {
-    const {name, introText, metaDescription, rightImg, blockColor, type, products, fixed} = req.body;
+    const {name, introText, metaDescription, rightImg, blockColor, type, products, fixed, active} = req.body;
     const article = await Article.findById(id);
     const mustFix = fixed === "on";
     
@@ -141,6 +142,7 @@ export const editArticle = async (req, res) => {
       introText,
       metaDescription,
       rightImg: rightImg === "on",
+      active: active === "on",
       blockColor,
       type,
       fixed: mustFix,
