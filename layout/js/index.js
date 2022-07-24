@@ -48,6 +48,7 @@ const gamePageNode = document.querySelector('.js-gamePage');
 const rangeNode = document.querySelector('.js-range');
 const modalMessageNode = document.querySelector('.js-modalMessage');
 const acceptAgreementNode = document.querySelector('.js-acceptAgreement');
+const blogPageNode = document.querySelector('.js-blogPage');
 const popupController = new PopupController([
   {
     id: 'loginFrom',
@@ -1321,6 +1322,45 @@ if (youtubePlayNodes.length) {
       iframe.setAttribute('allowFullScreen', '');
 
       new Modal(iframe);
+    })
+  })
+}
+
+if (blogPageNode) {
+  const loadMoreNode = blogPageNode.querySelector('.js-loadMore');
+  const countLoad = 3;
+  const listArticlesNode = blogPageNode.querySelector('.js-listArticles');
+  
+  loadMoreNode.addEventListener('click', async () => {
+    const response = await postman.get(`${websiteAddress}api/articles?skip=${loadMoreNode.dataset.skip}&limit=${countLoad}&includeFixed=false`);
+    const result = await response.json();
+  
+    if (result.error) {
+      return;
+    }
+    
+    if (result.isLast) {
+      return loadMoreNode.classList.add('hide');
+    }
+  
+    loadMoreNode.classList.remove('hide')
+    loadMoreNode.dataset.skip = parseInt(loadMoreNode.dataset.skip) + countLoad;
+    result.articles.forEach(article => {
+      listArticlesNode.innerHTML += `
+        <a class="article${article.rightImg ? ' right' : ''}" href="${websiteAddress}/blog/${article.alias}" style="--bgColor: ${article.blockColor}">
+            <img class="img" src="${websiteAddress}${article.img}" alt="Изображение записи в блоге - ${article.name}">
+            <div class="info">
+                <div class="content">
+                    <div class="title">${article.name}</div>
+                    <div class="description">${article.introText}</div>
+                </div>
+                <div class="activity">
+                    <div class="likes">${article.likes}</div>
+                    <div class="views">${article.views}</div>
+                </div>
+            </div>
+        </a>
+      `;
     })
   })
 }

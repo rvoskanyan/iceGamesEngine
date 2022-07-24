@@ -1,4 +1,4 @@
-<main class="blogPage">
+<main class="blogPage js-blogPage">
     <div class="breadcrumbs contentContainer">
         <div class="item">
             <a class="btn link" href="{{websiteAddress}}">Главная</a>
@@ -18,16 +18,14 @@
         </div>
     {{/if}}
     <div class="contentContainer">
-        <div class="articles">
+        <div class="articles js-listArticles">
             {{#each articles}}
                 <a class="article{{#if rightImg}} right{{/if}}" href="{{websiteAddress}}/blog/{{alias}}" style="--bgColor: {{blockColor}}">
                     <img class="img" src="{{@root.websiteAddress}}{{img}}" alt="Изображение записи в блоге - {{name}}">
                     <div class="info">
                         <div class="content">
                             <div class="title">{{name}}</div>
-                            <div class="description">
-                                {{introText}}
-                            </div>
+                            <div class="description">{{introText}}</div>
                         </div>
                         <div class="activity">
                             <div class="likes">{{likes}}</div>
@@ -37,7 +35,7 @@
                 </a>
             {{/each}}
         </div>
-        <button class="btn more increase" title="Показать еще статьи">
+        <button class="btn more increase js-loadMore" data-skip="3" title="Показать еще статьи">
             <span class="icon icon-arrowBottom"></span>
         </button>
     </div>
