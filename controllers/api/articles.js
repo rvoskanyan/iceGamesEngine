@@ -4,7 +4,12 @@ import {achievementEvent} from "../../services/achievement.js";
 export const getArticles = async (req, res) => {
   try {
     const {skip = 0, limit = 3, includeFixed = '1'} = req.query;
-    const articles = await Article.find({active: true, fixed: includeFixed === '1'}).limit(limit).skip(skip).lean();
+    const articles = await Article
+      .find({active: true, fixed: includeFixed === '1'})
+      .limit(limit)
+      .skip(skip)
+      .sort({createdAt: -1})
+      .lean();
     const count = await Article.countDocuments({active: true, fixed: includeFixed === '1'});
     const isLast = +skip + +limit >= count;
     
