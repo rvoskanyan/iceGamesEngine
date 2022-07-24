@@ -19,9 +19,9 @@
             {{#each products}}
                 <div class="review">
                     <div class="head">
-                        <a class="btn link userName" href="/profile/view/{{reviews.user.login}}" title="Перейти на страницу {{reviews.user.login}}">{{reviews.user.login}}</a>
+                        <a class="btn link userName" href="{{websiteAddress}}rating/{{reviews.user.login}}" title="Перейти на страницу {{reviews.user.login}}">{{reviews.user.login}}</a>
                         <div class="forGame">
-                            Отзыв на игру: <a class="link gameName" href="/games/{{alias}}">{{name}}</a>
+                            Отзыв на игру: <a class="link gameName" href="{{websiteAddress}}games/{{alias}}">{{name}}</a>
                         </div>
                     </div>
                     <div class="grade">
