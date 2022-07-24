@@ -1328,8 +1328,8 @@ if (youtubePlayNodes.length) {
 
 if (blogPageNode) {
   const loadMoreNode = blogPageNode.querySelector('.js-loadMore');
-  const countLoad = 3;
   const listArticlesNode = blogPageNode.querySelector('.js-listArticles');
+  const countLoad = 3;
   
   loadMoreNode.addEventListener('click', async () => {
     const response = await postman.get(`${websiteAddress}api/articles?skip=${loadMoreNode.dataset.skip}&limit=${countLoad}&includeFixed=false`);
@@ -1338,12 +1338,8 @@ if (blogPageNode) {
     if (result.error) {
       return;
     }
-    
-    if (result.isLast) {
-      return loadMoreNode.classList.add('hide');
-    }
   
-    loadMoreNode.classList.remove('hide')
+    result.isLast ? loadMoreNode.classList.add('hide') : loadMoreNode.classList.remove('hide');
     loadMoreNode.dataset.skip = parseInt(loadMoreNode.dataset.skip) + countLoad;
     result.articles.forEach(article => {
       listArticlesNode.innerHTML += `
