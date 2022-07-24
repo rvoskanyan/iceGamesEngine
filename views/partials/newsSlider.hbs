@@ -13,15 +13,11 @@
                             <div class="btn small round border small bg-darkLilac">
                                 {{#iff type '===' 'news'}}Новости{{else}}Статьи{{/iff}}
                             </div>
-                            <div class="date">12.01.21</div>
+                            <div class="date">{{createdDate}}</div>
                         </div>
                         <div class="description">
-                            <div class="title">
-                                {{name}}
-                            </div>
-                            <div class="text">
-                                {{introText}}
-                            </div>
+                            <div class="title">{{name}}</div>
+                            <div class="text">{{introText}}</div>
                         </div>
                     </a>
                 {{/each}}

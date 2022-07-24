@@ -1,4 +1,5 @@
 import Mongoose from "mongoose";
+import {getFormatDate} from "../utils/functions.js";
 
 const {Schema, model} = Mongoose;
 const fields = {
@@ -91,5 +92,9 @@ const options = {
 };
 
 const articleSchema = new Schema(fields, options);
+
+articleSchema.virtual('createdDate').get(function () {
+  return getFormatDate(this.createdAt, '.', ['d', 'm', 'y']);
+})
 
 export default model('Article', articleSchema);
