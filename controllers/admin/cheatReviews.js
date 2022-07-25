@@ -3,7 +3,7 @@ import User from "../../models/User.js";
 import Order from "../../models/Order.js";
 import {achievementEvent} from "../../services/achievement.js";
 
-export const pageAddPurchasesSoFavorites = async (req, res) => {
+export const pageAddPurchasesToFavorites = async (req, res) => {
   try {
     res.render('addPurchasesToFavorites', {layout: 'admin'});
   } catch (e) {
@@ -12,7 +12,7 @@ export const pageAddPurchasesSoFavorites = async (req, res) => {
   }
 }
 
-export const addPurchasesSoFavorites = async (req, res) => {
+export const addPurchasesToFavorites = async (req, res) => {
   const results = [];
   
   try {
