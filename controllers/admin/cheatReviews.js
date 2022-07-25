@@ -59,13 +59,13 @@ export const addPurchasesSoFavorites = async (req, res) => {
         });
   
         orderProducts.push(products[productIndex]);
-        user[0].purchasedProducts += 1;
-        await user[0].increaseRating(10);
-        await achievementEvent('productPurchase', user[0]);
       }
       
       await order.save();
+      user[0].purchasedProducts += countBuy;
       await user[0].save();
+      await user[0].increaseRating(10 * countBuy);
+      await achievementEvent('productPurchase', user[0]);
       
       results.push({
         userEmail: email,
