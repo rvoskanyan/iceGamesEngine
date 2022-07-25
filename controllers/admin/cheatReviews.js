@@ -54,6 +54,8 @@ export const addPurchasesToFavorites = async (req, res) => {
         }
   
         console.log(products[productIndex]);
+        console.log(productIndex);
+        console.log(products.length);
   
         order.products.push({
           productId: products[productIndex]._id,
