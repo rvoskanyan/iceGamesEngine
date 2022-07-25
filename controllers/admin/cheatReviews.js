@@ -45,14 +45,19 @@ export const addPurchasesSoFavorites = async (req, res) => {
       order.buyerEmail = user[0].email;
       order.status = 'paid';
       
-      for (let i = 0; i < countBuy; i++) {
+      while (orderProducts.length < countBuy) {
         const productIndex = Math.floor(Math.random() * (arrayEmails.length - 0)) + arrayEmails.length;
+        const isExists = orderProducts.find(product => products[productIndex]._id === product._id);
+        
+        if (isExists) {
+          continue;
+        }
   
         order.products.push({
           productId: products[productIndex]._id,
           purchasePrice: products[productIndex].priceTo,
         });
-        
+  
         orderProducts.push(products[productIndex]);
         user[0].purchasedProducts += 1;
         await user[0].increaseRating(10);
