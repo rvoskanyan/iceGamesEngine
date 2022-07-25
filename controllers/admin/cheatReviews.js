@@ -1,0 +1,88 @@
+import Product from "../../models/Product.js";
+import User from "../../models/User.js";
+import Order from "../../models/Order.js";
+import {achievementEvent} from "../../services/achievement.js";
+
+export const pageAddPurchasesSoFavorites = async (req, res) => {
+  try {
+    res.render('addPurchasesToFavorites', {layout: 'admin'});
+  } catch (e) {
+    console.log(e);
+    res.redirect('/admin/cheat-reviews');
+  }
+}
+
+export const addPurchasesSoFavorites = async (req, res) => {
+  const results = [];
+  
+  try {
+    const {emails, categoryProducts} = req.body;
+    const arrayEmails = emails.split('\n');
+    let products;
+    
+    switch (categoryProducts) {
+      case 'top': {
+        products = await Product.find({active: true, top: true});
+        break;
+      }
+      case 'all': {
+    
+        break;
+      }
+      case 'genre': {
+    
+        break;
+      }
+    }
+    
+    for (const email of arrayEmails) {
+      const order = new Order();
+      const user = await User.find({email});
+      const countBuy = Math.floor(Math.random() * 5) + 1;
+      const orderProducts = [];
+  
+      order.userId = user._id;
+      order.buyerEmail = user.email;
+      order.status = 'paid';
+      
+      for (let i = 0; i < countBuy; i++) {
+        const productIndex = Math.floor(Math.random() * (arrayEmails.length - 0)) + arrayEmails.length;
+        
+        products.push({
+          productId: products[productIndex]._id,
+          purchasePrice: products[productIndex].priceTo,
+        });
+        
+        orderProducts.push(products[productIndex]);
+        user.purchasedProducts += 1;
+        await user.increaseRating(10);
+        await achievementEvent('productPurchase', user);
+      }
+      
+      await order.save();
+      await user.save();
+      
+      results.push({
+        userEmail: email,
+        orderProducts,
+      })
+    }
+    
+    res.render('addPurchasesToFavoritesList', {
+      layout: 'admin',
+      results,
+    })
+    
+  } catch (e) {
+    console.log(e);
+    
+    if (results.length) {
+      return res.redirect('/admin/cheat-reviews');
+    }
+  
+    res.render('addPurchasesToFavoritesList', {
+      layout: 'admin',
+      results,
+    })
+  }
+}

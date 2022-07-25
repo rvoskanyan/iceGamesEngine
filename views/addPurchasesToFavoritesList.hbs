@@ -1,0 +1,14 @@
+<ul>
+    {{#each results}}
+        <li>
+            <p>{{userEmail}}:</p>
+            <ul>
+                {{#each orderProducts}}
+                    <li>
+                        <a href="{{@root.websiteAddress}}games/{{alias}}"></a>
+                    </li>
+                {{/each}}
+            </ul>
+        </li>
+    {{/each}}
+</ul>

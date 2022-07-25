@@ -1343,7 +1343,7 @@ if (blogPageNode) {
     loadMoreNode.dataset.skip = parseInt(loadMoreNode.dataset.skip) + countLoad;
     result.articles.forEach(article => {
       listArticlesNode.innerHTML += `
-        <a class="article${article.rightImg ? ' right' : ''}" href="${websiteAddress}/blog/${article.alias}" style="--bgColor: ${article.blockColor}">
+        <a class="article${article.rightImg ? ' right' : ''}" href="${websiteAddress}blog/${article.alias}" style="--bgColor: ${article.blockColor}">
             <img class="img" src="${websiteAddress}${article.img}" alt="Изображение записи в блоге - ${article.name}">
             <div class="info">
                 <div class="content">
