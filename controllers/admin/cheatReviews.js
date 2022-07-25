@@ -47,8 +47,8 @@ export const addPurchasesSoFavorites = async (req, res) => {
       
       for (let i = 0; i < countBuy; i++) {
         const productIndex = Math.floor(Math.random() * (arrayEmails.length - 0)) + arrayEmails.length;
-        
-        products.push({
+  
+        order.products.push({
           productId: products[productIndex]._id,
           purchasePrice: products[productIndex].priceTo,
         });
