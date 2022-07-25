@@ -46,10 +46,7 @@ export const addPurchasesSoFavorites = async (req, res) => {
       order.status = 'paid';
       
       while (orderProducts.length < countBuy) {
-        const productIndex = Math.floor(Math.random() * (arrayEmails.length - 0)) + arrayEmails.length;
-  
-        console.log(products);
-        console.log(productIndex);
+        const productIndex = Math.floor(Math.random() * (products.length - 0)) + products.length;
         const isExists = orderProducts.find(product => products[productIndex]._id === product._id);
         
         if (isExists) {
