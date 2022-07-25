@@ -41,8 +41,8 @@ export const addPurchasesSoFavorites = async (req, res) => {
       const countBuy = Math.floor(Math.random() * 5) + 1;
       const orderProducts = [];
   
-      order.userId = user._id;
-      order.buyerEmail = user.email;
+      order.userId = user[0]._id;
+      order.buyerEmail = user[0].email;
       order.status = 'paid';
       
       for (let i = 0; i < countBuy; i++) {
@@ -54,13 +54,13 @@ export const addPurchasesSoFavorites = async (req, res) => {
         });
         
         orderProducts.push(products[productIndex]);
-        user.purchasedProducts += 1;
-        await user.increaseRating(10);
-        await achievementEvent('productPurchase', user);
+        user[0].purchasedProducts += 1;
+        await user[0].increaseRating(10);
+        await achievementEvent('productPurchase', user[0]);
       }
       
       await order.save();
-      await user.save();
+      await user[0].save();
       
       results.push({
         userEmail: email,
