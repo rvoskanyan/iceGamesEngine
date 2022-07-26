@@ -6,7 +6,7 @@ export const reviewsPage = async (req, res) => {
     let lastViewedProducts = [];
     const products = await Product.aggregate([
       {$unwind: '$reviews'},
-      {$limit: 5},
+      /*{$limit: 5},*/
       {
         $lookup: {
           from: 'users',
