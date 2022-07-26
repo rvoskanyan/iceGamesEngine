@@ -19,6 +19,8 @@ export const addPurchasesToFavorites = async (req, res) => {
     const {emails, categoryProducts} = req.body;
     const arrayEmails = emails.split('\n');
     let products;
+  
+    console.log(arrayEmails);
     
     switch (categoryProducts) {
       case 'top': {
