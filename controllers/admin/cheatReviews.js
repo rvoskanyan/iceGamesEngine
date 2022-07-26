@@ -38,7 +38,7 @@ export const addPurchasesToFavorites = async (req, res) => {
     for (const email of arrayEmails) {
       const order = new Order();
       const user = await User.find({email});
-      const countBuy = Math.floor(Math.random() * 5) + 1;
+      const countBuy = Math.floor(Math.random() * 3) + 1;
       const orderProducts = [];
   
       order.userId = user[0]._id;
@@ -52,10 +52,6 @@ export const addPurchasesToFavorites = async (req, res) => {
         if (isExists) {
           continue;
         }
-  
-        console.log(products[productIndex]);
-        console.log(productIndex);
-        console.log(products.length);
   
         order.products.push({
           productId: products[productIndex]._id,
