@@ -12,6 +12,7 @@ export const profilePage = async (req, res) => {
     const ratingPosition = await user.getRatingPosition();
     const articles = await Article
       .find({active: true})
+      .sort({createdAt: -1})
       .select(['name', 'alias', 'introText', 'type', 'createdAt', 'img'])
       .limit(9);
     const countAchievements = res.locals.person.achievements ? res.locals.person.achievements.length : 0;
