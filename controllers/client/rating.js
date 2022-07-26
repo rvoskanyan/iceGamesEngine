@@ -4,7 +4,7 @@ import Order from "../../models/Order.js";
 
 export const ratingPage = async (req, res) => {
   try {
-    const users = await User.find().sort({rating: -1, createdAt: 1}).limit(15);
+    const users = await User.find().sort({rating: -1, createdAt: 1}).select(['login', 'rating']).limit(1000);
     const countUsers = await User.estimatedDocumentCount();
     
     res.render('rating', {
@@ -53,7 +53,7 @@ export const profileViewPage = async (req, res) => {
       
       for (let i = 0; i < order.products.length; i++) {
         if (lastPurchasedProducts.length > 3) {
-          break
+          break;
         }
         
         lastPurchasedProducts.push(order.products[i].productId)
