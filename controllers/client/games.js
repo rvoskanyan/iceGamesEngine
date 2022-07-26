@@ -13,7 +13,7 @@ export const gamesPage = async (req, res) => {
     const activationServices = await ActivationService.find().select(['name']);
     
     res.render('catalog', {
-      title: 'ICE Games — Каталог игр',
+      title: 'ICE GAMES — Каталог игр',
       metaDescription: 'Каталог лучших игр со скидками от ICE Games',
       isCatalog: true,
       categories,
@@ -228,7 +228,7 @@ export const gamePage = async (req, res) => {
     const seriesIsSlider = seriesProducts && seriesProducts.length > 5
     
     res.render('game', {
-      title: `ICE Games — ${product.name}`,
+      title: `ICE GAMES — ${product.name}`,
       product,
       trailerId,
       isProductNotPurchased,

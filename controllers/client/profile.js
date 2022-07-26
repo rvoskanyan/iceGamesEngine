@@ -18,7 +18,7 @@ export const profilePage = async (req, res) => {
     const countAchievements = res.locals.person.achievements ? res.locals.person.achievements.length : 0;
   
     res.render('profile', {
-      title: "ICE Games — Мой профиль",
+      title: "ICE GAMES — Мой профиль",
       noIndex: true,
       isProfileHome: true,
       user,
@@ -39,7 +39,7 @@ export const profileEditPage = async (req, res) => {
     const user = await User.findById(userId);
   
     res.render('profileEdit', {
-      title: "ICE Games — Редактирование профиля",
+      title: "ICE GAMES — Редактирование профиля",
       noIndex: true,
       isProfileEdit: true,
       user,
@@ -119,7 +119,7 @@ export const profileAchievementsPage = async (req, res) => {
     const percent = 100 / achievementCount * achievements.length;
     
     res.render('profileAchievements', {
-      title: 'ICE Games — Мои достижения',
+      title: 'ICE GAMES — Мои достижения',
       noIndex: true,
       isProfileAchievements: true,
       user,
@@ -153,7 +153,7 @@ export const profileInvitePage = async (req, res) => {
     }
     
     res.render('profileInvite', {
-      title: 'ICE Games — Приглашенные друзья',
+      title: 'ICE GAMES — Приглашенные друзья',
       noIndex: true,
       isProfileInvite: true,
       userId: req.session.userId,
@@ -195,7 +195,7 @@ export const profileOrdersPage = async (req, res) => {
     })
     
     res.render('profileOrders', {
-      title: 'ICE Games — Приобретенные товары',
+      title: 'ICE GAMES — Приобретенные товары',
       noIndex: true,
       isProfileOrders: true,
       orders,
@@ -212,7 +212,7 @@ export const profileFavoritesPage = async (req, res) => {
     const user = await res.locals.person.populate('favoritesProducts', ['name', 'alias', 'img', 'priceTo', 'priceFrom', 'dsId', 'dlc', 'inStock']);
     
     res.render('profileFavorites', {
-      title: 'ICE Games — Товары в избранном',
+      title: 'ICE GAMES — Товары в избранном',
       noIndex: true,
       isProfileFavorites: true,
       user,
