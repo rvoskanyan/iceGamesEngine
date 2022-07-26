@@ -5,6 +5,9 @@ import User from "./../../models/User.js";
 import {achievementEvent} from "../../services/achievement.js";
 import {getToken} from "../../services/digiseller.js";
 import {mailingBuyProduct} from "../../services/mailer.js";
+import exceljs from "exceljs";
+import path from "path";
+import {__dirname} from "../../rootPathes.js";
 
 export const assignOrderPay = async (req, res) => {
   try {
@@ -87,4 +90,25 @@ export const acceptAgreement = (req, res) => {
   res.json({
     success: true,
   });
+}
+
+export const getFeedCsv = async (req, res) => {
+  try {
+    const products = await Product.find({active: true}).select(['name', 'alias', 'img', 'description', 'priceTo', 'priceFrom']).lean();
+    const workbook = new exceljs.Workbook();
+    const worksheet = workbook.addWorksheet('Products In Stock');
+  
+    worksheet.columns = [{header: 'ID,URL,Image,Title,Description,Price,Currency,Old Price', key: 'row', width: 10}];
+  
+    products.forEach(product => {
+      worksheet.addRow({row: `${product._id},${res.locals.websiteAddress}games/${product.alias},${res.locals.websiteAddress}${product.img},${product.name},${product.description},${product.priceTo},RUB,${product.priceFrom}`});
+    });
+  
+    await workbook.csv.writeFile(path.join(__dirname, 'uploadedFiles/feed.csv'));
+  
+    res.sendFile(path.join(__dirname, 'uploadedFiles/feed.csv'));
+  } catch (e) {
+    console.log(e);
+    res.sendFile(path.join(__dirname, 'uploadedFiles/feed.csv'));
+  }
 }
