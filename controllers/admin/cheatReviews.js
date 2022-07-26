@@ -19,8 +19,6 @@ export const addPurchasesToFavorites = async (req, res) => {
     const {emails, categoryProducts} = req.body;
     const arrayEmails = emails.split('\n');
     let products;
-  
-    console.log(arrayEmails);
     
     switch (categoryProducts) {
       case 'top': {
@@ -39,7 +37,7 @@ export const addPurchasesToFavorites = async (req, res) => {
     
     for (const email of arrayEmails) {
       const order = new Order();
-      const user = await User.find({email});
+      const user = await User.find({email: email.trim()});
       const countBuy = Math.floor(Math.random() * 3) + 1;
       const orderProducts = [];
   
