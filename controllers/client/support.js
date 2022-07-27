@@ -5,8 +5,8 @@ export const supportPage = async (req, res) => {
     const faqs = Faq.find();
     
     res.render('support', {
-      title: 'ICE Games — Поддержка',
-      metaDescription: 'Ответы на часто задаваемые вопросы и чат с поддержкой',
+      title: 'ICE GAMES — Поддержка',
+      metaDescription: 'Проблемы с активацией? Поможем с решением любых вопросов в чате с оперативной поддержкой.',
       isSupport: true,
       faqs,
     });

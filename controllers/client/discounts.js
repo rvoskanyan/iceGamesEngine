@@ -31,7 +31,7 @@ export const discountsPage = async (req, res) => {
     
     res.render('selection', {
       title: 'ICE GAMES — Скидки',
-      metaDescription: 'Подборка лучших игр со скидками от ICE Games',
+      metaDescription: 'Купить лучшие игры со скидками. Раздел с самыми выгодными предложениями в магазине лицензионных ключей Стим.',
       isDiscounts: true,
       selectionName: 'Скидки',
       sort: 'discount',

@@ -8,7 +8,7 @@ export const ratingPage = async (req, res) => {
     const countUsers = await User.estimatedDocumentCount();
     
     res.render('rating', {
-      title: 'ICE Games — рейтинг пользователей',
+      title: 'ICE GAMES — рейтинг пользователей',
       metaDescription: 'Страница со всеми пользователями нашего интернет-магазина и их позицией в рейтинге',
       isRating: true,
       users,
@@ -63,7 +63,7 @@ export const profileViewPage = async (req, res) => {
     }
     
     res.render('profileViewPage', {
-      title: `ICE Games — Профиль пользователя ${login}`,
+      title: `ICE GAMES — Профиль пользователя ${login}`,
       metaDescription: `Просмотр профиля пользователя ${login} на ICE Games`,
       user,
       ratingPosition,

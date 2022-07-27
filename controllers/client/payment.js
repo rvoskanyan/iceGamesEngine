@@ -1,8 +1,8 @@
 export const paymentPage = async (req, res) => {
   try {
     res.render('payment', {
-      title: 'ICE Games — Доставка и оплата',
-      metaDescription: 'Здесь вы можете ознакомится с условиями доставки и вариантами оплаты',
+      title: 'ICE GAMES — Доставка и оплата',
+      metaDescription: 'Лучшие ключи Стим с быстрой доставкой в магазине компьютерных игр ICE GAMES. Ознакомьтесь с условиями оплаты и получения!',
       isPayment: true,
     });
   } catch (e) {

@@ -1,8 +1,8 @@
 export const aboutPage = async (req, res) => {
   try {
     res.render('about', {
-      title: 'ICE Games — О Магазине',
-      metaDescription: 'Знакомство с нами и нашим магазином',
+      title: 'ICE GAMES — О Магазине',
+      metaDescription: 'Все подробности о магазине компьютерных игр ICE GAMES! Наша история, команда и цели!',
       isAbout: true,
     });
   } catch (e) {

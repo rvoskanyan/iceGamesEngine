@@ -31,7 +31,7 @@ export const noveltyPage = async (req, res) => {
     
     res.render('selection', {
       title: 'ICE GAMES — Новинки',
-      metaDescription: 'Подборка лучших новинок от ICE Games',
+      metaDescription: 'Лучшие игровые новинки! Здесь можно купить новые ключи стим по выгодной цене.',
       isNovelty: true,
       selectionName: 'Новинки',
       sort: 'date',

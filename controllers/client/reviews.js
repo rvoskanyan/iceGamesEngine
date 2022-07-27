@@ -58,7 +58,7 @@ export const reviewsPage = async (req, res) => {
     
     res.render('reviews', {
       title: 'ICE GAMES — Отзывы',
-      metaDescription: 'Страница со всеми отзывами к играм',
+      metaDescription: 'Место для ваших отзывов. Помогите нам стать лучше — напишите своё мнение о магазине компьютерных игр ICE GAMES.',
       isReviews: true,
       products,
       lastViewedProducts,
