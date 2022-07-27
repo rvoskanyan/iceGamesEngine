@@ -213,8 +213,10 @@ export const profileFavoritesPage = async (req, res) => {
     
     user.favoritesProducts = user.favoritesProducts.map(product => {
       if (user.cart && user.cart.includes(product._id)) {
-        return product.inCart = true;
+        product.inCart = true;
       }
+  
+      return product;
     })
     
     res.render('profileFavorites', {
