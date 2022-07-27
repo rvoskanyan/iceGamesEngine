@@ -98,7 +98,8 @@ export const getFeedCsv = async (req, res) => {
       .find({active: true})
       .select(['name', 'alias', 'img', 'description', 'priceTo', 'priceFrom'])
       .populate(['activationServiceId'])
-      .limit(5)
+      .limit(4)
+      .skip(1)
       .lean();
     const workbook = new exceljs.Workbook();
     const worksheet = workbook.addWorksheet('Products In Stock');
