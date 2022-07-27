@@ -211,6 +211,12 @@ export const profileFavoritesPage = async (req, res) => {
   try {
     const user = await res.locals.person.populate('favoritesProducts', ['name', 'alias', 'img', 'priceTo', 'priceFrom', 'dsId', 'dlc', 'inStock']);
     
+    user.favoritesProducts = user.favoritesProducts.map(product => {
+      if (user.cart && user.cart.includes(product._id)) {
+        return product.inCart = true;
+      }
+    })
+    
     res.render('profileFavorites', {
       title: 'ICE GAMES — Товары в избранном',
       noIndex: true,
