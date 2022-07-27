@@ -24,9 +24,9 @@ import Edition from "../../models/Edition.js";
 
 export const pageProducts = async (req, res) => {
   try {
-    const active = await Product.find({active: true}).select(['name', 'dsId']).lean();
+    const active = await Product.find({active: true}).select(['name', 'dsId', 'images']).lean();
     const top = await Product.find({top: true}).select(['name', 'active', 'dsId']).lean();
-    const other = await Product.find({active: false}).select(['name', 'dsId']).lean();
+    const other = await Product.find({active: false}).select(['name', 'dsId', 'images']).lean();
     const all = await Product.find().select(['name', 'dsId']).lean();
   
     function foo(arr, copies) {
