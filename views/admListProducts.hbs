@@ -6,6 +6,7 @@
         <th>Имеют дубли</th>
         <th>Активные</th>
         <th>ТОП</th>
+        <th>Нет скриншотов</th>
     </tr>
     <tr style="vertical-align: top">
         <td>
@@ -41,6 +42,24 @@
                     <li>
                         <a href="/admin/products/edit/{{_id}}">{{name}} - {{dsId}}{{#if active}}<span style="color: red"> *</span>{{/if}}</a>
                     </li>
+                {{/each}}
+            </ul>
+        </td>
+        <td>
+            <ul>
+                {{#each other}}
+                    {{#unless images.length}}
+                        <li>
+                            <a href="/admin/products/edit/{{_id}}">{{name}} - {{dsId}}</a>
+                        </li>
+                    {{/unless}}
+                {{/each}}
+                {{#each active}}
+                    {{#unless images.length}}
+                        <li>
+                            <a href="/admin/products/edit/{{_id}}">{{name}} - {{dsId}}</a>
+                        </li>
+                    {{/unless}}
                 {{/each}}
             </ul>
         </td>
