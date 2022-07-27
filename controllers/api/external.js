@@ -94,14 +94,18 @@ export const acceptAgreement = (req, res) => {
 
 export const getFeedCsv = async (req, res) => {
   try {
-    const products = await Product.find({active: true}).select(['name', 'alias', 'img', 'description', 'priceTo', 'priceFrom']).lean();
+    const products = await Product
+      .find({active: true})
+      .select(['name', 'alias', 'img', 'description', 'priceTo', 'priceFrom'])
+      .populate(['activationServiceId'])
+      .lean();
     const workbook = new exceljs.Workbook();
     const worksheet = workbook.addWorksheet('Products In Stock');
   
     worksheet.columns = [{header: 'ID,URL,Image,Title,Description,Price,Currency,Old Price', key: 'row', width: 10}];
   
     products.forEach(product => {
-      worksheet.addRow({row: `${product._id},${res.locals.websiteAddress}games/${product.alias},${res.locals.websiteAddress}${product.img},${product.name},${product.description},${product.priceTo},RUB,${product.priceFrom}`});
+      worksheet.addRow({row: `${product._id},${res.locals.websiteAddress}games/${product.alias},${res.locals.websiteAddress}${product.img},${product.name},Купить игру ${product.name} c активацией в ${product.activationServiceId.name} со скидкой.,${product.priceTo},RUB,${product.priceFrom}`});
     });
   
     await workbook.csv.writeFile(path.join(__dirname, 'uploadedFiles/feed.csv'));
