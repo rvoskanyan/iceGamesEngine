@@ -104,8 +104,8 @@ export const getFeedCsv = async (req, res) => {
   
     worksheet.columns = [{header: 'ID,URL,Image,Title,Description,Price,Currency,Old Price', key: 'row', width: 10}];
   
-    products.forEach(product => {
-      worksheet.addRow({row: `${product._id},${res.locals.websiteAddress}games/${product.alias},${res.locals.websiteAddress}${product.img},${product.name},Купить игру ${product.name} c активацией в ${product.activationServiceId.name} со скидкой.,${product.priceTo},RUB,${product.priceFrom}`});
+    products.forEach((product, index) => {
+      worksheet.addRow({row: `${index},${res.locals.websiteAddress}games/${product.alias},${res.locals.websiteAddress}${product.img},${product.name},Купить игру ${product.name} c активацией в ${product.activationServiceId.name} со скидкой.,${product.priceTo},RUB,${product.priceFrom}`});
     });
   
     await workbook.csv.writeFile(path.join(__dirname, 'uploadedFiles/feed.csv'));

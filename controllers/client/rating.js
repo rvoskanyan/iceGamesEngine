@@ -9,7 +9,7 @@ export const ratingPage = async (req, res) => {
     
     res.render('rating', {
       title: 'ICE GAMES — рейтинг пользователей',
-      metaDescription: 'Страница со всеми пользователями нашего интернет-магазина и их позицией в рейтинге',
+      metaDescription: 'Призы самым активным! Отслеживайте свою позицию в магазине компьютерных игр ICE GAMES.',
       isRating: true,
       users,
       countUsers,
@@ -64,7 +64,7 @@ export const profileViewPage = async (req, res) => {
     
     res.render('profileViewPage', {
       title: `ICE GAMES — Профиль пользователя ${login}`,
-      metaDescription: `Просмотр профиля пользователя ${login} на ICE Games`,
+      metaDescription: `Личный профиль пользователя ${login} в магазине компьютерных игр ICE GAMES.`,
       user,
       ratingPosition,
       countUsers,
