@@ -1731,6 +1731,10 @@ if (loginFormNode) {
     mainNode: loginFormNode,
     resultMessageNode: resultLoginNode,
     successHandler: () => {
+      if (loginFormNode.action === '/reg') {
+        ym(69707947,'reachGoal','registration_complete');
+      }
+      
       setTimeout(() => {
         window.location.reload();
       }, 1500)
