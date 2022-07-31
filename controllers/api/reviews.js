@@ -5,8 +5,8 @@ export const getReviews = async (req, res) => {
     const {limit = 5, skip = 0} = req.query;
     const products = await Product.aggregate([
       {$unwind: '$reviews'},
-      {$skip: skip},
-      {$limit: limit},
+      {$skip: parseInt(skip)},
+      {$limit: parseInt(limit)},
       {$sort: {createdAt: -1}},
       {
         $lookup: {
@@ -27,7 +27,7 @@ export const getReviews = async (req, res) => {
         },
       },
       {$unwind: '$reviews.user'},
-    ]);
+    ]).count("countReviews");
     
     res.json({
       products,
