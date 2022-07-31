@@ -110,7 +110,7 @@ export const getFeedCsv = async (req, res) => {
       worksheet.addRow({row: `${index + 1},${product.name},${res.locals.websiteAddress}games/${product.alias},${res.locals.websiteAddress}${product.img},Купить игру ${product.name} c активацией в ${product.activationServiceId.name} со скидкой.,${product.priceTo},${product.priceFrom},RUB`}, 'i');
     });
   
-    await workbook.csv.writeFile(path.join(__dirname, 'uploadedFiles/feed.csv'));
+    await workbook.csv.writeFile(path.join(__dirname, 'uploadedFiles/feed.csv'), {encoding: 'UTF-8'});
   
     res.sendFile(path.join(__dirname, 'uploadedFiles/feed.csv'));
   } catch (e) {
