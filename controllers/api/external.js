@@ -104,13 +104,36 @@ export const getFeedCsv = async (req, res) => {
     const workbook = new exceljs.Workbook();
     const worksheet = workbook.addWorksheet('Products In Stock');
   
-    worksheet.columns = [{header: 'ID,Title,URL,Image,Description,Price,Old Price,Currency', key: 'row'}];
+    worksheet.columns = [
+      {header: 'ID', key: 'ID'},
+      {header: 'Title', key: 'Title'},
+      {header: 'URL', key: 'URL'},
+      {header: 'Image', key: 'Image'},
+      {header: 'Description', key: 'Description'},
+      {header: 'Price', key: 'Price'},
+      {header: 'Old Price', key: 'OldPrice'},
+      {header: 'Currency', key: 'Currency'},
+    ];
   
     products.forEach((product, index) => {
-      worksheet.addRow({row: `${index + 1},${product.name},${res.locals.websiteAddress}games/${product.alias},${res.locals.websiteAddress}${product.img},Купить игру ${product.name} c активацией в ${product.activationServiceId.name} со скидкой.,${product.priceTo},${product.priceFrom},RUB`}, 'i');
+      worksheet.addRow({
+        ID: index + 1,
+        Title: product.name,
+        URL: `${res.locals.websiteAddress}games/${product.alias}`,
+        Image: `${res.locals.websiteAddress}${product.img}`,
+        Description: `Купить игру ${product.name} c активацией в ${product.activationServiceId.name} со скидкой.`,
+        Price: product.priceTo,
+        OldPrice: product.priceFrom,
+        Currency: 'RUB',
+      })
     });
   
-    await workbook.csv.writeFile(path.join(__dirname, 'uploadedFiles/feed.csv'), {encoding: 'UTF-8'});
+    await workbook.csv.writeFile(path.join(__dirname, 'uploadedFiles/feed.csv'), {
+      formatterOptions: {
+        delimiter: ',',
+        quote: false,
+      }
+    });
   
     res.sendFile(path.join(__dirname, 'uploadedFiles/feed.csv'));
   } catch (e) {
