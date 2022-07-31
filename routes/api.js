@@ -5,6 +5,7 @@ import cartRoute from './api/cart.js';
 import ordersRoute from './api/orders.js';
 import externalRoute from './api/external.js';
 import commentsRoute from './api/comments.js';
+import reviewsRoute from './api/rewiews.js';
 
 const router = Router();
 
@@ -14,5 +15,6 @@ router.use('/cart', cartRoute);
 router.use('/order', ordersRoute);
 router.use('/external', externalRoute);
 router.use('/comments', commentsRoute);
+router.use('/reviews', reviewsRoute);
 
 export default router;
