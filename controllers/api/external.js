@@ -104,11 +104,10 @@ export const getFeedCsv = async (req, res) => {
     const workbook = new exceljs.Workbook();
     const worksheet = workbook.addWorksheet('Products In Stock');
   
-    //worksheet.columns = [{header: 'ID,Title,URL,Image,Description,Price,Old Price,Currency', key: 'row'}];
+    worksheet.columns = [{header: 'ID,Title,URL,Image,Description,Price,Old Price,Currency', key: 'row'}];
   
-    worksheet.addRow('ID,Title,URL,Image,Description,Price,Old Price,Currency');
     products.forEach((product, index) => {
-      worksheet.addRow(`${index + 1},${product.name},${res.locals.websiteAddress}games/${product.alias},${res.locals.websiteAddress}${product.img},Купить игру ${product.name} c активацией в ${product.activationServiceId.name} со скидкой.,${product.priceTo},${product.priceFrom},RUB`);
+      worksheet.addRow({row: `${index + 1},${product.name},${res.locals.websiteAddress}games/${product.alias},${res.locals.websiteAddress}${product.img},Купить игру ${product.name} c активацией в ${product.activationServiceId.name} со скидкой.,${product.priceTo},${product.priceFrom},RUB`}, 'i');
     });
   
     await workbook.csv.writeFile(path.join(__dirname, 'uploadedFiles/feed.csv'));
