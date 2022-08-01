@@ -98,8 +98,6 @@ export const getFeedCsv = async (req, res) => {
       .find({active: true})
       .select(['name', 'alias', 'img', 'description', 'priceTo', 'priceFrom'])
       .populate(['activationServiceId'])
-      .limit(4)
-      .skip(1)
       .lean();
     const workbook = new exceljs.Workbook();
     const worksheet = workbook.addWorksheet('Products In Stock');
@@ -123,7 +121,7 @@ export const getFeedCsv = async (req, res) => {
         Image: `${res.locals.websiteAddress}${product.img}`,
         Description: `Купить игру ${product.name} c активацией в ${product.activationServiceId.name} со скидкой.`,
         Price: product.priceTo,
-        OldPrice: product.priceFrom,
+        OldPrice: product.priceFrom > product.priceTo ? product.priceFrom : product.priceTo + 1,
         Currency: 'RUB',
       })
     });

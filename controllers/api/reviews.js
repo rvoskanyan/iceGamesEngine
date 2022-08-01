@@ -27,7 +27,7 @@ export const getReviews = async (req, res) => {
         },
       },
       {$unwind: '$reviews.user'},
-    ]).count("countReviews");
+    ]);
     
     res.json({
       products,
