@@ -1389,10 +1389,7 @@ if (catalogNode) {
   }];
   let sortActiveBtn = null;
   
-  const checkbox = [
-    ...filterNode.querySelectorAll('.js-checkbox'),
-    ...sortNode.querySelectorAll('.js-checkbox'),
-  ];
+  const checkbox = [...filterNode.querySelectorAll('.js-checkbox')];
   const sortBtnNodes = sortNode.querySelectorAll('.js-variant-sort');
   const rangePriceSliderNodes = rangePriceNode.querySelectorAll('.js-slider');
   
