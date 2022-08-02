@@ -5,48 +5,7 @@ import Review from "../../models/Review.js";
 export const reviewsPage = async (req, res) => {
   try {
     let lastViewedProducts = [];
-    const products = await Product.aggregate([
-      {$unwind: '$reviews'},
-      {$sort: {createdAt: 1}},
-      {
-        $lookup: {
-          from: 'users',
-          localField: 'reviews.userId',
-          foreignField: '_id',
-          as: 'reviews.user',
-        },
-      },
-      {
-        $project: {
-          _id: 1,
-          name: 1,
-          alias: 1,
-          'reviews.eval': 1,
-          'reviews.text': 1,
-          'reviews.user.login': 1,
-          'reviews.user._id': 1,
-        },
-      },
-      {$unwind: '$reviews.user'},
-    ]);
-    
-    for (const item of products) {
-      const candidate = await Review.find({product: item._id, user: item.reviews.user._id});
-      
-      if (candidate.length) {
-        continue;
-      }
-      
-      const review  = new Review({
-        user: item.reviews.user._id,
-        product: item._id,
-        eval: item.reviews.eval,
-        text: item.reviews.text,
-      });
-  
-      await review.save();
-    }
-  
+    const countReviews = await Review.countDocuments({active: true});
     const reviews = await Review
       .find({active: true})
       .limit(5)
@@ -97,6 +56,7 @@ export const reviewsPage = async (req, res) => {
       isReviews: true,
       reviews,
       lastViewedProducts,
+      countReviews,
     });
   } catch (e) {
     console.log(e);

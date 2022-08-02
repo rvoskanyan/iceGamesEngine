@@ -51,6 +51,8 @@ const rangeNode = document.querySelector('.js-range');
 const modalMessageNode = document.querySelector('.js-modalMessage');
 const acceptAgreementNode = document.querySelector('.js-acceptAgreement');
 const blogPageNode = document.querySelector('.js-blogPage');
+const loadMoreReviewsBtnNode = document.querySelector('.js-loadMoreReviewsBtn');
+const reviewsListNode = document.querySelector('.js-reviewsList');
 const popupController = new PopupController([
   {
     id: 'loginFrom',
@@ -134,6 +136,38 @@ const popupController = new PopupController([
     ],
   },
 ]);
+
+loadMoreReviewsBtnNode && loadMoreReviewsBtnNode.addEventListener('click', async () => {
+  const skip = parseInt(loadMoreReviewsBtnNode.dataset.skip);
+  
+  const response = await postman.get(`${websiteAddress}api/reviews?skip=${skip}`);
+  const result = await response.json();
+  
+  if (result.email) {
+    return;
+  }
+  
+  result.reviews.forEach(review => {
+    reviewsListNode.innerHTML += `
+      <div class="review">
+          <div class="head">
+              <a class="btn link userName" href="${websiteAddress}rating/${review.user.login}" title="Перейти на страницу ${review.user.login}">${review.user.login}</a>
+              <div class="forGame">Отзыв на игру: <a class="link gameName" href="${websiteAddress}games/${review.product.alias}">${review.product.name}</a></div>
+          </div>
+          <div class="grade">
+              <span class="icon icon-star${review.eval >= 1 ? 'Fill' : ''}"></span>
+              <span class="icon icon-star${review.eval >= 2 ? 'Fill' : ''}"></span>
+              <span class="icon icon-star${review.eval >= 3 ? 'Fill' : ''}"></span>
+              <span class="icon icon-star${review.eval >= 4 ? 'Fill' : ''}"></span>
+              <span class="icon icon-star${review.eval >= 5 ? 'Fill' : ''}"></span>
+          </div>
+          <div class="text">${review.text}</div>
+      </div>
+    `;
+  });
+  
+  loadMoreReviewsBtnNode.dataset.skip = parseInt(loadMoreReviewsBtnNode.dataset.skip) + 5;
+});
 
 if (largeImgNodes.length) {
   largeImgNodes.forEach(item => {

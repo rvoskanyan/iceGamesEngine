@@ -33,34 +33,6 @@ const imageSchema = new Schema({
   },
 });
 
-const commentSchema = new Schema({
-  text: {
-    type: String,
-    required: true,
-  },
-  authorId: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
-    require: true,
-  },
-});
-
-const reviews = new Schema({
-  userId: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
-    required: true,
-  },
-  eval: {
-    type: Number,
-    required: true,
-  },
-  text: {
-    type: String,
-    required: true,
-  },
-});
-
 const fields = {
   name: {
     type: String,
@@ -167,10 +139,6 @@ const fields = {
   countKeys: {
     type: Number,
     default: 0,
-  },
-  reviews: {
-    type: [reviews],
-    default: [],
   },
   countReviews: {
     type: Number,
