@@ -38,6 +38,8 @@ const likeArticleNode = document.querySelector('.js-likeArticle');
 const copyBtnNode = document.querySelector('.js-copyBtn');
 const searchStringNode = document.querySelector('.js-searchString');
 const mobileSearchStringNode = document.querySelector('.js-mobileSearchString');
+const goSearchNode = document.querySelector('.js-goSearch');
+const goSearchMobileNode = document.querySelector('.js-goSearchMobile');
 const cartNode = document.querySelector('.js-cart');
 const collapseNodes = document.querySelectorAll('.js-collapse');
 const autoSizeInputNodes = document.querySelectorAll('.js-autoSizeInput');
@@ -878,7 +880,15 @@ document.addEventListener('click', async (e) => {
   new Menu(menu);*/
 })
 
-mobileSearchStringNode.addEventListener('input', async () => {
+goSearchNode.addEventListener('click', () => {goSearch(searchStringNode.value)})
+goSearchMobileNode.addEventListener('click', () => {goSearch(mobileSearchStringNode.value)})
+
+mobileSearchStringNode.addEventListener('keypress', async (e) => {
+  if (e.key === 'Enter') {
+    e.returnValue = false;
+    return goSearch(mobileSearchStringNode.value);
+  }
+  
   const response = await postman.get(`${websiteAddress}api/products`, {searchString: mobileSearchStringNode.value, limit: 7});
   const result = await response.json();
   const searchResultNode = document.querySelector('.js-mobileSearchResult');
@@ -960,9 +970,14 @@ mobileSearchStringNode.addEventListener('input', async () => {
   }
 })
 
-searchStringNode.addEventListener('input', async () => {
+searchStringNode.addEventListener('keypress', async (e) => {
   if (catalogNode) {
     return;
+  }
+  
+  if (e.key === 'Enter') {
+    e.returnValue = false;
+    return goSearch(searchStringNode.value);
   }
   
   popupController.activateById('navigate');
@@ -1795,4 +1810,8 @@ if (seriesSliderNode) {
     isTrack: true,
     countSlidesScroll: 4,
   })
+}
+
+function goSearch(str) {
+  document.location.href = `${websiteAddress}games?searchString=${str}`;
 }
