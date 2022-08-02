@@ -79,6 +79,10 @@ const fields = {
     default: false,
   },
   lockingMessage: String,
+  bot: {
+    type: Boolean,
+    default: false,
+  },
   active: {
     type: Boolean,
     default: true,

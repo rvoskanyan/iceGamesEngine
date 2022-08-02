@@ -41,6 +41,9 @@ export const blogArticlePage = async (req, res) => {
         
         await article.save();
         await achievementEvent('articlesRead', user);
+      } else if (article.views < 1000) {
+        article.views += 1;
+        await article.save();
       }
     }
   
