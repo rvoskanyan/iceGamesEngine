@@ -7,6 +7,7 @@ import Order from './../../models/Order.js';
 
 export const profilePage = async (req, res) => {
   try {
+    const countAchievements = res.locals.person.achievements ? res.locals.person.achievements.length : 0;
     const user = await res.locals.person.populate({path: 'achievements', options: {limit: 4}});
     const countUsers = await User.estimatedDocumentCount();
     const ratingPosition = await user.getRatingPosition();
@@ -15,7 +16,6 @@ export const profilePage = async (req, res) => {
       .sort({createdAt: -1})
       .select(['name', 'alias', 'introText', 'type', 'createdAt', 'img'])
       .limit(9);
-    const countAchievements = res.locals.person.achievements ? res.locals.person.achievements.length : 0;
   
     res.render('profile', {
       title: "ICE GAMES — Мой профиль",
