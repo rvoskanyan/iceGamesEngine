@@ -4,8 +4,13 @@ import Order from "../../models/Order.js";
 
 export const ratingPage = async (req, res) => {
   try {
-    const users = await User.find().sort({rating: -1, createdAt: 1}).select(['login', 'rating']).limit(1000);
-    const countUsers = await User.estimatedDocumentCount();
+    const countUsers = await User.estimatedDocumentCount({locked: false, active: true});
+    const users = await User
+      .find({locked: false, active: true})
+      .sort({rating: -1, createdAt: 1})
+      .select(['login', 'rating'])
+      .limit(20)
+      .lean();
     
     res.render('rating', {
       title: 'ICE GAMES — рейтинг пользователей',

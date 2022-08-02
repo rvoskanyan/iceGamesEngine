@@ -53,6 +53,8 @@ const acceptAgreementNode = document.querySelector('.js-acceptAgreement');
 const blogPageNode = document.querySelector('.js-blogPage');
 const loadMoreReviewsBtnNode = document.querySelector('.js-loadMoreReviewsBtn');
 const reviewsListNode = document.querySelector('.js-reviewsList');
+const loadMoreRatingNode = document.querySelector('.js-loadMoreRating');
+const listRatingNode = document.querySelector('.js-listRating');
 const popupController = new PopupController([
   {
     id: 'loginFrom',
@@ -137,6 +139,33 @@ const popupController = new PopupController([
   },
 ]);
 
+loadMoreRatingNode && loadMoreRatingNode.addEventListener('click', async () => {
+  const skip = parseInt(loadMoreRatingNode.dataset.skip);
+  
+  const response = await postman.get(`${websiteAddress}api/users?skip=${skip}`);
+  const result = await response.json();
+  
+  if (result.email) {
+    return;
+  }
+  
+  result.users.forEach((user, index) => {
+    listRatingNode.innerHTML += `
+      <a href="${websiteAddress}rating/${user.login}" class="item">
+          <div class="position">${skip + index + 1} \\ ${result.countUsers}</div>
+          <div class="name">${user.login}</div>
+          <div class="rating">${user.rating}</div>
+      </a>
+    `;
+  });
+  
+  if (result.isLast) {
+    return loadMoreRatingNode.remove();
+  }
+  
+  loadMoreRatingNode.dataset.skip = parseInt(loadMoreRatingNode.dataset.skip) + 20;
+});
+
 loadMoreReviewsBtnNode && loadMoreReviewsBtnNode.addEventListener('click', async () => {
   const skip = parseInt(loadMoreReviewsBtnNode.dataset.skip);
   
@@ -165,6 +194,10 @@ loadMoreReviewsBtnNode && loadMoreReviewsBtnNode.addEventListener('click', async
       </div>
     `;
   });
+  
+  if (result.isLast) {
+    return loadMoreReviewsBtnNode.remove();
+  }
   
   loadMoreReviewsBtnNode.dataset.skip = parseInt(loadMoreReviewsBtnNode.dataset.skip) + 5;
 });

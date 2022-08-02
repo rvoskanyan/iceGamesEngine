@@ -12,7 +12,7 @@
     </div>
     <h1 class="title">Рейтинг айсов</h1>
     <div class="description">Тут Вы можете увидеть рейтинг среди всех пользователей на сайте</div>
-    <div class="list">
+    <div class="list js-listRating">
         {{#each users}}
             <a href="{{@root.websiteAddress}}rating/{{login}}" class="item">
                 {{#iff @index '<' 3}}
@@ -28,4 +28,5 @@
             </a>
         {{/each}}
     </div>
+    <button class="btn rounded bg-lilac translucent loadMore js-loadMoreRating" data-skip="20">Загрузить ещё</button>
 </main>
