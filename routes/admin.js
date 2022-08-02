@@ -1,7 +1,6 @@
 import {Router} from 'express';
 import indexRoute from './admin/index.js';
 import productsRoute from './admin/products.js';
-import uspRoute from './admin/usp.js';
 import categoriesRoute from './admin/categories.js';
 import genresRoute from './admin/genres.js';
 import namesKitsRoute from './admin/namesKits.js';
@@ -27,7 +26,6 @@ const router = Router();
 
 router.use('/', indexRoute);
 router.use('/products', productsRoute);
-router.use('/usp', uspRoute);
 router.use('/categories', categoriesRoute);
 router.use('/genres', genresRoute);
 router.use('/names-kits', namesKitsRoute);

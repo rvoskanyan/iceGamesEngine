@@ -1,5 +1,4 @@
 import Product from "../../models/Product.js";
-import Usp from "../../models/Usp.js";
 import Category from "../../models/Category.js";
 import Genre from "../../models/Genre.js";
 import Article from "../../models/Article.js";
@@ -16,7 +15,6 @@ export const homepage = async (req, res) => {
     .limit(5)
     .select(['name', 'alias', 'description', 'priceTo', 'priceFrom', 'img', 'coverImg', 'coverVideo', 'discount', 'dsId'])
     .lean();
-  const usp = await Usp.find().select('text').lean();
   const categories = await Category.find().select('name').lean();
   const genres = await Genre.find().select(['name', 'img', 'bgColor']).sort({order: 1}).lean();
   const partners = await Partner.find().select(['name', 'img', 'link']).lean();
@@ -160,7 +158,6 @@ export const homepage = async (req, res) => {
     metaDescription: 'Магазин лицензионных ключей ICE GAMES. Широкий выбор игр, увлекательные статьи и большое активное комьюнити.',
     isHome: true,
     sliderProducts,
-    usp,
     catalog,
     genres,
     articles,

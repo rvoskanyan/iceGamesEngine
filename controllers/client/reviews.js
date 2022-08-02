@@ -1,13 +1,13 @@
 import Product from "./../../models/Product.js";
 import User from "../../models/User.js";
+import Review from "../../models/Review.js";
 
 export const reviewsPage = async (req, res) => {
   try {
     let lastViewedProducts = [];
     const products = await Product.aggregate([
       {$unwind: '$reviews'},
-      /*{$limit: 5},*/
-      {$sort: {createdAt: -1}},
+      {$sort: {createdAt: 1}},
       {
         $lookup: {
           from: 'users',
@@ -18,16 +18,51 @@ export const reviewsPage = async (req, res) => {
       },
       {
         $project: {
-          _id: 0,
+          _id: 1,
           name: 1,
           alias: 1,
           'reviews.eval': 1,
           'reviews.text': 1,
           'reviews.user.login': 1,
+          'reviews.user._id': 1,
         },
       },
       {$unwind: '$reviews.user'},
     ]);
+    
+    for (const item of products) {
+      const candidate = await Review.find({product: item._id, user: item.reviews.user._id});
+      
+      if (candidate.length) {
+        continue;
+      }
+      
+      const review  = new Review({
+        user: item.reviews.user._id,
+        product: item._id,
+        eval: item.reviews.eval,
+        text: item.reviews.text,
+      });
+  
+      await review.save();
+    }
+  
+    const reviews = await Review
+      .find({active: true})
+      .limit(5)
+      .sort({createdAt: -1})
+      .select(['eval', 'text'])
+      .populate([
+        {
+          path: 'product',
+          select: ['name', 'alias'],
+        },
+        {
+          path: 'user',
+          select: ['login'],
+        }
+      ])
+      .lean();
   
     if (req.session.isAuth) {
       const person = res.locals.person;
@@ -60,7 +95,7 @@ export const reviewsPage = async (req, res) => {
       title: 'ICE GAMES — Отзывы',
       metaDescription: 'Место для ваших отзывов. Помогите нам стать лучше — напишите своё мнение о магазине компьютерных игр ICE GAMES.',
       isReviews: true,
-      products,
+      reviews,
       lastViewedProducts,
     });
   } catch (e) {

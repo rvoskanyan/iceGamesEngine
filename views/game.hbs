@@ -535,17 +535,15 @@
                                 </form>
                             {{/if}}
                             <div class="listItems js-listReviews"{{#if @root.person.login}} data-user-name="{{@root.person.login}}"{{/if}}>
-                                {{#if product.reviews}}
-                                    {{#each product.reviews}}
-                                        {{> review
-                                                userLogin=userId.login
-                                                eval=eval
-                                                text=text
-                                        }}
-                                    {{/each}}
-                                {{/if}}
+                                {{#each reviews}}
+                                    {{> review
+                                            userLogin=user.login
+                                            eval=eval
+                                            text=text
+                                    }}
+                                {{/each}}
                             </div>
-                            {{#iff product.reviews.length '>' 3}}
+                            {{#iff countReviews '>' 5}}
                                 <div class="btn link translucent loadMore">Загрузить еще</div>
                             {{/iff}}
                         </div>

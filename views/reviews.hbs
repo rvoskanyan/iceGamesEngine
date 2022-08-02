@@ -16,24 +16,22 @@
     </div>
     <div class="contentContainer js-listReviews">
         <div class="reviewsList">
-            {{#each products}}
+            {{#each reviews}}
                 <div class="review">
                     <div class="head">
-                        <a class="btn link userName" href="{{websiteAddress}}rating/{{reviews.user.login}}" title="Перейти на страницу {{reviews.user.login}}">{{reviews.user.login}}</a>
+                        <a class="btn link userName" href="{{websiteAddress}}rating/{{user.login}}" title="Перейти на страницу {{user.login}}">{{user.login}}</a>
                         <div class="forGame">
-                            Отзыв на игру: <a class="link gameName" href="{{websiteAddress}}games/{{alias}}">{{name}}</a>
+                            Отзыв на игру: <a class="link gameName" href="{{websiteAddress}}games/{{product.alias}}">{{product.name}}</a>
                         </div>
                     </div>
                     <div class="grade">
-                        <span class="icon icon-star{{#iff reviews.eval '>=' 1}}Fill{{/iff}}"></span>
-                        <span class="icon icon-star{{#iff reviews.eval '>=' 2}}Fill{{/iff}}"></span>
-                        <span class="icon icon-star{{#iff reviews.eval '>=' 3}}Fill{{/iff}}"></span>
-                        <span class="icon icon-star{{#iff reviews.eval '>=' 4}}Fill{{/iff}}"></span>
-                        <span class="icon icon-star{{#iff reviews.eval '>=' 5}}Fill{{/iff}}"></span>
+                        <span class="icon icon-star{{#iff eval '>=' 1}}Fill{{/iff}}"></span>
+                        <span class="icon icon-star{{#iff eval '>=' 2}}Fill{{/iff}}"></span>
+                        <span class="icon icon-star{{#iff eval '>=' 3}}Fill{{/iff}}"></span>
+                        <span class="icon icon-star{{#iff eval '>=' 4}}Fill{{/iff}}"></span>
+                        <span class="icon icon-star{{#iff eval '>=' 5}}Fill{{/iff}}"></span>
                     </div>
-                    <div class="text">
-                        {{reviews.text}}
-                    </div>
+                    <div class="text">{{text}}</div>
                 </div>
             {{/each}}
         </div>

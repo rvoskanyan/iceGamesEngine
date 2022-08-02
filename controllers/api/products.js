@@ -6,6 +6,7 @@ import {achievementEvent} from "../../services/achievement.js";
 import {validationResult} from "express-validator";
 import fetch from "node-fetch";
 import {getAlias, getChangeLayout, getSoundIndex, normalizeStr} from "../../utils/functions.js";
+import Review from "../../models/Review.js";
 /*
   Articles.find({_id: {$ne: article._id}})
  */
@@ -312,18 +313,22 @@ export const addReview = async (req, res) => {
       });
     }
     
-    const product = await Product.findById(productId).select(['reviews', 'countReviews', 'totalEval']);
-    const isNoReview = product.reviews.findIndex(review => review.userId.toString() === user.id) === -1;
+    const product = await Product.findById(productId).select(['countReviews', 'totalEval']);
+    let review = await Review.find({product: productId, user: user._id});
+    const isNoReview = !review.length;
 
     if (!isNoReview) {
       throw new Error('The product has a review from an current user');
     }
-    
-    product.reviews.push({
-      userId: user._id,
+  
+    review = new Review({
+      user: user._id,
+      product: productId,
       eval: evalValue,
       text,
     });
+    
+    await review.save();
     
     product.countReviews += 1;
     product.totalEval += evalValue;

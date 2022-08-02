@@ -5,6 +5,7 @@ import ActivationService from '../../models/ActivationService.js';
 import Order from '../../models/Order.js';
 import Comment from '../../models/Comment.js';
 import User from '../../models/User.js';
+import Review from "../../models/Review.js";
 
 export const gamesPage = async (req, res) => {
   try {
@@ -39,7 +40,6 @@ export const gamePage = async (req, res) => {
         'platformId',
         'activationServiceId',
         'publisherId',
-        'reviews.userId',
         'editionId',
         'dlcForId',
         {
@@ -50,6 +50,17 @@ export const gamePage = async (req, res) => {
           }
         }
       ]);
+    const reviews = await Review
+      .find({product: product._id, active: true})
+      .limit(5)
+      .sort({createdAt: -1})
+      .select(['eval', 'text'])
+      .populate([{
+        path: 'user',
+        select: ['login'],
+      }])
+      .lean();
+    const countReviews = await Review.countDocuments({product: product._id, active: true});
     const countSales = product.inStock ? Math.floor(Math.floor(product.priceFrom) / 3 * 0.005 * (Math.floor(new Date().getHours() / 5)) * (product.top ? 1.3 : 1)) : 0;
     const comments = await Comment
       .find({subjectId: product.id, ref: 'product'})
@@ -129,7 +140,8 @@ export const gamePage = async (req, res) => {
         return viewedProduct;
       });
       
-      isProductNoReview = product.reviews.findIndex(review => review.userId.id === res.locals.person.id) === -1;
+      isProductNoReview = await Review.find({product: product._id, user: res.locals.person._id});
+      isProductNoReview = !isProductNoReview.length;
       
       let viewedProducts = person.viewedProducts;
       const viewedProductIndex = viewedProducts.findIndex(viewedProductId => {
@@ -244,6 +256,8 @@ export const gamePage = async (req, res) => {
       seriesIsSlider,
       subscribed,
       countSales,
+      reviews,
+      countReviews,
     });
   } catch (e) {
     console.log(e);
