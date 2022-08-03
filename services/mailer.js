@@ -21,12 +21,27 @@ export async function registrationMail(to, hash) {
     subject: 'Подтверждение E-mail',
     html: `
       <p>
-        Здравствуйте! Вы успешно зарегистрировались на ICE Games. Для продолжения работы Вам необходимо подтвердить свой
+        Здравствуйте! Вы успешно зарегистрировались на ICE GAMES. Для продолжения работы Вам необходимо подтвердить свой
         адрес электронной почты, для этого перейдите по данной
         <a href="${process.env.WEB_SITE_ADDRESS}?confirmEmail=${hash}">ссылке.</a>
       </p>
       <p>Если Вы не создавали данный аккаунт, пожалуйста, проигноррируйте это письмо.</p>
-      <p>С уважением, команда <a href="${process.env.WEB_SITE_ADDRESS}">ICE Games</a>!</p>
+      <p>С уважением, команда <a href="${process.env.WEB_SITE_ADDRESS}">ICE GAMES</a>!</p>
+    `,
+  })
+}
+
+export async function restoreMail(to, password) {
+  await transporter.sendMail({
+    from: 'ICE GAMES <info@icegames.store>',
+    to: to,
+    subject: 'Смена пароля',
+    html: `
+      <p>Здравствуйте! Вы успешно изменили свой пароль на ICE GAMES. Для авторизации используйте следующие данные:</p>
+      <p><b>E-mail:</b> <i>${to}</i></p>
+      <p><b>Пароль:</b> <i>${password}</i></p>
+      <p>Если Вы не выполняли данного действия, пожалуйста, обратитесь в <a href="https://vk.com/ice.games">поддержку</a>.</p>
+      <p>С уважением, команда <a href="${process.env.WEB_SITE_ADDRESS}">ICE GAMES</a>!</p>
     `,
   })
 }

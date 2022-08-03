@@ -55,6 +55,7 @@ const loadMoreReviewsBtnNode = document.querySelector('.js-loadMoreReviewsBtn');
 const reviewsListNode = document.querySelector('.js-reviewsList');
 const loadMoreRatingNode = document.querySelector('.js-loadMoreRating');
 const listRatingNode = document.querySelector('.js-listRating');
+const restorePasswordFormNode = document.querySelector('.js-restorePasswordForm');
 const popupController = new PopupController([
   {
     id: 'loginFrom',
@@ -1802,6 +1803,19 @@ if (inputLabelInFieldNodes.length) {
     item.querySelector('input').addEventListener('blur', (e) => {
       e.target.value.length ? e.target.classList.add('active') : e.target.classList.remove('active');
     })
+  })
+}
+
+if (restorePasswordFormNode) {
+  const resultRestoreNode = document.querySelector('.js-resultRestore');
+  
+  new AsyncForm({
+    mainNode: restorePasswordFormNode,
+    resultMessageNode: resultRestoreNode,
+    successHandler: () => {
+      restorePasswordFormNode.before(resultRestoreNode);
+      restorePasswordFormNode.remove();
+    },
   })
 }
 

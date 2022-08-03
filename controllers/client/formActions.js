@@ -2,7 +2,7 @@ import {validationResult} from 'express-validator';
 import bcrypt from 'bcryptjs';
 
 import User from './../../models/User.js';
-import {registrationMail} from "../../services/mailer.js";
+import {registrationMail, restoreMail} from "../../services/mailer.js";
 import {v4 as uuidv4} from "uuid";
 
 export const registration = async (req, res) => {
@@ -97,6 +97,42 @@ export const auth = async (req, res) => {
         message: 'Не верный E-mail или пароль',
       });
     }
+  } catch (e) {
+    console.log(e);
+    res.json({
+      error: true,
+      message: 'Неизвестная ошибка, попробуйте позже или обратитесь в поддержку.',
+    });
+  }
+}
+
+export const restore = async (req, res) => {
+  try {
+    const email = req.body.email;
+    const user = await User.find({email}).select(['password']);
+    const chars = "0123456789abcdefghijklmnopqrstuvwxyz!@#$%^&*()ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    let password = '';
+    
+    if (!user.length) {
+      return res.json({
+        error: true,
+        message: 'Пользователь с таким E-mail не найден',
+      });
+    }
+    
+    while (password.length < 12) {
+      const randomNumber = Math.floor(Math.random() * chars.length);
+      password += chars.substring(randomNumber, randomNumber + 1);
+    }
+  
+    user[0].password = await bcrypt.hash(password, 10);
+    await restoreMail(email, password);
+    await user[0].save();
+  
+    res.json({
+      success: true,
+      message: 'Новый пароль отправлен на Ваш E-mail',
+    });
   } catch (e) {
     console.log(e);
     res.json({

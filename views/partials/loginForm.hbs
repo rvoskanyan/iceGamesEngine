@@ -29,11 +29,12 @@
     <div class="formContainer restore js-restoreFomContainer">
         <div class="title">Забыли пароль?</div>
         <div class="description">Мы пришлем Вам новый на E-mail, указанный при регистрации!</div>
-        <form class="form" action="/restore" method="post">
+        <form class="form js-restorePasswordForm" action="{{websiteAddress}}restore" method="post">
             <label class="input-labelInField js-inputLabelInField">
                 <input class="textField" type="text" name="email">
                 <span class="label">E-mail</span>
             </label>
+            <div class="responseMessage js-resultRestore"></div>
             <button type="submit" class="btn round border fillFromCenter fillFromCenter-darkLilac submit">Восстановить</button>
         </form>
         <button class="btn link js-btnBackLogin">Назад</button>
