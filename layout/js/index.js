@@ -950,12 +950,14 @@ document.addEventListener('click', async (e) => {
 goSearchNode.addEventListener('click', () => {goSearch(searchStringNode.value)})
 goSearchMobileNode.addEventListener('click', () => {goSearch(mobileSearchStringNode.value)})
 
-mobileSearchStringNode.addEventListener('keypress', async (e) => {
+mobileSearchStringNode.addEventListener('keypress', (e) => {
   if (e.key === 'Enter') {
     e.returnValue = false;
     return goSearch(mobileSearchStringNode.value);
   }
-  
+})
+
+mobileSearchStringNode.addEventListener('input', async () => {
   const response = await postman.get(`${websiteAddress}api/products`, {searchString: mobileSearchStringNode.value, limit: 7});
   const result = await response.json();
   const searchResultNode = document.querySelector('.js-mobileSearchResult');
