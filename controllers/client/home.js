@@ -85,6 +85,19 @@ export const homepage = async (req, res) => {
     .limit(10)
     .lean();
   
+  for (let category of categories) {
+    const products = await Product
+      .find({categories: {$in: category._id.toString()}, active: true})
+      .select(['name', 'alias', 'img', 'priceTo', 'priceFrom', 'dlc', 'dsId', 'inStock'])
+      .limit(10)
+      .lean();
+    
+    catalog.push({
+      category,
+      products,
+    });
+  }
+  
   catalog.push({
     category: {name: 'Новинки'},
     products: noveltiesProduct.map(item => {
@@ -101,19 +114,6 @@ export const homepage = async (req, res) => {
       return item;
     }),
   })
-  
-  for (let category of categories) {
-    const products = await Product
-      .find({categories: {$in: category._id.toString()}, active: true})
-      .select(['name', 'alias', 'img', 'priceTo', 'priceFrom', 'dlc', 'dsId', 'inStock'])
-      .limit(10)
-      .lean();
-    
-    catalog.push({
-      category,
-      products,
-    });
-  }
   
   catalog.push({
     category: {name: 'Скидки'},
