@@ -11,23 +11,25 @@
 
 <ul>
     <li><a href="/admin/products">Игры</a></li>
-    <li><a href="/admin/categories">Категории</a></li>
-    <li><a href="/admin/genres">Жанры</a></li>
-    <li><a href="/admin/editions">Версии</a></li>
-    <li><a href="/admin/keys">Ключи</a></li>
-    <li><a href="/admin/extends">Расширения</a></li>
-    <li><a href="/admin/languages">Языки</a></li>
-    <li><a href="/admin/regions">Регионы</a></li>
-    <li><a href="/admin/activation-services">Сервисы активации</a></li>
-    <li><a href="/admin/publishers">Издатели</a></li>
-    <li><a href="/admin/developers">Разработчики</a></li>
-    <li><a href="/admin/platforms">Платформы</a></li>
-    <li><a href="/admin/bundles">Связки игр</a></li>
-    <li><a href="/admin/series">Серии игр</a></li>
-    <li><a href="/admin/articles">Блог</a></li>
-    <li><a href="/admin/achievements">Достижения</a></li>
-    <li><a href="/admin/parsing">Парсинг</a></li>
-    <li><a href="https://steambuy.com/">Steambuy</a></li>
+    {{#iff persone.role '===' 'admin'}}
+        <li><a href="/admin/categories">Категории</a></li>
+        <li><a href="/admin/genres">Жанры</a></li>
+        <li><a href="/admin/editions">Версии</a></li>
+        <li><a href="/admin/keys">Ключи</a></li>
+        <li><a href="/admin/extends">Расширения</a></li>
+        <li><a href="/admin/languages">Языки</a></li>
+        <li><a href="/admin/regions">Регионы</a></li>
+        <li><a href="/admin/activation-services">Сервисы активации</a></li>
+        <li><a href="/admin/publishers">Издатели</a></li>
+        <li><a href="/admin/developers">Разработчики</a></li>
+        <li><a href="/admin/platforms">Платформы</a></li>
+        <li><a href="/admin/bundles">Связки игр</a></li>
+        <li><a href="/admin/series">Серии игр</a></li>
+        <li><a href="/admin/articles">Блог</a></li>
+        <li><a href="/admin/achievements">Достижения</a></li>
+        <li><a href="/admin/parsing">Парсинг</a></li>
+        <li><a href="https://steambuy.com/">Steambuy</a></li>
+    {{/iff}}
 </ul>
 
 {{{body}}}

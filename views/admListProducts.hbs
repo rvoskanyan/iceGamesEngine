@@ -1,67 +1,80 @@
-<a href="/admin/products/add/">Добавить товар</a>
+{{#iff persone.role '===' 'admin'}}
+    <a href="/admin/products/add/">Добавить товар</a>
+{{/iff}}
 
-<table>
-    <tr>
-        <th>Не активные</th>
-        <th>Имеют дубли</th>
-        <th>Активные</th>
-        <th>ТОП</th>
-        <th>Нет скриншотов</th>
-    </tr>
-    <tr style="vertical-align: top">
-        <td>
-            <ul>
-                {{#each other}}
-                    <li>
-                        <a href="/admin/products/edit/{{_id}}">{{name}} - {{dsId}}</a>
-                    </li>
-                {{/each}}
-            </ul>
-        </td>
-        <td>
-            <ul>
-                {{#each doubles}}
-                    <li>
-                       {{this}}
-                    </li>
-                {{/each}}
-            </ul>
-        </td>
-        <td>
-            <ul>
-                {{#each active}}
-                    <li>
-                        <a href="/admin/products/edit/{{_id}}">{{name}} - {{dsId}}</a>
-                    </li>
-                {{/each}}
-            </ul>
-        </td>
-        <td>
-            <ul>
-                {{#each top}}
-                    <li>
-                        <a href="/admin/products/edit/{{_id}}">{{name}} - {{dsId}}{{#if active}}<span style="color: red"> *</span>{{/if}}</a>
-                    </li>
-                {{/each}}
-            </ul>
-        </td>
-        <td>
-            <ul>
-                {{#each other}}
-                    {{#unless images.length}}
+
+{{#iff persone.role '===' 'admin'}}
+    <table>
+        <tr>
+            <th>Не активные</th>
+            <th>Имеют дубли</th>
+            <th>Активные</th>
+            <th>ТОП</th>
+            <th>Нет скриншотов</th>
+        </tr>
+        <tr style="vertical-align: top">
+            <td>
+                <ul>
+                    {{#each other}}
                         <li>
                             <a href="/admin/products/edit/{{_id}}">{{name}} - {{dsId}}</a>
                         </li>
-                    {{/unless}}
-                {{/each}}
-                {{#each active}}
-                    {{#unless images.length}}
+                    {{/each}}
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    {{#each doubles}}
+                        <li>
+                            {{this}}
+                        </li>
+                    {{/each}}
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    {{#each active}}
                         <li>
                             <a href="/admin/products/edit/{{_id}}">{{name}} - {{dsId}}</a>
                         </li>
-                    {{/unless}}
-                {{/each}}
-            </ul>
-        </td>
-    </tr>
-</table>
+                    {{/each}}
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    {{#each top}}
+                        <li>
+                            <a href="/admin/products/edit/{{_id}}">{{name}} - {{dsId}}{{#if active}}<span style="color: red"> *</span>{{/if}}</a>
+                        </li>
+                    {{/each}}
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    {{#each other}}
+                        {{#unless images.length}}
+                            <li>
+                                <a href="/admin/products/edit/{{_id}}">{{name}} - {{dsId}}</a>
+                            </li>
+                        {{/unless}}
+                    {{/each}}
+                    {{#each active}}
+                        {{#unless images.length}}
+                            <li>
+                                <a href="/admin/products/edit/{{_id}}">{{name}} - {{dsId}}</a>
+                            </li>
+                        {{/unless}}
+                    {{/each}}
+                </ul>
+            </td>
+        </tr>
+    </table>
+{{else}}
+    <ul>
+        {{#each active}}
+            <li>
+                <a href="/admin/products/edit/{{_id}}">{{name}} - {{dsId}}</a>
+            </li>
+        {{/each}}
+    </ul>
+{{/iff}}

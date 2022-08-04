@@ -42,7 +42,7 @@ const fields = {
   role: {
     type: String,
     required: true,
-    enum: ['client', 'admin'],
+    enum: ['client', 'admin', 'moderator'],
     default: 'client',
   },
   cart: [{
