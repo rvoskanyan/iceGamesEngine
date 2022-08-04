@@ -166,27 +166,32 @@ export async function mailingBuyProduct(productId, email) {
                                               </tr>
                                               <tr>
                                                   <td align="center">
-                                                      <a href="#">
+                                                      <a href="https://vk.com/ice.games">
                                                           <img src="${websiteAddress}img/vkSocial.png" alt="Логотип VK" title="Перейти на страницу Ice Games в VK">
                                                       </a>
                                                   </td>
                                                   <td align="center">
-                                                      <a href="#">
+                                                      <a href="https://t.me/icegames_store">
                                                           <img src="${websiteAddress}img/telegramSocial.png" alt="Логотип Telegram" title="Перейти на страницу Ice Games в Telegram">
                                                       </a>
                                                   </td>
                                                   <td align="center">
-                                                      <a href="#">
+                                                      <a href="https://m.twitch.tv/surf1se/about">
                                                           <img src="${websiteAddress}img/twitchSocial.png" alt="Логотип Twitch" title="Перейти на страницу Ice Games в Twitch">
                                                       </a>
                                                   </td>
                                                   <td align="center">
-                                                      <a href="#">
+                                                      <a href="https://www.youtube.com/channel/UCMARO--DvWrjVlbVflNtczA">
+                                                          <img src="${websiteAddress}img/youtubeSocial.png" alt="Логотип YouTube" title="Перейти на страницу Ice Games в YouTube">
+                                                      </a>
+                                                  </td>
+                                                  <td align="center">
+                                                      <a href="https://vt.tiktok.com/ZSRRFmTSm/">
                                                           <img src="${websiteAddress}img/tiktokSocial.png" alt="Логотип TikTok" title="Перейти на страницу Ice Games в TikTok">
                                                       </a>
                                                   </td>
                                                   <td align="center">
-                                                      <a href="#">
+                                                      <a href="https://instagram.com/icegames.store">
                                                           <img src="${websiteAddress}img/instagramSocial.png" alt="Логотип Instagram" title="Перейти на страницу Ice Games в Instagram">
                                                       </a>
                                                   </td>
@@ -319,27 +324,32 @@ export async function mailingInStockProduct(productId, emails) {
                                               </tr>
                                               <tr>
                                                   <td align="center">
-                                                      <a href="#">
+                                                      <a href="https://vk.com/ice.games">
                                                           <img src="${websiteAddress}img/vkSocial.png" alt="Логотип VK" title="Перейти на страницу Ice Games в VK">
                                                       </a>
                                                   </td>
                                                   <td align="center">
-                                                      <a href="#">
+                                                      <a href="https://t.me/icegames_store">
                                                           <img src="${websiteAddress}img/telegramSocial.png" alt="Логотип Telegram" title="Перейти на страницу Ice Games в Telegram">
                                                       </a>
                                                   </td>
                                                   <td align="center">
-                                                      <a href="#">
+                                                      <a href="https://m.twitch.tv/surf1se/about">
                                                           <img src="${websiteAddress}img/twitchSocial.png" alt="Логотип Twitch" title="Перейти на страницу Ice Games в Twitch">
                                                       </a>
                                                   </td>
                                                   <td align="center">
-                                                      <a href="#">
+                                                      <a href="https://www.youtube.com/channel/UCMARO--DvWrjVlbVflNtczA">
+                                                          <img src="${websiteAddress}img/youtubeSocial.png" alt="Логотип YouTube" title="Перейти на страницу Ice Games в YouTube">
+                                                      </a>
+                                                  </td>
+                                                  <td align="center">
+                                                      <a href="https://vt.tiktok.com/ZSRRFmTSm/">
                                                           <img src="${websiteAddress}img/tiktokSocial.png" alt="Логотип TikTok" title="Перейти на страницу Ice Games в TikTok">
                                                       </a>
                                                   </td>
                                                   <td align="center">
-                                                      <a href="#">
+                                                      <a href="https://instagram.com/icegames.store">
                                                           <img src="${websiteAddress}img/instagramSocial.png" alt="Логотип Instagram" title="Перейти на страницу Ice Games в Instagram">
                                                       </a>
                                                   </td>
