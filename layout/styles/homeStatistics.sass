@@ -1,8 +1,13 @@
+@import './breakPoints'
+
 .homeStatistics
   display: flex
   margin: 0 auto
-  justify-content: center
-  column-gap: 50px
+  column-gap: 20px
+
+  @include for-desktop-up
+    column-gap: 50px
+    justify-content: center
 
   .item
     display: flex
@@ -10,23 +15,34 @@
     align-items: center
     row-gap: 10px
     text-align: center
-    min-width: 230px
+    min-width: 120px
     color: #fff
+
+    @include for-desktop-up
+      min-width: 230px
 
     .label
       font-family: 'Lemon Milk'
       width: 100%
-      font-size: 18px
+      font-size: 12px
+
+      @include for-desktop-up
+        font-size: 18px
 
     .value
       font-family: 'Lemon Milk'
       width: 100%
-      font-size: 28px
+      font-size: 16px
       border: 1px solid #fff
-      padding: 12px 50px
-      border-radius: 20px
+      padding: 8px 10px
+      border-radius: 12px
       opacity: 0
       transition: ease-in .5s
+
+      @include for-desktop-up
+        border-radius: 20px
+        padding: 12px 50px
+        font-size: 28px
 
       &.active
         opacity: 1
