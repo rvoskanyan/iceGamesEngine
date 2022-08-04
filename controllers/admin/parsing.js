@@ -1,4 +1,4 @@
-import {parseProduct, startParsingProducts} from "../../services/parsing.js";
+import {parseProduct, startParsingProducts, syncPriceAndInStock} from "../../services/parsing.js";
 import ParsingTask from "../../models/ParsingTask.js";
 import Product from "../../models/Product.js";
 
@@ -6,12 +6,18 @@ export const parsingPage = (req, res) => {
   res.render('parsing', {
     layout: 'admin',
     parsing: process.env.PARSING,
+    sync: process.env.SYNC,
   })
 }
 
 export const startParsing = (req, res) => {
   startParsingProducts();
   process.env.PARSING = '1';
+  res.redirect('/admin/parsing');
+}
+
+export const sync = (req, res) => {
+  syncPriceAndInStock();
   res.redirect('/admin/parsing');
 }
 

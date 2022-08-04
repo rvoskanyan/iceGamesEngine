@@ -15,6 +15,74 @@ import {__dirname} from "../rootPathes.js";
 import {v4 as uuidv4} from "uuid";
 import Browser from "./Browser.js";
 
+let int;
+
+export const syncPriceAndInStock = async () => {
+  clearInterval(int);
+  
+  int = setInterval(async () => {
+    process.env.SYNC = '1';
+    await sync();
+  }, 1000 * 60 * 5);
+  
+  process.env.SYNC = '1';
+  await sync();
+}
+
+const sync = async () => {
+  const rows = 2000;
+  let page = 1;
+  let pages = 1;
+  
+  while (page <= pages) {
+    const responseProducts = await fetch('https://api.digiseller.ru/api/seller-goods', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: JSON.stringify({
+        id_seller: 182844,
+        order_col: "name",
+        order_dir: "asc",
+        currency: "RUR",
+        lang: "ru-RU",
+        rows,
+        page,
+      }),
+    });
+    const resultProducts = await responseProducts.json();
+    const products = resultProducts.rows;
+    
+    pages = resultProducts.pages;
+    
+    for (const product of products) {
+      const inStock = !!product.in_stock;
+      const dsId = product.id_goods;
+      const priceTo = parseFloat(product.price_rur);
+      
+      try {
+        const productOnSite = await Product.findOne({dsId});
+        
+        if (!productOnSite) {
+          continue;
+        }
+        
+        productOnSite.priceTo = priceTo;
+        
+        await productOnSite.save();
+        await productOnSite.changeInStock(inStock);
+      } catch (e) {
+        console.log(e);
+      }
+    }
+    
+    page++;
+  }
+  
+  process.env.SYNC = '';
+}
+
 export const startParsingProducts = async () => {
   const rows = 2000;
   let page = 1;
