@@ -110,7 +110,7 @@ export const importReviews = async (req, res) => {
     const {startPosition = 1, count = 300} = req.body;
     const {importFile} = req.files;
     const workbook = new exceljs.Workbook();
-    const products = await Product.find({active: true, dlc: false, top: false}).select(['name', 'alias', 'priceTo']).lean();
+    const products = await Product.find({active: true, dlc: false, top: true, inStock: true}).select(['name', 'alias', 'priceTo']).lean();
     const articles = await Article.find({active: true}).select(['views', 'likes']);
     const results = [];
   
