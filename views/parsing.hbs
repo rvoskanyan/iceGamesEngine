@@ -9,8 +9,8 @@
     <a href="/admin/parsing/tasks">Задачи</a>
 </form>-->
 <form action="{{webSiteAddress}}/admin/parsing/sync" method="post">
-    <input type="submit"{{#if sunc}} disabled{{/if}} value="Запустить синхронизацию">
-    {{#if sunc}}
+    <input type="submit"{{#if sync}} disabled{{/if}} value="Запустить синхронизацию">
+    {{#if sync}}
         <p style="color: red">Синхронизация цен и наличия запущена</p>
     {{/if}}
     <br>
