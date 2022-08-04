@@ -23,7 +23,7 @@ export const syncPriceAndInStock = async () => {
   int = setInterval(async () => {
     process.env.SYNC = '1';
     await sync();
-  }, 1000 * 60 * 5);
+  }, 1000 * 60 * 60);
   
   process.env.SYNC = '1';
   await sync();
