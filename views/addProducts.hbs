@@ -1,4 +1,4 @@
-{{#iff persone.role '===' 'admin'}}
+{{#iff person.role '===' 'admin'}}
     {{#if isEdit}}
         Состав набора:
         {{#if product.elements}}
@@ -31,20 +31,20 @@
 <form method="post" action="/admin/products/{{#if isEdit}}edit/{{product.id}}{{else}}add{{/if}}" enctype="multipart/form-data">
     <label>
         Название:
-        <input type="text" name="name" {{#iff persone.role '!==' 'admin'}} disabled{{/iff}} value="{{product.name}}">
+        <input type="text" name="name" {{#iff person.role '!==' 'admin'}} disabled{{/iff}} value="{{product.name}}">
     </label>
     <br>
     <br>
     <label>
-        Id на Digiseller:
-        <input type="number" name="dsId" value="{{product.dsId}}">
+        Описание:
+        <textarea name="description" cols="30" rows="10">{{product.description}}</textarea>
     </label>
     <br>
     <br>
-    {{#iff persone.role '===' 'admin'}}
+    {{#iff person.role '===' 'admin'}}
         <label>
-            Описание:
-            <textarea name="description" cols="30" rows="10">{{product.description}}</textarea>
+            Id на Digiseller:
+            <input type="number" name="dsId" value="{{product.dsId}}">
         </label>
         <br>
         <br>
