@@ -102,6 +102,19 @@ export const homepage = async (req, res) => {
     }),
   })
   
+  for (let category of categories) {
+    const products = await Product
+      .find({categories: {$in: category._id.toString()}, active: true})
+      .select(['name', 'alias', 'img', 'priceTo', 'priceFrom', 'dlc', 'dsId', 'inStock'])
+      .limit(10)
+      .lean();
+    
+    catalog.push({
+      category,
+      products,
+    });
+  }
+  
   catalog.push({
     category: {name: 'Скидки'},
     products: discounts.map(item => {
@@ -135,19 +148,6 @@ export const homepage = async (req, res) => {
       return item;
     }),
   })
-  
-  for (let category of categories) {
-    const products = await Product
-      .find({categories: {$in: category._id.toString()}, active: true})
-      .select(['name', 'alias', 'img', 'priceTo', 'priceFrom', 'dlc', 'dsId', 'inStock'])
-      .limit(10)
-      .lean();
-  
-    catalog.push({
-      category,
-      products,
-    });
-  }
   
   if (inviter && !req.session.isAuth) {
     res.cookie('inviterId', inviter).redirect('/');
