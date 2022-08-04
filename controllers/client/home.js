@@ -5,6 +5,8 @@ import Article from "../../models/Article.js";
 import User from "../../models/User.js";
 import Partner from "../../models/Partner.js";
 import {achievementEvent} from "../../services/achievement.js";
+import Review from "../../models/Review.js";
+import Order from "../../models/Order.js";
 
 export const homepage = async (req, res) => {
   const person = res.locals.person;
@@ -18,6 +20,10 @@ export const homepage = async (req, res) => {
   const categories = await Category.find().select('name').lean();
   const genres = await Genre.find().select(['name', 'img', 'bgColor']).sort({order: 1}).lean();
   const partners = await Partner.find().select(['name', 'img', 'link']).lean();
+  const countReviews = await Review.countDocuments({active: true});
+  const countProducts = await Product.countDocuments({active: true});
+  const orders = await Order.find({status: 'paid'}).select(['products']).lean();
+  const countSales = orders.reduce((countSales, order) => countSales + order.products.length, 9000);
   const articles = await Article
     .find({active: true})
     .sort({createdAt: -1})
@@ -163,5 +169,8 @@ export const homepage = async (req, res) => {
     articles,
     checkedEmail,
     partners,
+    countProducts,
+    countReviews,
+    countSales,
   });
 }

@@ -56,6 +56,7 @@ const reviewsListNode = document.querySelector('.js-reviewsList');
 const loadMoreRatingNode = document.querySelector('.js-loadMoreRating');
 const listRatingNode = document.querySelector('.js-listRating');
 const restorePasswordFormNode = document.querySelector('.js-restorePasswordForm');
+const counterAnimationNodes = document.querySelectorAll('.js-counterAnimation');
 const popupController = new PopupController([
   {
     id: 'loginFrom',
@@ -139,6 +140,62 @@ const popupController = new PopupController([
     ],
   },
 ]);
+
+const windowHeight = document.documentElement.clientHeight;
+const topGap = document.querySelector('.js-header').getBoundingClientRect().height + 10;
+
+counterAnimationNodes.forEach(counterAnimationNode => {
+  const offsetTop = counterAnimationNode.getBoundingClientRect().top;
+  const height = counterAnimationNode.getBoundingClientRect().height;
+  const animate = () => {
+    const count = parseInt(counterAnimationNode.innerText);
+    const step = Math.floor(count / 50);
+  
+    counterAnimationNode.innerText = 0;
+    counterAnimationNode.classList.add('active');
+    
+    const int = setInterval(() => {
+      const currentValue = parseInt(counterAnimationNode.innerText);
+      
+      if (currentValue < count) {
+        return counterAnimationNode.innerText = currentValue + step <= count ? currentValue + step : count;
+      }
+      
+      clearInterval(int);
+    }, 50);
+  }
+  let handler;
+  let active = false;
+  
+  if (offsetTop < topGap) {
+    handler = () => {
+      const offsetTop = counterAnimationNode.getBoundingClientRect().top;
+      
+      if (!active && offsetTop >= topGap) {
+        document.removeEventListener('scroll', handler);
+        animate();
+      }
+    }
+  } else if (offsetTop > windowHeight - height) {
+    handler = () => {
+      const offsetTop = counterAnimationNode.getBoundingClientRect().top;
+      
+      if (!active && offsetTop <= windowHeight - height) {
+        document.removeEventListener('scroll', handler);
+        animate();
+      }
+    }
+  } else {
+    active = true;
+    animate();
+  }
+  
+  if (active) {
+    return;
+  }
+  
+  document.addEventListener('scroll', handler)
+})
 
 loadMoreRatingNode && loadMoreRatingNode.addEventListener('click', async () => {
   const skip = parseInt(loadMoreRatingNode.dataset.skip);

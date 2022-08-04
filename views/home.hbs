@@ -80,24 +80,24 @@
         </div>
     </div>
     <div class="contentContainer">
-        <!--<div class="homeSection homeStatistics">
+        <div class="homeSection homeStatistics mobileInvisibleScroll">
             <div class="item">
                 <div class="label">комьюнити</div>
-                <div class="value">3027</div>
+                <div class="value js-counterAnimation">3027</div>
             </div>
             <div class="item">
                 <div class="label">игр продано</div>
-                <div class="value">10142</div>
+                <div class="value js-counterAnimation">{{countSales}}</div>
             </div>
             <div class="item">
                 <div class="label">игр на сайте</div>
-                <div class="value">2131</div>
+                <div class="value js-counterAnimation">{{countProducts}}</div>
             </div>
             <div class="item">
                 <div class="label">отзывов</div>
-                <div class="value">1087</div>
+                <div class="value js-counterAnimation">{{countReviews}}</div>
             </div>
-        </div>-->
+        </div>
         <div class="homeSection homeCatalog js-homeCatalogTabs">
             <div class="categories mobileInvisibleScroll">
                 {{#each catalog}}
