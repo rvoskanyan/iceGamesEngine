@@ -111,7 +111,7 @@ export const importReviews = async (req, res) => {
     const {importFile} = req.files;
     const workbook = new exceljs.Workbook();
     const products = await Product.find({active: true, dlc: false, top: true}).select(['name', 'alias', 'priceTo']).lean();
-    const articles = await Article.find({active: true}).select(['views']);
+    const articles = await Article.find({active: true}).select(['views', 'likes']);
     const results = [];
   
     await workbook.xlsx.load(importFile.data);
@@ -210,17 +210,18 @@ export const importReviews = async (req, res) => {
           continue;
         }
   
+        user.likedArticles.push(article._id);
         user.viewedArticles.push(article._id);
         await user.save();
         await user.increaseRating(2);
-        
+  
+        article.likes += 1;
         article.views += 1;
         await article.save();
         await achievementEvent('articlesRead', user);
+        await achievementEvent('likeArticle', user)
       }
     }
-  
-    console.log(results);
     
     res.render('admImportReviews', {
       layout: 'admin',
