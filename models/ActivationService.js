@@ -7,6 +7,11 @@ const fields = {
     unique: true,
     required: true,
   },
+  alias: {
+    type: String,
+    unique: true,
+    required: true,
+  },
   steamBuyName: String,
   stages: [{
     name: {

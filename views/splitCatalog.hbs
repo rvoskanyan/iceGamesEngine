@@ -1,0 +1,32 @@
+<main class="contentContainer withoutCover categoriesCatalogPage">
+    <div class="breadcrumbs contentContainer">
+        <div class="item">
+            <a class="btn link" href="/">Главная</a>
+        </div>
+        <div class="current">{{section.name}}</div>
+    </div>
+    <h1 class="title">{{hTitle}}</h1>
+    <div class="list">
+        {{#each products}}
+            {{> game
+                    id=_id
+            }}
+        {{/each}}
+    </div>
+    {{#iff pagination.length '>' 2}}
+        <div class="nav">
+            <a class="btn rounded bg-pink increase big" href="{{websiteAddress}}games?{{sectionType}}={{section._id}}">В каталог</a>
+            <div class="pagination">
+                {{#each pagination}}
+                    {{#if separator}}
+                        <div class="separator">...</div>
+                    {{else}}
+                        {{> pageBtn}}
+                    {{/if}}
+                {{/each}}
+            </div>
+        </div>
+    {{else}}
+        <a class="btn rounded bg-pink increase big inCatalog" href="{{websiteAddress}}games?{{sectionType}}={{section._id}}">В каталог</a>
+    {{/iff}}
+</main>

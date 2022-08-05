@@ -6,6 +6,12 @@
     <br>
     <br>
     <label>
+        *Алиас (название на английском маленькими буквами, без пробелов, слова делятся коротким дефисом. Например: activation-name):
+        <input type="text" name="alias"{{#if genre.alias}} value="{{genre.alias}}"{{/if}}>
+    </label>
+    <br>
+    <br>
+    <label>
         *Изображение:
         <input type="file" name="img">
     </label>

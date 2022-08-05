@@ -5,8 +5,8 @@ import Category from '../models/Category.js';
 export default async (req, res, next) => {
   res.locals = {
     ...res.locals,
-    allActivationServices: await ActivationService.find().select(['name']).lean(),
-    allGenres: await Genre.find().select(['name']).lean(),
+    allActivationServices: await ActivationService.find().select(['name', 'alias']).lean(),
+    allGenres: await Genre.find().select(['name', 'alias']).lean(),
     allCategories: await Category.find().select(['name']).lean(),
   }
   

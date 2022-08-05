@@ -16,6 +16,7 @@ import reviewsRoute from './client/reviews.js';
 import ratingRoute from './client/rating.js';
 import sitemapsRoute from './client/sitemaps.js';
 import legalInfo from './client/legalinfo.js';
+import splitCatalogRoute from './client/splitCatalog.js';
 
 const router = Router();
 
@@ -36,5 +37,6 @@ router.use('/reviews', reviewsRoute);
 router.use('/rating', ratingRoute);
 router.use('/sitemaps', sitemapsRoute);
 router.use('/legal-info', legalInfo);
+router.use('/', splitCatalogRoute);
 
 export default router;

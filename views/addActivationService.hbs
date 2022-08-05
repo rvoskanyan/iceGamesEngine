@@ -1,7 +1,13 @@
 <form action="/admin/activation-services/{{#if isEdit}}edit/{{activationService._id}}{{else}}add{{/if}}" method="post">
     <label>
-        Название сервиса активации:
+        *Название сервиса активации:
         <input type="text" name="name"{{#if isEdit}} value="{{activationService.name}}"{{/if}}>
+    </label>
+    <br>
+    <br>
+    <label>
+        *Алиас (название на английском маленькими буквами, без пробелов, слова делятся коротким дефисом. Например: genre-name):
+        <input type="text" name="alias"{{#if isEdit}} value="{{activationService.alias}}"{{/if}}>
     </label>
     <br>
     <br>
