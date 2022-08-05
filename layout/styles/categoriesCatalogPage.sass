@@ -36,6 +36,10 @@
     display: flex
     justify-content: space-between
 
+    @include for-big-phone-down
+      row-gap: 15px
+      flex-direction: column-reverse
+
     .pagination
       display: flex
       column-gap: 10px
