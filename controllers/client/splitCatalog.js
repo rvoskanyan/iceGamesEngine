@@ -27,14 +27,14 @@ export const pageSplitCatalog = async (req, res, next) => {
         filter = {genres: {$in: section._id}};
         metaDescription = `Здесь Вы можете выбрать и купить игры в жанре ${section.name} со скидкой`;
         title = `ICE GAMES — игры в жанре ${section.name}`;
-        hTitle = `Игры в жанре ${section.name}`;
+        hTitle = `Купить ${section.name} игры дешево для PC`;
         break;
       }
       case 'activationServices': {
         filter = {activationServiceId: section._id};
         metaDescription = `Здесь Вы можете выбрать и купить игры с активацией в ${section.name} со скидкой`;
         title = `ICE GAMES — игры с активацией в ${section.name}`;
-        hTitle = `Игры с активацией в ${section.name}`;
+        hTitle = `Купить ключи активации ${section.name} дешево`;
         break;
       }
       default: next();
