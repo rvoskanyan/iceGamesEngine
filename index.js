@@ -109,13 +109,11 @@ app.use(function(req, res) {
   res.status(404);
   
   if (req.accepts('html')) {
-    res.render('404', { url: req.url });
-    return;
+    return res.render('404', {title: 'ICE GAMES — Страница не найдена'});
   }
   
   if (req.accepts('json')) {
-    res.json({ error: 'Not found' });
-    return;
+    return res.json({error: 'Not found'});
   }
   
   res.type('txt').send('Not found');
