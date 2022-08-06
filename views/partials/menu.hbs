@@ -3,15 +3,18 @@
         <ul class="col categoriesMenu mobileMenu">
             {{#each allCategories}}
                 <li class="colLink">
-                    <a href="/games?categories={{_id}}" class="link" title="Открыть товары из категории {{name}}">{{name}}</a>
+                    <a href="{{websiteAddress}}games?categories={{_id}}" class="link" title="Открыть товары из категории {{name}}">{{name}}</a>
                 </li>
             {{/each}}
             <li class="colLink">
                 {{#if isCatalog}}
                     <span class="link">Все игры</span>
                 {{else}}
-                    <a href="/games" class="link" title="Все игры">Все игры</a>
+                    <a href="{{websiteAddress}}games" class="link" title="Все игры">Все игры</a>
                 {{/if}}
+            </li>
+            <li class="colLink">
+                <a href="{{websiteAddress}}games?onlyStock=true" class="link" title="Все игры">Игры в наличии</a>
             </li>
         </ul>
         <div class="containerMainMenuSearch">
