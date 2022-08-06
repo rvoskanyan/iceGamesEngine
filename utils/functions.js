@@ -27,7 +27,7 @@ export const getFormatDate = (date, separator, pattern, monthString) => {
         break;
       }
       case 'm': {
-        value = date.getMonth();
+        value = dateObject.getMonth();
         
         if (monthString) {
           value = strMonths[value];
@@ -38,7 +38,7 @@ export const getFormatDate = (date, separator, pattern, monthString) => {
         break;
       }
       case 'd': {
-        value = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+        value = dateObject.getDate() < 10 ? '0' + dateObject.getDate() : dateObject.getDate();
         break;
       }
     }
@@ -60,12 +60,25 @@ export const getSitemapUrlTag = ({url, lastMod, changeFreq, priority}) => {
   `;
 }
 
-export const getSitemap = (params) => {
+export const getSitemapImageTag = ({url, imgPath, deskImg, imgName}) => {
+  return `
+    <url>
+        <loc>${url}</loc>
+        <image:image>
+            <image:loc>${imgPath}</image:loc>
+            <image:caption>${deskImg}</image:caption>
+            <image:title>${imgName}</image:title>
+        </image:image>
+    </url>
+  `;
+}
+
+export const getSitemap = (params, images = false) => {
   let siteMap = `<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="/main-style.xml"?>
   <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd http://www.google.com/schemas/sitemap-image/1.1 http://www.google.com/schemas/sitemap-image/1.1/sitemap-image.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`;
   
   params.forEach(param => {
-    siteMap += getSitemapUrlTag(param);
+    siteMap += images ? getSitemapImageTag(param) : getSitemapUrlTag(param);
   })
   
   return siteMap += '</urlset>';

@@ -3,6 +3,7 @@ import User from './../models/User.js';
 import Guest from './../models/Guest.js';
 
 export default async (req, res, next) => {
+  const currentYear = new Date().getFullYear();
   let person = null;
   let agreementAccepted = false;
   
@@ -26,6 +27,7 @@ export default async (req, res, next) => {
     isAuth: req.session.isAuth,
     person,
     agreementAccepted,
+    currentYear,
   }
   
   next();

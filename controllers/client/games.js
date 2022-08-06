@@ -1,3 +1,5 @@
+import fetch from "node-fetch";
+
 import Product from '../../models/Product.js';
 import Category from '../../models/Category.js';
 import Genre from '../../models/Genre.js';
@@ -17,6 +19,8 @@ export const gamesPage = async (req, res) => {
       title: 'ICE GAMES — Каталог игр',
       metaDescription: 'Каталог лучших игр со скидками и удобным поиском. Топ продаж от магазина лицензионных ключей ICE GAMES.',
       isCatalog: true,
+      noIndex: true,
+      noIndexGoogle: true,
       categories,
       genres,
       activationServices,
@@ -88,6 +92,7 @@ export const gamePage = async (req, res) => {
     let subscribed = false;
     let favoritesProducts;
     let cart;
+    let typeTrailerCover;
   
     if (person) {
       const email = person.email;
@@ -237,11 +242,19 @@ export const gamePage = async (req, res) => {
       return item;
     })
   
-    const seriesIsSlider = seriesProducts && seriesProducts.length > 5
+    const seriesIsSlider = seriesProducts && seriesProducts.length > 5;
+    
+    if (trailerId) {
+      const responseTrailerCover = await fetch(`https://img.youtube.com/vi/${trailerId}/maxresdefault.jpg`);
+      const statusTrailerCover = responseTrailerCover.status;
+      
+      typeTrailerCover = statusTrailerCover === 404 ? 'mqdefault' : 'maxresdefault';
+    }
     
     res.render('game', {
       title: `ICE GAMES — ${product.name}`,
       metaDescription: `Купить игру ${product.name} c активацией в ${product.activationServiceId.name} со скидкой. Широкий выбор лицензионных ключей с гарантией от поставщиков в ICE GAMES.`,
+      typeTrailerCover,
       product,
       trailerId,
       isProductNotPurchased,

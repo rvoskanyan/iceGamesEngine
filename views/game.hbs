@@ -1,6 +1,7 @@
 <main class="gamePage js-gamePage">
     {{#unless product.inStock}}
         {{#unless @root.isAuth}}
+            <!—noindex—>
             <div class="subscribeModalContainer js-subscribeModal">
                 <div class="subscribeModalBlock">
                     <div class="title">Укажите Ваш E-mail</div>
@@ -19,6 +20,7 @@
                     <div class="msgResult js-msgResult"></div>
                 </div>
             </div>
+            <!—/noindex—>
         {{/unless}}
     {{/unless}}
     <div class="breadcrumbs contentContainer mobileInvisibleScroll">
@@ -188,7 +190,7 @@
                         <div class="tape js-tape">
                             {{#if product.trailerLink}}
                                 <button class="slide js-slide btn video js-playYouTubeVideo" title="Посмотреть трейлер игры" data-link="{{trailerId}}">
-                                    <img class="img" src="https://img.youtube.com/vi/{{trailerId}}/maxresdefault.jpg" alt="Трейлер игры {{game.name}}" title="Трейлер игр {{game.name}}">
+                                    <img class="img" src="https://img.youtube.com/vi/{{trailerId}}/{{typeTrailerCover}}.jpg" alt="Трейлер игры {{game.name}}" title="Трейлер игр {{game.name}}">
                                 </button>
                             {{/if}}
                             {{#each product.images}}

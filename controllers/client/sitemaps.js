@@ -1,9 +1,11 @@
 import Product from "../../models/Product.js";
 import Article from "../../models/Article.js";
 import User from "../../models/User.js";
+import Genre from "../../models/Genre.js";
+import ActivationService from "../../models/ActivationService.js";
 
 import {websiteAddress} from "../../config.js";
-import {getSitemap} from "../../utils/functions.js";
+import {getFormatDate, getSitemap} from "../../utils/functions.js";
 
 export const indexSitemap = async (req, res) => {
   try {
@@ -66,18 +68,42 @@ export const indexSitemap = async (req, res) => {
 
 export const catalogSitemap = async (req, res) => {
   try {
-    const products = await Product.find({active: true}).sort({createdAt: -1}).select(['alias', 'updatedAt', 'createdAt']).lean();
+    const genres = await Genre.find().select(['alias']).lean();
+    const activationServices = await ActivationService.find().select(['alias']).lean();
+    const products = await Product
+      .find({active: true})
+      .sort({createdAt: -1})
+      .select(['alias', 'updatedAt', 'createdAt'])
+      .lean();
     const params = [{
       url: `${websiteAddress}games`,
-      lastMod: products[0].createdAt,
+      lastMod: getFormatDate(products[0].createdAt, '-', ['y', 'm', 'd']),
       changeFreq: 'weekly',
       priority: '1',
     }];
+  
+    genres.forEach(genre => {
+      params.push({
+        url: `${websiteAddress}${genre.alias}`,
+        lastMod: getFormatDate(products[0].createdAt, '-', ['y', 'm', 'd']),
+        changeFreq: 'monthly',
+        priority: '1',
+      })
+    });
+  
+    activationServices.forEach(activationService => {
+      params.push({
+        url: `${websiteAddress}${activationService.alias}`,
+        lastMod: getFormatDate(products[0].createdAt, '-', ['y', 'm', 'd']),
+        changeFreq: 'monthly',
+        priority: '1',
+      })
+    });
     
     products.forEach(product => {
       params.push({
         url: `${websiteAddress}games/${product.alias}`,
-        lastMod: product.updatedAt,
+        lastMod: getFormatDate(product.updatedAt, '-', ['y', 'm', 'd']),
         changeFreq: 'monthly',
         priority: '1',
       })
@@ -97,7 +123,7 @@ export const blogSitemap = async (req, res) => {
     const articles = await Article.find({active: true}).sort({createdAt: -1}).select(['alias', 'updatedAt', 'createdAt']).lean();
     const params = [{
       url: `${websiteAddress}blog`,
-      lastMod: articles[0].createdAt,
+      lastMod: getFormatDate(articles[0].createdAt, '-', ['y', 'm', 'd']),
       changeFreq: 'weekly',
       priority: '0.9',
     }];
@@ -105,7 +131,7 @@ export const blogSitemap = async (req, res) => {
     articles.forEach(article => {
       params.push({
         url: `${websiteAddress}blog/${article.alias}`,
-        lastMod: article.updatedAt,
+        lastMod: getFormatDate(article.updatedAt, '-', ['y', 'm', 'd']),
         changeFreq: 'monthly',
         priority: '0.9',
       })
@@ -132,13 +158,40 @@ export const ratingSitemap = async (req, res) => {
     users.forEach(user => {
       params.push({
         url: `${websiteAddress}rating/${user.login}`,
-        lastMod: user.updatedAt,
+        lastMod: getFormatDate(user.updatedAt, '-', ['y', 'm', 'd']),
         changeFreq: 'monthly',
         priority: '0.8',
       })
     });
     
     const siteMap = getSitemap(params);
+    
+    res.set('Content-Type', 'text/xml');
+    res.send(siteMap);
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+export const imagesSitemap = async (req, res) => {
+  try {
+    const params = [];
+    const products = await Product
+      .find({active: true})
+      .sort({createdAt: -1})
+      .select(['alias', 'name', 'img'])
+      .lean();
+  
+    products.forEach(product => {
+      params.push({
+        url: `${websiteAddress}games/${product.alias}`,
+        imgPath: `${websiteAddress}${product.img}`,
+        deskImg: `Изображение обложки игры ${product.name}`,
+        imgName: `Картинка ${product.name}`,
+      })
+    });
+    
+    const siteMap = getSitemap(params, true);
     
     res.set('Content-Type', 'text/xml');
     res.send(siteMap);

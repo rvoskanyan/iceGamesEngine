@@ -20,6 +20,7 @@ export const profilePage = async (req, res) => {
     res.render('profile', {
       title: "ICE GAMES — Мой профиль",
       noIndex: true,
+      noIndexGoogle: true,
       isProfileHome: true,
       user,
       countUsers,
@@ -41,6 +42,7 @@ export const profileEditPage = async (req, res) => {
     res.render('profileEdit', {
       title: "ICE GAMES — Редактирование профиля",
       noIndex: true,
+      noIndexGoogle: true,
       isProfileEdit: true,
       user,
     })
@@ -121,6 +123,7 @@ export const profileAchievementsPage = async (req, res) => {
     res.render('profileAchievements', {
       title: 'ICE GAMES — Мои достижения',
       noIndex: true,
+      noIndexGoogle: true,
       isProfileAchievements: true,
       user,
       achievements,
@@ -155,6 +158,7 @@ export const profileInvitePage = async (req, res) => {
     res.render('profileInvite', {
       title: 'ICE GAMES — Приглашенные друзья',
       noIndex: true,
+      noIndexGoogle: true,
       isProfileInvite: true,
       userId: req.session.userId,
       invitedUsers: invitedUsersWithRatingPosition,
@@ -197,6 +201,7 @@ export const profileOrdersPage = async (req, res) => {
     res.render('profileOrders', {
       title: 'ICE GAMES — Приобретенные товары',
       noIndex: true,
+      noIndexGoogle: true,
       isProfileOrders: true,
       orders,
       user,
@@ -222,6 +227,7 @@ export const profileFavoritesPage = async (req, res) => {
     res.render('profileFavorites', {
       title: 'ICE GAMES — Товары в избранном',
       noIndex: true,
+      noIndexGoogle: true,
       isProfileFavorites: true,
       user,
     })

@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 {{#if noIndex}}
-    <meta name="robots" content="noindex, nofollow">
+    <meta name="robots" content="noindex">
+{{/if}}
+{{#if noIndexGoogle}}
+    <meta name="googlebot" content="noindex">
 {{/if}}
 {{#if metaDescription}}
     <meta name="description" content="{{metaDescription}}">
@@ -226,7 +229,7 @@
         <span class="designBy">Дизайн: Beach</span>
     </div>
     <div class="copy">
-        Все права защищены. Копирование любых материалов сайта запрещено! Все названия продуктов и игр,
+        © {{currentYear}} ICE GAMES. Все права защищены. Копирование любых материалов сайта запрещено! Все названия продуктов и игр,
         компаний и марок, логотипы, товарные знаки и другие материалы являются собственностью
         соответствующих владельцев. Только лицензионные ключи ко всем игровым платформам: Steam, Uplay,
         Battle.net, Origin и другие. Выгодно, надежно и быстро!
