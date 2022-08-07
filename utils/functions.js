@@ -84,6 +84,15 @@ export const getSitemap = (params, images = false) => {
   return siteMap += '</urlset>';
 }
 
+export function htmlEntities(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/'/g, '&apos;')
+    .replace(/"/g, '&quot;');
+}
+
 /*
   getArray - Используется для преобразования в массив данных,
   приходящих из полей multiple, если выбран был только один элемент

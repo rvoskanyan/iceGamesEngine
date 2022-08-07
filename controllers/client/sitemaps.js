@@ -5,7 +5,7 @@ import Genre from "../../models/Genre.js";
 import ActivationService from "../../models/ActivationService.js";
 
 import {websiteAddress} from "../../config.js";
-import {getFormatDate, getSitemap} from "../../utils/functions.js";
+import {getFormatDate, getSitemap, htmlEntities} from "../../utils/functions.js";
 
 export const indexSitemap = async (req, res) => {
   try {
@@ -32,28 +32,28 @@ export const indexSitemap = async (req, res) => {
       },
       {
         url: `${websiteAddress}about`,
-        changeFreq: 'about',
+        changeFreq: 'monthly',
         priority: '0.5',
       },
       {
         url: `${websiteAddress}discounts`,
-        changeFreq: 'discounts',
-        priority: '0.5',
+        changeFreq: 'daily',
+        priority: '1',
       },
       {
         url: `${websiteAddress}novelty`,
-        changeFreq: 'novelty',
-        priority: '0.5',
+        changeFreq: 'daily',
+        priority: '1',
       },
       {
         url: `${websiteAddress}preorders`,
-        changeFreq: 'novelty',
-        priority: '0.5',
+        changeFreq: 'daily',
+        priority: '1',
       },
       {
         url: `${websiteAddress}reviews`,
         changeFreq: 'daily',
-        priority: '0.5',
+        priority: '1',
       },
     ];
     
@@ -79,14 +79,14 @@ export const catalogSitemap = async (req, res) => {
       url: `${websiteAddress}games`,
       lastMod: getFormatDate(products[0].createdAt, '-', ['y', 'm', 'd']),
       changeFreq: 'weekly',
-      priority: '1',
+      priority: '0.5',
     }];
   
     genres.forEach(genre => {
       params.push({
         url: `${websiteAddress}${genre.alias}`,
         lastMod: getFormatDate(products[0].createdAt, '-', ['y', 'm', 'd']),
-        changeFreq: 'monthly',
+        changeFreq: 'daily',
         priority: '1',
       })
     });
@@ -95,7 +95,7 @@ export const catalogSitemap = async (req, res) => {
       params.push({
         url: `${websiteAddress}${activationService.alias}`,
         lastMod: getFormatDate(products[0].createdAt, '-', ['y', 'm', 'd']),
-        changeFreq: 'monthly',
+        changeFreq: 'daily',
         priority: '1',
       })
     });
@@ -104,7 +104,7 @@ export const catalogSitemap = async (req, res) => {
       params.push({
         url: `${websiteAddress}games/${product.alias}`,
         lastMod: getFormatDate(product.updatedAt, '-', ['y', 'm', 'd']),
-        changeFreq: 'monthly',
+        changeFreq: 'weekly',
         priority: '1',
       })
     });
@@ -186,8 +186,8 @@ export const imagesSitemap = async (req, res) => {
       params.push({
         url: `${websiteAddress}games/${product.alias}`,
         imgPath: `${websiteAddress}${product.img}`,
-        deskImg: `Изображение обложки игры ${product.name}`,
-        imgName: `Картинка ${product.name}`,
+        deskImg: htmlEntities(`Изображение обложки игры ${product.name}`),
+        imgName: htmlEntities(`Картинка ${product.name}`),
       })
     });
     
