@@ -807,7 +807,7 @@ export const parseBySteambuy = async (req, res) => {
         case 'trailerLink': {
           const node = mediaNodes.find(mediaNode => productNode(mediaNode).hasClass('product-media__link_video'));
   
-          product.trailerLink = 'https://www.youtube.com/watch?v=' + node.attr('href').split('/embed/')[1].split('?autoplay=')[0];
+          product.trailerLink = 'https://www.youtube.com/watch?v=' + productNode(node).attr('href').split('/embed/')[1].split('?autoplay=')[0];
           
           break;
         }
@@ -816,7 +816,7 @@ export const parseBySteambuy = async (req, res) => {
             break;
           }
   
-          const dateArr = date.split(' ');
+          const dateArr = releaseDateStr.split(' ');
           const monthIndex = strMonths.indexOf(dateArr[1]) + 1;
           let currentDate = new Date();
   
@@ -1014,35 +1014,35 @@ export const parseBySteambuy = async (req, res) => {
           break;
         }
         case 'os': {
-          if (os.length) {
+          if (os) {
             product.os = os;
           }
           
           break;
         }
         case 'cpu': {
-          if (cpu.length) {
+          if (cpu) {
             product.cpu = cpu;
           }
     
           break;
         }
         case 'graphicsCard': {
-          if (graphicsCard.length) {
+          if (graphicsCard) {
             product.graphicsCard = graphicsCard;
           }
     
           break;
         }
         case 'ram': {
-          if (ram.length) {
+          if (ram) {
             product.ram = ram;
           }
     
           break;
         }
         case 'diskMemory': {
-          if (diskMemory.length) {
+          if (diskMemory) {
             product.diskMemory = diskMemory;
           }
     
