@@ -419,7 +419,7 @@ export async function parseProduct(searchProductName, price, sourceLink = null) 
             
             if (region) {
               product.activationRegions.push(region._id);
-              break;
+              continue;
             }
   
             try {
@@ -488,7 +488,7 @@ export async function parseProduct(searchProductName, price, sourceLink = null) 
             
             if (genre) {
               product.genres.push(genre._id);
-              break;
+              continue;
             }
   
             try {
@@ -533,9 +533,7 @@ export async function parseProduct(searchProductName, price, sourceLink = null) 
             break;
           }
   
-          const publisher = publishers.find(item => {
-            return item.steamBuyName === publisherName;
-          });
+          const publisher = publishers.find(item => item.steamBuyName === publisherName);
           
           if (publisher) {
             product.publisherId = publisher._id;
@@ -564,7 +562,7 @@ export async function parseProduct(searchProductName, price, sourceLink = null) 
             
             if (extend) {
               product.extends.push(extend._id);
-              break;
+              continue;
             }
   
             try {
@@ -589,7 +587,7 @@ export async function parseProduct(searchProductName, price, sourceLink = null) 
             
             if (extend) {
               product.extends.push(extend._id);
-              break;
+              continue;
             }
   
             try {

@@ -1,5 +1,10 @@
 {{#iff person.role '===' 'admin'}}
     {{#if isEdit}}
+        {{#unless product.active}}
+            <a href="/admin/products/{{product.id}}/parse-by-steam-buy">Спарсить данные со стимбая</a>
+        {{/unless}}
+        <br>
+        <br>
         Состав набора:
         {{#if product.elements}}
             <ul>

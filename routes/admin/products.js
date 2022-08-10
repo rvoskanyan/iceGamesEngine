@@ -10,6 +10,8 @@ import {
   deleteProductElement,
   pageAddProductElements,
   addProductElements,
+  pageParseBySteambuy,
+  parseBySteambuy,
 } from '../../controllers/admin/products.js';
 
 const router = Router();
@@ -28,5 +30,8 @@ router.post('/:productId/deleteElement/:elementId', deleteProductElement);
 
 router.get('/:productId/addElements', pageAddProductElements);
 router.post('/:productId/addElements', addProductElements);
+
+router.get('/:productId/parse-by-steam-buy', pageParseBySteambuy);
+router.post('/:productId/parse-by-steam-buy', parseBySteambuy);
 
 export default router;

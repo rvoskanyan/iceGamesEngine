@@ -198,7 +198,7 @@ const fields = {
     type: Schema.Types.ObjectId,
     ref: 'Category',
   }],
-    genres: [{
+  genres: [{
     type: Schema.Types.ObjectId,
     ref: 'Genre',
   }],

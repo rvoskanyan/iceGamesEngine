@@ -1,0 +1,89 @@
+<form action="{{websiteAddress}}admin/products/{{productId}}/parse-by-steam-buy" method="post">
+    <label>
+        *Ссылка на страницу игры на Steambuy:
+        <input type="text" name="sourceLink">
+    </label>
+    <br>
+    <br>
+    <fieldset>
+        <legend>Выберите данные для парсинга</legend>
+        <label>
+            <input type="checkbox" name="values" value="description"> Описание
+        </label>
+        <br>
+        <br>
+        <label>
+            <input type="checkbox" name="values" value="images"> Изображения слайдера
+        </label>
+        <br>
+        <br>
+        <label>
+            <input type="checkbox" name="values" value="trailerLink"> Ссылка на трейлер в YouTube
+        </label>
+        <br>
+        <br>
+        <label>
+            <input type="checkbox" name="values" value="releaseDate"> Дата выхода
+        </label>
+        <br>
+        <br>
+        <label>
+            <input type="checkbox" name="values" value="genres"> Жанры игры
+        </label>
+        <br>
+        <br>
+        <label>
+            <input type="checkbox" name="values" value="extends"> Расширения игры
+        </label>
+        <br>
+        <br>
+        <label>
+            <input type="checkbox" name="values" value="publisherId"> Издатель
+        </label>
+        <br>
+        <br>
+        <label>
+            <input type="checkbox" name="values" value="activationServiceId"> Сервис активации
+        </label>
+        <br>
+        <br>
+        <label>
+            <input type="checkbox" name="values" value="activationRegions"> Регионы активации
+        </label>
+        <br>
+        <br>
+        <label>
+            <input type="checkbox" name="values" value="languages"> Языки игры
+        </label>
+        <br>
+        <br>
+        <label>
+            <input type="checkbox" name="values" value="os"> OS
+        </label>
+        <br>
+        <br>
+        <label>
+            <input type="checkbox" name="values" value="cpu"> Процессор
+        </label>
+        <br>
+        <br>
+        <label>
+            <input type="checkbox" name="values" value="graphicsCard"> Видео карта
+        </label>
+        <br>
+        <br>
+        <label>
+            <input type="checkbox" name="values" value="ram"> Оперативная память
+        </label>
+        <br>
+        <br>
+        <label>
+            <input type="checkbox" name="values" value="diskMemory"> Память на диске
+        </label>
+    </fieldset>
+    <br>
+    <br>
+    <input type="submit" value="Спарсить">
+    <br>
+    <br>
+</form>

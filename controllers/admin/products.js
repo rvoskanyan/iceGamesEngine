@@ -1,6 +1,10 @@
+import cheerio from "cheerio";
+import fetch from "node-fetch";
 import {v4 as uuidv4} from 'uuid';
+import fs from "fs";
 import path from 'path';
-import {__dirname} from "../../rootPathes.js";
+import Browser from "../../services/Browser.js";
+
 import Product from './../../models/Product.js';
 import Category from './../../models/Category.js';
 import Genre from './../../models/Genre.js';
@@ -10,6 +14,9 @@ import Publisher from './../../models/Publisher.js';
 import ActivationService from './../../models/ActivationService.js';
 import Platform from './../../models/Platform.js';
 import Series from './../../models/Series.js';
+import Bundle from "../../models/Bundle.js";
+import Edition from "../../models/Edition.js";
+
 import {
   getExtendFile,
   getArray,
@@ -19,8 +26,9 @@ import {
   normalizeStr,
   getSoundIndex,
 } from "../../utils/functions.js";
-import Bundle from "../../models/Bundle.js";
-import Edition from "../../models/Edition.js";
+
+import {__dirname} from "../../rootPathes.js";
+import {strMonths} from "../../utils/constants.js";
 
 export const pageProducts = async (req, res) => {
   try {
@@ -598,5 +606,456 @@ export const addProductElements = async (req, res) => {
   } catch (e) {
     console.log(e);
     req.redirect(`/admin/products/${productId}/addElement`);
+  }
+}
+
+export const pageParseBySteambuy = async (req, res) => {
+  const {productId} = req.params;
+  
+  try {
+    res.render('admParsingOnLink', {
+      layout: 'admin',
+      productId,
+    });
+  } catch (e) {
+    console.log(e);
+    res.redirect(`/admin/products/edit/${productId}`);
+  }
+}
+
+export const parseBySteambuy = async (req, res) => {
+  const {productId} = req.params;
+  
+  try {
+    let {
+      sourceLink = '',
+      values,
+    } = req.body;
+    
+    if (!sourceLink || !values) {
+      throw new Error('Not found sourceLink or values');
+    }
+    
+    if (!Array.isArray(values)) {
+      values = [values];
+    }
+    
+    const product = await Product
+      .findById(productId)
+      .select([
+        'description',
+        'images',
+        'trailerLink',
+        'releaseDate',
+        'genres',
+        'extends',
+        'publisherId',
+        'activationServiceId',
+        'activationRegions',
+        'languages',
+        'os',
+        'cpu',
+        'graphicsCard',
+        'ram',
+        'diskMemory',
+        'active',
+      ]);
+    
+    if (product.active) {
+      return res.redirect(`/admin/products/edit/${productId}`);
+    }
+  
+    const browser = new Browser();
+    const productContent = await browser.getPageContent(sourceLink);
+    const productNode = cheerio.load(productContent);
+    const mediaNodes = productNode('.product-media .product-media__item a.product-media__link').toArray();
+    let activationName = productNode('.product-price .product-price__activation .product-price__activation-value .product-price__activation-title').text().trim();
+    let steamAch;
+    let genreNodes;
+    let releaseDateStr;
+    let publisherName;
+    let languages;
+    let os;
+    let cpu;
+    let ram;
+    let graphicsCard;
+    let diskMemory;
+    let playersNodes = [];
+    let extendNodes = [];
+    let regionNames = [];
+    
+    productNode('.product-detail .product-detail__section .product-detail__unit').toArray().forEach(detail => {
+      const label = productNode(detail).find('.product-detail__label').text();
+      const valueNode = productNode(detail).find('.product-detail__value');
+      
+      switch (label) {
+        case 'Жанр:': {
+          genreNodes = valueNode.find('.product-detail__value-item a.product-detail__value-link').toArray();
+          break;
+        }
+        case 'Дата выхода:': {
+          releaseDateStr = valueNode.first().text().trim();
+          break;
+        }
+        case 'Издатель:': {
+          publisherName = valueNode.find('.product-detail__value-item a.product-detail__value-link').first().text().trim();
+          break;
+        }
+        case 'Количество игроков:': {
+          playersNodes = valueNode.find('.product-detail__value-item a.product-detail__value-link').toArray();
+          break;
+        }
+        case 'Особенности:': {
+          extendNodes = valueNode.find('.product-detail__value-item a.product-detail__value-link').toArray();
+          break;
+        }
+        case 'Достижения Steam:': {
+          steamAch = true;
+          break;
+        }
+      }
+    })
+    productNode('.product-about .product-about__option .product-about__option-unit').toArray().forEach(aboutItem => {
+      const label = productNode(aboutItem).find('.product-about__option-label').text().trim();
+      const value = productNode(aboutItem).find('.product-about__option-value').text();
+      
+      switch (label) {
+        case 'Активация:': {
+          activationName = value.trim();
+          break;
+        }
+        case 'Регион:': {
+          regionNames = value.split(', ');
+          break;
+        }
+        case 'Язык:': {
+          languages = value.trim();
+          break;
+        }
+      }
+    })
+    productNode('.product-os .product-os__tabs .os-tabs-content.os-tabs-content_active .os-option__unit').toArray().forEach(systemReq => {
+      const label = productNode(systemReq).find('.os-option__label').text().trim();
+      const value = productNode(systemReq).find('.os-option__value').text().trim();
+  
+      switch (label) {
+        case 'Система:': {
+          os = value;
+          break;
+        }
+        case 'Процессор:': {
+          cpu = value;
+          break;
+        }
+        case 'Память:': {
+          ram = value;
+          break;
+        }
+        case 'Графика:': {
+          graphicsCard = value;
+          break;
+        }
+        case 'Размер:': {
+          diskMemory = value;
+          break;
+        }
+      }
+    });
+    
+    for (const value of values) {
+      switch (value) {
+        case 'description': {
+          productNode('.product-desc__article p').each((i, el) => {
+            productNode(el).html().split('<br><br>').forEach(p => product.description += `<p>${p}</p>`);
+          });
+      
+          break;
+        }
+        case 'images': {
+          for (const mediaNode of mediaNodes) {
+            const el = productNode(mediaNode);
+  
+            if (el.hasClass('product-media__link_video')) {
+              continue;
+            }
+  
+            try {
+              const imageUrl = el.attr('href');
+              const extend = getExtendFile(imageUrl);
+              const productGalleryNameImg = `${uuidv4()}.${extend}`;
+              const res = await fetch(imageUrl);
+              const fileStream = fs.createWriteStream(path.join(__dirname, `/uploadedFiles/${productGalleryNameImg}`));
+    
+              await new Promise((resolve, reject) => {
+                res.body.pipe(fileStream);
+                res.body.on("error", (err) => {
+                  reject(err);
+                });
+                fileStream.on("finish", function () {
+                  resolve();
+                });
+              });
+              
+              product.images.push({name: productGalleryNameImg});
+            } catch (e) {
+              console.log(e);
+            }
+          }
+      
+          break;
+        }
+        case 'trailerLink': {
+          const node = mediaNodes.find(mediaNode => productNode(mediaNode).hasClass('product-media__link_video'));
+  
+          product.trailerLink = 'https://www.youtube.com/watch?v=' + node.attr('href').split('/embed/')[1].split('?autoplay=')[0];
+          
+          break;
+        }
+        case 'releaseDate': {
+          if (releaseDateStr.toLowerCase() === 'уточняется') {
+            break;
+          }
+  
+          const dateArr = date.split(' ');
+          const monthIndex = strMonths.indexOf(dateArr[1]) + 1;
+          let currentDate = new Date();
+  
+          dateArr[0] = +dateArr[0] < 10 ? '0' + dateArr[0] : '' + dateArr[0];
+          dateArr[1] = monthIndex < 10 ? '0' + monthIndex : '' + monthIndex;
+  
+          const releaseDate = new Date(`${dateArr.reverse().join('-')}T00:00:00.000+00:00`);
+  
+          currentDate = `${currentDate.getFullYear()}-${currentDate.getMonth() < 9 ? '0' + (currentDate.getMonth() + 1) : currentDate.getMonth() + 1}-${currentDate.getDate() < 9 ? '0' + currentDate.getDate() : currentDate.getDate()}T00:00:00.000+00:00`;
+          currentDate = new Date(currentDate);
+  
+          product.releaseDate = releaseDate;
+          product.preOrder = releaseDate >= currentDate;
+          
+          break;
+        }
+        case 'genres': {
+          const genres = await Genre.find().select(['steamBuyName']).lean();
+          
+          for (const genreNode of genreNodes) {
+            const genreName = productNode(genreNode).text().trim();
+            const genre = genres.find(item => item.steamBuyName === genreName);
+    
+            if (genre) {
+              const exists = product.genres.findIndex(item => item.toString() === genre._id.toString()) !== -1;
+  
+              if (!exists) {
+                product.genres.push(genre._id);
+              }
+              
+              continue;
+            }
+    
+            try {
+              const newGenre = new Genre({name: genreName, steamBuyName: genreName});
+      
+              await newGenre.save();
+              product.genres.push(newGenre._id);
+            } catch (e) {
+              console.log(e);
+            }
+          }
+          
+          break;
+        }
+        case 'extends': {
+          const extendsItems = await Extend.find().select('steamBuyName').lean();
+          
+          for (const playersNode of playersNodes) {
+            const extendName = productNode(playersNode).text().trim();
+            const extend = extendsItems.find(item => item.steamBuyName === extendName);
+    
+            if (extend) {
+              const exists = product.extends.findIndex(item => item.toString() === extend._id.toString()) !== -1;
+              
+              if (!exists) {
+                product.extends.push(extend._id);
+              }
+              
+              continue;
+            }
+    
+            try {
+              const newExtend = new Extend({name: extendName, steamBuyName: extendName});
+      
+              await newExtend.save();
+              product.extends.push(newExtend._id);
+            } catch (e) {
+              console.log(e);
+            }
+          }
+  
+          for (const extendNode of extendNodes) {
+            const extendName = productNode(extendNode).text().trim();
+            const extend = extendsItems.find(item => item.steamBuyName === extendName);
+    
+            if (extend) {
+              const exists = product.extends.findIndex(item => item.toString() === extend._id.toString()) !== -1;
+      
+              if (!exists) {
+                product.extends.push(extend._id);
+              }
+      
+              continue;
+            }
+    
+            try {
+              const newExtend = new Extend({name: extendName, steamBuyName: extendName});
+      
+              await newExtend.save();
+              product.extends.push(newExtend._id);
+            } catch (e) {
+              console.log(e);
+            }
+          }
+          
+          if (steamAch) {
+            const extendName = 'Достижения Steam';
+            const extend = extendsItems.find(item => item.steamBuyName === extendName);
+  
+            if (extend) {
+              const exists = product.extends.findIndex(item => item.toString() === extend._id.toString()) !== -1;
+    
+              if (!exists) {
+                product.extends.push(extend._id);
+              }
+    
+              continue;
+            }
+  
+            try {
+              const newExtend = new Extend({name: extendName, steamBuyName: extendName});
+    
+              await newExtend.save();
+              product.extends.push(newExtend._id);
+            } catch (e) {
+              console.log(e);
+            }
+          }
+          
+          break;
+        }
+        case 'publisherId': {
+          const publishers = await Publisher.find().select('steamBuyName').lean();
+          
+          if (!publisherName.length) {
+            break;
+          }
+  
+          const publisher = publishers.find(item => item.steamBuyName === publisherName);
+  
+          if (publisher) {
+            product.publisherId = publisher._id;
+            break;
+          }
+  
+          try {
+            const newPublisher = new Publisher({name: publisherName, steamBuyName: publisherName});
+    
+            await newPublisher.save();
+            product.publisherId = newPublisher._id;
+          } catch (e) {
+            console.log(e);
+          }
+  
+          break;
+        }
+        case 'activationServiceId': {
+          if (activationName.length) {
+            const activationServices = await ActivationService.find().select('steamBuyName').lean();
+            const activationService = activationServices.find(item => item.steamBuyName === activationName);
+            
+            if (activationService) {
+              product.activationServiceId = activationService._id;
+              break;
+            }
+            
+            try {
+              const newActivationService = new ActivationService({name: activationName, steamBuyName: activationName});
+      
+              await newActivationService.save();
+              product.activationServiceId = newActivationService._id;
+            } catch (e) {
+              console.log(e);
+            }
+          }
+          
+          break;
+        }
+        case 'activationRegions': {
+          const regions = await Region.find().select('steamBuyName').lean();
+          
+          for (const regionName of regionNames) {
+            const region = regions.find(item => item.steamBuyName.toLowerCase() === regionName.toLowerCase());
+    
+            if (region) {
+              product.activationRegions.push(region._id);
+              continue;
+            }
+    
+            try {
+              const newRegion = new Region({name: regionName, steamBuyName: regionName});
+      
+              await newRegion.save();
+              product.activationRegions.push(newRegion._id);
+            } catch (e) {
+              console.log(e);
+            }
+          }
+  
+          break;
+        }
+        case 'languages': {
+          product.languages = languages;
+          break;
+        }
+        case 'os': {
+          if (os.length) {
+            product.os = os;
+          }
+          
+          break;
+        }
+        case 'cpu': {
+          if (cpu.length) {
+            product.cpu = cpu;
+          }
+    
+          break;
+        }
+        case 'graphicsCard': {
+          if (graphicsCard.length) {
+            product.graphicsCard = graphicsCard;
+          }
+    
+          break;
+        }
+        case 'ram': {
+          if (ram.length) {
+            product.ram = ram;
+          }
+    
+          break;
+        }
+        case 'diskMemory': {
+          if (diskMemory.length) {
+            product.diskMemory = diskMemory;
+          }
+    
+          break;
+        }
+      }
+    }
+    
+    await product.save();
+  
+    res.redirect(`/admin/products/edit/${productId}`);
+  } catch (e) {
+    console.log(e);
+    res.redirect(`/admin/products/${productId}/parse-by-steam-buy`);
   }
 }

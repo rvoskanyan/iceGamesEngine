@@ -14,7 +14,7 @@ export const pageSplitCatalog = async (req, res, next) => {
     }
     
     if (!section) {
-      next();
+      return next();
     }
   
     let filter;
@@ -37,7 +37,7 @@ export const pageSplitCatalog = async (req, res, next) => {
         hTitle = `Купить ключи активации ${section.name} дешево`;
         break;
       }
-      default: next();
+      default: return next();
     }
     
     let {page = 1} = req.query;
