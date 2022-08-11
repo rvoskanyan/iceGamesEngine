@@ -1326,8 +1326,8 @@ if (homeSliderNode) {
   const homeSlider = new Slider({
     mainNode: homeSliderNode,
     onSwitch: switchHomeSlider,
-    progress: true,
     navigate: true,
+    progressNavigate: true,
     switchingTime: 5000,
   });
   

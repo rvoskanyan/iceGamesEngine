@@ -19,29 +19,25 @@
         opacity: 1
 
   & .navigate
-    margin-top: -140px
+    margin-top: -255px
+    display: flex
+
+    @include for-middle-phone-up
+      margin-top: -230px
 
     @include for-big-phone-up
-      margin-top: -160px
+      margin-top: -290px
+      column-gap: 10px
+      justify-content: end
 
-    & .slideControls
-      position: relative
-      max-width: 440px
-      left: calc(100% - 440px)
+    .roundNavItem
+      background: none
+      border: none
+      margin: 0
 
-      @include for-big-phone-down
-        display: none
+      &:hover
+        cursor: pointer
+        transform: scale(1.1, 1.1)
 
-    & .items
-      overflow: hidden
-      overflow-x: auto
-      padding: 8px 5px 15px 5px
-      display: flex
-      column-gap: 25px
-      justify-content: space-between
-
-      @include for-desktop-up
-        margin-top: 50px
-        overflow: initial
-        overflow-x: initial
-        padding: initial
+      &.active
+        transform: scale(1.15, 1.15)

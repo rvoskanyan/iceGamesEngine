@@ -7,6 +7,7 @@ export default class Slider {
       isVertical,
       progress,
       navigate,
+      progressNavigate,
       countSlidesScroll = 1,
       onSwitch,
       carousel,
@@ -18,11 +19,13 @@ export default class Slider {
     this.isVertical = isVertical;
     this.progress = progress;
     this.navigate = navigate;
+    this.progressNavigate = progressNavigate;
     this.countSlidesScroll = countSlidesScroll;
     this.onSwitch = onSwitch;
     this.activeScreen = 0;
     this.countVisibleSlides = 1;
     this.timeOutId = null;
+    this.inervalProgressNavigate = null;
     this.offsetSlide = 0;
   
     this.mainNode = mainNode;
@@ -84,13 +87,15 @@ export default class Slider {
     }
   
     if (this.switchingTime) {
+      this.startProgressNav(this.switchingTime);
+      
       this.timeOutId = setTimeout(() => {
         this.switchScreen(this.activeScreen + 1);
       }, this.switchingTime);
     }
-    
-    this.prevBtnNode.addEventListener('click', () => this.switchScreen(this.activeScreen - 1));
-    this.nextBtnNode.addEventListener('click', () => this.switchScreen(this.activeScreen + 1));
+  
+    this.prevBtnNode && this.prevBtnNode.addEventListener('click', () => this.switchScreen(this.activeScreen - 1));
+    this.nextBtnNode && this.nextBtnNode.addEventListener('click', () => this.switchScreen(this.activeScreen + 1));
   
     for (let i = 0; i < this.countVisibleSlides; i++) {
       if (this.slideNodes[i]) {
@@ -102,38 +107,12 @@ export default class Slider {
       this.visibleAreaNode.addEventListener('mousedown', this.mouseDownVisibleArea);
       this.visibleAreaNode.addEventListener('touchstart', this.touchVisibleArea);
     }
-  
-    /*switch (this.type) {
-      case 'switchClass': {
-        this.handleSwitch = this.getSwitcher(this.switchClass);
-        this.tapeNode = true;
-        if (this.navigateInitial) {
-          this.navNodes.forEach((item, index) => item.addEventListener('click', () => this.handleSwitch(index)));
-        }
-        this.nextBtnNode.addEventListener('click', () => this.handleSwitch(this.slideActive + this.slideScroll));
-        this.prevBtnNode.addEventListener('click', () => this.handleSwitch(this.slideActive - this.slideScroll));
-        break;
-      }
-      case 'track': {
-        //this.tape.addEventListener('mousedown', this.moveTape);
-        this.widthSlide = this.visibleAreaNode.offsetWidth / this.countVisibleSlides;
-        this.slidesNodes.forEach(item => item.style.width = `${this.widthSlide}px`);
-        this.positionTape = 0;
-        this.handleSwitch = this.getSwitcher(this.trackSwitch);
-        break;
-      }
-      case 'verticalTrack': {
-        this.heightSlide = this.visibleAreaNode.offsetHeight / this.countVisibleSlides;
-        this.slidesNodes.forEach(item => item.style.height = `${this.heightSlide}px`);
-        this.positionTape = 0;
-        this.handleSwitch = this.getSwitcher(this.verticalTrackSwitch);
-        break;
-      }
-    }*/
   }
   
   switchScreen = (targetScreen) => {
     const prevScreen = this.activeScreen;
+  
+    this.navigateItemNodes && this.navigateItemNodes[prevScreen].style.setProperty('--progressPercent', 0);
     
     this.activeScreen = targetScreen;
     
@@ -160,13 +139,40 @@ export default class Slider {
       this.moveTape(prevScreen);
     }
   
+    clearInterval(this.inervalProgressNavigate);
     clearTimeout(this.timeOutId);
   
     if (this.switchingTime) {
+      this.startProgressNav(this.switchingTime);
+      
       this.timeOutId = setTimeout(() => {
         this.switchScreen(this.activeScreen + 1);
       }, this.switchingTime);
     }
+  }
+  
+  startProgressNav = (time) => {
+    if (!this.progressNavigate) {
+      return;
+    }
+    
+    const timeInPercent = 100 / (time / 1000);
+    let second = 2;
+    let percent = 0;
+  
+    clearInterval(this.inervalProgressNavigate);
+  
+    this.navigateItemNodes[this.activeScreen].style.setProperty('--progressPercent', timeInPercent);
+    
+    this.inervalProgressNavigate = setInterval(() => {
+      if (percent === 100) {
+        clearInterval(this.inervalProgressNavigate);
+      }
+      
+      this.navigateItemNodes[this.activeScreen].style.setProperty('--progressPercent', timeInPercent * second);
+      percent += timeInPercent;
+      second++;
+    }, 1000);
   }
   
   setActiveClass = (screen, action) => {
@@ -236,7 +242,10 @@ export default class Slider {
   }
   
   changeTimeoutOnce = (time) => {
+    clearInterval(this.inervalProgressNavigate);
     clearTimeout(this.timeOutId);
+  
+    this.startProgressNav(time);
     this.timeOutId = setTimeout(() => {
       this.switchScreen(this.activeScreen + 1);
     }, time);

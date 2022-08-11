@@ -32,6 +32,15 @@ export const homepage = async (req, res) => {
   const inviter = req.query.inviter;
   const checkEmailHash = req.query.confirmEmail;
   const catalog = [];
+  const day = new Date().getDay();
+  const countRecommend = await Product.countDocuments({active: true, top: true, inStock: true});
+  const skipRecommend = day * 5 + 5;
+  let recommend = await Product
+    .find({active: true, top: true, inStock: true})
+    .select(['name', 'alias', 'priceTo', 'priceFrom', 'img', 'dsId', 'inStock'])
+    .skip(countRecommend > skipRecommend ? skipRecommend : countRecommend - 5)
+    .limit(5)
+    .lean();
   let checkedEmail = false;
   
   if (person) {
@@ -45,6 +54,18 @@ export const homepage = async (req, res) => {
       
       return product;
     });
+  
+    recommend = recommend.map(product => {
+      if (cart && cart.includes(product._id.toString())) {
+        product.inCart = true;
+      }
+  
+      if (favoritesProducts && favoritesProducts.includes(product._id.toString())) {
+        product.inFavorites = true;
+      }
+  
+      return product;
+    })
   }
   
   if (checkEmailHash) {
@@ -174,5 +195,6 @@ export const homepage = async (req, res) => {
     countProducts,
     countReviews,
     countSales,
+    recommend,
   });
 }

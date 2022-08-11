@@ -371,3 +371,143 @@
 
     @include for-big-phone-up
       bottom: 200px
+
+  .tableInfo
+    position: absolute
+    bottom: 15px
+    z-index: $ZIndex-Cover-TableInfo
+    width: 100%
+
+    @include for-desktop-up
+      bottom: 50px
+
+    &__container
+      display: flex
+      justify-content: space-between
+      color: #fff
+      flex-direction: column
+
+      @include for-desktop-up
+        background: rgba(1, 0, 46, 0.3)
+        border: 1px solid #fff
+        backdrop-filter: blur(14px)
+        border-radius: 18px
+        flex-direction: row
+        padding: 16px 20px
+
+    &__name
+      font-size: 18px
+      font-weight: 400
+      font-family: 'Lemon Milk'
+
+      @include for-desktop-up
+        font-size: 26px
+
+    &__desc
+      max-width: 625px
+      margin-top: 8px
+      overflow: hidden
+      text-overflow: ellipsis
+      display: -webkit-box
+      display: -moz-box
+      -webkit-box-orient: vertical
+      -moz-box-orient: vertical
+      box-orient: vertical
+      font-size: 12px
+      line-clamp: 3 // line-count
+      -webkit-line-clamp: 3 // line-count
+      line-height: 14px // line-height
+      max-height: calc(14px * 3) // line-height * line-count
+
+      @include for-desktop-up
+        margin-top: 12px
+        font-size: 16px
+        line-height: 18px // line-height
+        max-height: calc(18px * 3) // line-height * line-count
+
+    &__price
+      display: flex
+      align-items: end
+      justify-content: space-between
+      margin-top: 10px
+
+      @include for-middle-phone-up
+        align-items: center
+
+      @include for-desktop-up
+        margin-top: initial
+        align-items: end
+        flex-direction: column
+        justify-content: initial
+
+    &__priceValues
+      display: flex
+      flex-direction: column
+
+      & .toPrice, & .fromPrice
+        font-family: 'Montserrat'
+        font-weight: 800
+        line-height: 1
+
+      & .rowDiscount
+        display: flex
+        align-items: center
+
+        & .fromPrice
+          margin-right: 8px
+          color: #984BFB
+          font-size: 14px
+
+          @include for-big-phone-up
+            font-size: 24px
+            margin-right: 10px
+
+          &:after
+            font-size: 12px
+
+            @include for-middle-desktop-up
+              font-size: 16px
+
+        & .discount
+          display: block
+          color: #fff
+          font-weight: 700
+          background-color: rgba(147, 73, 242, 0.8)
+          border-radius: 20px
+          padding: 4px
+          line-height: 1
+          font-size: 12px
+
+          @include for-big-phone-up
+            padding: 5px 8px
+            font-size: 14px
+
+      & .toPrice
+        color: #C745CB
+        font-size: 25px
+
+        @include for-big-phone-up
+          margin-top: 3px
+          font-size: 40px
+
+        &:after
+          font-size: 16px
+
+          @include for-middle-desktop-up
+            font-size: 26px
+
+    &__actions
+      display: flex
+      flex-direction: column-reverse
+      align-items: end
+      row-gap: 8px
+
+      @include for-middle-phone-up
+        row-gap: initial
+        column-gap: 8px
+        flex-direction: row
+
+      @include for-desktop-up
+        column-gap: 15px
+        margin-top: 15px
+        flex-direction: row

@@ -86,7 +86,7 @@
         <div class="navigateMobileContainer js-navigateMobileContainer">
             <div class="navigation js-mainNavigation">
                 {{> menu}}
-                <button title="Открыть каталог игр" class="btn round border hover-color-pink hover-border-pink openMenu js-toggleMainNavigation">Каталог</button>
+                <button title="Открыть каталог игр" class="btn bg-blur round border hover-bg-pink hover-border-pink openMenu js-toggleMainNavigation">Каталог</button>
                 <div class="searchBar">
                     <input class="textField js-searchString" type="text" placeholder="Поиск...">
                     <button class="btn goSearch js-goSearch" title="Выполнить поиск">
@@ -94,9 +94,9 @@
                     </button>
                 </div>
                 {{#if isRating}}
-                    <span title="Рейтинг пользователей ICE GAMES" class="rating btn round border hover-color-pink hover-border-pink">Рейтинг</span>
+                    <span title="Рейтинг пользователей ICE GAMES" class="rating bg-blur btn round border hover-bg-pink hover-border-pink">Рейтинг</span>
                 {{else}}
-                    <a href="{{websiteAddress}}rating" title="Рейтинг пользователей ICE GAMES" class="rating btn round border hover-color-pink hover-border-pink">Рейтинг</a>
+                    <a href="{{websiteAddress}}rating" title="Рейтинг пользователей ICE GAMES" class="rating bg-blur btn round border hover-bg-pink hover-border-pink">Рейтинг</a>
                 {{/if}}
             </div>
             <div class="profile">

@@ -1,85 +1,80 @@
-<main>
+<main class="homePage">
     {{#if checkedEmail}}
         <div class="modalMessage js-modalMessage">E-mail успешно подтвержден! ✔</div>
     {{/if}}
     <div class="homeSlider js-homeSlider">
         <div class="tape js-tapeSlider">
             {{#each sliderProducts}}
-                <div class="cover blackout blackout-left blackout-bottom slide{{#if @first}} active{{/if}} js-slide" data-video-name="{{coverVideo}}">
+                <div class="cover blackout-bottom slide{{#if @first}} active{{/if}} js-slide" data-video-name="{{coverVideo}}">
                     <video class="video" muted></video>
                     <img class="img" src="{{@root.websiteAddress}}{{coverImg}}" alt="Постер игры {{name}}" title="Постер игры {{name}}">
-                    <div class="offer">
-                        <div class="name">
-                            {{name}}
-                        </div>
-                        <div class="description">
-                            {{encodeString description}}
-                        </div>
-                        <div class="price">
-                            {{#iff discount '>' 0}}
-                                <div class="rowDiscount">
-                                    <div class="fromPrice">
-                                        <span class="value">{{priceFrom}}</span>
-                                    </div>
-                                    <div class="discount">{{discount}}</div>
-                                </div>
-                            {{/iff}}
-                            <div class="toPrice">
-                                <span class="value">{{priceTo}}</span>
+                    <div class="contentContainer tableInfo">
+                        <div class="tableInfo__container">
+                            <div class="tableInfo__info">
+                                <h2 class="tableInfo__name">{{name}}</h2>
+                                <div class="tableInfo__desc">{{encodeString description}}</div>
                             </div>
-                        </div>
-                        <div class="actions">
-                            {{#if inCart}}
-                                <button
-                                    title="Перейти в корзину покупок"
-                                    class="btn elongated rounded increase bg-pink hover-backlight-blue  js-addToCart js-active"
-                                >Добавлено</button>
-                            {{else}}
-                                <button
-                                    title="Добавить товар в корзину покупок"
-                                    class="btn elongated rounded increase bg-pink hover-backlight-blue js-addToCart"
-                                    data-product-id="{{_id}}"
-                                >
-                                    В корзину
-                                </button>
-                            {{/if}}
-                            <a href="/games/{{alias}}" title="Перейти к странице товара" class="btn elongated rounded translucent bg-pink">Подробнее</a>
+                            <div class="tableInfo__price">
+                                <div class="tableInfo__priceValues">
+                                    {{#iff discount '>' 0}}
+                                        <div class="rowDiscount">
+                                            <div class="fromPrice">
+                                                <span class="value">{{priceFrom}}</span>
+                                            </div>
+                                            <div class="discount">{{discount}}</div>
+                                        </div>
+                                    {{/iff}}
+                                    <div class="toPrice">
+                                        <span class="value">{{priceTo}}</span>
+                                    </div>
+                                </div>
+                                <div class="tableInfo__actions">
+                                    <a href="/games/{{alias}}" title="Перейти к странице товара" class="btn rounded translucent bg-pink">Подробнее</a>
+                                    {{#if inCart}}
+                                        <button
+                                                title="Перейти в корзину покупок"
+                                                class="btn rounded increase bg-pink hover-backlight-blue  js-addToCart js-active"
+                                        >Добавлено</button>
+                                    {{else}}
+                                        <button
+                                                title="Добавить товар в корзину покупок"
+                                                class="btn rounded increase bg-pink hover-backlight-blue js-addToCart"
+                                                data-product-id="{{_id}}"
+                                        >
+                                            В корзину
+                                        </button>
+                                    {{/if}}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             {{/each}}
         </div>
-        <div class="contentContainer navigate">
-            <div class="slideControls">
-                <button class="btn prev js-prevBtn"></button>
-                <div class="progress js-progress"></div>
-                <button class="btn next js-nextBtn"></button>
-            </div>
-            <div class="items mobileScroll js-navigateItemsContainer">
-                {{#each sliderProducts}}
-                    <button class="cardGame big{{#if @first}} active{{/if}} js-itemNavigate" title="Переключить слайд">
-                        <div class="head">
-                            <img class="img" src="{{@root.websiteAddress}}{{img}}" alt="Изображение игры {{name}}" title="{{name}}">
-                            <div class="name">
-                                {{name}}
-                            </div>
-                        </div>
-                        <div class="price">
-                            <div class="toPrice">
-                                <span class="value">{{priceTo}}</span>
-                            </div>
-                            {{#iff priceTo '<' priceFrom}}
-                                <div class="fromPrice">
-                                    <span class="value">{{priceFrom}}</span>
-                                </div>
-                            {{/iff}}
-                        </div>
-                    </button>
+        <div class="contentContainer navigate js-navigateItemsContainer">
+            {{#each sliderProducts}}
+                <button class="roundNavItem circleProgress {{#if @first}} active{{/if}} js-itemNavigate" style="--progressPercent: 0">
+                    <svg>
+                        <circle cx="24" cy="24" r="24"></circle>
+                        <circle cx="24" cy="24" r="24"></circle>
+                    </svg>
+                    <img src="{{@root.websiteAddress}}{{img}}" class="center">
+                </button>
+            {{/each}}
+        </div>
+    </div>
+    <div class="contentContainer homeContent">
+        <div class="homeSection">
+            <h3 class="homeSubTitle">Рекомендуем</h3>
+            <div class="homeRecommend mobileScroll">
+                {{#each recommend}}
+                    {{> game
+                            id=_id
+                            size='big'
+                    }}
                 {{/each}}
             </div>
         </div>
-    </div>
-    <div class="contentContainer">
         <div class="homeSection homeStatistics mobileInvisibleScroll">
             <div class="item">
                 <div class="label">комьюнити</div>
@@ -131,7 +126,7 @@
             </a>
         </div>
         <div class="homeSection">
-            <div class="homeTitle">Жанры</div>
+            <h2 class="homeTitle">Жанры</h2>
             <div class="genresSlider js-genresSlider">
                 <div class="visibleArea js-visibleArea">
                     <div class="slides js-tape">
@@ -163,7 +158,7 @@
                 aricles=articles
         }}
         <div class="homeSection">
-            <div class="homeTitle">Медиа о нас</div>
+            <h2 class="homeTitle">Медиа о нас</h2>
             <div class="homeMediaSlider js-homeMediaSlider">
                 <div class="tape js-tape">
                     {{#each partners}}
