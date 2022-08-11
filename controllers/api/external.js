@@ -44,11 +44,13 @@ export const assignOrderPay = async (req, res) => {
     });
     const resultOrder = await responseOrder.json();
     const priceProduct = resultOrder.content.amount;
-    const product = await Product.findOne({dsId: dsProductId});
+    const product = await Product.findOne({dsId: dsProductId}).select(['_id']).lean();
     const productByOrder = {
       productId: product._id,
       purchasePrice: priceProduct,
     };
+  
+    console.log(product);
     
     if (order.status !== 'paid') {
       order.status = 'paid';
