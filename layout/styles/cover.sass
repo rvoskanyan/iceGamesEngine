@@ -446,6 +446,9 @@
       display: flex
       flex-direction: column
 
+      @include for-desktop-up
+        align-items: end
+
       & .toPrice, & .fromPrice
         font-family: 'Montserrat'
         font-weight: 800

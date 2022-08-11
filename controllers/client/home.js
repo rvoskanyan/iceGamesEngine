@@ -33,10 +33,10 @@ export const homepage = async (req, res) => {
   const checkEmailHash = req.query.confirmEmail;
   const catalog = [];
   const day = new Date().getDay();
-  const countRecommend = await Product.countDocuments({active: true, top: true, inStock: true});
+  const countRecommend = await Product.countDocuments({active: true, top: true, inStock: true, priceTo: {$gt: 300}});
   const skipRecommend = day * 5 + 5;
   let recommend = await Product
-    .find({active: true, top: true, inStock: true})
+    .find({active: true, top: true, inStock: true, priceTo: {$gt: 300}})
     .select(['name', 'alias', 'priceTo', 'priceFrom', 'img', 'dsId', 'inStock'])
     .skip(countRecommend > skipRecommend ? skipRecommend : countRecommend - 5)
     .limit(5)
