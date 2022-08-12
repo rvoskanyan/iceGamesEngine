@@ -8,6 +8,7 @@ export default class Turn {
     
     this.status = 'wait';
     this.turnFunctions = [];
+    Turn.#instance = this;
   }
   
   push = (func) => {
