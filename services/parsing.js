@@ -69,6 +69,7 @@ const sync = async () => {
         }
         
         productOnSite.priceTo = priceTo;
+        productOnSite.discount = getDiscount(priceTo, productOnSite.priceFrom);
         
         await productOnSite.save();
         await productOnSite.changeInStock(inStock);
