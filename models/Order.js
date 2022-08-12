@@ -24,6 +24,7 @@ const fields = {
 
 const options = {
   timestamps: true,
+  versionKey: false,
 };
 
 const OrderSchema = new Schema(fields, options);
