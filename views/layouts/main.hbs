@@ -13,6 +13,9 @@
 {{#if metaDescription}}
     <meta name="description" content="{{metaDescription}}">
 {{/if}}
+{{#if canonical}}
+    <link rel="canonical" href="{{canonical}}"/>
+{{/if}}
     <link rel="shortcut icon" href="{{websiteAddress}}img/favicon.svg" type="image/x-icon">
     <link rel="stylesheet" href="{{websiteAddress}}styles/bundle.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">

@@ -142,6 +142,7 @@ export const pageSplitCatalog = async (req, res, next) => {
       products,
       sectionType,
       pagination,
+      canonical: `${res.locals.websiteAddress}${alias}`,
     });
   } catch (e) {
     console.log(e);
