@@ -135,8 +135,8 @@ export const pageSplitCatalog = async (req, res, next) => {
     }
     
     if (page > 1) {
-      title += ` | страница ${page}`;
-      metaDescription += ` | страница ${page}`;
+      title += ` | Страница ${page}`;
+      metaDescription += ` | Страница ${page}`;
     }
     
     res.render('splitCatalog', {
