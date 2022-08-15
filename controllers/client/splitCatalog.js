@@ -134,6 +134,11 @@ export const pageSplitCatalog = async (req, res, next) => {
       });
     }
     
+    if (page > 1) {
+      title += ` | страница ${page}`;
+      metaDescription += ` | страница ${page}`;
+    }
+    
     res.render('splitCatalog', {
       title,
       metaDescription,
@@ -142,7 +147,6 @@ export const pageSplitCatalog = async (req, res, next) => {
       products,
       sectionType,
       pagination,
-      canonical: `${res.locals.websiteAddress}${alias}`,
     });
   } catch (e) {
     console.log(e);
