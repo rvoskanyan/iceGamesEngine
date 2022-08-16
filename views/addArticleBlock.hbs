@@ -1,11 +1,6 @@
-{{#if isEdit}}
-    <a href="/admin/articles/{{article.id}}/addBlock">Добавить контент-блок</a>
-    <br>
-    <br>
-{{/if}}
-<form method="post" action="/admin/articles/{{articleId}}/addBlock" enctype="multipart/form-data">
+<form method="post" action="/admin/articles/{{articleId}}/{{#if isEdit}}{{block._id}}{{else}}addBlock{{/if}}" enctype="multipart/form-data">
     <label>
-        Текст:
+        *Текст:
         <textarea name="text" cols="30" rows="10">{{block.text}}</textarea>
     </label>
     <br>
@@ -13,6 +8,11 @@
     <label>
         Картинка:
         <input type="file" name="img">
+        {{#if block.img}}
+            <br>
+            <br>
+            <img src="{{websiteAddress}}{{block.img}}" style="max-width: 250px">
+        {{/if}}
     </label>
     <br>
     <br>
@@ -26,5 +26,5 @@
     </label>
     <br>
     <br>
-    <input type="submit" name="add" value="{{#if isEdit}}Сохранить изменения{{else}}Добавить{{/if}}">
+    <input type="submit" value="{{#if isEdit}}Сохранить изменения{{else}}Добавить{{/if}}">
 </form>

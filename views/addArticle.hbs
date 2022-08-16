@@ -97,8 +97,17 @@
     {{#if article.blocks.length}}
         <ul>
             {{#each article.blocks}}
-                <li>
-                    {{text}}
+                <li style="margin:  30px 0; max-width: 500px">
+                    <div>{{encodeString text}}</div>
+                    {{#if img}}
+                        <img src="{{@root.websiteAddress}}{{img}}" style="max-width: 250px">
+                    {{/if}}
+                    <div style="margin-top: 15px; display: flex; column-gap: 10px">
+                        <a href="{{@root.websiteAddress}}admin/articles/{{@root.article._id}}/{{_id}}">Редактировать блок</a>
+                        <form action="{{@root.websiteAddress}}admin/articles/{{@root.article._id}}/delete/{{_id}}" method="post">
+                            <input type="submit" value="Удалить">
+                        </form>
+                    </div>
                 </li>
             {{/each}}
         </ul>

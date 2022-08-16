@@ -205,3 +205,100 @@ export const addBlock = async (req, res) => {
     res.redirect(`/admin/articles/${id}/addBlock`);
   }
 }
+
+export const editBlockPage = async (req, res) => {
+  const id = req.params.id;
+  
+  try {
+    const blockId = req.params.blockId;
+    const article = await Article
+      .findById(id)
+      .select('blocks')
+      .lean();
+    const block = article.blocks.find(block => block._id.toString() === blockId);
+    
+    if (!block) {
+      throw new Error('Not found block');
+    }
+  
+    res.render('addArticleBlock', {
+      layout: 'admin',
+      title: 'Редактирование контент-блока записи',
+      articleId: id,
+      isEdit: true,
+      block,
+    });
+  } catch (e) {
+    console.log(e);
+    res.redirect(`/admin/articles/edit/${id}`);
+  }
+}
+
+export const editBlock = async (req, res) => {
+  const id = req.params.id;
+  const blockId = req.params.blockId;
+  
+  try {
+    const article = await Article
+      .findById(id)
+      .select('blocks')
+    const blockIndex = article.blocks.findIndex(block => block._id.toString() === blockId);
+  
+    if (blockIndex === -1) {
+      throw new Error('Not found block');
+    }
+  
+    const {text, imgPosition} = req.body;
+    
+    article.blocks[blockIndex].text = text;
+    article.blocks[blockIndex].imgPosition = imgPosition;
+  
+    if (req.files) {
+      const {
+        img = null,
+      } = req.files;
+    
+      if (img) {
+        const imgExtend = getExtendFile(img.name);
+        const imgName = `${uuidv4()}.${imgExtend}`;
+      
+        await img.mv(path.join(__dirname, '/uploadedFiles', imgName));
+  
+        article.blocks[blockIndex].img = imgName;
+      }
+    }
+  
+    await article.save();
+  
+    res.redirect(`/admin/articles/edit/${id}`);
+  } catch (e) {
+    console.log(e);
+    res.redirect(`/admin/articles/${id}/${blockId}`);
+  }
+}
+
+export const deleteBlock = async (req, res) => {
+  const id = req.params.id;
+  
+  try {
+    const blockId = req.params.blockId;
+  
+    const article = await Article
+      .findById(id)
+      .select('blocks')
+    const blockIndex = article.blocks.findIndex(block => block._id.toString() === blockId);
+  
+    if (blockIndex === -1) {
+      throw new Error('Not found block');
+    }
+  
+    article.blocks.splice(blockIndex, 1);
+  
+    await article.save();
+  
+    res.redirect(`/admin/articles/edit/${id}`);
+  } catch (e) {
+    console.log(e);
+    res.redirect(`/admin/articles/edit/${id}`);
+  }
+}
