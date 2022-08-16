@@ -43,7 +43,7 @@
                                         <img src="{{@root.websiteAddress}}{{productId.img}}" alt="Картинка игры {{productId.name}}" class="compoundItem__img">
                                         <div class="compoundItem__info">
                                             <div class="compoundItem__mainInfo">
-                                                <div class="compoundItem__name">{{productId.name}}</div>
+                                                <a href="{{@root.websiteAddress}}games/{{productId.alias}}" class="compoundItem__name link underlined">{{productId.name}}</a>
                                                 <div class="compoundItem__price">
                                                     {{#iff discount '>' 0}}
                                                         <div class="rowDiscount">
