@@ -69,12 +69,10 @@
 
   &__compoundItem
     display: flex
-    align-items: center
     column-gap: 15px
 
     @include for-desktop-up
       column-gap: 30px
-      align-items: initial
 
   & .compoundItem
     &__img
@@ -86,6 +84,7 @@
       max-width: 117px
       min-height: 160px
       max-height: 160px
+      align-self: center
 
       @include for-desktop-up
         min-width: 190px
