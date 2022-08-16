@@ -606,6 +606,34 @@
               width: 70px
               height: 58px
 
+    &.orders
+      .description
+        margin-top: 5px
+        font-size: 13px
+
+        &:after
+          content: ''
+          display: block
+          height: 1px
+          background: linear-gradient(270deg, transparent 0%, #fff 100%)
+          margin-top: 15px
+
+          @include for-desktop-up
+            margin-top: 20px
+
+        @include for-big-phone-up
+          margin-top: 16px
+          font-size: 16px
+
+      .list
+        display: flex
+        flex-direction: column
+        row-gap: 35px
+        margin-top: 20px
+
+        @include for-desktop-up
+          margin-top: 40px
+
     &.savedGames
       .description
         margin-top: 5px

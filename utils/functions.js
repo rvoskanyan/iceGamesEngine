@@ -14,12 +14,15 @@ export const getDiscount = (priceTo, priceFrom) => {
   return Math.floor(100 - priceTo / (priceFrom / 100));
 }
 
-export const getFormatDate = (date, separator, pattern, monthString) => {
+export const getFormatDate = (date, separator, pattern, monthString, timeSeparator) => {
   const dateObject = new Date(Date.parse(date));
   let newDate = '';
+  let timeInit = false;
+  let dayInit = false;
   
   pattern.forEach(item => {
     let value;
+    let time = false;
     
     switch (item) {
       case 'y': {
@@ -41,9 +44,40 @@ export const getFormatDate = (date, separator, pattern, monthString) => {
         value = dateObject.getDate() < 10 ? '0' + dateObject.getDate() : dateObject.getDate();
         break;
       }
+      case 'hour': {
+        value = dateObject.getHours() < 10 ? '0' + dateObject.getHours() : dateObject.getHours();
+        time = true;
+        break;
+      }
+      case 'min': {
+        value = dateObject.getMinutes() < 10 ? '0' + dateObject.getMinutes() : dateObject.getMinutes();
+        time = true;
+        break;
+      }
+      case 'sec': {
+        value = dateObject.getSeconds() < 10 ? '0' + dateObject.getSeconds() : dateObject.getSeconds();
+        time = true;
+        break;
+      }
     }
     
-    value && newDate.length ? newDate += `${separator + value}` : newDate += `${value}`;
+    if (time) {
+      value && newDate.length
+        ? timeInit
+          ? newDate += `${timeSeparator + value}`
+          : newDate += ` ${value}`
+        : newDate += `${value}`;
+      
+      return timeInit = true;
+    }
+    
+    value && newDate.length
+      ? dayInit && !monthString
+        ? newDate += `${separator + value}`
+        : newDate += ` ${value}`
+      : newDate += `${value}`;
+  
+    dayInit = true;
   })
   
   return newDate;

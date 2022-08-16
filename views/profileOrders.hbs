@@ -10,13 +10,77 @@
     </div>
     <div class="profile">
         {{> profileMenu}}
-        <div class="content savedGames">
+        <div class="content orders">
             <div class="subtitle">Мои игры</div>
-            <div class="description">Тут Вы можете увидеть игры, которые уже приобрели</div>
+            <div class="description">Тут Вы можете увидеть статус Ваших заказов</div>
             {{#if orders.length}}
                 <div class="list">
                     {{#each orders}}
-                        {{#each products}}
+                        <div class="orderBlock">
+                            <div class="orderBlock__title">Заказ от {{createdAt}}</div>
+                            {{#iff status '===' 'paid'}}
+                                <div class="orderBlock__status orderBlock__status-positive">Оплачен</div>
+                            {{else}}
+                                <div class="orderBlock__status orderBlock__status-negative">Ожидает оплаты</div>
+                            {{/iff}}
+                            <div class="orderBlock__actions">
+                                {{#iff status '===' 'notPaid'}}
+                                    <form action="https://oplata.info/asp2/pay.asp" method="post">
+                                        <input type="hidden" name="cart_uid" value="{{dsCartId}}" />
+                                        <input type="hidden" name="email" value="{{@root.person.email}}" />
+                                        <input type="hidden" name="failpage" value="{{@root.websiteAddress}}cart" />
+                                        <input type="hidden" name="agent" value="951647" />
+                                        <input type="hidden" name="typecurr" value="RUB" />
+                                        <input type="hidden" name="dsCartId" value="{{dsCartId}}" />
+                                        <input type="submit" class="btn bg-violet rounded small font-weight-average" title="Перейти на страницу оплаты заказа" value="Оплатить">
+                                    </form>
+                                {{/iff}}
+                                <button class="btn bg-violet rounded small font-weight-average translucent js-openCompoundOrder" data-compund="{{@index}}">Состав заказа</button>
+                            </div>
+                            <div class="orderBlock__compound js-compoundOrder-{{@index}}">
+                                {{#each products}}
+                                    <div class="orderBlock__compoundItem">
+                                        <img src="{{@root.websiteAddress}}{{productId.img}}" alt="Картинка игры {{productId.name}}" class="compoundItem__img">
+                                        <div class="compoundItem__info">
+                                            <div class="compoundItem__mainInfo">
+                                                <div class="compoundItem__name">{{productId.name}}</div>
+                                                <div class="compoundItem__price">
+                                                    {{#iff discount '>' 0}}
+                                                        <div class="rowDiscount">
+                                                            <div class="fromPrice">
+                                                                <span class="value">{{productId.priceFrom}}</span>
+                                                            </div>
+                                                            <div class="discount">{{discount}}</div>
+                                                        </div>
+                                                    {{/iff}}
+                                                    <div class="toPrice">
+                                                        <span class="value">{{purchasePrice}}</span>
+                                                    </div>
+                                                </div>
+                                                {{#if productId.preorder}}
+                                                    <div class="compoundItem__preOrder">Внимание! Это предзаказ. Ключ будет доставлен Вам <b>{{productId.releaseDate}}</b></div>
+                                                {{/if}}
+                                            </div>
+                                            <div class="compoundItem__otherInfo">
+                                                <div class="activation">
+                                                    Сервис активации:
+                                                    <a href="{{@root.websiteAddress}}games?activationServices={{productId.activationServiceId._id}}" title="Перейти в каталог товаров с активацией в {{productId.activationServiceId.name}}" class="link underlined">
+                                                        {{productId.activationServiceId.name}}
+                                                    </a>
+                                                </div>
+                                                <div class="region">
+                                                    Регион активации:
+                                                    {{#each productId.activationRegions}}
+                                                        {{name}}{{#unless @last}}, {{/unless}}
+                                                    {{/each}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {{/each}}
+                            </div>
+                        </div>
+                        <!--{{#each products}}
                             {{> game
                                     id=productId._id
                                     img=productId.img
@@ -29,11 +93,11 @@
                                     priceFrom=productId.priceFrom
                                     size='small'
                             }}
-                        {{/each}}
+                        {{/each}}-->
                     {{/each}}
                 </div>
             {{else}}
-                <div class="noItems">Вы не приобрели еще ни одной игры</div>
+                <div class="noItems">Вы не оформили ни одного заказа</div>
             {{/if}}
         </div>
     </div>

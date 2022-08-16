@@ -4,6 +4,7 @@ import User from '../../models/User.js';
 import Achievement from './../../models/Achievement.js';
 import Article from './../../models/Article.js';
 import Order from './../../models/Order.js';
+import {getDiscount, getFormatDate} from "../../utils/functions.js";
 
 export const profilePage = async (req, res) => {
   try {
@@ -176,13 +177,29 @@ export const profileOrdersPage = async (req, res) => {
     const user = res.locals.person;
     const favoritesProducts = user.favoritesProducts;
     const cart = user.cart;
-    const orders = await Order
-      .find({userId: user._id, status: 'paid'})
+    let orders = await Order
+      .find({userId: user._id})
       .sort({'createdAt': -1})
-      .select('products')
-      .populate('products.productId', ['name', 'alias', 'priceTo', 'priceFrom', 'img', 'inStock']);
+      .select(['products', 'createdAt', 'status', 'dsCartId'])
+      .populate([
+        {
+          path: 'products.productId',
+          select: ['name', 'alias', 'priceTo', 'priceFrom', 'img', 'preorder', 'releaseDate', 'activationServiceId', 'activationRegions'],
+          populate: [
+            {
+              path: 'activationServiceId',
+              select: ['name'],
+            },
+            {
+              path: 'activationRegions',
+              select: ['name'],
+            },
+          ]
+        },
+      ])
+      .lean();
     
-    orders.forEach(order => {
+    orders = orders.map(order => {
       order.products = order.products.map(item => {
         const productId = item.productId._id.toString();
     
@@ -193,9 +210,17 @@ export const profileOrdersPage = async (req, res) => {
         if (cart && cart.includes(productId)) {
           item.productId.inCart = true;
         }
+  
+        item.purchasePrice = item.purchasePrice ? item.purchasePrice : item.productId.priceTo;
+        item.discount = getDiscount(item.purchasePrice, item.productId.priceFrom);
+        item.productId.releaseDate = getFormatDate(item.productId.releaseDate, '.', ['d', 'm', 'y']);
     
         return item;
       });
+      
+      order.createdAt = getFormatDate(order.createdAt, '.', ['d', 'm', 'y', 'hour', 'min', 'sec'], false, ':');
+      
+      return order;
     })
     
     res.render('profileOrders', {

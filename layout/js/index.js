@@ -57,6 +57,7 @@ const loadMoreRatingNode = document.querySelector('.js-loadMoreRating');
 const listRatingNode = document.querySelector('.js-listRating');
 const restorePasswordFormNode = document.querySelector('.js-restorePasswordForm');
 const counterAnimationNodes = document.querySelectorAll('.js-counterAnimation');
+const openCompoundOrderNodes = document.querySelectorAll('.js-openCompoundOrder');
 const popupController = new PopupController([
   {
     id: 'loginFrom',
@@ -143,6 +144,18 @@ const popupController = new PopupController([
 
 const windowHeight = document.documentElement.clientHeight;
 const topGap = document.querySelector('.js-header').getBoundingClientRect().height + 10;
+
+openCompoundOrderNodes.forEach(item => {
+  item.addEventListener('click', () => {
+    const compoundNode = document.querySelector(`.js-compoundOrder-${item.dataset.compund}`);
+    let action;
+  
+    compoundNode.classList.contains('active') ? action = 'remove' : action = 'add';
+    
+    item.classList[action]('active');
+    compoundNode.classList[action]('active');
+  })
+})
 
 counterAnimationNodes.forEach(counterAnimationNode => {
   const offsetTop = counterAnimationNode.getBoundingClientRect().top;
