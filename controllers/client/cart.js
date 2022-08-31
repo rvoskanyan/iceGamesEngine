@@ -41,6 +41,10 @@ export const cartPage = async (req, res) => {
         priceFromTotal,
         saving: priceFromTotal - priceToTotal,
       },
+      breadcrumbs: [{
+        name: 'Корзина',
+        current: true,
+      }],
     });
   } catch (e) {
     console.log(e);

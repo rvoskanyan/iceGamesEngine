@@ -28,12 +28,7 @@
             </div>
         </div>
     </div>
-    <div class="breadcrumbs contentContainer">
-        <div class="item">
-            <a class="btn link" href="{{websiteAddress}}">Главная</a>
-        </div>
-        <div class="current">Корзина</div>
-    </div>
+    {{> breadcrumbs}}
     {{#if cart.items.length}}
         <h1 class="title js-cartTitle">Список покупок</h1>
         <div class="info js-cartList">

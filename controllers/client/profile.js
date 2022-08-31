@@ -23,6 +23,10 @@ export const profilePage = async (req, res) => {
       noIndex: true,
       noIndexGoogle: true,
       isProfileHome: true,
+      breadcrumbs: [{
+        name: 'Профиль',
+        current: true,
+      }],
       user,
       countUsers,
       ratingPosition,
@@ -46,6 +50,16 @@ export const profileEditPage = async (req, res) => {
       noIndexGoogle: true,
       isProfileEdit: true,
       user,
+      breadcrumbs: [
+        {
+          name: 'Профиль',
+          path: 'profile',
+        },
+        {
+          name: 'Личные данные',
+          current: true,
+        },
+      ],
     })
   } catch (e) {
     console.log(e);
@@ -131,6 +145,16 @@ export const profileAchievementsPage = async (req, res) => {
       restAchievements,
       achievementCount,
       percent,
+      breadcrumbs: [
+        {
+          name: 'Профиль',
+          path: 'profile',
+        },
+        {
+          name: 'Достижения',
+          current: true,
+        },
+      ],
     });
   } catch (e) {
     console.log(e);
@@ -165,6 +189,16 @@ export const profileInvitePage = async (req, res) => {
       invitedUsers: invitedUsersWithRatingPosition,
       countUsers,
       user,
+      breadcrumbs: [
+        {
+          name: 'Профиль',
+          path: 'profile',
+        },
+        {
+          name: 'Пригласи друга',
+          current: true,
+        },
+      ],
     })
   } catch (e) {
     console.log(e);
@@ -228,6 +262,16 @@ export const profileOrdersPage = async (req, res) => {
       noIndex: true,
       noIndexGoogle: true,
       isProfileOrders: true,
+      breadcrumbs: [
+        {
+          name: 'Профиль',
+          path: 'profile',
+        },
+        {
+          name: 'Мои игры',
+          current: true,
+        },
+      ],
       orders,
       user,
     });
@@ -255,6 +299,16 @@ export const profileFavoritesPage = async (req, res) => {
       noIndexGoogle: true,
       isProfileFavorites: true,
       user,
+      breadcrumbs: [
+        {
+          name: 'Профиль',
+          path: 'profile',
+        },
+        {
+          name: 'Избранное',
+          current: true,
+        },
+      ],
     })
   } catch (e) {
     console.log(e);

@@ -27,15 +27,7 @@
     </div>
 {{/iff}}
 <main class="contentContainer withoutCover viewProfilePage{{#iff ratingPosition '===' 1}} firstPlace{{/iff}}">
-    <div class="breadcrumbs contentContainer mobileInvisibleScroll">
-        <div class="item">
-            <a class="btn link" href="/">Главная</a>
-        </div>
-        <div class="item">
-            <a class="btn link" href="/rating">Рейтинг пользователей</a>
-        </div>
-        <div class="current">{{user.login}}</div>
-    </div>
+    {{> breadcrumbs}}
     <div class="head">
         <div class="main">
             <div class="crown">

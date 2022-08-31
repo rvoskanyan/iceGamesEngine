@@ -1,20 +1,31 @@
-<div class="item review">
+<div class="item review" itemscope itemtype="https://schema.org/Review">
     <div class="head">
-        <a class="btn link userName" href="{{@root.websiteAddress}}rating/{{userLogin}}" title="Перейти на страницу пользователя {{userLogin}}">{{userLogin}}</a>
+        <a
+            class="btn link userName"
+            href="{{@root.websiteAddress}}rating/{{userLogin}}"
+            title="Перейти на страницу пользователя {{userLogin}}"
+            itemprop="author"
+            itemscope
+            itemtype="https://schema.org/Person"
+        >
+            {{userLogin}}
+            <meta itemprop="name" content="{{userLogin}}">
+        </a>
         {{#if forGameName}}
             <div class="forGame">
                 Отзыв на игру: {{#if forGameAlias}}<a class="link gameName" href="/games/{{forGameAlias}}">{{forGameName}}</a>{{else}}<span class="gameName">{{forGameName}}</span>{{/if}}
             </div>
         {{/if}}
     </div>
-    <div class="grade">
+    <div class="grade" itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">
         <span class="icon icon-star{{#iff eval '>=' 1}}Fill{{/iff}}"></span>
         <span class="icon icon-star{{#iff eval '>=' 2}}Fill{{/iff}}"></span>
         <span class="icon icon-star{{#iff eval '>=' 3}}Fill{{/iff}}"></span>
         <span class="icon icon-star{{#iff eval '>=' 4}}Fill{{/iff}}"></span>
         <span class="icon icon-star{{#iff eval '>=' 5}}Fill{{/iff}}"></span>
+        <meta itemprop="ratingValue" content="{{eval}}">
     </div>
-    <div class="text">
+    <div class="text" itemprop="name">
         {{text}}
     </div>
 </div>

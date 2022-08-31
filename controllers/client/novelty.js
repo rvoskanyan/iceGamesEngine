@@ -35,6 +35,10 @@ export const noveltyPage = async (req, res) => {
       isNovelty: true,
       selectionName: 'Новинки',
       sort: 'date',
+      breadcrumbs: [{
+        name: 'Новинки',
+        current: true,
+      }],
       products,
     });
   } catch (e) {

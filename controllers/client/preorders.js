@@ -32,6 +32,10 @@ export const preordersPage = async (req, res) => {
       metaDescription: 'Подборка игр для предзаказа от ICE Games',
       isPreorders: true,
       selectionName: 'Предзаказы',
+      breadcrumbs: [{
+        name: 'Предзаказы',
+        current: true,
+      }],
       products,
     });
   } catch (e) {

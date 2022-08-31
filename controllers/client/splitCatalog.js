@@ -147,6 +147,10 @@ export const pageSplitCatalog = async (req, res, next) => {
       products,
       sectionType,
       pagination,
+      breadcrumbs: [{
+        name: section.name,
+        current: true,
+      }],
     });
   } catch (e) {
     console.log(e);

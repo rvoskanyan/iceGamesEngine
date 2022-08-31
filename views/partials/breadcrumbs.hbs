@@ -1,0 +1,28 @@
+<div class="breadcrumbs contentContainer mobileInvisibleScroll" itemscope itemtype="https://schema.org/BreadcrumbList">
+    <div class="item"
+         itemprop="itemListElement"
+         itemscope
+         itemtype="https://schema.org/ListItem"
+    >
+        <a class="btn link" href="{{websiteAddress}}" itemprop="item">
+            <span itemprop="name">Главная</span>
+        </a>
+        <meta itemprop="position" content="1">
+    </div>
+    {{#each breadcrumbs}}
+        {{#if current}}
+            <div class="current">{{name}}</div>
+        {{else}}
+            <div class="item"
+                 itemprop="itemListElement"
+                 itemscope
+                 itemtype="https://schema.org/ListItem"
+            >
+                <a class="btn link" href="{{@root.websiteAddress}}{{path}}" itemprop="item">
+                    <span itemprop="name">{{name}}</span>
+                </a>
+                <meta itemprop="position" content="{{inc (inc @index)}}">
+            </div>
+        {{/if}}
+    {{/each}}
+</div>

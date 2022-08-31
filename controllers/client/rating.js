@@ -16,6 +16,10 @@ export const ratingPage = async (req, res) => {
       title: 'ICE GAMES — рейтинг пользователей',
       metaDescription: 'Призы самым активным! Отслеживайте свою позицию в магазине компьютерных игр ICE GAMES.',
       isRating: true,
+      breadcrumbs: [{
+        name: 'Рейтинг',
+        current: true,
+      }],
       users,
       countUsers,
     });
@@ -76,6 +80,16 @@ export const profileViewPage = async (req, res) => {
       countAchievements,
       restAchievements,
       lastPurchasedProducts,
+      breadcrumbs: [
+        {
+          name: 'Рейтинг пользователей',
+          path: 'rating',
+        },
+        {
+          name: user.login,
+          current: true,
+        },
+      ],
     })
   } catch (e) {
     console.log(e);

@@ -1,10 +1,5 @@
 <main class="contentContainer withoutCover basketPage js-cart">
-    <div class="breadcrumbs contentContainer">
-        <div class="item">
-            <a class="btn link" href="{{websiteAddress}}">Главная</a>
-        </div>
-        <div class="current">Страница не найдена</div>
-    </div>
+    {{> breadcrumbs}}
     <div class="notFound">
         <img src="{{websiteAddress}}img/notFound.svg" class="img" alt="Иконка расстроенного смайла" title="Корзина пуста :(">
         <div class="text">

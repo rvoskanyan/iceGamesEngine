@@ -35,6 +35,10 @@ export const discountsPage = async (req, res) => {
       isDiscounts: true,
       selectionName: 'Скидки',
       sort: 'discount',
+      breadcrumbs: [{
+        name: 'Скидки',
+        current: true,
+      }],
       products,
     });
   } catch (e) {

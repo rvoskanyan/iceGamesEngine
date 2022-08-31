@@ -1,4 +1,3 @@
-import Product from "./../../models/Product.js";
 import User from "../../models/User.js";
 import Review from "../../models/Review.js";
 
@@ -54,6 +53,10 @@ export const reviewsPage = async (req, res) => {
       title: 'ICE GAMES — Отзывы',
       metaDescription: 'Место для ваших отзывов. Помогите нам стать лучше — напишите своё мнение о магазине компьютерных игр ICE GAMES.',
       isReviews: true,
+      breadcrumbs: [{
+        name: 'Отзывы',
+        current: true,
+      }],
       reviews,
       lastViewedProducts,
       countReviews,

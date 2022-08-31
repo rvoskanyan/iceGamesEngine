@@ -24,6 +24,10 @@ export const gamesPage = async (req, res) => {
       categories,
       genres,
       activationServices,
+      breadcrumbs: [{
+        name: 'Каталог',
+        current: true,
+      }],
     });
   } catch (e) {
     console.log(e);
@@ -271,6 +275,17 @@ export const gamePage = async (req, res) => {
       countSales,
       reviews,
       countReviews,
+      ogImage: product.img,
+      breadcrumbs: [
+        {
+          name: 'Каталог',
+          path: 'games',
+        },
+        {
+          name: product.name,
+          current: true,
+        },
+      ],
     });
   } catch (e) {
     console.log(e);

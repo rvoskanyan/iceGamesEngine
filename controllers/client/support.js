@@ -8,6 +8,10 @@ export const supportPage = async (req, res) => {
       title: 'ICE GAMES — Поддержка',
       metaDescription: 'Проблемы с активацией? Поможем с решением любых вопросов в чате с оперативной поддержкой.',
       isSupport: true,
+      breadcrumbs: [{
+        name: 'Поддержка',
+        current: true,
+      }],
       faqs,
     });
   } catch (e) {

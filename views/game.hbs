@@ -1,4 +1,4 @@
-<main class="gamePage js-gamePage">
+<main class="gamePage js-gamePage" itemscope itemtype="http://schema.org/Product">
     {{#unless product.inStock}}
         {{#unless @root.isAuth}}
             <!--noindex-->
@@ -23,23 +23,22 @@
             <!--/noindex-->
         {{/unless}}
     {{/unless}}
-    <div class="breadcrumbs contentContainer mobileInvisibleScroll">
-        <div class="item">
-            <a class="btn link" href="/">Главная</a>
-        </div>
-        <div class="item">
-            <a class="btn link" href="/games">Каталог</a>
-        </div>
-        <div class="current">
-            {{product.name}}
-        </div>
-    </div>
-    <div class="cover blackout blackout-left blackout-bottom slide active js-productPageCover"{{#if product.coverVideo}} data-video-name="{{product.coverVideo}}"{{/if}}>
+    {{> breadcrumbs}}
+    <div
+        class="cover blackout blackout-left blackout-bottom slide active js-productPageCover"
+        {{#if product.coverVideo}} data-video-name="{{product.coverVideo}}"{{/if}}
+    >
         <div class="mobileImgContainer">
-            <img class="mobileImg" src="{{websiteAddress}}{{product.img}}" alt="{{product.name}}" title="{{product.name}}">
+            <img class="mobileImg" src="{{websiteAddress}}{{product.img}}" alt="{{product.name}}" title="{{product.name}}" itemprop="image">
         </div>
         {{#if product.coverVideo}}
-            <video class="video js-coverVideo" loop muted></video>
+            <div class="videoMacro" itemscope itemprop="VideoObject" itemtype="https://schema.org/VideoObject">
+                <meta itemprop="name" content="Трейлер {{product.name}}">
+                <meta itemprop="uploadDate" content="{{product.createdAt}}">
+                <meta itemprop="description" content="{{product.description}}">
+                <meta itemprop="contentUrl" content="{{websiteAddress}}{{product.coverVideo}}" />
+                <video class="video js-coverVideo" loop muted></video>
+            </div>
         {{/if}}
         <img class="img" src="{{websiteAddress}}{{product.coverImg}}" alt="{{product.name}}" title="{{product.name}}">
         <div class="offer">
@@ -74,92 +73,99 @@
                     {{/each}}
                 </div>
             {{/iff}}
-            <h1 class="name">{{product.name}}</h1>
-            <div class="statuses">
-                {{#if product.inStock}}
-                    <div class="status positive">в наличии</div>
+            <h1 class="name" itemprop="name">{{product.name}}</h1>
+            <div class="description" itemprop="description">{{encodeString product.description}}</div>
+            <div class="offerMacro" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+                {{#if product.preOrder}}
+                    <link itemprop="availability" href="http://schema.org/PreOrder">
                 {{else}}
-                    <div class="status negative">нет в наличии</div>
-                {{/if}}
-                <div class="status positive">приобрели сегодня {{countSales}} раз(а)</div>
-            </div>
-            <div class="description">
-                {{encodeString product.description}}
-            </div>
-            <div class="mobileBuyContainer">
-                <div class="price">
-                    {{#iff product.discount '>' 0}}
-                        <div class="rowDiscount">
-                            <div class="fromPrice">
-                                <span class="value">{{product.priceFrom}}</span>
-                            </div>
-                            <div class="discount">{{product.discount}}</div>
-                        </div>
-                    {{/iff}}
-                    <div class="toPrice">
-                        <span class="value">{{product.priceTo}}</span>
-                    </div>
-                </div>
-                <div class="actions">
-                    {{#if product.inStock}}
-                        {{#if currentProductInCart}}
-                            <button
-                                title="Перейти в корзину покупок"
-                                class="btn elongated rounded increase bg-pink hover-backlight-blue js-addToCartBtn js-active"
-                            >Добавлено</button>
+                    <div class="statuses">
+                        {{#if product.inStock}}
+                            <div class="status positive">в наличии</div>
+                            <link itemprop="availability" href="http://schema.org/InStock">
                         {{else}}
-                            <button
-                                title="Добавить данный товар в корзину покупок"
-                                class="btn elongated rounded increase bg-pink hover-backlight-blue js-addToCartBtn"
-                                data-product-id="{{product.id}}"
-                            >В корзину</button>
+                            <div class="status negative">нет в наличии</div>
+                            <link itemprop="availability" href="http://schema.org/OutOfStock">
                         {{/if}}
-                    {{else}}
-                        {{#if subscribed}}
-                            <div
-                                title="Когда товар появится в наличии, на Ваш E-mail придет уведомление."
-                                class="btn elongated rounded bg-pink"
-                            >Уведомление оформлено</div>
+                        <div class="status positive">приобрели сегодня {{countSales}} раз(а)</div>
+                    </div>
+                {{/if}}
+                <div class="mobileBuyContainer">
+                    <div class="price">
+                        {{#iff product.discount '>' 0}}
+                            <div class="rowDiscount">
+                                <div class="fromPrice">
+                                    <span class="value">{{product.priceFrom}}</span>
+                                </div>
+                                <div class="discount">{{product.discount}}</div>
+                            </div>
+                        {{/iff}}
+                        <div class="toPrice">
+                            <span class="value" itemprop="price">{{product.priceTo}}</span>
+                            <meta itemprop="priceCurrency" content="RUB">
+                        </div>
+                    </div>
+                    <div class="actions">
+                        {{#if product.inStock}}
+                            {{#if currentProductInCart}}
+                                <button
+                                        title="Перейти в корзину покупок"
+                                        class="btn elongated rounded increase bg-pink hover-backlight-blue js-addToCartBtn js-active"
+                                >Добавлено</button>
+                            {{else}}
+                                <button
+                                        title="Добавить данный товар в корзину покупок"
+                                        class="btn elongated rounded increase bg-pink hover-backlight-blue js-addToCartBtn"
+                                        data-product-id="{{product.id}}"
+                                >В корзину</button>
+                            {{/if}}
                         {{else}}
-                            <button
-                                title="Подписаться на уведомление о поступлении товара"
-                                class="
+                            {{#if subscribed}}
+                                <div
+                                        title="Когда товар появится в наличии, на Ваш E-mail придет уведомление."
+                                        class="btn elongated rounded bg-pink"
+                                >Уведомление оформлено</div>
+                            {{else}}
+                                <button
+                                        title="Подписаться на уведомление о поступлении товара"
+                                        class="
                                     btn elongated rounded increase bg-pink hover-backlight-blue js-subscribeInStock
                                     {{#unless @root.isAuth}} js-notAuth{{/unless}}
                                 "
-                                data-product-id="{{product.id}}"
-                            >Уведомить</button>
+                                        data-product-id="{{product.id}}"
+                                >Уведомить</button>
+                            {{/if}}
                         {{/if}}
-                    {{/if}}
-                    <div class="moreInfoBlocks">
-                        {{#if product.preOrder}}
-                            <div class="moreInfo preOrderInfo">
-                                Внимание! Это предзаказ. Ключ будет доставлен Вам
-                                <span class="date">{{product.pointReleaseDate}}</span>
-                            </div>
-                        {{/if}}
-                        {{#if product.dlc}}
-                            <div class="moreInfo dlcInfo">
-                                Для активации дополнения требуется наличие
-                                {{#if product.dlcForFree}}
-                                    бесплатной
-                                {{/if}}
-                                игры
-                                {{#if product.dlcForId}}
-                                    <a
-                                            href="{{websiteAddress}}games/{{product.dlcForId.alias}}"
-                                            title="Перейти к product.dlcForId.name"
-                                            class="link underlined"
-                                    >
-                                        {{product.dlcForId.name}}
-                                    </a>
-                                {{else}}
-                                    {{product.dlcForName}}
-                                {{/if}}
-                                на аккаунте
-                                {{product.activationServiceId.name}}
-                            </div>
-                        {{/if}}
+                        <div class="moreInfoBlocks">
+                            {{#if product.preOrder}}
+                                <div class="moreInfo preOrderInfo">
+                                    Внимание! Это предзаказ. Ключ будет доставлен Вам
+                                    <span class="date">{{product.pointReleaseDate}}</span>
+                                </div>
+                            {{/if}}
+                            {{#if product.dlc}}
+                                <div class="moreInfo dlcInfo">
+                                    Для активации дополнения требуется наличие
+                                    {{#if product.dlcForFree}}
+                                        бесплатной
+                                    {{/if}}
+                                    игры
+                                    {{#if product.dlcForId}}
+                                        <a
+                                                href="{{websiteAddress}}games/{{product.dlcForId.alias}}"
+                                                title="Перейти к product.dlcForId.name"
+                                                class="link underlined"
+                                        >
+                                            {{product.dlcForId.name}}
+                                        </a>
+                                    {{else}}
+                                        {{product.dlcForName}}
+                                    {{/if}}
+                                    на аккаунте
+                                    {{product.activationServiceId.name}}
+                                </div>
+                            {{/if}}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -194,8 +200,10 @@
                                 </button>
                             {{/if}}
                             {{#each product.images}}
-                                <button class="btn slide js-slide js-largeImg" title="Увеличить">
-                                    <img class="img js-targetImg" src="{{@root.websiteAddress}}{{name}}" alt="Изображение-{{@index}} из игры {{@root.product.name}}">
+                                <button class="btn slide js-slide js-largeImg" title="Увеличить" itemscope itemtype="https://schema.org/ImageObject">
+                                    <meta itemprop="name" content="Картинка игры {{@root.product.name}}">
+                                    <meta itemprop="description" content="Картинка игры {{@root.product.name}} в интернет магазине ключей игр — ICE GAMES">
+                                    <img itemprop="contentUrl" class="img js-targetImg" src="{{@root.websiteAddress}}{{name}}" alt="Изображение-{{@index}} из игры {{@root.product.name}}">
                                 </button>
                             {{/each}}
                         </div>

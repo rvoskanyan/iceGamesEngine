@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ru">
+<html lang="ru" prefix="og: http://ogp.me/ns#">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -12,6 +12,14 @@
 {{/if}}
 {{#if metaDescription}}
     <meta name="description" content="{{metaDescription}}">
+{{/if}}
+    <meta property="og:site_name" content="ICE GAMES">
+{{#if ogImage}}
+    <meta name="og:image" content="{{websiteAddress}}{{ogImage}}">
+    <meta name="og:image:secure_url" content="{{websiteAddress}}{{ogImage}}">
+{{else}}
+    <meta name="og:image" content="{{websiteAddress}}fullLogo.png">
+    <meta name="og:image:secure_url" content="{{websiteAddress}}fullLogo.png">
 {{/if}}
 {{#if canonical}}
     <link rel="canonical" href="{{canonical}}"/>

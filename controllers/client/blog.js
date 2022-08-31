@@ -15,6 +15,10 @@ export const blogHomePage = async (req, res) => {
       isBlog: true,
       fixArticle,
       articles,
+      breadcrumbs: [{
+        name: 'Блог',
+        current: true,
+      }],
     });
   } catch (e) {
     console.log(e);
@@ -51,6 +55,17 @@ export const blogArticlePage = async (req, res) => {
       title: `ICE GAMES — ${article.name}`,
       metaDescription: article.metaDescription,
       article,
+      ogImage: article.img,
+      breadcrumbs: [
+        {
+          name: 'Блог',
+          path: 'blog',
+        },
+        {
+          name: article.name,
+          current: true,
+        },
+      ],
     });
   } catch (e) {
     console.log(e);

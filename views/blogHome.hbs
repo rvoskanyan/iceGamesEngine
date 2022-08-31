@@ -1,10 +1,5 @@
 <main class="blogPage js-blogPage">
-    <div class="breadcrumbs contentContainer">
-        <div class="item">
-            <a class="btn link" href="{{websiteAddress}}">Главная</a>
-        </div>
-        <div class="current">Блог</div>
-    </div>
+    {{> breadcrumbs}}
     {{#if fixArticle}}
         <div class="cover blackout blackout-bottomMax slide active js-slide">
             <img class="img" src="{{websiteAddress}}{{fixArticle.coverImg}}" alt="Постер записи в блоге - {{fixArticle.name}}" title="Постер записи в блоге - {{fixArticle.name}}">
