@@ -16,7 +16,7 @@ export const gamesPage = async (req, res) => {
     const activationServices = await ActivationService.find().select(['name']);
     
     res.render('catalog', {
-      title: 'ICE GAMES — Каталог игр',
+      title: 'Каталог игр ICE GAMES',
       metaDescription: 'Каталог лучших игр со скидками и удобным поиском. Топ продаж от магазина лицензионных ключей ICE GAMES.',
       isCatalog: true,
       noIndex: true,
@@ -256,8 +256,8 @@ export const gamePage = async (req, res) => {
     }
     
     res.render('game', {
-      title: `ICE GAMES — ${product.name}`,
-      metaDescription: `Купить игру ${product.name} c активацией в ${product.activationServiceId.name} со скидкой. Широкий выбор лицензионных ключей с гарантией от поставщиков в ICE GAMES.`,
+      title: `Купить лицензионный ключ ${product.name} для ${product.activationServiceId.name} по цене ${product.priceTo}₽. в магазине ICE GAMES`,
+      metaDescription: `${product.name} дешево для активации в ${product.activationServiceId.name}. Лицензионный ключ в магазине ICE GAMES со скидкой. Мгновенная доставка ключа активации на почту. Оплата удобным способом.`,
       typeTrailerCover,
       product,
       trailerId,

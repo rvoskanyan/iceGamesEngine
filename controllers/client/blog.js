@@ -10,8 +10,8 @@ export const blogHomePage = async (req, res) => {
     const fixArticle = await Article.findOne({fixed: true});
     
     res.render('blogHome', {
-      title: 'ICE GAMES — Блог',
-      metaDescription: 'Обзоры на игры, познавательные статьи и актуальные новости: все самое интересное в магазине компьютерных игр ICE GAMES.',
+      title: 'Блог ICE GAMES',
+      metaDescription: 'Обзоры игр, познавательные статьи и актуальные новости — всё самое интересное в магазине лицензионных ключей ICE GAMES.',
       isBlog: true,
       fixArticle,
       articles,
@@ -52,7 +52,7 @@ export const blogArticlePage = async (req, res) => {
     }
   
     res.render('blogArticle', {
-      title: `ICE GAMES — ${article.name}`,
+      title: `ICE GAMES Блог — ${article.name}`,
       metaDescription: article.metaDescription,
       article,
       ogImage: article.img,

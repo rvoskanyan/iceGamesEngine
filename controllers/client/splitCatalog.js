@@ -25,15 +25,15 @@ export const pageSplitCatalog = async (req, res, next) => {
     switch (sectionType) {
       case 'genres': {
         filter = {genres: {$in: section._id}};
-        metaDescription = `Здесь Вы можете выбрать и купить игры в жанре ${section.name} со скидкой`;
-        title = `ICE GAMES — игры в жанре ${section.name}`;
+        metaDescription = `Купить ${section.name} игры дешево для PC в магазине ICE GAMES. Мгновенная доставка ключей активации для Steam, Origin, Battle.net и других платформ. Широкий выбор игр, сервисная поддержка.`;
+        title = `Купить ${section.name} игры дешево для PC со скидкой в магазине лицензионных ключей ICE GAMES`;
         hTitle = `Купить ${section.name} игры дешево для PC`;
         break;
       }
       case 'activationServices': {
         filter = {activationServiceId: section._id};
-        metaDescription = `Здесь Вы можете выбрать и купить игры с активацией в ${section.name} со скидкой`;
-        title = `ICE GAMES — игры с активацией в ${section.name}`;
+        metaDescription = `Купить ключи активации ${section.name} дешево в магазине ICE GAMES. Мгновенная доставка ключей активации. Широкий выбор игр, сервисная поддержка.`;
+        title = `Купить ключи активации ${section.name} дешево со скидкой в магазине лицензионных ключей ICE GAMES`;
         hTitle = `Купить ключи активации ${section.name} дешево`;
         break;
       }
@@ -140,8 +140,8 @@ export const pageSplitCatalog = async (req, res, next) => {
     }
     
     res.render('splitCatalog', {
-      title,
-      metaDescription,
+      title: `${title} — страница ${page}`,
+      metaDescription: `${metaDescription} — страница ${page}`,
       hTitle,
       section,
       products,
