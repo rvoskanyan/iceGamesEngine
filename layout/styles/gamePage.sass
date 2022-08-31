@@ -84,6 +84,9 @@
               &.preOrderInfo
                 align-self: flex-start
 
+    .videoMacro
+      display: contents
+
     @include for-big-phone-up
       & .mobileImgContainer
         display: none
@@ -101,7 +104,7 @@
         &:after, &:before
           content: initial
 
-      .offerMacro, & .videoMacro
+      .offerMacro
         display: contents
 
       & .packages
