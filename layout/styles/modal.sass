@@ -5,14 +5,77 @@
   position: fixed
   display: flex
   justify-content: center
-  align-items: center
+  align-items: start
   top: 0
   left: 0
   width: 100%
   height: 100vh
-  background-color: rgba(0, 0, 0, 0.7)
+  background-color: rgba(0, 0, 0, 0.6)
   z-index: $ZIndex-Modal
-  padding: 80px 30px
+  padding: 40px 15px
+  overflow: auto
+  visibility: hidden
+  opacity: 0
+  transition: .3s ease-in
+  transition-property: opacity, visibility
+
+  @include for-desktop-up
+    padding: 80px 30px
+
+  &.active
+    visibility: visible
+    opacity: 1
+
+  .contentBlock
+    position: relative
+    max-width: 1200px
+    border: 1px solid #fff
+    border-radius: 15px
+    background-color: #984BFB
+    color: #fff
+    padding: 15px 10px
+    font-size: 14px
+
+    @include for-desktop-up
+      border: 2px solid #fff
+      border-radius: 20px
+      padding: 27px 35px
+      font-size: 16px
+
+    .roundCloseModal
+      position: absolute
+      right: 5px
+      top: 5px
+
+      @include for-desktop-up
+        right: 10px
+        top: 10px
+
+    h1
+      margin-bottom: 10px
+      font-size: 18px
+
+      @include for-desktop-up
+        margin-bottom: 15px
+        font-size: 24px
+
+    p, ul
+      margin-bottom: 8px
+
+      @include for-desktop-up
+        margin-bottom: 12px
+
+    ul
+      margin-left: 26px
+
+      @include for-desktop-up
+        margin-left: 28px
+
+      li
+        margin-bottom: 2px
+
+        @include for-desktop-up
+          margin-bottom: 3px
 
   .close
     position: absolute

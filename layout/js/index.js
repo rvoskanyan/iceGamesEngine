@@ -58,6 +58,7 @@ const listRatingNode = document.querySelector('.js-listRating');
 const restorePasswordFormNode = document.querySelector('.js-restorePasswordForm');
 const counterAnimationNodes = document.querySelectorAll('.js-counterAnimation');
 const openCompoundOrderNodes = document.querySelectorAll('.js-openCompoundOrder');
+const openAboutHomeModalNode = document.querySelector('.js-openAboutHomeModal');
 const popupController = new PopupController([
   {
     id: 'loginFrom',
@@ -144,6 +145,24 @@ const popupController = new PopupController([
 
 const windowHeight = document.documentElement.clientHeight;
 const topGap = document.querySelector('.js-header').getBoundingClientRect().height + 10;
+
+openAboutHomeModalNode.addEventListener('click', () => {
+  const aboutHomeModalNode = document.querySelector('.js-aboutHomeModal');
+  
+  if (!aboutHomeModalNode) {
+    return;
+  }
+  
+  const aboutHomeModalCloseNode = document.querySelector('.js-aboutHomeModalClose');
+  
+  aboutHomeModalNode.classList.add('active');
+  document.querySelector('body').classList.add('noScrolling');
+  
+  aboutHomeModalCloseNode.addEventListener('click', () => {
+    aboutHomeModalNode.classList.remove('active');
+    document.querySelector('body').classList.remove('noScrolling');
+  })
+});
 
 openCompoundOrderNodes.forEach(item => {
   item.addEventListener('click', () => {

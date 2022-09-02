@@ -50,6 +50,9 @@
       outline: none
       opacity: 1
 
+  &.underlined
+    text-decoration: underline
+
   &.round
     border-radius: 100px
     padding: 8px 15px
@@ -72,6 +75,43 @@
       @include for-big-phone-up
         font-size: 16px
         padding: 4px 12px
+
+    &-close
+      display: flex
+      align-items: center
+      justify-content: center
+      position: relative
+      border: 2px solid #fff
+      border-radius: 100%
+      min-height: 25px
+      min-width: 25px
+      max-width: 25px
+      max-height: 25px
+
+      @include for-desktop-up
+        min-height: 30px
+        min-width: 30px
+        max-width: 30px
+        max-height: 30px
+
+      &:before, &:after
+        content: ''
+        position: absolute
+        display: block
+        max-width: 15px
+        min-width: 15px
+        height: 2px
+        background-color: #fff
+
+        @include for-desktop-up
+          max-width: 20px
+          min-width: 20px
+
+      &:before
+        transform: rotate(45deg)
+
+      &:after
+        transform: rotate(-45deg)
 
   &.rounded
     border-radius: 8px
@@ -98,6 +138,9 @@
   &.font-weight
     &-average
       font-weight: 500
+
+    &-large
+      font-weight: 400
 
   &.elongated
     padding-left: 20px
@@ -223,3 +266,11 @@
 
       &-pink
         background-color: #C745CB
+
+  &.color
+    &-blue
+      color: #00BEFF
+
+  &.ff
+    &-lm
+      font-family: 'Lemon Milk'

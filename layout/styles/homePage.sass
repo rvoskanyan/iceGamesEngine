@@ -1,10 +1,17 @@
 @import "./breakPoints"
 
-.homePage .homeContent
-  margin-top: 225px
+.homePage
+  .homeContent
+    margin-top: 225px
 
-  @include for-middle-phone-up
-    margin-top: 200px
+    @include for-middle-phone-up
+      margin-top: 200px
 
-  @include for-desktop-up
-    margin-top: 250px
+    @include for-desktop-up
+      margin-top: 250px
+
+  .aboutBtnHome
+    margin: 0 auto
+
+    .icon
+      margin-right: 10px

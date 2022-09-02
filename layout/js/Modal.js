@@ -4,7 +4,7 @@ export default class Modal {
     this.mainNode = document.createElement('div');
     this.closeBtn = document.createElement('button');
     
-    this.mainNode.classList.add('modal');
+    this.mainNode.classList.add('modal', 'active');
     this.closeBtn.classList.add('btn', 'close');
     
     this.mainNode.addEventListener('click', this.close);
