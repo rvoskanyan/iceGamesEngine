@@ -146,7 +146,7 @@ const popupController = new PopupController([
 const windowHeight = document.documentElement.clientHeight;
 const topGap = document.querySelector('.js-header').getBoundingClientRect().height + 10;
 
-openAboutHomeModalNode.addEventListener('click', () => {
+openAboutHomeModalNode && openAboutHomeModalNode.addEventListener('click', () => {
   const aboutHomeModalNode = document.querySelector('.js-aboutHomeModal');
   
   if (!aboutHomeModalNode) {
