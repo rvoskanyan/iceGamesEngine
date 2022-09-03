@@ -11,6 +11,12 @@
     </label>
     <br>
     <br>
+    <label>
+        Описание:
+        <textarea name="description" cols="30" rows="10">{{activationService.description}}</textarea>
+    </label>
+    <br>
+    <br>
     <input type="submit" name="add" value="{{#if isEdit}}Сохранить изменения{{else}}Добавить{{/if}}">
 </form>
 {{#if isEdit}}

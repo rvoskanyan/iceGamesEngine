@@ -1,6 +1,17 @@
 <main class="contentContainer withoutCover categoriesCatalogPage">
     {{> breadcrumbs}}
-    <h1 class="title">{{hTitle}}</h1>
+    <div class="head">
+        <h1 class="title">{{hTitle}}</h1>
+        {{#if section.description}}
+            <div class="descriptionContainer">
+                <button class="btn round info border js-openDescriptionSplitCatalog">i</button>
+                <div class="description js-descriptionSplitCatalog">
+                    <button class="btn round-close close js-descriptionSplitCatalogClose"></button>
+                    {{encodeString section.description}}
+                </div>
+            </div>
+        {{/if}}
+    </div>
     <div class="list">
         {{#each products}}
             {{> game

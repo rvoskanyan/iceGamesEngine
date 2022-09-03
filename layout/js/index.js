@@ -59,6 +59,7 @@ const restorePasswordFormNode = document.querySelector('.js-restorePasswordForm'
 const counterAnimationNodes = document.querySelectorAll('.js-counterAnimation');
 const openCompoundOrderNodes = document.querySelectorAll('.js-openCompoundOrder');
 const openAboutHomeModalNode = document.querySelector('.js-openAboutHomeModal');
+const openDescriptionSplitCatalogNode = document.querySelector('.js-openDescriptionSplitCatalog');
 const popupController = new PopupController([
   {
     id: 'loginFrom',
@@ -163,6 +164,22 @@ openAboutHomeModalNode && openAboutHomeModalNode.addEventListener('click', () =>
     document.querySelector('body').classList.remove('noScrolling');
   })
 });
+
+openDescriptionSplitCatalogNode && openDescriptionSplitCatalogNode.addEventListener('click', () => {
+  const descriptionSplitCatalogNode = document.querySelector('.js-descriptionSplitCatalog');
+  
+  if (!descriptionSplitCatalogNode) {
+    return;
+  }
+  
+  const descriptionSplitCatalogCloseNode = document.querySelector('.js-descriptionSplitCatalogClose');
+  
+  descriptionSplitCatalogNode.classList.add('active');
+  
+  descriptionSplitCatalogCloseNode.addEventListener('click', () => {
+    descriptionSplitCatalogNode.classList.remove('active');
+  })
+})
 
 openCompoundOrderNodes.forEach(item => {
   item.addEventListener('click', () => {

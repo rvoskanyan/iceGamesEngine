@@ -1,6 +1,85 @@
 @import './breakPoints'
 
 .categoriesCatalogPage
+  .head
+    display: flex
+    flex-direction: column
+    align-items: center
+    row-gap: 10px
+
+    @include for-desktop-up
+      flex-direction: initial
+      column-gap: 25px
+
+    .descriptionContainer
+      position: relative
+
+      .description
+        position: absolute
+        background-color: #410074
+        border: 1px solid #fff
+        border-radius: 10px
+        color: #fff
+        top: 0
+        right: -50%
+        transform: translateX(calc(50% - 24px))
+        padding: 15px 10px
+        min-width: 300px
+        z-index: 2
+        opacity: 0
+        visibility: hidden
+        transition: .3s ease-in
+        transition-property: visibility, opacity
+        font-size: 14px
+
+        @include for-desktop-up
+          min-width: 600px
+          top: 0
+          right: 0
+          transform: initial
+          border-radius: 20px
+          padding: 25px 28px
+          font-size: 16px
+
+        &.active
+          opacity: 1
+          visibility: visible
+
+        .close
+          position: absolute
+          right: 5px
+          top: 5px
+
+          @include for-desktop-up
+            right: 10px
+            top: 10px
+
+        h2
+          margin-bottom: 10px
+          font-size: 16px
+
+          @include for-desktop-up
+            margin-bottom: 15px
+            font-size: 21px
+
+        p, ul
+          margin-bottom: 8px
+
+          @include for-desktop-up
+            margin-bottom: 12px
+
+        ul
+          margin-left: 26px
+
+          @include for-desktop-up
+            margin-left: 28px
+
+          li
+            margin-bottom: 2px
+
+            @include for-desktop-up
+              margin-bottom: 3px
+
   .title
     font-family: 'Lemon Milk'
     color: #fff

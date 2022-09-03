@@ -23,6 +23,7 @@ const fields = {
       required: true,
     }
   }],
+  description: String,
 }
 
 const options = {

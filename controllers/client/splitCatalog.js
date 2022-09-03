@@ -5,11 +5,11 @@ import ActivationService from "../../models/ActivationService.js";
 export const pageSplitCatalog = async (req, res, next) => {
   try {
     const alias = req.params.alias;
-    let section = await Genre.findOne({alias}).select(['name']).lean();
+    let section = await Genre.findOne({alias}).select(['name', 'description']).lean();
     let sectionType = 'genres';
     
     if (!section) {
-      section = await ActivationService.findOne({alias}).select(['name']).lean();
+      section = await ActivationService.findOne({alias}).select(['name', 'description']).lean();
       sectionType = 'activationServices';
     }
     

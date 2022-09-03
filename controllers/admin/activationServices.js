@@ -23,9 +23,9 @@ export const pageAddActivationService = async (req, res) => {
 
 export const addActivationService = async (req, res) => {
   try {
-    const {name, alias} = req.body;
+    const {name, alias, description} = req.body;
     
-    await ActivationService.create({name, alias});
+    await ActivationService.create({name, alias, description});
     
     res.redirect('/admin/activation-services');
   } catch (e) {
@@ -55,11 +55,12 @@ export const editActivationService = async (req, res) => {
   const {id} = req.params;
   
   try {
-    const {name, alias} = req.body;
+    const {name, alias, description} = req.body;
     const activationService = await ActivationService.findById(id);
   
     activationService.name = name;
     activationService.alias = alias;
+    activationService.description = description;
     await activationService.save();
     
     res.redirect('/admin/activation-services');
