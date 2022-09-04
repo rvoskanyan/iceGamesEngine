@@ -73,7 +73,7 @@
                     {{/each}}
                 </div>
             {{/iff}}
-            <h1 class="name" itemprop="name">{{product.name}}</h1>
+            <h1 class="name">Ключ для <span itemprop="name">{{product.name}}</span></h1>
             <div class="description" itemprop="description">{{encodeString product.description}}</div>
             <div class="offerMacro" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
                 {{#if product.preOrder}}

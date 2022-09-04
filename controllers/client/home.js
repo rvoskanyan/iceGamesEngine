@@ -106,7 +106,7 @@ export const homepage = async (req, res) => {
     .lean();
   
   const discounts = await Product
-    .find({discount: {$gt: 60}, active: true})
+    .find({discount: {$gt: 60}, active: true, inStock: true})
     .select(['name', 'alias', 'img', 'priceTo', 'priceFrom', 'dlc', 'dsId', 'inStock'])
     .sort({'priceFrom': -1})
     .limit(10)
@@ -114,7 +114,7 @@ export const homepage = async (req, res) => {
   
   for (let category of categories) {
     const products = await Product
-      .find({categories: {$in: category._id.toString()}, active: true})
+      .find({categories: {$in: category._id.toString()}, active: true, inStock: true})
       .select(['name', 'alias', 'img', 'priceTo', 'priceFrom', 'dlc', 'dsId', 'inStock'])
       .limit(10)
       .lean();
