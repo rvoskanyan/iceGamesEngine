@@ -147,6 +147,7 @@ export const pageSplitCatalog = async (req, res, next) => {
       products,
       sectionType,
       pagination,
+      canonical: req.query.page ? alias : undefined,
       breadcrumbs: [{
         name: section.name,
         current: true,
