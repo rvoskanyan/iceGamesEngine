@@ -1,4 +1,5 @@
 import {strMonths} from "./constants.js";
+import {websiteAddress} from "../config.js";
 
 export const getExtendFile = (fileName) => {
   const parts = fileName.split('.');
@@ -116,6 +117,58 @@ export const getSitemap = (params, images = false) => {
   })
   
   return siteMap += '</urlset>';
+}
+
+export function getYmlFeed(offers, genres) {
+  const date = new Date().toISOString();
+  let categories = '';
+  
+  genres.forEach((genre, index) => {
+     categories += `
+     <category id="${index + 1}">${htmlEntities(genre.name)}</category>`;
+  })
+  
+  let ymlFeed = `<?xml version="1.0" encoding="UTF-8"?>
+<yml_catalog date="${date}">
+  <shop>
+    <name>ICE GAMES</name>
+    <company>ICE GAMES</company>
+    <url>${websiteAddress}</url>
+    <categories>${categories}
+    </categories>
+    <offers>`;
+  
+  offers.forEach((offer, index) => {
+    offer.id = index + 1;
+    offer.categoryId = genres.findIndex(genre => genre.name === offer.genres[0].name) + 1;
+  
+    ymlFeed += getYmlOffer(offer);
+  });
+  
+  ymlFeed += `
+    </offers>
+  </shop>
+</yml_catalog>`
+  
+  return ymlFeed;
+}
+
+export function getYmlOffer(data) {
+  return `
+        <offer id="${data.id}">
+            <name>${htmlEntities(data.name)}</name>
+            <url>${websiteAddress}games/${htmlEntities(data.alias)}</url>
+            <price>${data.priceTo}</price>
+            <oldprice>${data.priceFrom}</oldprice>
+            <enable_auto_discounts>true</enable_auto_discounts>
+            <currencyId>RUR</currencyId>
+            <count>1</count>
+            <categoryId>${data.categoryId}</categoryId>
+            <picture>${websiteAddress}${htmlEntities(data.img)}</picture>
+            <param name="Сервис активации">${htmlEntities(data.activationServiceId.name)}</param>
+            <param name="Платформа">PC</param>
+            <downloadable>true</downloadable>
+        </offer>`;
 }
 
 export function htmlEntities(str) {

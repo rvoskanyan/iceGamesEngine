@@ -1,14 +1,19 @@
 import fetch from "node-fetch";
-import Order from "./../../models/Order.js";
-import Product from "./../../models/Product.js";
-import User from "./../../models/User.js";
+import exceljs from "exceljs";
+import path from "path";
+
 import {achievementEvent} from "../../services/achievement.js";
 import {getToken} from "../../services/digiseller.js";
 import {mailingBuyProduct} from "../../services/mailer.js";
-import exceljs from "exceljs";
-import path from "path";
-import {__dirname} from "../../rootPathes.js";
 import Turn from "../../services/Turn.js";
+
+import Order from "./../../models/Order.js";
+import Product from "./../../models/Product.js";
+import User from "./../../models/User.js";
+import Genre from "../../models/Genre.js";
+
+import {getYmlFeed} from "../../utils/functions.js";
+import {__dirname} from "../../rootPathes.js";
 
 export const assignOrderPay = async (req, res) => {
   const turn = new Turn();
@@ -142,5 +147,23 @@ export const getFeedCsv = async (req, res) => {
   } catch (e) {
     console.log(e);
     res.sendFile(path.join(__dirname, 'uploadedFiles/feed.csv'));
+  }
+}
+
+export const getFeedYML = async (req, res) => {
+  try {
+    const genres = await Genre.find().lean();
+    const products = await Product
+      .find({active: true})
+      .select(['name', 'alias', 'img', 'description', 'priceTo', 'priceFrom'])
+      .populate(['activationServiceId', 'genres'])
+      .lean();
+    
+    const ymlFeed = getYmlFeed(products, genres);
+  
+    res.set('Content-Type', 'text/xml');
+    res.send(ymlFeed);
+  } catch (e) {
+    console.log(e);
   }
 }
