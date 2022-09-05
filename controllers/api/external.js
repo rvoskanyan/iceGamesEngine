@@ -36,6 +36,10 @@ export const assignOrderPay = async (req, res) => {
           return true;
         }
       });
+      
+      if (!dsCartId) {
+        return;
+      }
     
       const order = await Order.findOne({dsCartId});
     
@@ -65,10 +69,8 @@ export const assignOrderPay = async (req, res) => {
       } else {
         order.products.push(productByOrder);
       }
-    
-      if (!order.buyerEmail) {
-        order.buyerEmail = buyerEmail;
-      }
+      
+      order.buyerEmail = buyerEmail;
     
       await order.save();
     
