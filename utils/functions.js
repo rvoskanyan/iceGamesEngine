@@ -162,7 +162,6 @@ export function getYmlOffer(data) {
             <oldprice>${data.priceFrom}</oldprice>
             <enable_auto_discounts>true</enable_auto_discounts>
             <currencyId>RUR</currencyId>
-            <count>1</count>
             <categoryId>${data.categoryId}</categoryId>
             <picture>${websiteAddress}${htmlEntities(data.img)}</picture>
             <param name="Сервис активации">${htmlEntities(data.activationServiceId.name)}</param>
