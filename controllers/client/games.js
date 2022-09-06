@@ -78,10 +78,21 @@ export const gamePage = async (req, res) => {
     const countComments = await Comment.estimatedDocumentCount();
     const person = res.locals.person;
     const genreIds = product.genres.map(genre => genre._id);
+    const maxPrice = await Product.findOne({active: true}).sort({priceTo: -1}).select(['priceTo']).lean();
+    const rangePriceRecProducts = product.priceTo > 200
+      ? product.priceTo >= maxPrice.priceTo - 200
+        ? {min: product.priceTo - 200 - (product.priceTo - (maxPrice.priceTo - 200)), max: maxPrice.priceTo}
+        : {min: product.priceTo - 200, max: product.priceTo + 200}
+      : {min: 0, max: 200 - product.priceTo + 200};
     const recProductsFilter = { //Фильтры для подборки рекомендаций
       _id: {$ne: product._id}, //Отсеивает товар, на котором сейчас находимся
+      inStock: true,
       active: true,
       genres: {$in: genreIds}, //Находит продукты содержащие хотя бы один из жанров текущего товара
+      $and: [
+        {priceTo: {$gte: rangePriceRecProducts.min}},
+        {priceTo: {$lte: rangePriceRecProducts.max}},
+      ],
       $or: [ //"ИЛИ" для связок
         {bundleId: {$ne: null}, isOriginalInBundle: true}, //Если товар состоит в связке, то он должен быть исходным
         {bundleId: null}, //Иначе он не должен состоять в связке вовсе
