@@ -79,11 +79,12 @@ export const gamePage = async (req, res) => {
     const person = res.locals.person;
     const genreIds = product.genres.map(genre => genre._id);
     const maxPrice = await Product.findOne({active: true}).sort({priceTo: -1}).select(['priceTo']).lean();
-    const rangePriceRecProducts = product.priceTo > 200
-      ? product.priceTo >= maxPrice.priceTo - 200
-        ? {min: product.priceTo - 200 - (product.priceTo - (maxPrice.priceTo - 200)), max: maxPrice.priceTo}
-        : {min: product.priceTo - 200, max: product.priceTo + 200}
-      : {min: 0, max: 200 - product.priceTo + 200};
+    const scatter = 600;
+    const rangePriceRecProducts = product.priceTo > scatter
+      ? product.priceTo >= maxPrice.priceTo - scatter
+        ? {min: product.priceTo - scatter - (product.priceTo - (maxPrice.priceTo - scatter)), max: maxPrice.priceTo}
+        : {min: product.priceTo - scatter, max: product.priceTo + scatter}
+      : {min: 0, max: scatter - product.priceTo + scatter};
     const recProductsFilter = { //Фильтры для подборки рекомендаций
       _id: {$ne: product._id}, //Отсеивает товар, на котором сейчас находимся
       inStock: true,
@@ -93,10 +94,10 @@ export const gamePage = async (req, res) => {
         {priceTo: {$gte: rangePriceRecProducts.min}},
         {priceTo: {$lte: rangePriceRecProducts.max}},
       ],
-      $or: [ //"ИЛИ" для связок
+      /*$or: [ //"ИЛИ" для связок
         {bundleId: {$ne: null}, isOriginalInBundle: true}, //Если товар состоит в связке, то он должен быть исходным
         {bundleId: null}, //Иначе он не должен состоять в связке вовсе
-      ],
+      ],*/
     };
     let isProductNoReview = true;
     let isProductNotPurchased = true;
@@ -223,11 +224,7 @@ export const gamePage = async (req, res) => {
       }
     }
     
-    let recProducts = await Product.aggregate([
-      {$match: recProductsFilter},
-      {$project: {name: 1, alias: 1, inStock: 1, img: 1, priceTo: 1, priceFrom: 1}},
-      {$sample: {size: 8}},
-    ]);
+    let recProducts = await Product.find(recProductsFilter).select(['name', 'alias', 'inStock', 'img', 'priceTo', 'priceFrom']).limit(8).lean();
   
     recProducts = recProducts.map(item => {
       const productId = item._id.toString();
