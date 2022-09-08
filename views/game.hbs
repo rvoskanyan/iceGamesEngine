@@ -288,7 +288,7 @@
                                     </div>
                                 </div>
                             </div>
-                            {{#iff recProducts.length '>' 1}}
+                            {{#iff recProducts.length '>' 2}}
                                 <div class="slideControls">
                                     <button class="btn prev js-prevBtn"></button>
                                     <div class="progress js-progress"></div>
@@ -323,11 +323,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="slideControls">
-                                <button class="btn prev js-prevBtn"></button>
-                                <div class="progress js-progress"></div>
-                                <button class="btn next js-nextBtn"></button>
-                            </div>
+                            {{#iff recProducts.length '>' 1}}
+                                <div class="slideControls">
+                                    <button class="btn prev js-prevBtn"></button>
+                                    <div class="progress js-progress"></div>
+                                    <button class="btn next js-nextBtn"></button>
+                                </div>
+                            {{/iff}}
                         </div>
                     </div>
                 {{/if}}
