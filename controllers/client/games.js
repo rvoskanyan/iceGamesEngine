@@ -8,6 +8,7 @@ import Order from '../../models/Order.js';
 import Comment from '../../models/Comment.js';
 import User from '../../models/User.js';
 import Review from "../../models/Review.js";
+import Article from "../../models/Article.js";
 
 export const gamesPage = async (req, res) => {
   try {
@@ -80,6 +81,9 @@ export const gamePage = async (req, res) => {
     const genreIds = product.genres.map(genre => genre._id);
     const maxPrice = await Product.findOne({active: true}).sort({priceTo: -1}).select(['priceTo']).lean();
     const scatter = 600;
+    const articles = await Article
+      .find({products: {$in: [product._id.toString()]}})
+      .select(['alias', 'img', 'name', 'type', 'created', 'createdAt', 'introText']);
     const rangePriceRecProducts = product.priceTo > scatter
       ? product.priceTo >= maxPrice.priceTo - scatter
         ? {min: product.priceTo - scatter - (product.priceTo - (maxPrice.priceTo - scatter)), max: maxPrice.priceTo}
@@ -283,6 +287,7 @@ export const gamePage = async (req, res) => {
       countSales,
       reviews,
       countReviews,
+      articles,
       ogImage: product.img,
       breadcrumbs: [
         {

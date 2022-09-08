@@ -406,18 +406,21 @@
 
   & .fullInfo
     margin-top: 20px
+    display: flex
+    flex-direction: column-reverse
 
     @include for-big-phone-up
-      display: flex
+      flex-direction: initial
       column-gap: 70px
       margin-top: 100px
 
     & .sideBar
-      @include for-big-phone-down
-        display: none
+      .doubleGameSlider
+        @include for-big-phone-down
+          display: none
 
-      &.doubleGameSlider:not(:last-child)
-        margin-bottom: 60px
+        &:not(:last-child)
+          margin-bottom: 60px
 
     & .info
       flex-grow: 1

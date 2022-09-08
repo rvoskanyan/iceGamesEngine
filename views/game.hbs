@@ -294,6 +294,39 @@
                         </div>
                     </div>
                 </div>
+                {{#if articles.length}}
+                    <div class="articlesGameSlider">
+                        <div class="title">Упоминания в блоге</div>
+                        <div class="slider js-articlesGameSlider">
+                            <div class="visibleAreaWrapper">
+                                <div class="visibleArea js-visibleArea">
+                                    <div class="tape js-tape">
+                                        {{#each articles}}
+                                            <a href="{{@root.websiteAddress}}blog/{{alias}}" class="slide newsPreview js-slide{{#if @first}} active{{/if}}">
+                                                <img class="img" src="{{@root.websiteAddress}}{{img}}" alt="Изображение записи из блога {{name}}" title="Изображение записи из блога {{name}}">
+                                                <div class="attributes">
+                                                    <div class="btn small round border small bg-darkLilac">
+                                                        {{#iff type '===' 'news'}}Новости{{else}}Статьи{{/iff}}
+                                                    </div>
+                                                    <div class="date">{{createdDate}}</div>
+                                                </div>
+                                                <div class="description">
+                                                    <div class="title">{{name}}</div>
+                                                    <div class="text">{{introText}}</div>
+                                                </div>
+                                            </a>
+                                        {{/each}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slideControls">
+                                <button class="btn prev js-prevBtn"></button>
+                                <div class="progress js-progress"></div>
+                                <button class="btn next js-nextBtn"></button>
+                            </div>
+                        </div>
+                    </div>
+                {{/if}}
             </div>
             <div class="info">
                 <div class="generalInfo tabs js-gameInfoTabs">

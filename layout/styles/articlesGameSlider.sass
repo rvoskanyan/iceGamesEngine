@@ -1,0 +1,93 @@
+@import './breakPoints'
+
+.articlesGameSlider
+  margin-top: 20px
+
+  @include for-desktop-up
+    margin-top: 40px
+
+  .title
+    font-family: 'Lemon Milk'
+    font-size: 18px
+    color: #fff
+
+    @include for-desktop-up
+      text-align: center
+      font-size: 24px
+
+  .slider
+    margin-top: 10px
+
+    @include for-desktop-up
+      margin-top: 20px
+
+    .visibleArea
+      max-width: 100%
+      min-width: 100%
+      overflow: hidden
+
+      @include for-desktop-up
+        max-width: 366px
+        min-width: 366px
+
+      @include for-middle-desktop-up
+        max-width: 390px
+        min-width: 390px
+
+      @include for-big-desktop-up
+        max-width: 442px
+        min-width: 442px
+
+      .tape
+        display: flex
+        transition: transform .3s ease-in
+
+        .slide
+          transition: .3s ease-in
+          transition-property: opacity, visibility
+          opacity: 0
+          visibility: hidden
+
+          &.active
+            opacity: 1
+            visibility: visible
+
+    .newsPreview
+      max-width: 100%
+      min-width: 100%
+      border: initial
+
+      @include for-desktop-up
+        max-width: 366px
+        min-width: 366px
+
+      @include for-middle-desktop-up
+        max-width: 390px
+        min-width: 390px
+
+      @include for-big-desktop-up
+        max-width: 442px
+        min-width: 442px
+
+      .img
+        box-shadow: initial
+
+      .attributes
+        justify-content: center
+
+      .title
+        font-family: Montserrat
+        text-align: center
+
+      .text
+        overflow: hidden
+        text-align: center
+
+      &:hover img
+        transform: initial
+
+    .slideControls
+      margin-top: 20px
+
+      @include for-big-phone-down
+        display: none
