@@ -30,6 +30,7 @@ export default class Slider {
   
     this.mainNode = mainNode;
     this.tapeNode = this.mainNode.querySelector('.js-tape');
+    this.slideNodes = this.mainNode.querySelectorAll('.js-slide');
   
     if (this.carousel) {
       return this.carouselMode();
@@ -37,7 +38,6 @@ export default class Slider {
     
     this.prevBtnNode = this.mainNode.querySelector('.js-prevBtn');
     this.nextBtnNode = this.mainNode.querySelector('.js-nextBtn');
-    this.slideNodes = this.mainNode.querySelectorAll('.js-slide');
     
     this.countSlides = this.slideNodes.length;
     this.countScreens = this.countSlides;
@@ -258,21 +258,20 @@ export default class Slider {
       if (this.space <= 0) {
         return;
       }
-  
-      this.direction = 'left';
-      this.time = 15 * this.space;
-      this.tapeNode.style.transform = `translateX(0px)`;
-      this.tapeNode.style.transition = `transform ${this.time}ms cubic-bezier(0.45, 0.05, 0.55, 0.95)`;
-      this.tapeNode.style.transform = `translateX(-${this.space}px)`;
-  
+      
+      this.slideNodes.forEach(slideNode => this.tapeNode.append(slideNode.cloneNode(true)));
+      this.time = 10 * this.tapeNode.scrollWidth;
+      this.tapeNode.style.transition = `transform ${this.time}ms linear`;
+      this.tapeNode.style.transform = `translateX(calc(-100% - ${this.space}px))`;
+      
       setInterval(() => {
-        if (this.direction === 'right') {
-          this.tapeNode.style.transform = `translateX(-${this.space}px)`;
-          this.direction = 'left';
-        } else {
-          this.tapeNode.style.transform = `translateX(0px)`;
-          this.direction = 'right';
-        }
+        this.tapeNode.style.transition = `transform 1ms linear`;
+        this.tapeNode.style.transform = `translateX(0px)`;
+        
+        setTimeout(() => {
+          this.tapeNode.style.transition = `transform ${this.time}ms linear`;
+          this.tapeNode.style.transform = `translateX(calc(-100% - ${this.space}px))`;
+        }, 100);
       }, this.time);
     })
   }
