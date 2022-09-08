@@ -1,11 +1,13 @@
 @import './breakPoints'
 
 .articlesGameSlider
-  &:not(:first-child)
-    margin-top: 20px
+  margin-top: 20px
 
-    @include for-desktop-up
-      margin-top: 40px
+  @include for-desktop-up
+    margin-top: 0
+
+    &:not(:first-child)
+      margin-top: 20px
 
   .title
     font-family: 'Lemon Milk'
