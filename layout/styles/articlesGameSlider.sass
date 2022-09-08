@@ -1,7 +1,8 @@
 @import './breakPoints'
 
 .articlesGameSlider
-  margin-top: 20px
+  &:not(:first-child)
+    margin-top: 20px
 
   @include for-desktop-up
     margin-top: 40px
