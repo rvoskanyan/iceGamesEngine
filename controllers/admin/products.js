@@ -391,11 +391,11 @@ export const editProduct = async (req, res) => {
       priceFrom,
       discount: getDiscount(priceTo, priceFrom),
       trailerLink,
-      inHomeSlider: inHomeSlider ? inHomeSlider === "on" : product.inHomeSlider,
-      dlc: dlc ? dlc === 'on' : product.dlc,
-      dlcForFree: dlcForFree ? dlcForFree === 'on' : product.dlcForFree,
+      inHomeSlider: inHomeSlider === "on",
+      dlc: dlc === 'on',
+      dlcForFree: dlcForFree === 'on',
       dlcForName,
-      preOrder: preOrder ? preOrder === 'on' : product.preOrder,
+      preOrder: preOrder === 'on',
       releaseDate,
       os,
       cpu,
@@ -403,16 +403,16 @@ export const editProduct = async (req, res) => {
       ram,
       diskMemory,
       languages,
-      categories: categories ? getArray(categories) : product.categories,
+      categories: getArray(categories),
       genres: genres ? getArray(genres) : product.genres,
       extends: gameExtends ? getArray(gameExtends) : product.extends,
       activationRegions: activationRegions ? getArray(activationRegions) : product.activationRegions,
       publisherId: publisher ? publisher : product.publisherId,
       activationServiceId: activationService ? activationService : product.activationServiceId,
       platformId: platform ? platform : product.platformId,
-      top: top ? top === 'on' : product.top,
-      active: active ? active === 'on' : product.active,
-    })
+      top: top === 'on',
+      active: active === 'on',
+    });
     
     if (req.files) {
       const {
@@ -474,19 +474,19 @@ export const editProduct = async (req, res) => {
     if (series === '0') {
       product.seriesId = null;
     } else {
-      product.seriesId = series ? series : product.seriesId;
+      product.seriesId = series;
     }
     
     if (bundle === '0') {
       product.bundleId = null;
     } else {
-      product.bundleId = bundle ? bundle : product.bundleId;
+      product.bundleId = bundle;
     }
     
     if (edition === '0') {
       product.editionId = null
     } else {
-      product.editionId = edition ? edition : product.editionId;
+      product.editionId = edition;
     }
   
     if (dsId === '0') {
@@ -497,9 +497,7 @@ export const editProduct = async (req, res) => {
   
     await product.save();
     
-    if (inStock) {
-      product.changeInStock(inStock === 'on').then();
-    }
+    product.changeInStock(inStock === 'on').then();
     res.redirect('/admin/products');
   } catch (e) {
     console.log(e);
@@ -671,7 +669,7 @@ export const parseBySteambuy = async (req, res) => {
     const browser = new Browser();
     const productContent = await browser.getPageContent(sourceLink);
     const productNode = cheerio.load(productContent);
-    const mediaNodes = productNode('.product-media .product-media__item a.product-media__link').toArray();
+    const mediaNodes = productNode('.product-media .product-media__item').toArray();
     let activationName = productNode('.product-price .product-price__activation .product-price__activation-value .product-price__activation-title').text().trim();
     let steamAch;
     let genreNodes;
@@ -776,7 +774,13 @@ export const parseBySteambuy = async (req, res) => {
         }
         case 'images': {
           for (const mediaNode of mediaNodes) {
-            const el = productNode(mediaNode);
+            let el = productNode(mediaNode);
+            
+            if (el.hasClass('slick-cloned')) {
+              continue;
+            }
+            
+            el = el.find('a.product-media__link');
   
             if (el.hasClass('product-media__link_video')) {
               continue;
@@ -808,9 +812,9 @@ export const parseBySteambuy = async (req, res) => {
           break;
         }
         case 'trailerLink': {
-          const node = mediaNodes.find(mediaNode => productNode(mediaNode).hasClass('product-media__link_video'));
+          const node = mediaNodes.find(mediaNode => productNode(mediaNode).find('a.product-media__link').hasClass('product-media__link_video'));
   
-          product.trailerLink = 'https://www.youtube.com/watch?v=' + productNode(node).attr('href').split('/embed/')[1].split('?autoplay=')[0];
+          product.trailerLink = 'https://www.youtube.com/watch?v=' + productNode(node).find('a.product-media__link').attr('href').split('/embed/')[1].split('?autoplay=')[0];
           
           break;
         }

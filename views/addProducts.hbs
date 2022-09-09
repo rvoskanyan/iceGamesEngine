@@ -35,13 +35,13 @@
 {{/iff}}
 <form method="post" action="/admin/products/{{#if isEdit}}edit/{{product.id}}{{else}}add{{/if}}" enctype="multipart/form-data">
     <label>
-        Название:
+        Название*:
         <input type="text" name="name" {{#iff person.role '!==' 'admin'}} readonly{{/iff}} value="{{product.name}}">
     </label>
     <br>
     <br>
     <label>
-        Описание:
+        Описание*:
         <textarea name="description" cols="30" rows="10">{{product.description}}</textarea>
     </label>
     <br>
@@ -53,19 +53,19 @@
     <br>
     <br>
     <label>
-        Цена со скидкой:
+        Цена со скидкой*:
         <input type="number" name="priceTo" value="{{product.priceTo}}"{{#iff person.role '!==' 'admin'}} readonly{{/iff}}>
     </label>
     <br>
     <br>
     <label>
-        Цена без скидки:
+        Цена без скидки*:
         <input type="number" name="priceFrom" value="{{product.priceFrom}}"{{#iff person.role '!==' 'admin'}} readonly{{/iff}}>
     </label>
     <br>
     <br>
     <label>
-        Изображение:
+        Изображение*:
         <input type="file" name="img"{{#iff person.role '!==' 'admin'}} disabled{{/iff}}>
     </label>
     <br>
@@ -76,7 +76,7 @@
     <br>
     <br>
     <label>
-        Cover изображение:
+        Cover изображение*:
         <input type="file" name="coverImg"{{#iff person.role '!==' 'admin'}} disabled{{/iff}}>
     </label>
     <br>
@@ -100,7 +100,7 @@
     <br>
     <br>
     <label>
-        Изображения слайдера:
+        Изображения слайдера*:
         <input type="file" name="gameImages" multiple{{#iff person.role '!==' 'admin'}} disabled{{/iff}}>
     </label>
     <br>
@@ -126,13 +126,13 @@
     <br>
     <label>
         DLC:
-        <input type="checkbox" name="dlc"{{#if product.dlc}} checked{{/if}}{{#iff person.role '!==' 'admin'}} disabled{{/iff}}>
+        <input type="checkbox" name="dlc"{{#if product.dlc}} checked{{/if}}>
     </label>
     <br>
     <br>
     <label>
         DLC для бесплатной игры:
-        <input type="checkbox" name="dlcForFree"{{#if product.dlcForFree}} checked{{/if}}{{#iff person.role '!==' 'admin'}} disabled{{/iff}}>
+        <input type="checkbox" name="dlcForFree"{{#if product.dlcForFree}} checked{{/if}}>
     </label>
     <br>
     <br>
@@ -157,12 +157,12 @@
     <br>
     <label>
         Предзаказ:
-        <input type="checkbox" name="preOrder"{{#if product.preOrder}} checked{{/if}}{{#iff person.role '!==' 'admin'}} disabled{{/iff}}>
+        <input type="checkbox" name="preOrder"{{#if product.preOrder}} checked{{/if}}>
     </label>
     <br>
     <br>
     <label>
-        Дата выхода:
+        Дата выхода*:
         <input type="date" name="releaseDate" value="{{product.hyphenReleaseDate}}"{{#iff person.role '!==' 'admin'}} readonly{{/iff}}>
     </label>
     <br>
@@ -198,14 +198,14 @@
     <br>
     <br>
     <label>
-        Языки игры:
+        Языки игры*:
         <input type="text" name="languages" value="{{product.languages}}"{{#iff person.role '!==' 'admin'}} readonly{{/iff}}>
     </label>
     <br>
     <br>
     <label>
         Категории игры:
-        <select name="categories" multiple{{#iff person.role '!==' 'admin'}} disabled{{/iff}}>
+        <select name="categories" multiple>
             {{#each categories}}
                 <option value="{{id}}" {{#if selected}}selected{{/if}}>
                     {{name}}
@@ -216,7 +216,7 @@
     <br>
     <br>
     <label>
-        Жанры игры:
+        Жанры игры*:
         <select name="genres" multiple{{#iff person.role '!==' 'admin'}} disabled{{/iff}}>
             {{#each genres}}
                 <option value="{{id}}" {{#if selected}}selected{{/if}}>
@@ -228,7 +228,7 @@
     <br>
     <br>
     <label>
-        Расширения игры:
+        Расширения игры*:
         <select name="gameExtends" multiple{{#iff person.role '!==' 'admin'}} disabled{{/iff}}>
             {{#each extends}}
                 <option value="{{id}}" {{#if selected}}selected{{/if}}>
@@ -240,7 +240,7 @@
     <br>
     <br>
     <label>
-        Регионы активации:
+        Регионы активации*:
         <select name="activationRegions" multiple{{#iff person.role '!==' 'admin'}} disabled{{/iff}}>
             {{#each activationRegions}}
                 <option value="{{id}}" {{#if selected}}selected{{/if}}>
@@ -253,7 +253,7 @@
     <br>
     <label>
         Игра серии:
-        <select name="series"{{#iff person.role '!==' 'admin'}} disabled{{/iff}}>
+        <select name="series">
             <option value="0">Не выбрано</option>
             {{#each series}}
                 <option value="{{id}}" {{#if selected}}selected{{/if}}>
@@ -266,7 +266,7 @@
     <br>
     <label>
         Связка игры:
-        <select name="bundle"{{#iff person.role '!==' 'admin'}} disabled{{/iff}}>
+        <select name="bundle">
             <option value="0">Не выбрано</option>
             {{#each bundles}}
                 <option value="{{id}}" {{#if selected}}selected{{/if}}>
@@ -279,7 +279,7 @@
     <br>
     <label>
         Версия игры:
-        <select name="edition"{{#iff person.role '!==' 'admin'}} disabled{{/iff}}>
+        <select name="edition">
             <option value="0">Не выбрано</option>
             {{#each editions}}
                 <option value="{{id}}" {{#if selected}}selected{{/if}}>
@@ -291,7 +291,7 @@
     <br>
     <br>
     <label>
-        Издатель:
+        Издатель*:
         <select name="publisher"{{#iff person.role '!==' 'admin'}} disabled{{/iff}}>
             {{#each publishers}}
                 <option value="{{id}}" {{#if selected}}selected{{/if}}>
@@ -303,7 +303,7 @@
     <br>
     <br>
     <label>
-        Сервис активации:
+        Сервис активации*:
         <select name="activationService"{{#iff person.role '!==' 'admin'}} disabled{{/iff}}>
             {{#each activationServices}}
                 <option value="{{id}}" {{#if selected}}selected{{/if}}>
@@ -315,7 +315,7 @@
     <br>
     <br>
     <label>
-        Платформа:
+        Платформа*:
         <select name="platform"{{#iff person.role '!==' 'admin'}} disabled{{/iff}}>
             {{#each platforms}}
                 <option value="{{id}}" {{#if selected}}selected{{/if}}>
@@ -328,7 +328,7 @@
     <br>
     <label>
         В наличии:
-        <input type="checkbox" name="inStock"{{#if product.inStock}} checked{{/if}}{{#iff person.role '!==' 'admin'}} disabled{{/iff}}>
+        <input type="checkbox" name="inStock"{{#if product.inStock}} checked{{/if}}>
     </label>
     <br>
     <br>
