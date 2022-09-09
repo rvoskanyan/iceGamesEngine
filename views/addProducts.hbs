@@ -36,7 +36,7 @@
 <form method="post" action="/admin/products/{{#if isEdit}}edit/{{product.id}}{{else}}add{{/if}}" enctype="multipart/form-data">
     <label>
         Название:
-        <input type="text" name="name" {{#iff person.role '!==' 'admin'}} disabled{{/iff}} value="{{product.name}}">
+        <input type="text" name="name" {{#iff person.role '!==' 'admin'}} readonly{{/iff}} value="{{product.name}}">
     </label>
     <br>
     <br>
@@ -48,19 +48,19 @@
     <br>
     <label>
         Id на Digiseller:
-        <input type="number" name="dsId" value="{{product.dsId}}"{{#iff person.role '!==' 'admin'}} disabled{{/iff}}>
+        <input type="number" name="dsId" value="{{product.dsId}}"{{#iff person.role '!==' 'admin'}} readonly{{/iff}}>
     </label>
     <br>
     <br>
     <label>
         Цена со скидкой:
-        <input type="number" name="priceTo" value="{{product.priceTo}}"{{#iff person.role '!==' 'admin'}} disabled{{/iff}}>
+        <input type="number" name="priceTo" value="{{product.priceTo}}"{{#iff person.role '!==' 'admin'}} readonly{{/iff}}>
     </label>
     <br>
     <br>
     <label>
         Цена без скидки:
-        <input type="number" name="priceFrom" value="{{product.priceFrom}}"{{#iff person.role '!==' 'admin'}} disabled{{/iff}}>
+        <input type="number" name="priceFrom" value="{{product.priceFrom}}"{{#iff person.role '!==' 'admin'}} readonly{{/iff}}>
     </label>
     <br>
     <br>
@@ -116,7 +116,7 @@
     <br>
     <label>
         Ссылка на трейлер в YouTube:
-        <input type="text" name="trailerLink"{{#if product.trailerLink}} value="{{product.trailerLink}}"{{/if}}{{#iff person.role '!==' 'admin'}} disabled{{/iff}}>
+        <input type="text" name="trailerLink"{{#if product.trailerLink}} value="{{product.trailerLink}}"{{/if}}{{#iff person.role '!==' 'admin'}} readonly{{/iff}}>
     </label>
     <br>
     {{#if product.trailerLink}}
@@ -138,7 +138,7 @@
     <br>
     <label>
         Название игры, если ее нет на сайте, к которой относится это DLC:
-        <input type="text" name="dlcForName"{{#if product.dlcForName}} value="{{product.dlcForName}}"{{/if}}{{#iff person.role '!==' 'admin'}} disabled{{/iff}}>
+        <input type="text" name="dlcForName"{{#if product.dlcForName}} value="{{product.dlcForName}}"{{/if}}{{#iff person.role '!==' 'admin'}} readonly{{/iff}}>
     </label>
     <br>
     <br>
@@ -163,43 +163,43 @@
     <br>
     <label>
         Дата выхода:
-        <input type="date" name="releaseDate" value="{{product.hyphenReleaseDate}}"{{#iff person.role '!==' 'admin'}} disabled{{/iff}}>
+        <input type="date" name="releaseDate" value="{{product.hyphenReleaseDate}}"{{#iff person.role '!==' 'admin'}} readonly{{/iff}}>
     </label>
     <br>
     <br>
     <label>
         ОС:
-        <input type="text" name="os" value="{{product.os}}"{{#iff person.role '!==' 'admin'}} disabled{{/iff}}>
+        <input type="text" name="os" value="{{product.os}}"{{#iff person.role '!==' 'admin'}} readonly{{/iff}}>
     </label>
     <br>
     <br>
     <label>
         Процессор:
-        <input type="text" name="cpu" value="{{product.cpu}}"{{#iff person.role '!==' 'admin'}} disabled{{/iff}}>
+        <input type="text" name="cpu" value="{{product.cpu}}"{{#iff person.role '!==' 'admin'}} readonly{{/iff}}>
     </label>
     <br>
     <br>
     <label>
         Видео карта:
-        <input type="text" name="graphicsCard" value="{{product.graphicsCard}}"{{#iff person.role '!==' 'admin'}} disabled{{/iff}}>
+        <input type="text" name="graphicsCard" value="{{product.graphicsCard}}"{{#iff person.role '!==' 'admin'}} readonly{{/iff}}>
     </label>
     <br>
     <br>
     <label>
         Оперативная память:
-        <input type="text" name="ram" value="{{product.ram}}"{{#iff person.role '!==' 'admin'}} disabled{{/iff}}>
+        <input type="text" name="ram" value="{{product.ram}}"{{#iff person.role '!==' 'admin'}} readonly{{/iff}}>
     </label>
     <br>
     <br>
     <label>
         Память на диске:
-        <input type="text" name="diskMemory" value="{{product.diskMemory}}"{{#iff person.role '!==' 'admin'}} disabled{{/iff}}>
+        <input type="text" name="diskMemory" value="{{product.diskMemory}}"{{#iff person.role '!==' 'admin'}} readonly{{/iff}}>
     </label>
     <br>
     <br>
     <label>
         Языки игры:
-        <input type="text" name="languages" value="{{product.languages}}"{{#iff person.role '!==' 'admin'}} disabled{{/iff}}>
+        <input type="text" name="languages" value="{{product.languages}}"{{#iff person.role '!==' 'admin'}} readonly{{/iff}}>
     </label>
     <br>
     <br>

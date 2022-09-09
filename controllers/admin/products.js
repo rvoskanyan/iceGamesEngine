@@ -391,11 +391,11 @@ export const editProduct = async (req, res) => {
       priceFrom,
       discount: getDiscount(priceTo, priceFrom),
       trailerLink,
-      inHomeSlider: inHomeSlider === "on",
-      dlc: dlc === 'on',
-      dlcForFree: dlcForFree === 'on',
+      inHomeSlider: inHomeSlider ? inHomeSlider === "on" : product.inHomeSlider,
+      dlc: dlc ? dlc === 'on' : product.dlc,
+      dlcForFree: dlcForFree ? dlcForFree === 'on' : product.dlcForFree,
       dlcForName,
-      preOrder: preOrder === 'on',
+      preOrder: preOrder ? preOrder === 'on' : product.preOrder,
       releaseDate,
       os,
       cpu,
@@ -403,15 +403,15 @@ export const editProduct = async (req, res) => {
       ram,
       diskMemory,
       languages,
-      categories: getArray(categories),
-      genres: getArray(genres),
-      extends: getArray(gameExtends),
-      activationRegions: getArray(activationRegions),
-      publisherId: publisher,
-      activationServiceId: activationService,
-      platformId: platform,
-      top: top === 'on',
-      active: active === 'on',
+      categories: categories ? getArray(categories) : product.categories,
+      genres: genres ? getArray(genres) : product.genres,
+      extends: gameExtends ? getArray(gameExtends) : product.extends,
+      activationRegions: activationRegions ? getArray(activationRegions) : product.activationRegions,
+      publisherId: publisher ? publisher : product.publisherId,
+      activationServiceId: activationService ? activationService : product.activationServiceId,
+      platformId: platform ? platform : product.platformId,
+      top: top ? top === 'on' : product.top,
+      active: active ? active === 'on' : product.active,
     })
     
     if (req.files) {
@@ -468,25 +468,25 @@ export const editProduct = async (req, res) => {
     if (dlcForId === '0') {
       product.dlcForId = null;
     } else {
-      product.dlcForId = dlcForId;
+      product.dlcForId = dlcForId ? dlcForId : product.dlcForId;
     }
   
     if (series === '0') {
       product.seriesId = null;
     } else {
-      product.seriesId = series;
+      product.seriesId = series ? series : product.seriesId;
     }
     
     if (bundle === '0') {
       product.bundleId = null;
     } else {
-      product.bundleId = bundle;
+      product.bundleId = bundle ? bundle : product.bundleId;
     }
     
     if (edition === '0') {
       product.editionId = null
     } else {
-      product.editionId = edition;
+      product.editionId = edition ? edition : product.editionId;
     }
   
     if (dsId === '0') {
@@ -496,7 +496,10 @@ export const editProduct = async (req, res) => {
     }
   
     await product.save();
-    product.changeInStock(inStock === 'on').then();
+    
+    if (inStock) {
+      product.changeInStock(inStock === 'on').then();
+    }
     res.redirect('/admin/products');
   } catch (e) {
     console.log(e);
