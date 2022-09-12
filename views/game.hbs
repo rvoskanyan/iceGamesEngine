@@ -273,12 +273,12 @@
                 {{#if recProducts.length}}
                     <div class="doubleGameSlider">
                         <div class="title">Вам может понравится</div>
-                        <div class="slider js-recProductSlider">
+                        <div class="slider{{#iff recProducts.length '>' 2}} js-recProductSlider{{/iff}}">
                             <div class="visibleAreaWrapper">
                                 <div class="visibleArea js-visibleArea">
                                     <div class="tape js-tape">
                                         {{#each recProducts}}
-                                            <div class="slide js-slide">
+                                            <div class="slide js-slide{{#iff @index '<' 2}} active{{/iff}}">
                                                 {{> game
                                                         id=_id
                                                         size='small'
@@ -301,7 +301,7 @@
                 {{#if articles.length}}
                     <div class="articlesGameSlider">
                         <div class="title">Упоминания в блоге</div>
-                        <div class="slider js-articlesGameSlider">
+                        <div class="slider{{#iff articles.length '>' 1}} js-articlesGameSlider{{/iff}}">
                             <div class="visibleAreaWrapper">
                                 <div class="visibleArea js-visibleArea">
                                     <div class="tape js-tape">
