@@ -170,13 +170,13 @@
                 </div>
             </div>
             {{#if product.extends.length}}
-                <div class="extends">
+                <div class="extends mobileInvisibleScroll">
                     {{#each product.extends}}
                         <div class="tooltip">
                             <button class="btn extend">
                                 <img  class="extendIcon" src="{{@root.websiteAddress}}{{icon}}" alt="{{text}}" title="{{name}}">
                             </button>
-                            <div class="prompt">
+                            <div class="prompt pointer-triangle js-promptProduct">
                                 <div class="extendName">{{name}}</div>
                             </div>
                         </div>

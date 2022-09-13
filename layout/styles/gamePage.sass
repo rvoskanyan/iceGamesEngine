@@ -193,6 +193,11 @@
       & .extends
         display: flex
         column-gap: 10px
+        max-width: 100%
+        padding: 3px 15px 64px 15px
+
+        @include for-desktop-up
+          padding: initial
 
         & .tooltip
           & .extend
@@ -220,27 +225,16 @@
                 width: 33px
 
           & .prompt
-            filter: drop-shadow(0 0 10px #8F00FF)
+            filter: drop-shadow(0 0 7px #8F00FF)
+
+            @include for-desktop-up
+              filter: drop-shadow(0 0 10px #8F00FF)
 
             &:before
-              content: ""
-              display: block
-              position: absolute
-              border-width: 7px
-              border-style: solid
-              border-color: transparent
               border-bottom-color: #db00ff
-              bottom: calc(100% - 12px)
-              left: 50%
-              transform: translateX(-50%)
-
-              @include for-big-phone-up
-                border-width: 10px
-                bottom: calc(100% - 15px)
 
             & .extendName
               margin-top: 12px
-              white-space: nowrap
               color: #fff
               background-color: #DB00FF
               padding: 4px 8px
@@ -248,8 +242,11 @@
               font-weight: 600
               clip-path: polygon(6px 0, calc(100% - 6px) 0, 100% 6px, 100% calc(100% - 6px), calc(100% - 6px) 100%, 6px 100%, 0 calc(100% - 6px), 0 6px)
               line-height: 1.4
+              width: max-content
+              max-width: 290px
 
               @include for-big-phone-up
+                max-width: 600px
                 padding: 6px 10px
                 font-size: 14px
                 margin-top: 15px
@@ -272,7 +269,8 @@
 
   & .main
     @include for-big-phone-down
-      padding: 25px 0 0 0
+      padding: 0
+      margin-top: -40px
 
     @include for-big-phone-up
       margin-top: 25px

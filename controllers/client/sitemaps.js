@@ -55,6 +55,21 @@ export const indexSitemap = async (req, res) => {
         changeFreq: 'daily',
         priority: '1',
       },
+      {
+        url: `${websiteAddress}legal-info`,
+        changeFreq: 'monthly',
+        priority: '0.5',
+      },
+      {
+        url: `${websiteAddress}legal-info/agreement`,
+        changeFreq: 'monthly',
+        priority: '0.5',
+      },
+      {
+        url: `${websiteAddress}legal-info/privacy-policy`,
+        changeFreq: 'monthly',
+        priority: '0.5',
+      },
     ];
     
     const siteMap = getSitemap(params);

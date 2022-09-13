@@ -25,3 +25,20 @@ export const legalInfoAgreementPage = (req, res) => {
       ],
    });
 }
+
+export const privacyPolicyPage = (req, res) => {
+   res.render('privacyPolicy', {
+      title: 'ICE GAMES — Политика конфиденциальности',
+      metaDescription: 'Страница ознакомления с политикой конфиденциальности при использовании сайта интернет-магазина ключей компьютерных игры - ICE GAMES',
+      breadcrumbs: [
+         {
+            name: 'Правовая информация',
+            path: 'legal-info',
+         },
+         {
+            name: 'Политика конфиденциальности',
+            current: true,
+         },
+      ],
+   });
+}

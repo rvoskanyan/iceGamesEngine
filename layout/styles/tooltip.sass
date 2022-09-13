@@ -1,17 +1,17 @@
 @import './zIndex'
+@import './breakPoints'
 
 .tooltip
   position: relative
   width: max-content
+  z-index: $ZIndex-Tooltip
 
   &:hover, &:focus-within
-    z-index: $ZIndex-Tooltip
-
     .prompt
       opacity: 1
       visibility: visible
 
-  & .prompt
+  .prompt
     position: absolute
     top: 100%
     left: 50%
@@ -19,3 +19,37 @@
     visibility: hidden
     opacity: 0
     transition: .3s ease-in
+
+    &.pointer-triangle:before
+      content: ""
+      display: block
+      position: absolute
+      border-width: 7px
+      border-style: solid
+      border-color: transparent
+      border-bottom-color: #fff
+      bottom: calc(100% - 13px)
+      left: 50%
+      transform: translateX(-50%)
+
+      @include for-big-phone-up
+        border-width: 10px
+        bottom: calc(100% - 15px)
+
+    &.left
+      right: 0
+      left: initial
+      transform: initial
+
+      &.pointer-triangle:before
+        right: 13px
+        left: initial
+        transform: initial
+
+    &.right
+      left: 0
+      transform: initial
+
+      &.pointer-triangle:before
+        left: 13px
+        transform: initial

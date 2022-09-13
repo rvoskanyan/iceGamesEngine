@@ -34,6 +34,7 @@ const btnSwitchAuthNode = document.querySelector('.js-btnSwitchAuth');
 const btnSwitchRegNode = document.querySelector('.js-btnSwitchReg');
 const inputLabelInFieldNodes = document.querySelectorAll('.js-inputLabelInField');
 const promptNodes = document.querySelectorAll('.js-prompt');
+const promptProductNodes = document.querySelectorAll('.js-promptProduct');
 const scrollerNode = document.querySelector('.js-scroller');
 const likeArticleNode = document.querySelector('.js-likeArticle');
 const copyBtnNode = document.querySelector('.js-copyBtn');
@@ -146,7 +147,20 @@ const popupController = new PopupController([
 ]);
 
 const windowHeight = document.documentElement.clientHeight;
+const windowWidth = document.documentElement.clientWidth;
 const topGap = document.querySelector('.js-header').getBoundingClientRect().height + 10;
+
+promptProductNodes.forEach(promptProductNode => {
+  const coordinates = promptProductNode.getBoundingClientRect();
+  
+  if (coordinates.left < 15) {
+    promptProductNode.classList.remove('left')
+    promptProductNode.classList.add('right')
+  } else if (coordinates.right + 15 > windowWidth) {
+    promptProductNode.classList.add('left')
+    promptProductNode.classList.remove('right')
+  }
+})
 
 openAboutHomeModalNode && openAboutHomeModalNode.addEventListener('click', () => {
   const aboutHomeModalNode = document.querySelector('.js-aboutHomeModal');
