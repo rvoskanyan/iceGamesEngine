@@ -41,6 +41,14 @@
     <br>
     <br>
     <label>
+        Иные вариации имени (аббревиатуры, сокращения и т.д. Пр.: GTA V), через запятую:
+        <br>
+        <br>
+        <textarea name="shortNames" cols="30" rows="10">{{#each product.shortNames}}{{this}}{{#unless @last}}, {{/unless}}{{/each}}</textarea>
+    </label>
+    <br>
+    <br>
+    <label>
         Описание*:
         <textarea name="description" cols="30" rows="10">{{product.description}}</textarea>
     </label>

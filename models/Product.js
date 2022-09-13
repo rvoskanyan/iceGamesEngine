@@ -42,6 +42,7 @@ const fields = {
   },
   normalizeName: String,
   soundName: [],
+  shortNames: [String],
   alias: {
     type: String,
     //require: true,

@@ -43,11 +43,13 @@ export const getProducts = async (req, res) => {
     const name = new RegExp(searchString, 'i');
     const changedLayoutName = new RegExp(getChangeLayout(searchString), 'i');
     const normalizeName = new RegExp(normalizeStr(searchString), 'i');
+    const shortName = normalizeStr(searchString);
     const alias = new RegExp(getAlias(searchString), 'i');
     const aliasChangeLayout = new RegExp(getAlias(getChangeLayout(searchString)), 'i');
     const filter = {$or: [
       {name},
       {name: changedLayoutName},
+      {shortNames: {$in: shortName}},
       {alias},
       {alias: aliasChangeLayout},
       {normalizeName},

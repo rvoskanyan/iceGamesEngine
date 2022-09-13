@@ -105,6 +105,7 @@ export const addProduct = async (req, res) => {
   try {
     const {
       name,
+      shortNames,
       metaDescription,
       dsId,
       description,
@@ -145,6 +146,7 @@ export const addProduct = async (req, res) => {
     const creator = req.session.userId;
     const product = new Product({
       name,
+      shortNames: shortNames ? shortNames.split(',').map(shortName => normalizeStr(shortName)) : undefined,
       normalizeName: normalizeStr(name),
       soundName: getSoundIndex(name),
       metaDescription,
@@ -343,6 +345,7 @@ export const editProduct = async (req, res) => {
   try {
     const {
       name,
+      shortNames,
       metaDescription,
       dsId,
       description,
@@ -381,6 +384,7 @@ export const editProduct = async (req, res) => {
   
     Object.assign(product, {
       name,
+      shortNames: shortNames ? shortNames.split(',').map(shortName => normalizeStr(shortName)) : undefined,
       normalizeName: normalizeStr(name),
       soundName: getSoundIndex(name),
       metaDescription,

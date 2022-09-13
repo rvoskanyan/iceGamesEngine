@@ -1159,7 +1159,7 @@ searchStringNode.addEventListener('keypress', async (e) => {
   
   popupController.activateById('navigate');
   
-  const response = await postman.get(`${websiteAddress}api/products`, {searchString: searchStringNode.value, limit: 7});
+  const response = await postman.get(`${websiteAddress}api/products`, {searchString: searchStringNode.value + e.key, limit: 7});
   const result = await response.json();
   const menuNode = document.querySelector('.js-menu');
   const searchResultNode = document.querySelector('.js-searchResult');
