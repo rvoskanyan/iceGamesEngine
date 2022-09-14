@@ -40,7 +40,7 @@ export const pageProducts = async (req, res) => {
   
     all.forEach(product => {
       if (!product.trailerLink) {
-        return; //trailerProblem.push(product);
+        return trailerProblem.push(product);
       }
       
       if (!product.trailerLink.match(/^https:\/\/www.youtube.com\/watch\?v=([a-zA-Z0-9\-_]+)(?=$)/)) { //https://www.youtube.com/watch?v=oIbcZLcKswU
