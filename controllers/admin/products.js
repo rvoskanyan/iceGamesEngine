@@ -35,7 +35,18 @@ export const pageProducts = async (req, res) => {
     const active = await Product.find({active: true}).select(['name', 'dsId', 'images']).lean();
     const top = await Product.find({top: true}).select(['name', 'active', 'dsId']).lean();
     const other = await Product.find({active: false}).select(['name', 'dsId', 'images']).lean();
-    const all = await Product.find().select(['name', 'dsId']).lean();
+    const all = await Product.find().select(['name', 'dsId', 'trailerLink']).lean();
+    const trailerProblem = [];
+  
+    all.forEach(product => {
+      if (!product.trailerLink) {
+        return; //trailerProblem.push(product);
+      }
+      
+      if (!product.trailerLink.match(/^https:\/\/www.youtube.com\/watch\?v=([a-zA-Z0-9\-_]+)(?=$)/)) { //https://www.youtube.com/watch?v=oIbcZLcKswU
+        trailerProblem.push(product);
+      }
+    })
   
     function foo(arr, copies) {
       let map = new Map();
@@ -59,6 +70,7 @@ export const pageProducts = async (req, res) => {
       top,
       other,
       doubles,
+      trailerProblem,
     });
   } catch (e) {
     console.log(e);

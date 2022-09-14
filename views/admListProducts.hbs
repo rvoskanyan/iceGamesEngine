@@ -11,6 +11,7 @@
             <th>Активные</th>
             <th>ТОП</th>
             <th>Нет скриншотов</th>
+            <th>Проблемы с трейлером</th>
         </tr>
         <tr style="vertical-align: top">
             <td>
@@ -64,6 +65,15 @@
                                 <a href="/admin/products/edit/{{_id}}">{{name}} - {{dsId}}</a>
                             </li>
                         {{/unless}}
+                    {{/each}}
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    {{#each trailerProblem}}
+                        <li>
+                            <a href="/admin/products/edit/{{_id}}">{{name}} - {{dsId}}</a>
+                        </li>
                     {{/each}}
                 </ul>
             </td>
