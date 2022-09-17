@@ -69,6 +69,17 @@ export const gamePage = async (req, res) => {
         select: ['login'],
       }])
       .lean();
+    
+    if (!product.active) {
+      return res.status(404).render('404', {
+        title: 'ICE GAMES — Страница не найдена',
+        breadcrumbs: [{
+          name: 'Страница не найдена',
+          current: true,
+        }],
+      });
+    }
+    
     const countReviews = await Review.countDocuments({product: product._id, active: true});
     const countSales = product.inStock ? Math.floor(Math.floor(product.priceFrom) / 3 * 0.005 * (Math.floor(new Date().getHours() / 5)) * (product.top ? 1.3 : 1)) : 0;
     const comments = await Comment
