@@ -922,7 +922,7 @@ if (cartNode) {
           const priceToNode = productNode.querySelector('.js-priceTo');
           const currentPrice = +priceToNode.innerText;
       
-          if (+product.price !== currentPrice) {
+          /*if (+product.price !== currentPrice) {
             const priceFrom = +productNode.querySelector('.js-priceFrom').innerText;
             const dsPrice = parseInt(product.price);
             const discountNode = productNode.querySelector('.js-discount');
@@ -938,7 +938,7 @@ if (cartNode) {
               fromPrice: currentPrice,
               toPrice: dsPrice,
             });
-          }
+          }*/
       
           if (!dsCartId) {
             formData.set('cart_uid', resultAddCartDs.cart_uid);
