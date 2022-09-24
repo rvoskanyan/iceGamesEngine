@@ -5,7 +5,7 @@ import Order from "../../models/Order.js";
 import {achievementEvent} from "../../services/achievement.js";
 import {validationResult} from "express-validator";
 import fetch from "node-fetch";
-import {getAlias, getChangeLayout, getSoundIndex, normalizeStr} from "../../utils/functions.js";
+import {getGrams} from "../../utils/functions.js";
 import Review from "../../models/Review.js";
 /*
   Articles.find({_id: {$ne: article._id}})
@@ -40,23 +40,18 @@ export const getProducts = async (req, res) => {
       limit = 20,
       skip = 0,
     } = req.query;
-    const name = new RegExp(searchString, 'i');
-    const changedLayoutName = new RegExp(getChangeLayout(searchString), 'i');
-    const normalizeName = new RegExp(normalizeStr(searchString), 'i');
-    const shortName = normalizeStr(searchString);
-    const alias = new RegExp(getAlias(searchString), 'i');
-    const aliasChangeLayout = new RegExp(getAlias(getChangeLayout(searchString)), 'i');
-    const filter = {$or: [
-      {name},
-      {name: changedLayoutName},
-      {shortNames: {$in: shortName}},
-      {alias},
-      {alias: aliasChangeLayout},
-      {normalizeName},
-      {soundName: {$all: getSoundIndex(searchString)}},
-    ], active: true};
-    const person = res.locals.person;
     
+    const searchGrams = getGrams(searchString);
+    const filter = {
+      active: true,
+    }
+    let person = null;
+    let query;
+  
+    if (res.locals && res.locals.person) {
+      person = res.locals.person;
+    }
+  
     if (categories.length) {
       filter.categories = {$in: categories};
     }
@@ -68,7 +63,7 @@ export const getProducts = async (req, res) => {
     if (activationServices.length) {
       filter.activationServiceId = {$in: activationServices};
     }
-    
+  
     if (priceFrom && +priceFrom >= 0) {
       filter.priceTo = {$gte: +priceFrom};
     }
@@ -83,8 +78,51 @@ export const getProducts = async (req, res) => {
     if (onlyStock) {
       filter.inStock = true;
     }
-    
-    let query = Product.find(filter).lean();
+  
+    if (searchGrams) {
+      filter.nameGrams = {
+        $in: searchGrams,
+      };
+      
+      query = Product.aggregate([
+        {
+          $match: filter,
+        },
+        {
+          $project: {
+            name: 1,
+            img: 1,
+            alias: 1,
+            releaseDate: 1,
+            priceTo: 1,
+            priceFrom: 1,
+            discount: 1,
+            createdAt: 1,
+            SCORE: {
+              $round: [{
+                $divide: [
+                  {
+                    $size: {
+                      $filter: {
+                        input: "$nameGrams",
+                        cond: {
+                          $in: ["$$this", searchGrams]
+                        },
+                      },
+                    },
+                  },
+                  {
+                    $size: "$nameGrams",
+                  },
+                ]
+              }, 2],
+            },
+          },
+        },
+      ]);
+    } else {
+      query = Product.find(filter).lean();
+    }
     
     if (sort) {
       const sortObjs = {};
@@ -107,11 +145,13 @@ export const getProducts = async (req, res) => {
       sortObjs.createdAt = -1;
       
       query = query.sort(sortObjs);
+    } else if (searchGrams) {
+      query = query.sort({SCORE: -1, priceTo: -1, createdAt: -1})
     } else {
       query = query.sort({priceTo: -1, createdAt: -1})
     }
     
-    let products = await query.skip(skip).limit(limit);
+    let products = await query.skip(+skip).limit(+limit);
   
     if (person) {
       const favoritesProducts = person.favoritesProducts;

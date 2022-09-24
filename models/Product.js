@@ -40,6 +40,7 @@ const fields = {
     //unique: true,
     //index: true,
   },
+  nameGrams: [String],
   normalizeName: String,
   soundName: [],
   shortNames: [String],

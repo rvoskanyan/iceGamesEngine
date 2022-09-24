@@ -531,3 +531,39 @@ export function isEqualBySound(firsStr, secondStr) {
   
   return coincidences === firsSound.length;
 }
+
+export function getGrams(str) {
+  str = str.trim().toLowerCase();
+  
+  if (!str.length) {
+    return undefined;
+  }
+  
+  if (str.length === 1) {
+    return [str];
+  }
+  
+  if (str.length === 2) {
+    return [str[0], str, str[1]]
+  }
+  
+  const grams = [];
+  
+  for (let i = 1; i <= str.length; i++) {
+    if (i === str.length) {
+      grams.push(str.slice(i - 3), str.slice(i - 2), str.slice(i - 1));
+    
+      continue;
+    }
+    
+    if (i < 3) {
+      grams.push(str.slice(0, i));
+      
+      continue;
+    }
+    
+    grams.push(str.slice(i - 3, i));
+  }
+  
+  return grams;
+}

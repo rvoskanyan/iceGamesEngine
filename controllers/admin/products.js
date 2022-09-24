@@ -25,6 +25,7 @@ import {
   mergeParams,
   normalizeStr,
   getSoundIndex,
+  getGrams,
 } from "../../utils/functions.js";
 
 import {__dirname} from "../../rootPathes.js";
@@ -37,6 +38,14 @@ export const pageProducts = async (req, res) => {
     const other = await Product.find({active: false}).select(['name', 'dsId', 'images']).lean();
     const all = await Product.find().select(['name', 'dsId', 'trailerLink']).lean();
     const trailerProblem = [];
+    
+    const noGramsName = await Product.find({nameGrams: undefined, active: true}).select(['name', 'nameGrams']);
+  
+    for (let product of noGramsName) {
+      product.nameGrams = getGrams(product.name);
+      
+      await product.save();
+    }
   
     all.forEach(product => {
       if (!product.trailerLink) {
@@ -158,6 +167,7 @@ export const addProduct = async (req, res) => {
     const creator = req.session.userId;
     const product = new Product({
       name,
+      nameGrams: getGrams(name),
       shortNames: shortNames ? shortNames.split(',').map(shortName => normalizeStr(shortName)) : undefined,
       normalizeName: normalizeStr(name),
       soundName: getSoundIndex(name),
@@ -396,6 +406,7 @@ export const editProduct = async (req, res) => {
   
     Object.assign(product, {
       name,
+      nameGrams: getGrams(name),
       shortNames: shortNames ? shortNames.split(',').map(shortName => normalizeStr(shortName)) : undefined,
       normalizeName: normalizeStr(name),
       soundName: getSoundIndex(name),
