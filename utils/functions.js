@@ -237,7 +237,7 @@ export const getChangeLayout = (str) => {
   return resultStr;
 }
 
-export const getAlias = (str) => {
+export const getAlias = (str, replaceSpace = true) => {
   const replace = {
     'a': 'а',
     'b': 'б',
@@ -281,7 +281,7 @@ export const getAlias = (str) => {
     const char = item.toLowerCase();
     
     if (/\s/.test(char)) {
-      return resultStr += '-';
+      return resultStr += replaceSpace ? '-' : ' ';
     }
     
     if (/[a-z0-9]/.test(char)) {
@@ -293,7 +293,7 @@ export const getAlias = (str) => {
     }
   })
   
-  return resultStr.replace(/-{2,}/g,'-');
+  return replaceSpace ? resultStr.replace(/-{2,}/g,'-') : resultStr;
 }
 
 export function getRomanNum(num) {

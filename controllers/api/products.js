@@ -5,7 +5,7 @@ import Order from "../../models/Order.js";
 import {achievementEvent} from "../../services/achievement.js";
 import {validationResult} from "express-validator";
 import fetch from "node-fetch";
-import {getGrams} from "../../utils/functions.js";
+import {getAlias, getChangeLayout, getSoundIndex, normalizeStr} from "../../utils/functions.js";
 import Review from "../../models/Review.js";
 /*
   Articles.find({_id: {$ne: article._id}})
@@ -40,89 +40,51 @@ export const getProducts = async (req, res) => {
       limit = 20,
       skip = 0,
     } = req.query;
+    const name = new RegExp(searchString, 'i');
+    const changedLayoutName = new RegExp(getChangeLayout(searchString), 'i');
+    const normalizeName = new RegExp(normalizeStr(searchString), 'i');
+    const shortName = normalizeStr(searchString);
+    const alias = new RegExp(getAlias(searchString), 'i');
+    const aliasChangeLayout = new RegExp(getAlias(getChangeLayout(searchString)), 'i');
+    const filter = {$or: [
+        {name},
+        {name: changedLayoutName},
+        {shortNames: {$in: shortName}},
+        {alias},
+        {alias: aliasChangeLayout},
+        {normalizeName},
+        {soundName: {$all: getSoundIndex(searchString)}},
+      ], active: true};
+    const person = res.locals.person;
     
-    const searchGrams = getGrams(searchString);
-    const filter = {
-      active: true,
-    }
-    let person = null;
-    let query;
-  
-    if (res.locals && res.locals.person) {
-      person = res.locals.person;
-    }
-  
     if (categories.length) {
       filter.categories = {$in: categories};
     }
-  
+    
     if (genres.length) {
       filter.genres = {$in: genres};
     }
-  
+    
     if (activationServices.length) {
       filter.activationServiceId = {$in: activationServices};
     }
-  
+    
     if (priceFrom && +priceFrom >= 0) {
       filter.priceTo = {$gte: +priceFrom};
     }
-  
+    
     if (priceTo && +priceTo >= 0) {
       filter.priceTo = {
         ...filter.priceTo,
         $lte: +priceTo,
       }
     }
-  
+    
     if (onlyStock) {
       filter.inStock = true;
     }
-  
-    if (searchGrams) {
-      filter.nameGrams = {
-        $in: searchGrams,
-      };
-      
-      query = Product.aggregate([
-        {
-          $match: filter,
-        },
-        {
-          $project: {
-            name: 1,
-            img: 1,
-            alias: 1,
-            releaseDate: 1,
-            priceTo: 1,
-            priceFrom: 1,
-            discount: 1,
-            createdAt: 1,
-            SCORE: {
-              $round: [{
-                $divide: [
-                  {
-                    $size: {
-                      $filter: {
-                        input: "$nameGrams",
-                        cond: {
-                          $in: ["$$this", searchGrams]
-                        },
-                      },
-                    },
-                  },
-                  {
-                    $size: "$nameGrams",
-                  },
-                ]
-              }, 2],
-            },
-          },
-        },
-      ]);
-    } else {
-      query = Product.find(filter).lean();
-    }
+    
+    let query = Product.find(filter).lean();
     
     if (sort) {
       const sortObjs = {};
@@ -141,37 +103,35 @@ export const getProducts = async (req, res) => {
           break;
         }
       }
-  
+      
       sortObjs.createdAt = -1;
       
       query = query.sort(sortObjs);
-    } else if (searchGrams) {
-      query = query.sort({SCORE: -1, priceTo: -1, createdAt: -1})
     } else {
       query = query.sort({priceTo: -1, createdAt: -1})
     }
     
-    let products = await query.skip(+skip).limit(+limit);
-  
+    let products = await query.skip(skip).limit(limit);
+    
     if (person) {
       const favoritesProducts = person.favoritesProducts;
       const cart = person.cart;
-    
+      
       products = products.map(item => {
         const productId = item._id.toString();
         
         if (favoritesProducts && favoritesProducts.includes(productId)) {
           item.inFavorites = true;
         }
-      
+        
         if (cart && cart.includes(productId)) {
           item.inCart = true;
         }
-      
+        
         return item;
       });
     }
-  
+    
     const count = await Product.countDocuments(filter);
     const isLast = +skip + +limit >= count;
     
@@ -229,14 +189,14 @@ export const deleteFromFavorites = async (req, res) => {
   try {
     const productId = req.params.productId;
     const userId = req.session.userId;
-  
+    
     if (!productId || !userId) {
       throw new Error('No auth or no productId');
     }
-  
+    
     const user = await User.findById(userId);
     const index = user.favoritesProducts.findIndex(item => item._id.toString() === productId);
-  
+    
     if (index === -1) {
       throw new Error('Not found this product in favorites');
     }
@@ -258,17 +218,17 @@ export const addToCart = async (req, res) => {
   try {
     const productId = req.params.productId;
     let person = res.locals.person;
-  
+    
     if (!productId) {
       throw new Error('No productId');
     }
-  
+    
     const product = await Product.findById(productId).select(['_id', 'inStock']).lean();
-  
+    
     if (!product) {
       throw new Error('Product not found in DB');
     }
-
+    
     if (!product.inStock) {
       throw new Error('Product not in stock');
     }
@@ -277,11 +237,11 @@ export const addToCart = async (req, res) => {
       person = new Guest();
       res.cookie('guestId', person.id);
     }
-  
+    
     if (person['cart'].includes(productId)) {
       throw new Error('This product exists');
     }
-  
+    
     person['cart'].push(productId);
     await person.save();
     res.json({
@@ -299,17 +259,17 @@ export const deleteFromCart = async (req, res) => {
   try {
     const productId = req.params.productId;
     const person = res.locals.person;
-  
+    
     if (!productId || !person) {
       throw new Error('No productId or personData');
     }
     
     const index = person.cart.findIndex(item => item._id.toString() === productId);
-  
+    
     if (index === -1) {
       throw new Error('Not found this product in cart');
     }
-  
+    
     person.cart.splice(index, 1);
     await person.save();
     res.json({
@@ -335,7 +295,7 @@ export const addReview = async (req, res) => {
     const validErrors = [];
     const evalValue = parseInt(req.body.eval);
     const order = await Order.findOne({status: 'paid', userId: user._id, products: {$elemMatch: {productId}}});
-  
+    
     if (!order) {
       throw new Error('Product not purchased');
     }
@@ -358,11 +318,11 @@ export const addReview = async (req, res) => {
     const product = await Product.findById(productId).select(['countReviews', 'totalEval']);
     let review = await Review.find({product: productId, user: user._id});
     const isNoReview = !review.length;
-
+    
     if (!isNoReview) {
       throw new Error('The product has a review from an current user');
     }
-  
+    
     review = new Review({
       user: user._id,
       product: productId,
@@ -405,7 +365,7 @@ export const revise = async (req, res) => {
     
     await product.changeInStock(!!dsProduct.in_stock);
     await product.changePrice({priceTo: parseInt(dsProduct.price_rub)});
-  
+    
     res.json({
       success: true,
     });
@@ -422,7 +382,7 @@ export const subscribeInStock = async (req, res) => {
     const errors = validationResult(req);
     const {productId} = req.params;
     let {email = null} = req.body;
-  
+    
     if (!errors.isEmpty()) {
       return res.status(422).json({
         error: true,
@@ -446,7 +406,7 @@ export const subscribeInStock = async (req, res) => {
     if (!product || product.inStock) {
       throw new Error();
     }
-  
+    
     product.subscribesInStock.addToSet(email);
     await product.save();
     res.json({success: true});
