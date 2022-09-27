@@ -23,7 +23,8 @@
         <span class="icon icon-star{{#iff eval '>=' 3}}Fill{{/iff}}"></span>
         <span class="icon icon-star{{#iff eval '>=' 4}}Fill{{/iff}}"></span>
         <span class="icon icon-star{{#iff eval '>=' 5}}Fill{{/iff}}"></span>
-        <meta itemprop="ratingValue" content="{{eval}}">
+        <meta itemprop="ratingValue" content="{{toStr eval}}">
+        <meta itemprop="itemReviewed" itemscope itemtype=”https://schema.org/Game”>
     </div>
     <div class="text" itemprop="name">
         {{text}}

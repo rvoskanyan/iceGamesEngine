@@ -2,7 +2,7 @@
     <div class="videoMacro" itemscope itemtype="https://schema.org/VideoObject">
         <meta itemprop="name" content="Трейлер {{product.name}}">
         <meta itemprop="uploadDate" content="{{product.createdAt}}">
-        <meta itemprop="description" content="{{product.description}}">
+        <meta itemprop="description" content="{{encodeString product.description}}">
         <meta itemprop="contentUrl" content="{{websiteAddress}}{{product.coverVideo}}" />
     </div>
 {{/if}}
