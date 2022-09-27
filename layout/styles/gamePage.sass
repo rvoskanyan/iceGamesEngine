@@ -52,6 +52,7 @@
         font-size: 12px
         line-height: 15px
         max-height: calc(15px * 3) //lineHeight * countRows
+        min-height: calc(15px * 3) //lineHeight * countRows
 
         @include for-middle-phone-up
           padding: 0 45px
@@ -85,7 +86,7 @@
                 align-self: flex-start
 
     .videoMacro
-      display: contents
+      display: none
 
     @include for-big-phone-up
       & .mobileImgContainer

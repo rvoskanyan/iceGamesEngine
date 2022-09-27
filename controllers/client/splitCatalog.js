@@ -32,8 +32,8 @@ export const pageSplitCatalog = async (req, res, next) => {
       }
       case 'activationServices': {
         filter = {activationServiceId: section._id};
-        metaDescription = `Купить ключи активации ${section.name} дешево в магазине ICE GAMES. Мгновенная доставка ключей активации. Широкий выбор игр, сервисная поддержка.`;
-        title = `Купить ключи активации ${section.name} дешево со скидкой в магазине лицензионных ключей ICE GAMES`;
+        metaDescription = `Ключи для ${section.name} в магазине ICE GAMES. Мгновенная доставка ключей активации. Широкий выбор игр, сервисная поддержка.`;
+        title = `Ключи для ${section.name} со скидкой в магазине лицензионных ключей ICE GAMES`;
         hTitle = `Купить ключи активации ${section.name} дешево`;
         break;
       }

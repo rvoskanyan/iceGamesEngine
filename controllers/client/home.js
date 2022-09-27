@@ -181,7 +181,7 @@ export const homepage = async (req, res) => {
   }
   
   res.render('home', {
-    title: "Магазин ключей ICE GAMES",
+    title: "Ваши лицензионные ключи к «Стиму» в магазине ICE GAMES",
     metaDescription: 'Магазин лицензионных ключей ICE GAMES. Более 2000 игр в каталоге, 16 жанров, сервисная поддержка. Увлекательные статьи и большое активное комьюнити.',
     noIndex: !!checkEmailHash,
     noIndexGoogle: !!checkEmailHash,

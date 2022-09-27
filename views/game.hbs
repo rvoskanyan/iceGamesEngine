@@ -1,3 +1,11 @@
+{{#if product.coverVideo}}
+    <div class="videoMacro" itemscope itemtype="https://schema.org/VideoObject">
+        <meta itemprop="name" content="Трейлер {{product.name}}">
+        <meta itemprop="uploadDate" content="{{product.createdAt}}">
+        <meta itemprop="description" content="{{product.description}}">
+        <meta itemprop="contentUrl" content="{{websiteAddress}}{{product.coverVideo}}" />
+    </div>
+{{/if}}
 <main class="gamePage js-gamePage" itemscope itemtype="http://schema.org/Product">
     {{#unless product.inStock}}
         {{#unless @root.isAuth}}
@@ -32,13 +40,7 @@
             <img class="mobileImg" src="{{websiteAddress}}{{product.img}}" alt="{{product.name}}" title="{{product.name}}" itemprop="image">
         </div>
         {{#if product.coverVideo}}
-            <div class="videoMacro" itemscope itemprop="VideoObject" itemtype="https://schema.org/VideoObject">
-                <meta itemprop="name" content="Трейлер {{product.name}}">
-                <meta itemprop="uploadDate" content="{{product.createdAt}}">
-                <meta itemprop="description" content="{{product.description}}">
-                <meta itemprop="contentUrl" content="{{websiteAddress}}{{product.coverVideo}}" />
-                <video class="video js-coverVideo" loop muted></video>
-            </div>
+            <video class="video js-coverVideo" loop muted></video>
         {{/if}}
         <img class="img" src="{{websiteAddress}}{{product.coverImg}}" alt="{{product.name}}" title="{{product.name}}">
         <div class="offer">
