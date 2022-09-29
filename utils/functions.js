@@ -344,6 +344,10 @@ export const mergeParams = (relatedItems, restItems) => {
 }
 
 export const toRoman = (str, matches) => {
+  if (!matches || !matches.length) {
+    return str;
+  }
+  
   for (let i = 0; i < matches.length; i++) {
     const romanNum = getRomanNum(matches[i]);
     

@@ -5,7 +5,7 @@ import Order from "../../models/Order.js";
 import {achievementEvent} from "../../services/achievement.js";
 import {validationResult} from "express-validator";
 import fetch from "node-fetch";
-import {getAlias, getChangeLayout, getSoundIndex, normalizeStr} from "../../utils/functions.js";
+import {getAlias, getChangeLayout, getGrams, toRoman} from "../../utils/functions.js";
 import Review from "../../models/Review.js";
 /*
   Articles.find({_id: {$ne: article._id}})
@@ -28,7 +28,7 @@ import Review from "../../models/Review.js";
 
 export const getProducts = async (req, res) => {
   try {
-    const {
+    let {
       searchString = '',
       priceFrom = '',
       priceTo = '',
@@ -40,22 +40,165 @@ export const getProducts = async (req, res) => {
       limit = 20,
       skip = 0,
     } = req.query;
-    const name = new RegExp(searchString, 'i');
-    const changedLayoutName = new RegExp(getChangeLayout(searchString), 'i');
-    const normalizeName = new RegExp(normalizeStr(searchString), 'i');
-    const shortName = normalizeStr(searchString);
-    const alias = new RegExp(getAlias(searchString), 'i');
-    const aliasChangeLayout = new RegExp(getAlias(getChangeLayout(searchString)), 'i');
-    const filter = {$or: [
-        {name},
-        {name: changedLayoutName},
-        {shortNames: {$in: shortName}},
-        {alias},
-        {alias: aliasChangeLayout},
-        {normalizeName},
-        {soundName: {$all: getSoundIndex(searchString)}},
-      ], active: true};
-    const person = res.locals.person;
+    
+    searchString = searchString.trim();
+  
+    const recIds = [];
+    const recProducts = [];
+    const numsSearch = searchString.match(/\d/g);
+  
+    const latin = getAlias(searchString, false);
+    const changeLayout = getChangeLayout(searchString);
+    const romaNumsSearch = toRoman(searchString, numsSearch);
+    
+    const searchMatch = new RegExp(searchString, 'i');
+    const latinMatch = new RegExp(latin, 'i');
+    const changeLayoutMatch = new RegExp(changeLayout, 'i');
+    const romaNumsSearchMatch = new RegExp(changeLayout, 'i');
+    
+    const searchGrams = getGrams(searchString);
+    const latinGrams = getGrams(latin);
+    const changeLayoutGrams = getGrams(changeLayout);
+    const romaNumsSearchGrams = getGrams(romaNumsSearch);
+    
+    const filter = {
+      active: true,
+    }
+    
+    const getWithoutSort = async (filter) => {
+      let stageFilter = {
+        $or: [
+          {shortNames: {$in: [searchString.toUpperCase()]}},
+          {shortNames: {$in: [latin.toUpperCase()]}},
+          {shortNames: {$in: [changeLayout.toUpperCase()]}},
+          {shortNames: {$in: [romaNumsSearch.toUpperCase()]}},
+        ],
+      }
+      
+      let result = await Product.find({
+        ...filter,
+        ...stageFilter,
+      }).skip(+skip).limit(+limit).sort({priceTo: -1, createdAt: -1}).lean();
+      
+      recProducts.push(...result);
+  
+      if (recProducts.length === +limit) {
+        return recProducts;
+      }
+  
+      const countShortNames = await Product.countDocuments({
+        ...filter,
+        ...stageFilter,
+      });
+  
+      recIds.push(...result.map(item => item._id));
+      
+      stageFilter = {
+        _id: {$nin: recIds},
+        $or: [
+          {name: searchMatch},
+          {name: latinMatch},
+          {name: changeLayoutMatch},
+          {name: romaNumsSearchMatch},
+        ],
+      }
+  
+      result = await Product.find({
+        ...filter,
+        ...stageFilter,
+      }).skip(recProducts.length ? 0 : +skip - countShortNames).limit(+limit - recProducts.length).sort({priceTo: -1, createdAt: -1}).lean();
+  
+      recProducts.push(...result);
+  
+      if (recProducts.length === +limit) {
+        return recProducts;
+      }
+  
+      const countName = await Product.countDocuments({
+        ...filter,
+        ...stageFilter,
+      });
+  
+      recIds.push(...result.map(item => item._id));
+      
+      stageFilter = {
+        _id: {$nin: recIds},
+        nameGrams: {$in: searchGrams},
+      }
+      
+      result = await Product.aggregate([
+        {
+          $match: {
+            ...filter,
+            ...stageFilter,
+          }
+        },
+        {
+          $project: {
+            name: 1,
+            img: 1,
+            alias: 1,
+            releaseDate: 1,
+            priceTo: 1,
+            priceFrom: 1,
+            discount: 1,
+            createdAt: 1,
+            inStock: 1,
+            SCORE: {
+              $subtract: [
+                {
+                  $round: [{
+                    $divide: [
+                      {
+                        $size: {
+                          $filter: {
+                            input: "$nameGrams",
+                            cond: {
+                              $in: ["$$this", searchGrams]
+                            },
+                          },
+                        },
+                      },
+                      searchGrams.length,
+                    ]
+                  }, 2],
+                },
+                {
+                  $round: [{
+                    $divide: [
+                      {
+                        $size: {
+                          $filter: {
+                            input: "$nameGrams",
+                            cond: {
+                              $in: ["$$this", searchGrams]
+                            },
+                          },
+                        },
+                      },
+                      {
+                        $size: "$nameGrams",
+                      },
+                    ]
+                  }, 2],
+                }
+              ],
+            },
+          },
+        },
+      ]).sort({SCORE: -1}).skip(recProducts.length ? 0 : +skip - countShortNames - countName).limit(+limit - recProducts.length);
+      
+      recProducts.push(...result);
+      
+      return recProducts;
+    }
+  
+    let person = null;
+    let products;
+    
+    if (res.locals && res.locals.person) {
+      person = res.locals.person;
+    }
     
     if (categories.length) {
       filter.categories = {$in: categories};
@@ -84,34 +227,51 @@ export const getProducts = async (req, res) => {
       filter.inStock = true;
     }
     
-    let query = Product.find(filter).lean();
-    
-    if (sort) {
-      const sortObjs = {};
+    if (searchString.length) {
+      const paramsFilter = {...filter};
       
-      switch (sort) {
-        case 'date': {
-          sortObjs.releaseDate = -1;
-          break;
+      filter['$or'] = [
+        {shortNames: {$in: [searchString.toUpperCase()]}},
+        {shortNames: {$in: [latin.toUpperCase()]}},
+        {shortNames: {$in: [changeLayout.toUpperCase()]}},
+        {shortNames: {$in: [romaNumsSearch.toUpperCase()]}},
+        {name: searchMatch},
+        {name: latinMatch},
+        {name: changeLayoutMatch},
+        {name: romaNumsSearchMatch},
+        {nameGrams: {$in: searchGrams}},
+        {nameGrams: {$in: latinGrams}},
+        {nameGrams: {$in: changeLayoutGrams}},
+        {nameGrams: {$in: romaNumsSearchGrams}},
+      ];
+      
+      if (sort) {
+        const sortObjs = {};
+  
+        switch (sort) {
+          case 'date': {
+            sortObjs.releaseDate = -1;
+            break;
+          }
+          case 'price': {
+            sortObjs.priceTo = 1;
+            break;
+          }
+          case 'discount': {
+            sortObjs.discount = -1;
+            break;
+          }
         }
-        case 'price': {
-          sortObjs.priceTo = 1;
-          break;
-        }
-        case 'discount': {
-          sortObjs.discount = -1;
-          break;
-        }
+  
+        sortObjs.createdAt = -1;
+  
+        products = await Product.find(filter).sort(sortObjs).skip(+skip).limit(+limit).lean();
+      } else {
+        products = await getWithoutSort(paramsFilter);
       }
-      
-      sortObjs.createdAt = -1;
-      
-      query = query.sort(sortObjs);
     } else {
-      query = query.sort({priceTo: -1, createdAt: -1})
+      products = await Product.find(filter).sort({priceTo: -1, createdAt: -1}).skip(+skip).limit(+limit).lean();
     }
-    
-    let products = await query.skip(skip).limit(limit);
     
     if (person) {
       const favoritesProducts = person.favoritesProducts;
