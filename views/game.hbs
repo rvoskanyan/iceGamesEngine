@@ -108,7 +108,7 @@
                         </div>
                     </div>
                     <div class="actions">
-                        <button class="btn js-addInFavoritesProductPage{{#if currentProductInFavorite}} js-active{{/if}}" title="Добавить товар в избранное" data-product-id="{{product.id}}">
+                        <button class="btn js-addInFavoritesProductPage{{#if currentProductInFavorite}} js-active{{/if}}" title="{{#if currentProductInFavorite}}Удалить товар из избранного{{else}}Добавить товар в избранное{{/if}}" data-product-id="{{product.id}}">
                             <span class="icon icon-static icon-static-bigLike js-icon{{#if currentProductInFavorite}} active{{/if}}"></span>
                         </button>
                         {{#if product.inStock}}
