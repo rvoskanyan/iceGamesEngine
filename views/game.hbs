@@ -108,9 +108,11 @@
                         </div>
                     </div>
                     <div class="actions">
-                        <button class="btn js-addInFavoritesProductPage{{#if currentProductInFavorite}} js-active{{/if}}" title="{{#if currentProductInFavorite}}Удалить товар из избранного{{else}}Добавить товар в избранное{{/if}}" data-product-id="{{product.id}}">
-                            <span class="icon icon-static icon-static-bigLike js-icon{{#if currentProductInFavorite}} active{{/if}}"></span>
-                        </button>
+                        {{#if @root.isAuth}}
+                            <button class="btn js-addInFavoritesProductPage{{#if currentProductInFavorite}} js-active{{/if}}" title="{{#if currentProductInFavorite}}Удалить товар из избранного{{else}}Добавить товар в избранное{{/if}}" data-product-id="{{product.id}}">
+                                <span class="icon icon-static icon-static-bigLike js-icon{{#if currentProductInFavorite}} active{{/if}}"></span>
+                            </button>
+                        {{/if}}
                         {{#if product.inStock}}
                             {{#if currentProductInCart}}
                                 <button
