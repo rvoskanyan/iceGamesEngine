@@ -39,16 +39,6 @@ export const pageProducts = async (req, res) => {
     const all = await Product.find().select(['name', 'dsId', 'trailerLink']).lean();
     const trailerProblem = [];
   
-    const dlc = await Product.find({dlc: true});
-  
-    for (const item of dlc) {
-      item.seriesId = undefined;
-      item.editionId = undefined;
-      item.bundleId = undefined;
-    
-      await item.save();
-    }
-  
     all.forEach(product => {
       if (!product.trailerLink) {
         return trailerProblem.push(product);
