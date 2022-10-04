@@ -972,7 +972,7 @@ if (cartNode) {
   }
 }
 
-addInFavoritesProductPageNode.addEventListener('click', async (e) => {
+addInFavoritesProductPageNode && addInFavoritesProductPageNode.addEventListener('click', async (e) => {
   const addToFavoriteIconNode = addInFavoritesProductPageNode.querySelector('.js-icon');
   const productId = addInFavoritesProductPageNode.dataset.productId;
   
