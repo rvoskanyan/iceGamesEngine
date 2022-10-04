@@ -81,6 +81,29 @@ const hbs = exphbs.create({
       
       return opts.inverse(this)
     },
+    orIf: function () {
+      const opts = arguments[arguments.length - 1];
+      const args = Object.values(arguments);
+      const values = args.slice(0, args.length - 1);
+      let trust = false;
+      
+      if (!values.length) {
+        return opts.inverse(this)
+      }
+      
+      for (const value of values) {
+        if (value) {
+          trust = true;
+          break;
+        }
+      }
+      
+      if (trust) {
+        return opts.fn(this);
+      }
+    
+      return opts.inverse(this)
+    },
     sub: (lvalue, rvalue) => {
       return lvalue - rvalue;
     },

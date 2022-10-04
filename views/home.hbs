@@ -5,7 +5,7 @@
     <div class="homeSlider js-homeSlider">
         <div class="tape js-tapeSlider">
             {{#each sliderProducts}}
-                <div class="cover blackout-bottom slide{{#if @first}} active{{/if}} js-slide" data-video-name="{{coverVideo}}">
+                <div class="cover slide{{#if @first}} active{{/if}} js-slide" data-video-name="{{coverVideo}}">
                     <video class="video" muted></video>
                     <img class="img" src="{{@root.websiteAddress}}{{coverImg}}" alt="Постер игры {{name}}" title="Постер игры {{name}}">
                     <div class="contentContainer tableInfo">

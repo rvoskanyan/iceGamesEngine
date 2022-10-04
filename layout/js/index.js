@@ -62,6 +62,7 @@ const counterAnimationNodes = document.querySelectorAll('.js-counterAnimation');
 const openCompoundOrderNodes = document.querySelectorAll('.js-openCompoundOrder');
 const openAboutHomeModalNode = document.querySelector('.js-openAboutHomeModal');
 const openDescriptionSplitCatalogNode = document.querySelector('.js-openDescriptionSplitCatalog');
+const addInFavoritesProductPageNode = document.querySelector('.js-addInFavoritesProductPage');
 const popupController = new PopupController([
   {
     id: 'loginFrom',
@@ -969,6 +970,38 @@ if (cartNode) {
     }
   }
 }
+
+addInFavoritesProductPageNode.addEventListener('click', async (e) => {
+  const addToFavoriteIconNode = addInFavoritesProductPageNode.querySelector('.js-icon');
+  const productId = addInFavoritesProductPageNode.dataset.productId;
+  
+  e.preventDefault();
+  
+  if (addInFavoritesProductPageNode.classList.contains('js-active')) {
+    const response = await postman.delete(`/api/products/${productId}/favorites`);
+    const result = await response.json();
+    
+    if (result.error) {
+      return;
+    }
+  
+    addInFavoritesProductPageNode.setAttribute('title', 'Добавить игру в избранное');
+    addInFavoritesProductPageNode.classList.remove('js-active');
+    addToFavoriteIconNode.classList.remove('active');
+    return;
+  }
+  
+  const response = await postman.post(`/api/products/${productId}/favorites`);
+  const result = await response.json();
+  
+  if (result.error) {
+    return;
+  }
+  
+  addInFavoritesProductPageNode.setAttribute('title', 'Удалить игру из избранного');
+  addInFavoritesProductPageNode.classList.add('js-active');
+  addToFavoriteIconNode.classList.add('active');
+})
 
 document.addEventListener('click', async (e) => {
   const target = e.target;
@@ -2004,7 +2037,6 @@ if (recProductSliderNode) {
   new Slider({
     mainNode: recProductSliderNode,
     switchingTime: 3000,
-    progress: true,
     isTrack: true,
     countSlidesScroll: 1,
   });
@@ -2014,7 +2046,6 @@ if (articlesProductSliderNode) {
   new Slider({
     mainNode: articlesProductSliderNode,
     switchingTime: 3000,
-    progress: true,
     isTrack: true,
     countSlidesScroll: 1,
   });

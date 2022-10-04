@@ -102,3 +102,41 @@
 
       &:hover:before, &:focus-visible:before
         right: 6px
+
+  &-rounded
+    display: flex
+    column-gap: 15px
+
+    & .btn
+      display: flex
+      width: 40px
+      height: 40px
+      border: 2px solid #984BFB
+      border-radius: 100%
+      transition: background-color .3s ease-in
+
+      &:before
+        content: ''
+        background-size: cover
+        background-position: center
+        background-image: url("./../img/slideControlArrow.svg")
+        width: 15px
+        height: 8px
+        transition: transform .3s ease-in
+
+      &:hover
+        background-color: #984BFB
+
+      &.prev
+        &:before
+          transform: rotate(90deg) translateY(1px)
+
+        &:hover:before
+          transform: rotate(90deg) translateY(8px)
+
+      &.next
+        &:before
+          transform: rotate(-90deg) translateY(1px)
+
+        &:hover:before
+          transform: rotate(-90deg) translateY(8px)

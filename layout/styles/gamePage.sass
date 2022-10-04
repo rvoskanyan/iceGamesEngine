@@ -3,107 +3,38 @@
 
 .gamePage
   & .cover
-    @include for-big-phone-down
-      overflow: initial
-      display: flex
-      flex-direction: column
-      padding-top: 130px
-      align-items: center
+    padding-top: 130px
+    grid-template-rows: auto
 
+    @include for-big-phone-down
       &:before, &:after
         content: initial
 
       & .img
         display: none
 
-      & .mobileImgContainer
-        display: flex
-        align-items: center
-        justify-content: center
-        background-size: cover
-        background-position: center
-        background-image: url('./../img/mobilePorductPageImgDecore.svg')
-        height: 424px
-        width: 100%
-        margin: -40px 0
-
-        @include for-middle-phone-up
-          height: 502px
-          margin: -45px 0
-
-        & .mobileImg
-          object-fit: cover
-          width: 175px
-          height: 274px
-          border: 2px solid #fff
-          border-radius: 20px
-
-          @include for-middle-phone-up
-            width: 210px
-            height: 325px
-
-      & .description
-        font-family: 'Montserrat'
-        display: -webkit-box
-        display: -moz-box
-        font-style: normal
-        padding: 0 40px
-        font-weight: 400
-        font-size: 12px
-        line-height: 15px
-        max-height: calc(15px * 3) //lineHeight * countRows
-        min-height: calc(15px * 3) //lineHeight * countRows
-
-        @include for-middle-phone-up
-          padding: 0 45px
-
-      & .mobileBuyContainer
-        display: flex
-        flex-wrap: wrap
-        align-items: end
-        justify-content: space-between
-        padding: 15px
-        row-gap: 15px
-
-        & .price
-          align-items: start
-
-        & .actions
-          display: contents
-
-          & .moreInfoBlocks
-            display: flex
-            column-gap: 10px
-
-            & .moreInfo
-              min-width: initial
-              font-size: 11px
-              padding: 5px
-              border-radius: 7px
-              font-weight: 300
-
-              &.preOrderInfo
-                align-self: flex-start
+    @include for-desktop-up
+      padding-top: initial
 
     .videoMacro
       display: none
 
-    @include for-big-phone-up
-      & .mobileImgContainer
-        display: none
-
-      & .mobileBuyContainer
-        display: contents
-
-        & .moreInfoBlocks
-          display: contents
-
     & .offer
-      @include for-big-phone-down
-        display: contents
+      display: flex
+      text-align: center
+      flex-direction: column
+      align-items: center
+      width: 100%
+      z-index: $ZIndex-Cover-Offer
+      line-height: 1.3
 
-        &:after, &:before
-          content: initial
+      @include for-desktop-up
+        position: absolute
+        top: 190px
+        left: 50%
+        transform: translateX(-50%)
+        text-align: initial
+        align-items: initial
 
       .offerMacro
         display: contents
@@ -111,13 +42,8 @@
       & .packages
         display: flex
         column-gap: 10px
-        order: -1
 
-        @include for-big-phone-up
-          margin-top: -70px
-          margin-bottom: 25px
-          order: initial
-
+        @include for-desktop-up
           & .tooltip
             & .prompt
               background-color: #2F305E
@@ -146,26 +72,88 @@
                   &.moreElements
                     color: #FA00FF
 
-      & .name
-        padding: 0 40px
-        font-weight: 100
+      & .mobileImgContainer
+        display: flex
+        align-items: center
+        justify-content: center
+        background-size: cover
+        background-position: center
+        background-image: url('./../img/mobilePorductPageImgDecore.svg')
+        width: calc(100% + 30px)
+        margin: -40px 0
+        min-height: 425px
 
         @include for-middle-phone-up
-          padding: 0 45px
+          min-height: 510px
 
-        @include for-big-phone-up
-          padding: initial
+        @include for-desktop-up
+          display: none
+
+        & .mobileImg
+          object-fit: cover
+          border: 2px solid #fff
+          border-radius: 20px
+          width: 175px
+          height: 274px
+
+          @include for-middle-phone-up
+            width: 210px
+            height: 325px
+
+      & .name, & .name span
+        font-family: 'Lemon Milk'
+        font-weight: 100
+        font-size: 21px
+        color: #fff
+
+        @include for-desktop-up
+          margin-top: 50px
+          font-size: 36px
+          max-width: 500px
+
+        @include for-middle-desktop-up
+          font-size: 40px
+          margin-top: 70px
+
+      & .description
+        font-family: 'Montserrat'
+        margin-top: 10px
+        color: #fff
+        overflow: hidden
+        text-overflow: ellipsis
+        box-orient: vertical
+        -webkit-box-orient: vertical
+        -moz-box-orient: vertical
+        display: -webkit-box
+        display: -moz-box
+        font-style: normal
+        font-weight: 400
+        font-size: 12px
+        line-height: 15px //lineHeight
+        -webkit-line-clamp: 3 // line-count
+        line-clamp: 3 // line-count
+        max-height: 15px * 3 //lineHeight * countRows
+        min-height: 15px * 3 //lineHeight * countRows
+        max-width: 500px
+
+        @include for-desktop-up
+          font-size: 14px
+          display: -webkit-box
+          display: -moz-box
+
+        @include for-middle-desktop-up
+          font-size: 16px
 
       & .statuses
         display: flex
-        margin-top: 12px
-        column-gap: 15px
+        margin-top: 15px
+        column-gap: 10px
 
-        @include for-big-phone-up
+        @include for-desktop-up
           column-gap: 25px
 
         & .status
-          color: rgba(255, 255, 255, 0.4)
+          color: rgba(255, 255, 255, 0.5)
           font-size: 12px
           display: flex
           align-items: center
@@ -177,7 +165,7 @@
             width: 9px
             height: 9px
             border-radius: 100%
-            margin-right: 5px
+            margin-right: 3px
 
           &.positive:before
             background-color: rgba(0, 255, 56, 0.4)
@@ -185,19 +173,128 @@
           &.negative:before
             background-color: rgba(255, 0, 0, 0.4)
 
-          @include for-big-phone-up
+          @include for-desktop-up
             font-size: 16px
 
             &:before
               margin-right: 7px
 
+      & .buyContainer
+        display: flex
+        width: 100%
+        flex-wrap: wrap
+        align-items: end
+        justify-content: space-between
+        row-gap: 15px
+        max-width: 500px
+        margin-top: 10px
+
+        @include for-desktop-up
+          align-items: start
+          flex-direction: column
+          row-gap: 15px
+          margin-top: 25px
+
+        & .price
+          display: flex
+          align-items: start
+          flex-direction: column
+
+          @include for-desktop-up
+            align-items: initial
+
+          & .toPrice, & .fromPrice
+            font-family: 'Montserrat'
+            font-weight: 800
+            line-height: 1
+
+          & .rowDiscount
+            display: flex
+            align-items: center
+
+            & .fromPrice
+              margin-right: 10px
+              color: #984BFB
+              font-size: 18px
+
+              @include for-desktop-up
+                font-size: 25px
+
+              &:after
+                font-size: 14px
+
+                @include for-big-phone-up
+                  font-size: 16px
+
+                @include for-middle-desktop-up
+                  font-size: 18px
+
+            & .discount
+              display: block
+              color: #fff
+              font-weight: 700
+              font-size: 14px
+              background-color: rgba(147, 73, 242, 0.8)
+              border-radius: 20px
+              padding: 4px 7px
+              line-height: 1
+
+          & .toPrice
+            color: #C745CB
+            font-size: 32px
+            margin-top: 5px
+
+            @include for-desktop-up
+              font-size: 40px
+
+            &:after
+              font-size: 21px
+
+              @include for-big-phone-up
+                font-size: 24px
+
+              @include for-middle-desktop-up
+                font-size: 30px
+
+        & .actions
+          display: flex
+          column-gap: 8px
+          align-items: center
+
+          @include for-desktop-up
+            column-gap: 15px
+            flex-direction: row-reverse
+
+        & .moreInfoBlocks
+          display: flex
+          column-gap: 10px
+
+          & .moreInfo
+            font-size: 12px
+            padding: 5px
+            border-radius: 7px
+            font-weight: 300
+            line-height: 1.2
+
+            @include for-desktop-up
+              font-size: 14px
+              padding: 7px
+
+            &.preOrderInfo
+              align-self: flex-start
+
+              @include for-desktop-up
+                min-width: 250px
+
       & .extends
         display: flex
         column-gap: 10px
+        margin-top: 15px
         max-width: 100%
         padding: 3px 15px 64px 15px
 
         @include for-desktop-up
+          margin-top: 25px
           padding: initial
 
         & .tooltip
@@ -408,18 +505,20 @@
     display: flex
     flex-direction: column-reverse
 
-    @include for-big-phone-up
+    @include for-desktop-up
       flex-direction: initial
-      column-gap: 70px
-      margin-top: 100px
+      column-gap: 50px
+      margin-top: 60px
+
+    @include for-middle-desktop-up
+      column-gap: 60px
+      margin-top: 70px
 
     & .sideBar
-      .doubleGameSlider
-        @include for-big-phone-down
-          display: none
+      margin-top: 30px
 
-        &:not(:last-child)
-          margin-bottom: 60px
+      @include for-desktop-up
+        margin-top: 0
 
     & .info
       flex-grow: 1
@@ -646,7 +745,10 @@
                 font-size: 16px
 
   & .lastViews
-    margin-top: 30px
+    margin-top: 70px
 
-    @include for-big-phone-up
-      margin-top: 120px
+    @include for-middle-desktop-up
+      margin-top: 80px
+
+    @include for-big-phone-down
+      display: none

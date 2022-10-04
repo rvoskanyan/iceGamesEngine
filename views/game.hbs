@@ -33,17 +33,14 @@
     {{/unless}}
     {{> breadcrumbs}}
     <div
-        class="cover blackout blackout-left blackout-bottom slide active js-productPageCover"
+        class="cover js-productPageCover"
         {{#if product.coverVideo}} data-video-name="{{product.coverVideo}}"{{/if}}
     >
-        <div class="mobileImgContainer">
-            <img class="mobileImg" src="{{websiteAddress}}{{product.img}}" alt="{{product.name}}" title="{{product.name}}" itemprop="image">
-        </div>
         {{#if product.coverVideo}}
             <video class="video js-coverVideo" loop muted></video>
         {{/if}}
         <img class="img" src="{{websiteAddress}}{{product.coverImg}}" alt="{{product.name}}" title="{{product.name}}">
-        <div class="offer">
+        <div class="contentContainer offer">
             {{#iff bundleProducts.length '>' 1}}
                 <div class="packages mobileInvisibleScroll">
                     {{#each bundleProducts}}
@@ -75,6 +72,9 @@
                     {{/each}}
                 </div>
             {{/iff}}
+            <div class="mobileImgContainer">
+                <img class="mobileImg" src="{{websiteAddress}}{{product.img}}" alt="{{product.name}}" title="{{product.name}}" itemprop="image">
+            </div>
             <h1 class="name">Ключ для <span itemprop="name">{{product.name}}</span></h1>
             <div class="description" itemprop="description">{{encodeString product.description}}</div>
             <div class="offerMacro" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
@@ -92,7 +92,7 @@
                         <div class="status positive">приобрели сегодня {{countSales}} раз(а)</div>
                     </div>
                 {{/if}}
-                <div class="mobileBuyContainer">
+                <div class="buyContainer">
                     <div class="price">
                         {{#iff product.discount '>' 0}}
                             <div class="rowDiscount">
@@ -108,6 +108,9 @@
                         </div>
                     </div>
                     <div class="actions">
+                        <button class="btn js-addInFavoritesProductPage{{#if currentProductInFavorite}} js-active{{/if}}" title="Добавить товар в избранное" data-product-id="{{product.id}}">
+                            <span class="icon icon-static icon-static-bigLike js-icon{{#if currentProductInFavorite}} active{{/if}}"></span>
+                        </button>
                         {{#if product.inStock}}
                             {{#if currentProductInCart}}
                                 <button
@@ -138,6 +141,8 @@
                                 >Уведомить</button>
                             {{/if}}
                         {{/if}}
+                    </div>
+                    {{#orIf product.preOrder product.dlc}}
                         <div class="moreInfoBlocks">
                             {{#if product.preOrder}}
                                 <div class="moreInfo preOrderInfo">
@@ -168,7 +173,7 @@
                                 </div>
                             {{/if}}
                         </div>
-                    </div>
+                    {{/orIf}}
                 </div>
             </div>
             {{#if product.extends.length}}
@@ -196,11 +201,6 @@
                 <div class="visibleAreaWrapper">
                     <div class="visibleArea js-visibleArea">
                         <div class="tape js-tape">
-                            {{#if product.trailerLink}}
-                                <button class="slide js-slide btn video js-playYouTubeVideo" title="Посмотреть трейлер игры" data-link="{{trailerId}}">
-                                    <img class="img" src="https://img.youtube.com/vi/{{trailerId}}/{{typeTrailerCover}}.jpg" alt="Трейлер игры {{game.name}}" title="Трейлер игр {{game.name}}">
-                                </button>
-                            {{/if}}
                             {{#each product.images}}
                                 <button class="btn slide js-slide js-largeImg" title="Увеличить" itemscope itemtype="https://schema.org/ImageObject">
                                     <meta itemprop="name" content="Картинка игры {{@root.product.name}}">
@@ -208,6 +208,11 @@
                                     <img itemprop="contentUrl" class="img js-targetImg" src="{{@root.websiteAddress}}{{name}}" alt="Изображение-{{@index}} из игры {{@root.product.name}}">
                                 </button>
                             {{/each}}
+                            {{#if product.trailerLink}}
+                                <button class="slide js-slide btn video js-playYouTubeVideo" title="Посмотреть трейлер игры" data-link="{{trailerId}}">
+                                    <img class="img" src="https://img.youtube.com/vi/{{trailerId}}/{{typeTrailerCover}}.jpg" alt="Трейлер игры {{game.name}}" title="Трейлер игр {{game.name}}">
+                                </button>
+                            {{/if}}
                         </div>
                     </div>
                 </div>
@@ -272,14 +277,14 @@
         </div>
         <div class="fullInfo">
             <div class="sideBar">
-                {{#if recProducts.length}}
+                {{#if additions.length}}
                     <div class="doubleGameSlider">
-                        <div class="title">Вам может понравится</div>
-                        <div class="slider{{#iff recProducts.length '>' 2}} js-recProductSlider{{/iff}}">
+                        <div class="title">Дополнения к игре</div>
+                        <div class="slider{{#iff additions.length '>' 2}} js-recProductSlider{{/iff}}">
                             <div class="visibleAreaWrapper">
                                 <div class="visibleArea js-visibleArea">
                                     <div class="tape js-tape">
-                                        {{#each recProducts}}
+                                        {{#each additions}}
                                             <div class="slide js-slide{{#iff @index '<' 2}} active{{/iff}}">
                                                 {{> game
                                                         id=_id
@@ -290,10 +295,9 @@
                                     </div>
                                 </div>
                             </div>
-                            {{#iff recProducts.length '>' 2}}
-                                <div class="slideControls">
+                            {{#iff additions.length '>' 2}}
+                                <div class="slideControls-rounded">
                                     <button class="btn prev js-prevBtn"></button>
-                                    <div class="progress js-progress"></div>
                                     <button class="btn next js-nextBtn"></button>
                                 </div>
                             {{/iff}}
@@ -326,9 +330,35 @@
                                 </div>
                             </div>
                             {{#iff articles.length '>' 1}}
-                                <div class="slideControls">
+                                <div class="slideControls-rounded">
                                     <button class="btn prev js-prevBtn"></button>
-                                    <div class="progress js-progress"></div>
+                                    <button class="btn next js-nextBtn"></button>
+                                </div>
+                            {{/iff}}
+                        </div>
+                    </div>
+                {{/if}}
+                {{#if recProducts.length}}
+                    <div class="doubleGameSlider">
+                        <div class="title">Вам может понравится</div>
+                        <div class="slider{{#iff recProducts.length '>' 2}} js-recProductSlider{{/iff}}">
+                            <div class="visibleAreaWrapper">
+                                <div class="visibleArea js-visibleArea">
+                                    <div class="tape js-tape">
+                                        {{#each recProducts}}
+                                            <div class="slide js-slide{{#iff @index '<' 2}} active{{/iff}}">
+                                                {{> game
+                                                        id=_id
+                                                        size='small'
+                                                }}
+                                            </div>
+                                        {{/each}}
+                                    </div>
+                                </div>
+                            </div>
+                            {{#iff recProducts.length '>' 2}}
+                                <div class="slideControls-rounded">
+                                    <button class="btn prev js-prevBtn"></button>
                                     <button class="btn next js-nextBtn"></button>
                                 </div>
                             {{/iff}}

@@ -118,18 +118,28 @@ export const gamePage = async (req, res) => {
     let isProductNotPurchased = true;
     let lastViewedProducts = [];
     let currentProductInCart = false;
+    let currentProductInFavorite = false;
     let bundleProducts = null;
     let seriesProducts = null;
     let subscribed = false;
     let favoritesProducts;
     let cart;
     let typeTrailerCover;
+    let additions = await Product
+      .find({dlc: true, dlcForId: product._id})
+      .select(['name', 'img', 'priceTo', 'priceFrom', 'dlc', 'inStock', 'alias'])
+      .lean();
   
     if (person) {
       const email = person.email;
       const productId = product._id.toString();
+      
       cart = person.cart;
       favoritesProducts = person.favoritesProducts;
+  
+      if (favoritesProducts && favoritesProducts.includes(productId)) {
+        currentProductInFavorite = true;
+      }
       
       if (cart && cart.includes(productId)) {
         currentProductInCart = true;
@@ -255,6 +265,20 @@ export const gamePage = async (req, res) => {
       return item;
     })
   
+    additions = additions.map(item => {
+      const productId = item._id.toString();
+  
+      if (favoritesProducts && favoritesProducts.includes(productId)) {
+        item.inFavorites = true;
+      }
+  
+      if (cart && cart.includes(productId)) {
+        item.inCart = true;
+      }
+  
+      return item;
+    })
+  
     seriesProducts = seriesProducts && seriesProducts.map(item => {
       const productId = item._id.toString();
   
@@ -290,6 +314,7 @@ export const gamePage = async (req, res) => {
       countComments,
       lastViewedProducts,
       currentProductInCart,
+      currentProductInFavorite,
       bundleProducts,
       seriesProducts,
       recProducts,
@@ -299,6 +324,7 @@ export const gamePage = async (req, res) => {
       reviews,
       countReviews,
       articles,
+      additions,
       ogImage: product.img,
       breadcrumbs: [
         {

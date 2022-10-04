@@ -1,7 +1,7 @@
 <main class="blogPage js-blogPage">
     {{> breadcrumbs}}
     {{#if fixArticle}}
-        <div class="cover blackout blackout-bottomMax slide active js-slide">
+        <div class="cover">
             <img class="img" src="{{websiteAddress}}{{fixArticle.coverImg}}" alt="Постер записи в блоге - {{fixArticle.name}}" title="Постер записи в блоге - {{fixArticle.name}}">
             <div class="textContent">
                 <div class="title">{{fixArticle.name}}</div>

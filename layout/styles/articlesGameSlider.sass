@@ -1,22 +1,27 @@
 @import './breakPoints'
 
 .articlesGameSlider
-  margin-top: 20px
-
-  @include for-desktop-up
-    margin-top: 0
-
-    &:not(:first-child)
-      margin-top: 20px
-
-  .title
-    font-family: 'Lemon Milk'
-    font-size: 18px
-    color: #fff
+  &:not(:first-child)
+    margin-top: 20px
 
     @include for-desktop-up
-      text-align: center
-      font-size: 24px
+      margin-top: 40px
+
+  & > .title
+    font-family: 'Montserrat'
+    font-size: 18px
+    color: #fff
+    font-weight: 600
+    border: 1px solid #FFFFFF
+    border-radius: 40px
+    padding: 6px 12px
+    max-width: max-content
+
+    @include for-desktop-up
+      font-size: 21px
+      border: 2px solid #FFFFFF
+      border-radius: 40px
+      padding: 8px 15px
 
   .slider
     margin-top: 10px
@@ -30,16 +35,16 @@
       overflow: hidden
 
       @include for-desktop-up
-        max-width: 366px
-        min-width: 366px
+        max-width: 320px
+        min-width: 320px
 
       @include for-middle-desktop-up
-        max-width: 390px
-        min-width: 390px
+        max-width: 328px
+        min-width: 328px
 
       @include for-big-desktop-up
-        max-width: 442px
-        min-width: 442px
+        max-width: 372px
+        min-width: 372px
 
       .tape
         display: flex
@@ -61,16 +66,16 @@
       border: initial
 
       @include for-desktop-up
-        max-width: 366px
-        min-width: 366px
+        max-width: 320px
+        min-width: 320px
 
       @include for-middle-desktop-up
-        max-width: 390px
-        min-width: 390px
+        max-width: 328px
+        min-width: 328px
 
       @include for-big-desktop-up
-        max-width: 442px
-        min-width: 442px
+        max-width: 372px
+        min-width: 372px
 
       .img
         box-shadow: initial
@@ -89,7 +94,7 @@
       &:hover img
         transform: initial
 
-    .slideControls
+    .slideControls-rounded
       margin-top: 20px
 
       @include for-big-phone-down
