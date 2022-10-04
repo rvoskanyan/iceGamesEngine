@@ -15,6 +15,7 @@ const postman = new Postman();
 const profileMenuNode = document.querySelector('.js-profileMenu');
 const homeSliderNode = document.querySelector('.js-homeSlider');
 const recProductSliderNode = document.querySelector('.js-recProductSlider');
+const additionsProductSliderNode = document.querySelector('.js-additionsProductSlider');
 const articlesProductSliderNode = document.querySelector('.js-articlesGameSlider');
 const seriesSliderNode = document.querySelector('.js-seriesSlider');
 const newsSliderNode = document.querySelector('.js-newsSlider');
@@ -2031,6 +2032,15 @@ if (profileMenuNode) {
       moveIndicator(e.target)
     })
   })
+}
+
+if (additionsProductSliderNode) {
+  new Slider({
+    mainNode: additionsProductSliderNode,
+    switchingTime: 3000,
+    isTrack: true,
+    countSlidesScroll: 1,
+  });
 }
 
 if (recProductSliderNode) {
