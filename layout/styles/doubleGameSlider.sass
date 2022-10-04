@@ -36,7 +36,7 @@
       & .visibleArea
         max-width: calc((135px + 5px * 2) * 2)
 
-        @include for-desktop-up
+        @include for-middle-phone-up
           max-width: calc((150px + 5px * 2) * 2)
 
         @include for-middle-desktop-up
@@ -60,7 +60,13 @@
             transition: .3s ease-in
             transition-property: opacity, visibility
 
-            @include for-desktop-up
+            @include for-middle-phone-up
+              min-width: 150px
+              max-width: 150px
+              min-height: 235px
+              max-height: 235px
+
+            @include for-middle-phone-up
               min-width: 150px
               max-width: 150px
               min-height: 230px
