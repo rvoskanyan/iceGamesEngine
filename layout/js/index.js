@@ -64,6 +64,7 @@ const openCompoundOrderNodes = document.querySelectorAll('.js-openCompoundOrder'
 const openAboutHomeModalNode = document.querySelector('.js-openAboutHomeModal');
 const openDescriptionSplitCatalogNode = document.querySelector('.js-openDescriptionSplitCatalog');
 const addInFavoritesProductPageNode = document.querySelector('.js-addInFavoritesProductPage');
+const courseNode = document.querySelector('.js-course');
 const popupController = new PopupController([
   {
     id: 'loginFrom',
@@ -151,6 +152,28 @@ const popupController = new PopupController([
 const windowHeight = document.documentElement.clientHeight;
 const windowWidth = document.documentElement.clientWidth;
 const topGap = document.querySelector('.js-header').getBoundingClientRect().height + 10;
+
+let intervalCourseDollar;
+let intervalCourseEuro;
+
+courseNode && document.querySelector('.js-setCommission-dollar').addEventListener('input', async () => {
+  intervalCourseDollar && clearInterval(intervalCourseDollar);
+  
+  const url = 'https://koronapay.com/transfers/online/api/transfers/tariffs?sendingCountryId=RUS&sendingCurrencyId=810&receivingCountryId=TUR&receivingCurrencyId=840&paymentMethod=debitCard&receivingAmount=100&receivingMethod=cash&paidNotificationEnabled=true';
+  const method = 'GET';
+  
+  const response = await fetch(url, {mode: 'cors'});
+  //const result = await response.json();
+  
+  console.log(response);
+  
+  /*intervalCourseDollar = setInterval(async () => {
+    const url = 'https://koronapay.com/transfers/online/api/transfers/tariffs?sendingCountryId=RUS&sendingCurrencyId=810&receivingCountryId=TUR&receivingCurrencyId=978&paymentMethod=debitCard&receivingAmount=100000&receivingMethod=cash&paidNotificationEnabled=true';
+    const method = 'GET';
+  
+    const response = await fetch(url, {mode: 'cors-with-forced-preflight'});
+  }, 10000);*/
+})
 
 promptProductNodes.forEach(promptProductNode => {
   const coordinates = promptProductNode.getBoundingClientRect();
