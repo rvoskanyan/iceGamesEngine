@@ -166,6 +166,7 @@ courseNode && document.querySelector('.js-setCommission-dollar').addEventListene
     mode: 'no-cors',
     headers: {
       'Access-Control-Allow-Origin': 'https://icegames.store/',
+      'Content-Type': 'application/json',
     }
   });
   //const result = await response.json();
