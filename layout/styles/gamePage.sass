@@ -524,6 +524,12 @@
       flex-grow: 1
 
       & .generalInfo
+        &:not(:first-child)
+          margin-top: 20px
+
+          @include for-desktop-up
+            margin-top: 50px
+
         & .hiddenElementsList
           overflow: hidden
           max-height: 0
@@ -681,7 +687,7 @@
       margin-top: 30px
 
       @include for-big-phone-up
-        margin-top: 80px
+        margin-top: 60px
 
       & .listItems
         &:not(:first-child)

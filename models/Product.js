@@ -122,6 +122,26 @@ const fields = {
     type: String,
     //required: true,
   },
+  recOs: {
+    type: String,
+    //required: true,
+  },
+  recCpu: {
+    type: String,
+    //required: true,
+  },
+  recGraphicsCard: {
+    type: String,
+    //required: true,
+  },
+  recRam: {
+    type: String,
+    //required: true,
+  },
+  recDiskMemory: {
+    type: String,
+    //required: true,
+  },
   images: {
     type: [imageSchema],
     default: [],

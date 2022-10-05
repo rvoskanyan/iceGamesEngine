@@ -206,6 +206,36 @@
     <br>
     <br>
     <label>
+        Рукомендованная ОС:
+        <input type="text" name="recOs" value="{{product.recOs}}"{{#iff person.role '!==' 'admin'}} readonly{{/iff}}>
+    </label>
+    <br>
+    <br>
+    <label>
+        Рекомендованный процессор:
+        <input type="text" name="recCpu" value="{{product.recCpu}}"{{#iff person.role '!==' 'admin'}} readonly{{/iff}}>
+    </label>
+    <br>
+    <br>
+    <label>
+        Рекомендуемая видео карта:
+        <input type="text" name="recGraphicsCard" value="{{product.recGraphicsCard}}"{{#iff person.role '!==' 'admin'}} readonly{{/iff}}>
+    </label>
+    <br>
+    <br>
+    <label>
+        Рекомендуемая оперативная память:
+        <input type="text" name="recRam" value="{{product.recRam}}"{{#iff person.role '!==' 'admin'}} readonly{{/iff}}>
+    </label>
+    <br>
+    <br>
+    <label>
+        Рекомендуемая память на диске:
+        <input type="text" name="recDiskMemory" value="{{product.recDiskMemory}}"{{#iff person.role '!==' 'admin'}} readonly{{/iff}}>
+    </label>
+    <br>
+    <br>
+    <label>
         Языки игры*:
         <input type="text" name="languages" value="{{product.languages}}"{{#iff person.role '!==' 'admin'}} readonly{{/iff}}>
     </label>

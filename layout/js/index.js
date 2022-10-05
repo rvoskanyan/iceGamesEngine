@@ -25,6 +25,7 @@ const homeCatalogTabsNode = document.querySelector('.js-homeCatalogTabs');
 const genresSliderNode = document.querySelector('.js-genresSlider');
 const gameGallerySliderNode = document.querySelector('.js-gameGallerySlider');
 const gameInfoTabsNode = document.querySelector('.js-gameInfoTabs');
+const gameInfoSystemParamsNode = document.querySelector('.js-gameInfoSystemParams');
 const feedbackProductTabsNode = document.querySelector('.js-feedbackProductTabs');
 const youtubePlayNodes = document.querySelectorAll('.js-playYouTubeVideo');
 const catalogNode = document.querySelector('.js-catalog');
@@ -64,7 +65,6 @@ const openCompoundOrderNodes = document.querySelectorAll('.js-openCompoundOrder'
 const openAboutHomeModalNode = document.querySelector('.js-openAboutHomeModal');
 const openDescriptionSplitCatalogNode = document.querySelector('.js-openDescriptionSplitCatalog');
 const addInFavoritesProductPageNode = document.querySelector('.js-addInFavoritesProductPage');
-const courseNode = document.querySelector('.js-course');
 const popupController = new PopupController([
   {
     id: 'loginFrom',
@@ -152,33 +152,6 @@ const popupController = new PopupController([
 const windowHeight = document.documentElement.clientHeight;
 const windowWidth = document.documentElement.clientWidth;
 const topGap = document.querySelector('.js-header').getBoundingClientRect().height + 10;
-
-let intervalCourseDollar;
-let intervalCourseEuro;
-
-courseNode && document.querySelector('.js-setCommission-dollar').addEventListener('input', async () => {
-  intervalCourseDollar && clearInterval(intervalCourseDollar);
-  
-  const url = 'https://koronapay.com/transfers/online/api/transfers/tariffs?sendingCountryId=RUS&sendingCurrencyId=810&receivingCountryId=TUR&receivingCurrencyId=840&paymentMethod=debitCard&receivingAmount=100&receivingMethod=cash&paidNotificationEnabled=true';
-  
-  const response = await fetch(url, {
-    method: 'GET',
-    headers: {
-      'Access-Control-Allow-Origin': 'https://icegames.store/',
-      'Content-Type': 'application/json',
-    }
-  });
-  //const result = await response.json();
-  
-  console.log(response);
-  
-  /*intervalCourseDollar = setInterval(async () => {
-    const url = 'https://koronapay.com/transfers/online/api/transfers/tariffs?sendingCountryId=RUS&sendingCurrencyId=810&receivingCountryId=TUR&receivingCurrencyId=978&paymentMethod=debitCard&receivingAmount=100000&receivingMethod=cash&paidNotificationEnabled=true';
-    const method = 'GET';
-  
-    const response = await fetch(url, {mode: 'cors-with-forced-preflight'});
-  }, 10000);*/
-})
 
 promptProductNodes.forEach(promptProductNode => {
   const coordinates = promptProductNode.getBoundingClientRect();
@@ -1573,6 +1546,12 @@ if (gameGallerySliderNode) {
 if (gameInfoTabsNode) {
   new Tabs({
     mainNode: gameInfoTabsNode,
+  });
+}
+
+if (gameInfoSystemParamsNode) {
+  new Tabs({
+    mainNode: gameInfoSystemParamsNode,
   });
 }
 
