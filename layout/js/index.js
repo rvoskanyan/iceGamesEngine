@@ -160,9 +160,14 @@ courseNode && document.querySelector('.js-setCommission-dollar').addEventListene
   intervalCourseDollar && clearInterval(intervalCourseDollar);
   
   const url = 'https://koronapay.com/transfers/online/api/transfers/tariffs?sendingCountryId=RUS&sendingCurrencyId=810&receivingCountryId=TUR&receivingCurrencyId=840&paymentMethod=debitCard&receivingAmount=100&receivingMethod=cash&paidNotificationEnabled=true';
-  const method = 'GET';
   
-  const response = await fetch(url);
+  const response = await fetch(url, {
+    method: 'GET',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  });
   //const result = await response.json();
   
   console.log(response);
