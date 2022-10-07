@@ -43,7 +43,7 @@ const fields = {
   nameGrams: [String],
   normalizeName: String,
   soundName: [],
-  shortNames: [String],
+  shortNames: String,
   alias: {
     type: String,
     //require: true,

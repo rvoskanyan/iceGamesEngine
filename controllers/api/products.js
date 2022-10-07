@@ -50,11 +50,16 @@ export const getProducts = async (req, res) => {
     const latin = getAlias(searchString, false);
     const changeLayout = getChangeLayout(searchString);
     const romaNumsSearch = toRoman(searchString, numsSearch);
+  
+    const shortNamesMatch = new RegExp(searchString, 'i');
+    const latinShortNamesMatch = new RegExp(latin, 'i');
+    const changeLayoutShortNamesMatch = new RegExp(changeLayout, 'i');
+    const romaNumsShortNamesMatch = new RegExp(romaNumsSearch, 'i');
     
     const searchMatch = new RegExp(searchString, 'i');
     const latinMatch = new RegExp(latin, 'i');
     const changeLayoutMatch = new RegExp(changeLayout, 'i');
-    const romaNumsSearchMatch = new RegExp(changeLayout, 'i');
+    const romaNumsSearchMatch = new RegExp(romaNumsSearch, 'i');
     
     const searchGrams = getGrams(searchString);
     const latinGrams = getGrams(latin);
@@ -68,10 +73,10 @@ export const getProducts = async (req, res) => {
     const getWithoutSort = async (filter) => {
       let stageFilter = {
         $or: [
-          {shortNames: {$in: [searchString.toUpperCase()]}},
-          {shortNames: {$in: [latin.toUpperCase()]}},
-          {shortNames: {$in: [changeLayout.toUpperCase()]}},
-          {shortNames: {$in: [romaNumsSearch.toUpperCase()]}},
+          {shortNames: shortNamesMatch},
+          {shortNames: latinShortNamesMatch},
+          {shortNames: changeLayoutShortNamesMatch},
+          {shortNames: romaNumsShortNamesMatch},
         ],
       }
       

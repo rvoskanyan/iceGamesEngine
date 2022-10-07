@@ -38,6 +38,14 @@ export const pageProducts = async (req, res) => {
     const other = await Product.find({active: false}).select(['name', 'dsId', 'images']).lean();
     const all = await Product.find().select(['name', 'dsId', 'trailerLink']).lean();
     const trailerProblem = [];
+    
+    const products = await Product.find();
+    
+    for (const item of products) {
+      item.shortNames = undefined;
+      
+      await item.save();
+    }
   
     all.forEach(product => {
       if (!product.trailerLink) {
@@ -165,7 +173,7 @@ export const addProduct = async (req, res) => {
     const product = new Product({
       name,
       nameGrams: getGrams(name),
-      shortNames: shortNames ? shortNames.split(',').map(shortName => normalizeStr(shortName)) : undefined,
+      shortNames,
       normalizeName: normalizeStr(name),
       soundName: getSoundIndex(name),
       metaDescription,
@@ -414,7 +422,7 @@ export const editProduct = async (req, res) => {
     Object.assign(product, {
       name,
       nameGrams: getGrams(name),
-      shortNames: shortNames ? shortNames.split(',').map(shortName => normalizeStr(shortName)) : undefined,
+      shortNames,
       normalizeName: normalizeStr(name),
       soundName: getSoundIndex(name),
       metaDescription,

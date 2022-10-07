@@ -41,10 +41,8 @@
     <br>
     <br>
     <label>
-        Иные вариации имени (аббревиатуры, сокращения и т.д. Пр.: GTA V), через запятую:
-        <br>
-        <br>
-        <textarea name="shortNames" cols="30" rows="10">{{#each product.shortNames}}{{this}}{{#unless @last}}, {{/unless}}{{/each}}</textarea>
+        Иные вариации имени, через пробел:
+        <input type="text" name="shortNames" {{#iff person.role '!==' 'admin'}} readonly{{/iff}} value="{{product.shortNames}}">
     </label>
     <br>
     <br>
