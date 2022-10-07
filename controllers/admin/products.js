@@ -38,14 +38,6 @@ export const pageProducts = async (req, res) => {
     const other = await Product.find({active: false}).select(['name', 'dsId', 'images']).lean();
     const all = await Product.find().select(['name', 'dsId', 'trailerLink']).lean();
     const trailerProblem = [];
-    
-    const products = await Product.find();
-    
-    for (const item of products) {
-      item.shortNames = undefined;
-      
-      await item.save();
-    }
   
     all.forEach(product => {
       if (!product.trailerLink) {
