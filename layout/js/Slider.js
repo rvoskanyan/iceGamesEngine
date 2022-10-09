@@ -11,6 +11,7 @@ export default class Slider {
       countSlidesScroll = 1,
       onSwitch,
       carousel,
+      infinity,
     } = options;
   
     this.carousel = carousel;
@@ -22,6 +23,7 @@ export default class Slider {
     this.progressNavigate = progressNavigate;
     this.countSlidesScroll = countSlidesScroll;
     this.onSwitch = onSwitch;
+    this.infinity = infinity;
     this.activeScreen = 0;
     this.countVisibleSlides = 1;
     this.timeOutId = null;
@@ -107,14 +109,119 @@ export default class Slider {
       this.visibleAreaNode.addEventListener('mousedown', this.mouseDownVisibleArea);
       this.visibleAreaNode.addEventListener('touchstart', this.touchVisibleArea);
     }
+  
+    if (this.infinity) {
+      this.firstVisibleSlides = Object.values(this.slideNodes).slice(0, this.countVisibleSlides);
+      this.firstSlidesStart = true;
+      this.slideNodesFirstSlidesEnd = undefined;
+    }
   }
   
   switchScreen = (targetScreen) => {
-    const prevScreen = this.activeScreen;
+    let prevScreen = this.activeScreen;
   
     this.navigateItemNodes && this.navigateItemNodes[prevScreen].style.setProperty('--progressPercent', 0);
     
     this.activeScreen = targetScreen;
+    
+    if (this.infinity) {
+      this.setActiveClass(prevScreen, 'remove');
+      
+      if (targetScreen >= this.countScreens) {
+        this.tapeNode.style.transition = 'initial';
+  
+        if (this.firstSlidesStart) {
+          this.firstVisibleSlides.forEach(slide => {
+            this.tapeNode.append(slide);
+          });
+    
+          this.firstSlidesStart = false;
+          this.activeScreen -= this.countVisibleSlides;
+          this.positionTape += this.countVisibleSlides * this.shareSlide;
+        } else {
+          [...this.firstVisibleSlides].reverse().forEach(slide => {
+            this.tapeNode.prepend(slide);
+          });
+    
+          this.firstSlidesStart = true;
+          this.activeScreen = 1;
+          this.positionTape = 0;
+        }
+        
+        this.tapeNode.style.transform = `translateX(${this.positionTape}px)`;
+        this.setActiveClass(this.activeScreen, 'add');
+        prevScreen = this.activeScreen - 1;
+  
+        setTimeout(() => {
+          this.tapeNode.style.transition = '1s ease';
+          this.moveTape(prevScreen);
+  
+          clearTimeout(this.timeOutId);
+  
+          if (this.switchingTime) {
+            this.timeOutId = setTimeout(() => {
+              this.switchScreen(this.activeScreen + 1);
+            }, this.switchingTime);
+          }
+        }, 300);
+        
+        return;
+      }
+      
+      if (targetScreen < 0) {
+        this.tapeNode.style.transition = 'initial';
+  
+        if (this.firstSlidesStart) {
+          this.firstVisibleSlides.forEach(slide => {
+            this.tapeNode.append(slide);
+          });
+    
+          this.firstSlidesStart = false;
+          this.activeScreen = this.countScreens - 2;
+          this.positionTape = (this.countSlides - this.countVisibleSlides) * this.shareSlide * -1;
+        } else {
+          [...this.firstVisibleSlides].reverse().forEach(slide => {
+            this.tapeNode.prepend(slide);
+          });
+    
+          this.firstSlidesStart = true;
+          this.activeScreen = this.countVisibleSlides - this.countSlidesScroll;
+          this.positionTape = this.countVisibleSlides * this.shareSlide * -1;
+        }
+  
+        this.tapeNode.style.transform = `translateX(${this.positionTape}px)`;
+        this.setActiveClass(this.activeScreen, 'add');
+        prevScreen = this.activeScreen + 1;
+  
+        setTimeout(() => {
+          this.tapeNode.style.transition = '1s ease';
+          this.moveTape(prevScreen);
+    
+          clearTimeout(this.timeOutId);
+    
+          if (this.switchingTime) {
+            this.timeOutId = setTimeout(() => {
+              this.switchScreen(this.activeScreen + 1);
+            }, this.switchingTime);
+          }
+        }, 300);
+  
+        return;
+      }
+  
+      this.setActiveClass(this.activeScreen, 'add');
+      this.moveTape(prevScreen);
+  
+      clearTimeout(this.timeOutId);
+  
+      if (this.switchingTime) {
+        this.timeOutId = setTimeout(() => {
+          this.switchScreen(this.activeScreen + 1);
+        }, this.switchingTime);
+      }
+      
+      return;
+    }
     
     if (targetScreen >= this.countScreens) {
       this.activeScreen = 0;
@@ -178,6 +285,7 @@ export default class Slider {
   setActiveClass = (screen, action) => {
     let start = screen * this.countSlidesScroll - this.offsetSlide;
     let end = start + this.countVisibleSlides;
+    let slideNodes = this.slideNodes;
     
     const members = [];
     
@@ -208,8 +316,16 @@ export default class Slider {
       }
     }
     
+    if (this.infinity && !this.firstSlidesStart) {
+      if (!this.slideNodesFirstSlidesEnd) {
+        this.slideNodesFirstSlidesEnd = this.mainNode.querySelectorAll('.js-slide');
+      }
+      
+      slideNodes = this.slideNodesFirstSlidesEnd;
+    }
+    
     while (start < end) {
-      const slide = this.slideNodes[start];
+      const slide = slideNodes[start];
       
       members.push(slide);
       slide.classList[action]('active');

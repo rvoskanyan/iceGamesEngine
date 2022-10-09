@@ -1,127 +1,153 @@
 @import './breakPoints'
 
 .genresSlider
-  display: flex
-  column-gap: 15px
-  align-items: center
-  margin-top: 15px
-  justify-content: space-between
+  max-width: 1530px
+  margin: 15px auto 0 auto
+  position: relative
 
-  @include for-big-phone-up
-    margin-top: 40px
+  @include for-desktop-up
+    margin: 40px auto 0 auto
 
-  & .visibleArea
-    overflow: hidden
-    max-height: calc(150px + 120px + 5px * 4) //heightFirstGenre + heightSecondGenre + margin * 4
+  .visibleArea
     width: 100%
+    overflow: hidden
+    position: relative
 
     @include for-desktop-up
-      width: initial
-      max-height: calc((283px + 18px * 2) * 2) //(height + margin * 2) * 2
-      padding: 0 14px
+      padding: 11px 0
 
     @include for-middle-desktop-up
-      max-height: calc((310px + 20px * 2) * 2) //(height + margin * 2) * 2
+      padding: 12px 0
+      max-width: (440px + 12px * 2) * 3 //(slideWidth + slideMargin * 2) * countSlides
 
     @include for-big-desktop-up
-      max-height: calc((340px + 25px * 2) * 2) //(height + margin * 2) * 2
+      padding: 13px 0
+      max-width: (480px + 15px * 2) * 3 //(slideWidth + slideMargin * 2) * countSlides
 
-    & .slides
+    &:before, &:after
+      position: absolute
+      display: block
+      background: linear-gradient(90deg, #01033C 5%, transparent 100%)
+      top: 0
+      bottom: 0
+      width: 525px
+      z-index: 1
+
+      @include for-desktop-up
+        content: ''
+
+    &:after
+      right: 0
+      transform: rotate(180deg)
+
+    .tape
+      display: flex
       transition: 1s ease
 
-      & .slide
-        display: flex
-        flex-direction: column
-        visibility: hidden
+      .slide
+        position: relative
+        display: block
+        min-width: 100%
+        height: 200px
+        overflow: hidden
+        border-radius: 20px
         opacity: 0
+        visibility: hidden
         transition: .3s ease-in
-        transition-property: opacity, visibility
+        transition-property: opacity, visibility, transform
 
-        @include for-big-phone-up
-          flex-direction: initial
+        @include for-desktop-up
+          border-radius: 30px
+          min-width: 392px
+          max-width: 392px
+          height: 250px
+          margin: 0 10px
+
+        @include for-middle-desktop-up
+          min-width: 440px
+          max-width: 440px
+          height: 280px
+          margin: 0 12px
+
+        @include for-big-desktop-up
+          min-width: 480px
+          max-width: 480px
+          margin: 0 15px
+          height: 300px
+
 
         &.active
-          visibility: visible
           opacity: 1
+          visibility: visible
 
-        &:nth-child(even)
-          @include for-big-phone-up
-            flex-direction: row-reverse
+        &:hover
+          @include for-desktop-up
+            transform: scale(1.08, 1.08)
 
-        & .genre
+        .blackout
           display: block
-          height: 150px //heightFirstGenre
+          position: absolute
           width: 100%
-          margin: 5px 0 //margin
-          border-radius: 5px
-          overflow: hidden
-          transition: transform .3s ease-in
-          position: relative
+          height: 100%
+          opacity: 0.3
+
+        .img
+          display: block
+          object-fit: cover
+          width: 100%
+          height: 100%
+
+        .name
+          font-family: 'Lemon Milk'
+          text-align: center
+          color: #fff
+          font-size: 20px
+          position: absolute
+          top: 50%
+          left: 50%
+          transform: translate(-50%, -50%)
+          width: 100%
 
           @include for-big-phone-up
-            height: 283px //height
-            border-radius: 22px
-            width: 629px
-            margin: 18px //margin
+            font-size: 42px
 
-          @include for-middle-desktop-up
-            width: 684px
-            height: 310px //height
-            margin: 20px //margin
+  & .prev, & .next
+    display: flex
+    z-index: 2
+    position: absolute
+    width: 40px
+    height: 40px
+    border: 2px solid #fff
+    border-radius: 100%
+    top: 50%
+    transform: translateY(-50%)
 
-          @include for-big-desktop-up
-            width: 760px
-            height: 340px //height
-            margin: 25px //margin
+    &:before
+      content: ''
+      background-size: cover
+      background-position: center
+      background-image: url("./../img/slideControlArrow.svg")
+      width: 15px
+      height: 8px
+      transition: transform .3s ease-in
 
-          & .blackout
-            display: block
-            position: absolute
-            width: 100%
-            height: 100%
-            opacity: 0.3
+    @include for-big-phone-down
+      display: none
 
-          &:hover, &:focus-visible
-            @include for-big-phone-up
-              transform: scale(1.1, 1.1)
-              outline: none
+  .prev
+    left: 0
 
-          &:last-child
-            width: 100%
-            height: 120px //heightSecondGenre
+    &:before
+      transform: rotate(90deg) translateY(1px)
 
-            @include for-big-phone-up
-              height: initial
-              width: 404px
+    &:hover:before
+      transform: rotate(90deg) translateY(8px)
 
-            @include for-middle-desktop-up
-              width: 486px
+  .next
+    right: 0
 
-            @include for-big-desktop-up
-              width: 542px
+    &:before
+      transform: rotate(-90deg) translateY(1px)
 
-          & .img
-            width: 100%
-            height: 100%
-            object-fit: cover
-
-          & .name
-            font-family: 'Lemon Milk'
-            text-align: center
-            color: #fff
-            font-size: 20px
-            position: absolute
-            top: 50%
-            left: 50%
-            transform: translate(-50%, -50%)
-            width: 100%
-
-            @include for-big-phone-up
-              font-size: 48px
-
-  & .slideControls
-    height: 250px
-
-    @include for-big-phone-up
-      height: 450px
-
+    &:hover:before
+      transform: rotate(-90deg) translateY(8px)

@@ -1526,11 +1526,10 @@ if (homeCatalogTabsNode) {
 if (genresSliderNode) {
   new Slider({
     mainNode: genresSliderNode,
-    progress: true,
     isTrack: true,
-    isVertical: true,
-    countSlidesScroll: 2,
-    switchingTime: 7000,
+    countSlidesScroll: 1,
+    switchingTime: 3000,
+    infinity: true,
   });
 }
 

@@ -128,30 +128,19 @@
         <div class="homeSection">
             <h2 class="homeTitle">Жанры</h2>
             <div class="genresSlider js-genresSlider">
+                <button class="btn prev js-prevBtn"></button>
                 <div class="visibleArea js-visibleArea">
-                    <div class="slides js-tape">
-                        <div class="slide js-slide">
-                            {{#each genres}}
-                                <a class="genre" href="{{websiteAddress}}games?genres={{_id}}" title="Открыть игры с жанром {{name}}">
-                                    <span class="blackout" style="background-color: {{bgColor}}"></span>
-                                    <img class="img" src="{{@root.websiteAddress}}{{img}}" alt="Изображение жанра {{name}}" title="Изображение жанра {{name}}">
-                                    <div class="name">
-                                        {{name}}
-                                    </div>
-                                </a>
-                                {{#if (endOfBlock @index 2 @last)}}
-                                    </div>
-                                    <div class="slide js-slide">
-                                {{/if}}
-                            {{/each}}
-                        </div>
+                    <div class="tape js-tape">
+                        {{#each genres}}
+                            <a class="slide js-slide" href="{{websiteAddress}}games?genres={{_id}}" title="Открыть игры с жанром {{name}}">
+                                <span class="blackout" style="background-color: {{bgColor}}"></span>
+                                <img class="img" src="{{@root.websiteAddress}}{{img}}" alt="Изображение жанра {{name}}" title="Изображение жанра {{name}}">
+                                <div class="name">{{name}}</div>
+                            </a>
+                        {{/each}}
                     </div>
                 </div>
-                <div class="slideControls vertical">
-                    <button class="btn prev js-prevBtn"></button>
-                    <div class="progress js-progress"></div>
-                    <button class="btn next js-nextBtn"></button>
-                </div>
+                <button class="btn next js-nextBtn"></button>
             </div>
         </div>
         {{> newsSlider
