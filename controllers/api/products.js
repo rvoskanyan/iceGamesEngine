@@ -275,7 +275,30 @@ export const getProducts = async (req, res) => {
         products = await getWithoutSort(paramsFilter);
       }
     } else {
-      products = await Product.find(filter).sort({priceTo: -1, createdAt: -1}).skip(+skip).limit(+limit).lean();
+      let sortObj = {};
+      
+      if (sort) {
+        switch (sort) {
+          case 'date': {
+            sortObj.releaseDate = -1;
+            break;
+          }
+          case 'price': {
+            sortObj.priceTo = 1;
+            break;
+          }
+          case 'discount': {
+            sortObj.discount = -1;
+            break;
+          }
+        }
+      } else {
+        sortObj = {priceTo: -1};
+      }
+  
+      sortObj.createdAt = -1;
+    
+      products = await Product.find(filter).sort({...sortObj}).skip(+skip).limit(+limit).lean();
     }
     
     if (person) {
