@@ -123,10 +123,10 @@ export function getYmlFeed(offers, genres) {
   const date = new Date().toISOString();
   let categories = '';
   
-  genres.forEach((genre, index) => {
+  genres.forEach(genre => {
      categories += `
-     <category id="${index + 1}">${htmlEntities(genre.name)}</category>`;
-  })
+     <category id="${genre.alias}">${htmlEntities(genre.name)}</category>`;
+  });
   
   let ymlFeed = `<?xml version="1.0" encoding="UTF-8"?>
 <yml_catalog date="${date}">
@@ -138,9 +138,8 @@ export function getYmlFeed(offers, genres) {
     </categories>
     <offers>`;
   
-  offers.forEach((offer, index) => {
-    offer.id = index + 1;
-    offer.categoryId = genres.findIndex(genre => genre.name === offer.genres[0].name) + 1;
+  offers.forEach(offer => {
+    offer.categoryId = genres.find(genre => genre.name === offer.genres[0].name).alias;
   
     ymlFeed += getYmlOffer(offer);
   });
@@ -155,11 +154,11 @@ export function getYmlFeed(offers, genres) {
 
 export function getYmlOffer(data) {
   return `
-        <offer id="${data.id}">
+        <offer id="${data.alias}">
             <name>${htmlEntities(data.name)}</name>
             <url>${websiteAddress}games/${htmlEntities(data.alias)}</url>
-            <price>${data.priceTo}</price>
-            <oldprice>${data.priceFrom}</oldprice>
+            <price>${data.priceTo}</price>${data.discount > 5 && data.discount < 75 ? `
+            <oldprice>${data.priceFrom}</oldprice>` : ''}
             <enable_auto_discounts>true</enable_auto_discounts>
             <currencyId>RUR</currencyId>
             <categoryId>${data.categoryId}</categoryId>

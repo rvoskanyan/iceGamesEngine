@@ -1,9 +1,7 @@
 <div class="homeSection newsSliderContainer">
     <h2 class="homeTitle">Новости и статьи</h2>
     <div class="newsSlider js-newsSlider">
-        <button class="btn prev increase js-prevBtn">
-            <span class="icon-static icon-static-arrow"></span>
-        </button>
+        <button class="btn prev js-prevBtn"></button>
         <div class="visibleArea js-visibleArea">
             <div class="tape js-tape">
                 {{#each articles}}
@@ -23,9 +21,7 @@
                 {{/each}}
             </div>
         </div>
-        <button class="btn next increase js-nextBtn">
-            <span class="icon-static icon-static-arrow"></span>
-        </button>
+        <button class="btn next js-nextBtn"></button>
     </div>
     <a class="btn round border hover-bg-palePink all" href="{{websiteAddress}}blog">Все новости</a>
 </div>

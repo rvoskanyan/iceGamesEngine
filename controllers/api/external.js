@@ -154,10 +154,10 @@ export const getFeedCsv = async (req, res) => {
 
 export const getFeedYML = async (req, res) => {
   try {
-    const genres = await Genre.find().lean();
+    const genres = await Genre.find().select(['alias', 'name']).lean();
     const products = await Product
       .find({active: true})
-      .select(['name', 'alias', 'img', 'description', 'priceTo', 'priceFrom'])
+      .select(['name', 'alias', 'img', 'description', 'priceTo', 'priceFrom', 'discount'])
       .populate(['activationServiceId', 'genres'])
       .lean();
     

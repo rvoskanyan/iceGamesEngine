@@ -2,24 +2,54 @@
 
 .newsSlider
   margin-top: 10px
-  display: flex
 
-  & + .all
-    margin: 35px auto 0 auto
+  @include for-desktop-up
+    display: flex
+    justify-content: space-between
 
-  & > .btn
+  & .prev, & .next
+    display: flex
+    z-index:
+    width: 40px
+    height: 40px
+    border: 2px solid #fff
+    border-radius: 100%
+    margin-top: 84px
+
+    @include for-middle-desktop-up
+      margin-top: 95px
+
+    @include for-big-desktop-up
+      margin-top: 100px
+
+    &:before
+      content: ''
+      background-size: cover
+      background-position: center
+      background-image: url("./../img/slideControlArrow.svg")
+      width: 15px
+      height: 8px
+      transition: transform .3s ease-in
+
     @include for-big-phone-down
       display: none
 
-    @include for-big-phone-up
-      margin-top: 84px
+  .prev
+    &:before
+      transform: rotate(90deg) translateY(1px)
 
-  & .prev
-    @include for-big-phone-up
-      margin-right: 20px
+    &:hover:before
+      transform: rotate(90deg) translateY(8px)
 
-    &:hover
-      transform: scale(1.1, 1.1)
+  .next
+    &:before
+      transform: rotate(-90deg) translateY(1px)
+
+    &:hover:before
+      transform: rotate(-90deg) translateY(8px)
+
+  & + .all
+    margin: 35px auto 0 auto
 
   & .visibleArea
     flex-grow: 1
@@ -51,10 +81,3 @@
         &.active
           visibility: visible
           opacity: 1
-
-  & .next
-    @include for-big-phone-up
-      margin-left: 20px
-
-    & .icon-static
-      transform: rotate(180deg)

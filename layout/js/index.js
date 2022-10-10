@@ -1369,9 +1369,9 @@ if (likeArticleNode) {
 if (newsSliderNode) {
   new Slider({
     mainNode: newsSliderNode,
-    switchingTime: 5000,
+    switchingTime: 12000,
     isTrack: true,
-    countSlidesScroll: 2
+    countSlidesScroll: 1
   })
 }
 
@@ -1529,7 +1529,7 @@ if (genresSliderNode) {
     mainNode: genresSliderNode,
     isTrack: true,
     countSlidesScroll: 1,
-    switchingTime: 3000,
+    switchingTime: 5000,
     infinity: true,
   });
 }
@@ -1538,8 +1538,8 @@ if (gameGallerySliderNode) {
   new Slider({
     mainNode: gameGallerySliderNode,
     isTrack: true,
-    countSlidesScroll: 2,
-    switchingTime: 3000,
+    countSlidesScroll: 1,
+    switchingTime: 6000,
   });
 }
 
@@ -2062,7 +2062,7 @@ if (additionsProductSliderNode) {
 if (recProductSliderNode) {
   new Slider({
     mainNode: recProductSliderNode,
-    switchingTime: 3000,
+    switchingTime: 5000,
     isTrack: true,
     countSlidesScroll: 1,
   });
