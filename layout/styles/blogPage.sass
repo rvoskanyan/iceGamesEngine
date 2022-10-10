@@ -2,8 +2,8 @@
 @import './breakPoints'
 
 .blogPage
-  & .articles
-    & .article
+  .articles
+    .article
       display: block
       border-radius: 20px
       overflow: hidden
@@ -308,3 +308,107 @@
             padding: initial
             margin-top: 35px
             column-gap: 20px
+
+        .productsFromArticleSlider
+          display: flex
+          justify-content: center
+          margin-top: 20px
+
+          @include for-middle-phone-up
+            justify-content: space-between
+
+          @include for-desktop-up
+            align-items: center
+            padding: 0 10px
+            margin-top: 15px
+
+          @include for-middle-desktop-up
+            padding: 0 30px
+            margin-top: 20px
+
+          @include for-big-desktop-up
+            padding: 0 20px
+
+          .visibleArea
+            max-width: 160px
+            overflow: hidden
+
+            @include for-middle-phone-up
+              max-width: (160px + 2px * 2) * 2
+
+            @include for-desktop-up
+              padding: 9px 0
+              max-width: (154px + 15px * 2) * 6
+
+            @include for-middle-desktop-up
+              padding: 10px 0
+              max-width: (171px + 15px * 2) * 6
+
+            @include for-big-desktop-up
+              padding: 12px 0
+              max-width: (197px + 15px * 2) * 6
+
+            .tape
+              display: flex
+              transition: transform .3s ease-in
+
+              .slide
+                min-width: 160px
+                max-width: 160px
+                opacity: 0
+                visibility: hidden
+                transition: .3s ease-in
+                transition-property: opacity, visibility
+
+                @include for-middle-phone-up
+                  margin: 0 2px
+
+                @include for-desktop-up
+                  min-width: 154px
+                  max-width: 154px
+                  margin: 0 15px
+
+                @include for-middle-desktop-up
+                  min-width: 171px
+                  max-width: 171px
+
+                @include for-big-desktop-up
+                  min-width: 197px
+                  max-width: 197px
+
+                &.active
+                  opacity: 1
+                  visibility: visible
+
+          & .prev, & .next
+            display: flex
+            width: 40px
+            height: 40px
+            border: 2px solid #fff
+            border-radius: 100%
+
+            &:before
+              content: ''
+              background-size: cover
+              background-position: center
+              background-image: url("./../img/slideControlArrow.svg")
+              width: 15px
+              height: 8px
+              transition: transform .3s ease-in
+
+            @include for-big-phone-down
+              display: none
+
+          .prev
+            &:before
+              transform: rotate(90deg) translateY(1px)
+
+            &:hover:before
+              transform: rotate(90deg) translateY(8px)
+
+          .next
+            &:before
+              transform: rotate(-90deg) translateY(1px)
+
+            &:hover:before
+              transform: rotate(-90deg) translateY(8px)

@@ -48,21 +48,47 @@
         {{#if article.products.length}}
             <div class="gamesBlock">
                 <div class="title">Игры из статьи</div>
-                <div class="games mobileScroll">
-                    {{#each article.products}}
-                        {{> game
-                            id=_id
-                            name=name
-                            alias=alias
-                            img=img
-                            priceTo=priceTo
-                            priceFrom=priceFrom
-                            dsId=dsId
-                            dlc=dlc
-                            inStock=inStock
-                        }}
-                    {{/each}}
-                </div>
+                {{#iff article.products.length '>' 7}}
+                    <div class="productsFromArticleSlider js-productsFromArticleSlider">
+                        <button class="btn prev js-prevBtn"></button>
+                        <div class="visibleArea js-visibleArea">
+                            <div class="tape js-tape">
+                                {{#each article.products}}
+                                    <div class="slide js-slide">
+                                        {{> game
+                                                id=_id
+                                                name=name
+                                                alias=alias
+                                                img=img
+                                                priceTo=priceTo
+                                                priceFrom=priceFrom
+                                                dsId=dsId
+                                                dlc=dlc
+                                                inStock=inStock
+                                        }}
+                                    </div>
+                                {{/each}}
+                            </div>
+                        </div>
+                        <button class="btn next js-nextBtn"></button>
+                    </div>
+                {{else}}
+                    <div class="games mobileScroll">
+                        {{#each article.products}}
+                            {{> game
+                                    id=_id
+                                    name=name
+                                    alias=alias
+                                    img=img
+                                    priceTo=priceTo
+                                    priceFrom=priceFrom
+                                    dsId=dsId
+                                    dlc=dlc
+                                    inStock=inStock
+                            }}
+                        {{/each}}
+                    </div>
+                {{/iff}}
             </div>
         {{/if}}
     </div>

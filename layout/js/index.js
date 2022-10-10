@@ -21,6 +21,7 @@ const seriesSliderNode = document.querySelector('.js-seriesSlider');
 const newsSliderNode = document.querySelector('.js-newsSlider');
 const achievementViewProfileSliderNode = document.querySelector('.js-achievementViewProfileSlider');
 const homeMediaSliderNode = document.querySelector('.js-homeMediaSlider');
+const productsFromArticleSliderNode = document.querySelector('.js-productsFromArticleSlider');
 const homeCatalogTabsNode = document.querySelector('.js-homeCatalogTabs');
 const genresSliderNode = document.querySelector('.js-genresSlider');
 const gameGallerySliderNode = document.querySelector('.js-gameGallerySlider');
@@ -1539,6 +1540,15 @@ if (gameGallerySliderNode) {
     isTrack: true,
     countSlidesScroll: 2,
     switchingTime: 3000,
+  });
+}
+
+if (productsFromArticleSliderNode) {
+  new Slider({
+    mainNode: productsFromArticleSliderNode,
+    isTrack: true,
+    countSlidesScroll: 1,
+    switchingTime: 300000,
   });
 }
 
