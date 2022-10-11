@@ -123,9 +123,9 @@ export function getYmlFeed(offers, genres) {
   const date = new Date().toISOString();
   let categories = '';
   
-  genres.forEach(genre => {
-     categories += `
-     <category id="${genre.alias}">${htmlEntities(genre.name)}</category>`;
+  genres.forEach((genre, index) => {
+    categories += `
+     <category id="${index + 1}">${htmlEntities(genre.name)}</category>`;
   });
   
   let ymlFeed = `<?xml version="1.0" encoding="UTF-8"?>
@@ -139,7 +139,7 @@ export function getYmlFeed(offers, genres) {
     <offers>`;
   
   offers.forEach(offer => {
-    offer.categoryId = genres.find(genre => genre.name === offer.genres[0].name).alias;
+    offer.categoryId = genres.findIndex(genre => genre.name === offer.genres[0].name) + 1;
   
     ymlFeed += getYmlOffer(offer);
   });
