@@ -52,6 +52,10 @@ export const gamePage = async (req, res) => {
         'editionId',
         'dlcForId',
         {
+          path: 'recommends',
+          select: ['name', 'alias', 'inStock', 'img', 'priceTo', 'priceFrom'],
+        },
+        {
           path: 'elements',
           populate: {
             path: 'productId',
@@ -249,7 +253,19 @@ export const gamePage = async (req, res) => {
       }
     }
     
-    let recProducts = await Product.find(recProductsFilter).select(['name', 'alias', 'inStock', 'img', 'priceTo', 'priceFrom']).limit(8).lean();
+    let recProducts = product.recommends.map(item => {
+      return {...item.toObject()};
+    });
+    
+    if (recProducts.length < 8) {
+      const dopRect = await Product
+        .find(recProductsFilter)
+        .select(['name', 'alias', 'inStock', 'img', 'priceTo', 'priceFrom'])
+        .limit(8 - recProducts.length)
+        .lean();
+      
+      recProducts = [...recProducts, ...dopRect];
+    }
   
     recProducts = recProducts.map(item => {
       const productId = item._id.toString();

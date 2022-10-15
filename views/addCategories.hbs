@@ -1,9 +1,24 @@
-<form method="post" action="/admin/categories/add">
+{{#if isEdit}}
+    <a href="/admin/categories/{{category._id}}/addProduct">Добавить игру на главную</a>
+    <br>
+    <br>
+{{/if}}
+<form method="post" action="/admin/categories/{{#if isEdit}}edit/{{category._id}}{{else}}add{{/if}}">
     <label>
         Название категории:
-        <input type="text" name="name">
+        <input type="text" name="name"{{#if category.name}} value="{{category.name}}"{{/if}}>
     </label>
     <br>
     <br>
-    <input type="submit" name="add" value="Добавить">
+    <input type="submit" name="add" value="{{#if isEdit}}Сохранить{{else}}Добавить{{/if}}">
 </form>
+{{#if products.length}}
+    <br>
+    <br>
+    <p>Товары в категории на главной</p>
+    <ul>
+        {{#each products}}
+            <li>{{product.name}} - {{order}}</li>
+        {{/each}}
+    </ul>
+{{/if}}

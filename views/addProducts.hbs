@@ -240,6 +240,18 @@
     <br>
     <br>
     <label>
+        Рекомендуемые товары:
+        <select name="recommends" multiple>
+            {{#each recProducts}}
+                <option value="{{id}}" {{#if selected}}selected{{/if}}>
+                    {{name}}
+                </option>
+            {{/each}}
+        </select>
+    </label>
+    <br>
+    <br>
+    <label>
         Категории игры:
         <select name="categories" multiple>
             {{#each categories}}

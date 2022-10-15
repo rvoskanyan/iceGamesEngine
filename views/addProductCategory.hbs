@@ -1,0 +1,21 @@
+<form method="post" action="/admin/categories/{{categoryId}}/addProduct">
+    <label>
+        Товар:
+        <select name="productId">
+            {{#each products}}
+                <option value="{{_id}}" {{#if selected}}selected{{/if}}>
+                    {{name}}
+                </option>
+            {{/each}}
+        </select>
+    </label>
+    <br>
+    <br>
+    <label>
+        Порядок:
+        <input type="number" name="order">
+    </label>
+    <br>
+    <br>
+    <input type="submit" name="add" value="Добавить">
+</form>

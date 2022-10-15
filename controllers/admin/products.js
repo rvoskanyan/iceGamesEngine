@@ -92,6 +92,7 @@ export const pageAddProduct = async (req, res) => {
     const series = await Series.find().select(['name']);
     const bundles = await Bundle.find().select(['name']);
     const editions = await Edition.find().select(['name']);
+    const recProducts = await Product.find().select(['name']).lean();
   
     res.render('addProducts', {
       layout: 'admin',
@@ -107,6 +108,7 @@ export const pageAddProduct = async (req, res) => {
       series,
       bundles,
       editions,
+      recProducts,
     });
   } catch (e) {
     console.log(e);
@@ -143,6 +145,7 @@ export const addProduct = async (req, res) => {
       recGraphicsCard,
       recRam,
       recDiskMemory,
+      recommends,
       categories,
       genres,
       gameExtends,
@@ -195,6 +198,7 @@ export const addProduct = async (req, res) => {
       recRam,
       recDiskMemory,
       languages,
+      recommends: getArray(recommends),
       categories: getArray(categories),
       genres: getArray(genres),
       extends: getArray(gameExtends),
@@ -277,6 +281,7 @@ export const pageEditProduct = async (req, res) => {
   try {
     let product = await Product.findById(productId);
 
+    const restRecommends = await Product.find({_id: {$nin: [...product.recommends, product._id]}}).select('name').lean();
     const restCategories = await Category.find({_id: {$nin: product.categories}}).select('name').lean();
     const restGenres = await Genre.find({_id: {$nin: product.genres}}).select('name').lean();
     const restExtends = await Extend.find({_id: {$nin: product.extends}}).select('name').lean();
@@ -291,6 +296,10 @@ export const pageEditProduct = async (req, res) => {
   
     product = await product
       .populate([
+        {
+          path: 'recommends',
+          select: ['name'],
+        },
         'categories',
         'genres',
         'extends',
@@ -311,6 +320,7 @@ export const pageEditProduct = async (req, res) => {
         }
       ]);
     
+    const recProducts = mergeParams(product.recommends, restRecommends);
     const categories = mergeParams(product.categories, restCategories);
     const genres = mergeParams(product.genres, restGenres);
     const allExtends = mergeParams(product.extends, restExtends);
@@ -345,6 +355,7 @@ export const pageEditProduct = async (req, res) => {
           name: gameData.name,
         }
       }),*/
+      recProducts,
       categories,
       genres,
       extends: allExtends,
@@ -359,7 +370,6 @@ export const pageEditProduct = async (req, res) => {
   } catch (e) {
     console.log(e);
     res.redirect(`/admin/products/`);
-    res.json({error: true});
   }
 }
 
@@ -394,6 +404,7 @@ export const editProduct = async (req, res) => {
       recGraphicsCard,
       recRam,
       recDiskMemory,
+      recommends,
       categories,
       genres,
       gameExtends,
@@ -442,6 +453,7 @@ export const editProduct = async (req, res) => {
       recRam,
       recDiskMemory,
       languages,
+      recommends: getArray(recommends),
       categories: getArray(categories),
       genres: genres ? getArray(genres) : product.genres,
       extends: gameExtends ? getArray(gameExtends) : product.extends,
@@ -541,7 +553,6 @@ export const editProduct = async (req, res) => {
   } catch (e) {
     console.log(e);
     res.redirect(`/admin/products/edit/${productId}`);
-    res.json({error: true});
   }
 }
 

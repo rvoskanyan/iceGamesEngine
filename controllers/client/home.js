@@ -7,6 +7,7 @@ import Partner from "../../models/Partner.js";
 import {achievementEvent} from "../../services/achievement.js";
 import Review from "../../models/Review.js";
 import Order from "../../models/Order.js";
+import ProductCategory from "../../models/Product_Category.js";
 
 export const homepage = async (req, res) => {
   const person = res.locals.person;
@@ -113,11 +114,51 @@ export const homepage = async (req, res) => {
     .lean();
   
   for (let category of categories) {
-    const products = await Product
-      .find({categories: {$in: category._id.toString()}, active: true, inStock: true})
-      .select(['name', 'alias', 'img', 'priceTo', 'priceFrom', 'dlc', 'dsId', 'inStock'])
-      .limit(10)
-      .lean();
+    const products = await ProductCategory.aggregate([
+      {
+        $match: {
+          category: category._id,
+        }
+      },
+      {
+        $lookup: {
+          from: 'products',
+          localField: 'product',
+          foreignField: '_id',
+          as: 'product',
+        }
+      },
+      {
+        $unwind: '$product',
+      },
+      {
+        $match: {
+          'product.inStock': true,
+          'product.active': true,
+        }
+      },
+      {
+        $sort: {
+          order: 1,
+          'product.createdAt': -1,
+        }
+      },
+      {
+        $limit: 10,
+      },
+      {
+        $project: {
+          _id: '$product._id',
+          name: '$product.name',
+          alias: '$product.alias',
+          img: '$product.img',
+          priceTo: '$product.priceTo',
+          priceFrom: '$product.priceFrom',
+          dlc: '$product.dlc',
+          inStock: '$product.inStock',
+        }
+      }
+    ]);
     
     catalog.push({
       category,

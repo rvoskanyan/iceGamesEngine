@@ -212,6 +212,10 @@ const fields = {
     //required: true,
   },
   languages: String,
+  recommends: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Product',
+  }],
   activationRegions: [{
     type: Schema.Types.ObjectId,
     ref: 'Region',
