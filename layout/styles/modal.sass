@@ -10,7 +10,7 @@
   left: 0
   width: 100%
   height: 100vh
-  background-color: rgba(0, 0, 0, 0.6)
+  background-color: rgba(0, 0, 0, 0.8)
   z-index: $ZIndex-Modal
   padding: 40px 15px
   overflow: auto
@@ -84,3 +84,53 @@
     padding: 10px
     background-color: rgba(128, 128, 128, 0.8)
     border-radius: 5px
+
+
+  & .prevModal, & .nextModal
+    display: flex
+    min-width: 40px
+    min-height: 40px
+    border: 3px solid #984BFB
+    border-radius: 100%
+    position: absolute
+    top: 50%
+    transform: translateY(-50%)
+    transition: background-color .3s ease-in
+
+    &:hover
+      background-color: #984BFB
+
+    &:before
+      content: ''
+      background-size: cover
+      background-position: center
+      background-image: url("./../img/slideControlArrow.svg")
+      width: 15px
+      height: 8px
+      transition: transform .3s ease-in
+
+    &.prevModal
+      &:before
+        transform: rotate(90deg) translateY(1px)
+
+      &:hover:before
+        transform: rotate(90deg) translateY(8px)
+
+    &.nextModal
+      &:before
+        transform: rotate(-90deg) translateY(1px)
+
+      &:hover:before
+        transform: rotate(-90deg) translateY(8px)
+
+  .prevModal
+    left: 30px
+
+    @include for-desktop-up
+      left: 50px
+
+  .nextModal
+    right: 30px
+
+    @include for-desktop-up
+      right: 50px

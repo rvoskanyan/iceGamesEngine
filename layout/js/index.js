@@ -329,13 +329,17 @@ loadMoreReviewsBtnNode && loadMoreReviewsBtnNode.addEventListener('click', async
 });
 
 if (largeImgNodes.length) {
-  largeImgNodes.forEach(item => {
+  largeImgNodes.forEach((item, index) => {
     item.addEventListener('click', () => {
       const targetImgNode = item.querySelector('.js-targetImg');
       const newTargetImgNode = targetImgNode.cloneNode(true);
       
       newTargetImgNode.classList.add('enlargedImg');
-      new Modal(newTargetImgNode);
+      new Modal({
+        switching: true,
+        elems: Object.values(largeImgNodes).map(item => item.querySelector('.js-targetImg').cloneNode(true)),
+        activeIndex: index,
+      });
     })
   })
 }
