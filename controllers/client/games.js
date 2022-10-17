@@ -110,10 +110,10 @@ export const gamePage = async (req, res) => {
       inStock: true,
       active: true,
       genres: {$in: genreIds}, //Находит продукты содержащие хотя бы один из жанров текущего товара
-      $and: [
+      /*$and: [
         {priceTo: {$gte: rangePriceRecProducts.min}},
         {priceTo: {$lte: rangePriceRecProducts.max}},
-      ],
+      ],*/
       /*$or: [ //"ИЛИ" для связок
         {bundleId: {$ne: null}, isOriginalInBundle: true}, //Если товар состоит в связке, то он должен быть исходным
         {bundleId: null}, //Иначе он не должен состоять в связке вовсе
