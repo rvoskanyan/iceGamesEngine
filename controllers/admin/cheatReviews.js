@@ -232,3 +232,83 @@ export const importReviews = async (req, res) => {
     res.redirect('/admin/cheat-reviews/import-reviews');
   }
 }
+
+export const pageImportForProducts = (req, res) => {
+  res.render('admImportReviewsForProducts', {layout: 'admin'});
+}
+
+export const importForProducts = async (req, res) => {
+  try {
+    const {startPosition = 1, count = 300} = req.body;
+    const {importFile} = req.files;
+    const workbook = new exceljs.Workbook();
+    const results = [];
+    
+    await workbook.xlsx.load(importFile.data);
+    
+    const worksheet = workbook.getWorksheet(1);
+    
+    for (let i = parseInt(startPosition); i < parseInt(startPosition) + parseInt(count); i++) {
+      const email = worksheet.getCell(`A${i}`).value.trim().toLowerCase();
+      const text = worksheet.getCell(`C${i}`).value;
+      const productName = worksheet.getCell(`D${i}`).value;
+      
+      const product = await Product.findOne({name: productName}).select(['name', 'alias']).lean();
+      const user = await User.findOne({email, bot: true});
+      const result = {success: false};
+      
+      result.row = i;
+      result.noEmail = !email && (result.error = true);
+      result.noText = !text && (result.error = true);
+      result.noProductName = !productName && (result.error = true);
+      result.userNotFound = !user && (result.error = true);
+      result.productNotFound = !product && (result.error = true);
+      
+      if (result.error) {
+        results.push(result);
+        
+        continue;
+      }
+      
+      const order = new Order({
+        userId: user._id,
+        buyerEmail: email,
+        status: 'paid',
+        products: [{
+          productId: product._id,
+          purchasePrice: product.priceTo,
+        }],
+      });
+      
+      const review = new Review({
+        text,
+        eval: 5,
+        user: user._id,
+        product: product._id,
+      });
+      
+      await order.save();
+      user.purchasedProducts += 1;
+      await user.save();
+      await user.increaseRating(10);
+      await achievementEvent('productPurchase', user);
+      await review.save();
+      
+      result.success = true;
+      result.name = product.name;
+      result.alias = product.alias;
+      result.text = text;
+      result.evalValue = 5;
+      result.login = user.login;
+      results.push(result);
+    }
+    
+    res.render('admImportReviewsForProducts', {
+      layout: 'admin',
+      results,
+    });
+  } catch (e) {
+    console.log(e);
+    res.redirect('/admin/cheat-reviews/import-reviews');
+  }
+}

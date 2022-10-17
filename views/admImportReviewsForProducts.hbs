@@ -1,0 +1,41 @@
+<form method="post" action="/admin/cheat-reviews/import-reviews-for-products" enctype="multipart/form-data">
+    <label>
+        *Файл с отзывами:
+        <input type="file" name="importFile">
+    </label>
+    <br>
+    <br>
+    <label>
+        *Начать с позиции:
+        <input type="number" name="startPosition">
+    </label>
+    <br>
+    <br>
+    <label>
+        *Необходимое количество:
+        <input type="number" name="count">
+    </label>
+    <br>
+    <br>
+    <input type="submit" name="add" value="Добавить">
+</form>
+<br>
+<br>
+{{#each results}}
+    Строка {{row}}:
+    <ul>
+        {{#if noEmail}}<li>Нет почты</li>{{/if}}
+        {{#if noText}}<li>Нет текста</li>{{/if}}
+        {{#if noProductName}}<li>Нет названия товара</li>{{/if}}
+        {{#if userNotFound}}<li>Пользователь с таким e-mail не найден</li>{{/if}}
+        {{#if productNotFound}}<li>Товар с таким названием не найден</li>{{/if}}
+        {{#if success}}
+            <li>
+                Товар: <a href="{{@root.websiteAddress}}games/{{alias}}">{{name}}</a>
+            </li>
+            <li>Логин: {{login}}</li>
+            <li>Текст: {{text}}</li>
+            <li>Оценка: {{evalValue}}</li>
+        {{/if}}
+    </ul>
+{{/each}}
