@@ -28,8 +28,9 @@ export const preordersPage = async (req, res) => {
     }
     
     res.render('selection', {
-      title: 'ICE GAMES -- Предзаказы',
+      title: 'ICE GAMES — Предзаказы',
       metaDescription: 'Подборка игр для предзаказа от ICE Games',
+      ogPath: 'preorders',
       isPreorders: true,
       selectionName: 'Предзаказы',
       breadcrumbs: [{

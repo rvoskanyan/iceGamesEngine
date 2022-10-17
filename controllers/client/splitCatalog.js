@@ -142,6 +142,7 @@ export const pageSplitCatalog = async (req, res, next) => {
     res.render('splitCatalog', {
       title: `${title} — страница ${page}`,
       metaDescription: `${metaDescription} — страница ${page}`,
+      ogPath: alias,
       hTitle,
       section,
       products,

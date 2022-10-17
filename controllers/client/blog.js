@@ -12,6 +12,7 @@ export const blogHomePage = async (req, res) => {
     res.render('blogHome', {
       title: 'Блог ICE GAMES',
       metaDescription: 'Обзоры игр, познавательные статьи и актуальные новости — всё самое интересное в магазине лицензионных ключей ICE GAMES.',
+      ogPath: 'blog',
       isBlog: true,
       fixArticle,
       articles,
@@ -54,6 +55,11 @@ export const blogArticlePage = async (req, res) => {
     res.render('blogArticle', {
       title: `ICE GAMES Блог — ${article.name}`,
       metaDescription: article.metaDescription,
+      ogPath: `blog/${article.alias}`,
+      ogType: 'article',
+      ogArticlePublishedTime: article.createdAt,
+      ogArticleModifiedTime: article.updatedAt,
+      ogArticleSection: article.type === 'news' ? 'Новости' : 'Статьи',
       article,
       ogImage: article.img,
       breadcrumbs: [

@@ -19,6 +19,7 @@ export const gamesPage = async (req, res) => {
     res.render('catalog', {
       title: 'Каталог игр ICE GAMES',
       metaDescription: 'Каталог лучших игр со скидками и удобным поиском. Топ продаж от магазина лицензионных ключей ICE GAMES.',
+      ogPath: `games${req.url}`,
       isCatalog: true,
       noIndex: true,
       noIndexGoogle: true,
@@ -321,6 +322,7 @@ export const gamePage = async (req, res) => {
     res.render('game', {
       title: `Купить лицензионный ключ ${product.name} для ${product.activationServiceId.name} по цене ${product.priceTo}₽. в магазине ICE GAMES`,
       metaDescription: `${product.name} дешево для активации в ${product.activationServiceId.name}. Лицензионный ключ в магазине ICE GAMES со скидкой. Мгновенная доставка ключа активации на почту. Оплата удобным способом.`,
+      ogPath: `games/${product.alias}`,
       typeTrailerCover,
       product,
       trailerId,

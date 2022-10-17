@@ -74,6 +74,7 @@ export const profileViewPage = async (req, res) => {
     res.render('profileViewPage', {
       title: `ICE GAMES — Профиль пользователя ${login}`,
       metaDescription: `Личный профиль пользователя ${login} в магазине компьютерных игр ICE GAMES.`,
+      ogType: 'profile',
       user,
       ratingPosition,
       countUsers,

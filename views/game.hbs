@@ -3,7 +3,7 @@
         <meta itemprop="name" content="Трейлер {{product.name}}">
         <meta itemprop="uploadDate" content="{{product.createdAt}}">
         <meta itemprop="description" content="{{encodeString product.description}}">
-        <meta itemprop="contentUrl" content="{{websiteAddress}}{{product.coverVideo}}" />
+        <video class="videoSource" itemprop="contentUrl" src="{{websiteAddress}}{{product.coverVideo}}"></video>
     </div>
 {{/if}}
 <main class="gamePage js-gamePage" itemscope itemtype="http://schema.org/Product">

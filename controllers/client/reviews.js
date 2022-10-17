@@ -52,6 +52,7 @@ export const reviewsPage = async (req, res) => {
     res.render('reviews', {
       title: 'Отзывы о магазине ICE GAMES',
       metaDescription: 'Место для ваших отзывов. Помогите нам стать лучше — напишите своё мнение о магазине компьютерных игр ICE GAMES.',
+      ogPath: 'reviews',
       isReviews: true,
       breadcrumbs: [{
         name: 'Отзывы',

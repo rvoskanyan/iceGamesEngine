@@ -7,6 +7,7 @@ export const supportPage = async (req, res) => {
     res.render('support', {
       title: 'Поддержка — ICE GAMES',
       metaDescription: 'Проблемы с активацией? Напишите в наш чат с оперативной поддержкой. Поможем с решением любых вопросов.',
+      ogPath: 'support',
       isSupport: true,
       breadcrumbs: [{
         name: 'Поддержка',
