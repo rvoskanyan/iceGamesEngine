@@ -72,10 +72,19 @@
                     {{/each}}
                 </div>
             {{/iff}}
-            <div class="mobileImgContainer">
-                <img class="mobileImg" src="{{websiteAddress}}{{product.img}}" alt="{{product.name}}" title="{{product.name}}" itemprop="image">
+            <div class="head">
+                <div class="mobileImgContainer">
+                    <img class="mobileImg" src="{{websiteAddress}}{{product.img}}" alt="{{product.name}}" title="{{product.name}}" itemprop="image">
+                </div>
+                <h1 class="name">Ключ для <span itemprop="name">{{product.name}}</span></h1>
+                {{#if product.totalGradeParse}}
+                    <div class="totalGrade top" title="Оценка игры по результатам опросов" itemprop="aggregateRating" itemscope itemtype="https://schema.org/AggregateRating">
+                        <meta itemprop="ratingValue" content="{{product.totalGradeParse}}">
+                        <meta itemprop="ratingCount" content="{{product.ratingCountParse}}">
+                        {{product.totalGradeParse}}
+                    </div>
+                {{/if}}
             </div>
-            <h1 class="name">Ключ для <span itemprop="name">{{product.name}}</span></h1>
             <div class="description" itemprop="description">{{encodeString product.description}}</div>
             <div class="offerMacro" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
                 {{#if product.preOrder}}

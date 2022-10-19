@@ -9,6 +9,7 @@
 
 .gamePage
   & .cover
+    overflow: initial
     padding-top: 130px
     grid-template-rows: auto
 
@@ -77,48 +78,104 @@
                   &.moreElements
                     color: #FA00FF
 
-      & .mobileImgContainer
-        display: flex
-        align-items: center
-        justify-content: center
-        background-size: cover
-        background-position: center
-        background-image: url('./../img/mobilePorductPageImgDecore.svg')
+      & .head
         width: calc(100% + 30px)
-        margin: -40px 0
-        min-height: 425px
-
-        @include for-middle-phone-up
-          min-height: 510px
-
-        @include for-desktop-up
-          display: none
-
-        & .mobileImg
-          object-fit: cover
-          border: 2px solid #fff
-          border-radius: 20px
-          width: 175px
-          height: 274px
-
-          @include for-middle-phone-up
-            width: 210px
-            height: 325px
-
-      & .name, & .name span
-        font-family: 'Lemon Milk'
-        font-weight: 100
-        font-size: 21px
-        color: #fff
+        position: relative
 
         @include for-desktop-up
           margin-top: 50px
-          font-size: 36px
-          max-width: 500px
+          width: initial
+          display: flex
+          column-gap: 5px
+          align-items: start
 
         @include for-middle-desktop-up
-          font-size: 40px
           margin-top: 70px
+
+        & .mobileImgContainer
+          display: flex
+          align-items: center
+          justify-content: center
+          background-size: cover
+          background-position: center
+          background-image: url('./../img/mobilePorductPageImgDecore.svg')
+          width: 100%
+          margin: -40px 0
+          min-height: 425px
+
+          @include for-middle-phone-up
+            min-height: 510px
+
+          @include for-desktop-up
+            display: none
+
+          & .mobileImg
+            object-fit: cover
+            border: 2px solid #fff
+            border-radius: 20px
+            width: 175px
+            height: 274px
+
+            @include for-middle-phone-up
+              width: 210px
+              height: 325px
+
+        & .name, & .name span
+          font-family: 'Lemon Milk'
+          font-weight: 100
+          font-size: 21px
+          color: #fff
+          padding: 0 15px
+
+          @include for-desktop-up
+            font-size: 36px
+            max-width: 500px
+            padding: initial
+
+          @include for-middle-desktop-up
+            font-size: 40px
+
+        & .totalGrade
+          font-family: 'Montserrat'
+          font-weight: 700
+          font-size: 21px
+          line-height: 1
+          color: #fff
+          padding: 8px 10px
+          border-radius: 8px
+          margin-top: 5px
+
+          @include for-big-phone-down
+            position: absolute
+            top: 75px
+            right: 20%
+            font-size: 18px
+            padding: 6px 8px
+            border-radius: 5px
+
+          @include for-down-middle-phone
+            top: 55px
+            right: 21%
+            font-size: 16px
+            padding: 5px 8px
+
+          &.top
+            background-color: #226601
+
+            @include for-desktop-up
+              background-color: rgba(78, 204, 17, 0.5)
+
+          &.middle
+            background-color: #E1A60F
+
+            @include for-desktop-up
+              background-color: rgba(218, 163, 21, 0.5)
+
+          &.bottom
+            background-color: #CD2811
+
+            @include for-desktop-up
+              background-color: rgba(205, 40, 17, 0.5)
 
       & .description
         font-family: 'Montserrat'
