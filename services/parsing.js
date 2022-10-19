@@ -684,6 +684,7 @@ export async function parseProduct(searchProductName, price, sourceLink = null) 
 }
 
 export async function syncRating(products, req) {
+  req.app.set('syncRating', true);
   const browser = new Browser();
   
   for (const product of products) {
