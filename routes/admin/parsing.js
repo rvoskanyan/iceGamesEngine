@@ -8,6 +8,7 @@ import {
   tasksParsProduct,
   tasksRefusal,
   sync,
+  startSyncRating,
 } from "../../controllers/admin/parsing.js";
 
 const router = Router();
@@ -15,6 +16,8 @@ const router = Router();
 router.get('/', parsingPage);
 router.post('/start', startParsing);
 router.post('/sync', sync);
+
+router.post('/syncRating', startSyncRating);
 
 router.get('/tasks', tasksPage);
 router.post('/tasks/in-work', tasksInWork);

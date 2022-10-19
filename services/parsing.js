@@ -682,3 +682,29 @@ export async function parseProduct(searchProductName, price, sourceLink = null) 
   
   return product;
 }
+
+export async function syncRating(products, req) {
+  const browser = new Browser();
+  
+  for (const product of products) {
+    try {
+      const productWebPage = await browser.getPageContent(encodeURI(`https://www.playground.ru/${product.alias.replace('-', '_')}`));
+      const productPageNode = cheerio.load(productWebPage);
+      const totalGradeParse = productPageNode('.gp-game-info .game-rating-points .value.js-game-rating-value').text();
+      const ratingCountParse = productPageNode('.gp-game-info .game-rating-points .js-game-rating-count').text();
+  
+      if (!totalGradeParse || !ratingCountParse) {
+        continue;
+      }
+  
+      product.totalGradeParse = totalGradeParse;
+      product.ratingCountParse = ratingCountParse;
+  
+      await product.save();
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  
+  req.app.set('syncRating', false);
+}

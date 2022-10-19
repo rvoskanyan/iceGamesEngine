@@ -1,4 +1,4 @@
-import {parseProduct, startParsingProducts, syncPriceAndInStock} from "../../services/parsing.js";
+import {parseProduct, startParsingProducts, syncPriceAndInStock, syncRating} from "../../services/parsing.js";
 import ParsingTask from "../../models/ParsingTask.js";
 import Product from "../../models/Product.js";
 
@@ -7,6 +7,7 @@ export const parsingPage = (req, res) => {
     layout: 'admin',
     parsing: process.env.PARSING,
     sync: process.env.SYNC,
+    syncRating: req.app.get('syncRating'),
   })
 }
 
@@ -14,6 +15,19 @@ export const startParsing = (req, res) => {
   startParsingProducts();
   process.env.PARSING = '1';
   res.redirect('/admin/parsing');
+}
+
+export const startSyncRating = async (req, res) => {
+  try {
+    const products = await Product.find({active: true}).select(['alias', 'totalGradeParse', 'ratingCountParse']);
+    syncRating(products, req);
+    
+    res.redirect('/admin/parsing');
+  } catch (e) {
+    console.log(e);
+    req.app.set('syncRating', false);
+    res.redirect('/admin/parsing');
+  }
 }
 
 export const sync = (req, res) => {

@@ -9,10 +9,15 @@
     <a href="/admin/parsing/tasks">Задачи</a>
 </form>-->
 <form action="{{webSiteAddress}}/admin/parsing/sync" method="post">
-    <input type="submit"{{#if sync}} disabled{{/if}} value="Запустить синхронизацию">
+    <input type="submit"{{#if sync}} disabled{{/if}} value="Запустить синхронизацию цен и наличия">
     {{#if sync}}
         <p style="color: red">Синхронизация цен и наличия запущена</p>
     {{/if}}
-    <br>
-    <br>
+</form>
+<br>
+<form action="{{webSiteAddress}}/admin/parsing/syncRating" method="post">
+    <input type="submit"{{#if syncRating}} disabled{{/if}} value="Запустить синхронизацию рейтина">
+    {{#if syncRating}}
+        <p style="color: red">Синхронизация рейтинга запущена</p>
+    {{/if}}
 </form>

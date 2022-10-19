@@ -238,6 +238,8 @@ const fields = {
     type: Boolean,
     default: false,
   },
+  totalGradeParse: Number,
+  ratingCountParse: Number,
   active: {
     type: Boolean,
     default: false,
