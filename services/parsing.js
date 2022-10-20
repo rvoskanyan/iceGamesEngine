@@ -689,17 +689,17 @@ export async function syncRating(products, req) {
   
   for (const product of products) {
     try {
-      const productWebPage = await browser.getPageContent(encodeURI(`https://www.playground.ru/${product.alias.replace('-', '_')}`));
+      const productWebPage = await browser.getPageContent(encodeURI(`https://www.playground.ru/${product.alias.replace(/-/g, '_')}`));
       const productPageNode = cheerio.load(productWebPage);
-      const totalGradeParse = productPageNode('.gp-game-info .game-rating-points .value.js-game-rating-value').text();
-      const ratingCountParse = productPageNode('.gp-game-info .game-rating-points .js-game-rating-count').text();
+      const totalGradeParse = productPageNode('.gp-game-info .game-rating-points .value.js-game-rating-value').text().trim();
+      const ratingCountParse = productPageNode('.gp-game-info .game-rating-points .js-game-rating-count').text().trim();
   
       if (!totalGradeParse || !ratingCountParse) {
         continue;
       }
   
-      product.totalGradeParse = totalGradeParse;
-      product.ratingCountParse = ratingCountParse;
+      product.totalGradeParse = Number.isInteger(+totalGradeParse) ? +`${totalGradeParse}.0` : +totalGradeParse;
+      product.ratingCountParse = +ratingCountParse.replace(/\s/g, '');
   
       await product.save();
     } catch (e) {
