@@ -325,6 +325,7 @@ export const gamePage = async (req, res) => {
       ogPath: `games/${product.alias}`,
       typeTrailerCover,
       product,
+      stepRating: product.totalGradeParse && product.totalGradeParse > 7 ? 'top' : product.totalGradeParse > 3 ? 'middle' : 'bottom',
       trailerId,
       isProductNotPurchased,
       isProductNoReview,

@@ -78,7 +78,7 @@
                 </div>
                 <h1 class="name">Ключ для <span itemprop="name">{{product.name}}</span></h1>
                 {{#if product.totalGradeParse}}
-                    <div class="totalGrade top" title="Оценка игры по результатам опросов" itemprop="aggregateRating" itemscope itemtype="https://schema.org/AggregateRating">
+                    <div class="totalGrade {{stepRating}}" title="Оценка игры по результатам опросов" itemprop="aggregateRating" itemscope itemtype="https://schema.org/AggregateRating">
                         <meta itemprop="ratingValue" content="{{product.totalGradeParse}}">
                         <meta itemprop="ratingCount" content="{{product.ratingCountParse}}">
                         {{product.totalGradeParse}}
