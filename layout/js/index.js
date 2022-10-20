@@ -59,6 +59,7 @@ const blogPageNode = document.querySelector('.js-blogPage');
 const loadMoreReviewsBtnNode = document.querySelector('.js-loadMoreReviewsBtn');
 const reviewsListNode = document.querySelector('.js-reviewsList');
 const loadMoreRatingNode = document.querySelector('.js-loadMoreRating');
+const loadModeProductReviewsNode = document.querySelector('.js-loadModeProductReviews');
 const listRatingNode = document.querySelector('.js-listRating');
 const restorePasswordFormNode = document.querySelector('.js-restorePasswordForm');
 const counterAnimationNodes = document.querySelectorAll('.js-counterAnimation');
@@ -291,6 +292,47 @@ loadMoreRatingNode && loadMoreRatingNode.addEventListener('click', async () => {
   
   loadMoreRatingNode.dataset.skip = parseInt(loadMoreRatingNode.dataset.skip) + 20;
 });
+
+loadModeProductReviewsNode && loadModeProductReviewsNode.addEventListener('click', async () => {
+  const skip = parseInt(loadModeProductReviewsNode.dataset.skip);
+  const productId = loadModeProductReviewsNode.dataset.productId;
+  const listReviewsNode = document.querySelector('.js-listProductReviews');
+  
+  if (!listReviewsNode) {
+    return;
+  }
+  
+  const response = await postman.get(`${websiteAddress}api/reviews?skip=${skip}&productId=${productId}`);
+  const result = await response.json();
+  
+  if (result.email) {
+    return;
+  }
+  
+  result.reviews.forEach(review => {
+    listReviewsNode.innerHTML += `
+      <div class="item review">
+          <div class="head">
+              <a class="btn link userName" href="${websiteAddress}rating/${review.user.login}" title="Перейти на страницу ${review.user.login}">${review.user.login}</a>
+          </div>
+          <div class="grade">
+              <span class="icon icon-star${review.eval >= 1 ? 'Fill' : ''}"></span>
+              <span class="icon icon-star${review.eval >= 2 ? 'Fill' : ''}"></span>
+              <span class="icon icon-star${review.eval >= 3 ? 'Fill' : ''}"></span>
+              <span class="icon icon-star${review.eval >= 4 ? 'Fill' : ''}"></span>
+              <span class="icon icon-star${review.eval >= 5 ? 'Fill' : ''}"></span>
+          </div>
+          <div class="text">${review.text}</div>
+      </div>
+    `;
+  });
+  
+  if (result.isLast) {
+    return loadModeProductReviewsNode.remove();
+  }
+  
+  loadModeProductReviewsNode.dataset.skip = parseInt(loadModeProductReviewsNode.dataset.skip) + 5;
+})
 
 loadMoreReviewsBtnNode && loadMoreReviewsBtnNode.addEventListener('click', async () => {
   const skip = parseInt(loadMoreReviewsBtnNode.dataset.skip);
@@ -769,7 +811,7 @@ if (addReviewFormNode) {
   new AsyncForm({
     mainNode: addReviewFormNode,
     successHandler: (params) => {
-      const listReviewsNode = document.querySelector('.js-listReviews');
+      const listReviewsNode = document.querySelector('.js-listProductReviews');
       const userName = listReviewsNode.dataset.userName;
       
       addReviewFormNode.remove();

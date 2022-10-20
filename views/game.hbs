@@ -78,11 +78,11 @@
                 </div>
                 <h1 class="name">Ключ для <span itemprop="name">{{product.name}}</span></h1>
                 {{#if product.totalGradeParse}}
-                    <div class="totalGrade {{stepRating}}" title="Оценка игры по результатам опросов" itemprop="aggregateRating" itemscope itemtype="https://schema.org/AggregateRating">
+                    <span class="totalGrade {{stepRating}}" title="Оценка игры по результатам опросов" itemprop="aggregateRating" itemscope itemtype="https://schema.org/AggregateRating">
                         <meta itemprop="ratingValue" content="{{product.totalGradeParse}}">
                         <meta itemprop="ratingCount" content="{{product.ratingCountParse}}">
                         {{product.totalGradeParse}}
-                    </div>
+                    </span>
                 {{/if}}
             </div>
             <div class="description" itemprop="description">{{encodeString product.description}}</div>
@@ -712,7 +712,7 @@
                                     {{/if}}
                                 </form>
                             {{/if}}
-                            <div class="listItems js-listReviews"{{#if @root.person.login}} data-user-name="{{@root.person.login}}"{{/if}}>
+                            <div class="listItems js-listProductReviews"{{#if @root.person.login}} data-user-name="{{@root.person.login}}"{{/if}}>
                                 {{#each reviews}}
                                     {{> review
                                             userLogin=user.login
@@ -722,7 +722,7 @@
                                 {{/each}}
                             </div>
                             {{#iff countReviews '>' 5}}
-                                <div class="btn link translucent loadMore">Загрузить еще</div>
+                                <div class="btn link translucent loadMore js-loadModeProductReviews" data-skip="5" data-product-id="{{product._id}}">Загрузить еще</div>
                             {{/iff}}
                         </div>
                         <div class="item comments js-tabBlock-2">

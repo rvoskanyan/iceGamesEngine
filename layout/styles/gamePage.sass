@@ -83,11 +83,9 @@
         position: relative
 
         @include for-desktop-up
+          max-width: 500px
           margin-top: 50px
           width: initial
-          display: flex
-          column-gap: 5px
-          align-items: start
 
         @include for-middle-desktop-up
           margin-top: 70px
@@ -128,6 +126,7 @@
           padding: 0 15px
 
           @include for-desktop-up
+            display: inline
             font-size: 36px
             max-width: 500px
             padding: initial
@@ -144,8 +143,11 @@
           padding: 8px 10px
           border-radius: 8px
           margin-top: 5px
+          vertical-align: super
+          margin-left: 15px
 
           @include for-big-phone-down
+            display: block
             position: absolute
             top: 75px
             right: 20%
