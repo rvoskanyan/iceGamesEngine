@@ -146,18 +146,6 @@
         {{> newsSlider
                 aricles=articles
         }}
-        <div class="homeSection">
-            <h2 class="homeTitle">Медиа о нас</h2>
-            <div class="homeMediaSlider js-homeMediaSlider">
-                <div class="tape js-tape">
-                    {{#each partners}}
-                        <a href="{{link}}" target="_blank" rel="nofollow" class="slide js-slide" title="Логотип {{name}}">
-                            <img class="img" src="{{websiteAddress}}{{img}}" alt="Логотип {{name}}" title="Логотип {{name}}">
-                        </a>
-                    {{/each}}
-                </div>
-            </div>
-        </div>
         <div class="homeSection aboutUsHome">
             <img src="{{webSiteAddress}}/img/aboutUs.png" class="img" alt="Представление сайта на различных устройствах">
             <div class="text">
@@ -249,6 +237,18 @@
                     </p>
                 </div>
             </div>-->
+        </div>
+        <div class="homeSection">
+            <h2 class="homeTitle">Медиа о нас</h2>
+            <div class="homeMediaSlider js-homeMediaSlider">
+                <div class="tape js-tape">
+                    {{#each partners}}
+                        <a href="{{link}}" target="_blank" rel="nofollow" class="slide js-slide" title="Логотип {{name}}">
+                            <img class="img" src="{{websiteAddress}}{{img}}" alt="Логотип {{name}}" title="Логотип {{name}}">
+                        </a>
+                    {{/each}}
+                </div>
+            </div>
         </div>
     </div>
 </main>
