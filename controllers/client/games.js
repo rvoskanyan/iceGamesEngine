@@ -100,20 +100,12 @@ export const gamePage = async (req, res) => {
     const articles = await Article
       .find({products: {$in: [product._id.toString()]}})
       .select(['alias', 'img', 'name', 'type', 'created', 'createdAt', 'introText']);
-    const rangePriceRecProducts = product.priceTo > scatter
-      ? product.priceTo >= maxPrice.priceTo - scatter
-        ? {min: product.priceTo - scatter - (product.priceTo - (maxPrice.priceTo - scatter)), max: maxPrice.priceTo}
-        : {min: product.priceTo - scatter, max: product.priceTo + scatter}
-      : {min: 0, max: scatter - product.priceTo + scatter};
     const recProductsFilter = { //Фильтры для подборки рекомендаций
       _id: {$ne: product._id}, //Отсеивает товар, на котором сейчас находимся
       inStock: true,
       active: true,
+      dlc: false,
       genres: {$in: genreIds}, //Находит продукты содержащие хотя бы один из жанров текущего товара
-      /*$and: [
-        {priceTo: {$gte: rangePriceRecProducts.min}},
-        {priceTo: {$lte: rangePriceRecProducts.max}},
-      ],*/
       /*$or: [ //"ИЛИ" для связок
         {bundleId: {$ne: null}, isOriginalInBundle: true}, //Если товар состоит в связке, то он должен быть исходным
         {bundleId: null}, //Иначе он не должен состоять в связке вовсе
@@ -254,17 +246,47 @@ export const gamePage = async (req, res) => {
       }
     }
     
+    const recommendIds = [];
+    
     let recProducts = product.recommends.map(item => {
+      recommendIds.push(item._id);
+      
       return {...item.toObject()};
     });
     
     if (recProducts.length < 8) {
       const dopRect = await Product
-        .find(recProductsFilter)
+        .find({
+          ...recProductsFilter,
+          _id: {
+            $nin: recommendIds,
+          },
+          priceTo: {
+            $gte: product.priceTo,
+          },
+        })
         .select(['name', 'alias', 'inStock', 'img', 'priceTo', 'priceFrom'])
         .limit(8 - recProducts.length)
         .lean();
       
+      recProducts = [...recProducts, ...dopRect];
+    }
+  
+    if (recProducts.length < 8) {
+      const dopRect = await Product
+        .find({
+          ...recProductsFilter,
+          _id: {
+            $nin: recommendIds,
+          },
+          priceTo: {
+            $lt: product.priceTo,
+          },
+        })
+        .select(['name', 'alias', 'inStock', 'img', 'priceTo', 'priceFrom'])
+        .limit(8 - recProducts.length)
+        .lean();
+    
       recProducts = [...recProducts, ...dopRect];
     }
   

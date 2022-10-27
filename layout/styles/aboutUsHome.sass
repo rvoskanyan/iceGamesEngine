@@ -1,0 +1,73 @@
+@import './breakPoints'
+
+.aboutUsHome
+  color: #c7c7c7
+
+  @include for-desktop-up
+    display: flex
+    align-items: flex-start
+    column-gap: 30px
+
+  .img
+    max-width: 100%
+
+    @include for-desktop-up
+      max-width: 50%
+
+  .text
+    margin-top: 20px
+
+    @include for-desktop-up
+      margin-top: initial
+
+    .content
+      overflow: hidden
+      max-height: 375px
+      font-size: 14px
+
+      @include for-desktop-up
+        font-size: 16px
+
+      @include for-middle-desktop-up
+        max-height: 430px
+
+      &.active
+        max-height: initial
+
+      h1
+        color: #fff
+        margin-bottom: 10px
+        font-size: 21px
+
+        @include for-desktop-up
+          margin-bottom: 20px
+          font-size: 52px
+
+      p
+        margin-top: 10px
+
+        @include for-desktop-up
+          margin-top: 18px
+
+      ul
+        margin: 8px 0 0 18px
+
+    .showAllBtn
+      margin-top: 15px
+      font-weight: 400
+
+      @include for-desktop-up
+        margin-top: 30px
+
+      &:after
+        content: ''
+        background-size: cover
+        background-position: center
+        background-image: url(./../img/slideControlArrow.svg)
+        width: 15px
+        height: 8px
+        margin-left: 8px
+        margin-top: 2px
+
+      &.active:after
+        transform: rotate(180deg)

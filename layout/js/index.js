@@ -67,6 +67,7 @@ const openCompoundOrderNodes = document.querySelectorAll('.js-openCompoundOrder'
 const openAboutHomeModalNode = document.querySelector('.js-openAboutHomeModal');
 const openDescriptionSplitCatalogNode = document.querySelector('.js-openDescriptionSplitCatalog');
 const addInFavoritesProductPageNode = document.querySelector('.js-addInFavoritesProductPage');
+const showAboutAsHomeNode = document.querySelector('.js-showAboutAsHome');
 const popupController = new PopupController([
   {
     id: 'loginFrom',
@@ -165,6 +166,18 @@ promptProductNodes.forEach(promptProductNode => {
     promptProductNode.classList.add('left')
     promptProductNode.classList.remove('right')
   }
+})
+
+showAboutAsHomeNode && showAboutAsHomeNode.addEventListener('click', () => {
+  const aboutUsContentHomeNode = document.querySelector('.js-aboutUsContentHome');
+  let action = 'add';
+  
+  if (showAboutAsHomeNode.classList.contains('active')) {
+    action = 'remove';
+  }
+  
+  aboutUsContentHomeNode.classList[action]('active');
+  showAboutAsHomeNode.classList[action]('active');
 })
 
 openAboutHomeModalNode && openAboutHomeModalNode.addEventListener('click', () => {
