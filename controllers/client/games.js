@@ -217,7 +217,7 @@ export const gamePage = async (req, res) => {
         .lean();
   
       bundleProducts = bundleProducts.map(bundleProduct => {
-        if (bundleProduct._id.toString() === product.id) {
+        if (bundleProduct._id.toString() === product._id) {
           bundleProduct.isCurrent = true;
         }
 
@@ -231,7 +231,7 @@ export const gamePage = async (req, res) => {
     if (product.seriesId) {
       recProductsFilter.seriesId = {$ne: product.seriesId}; //Отсеиваем товары, которые есть в серии текущей игры
       seriesProducts = await Product
-        .find({_id: {$ne: product.id}, seriesId: product.seriesId, active: true})
+        .find({_id: {$ne: product._id}, seriesId: product.seriesId, active: true})
         .select(['name', 'alias', 'priceTo', 'priceFrom', 'img', 'inStock'])
         .lean();
     } else if (product.bundleId) {
@@ -341,16 +341,13 @@ export const gamePage = async (req, res) => {
       typeTrailerCover = statusTrailerCover === 404 ? 'mqdefault' : 'maxresdefault';
     }
     
-    if (Number.isInteger(+product.totalGradeParse)) {
-      product.totalGradeParse += '.0';
-    }
-    
     res.render('game', {
       title: `Купить лицензионный ключ ${product.name} для ${product.activationServiceId.name} по цене ${product.priceTo}₽. в магазине ICE GAMES`,
       metaDescription: `${product.name} дешево для активации в ${product.activationServiceId.name}. Лицензионный ключ в магазине ICE GAMES со скидкой. Мгновенная доставка ключа активации на почту. Оплата удобным способом.`,
       ogPath: `games/${product.alias}`,
       typeTrailerCover,
       product,
+      totalGradeParse: Number.isInteger(+product.totalGradeParse) ? `${product.totalGradeParse}.0` : product.totalGradeParse,
       stepRating: product.totalGradeParse && product.totalGradeParse >= 7 ? 'top' : product.totalGradeParse >= 4 ? 'middle' : 'bottom',
       trailerId,
       isProductNotPurchased,

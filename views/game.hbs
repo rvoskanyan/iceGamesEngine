@@ -81,7 +81,7 @@
                     <span class="totalGrade {{stepRating}}" title="Оценка игры по результатам опросов" itemprop="aggregateRating" itemscope itemtype="https://schema.org/AggregateRating">
                         <meta itemprop="ratingValue" content="{{product.totalGradeParse}}">
                         <meta itemprop="ratingCount" content="{{product.ratingCountParse}}">
-                        {{product.totalGradeParse}}
+                        {{totalGradeParse}}
                     </span>
                 {{/if}}
             </div>
@@ -118,7 +118,7 @@
                     </div>
                     <div class="actions">
                         {{#if @root.isAuth}}
-                            <button class="btn js-addInFavoritesProductPage{{#if currentProductInFavorite}} js-active{{/if}}" title="{{#if currentProductInFavorite}}Удалить товар из избранного{{else}}Добавить товар в избранное{{/if}}" data-product-id="{{product.id}}">
+                            <button class="btn js-addInFavoritesProductPage{{#if currentProductInFavorite}} js-active{{/if}}" title="{{#if currentProductInFavorite}}Удалить товар из избранного{{else}}Добавить товар в избранное{{/if}}" data-product-id="{{product._id}}">
                                 <span class="icon icon-static icon-static-bigLike js-icon{{#if currentProductInFavorite}} active{{/if}}"></span>
                             </button>
                         {{/if}}
@@ -132,7 +132,7 @@
                                 <button
                                         title="Добавить данный товар в корзину покупок"
                                         class="btn elongated rounded increase bg-pink js-addToCartBtn"
-                                        data-product-id="{{product.id}}"
+                                        data-product-id="{{product._id}}"
                                 >В корзину</button>
                             {{/if}}
                         {{else}}
@@ -148,7 +148,7 @@
                                     btn elongated rounded increase bg-pink hover-backlight-blue js-subscribeInStock
                                     {{#unless @root.isAuth}} js-notAuth{{/unless}}
                                 "
-                                        data-product-id="{{product.id}}"
+                                        data-product-id="{{product._id}}"
                                 >Уведомить</button>
                             {{/if}}
                         {{/if}}
