@@ -341,6 +341,10 @@ export const gamePage = async (req, res) => {
       typeTrailerCover = statusTrailerCover === 404 ? 'mqdefault' : 'maxresdefault';
     }
     
+    if (Number.isInteger(+product.totalGradeParse)) {
+      product.totalGradeParse += '.0';
+    }
+    
     res.render('game', {
       title: `Купить лицензионный ключ ${product.name} для ${product.activationServiceId.name} по цене ${product.priceTo}₽. в магазине ICE GAMES`,
       metaDescription: `${product.name} дешево для активации в ${product.activationServiceId.name}. Лицензионный ключ в магазине ICE GAMES со скидкой. Мгновенная доставка ключа активации на почту. Оплата удобным способом.`,
