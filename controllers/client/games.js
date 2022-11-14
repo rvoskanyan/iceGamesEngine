@@ -21,8 +21,6 @@ export const gamesPage = async (req, res) => {
       metaDescription: 'Каталог лучших игр со скидками и удобным поиском. Топ продаж от магазина лицензионных ключей ICE GAMES.',
       ogPath: `games${req.url}`,
       isCatalog: true,
-      noIndex: true,
-      noIndexGoogle: true,
       categories,
       genres,
       activationServices,
