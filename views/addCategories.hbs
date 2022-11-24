@@ -10,6 +10,12 @@
     </label>
     <br>
     <br>
+    <label>
+        *Алиас (название на английском маленькими буквами, без пробелов, слова делятся коротким дефисом. Например: category-name):
+        <input type="text" name="alias"{{#if category.alias}} value="{{category.alias}}"{{/if}}>
+    </label>
+    <br>
+    <br>
     <input type="submit" name="add" value="{{#if isEdit}}Сохранить{{else}}Добавить{{/if}}">
 </form>
 {{#if products.length}}

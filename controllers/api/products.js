@@ -7,6 +7,9 @@ import {validationResult} from "express-validator";
 import fetch from "node-fetch";
 import {getAlias, getChangeLayout, getGrams, toRoman} from "../../utils/functions.js";
 import Review from "../../models/Review.js";
+import Category from "../../models/Category.js";
+import Genre from "../../models/Genre.js";
+import ActivationService from "../../models/ActivationService.js";
 /*
   Articles.find({_id: {$ne: article._id}})
  */
@@ -43,6 +46,10 @@ export const getProducts = async (req, res) => {
     
     searchString = searchString.trim();
   
+    const allCategories = await Category.find().select(['name', 'alias']).lean();
+    const allGenres = await Genre.find().select(['name', 'alias']).lean();
+    const allActivationServices = await ActivationService.find().select(['name', 'alias']).lean();
+    
     const recIds = [];
     const recProducts = [];
     const numsSearch = searchString.match(/\d/g);
@@ -200,21 +207,35 @@ export const getProducts = async (req, res) => {
   
     let person = null;
     let products;
+  
+    categories = Array.isArray(categories) ? categories : [categories];
+    genres = Array.isArray(genres) ? genres : [genres];
+    activationServices = Array.isArray(activationServices) ? activationServices : [activationServices];
+  
+    const categoryFilterIds = categories.map(categoryAlias => {
+      return allCategories.find(item => item.alias === categoryAlias)._id
+    });
+    const genreFilterIds = genres.map(genreAlias => {
+      return allGenres.find(item => item.alias === genreAlias)._id
+    });
+    const activationServicesIds = activationServices.map(activationServiceAlias => {
+      return allActivationServices.find(item => item.alias === activationServiceAlias)._id
+    });
     
     if (res.locals && res.locals.person) {
       person = res.locals.person;
     }
-    
-    if (categories.length) {
-      filter.categories = {$in: categories};
+  
+    if (categoryFilterIds.length) {
+      filter.categories = {$in: categoryFilterIds};
     }
-    
-    if (genres.length) {
-      filter.genres = {$in: genres};
+  
+    if (genreFilterIds.length) {
+      filter.genres = {$in: genreFilterIds};
     }
-    
-    if (activationServices.length) {
-      filter.activationServiceId = {$in: activationServices};
+  
+    if (activationServicesIds.length) {
+      filter.activationServiceId = {$in: activationServicesIds};
     }
     
     if (priceFrom && +priceFrom >= 0) {

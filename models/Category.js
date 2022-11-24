@@ -7,6 +7,11 @@ const fields = {
     required: true,
     unique: true,
   },
+  alias: {
+    type: String,
+    //required: true,
+    //unique: true,
+  },
 };
 
 const options = {

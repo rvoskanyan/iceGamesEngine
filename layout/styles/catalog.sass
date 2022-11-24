@@ -143,8 +143,14 @@
 
     & .list
       flex-grow: 1
+      display: flex
+      flex-direction: column
+      row-gap: 20px
 
-      & .gameGrid.notFound
+      @include for-desktop-up
+        row-gap: 50px
+
+      &.notFound
         display: flex
         flex-direction: column
         align-items: center
@@ -159,10 +165,3 @@
 
         & .text
           margin-top: 20px
-
-
-      & .loadMore
-        margin: 35px auto 0 auto
-
-        &.hide
-          display: none

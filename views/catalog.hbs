@@ -1,6 +1,6 @@
 <main class="contentContainer withoutCover catalog js-catalog">
     {{> breadcrumbs}}
-    <h1 class="mainTitle">Каталог игр</h1>
+    <h1 class="mainTitle">{{#if searchString}}Игры по запросу: {{searchString}}{{else}}Каталог игр{{/if}}</h1>
     <div class="main">
         <button class="btn openParams js-openParams">
             <span class="icon icon-filterParams"></span>
@@ -22,10 +22,10 @@
                     <span class="icon icon-back"></span>
                 </button>
                 <div class="title">Цена:</div>
-                <div class="range js-range js-priceRange" data-min="0" data-max="3500">
-                    <div class="min js-minSlider js-slider" data-name="priceFrom" data-default="0"></div>
-                    <div class="max js-maxSlider js-slider" data-name="priceTo" data-default="3500">3500</div>
-                </div>
+                <div
+                    class="range js-range js-priceRange"
+                    data-min="{{minPrice}}" data-max="{{maxPrice}}" data-first-value="{{priceFrom}}" data-second-value="{{priceTo}}"
+                ></div>
             </div>
             <div class="paramContainer sortBlock js-sort js-sortParams">
                 <button class="btn js-closeSortParams">
@@ -33,13 +33,14 @@
                 </button>
                 <div class="title">Сортировать по:</div>
                 <div class="variants paramElements">
-                    <button class="btn small rounded bg-lilac translucent js-variant-sort sort" data-sort="date">Дате выхода</button>
-                    <button class="btn small rounded bg-lilac translucent js-variant-sort sort" data-sort="price">Цене</button>
-                    <button class="btn small rounded bg-lilac translucent js-variant-sort sort" data-sort="discount">Скидке</button>
+                    <button class="btn small rounded bg-lilac translucent js-variant-sort sort{{#iff sort '===' 'date'}} active{{/iff}}" data-sort="date">Дате выхода</button>
+                    <button class="btn small rounded bg-lilac translucent js-variant-sort sort{{#iff sort '===' 'price'}} active{{/iff}}" data-sort="price">Цене</button>
+                    <button class="btn small rounded bg-lilac translucent js-variant-sort sort{{#iff sort '===' 'discount'}} active{{/iff}}" data-sort="discount">Скидке</button>
                     {{> checkbox
                             value='true'
                             label='Только в наличии'
                             name='onlyStock'
+                            checked=onlyStock
                     }}
                 </div>
             </div>
@@ -50,10 +51,11 @@
                     </button>
                     <div class="title">Категории:</div>
                     <div class="elements paramElements">
-                        {{#each categories}}
+                        {{#each allCategories}}
                             {{> checkbox
-                                    value=id
+                                    value=alias
                                     label=name
+                                    checked=checked
                                     name='categories'
                             }}
                         {{/each}}
@@ -65,10 +67,11 @@
                     </button>
                     <div class="title">Жанры:</div>
                     <div class="elements paramElements">
-                        {{#each genres}}
+                        {{#each allGenres}}
                             {{> checkbox
-                                    value=id
+                                    value=alias
                                     label=name
+                                    checked=checked
                                     name='genres'
                             }}
                         {{/each}}
@@ -80,10 +83,11 @@
                     </button>
                     <div class="title">Активация:</div>
                     <div class="elements paramElements">
-                        {{#each activationServices}}
+                        {{#each allActivationServices}}
                             {{> checkbox
-                                    value=id
+                                    value=alias
                                     label=name
+                                    checked=checked
                                     name='activationServices'
                             }}
                         {{/each}}
@@ -91,9 +95,17 @@
                 </div>
             </div>
         </div>
-        <div class="list">
-            <div class="gameGrid js-productGrid"></div>
-            <button class="btn rounded bg-lilac translucent loadMore hide js-loadMore" data-skip="1">Загрузить ещё</button>
+        <div class="list js-catalogList{{#unless products.length}} notFound{{/unless}}" data-current-page="{{page}}">
+            {{#if products.length}}
+                <div class="gameGrid js-page" data-page-num="{{page}}">
+                    {{#each products}}
+                        {{> game}}
+                    {{/each}}
+                </div>
+            {{else}}
+                <img class="img" src="http://localhost:5000/img/notFound.svg">
+                <span class="text">Ничего не найдено...</span>
+            {{/if}}
         </div>
     </div>
 </main>

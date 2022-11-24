@@ -9,6 +9,7 @@ import Postman from "./Postman.js";
 import {websiteAddress} from "./config.js";
 
 import './../styles/index.sass';
+import Range from "./Range.js";
 
 const postman = new Postman();
 
@@ -52,7 +53,6 @@ const largeImgNodes = document.querySelectorAll('.js-largeImg');
 const addReviewFormNode = document.querySelector('.js-addReviewForm');
 const commentProductFormNode = document.querySelector('.js-commentProductForm');
 const gamePageNode = document.querySelector('.js-gamePage');
-const rangeNode = document.querySelector('.js-range');
 const modalMessageNode = document.querySelector('.js-modalMessage');
 const acceptAgreementNode = document.querySelector('.js-acceptAgreement');
 const blogPageNode = document.querySelector('.js-blogPage');
@@ -415,203 +415,6 @@ if (modalMessageNode) {
     modalMessageNode.classList.add('active');
     setTimeout(() => modalMessageNode.classList.remove('active'), 5000);
   }, 300);
-}
-
-if (rangeNode) {
-  const rangeWidth = parseFloat(getComputedStyle(rangeNode).width);
-  const min = +rangeNode.dataset.min;
-  const max = +rangeNode.dataset.max;
-  const minSliderNode = rangeNode.querySelector('.js-minSlider');
-  const maxSliderNode = rangeNode.querySelector('.js-maxSlider');
-  
-  const initialSliders = (e = null) => {
-    let minSliderValue = +minSliderNode.dataset.default;
-    let maxSliderValue = +maxSliderNode.dataset.default;
-    
-    if (minSliderValue > maxSliderValue) {
-      const saveMin = minSliderValue;
-      
-      minSliderValue = maxSliderValue;
-      maxSliderValue = saveMin;
-  
-      minSliderNode.style.zIndex = '0';
-      maxSliderNode.style.zIndex = '1';
-      activeSlide = maxSliderNode;
-    }
-    
-    if (minSliderValue < min) {
-      minSliderValue = min;
-    }
-    
-    if (maxSliderValue > max) {
-      maxSliderValue = max;
-    }
-  
-    minSliderNode.style.left = `${(minSliderValue - min) / step}px`;
-    maxSliderNode.style.left = `${(maxSliderValue - min) / step}px`;
-    minSliderNode.innerText = minSliderValue;
-    maxSliderNode.innerText = maxSliderValue;
-    minSliderNode.dataset.default = minSliderValue;
-    maxSliderNode.dataset.default = maxSliderValue;
-    
-    if (e && e.target === minSliderNode) {
-      return minSliderNode.dispatchEvent(new Event('initialSlider'));
-    }
-  
-    if (e && e.target === maxSliderNode) {
-      return maxSliderNode.dispatchEvent(new Event('initialSlider'));
-    }
-  
-    minSliderNode.dispatchEvent(new Event('initialSlider'));
-    maxSliderNode.dispatchEvent(new Event('initialSlider'));
-  }
-  
-  let maxSliderValue = +maxSliderNode.dataset.default;
-  let activeSlide = null;
-  
-  maxSliderNode.innerText = max;
-  
-  const maxSliderMaxValueWidth = parseFloat(getComputedStyle(maxSliderNode).width);
-  const step = (max - min) / (rangeWidth - maxSliderMaxValueWidth);
-  
-  maxSliderNode.innerText = maxSliderValue;
-  
-  initialSliders();
-  
-  maxSliderNode.addEventListener('mousedown', listenerMousedownSlider);
-  minSliderNode.addEventListener('mousedown', listenerMousedownSlider);
-  maxSliderNode.addEventListener('touchstart', listenerMousedownSlider);
-  minSliderNode.addEventListener('touchstart', listenerMousedownSlider);
-  
-  maxSliderNode.addEventListener('startInitial', initialSliders);
-  minSliderNode.addEventListener('startInitial', initialSliders);
-  
-  async function listenerMousedownSlider(e) {
-    if (e.target === document.activeElement) {
-      return;
-    }
-    
-    e.preventDefault();
-    let holder = false;
-    
-    await new Promise(resolve => {
-      const timeout = setTimeout(() => {
-        holder = true;
-        e.target.removeEventListener('mouseup', listenerMouseup);
-        e.target.removeEventListener('touchend', listenerMouseup);
-        resolve();
-      }, 150);
-      
-      e.target.addEventListener('mouseup', listenerMouseup);
-      e.target.addEventListener('touchend', listenerMouseup);
-  
-      function listenerMouseup () {
-        clearTimeout(timeout);
-        const range = document.createRange();
-        const sel = window.getSelection();
-        const sliderNode = e.target;
-        const inputSlider = (e) => {
-          if (e.key === 'Enter') {
-            e.returnValue = false;
-            return sliderNode.blur();
-          }
-          
-          const value = parseInt(sliderNode.innerText) || 0;
-          const num = parseInt(e.key);
-      
-          if ((num !== 0 && !num) || !(value <= max)) {
-            e.returnValue = false;
-        
-            if (e.preventDefault) {
-              e.preventDefault();
-            }
-          }
-      
-          if (sliderNode.innerText[0] === '0') {
-            sliderNode.innerText = sliderNode.innerText.replace(/^0+/, '');
-          }
-        }
-        const blurSlider = () => {
-          sliderNode.dataset.default = sliderNode.innerText;
-          initialSliders(e);
-          e.target.removeEventListener('mouseup', listenerMouseup);
-          e.target.removeEventListener('touchend', listenerMouseup);
-          e.target.removeEventListener('blur', blurSlider);
-          sliderNode.removeAttribute('contenteditable');
-        }
-    
-        sliderNode.setAttribute('contenteditable', '');
-        range.selectNodeContents(sliderNode);
-        range.collapse(false);
-        sel.removeAllRanges();
-        sel.addRange(range);
-        sliderNode.addEventListener('keypress', inputSlider);
-        sliderNode.addEventListener('blur', blurSlider);
-        resolve();
-      }
-    });
-    
-    if (!holder) {
-      return;
-    }
-  
-    const cursorStartPosition = e.pageX || e.changedTouches[0].clientX;
-    const sliderStartPosition = parseInt(getComputedStyle(e.target).left);
-    const sliderNode = e.target;
-    const listenerMousemove = (e) => {
-      moveSlider(e, sliderNode, cursorStartPosition, sliderStartPosition);
-    }
-    const listenerMouseup = () => {
-      document.removeEventListener('mousemove', listenerMousemove);
-      document.removeEventListener('touchmove', listenerMousemove);
-      document.removeEventListener('mouseup', listenerMouseup);
-      document.removeEventListener('touchend', listenerMouseup);
-      sliderNode.dispatchEvent(new Event('blur'));
-      initialSliders(e);
-      sliderNode.style.cursor = 'initial';
-    }
-  
-    sliderNode.style.cursor = 'pointer';
-  
-    document.addEventListener('mousemove', listenerMousemove);
-    document.addEventListener('touchmove', listenerMousemove);
-    document.addEventListener('mouseup', listenerMouseup);
-    document.addEventListener('touchend', listenerMouseup);
-  
-    if (activeSlide) {
-      activeSlide.style.zIndex = '0';
-    }
-  
-    sliderNode.style.zIndex = '1';
-    activeSlide = sliderNode;
-  }
-  
-  function moveSlider(e, sliderNode, cursorStartPosition, currentPositionSlider) {
-    let offset = 0;
-    
-    if (e.pageX) {
-      offset = e.pageX - cursorStartPosition;
-    } else {
-      offset = e.changedTouches[0].clientX - cursorStartPosition
-    }
-    const sliderWidth = parseFloat(getComputedStyle(sliderNode).width);
-    let position = offset + currentPositionSlider;
-    let sliderValue = Math.round(position * step + min);
-    
-    if (position > rangeWidth - sliderWidth) {
-      position = rangeWidth - sliderWidth;
-      sliderValue = max;
-    }
-    
-    if (position < 0) {
-      position = 0;
-      sliderValue = min;
-    }
-  
-    sliderNode.style.left = `${position}px`;
-    sliderNode.innerText = sliderValue;
-    sliderNode.dataset.default = `${sliderValue}`;
-  }
 }
 
 if (gamePageNode) {
@@ -1685,37 +1488,63 @@ if (blogPageNode) {
 }
 
 if (catalogNode) {
+  const priceRangeNode = catalogNode.querySelector('.js-range');
   const filterNode = catalogNode.querySelector('.js-filter');
   const sortNode = catalogNode.querySelector('.js-sort');
-  const rangePriceNode = catalogNode.querySelector('.js-priceRange');
-  const loadMoreNode = catalogNode.querySelector('.js-loadMore');
+  const catalogListNode = catalogNode.querySelector('.js-catalogList');
   const countLoad = 20;
-  const fields = [{
-    name: 'searchString',
-    node: searchStringNode,
-    type: 'textInput',
-  }];
-  let sortActiveBtn = null;
+  let currentPage = catalogListNode.dataset.currentPage;
+  let sortActiveBtn = catalogNode.querySelector('.js-sort .js-variant-sort.active');
+  let priceRangeObject;
+  const scrollToTop = () => {
+    const topOffset = document.querySelector('.js-header').offsetHeight;
+    const targetPosition = catalogListNode.getBoundingClientRect().top;
+    const offsetPosition = targetPosition - topOffset;
+  
+    window.scrollBy({
+      top: offsetPosition,
+      behavior: 'smooth',
+    });
+  }
+  
+  if (currentPage > 1) {
+    scrollToTop();
+  }
   
   const checkbox = [...filterNode.querySelectorAll('.js-checkbox')];
   const sortBtnNodes = sortNode.querySelectorAll('.js-variant-sort');
-  const rangePriceSliderNodes = rangePriceNode.querySelectorAll('.js-slider');
-  
-  loadMoreNode.addEventListener('click', async () => {
-    const url = new URL(window.location.href);
-    const response = await postman.get(`${websiteAddress}api/products${url.search ? url.search : '?'}&skip=${loadMoreNode.dataset.skip}&limit=${countLoad}`);
-    const result = await response.json();
-    const productGridNode = catalogNode.querySelector('.js-productGrid');
+  const offsetTop = catalogListNode.getBoundingClientRect().top;
+  const height = catalogListNode.getBoundingClientRect().height;
+  const scrollHandler = async () => {
+    const offsetTop = catalogListNode.getBoundingClientRect().top;
+    const height = catalogListNode.getBoundingClientRect().height;
     
+    if (offsetTop + height + 100 > windowHeight || loading) {
+      return;
+    }
+    
+    await loadMore();
+  }
+  let loading = false;
+  const loadMore = async () => {
+    loading = true;
+    
+    const url = new URL(window.location.href);
+    const response = await postman.get(`${websiteAddress}api/products${url.search ? url.search : '?'}&skip=${currentPage * countLoad}&limit=${countLoad}`);
+    const result = await response.json();
+    let pageHtml = `<div class="gameGrid js-page" data-page-num="${currentPage}">`;
+  
+    loading = false;
+  
     if (result.error) {
       return;
     }
-  
-    loadMoreNode.dataset.skip = parseInt(loadMoreNode.dataset.skip) + countLoad;
-    result.isLast ? loadMoreNode.classList.add('hide') : loadMoreNode.classList.remove('hide');
-  
+    
+    currentPage++;
+    result.isLast ? document.removeEventListener('scroll', scrollHandler) : '';
+    
     result.products.forEach(product => {
-      productGridNode.innerHTML += `
+      pageHtml += `
         <a
           href="/games/${product.alias}"
           class="cardGame js-cardGame"
@@ -1758,17 +1587,54 @@ if (catalogNode) {
               <span class="value">${product.priceTo}</span>
             </div>
             ${
-              product.priceTo < product.priceFrom ? `
+        product.priceTo < product.priceFrom ? `
                 <div class="fromPrice">
                   <span class="value">${product.priceFrom}</span>
                 </div>
               ` : ''
-            }
+      }
           </div>
         </a>
       `;
-    })
-  })
+    });
+    pageHtml += '</div';
+    catalogListNode.innerHTML += pageHtml;
+    
+    url.searchParams.set('page', currentPage);
+    history.pushState(null, null, url);
+  }
+  
+  if (offsetTop + height + 100 < windowHeight) {
+    loadMore().then();
+  }
+  
+  document.addEventListener('scroll', scrollHandler);
+  
+  
+  
+  
+  if (priceRangeNode) {
+    const min = +priceRangeNode.dataset.min;
+    const max = +priceRangeNode.dataset.max;
+    const firstPointValue = +priceRangeNode.dataset.firstValue;
+    const secondPointValue = +priceRangeNode.dataset.secondValue;
+  
+    priceRangeObject = new Range({
+      mainNode: priceRangeNode,
+      min,
+      max,
+      points: [
+        {
+          value: firstPointValue,
+          name: 'first',
+        },
+        {
+          value: secondPointValue,
+          name: 'second',
+        },
+      ],
+    });
+  }
   
   searchStringNode.addEventListener('input', () => {
     const url = new URL(window.location.href);
@@ -1782,28 +1648,24 @@ if (catalogNode) {
     
     history.pushState(null, null, url);
     catalogNode.dispatchEvent(new Event('changeParams'));
-  })
+  });
   
-  rangePriceSliderNodes.forEach(rangePriceSliderNode => {
-    const name = rangePriceSliderNode.dataset.name;
+  priceRangeObject.addChangeListener((values) => {
+    const url = new URL(window.location.href);
+    let min = values[0].value;
+    let max = values[1].value
     
-    rangePriceSliderNode.addEventListener('initialSlider', () => {
-      const url = new URL(window.location.href);
-      const value = rangePriceSliderNode.dataset.default;
-      
-      url.searchParams.set(name, value);
-      history.pushState(null, null, url);
-      catalogNode.dispatchEvent(new Event('changeParams'));
-    })
+    if (min > max) {
+      max = min;
+      min = values[1].value;
+    }
   
-    fields.push({
-      name,
-      node: rangePriceSliderNode,
-      type: 'contentEditable',
-      dispatch: true,
-      event: 'startInitial',
-    });
-  })
+    url.searchParams.set('priceFrom', min);
+    url.searchParams.set('priceTo', max);
+  
+    history.pushState(null, null, url);
+    catalogNode.dispatchEvent(new Event('changeParams'));
+  });
   
   sortBtnNodes.forEach(sortBtnNode => {
     const value = sortBtnNode.dataset.sort;
@@ -1825,16 +1687,7 @@ if (catalogNode) {
       history.pushState(null, null, url);
       catalogNode.dispatchEvent(new Event('changeParams'));
     })
-  
-    fields.push({
-      name: 'sort',
-      value,
-      fixValue: true,
-      node: sortBtnNode,
-      dispatch: true,
-      event: 'click',
-    });
-  })
+  });
   
   checkbox.forEach(item => {
     const input = item.querySelector('.input');
@@ -1865,98 +1718,40 @@ if (catalogNode) {
       history.pushState(null, null, url);
       catalogNode.dispatchEvent(new Event('changeParams'));
     });
-    
-    fields.push({
-      name: inputName,
-      value: inputValue,
-      fixValue: true,
-      node: input,
-      type: 'checkbox',
-    });
-  })
-  
-  const url = new URL(window.location.href);
-  const entriesSearchParams = [...url.searchParams.entries()];
-  
-  entriesSearchParams.forEach(searchParam => {
-    const field = fields.find(field => {
-      if (field.fixValue) {
-        return field.name === searchParam[0] && field.value === searchParam[1];
-      }
-  
-      return field.name === searchParam[0];
-    });
-    
-    if (!field) {
-      return;
-    }
-    
-    switch (field.type) {
-      case 'checkbox': {
-        field.node.checked = true;
-        break;
-      }
-      case 'contentEditable': {
-        field.node.innerText = searchParam[1];
-        field.node.dataset.default = searchParam[1];
-        break;
-      }
-      case 'textInput': {
-        field.node.value = searchParam[1];
-        break;
-      }
-    }
-    
-    if (field.dispatch) {
-      field.node.dispatchEvent(new Event(field.event));
-    }
-  
-    let param = {
-      name: searchParam[0],
-      value: searchParam[1],
-    };
-    
-    switch (field.type) {
-      case 'checkbox': {
-        param.value = field.node.value;
-        break;
-      }
-      case 'contentEditable': {
-        param.value = field.node.dataset.value;
-        break;
-      }
-      case 'textInput': {
-        param.value = field.node.value;
-        break;
-      }
-    }
   })
   
   catalogNode.addEventListener('changeParams', async () => {
+    const catalogListNode = catalogNode.querySelector('.js-catalogList');
+    
+    catalogListNode.innerHTML = '';
+    scrollToTop();
+    currentPage = 1;
+    document.removeEventListener('scroll', scrollHandler);
+    
     const url = new URL(window.location.href);
     const response = await postman.get(`${websiteAddress}api/products${url.search ? url.search : '?'}&limit=${countLoad}`);
     const result = await response.json();
-    const productGridNode = catalogNode.querySelector('.js-productGrid');
+    let pageHtml = `<div class="gameGrid js-page" data-page-num="${currentPage}">`;
+  
+    url.searchParams.set('page', currentPage);
+    history.pushState(null, null, url);
     
     if (result.error) {
       return;
     }
   
-    loadMoreNode.dataset.skip = countLoad;
-    result.isLast ? loadMoreNode.classList.add('hide') : loadMoreNode.classList.remove('hide');
-    productGridNode.classList.remove('notFound');
-    productGridNode.innerHTML = '';
+    catalogListNode.classList.remove('notFound');
     
     if (!result.products.length) {
-      productGridNode.classList.add ('notFound');
-      productGridNode.innerHTML = `
+      catalogListNode.classList.add ('notFound');
+      catalogListNode.innerHTML = `
         <img class="img" src="${websiteAddress}img/notFound.svg">
         <span class="text">Ничего не найдено...</span>
       `;
     }
     
     result.products.forEach(product => {
-      productGridNode.innerHTML += `
+      pageHtml += `
         <a
           href="/games/${product.alias}"
           class="cardGame js-cardGame"
@@ -2009,9 +1804,12 @@ if (catalogNode) {
         </a>
       `
     });
-  })
+    pageHtml += '</div>';
   
-  catalogNode.dispatchEvent(new Event('changeParams'));
+    catalogListNode.innerHTML += pageHtml;
+  
+    document.addEventListener('scroll', scrollHandler);
+  });
 }
 
 if (loginFormNode && btnSwitchAuthNode && btnSwitchRegNode && submitLoginNode) {

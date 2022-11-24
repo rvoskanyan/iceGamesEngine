@@ -126,7 +126,7 @@
                 {{> menu}}
                 <button title="Открыть каталог игр" class="btn bg-blur round border hover-bg-pink hover-border-pink openMenu js-toggleMainNavigation">Каталог</button>
                 <div class="searchBar">
-                    <input class="textField js-searchString" type="text" placeholder="Поиск...">
+                    <input class="textField js-searchString" type="text"{{#if searchString}} value="{{searchString}}"{{/if}} placeholder="Поиск...">
                     <button class="btn goSearch js-goSearch" title="Выполнить поиск">
                         <span class="icon icon-search"></span>
                     </button>

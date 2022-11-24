@@ -25,8 +25,8 @@ export const pageAddCategories = async (req, res) => {
 
 export const addCategories = async (req, res) => {
   try {
-    const {name} = req.body;
-    const category = new Category({name});
+    const {name, alias} = req.body;
+    const category = new Category({name, alias});
     
     await category.save();
     
@@ -62,10 +62,11 @@ export const editCategory = async (req, res) => {
   const {categoryId} = req.params;
   
   try {
-    const {name} = req.body;
+    const {name, alias} = req.body;
     const category = await Category.findById(categoryId);
   
     category.name = name;
+    category.alias = alias;
     
     await category.save();
     

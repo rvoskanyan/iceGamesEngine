@@ -9,25 +9,379 @@ import Comment from '../../models/Comment.js';
 import User from '../../models/User.js';
 import Review from "../../models/Review.js";
 import Article from "../../models/Article.js";
+import {getAlias, getChangeLayout, getGrams, toRoman} from "../../utils/functions.js";
 
 export const gamesPage = async (req, res) => {
   try {
-    const categories = await Category.find().select(['name']);
-    const genres = await Genre.find().select(['name']);
-    const activationServices = await ActivationService.find().select(['name']);
+    let allCategories = await Category.find().select(['name', 'alias']).lean();
+    let allGenres = await Genre.find().select(['name', 'alias']).lean();
+    let allActivationServices = await ActivationService.find().select(['name', 'alias']).lean();
+  
+    let {
+      searchString = '',
+      priceFrom = '',
+      priceTo = '',
+      sort = '',
+      onlyStock = '',
+      categories = [],
+      genres = [],
+      activationServices = [],
+      page = 1,
+    } = req.query;
+  
+    categories = Array.isArray(categories) ? categories : [categories];
+    genres = Array.isArray(genres) ? genres : [genres];
+    activationServices = Array.isArray(activationServices) ? activationServices : [activationServices];
+    
+    const minPriceProduct = await Product.findOne({active: true}).sort({priceTo: 1}).select(['priceTo']).lean();
+    const maxPriceProduct = await Product.findOne({active: true}).sort({priceTo: -1}).select(['priceTo']).lean();
+    const limit = 20;
+    const skip = (page - 1) * limit;
+  
+    searchString = searchString.trim();
+  
+    const recIds = [];
+    const recProducts = [];
+    const numsSearch = searchString.match(/\d/g);
+  
+    const latin = getAlias(searchString, false);
+    const changeLayout = getChangeLayout(searchString);
+    const romaNumsSearch = toRoman(searchString, numsSearch);
+  
+    const shortNamesMatch = new RegExp(searchString, 'i');
+    const latinShortNamesMatch = new RegExp(latin, 'i');
+    const changeLayoutShortNamesMatch = new RegExp(changeLayout, 'i');
+    const romaNumsShortNamesMatch = new RegExp(romaNumsSearch, 'i');
+  
+    const searchMatch = new RegExp(searchString, 'i');
+    const latinMatch = new RegExp(latin, 'i');
+    const changeLayoutMatch = new RegExp(changeLayout, 'i');
+    const romaNumsSearchMatch = new RegExp(romaNumsSearch, 'i');
+  
+    const searchGrams = getGrams(searchString);
+    const latinGrams = getGrams(latin);
+    const changeLayoutGrams = getGrams(changeLayout);
+    const romaNumsSearchGrams = getGrams(romaNumsSearch);
+    
+    const categoryFilterIds = categories.map(categoryAlias => {
+      return allCategories.find(item => item.alias === categoryAlias)._id
+    });
+    const genreFilterIds = genres.map(genreAlias => {
+      return allGenres.find(item => item.alias === genreAlias)._id
+    });
+    const activationServicesIds = activationServices.map(activationServiceAlias => {
+      return allActivationServices.find(item => item.alias === activationServiceAlias)._id
+    });
+  
+    const filter = {
+      active: true,
+    }
+  
+    const getWithoutSort = async (filter) => {
+      let stageFilter = {
+        $or: [
+          {shortNames: shortNamesMatch},
+          {shortNames: latinShortNamesMatch},
+          {shortNames: changeLayoutShortNamesMatch},
+          {shortNames: romaNumsShortNamesMatch},
+        ],
+      }
+    
+      let result = await Product.find({
+        ...filter,
+        ...stageFilter,
+      }).skip(+skip).limit(+limit).sort({priceTo: -1, createdAt: -1}).lean();
+    
+      recProducts.push(...result);
+    
+      if (recProducts.length === +limit) {
+        return recProducts;
+      }
+    
+      const countShortNames = await Product.countDocuments({
+        ...filter,
+        ...stageFilter,
+      });
+    
+      recIds.push(...result.map(item => item._id));
+    
+      stageFilter = {
+        _id: {$nin: recIds},
+        $or: [
+          {name: searchMatch},
+          {name: latinMatch},
+          {name: changeLayoutMatch},
+          {name: romaNumsSearchMatch},
+        ],
+      }
+    
+      result = await Product.find({
+        ...filter,
+        ...stageFilter,
+      }).skip(recProducts.length ? 0 : +skip - countShortNames).limit(+limit - recProducts.length).sort({priceTo: -1, createdAt: -1}).lean();
+    
+      recProducts.push(...result);
+    
+      if (recProducts.length === +limit) {
+        return recProducts;
+      }
+    
+      const countName = await Product.countDocuments({
+        ...filter,
+        ...stageFilter,
+      });
+    
+      recIds.push(...result.map(item => item._id));
+    
+      stageFilter = {
+        _id: {$nin: recIds},
+        nameGrams: {$in: searchGrams},
+      }
+    
+      result = await Product.aggregate([
+        {
+          $match: {
+            ...filter,
+            ...stageFilter,
+          }
+        },
+        {
+          $project: {
+            name: 1,
+            img: 1,
+            alias: 1,
+            releaseDate: 1,
+            priceTo: 1,
+            priceFrom: 1,
+            discount: 1,
+            createdAt: 1,
+            inStock: 1,
+            SCORE: {
+              $subtract: [
+                {
+                  $round: [{
+                    $divide: [
+                      {
+                        $size: {
+                          $filter: {
+                            input: "$nameGrams",
+                            cond: {
+                              $in: ["$$this", searchGrams]
+                            },
+                          },
+                        },
+                      },
+                      searchGrams.length,
+                    ]
+                  }, 2],
+                },
+                {
+                  $round: [{
+                    $divide: [
+                      {
+                        $size: {
+                          $filter: {
+                            input: "$nameGrams",
+                            cond: {
+                              $in: ["$$this", searchGrams]
+                            },
+                          },
+                        },
+                      },
+                      {
+                        $size: "$nameGrams",
+                      },
+                    ]
+                  }, 2],
+                }
+              ],
+            },
+          },
+        },
+      ]).sort({SCORE: -1}).skip(recProducts.length ? 0 : +skip - countShortNames - countName).limit(+limit - recProducts.length);
+    
+      recProducts.push(...result);
+    
+      return recProducts;
+    }
+  
+    let person = null;
+    let products;
+    
+    allCategories = allCategories.map(category => {
+      if (categories.findIndex(item => item === category.alias) > -1) {
+        return {
+          ...category,
+          checked: true,
+        }
+      }
+      
+      return category;
+    });
+  
+    allGenres = allGenres.map(genre => {
+      if (genres.findIndex(item => item === genre.alias) > -1) {
+        return {
+          ...genre,
+          checked: true,
+        }
+      }
+    
+      return genre;
+    });
+  
+    allActivationServices = allActivationServices.map(activationService => {
+      if (activationServices.findIndex(item => item === activationService.alias) > -1) {
+        return {
+          ...activationService,
+          checked: true,
+        }
+      }
+    
+      return activationService;
+    });
+  
+    if (res.locals && res.locals.person) {
+      person = res.locals.person;
+    }
+  
+    if (categoryFilterIds.length) {
+      filter.categories = {$in: categoryFilterIds};
+    }
+  
+    if (genreFilterIds.length) {
+      filter.genres = {$in: genreFilterIds};
+    }
+  
+    if (activationServicesIds.length) {
+      filter.activationServiceId = {$in: activationServicesIds};
+    }
+  
+    if (priceFrom && +priceFrom >= 0) {
+      filter.priceTo = {$gte: +priceFrom};
+    }
+  
+    if (priceTo && +priceTo >= 0) {
+      filter.priceTo = {
+        ...filter.priceTo,
+        $lte: +priceTo,
+      }
+    }
+  
+    if (onlyStock) {
+      filter.inStock = true;
+    }
+  
+    if (searchString.length) {
+      const paramsFilter = {...filter};
+    
+      filter['$or'] = [
+        {shortNames: {$in: [searchString.toUpperCase()]}},
+        {shortNames: {$in: [latin.toUpperCase()]}},
+        {shortNames: {$in: [changeLayout.toUpperCase()]}},
+        {shortNames: {$in: [romaNumsSearch.toUpperCase()]}},
+        {name: searchMatch},
+        {name: latinMatch},
+        {name: changeLayoutMatch},
+        {name: romaNumsSearchMatch},
+        {nameGrams: {$in: searchGrams}},
+        {nameGrams: {$in: latinGrams}},
+        {nameGrams: {$in: changeLayoutGrams}},
+        {nameGrams: {$in: romaNumsSearchGrams}},
+      ];
+    
+      if (sort) {
+        const sortObjs = {};
+      
+        switch (sort) {
+          case 'date': {
+            sortObjs.releaseDate = -1;
+            break;
+          }
+          case 'price': {
+            sortObjs.priceTo = 1;
+            break;
+          }
+          case 'discount': {
+            sortObjs.discount = -1;
+            break;
+          }
+        }
+      
+        sortObjs.createdAt = -1;
+      
+        products = await Product.find(filter).sort(sortObjs).skip(+skip).limit(+limit).lean();
+      } else {
+        products = await getWithoutSort(paramsFilter);
+      }
+    } else {
+      let sortObj = {};
+    
+      if (sort) {
+        switch (sort) {
+          case 'date': {
+            sortObj.releaseDate = -1;
+            break;
+          }
+          case 'price': {
+            sortObj.priceTo = 1;
+            break;
+          }
+          case 'discount': {
+            sortObj.discount = -1;
+            break;
+          }
+        }
+      } else {
+        sortObj = {priceTo: -1};
+      }
+    
+      sortObj.createdAt = -1;
+    
+      products = await Product.find(filter).sort({...sortObj}).skip(+skip).limit(+limit).lean();
+    }
+  
+    if (person) {
+      const favoritesProducts = person.favoritesProducts;
+      const cart = person.cart;
+    
+      products = products.map(item => {
+        const productId = item._id.toString();
+      
+        if (favoritesProducts && favoritesProducts.includes(productId)) {
+          item.inFavorites = true;
+        }
+      
+        if (cart && cart.includes(productId)) {
+          item.inCart = true;
+        }
+      
+        return item;
+      });
+    }
     
     res.render('catalog', {
       title: 'Каталог игр ICE GAMES',
       metaDescription: 'Каталог лучших игр со скидками и удобным поиском. Топ продаж от магазина лицензионных ключей ICE GAMES.',
       ogPath: `games${req.url}`,
       isCatalog: true,
-      categories,
-      genres,
-      activationServices,
+      priceFrom: priceFrom ? priceFrom : minPriceProduct.priceTo,
+      priceTo: priceTo ? priceTo : maxPriceProduct.priceTo,
+      minPrice: minPriceProduct.priceTo,
+      maxPrice: maxPriceProduct.priceTo,
       breadcrumbs: [{
         name: 'Каталог',
         current: true,
       }],
+      onlyStock,
+      allCategories,
+      allGenres,
+      allActivationServices,
+      searchString,
+      sort,
+      products,
+      limit,
+      page,
     });
   } catch (e) {
     console.log(e);
