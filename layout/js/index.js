@@ -1492,116 +1492,20 @@ if (catalogNode) {
   const filterNode = catalogNode.querySelector('.js-filter');
   const sortNode = catalogNode.querySelector('.js-sort');
   const catalogListNode = catalogNode.querySelector('.js-catalogList');
-  const countLoad = 20;
-  let currentPage = catalogListNode.dataset.currentPage;
-  let sortActiveBtn = catalogNode.querySelector('.js-sort .js-variant-sort.active');
-  let priceRangeObject;
-  const scrollToTop = () => {
-    const topOffset = document.querySelector('.js-header').offsetHeight;
-    const targetPosition = catalogListNode.getBoundingClientRect().top;
-    const offsetPosition = targetPosition - topOffset;
-  
-    window.scrollBy({
-      top: offsetPosition,
-      behavior: 'smooth',
-    });
-  }
-  
-  if (currentPage > 1) {
-    scrollToTop();
-  }
-  
+  const countLoad = catalogListNode.dataset.loadLimit;
   const checkbox = [...filterNode.querySelectorAll('.js-checkbox')];
   const sortBtnNodes = sortNode.querySelectorAll('.js-variant-sort');
   const offsetTop = catalogListNode.getBoundingClientRect().top;
   const height = catalogListNode.getBoundingClientRect().height;
-  const scrollHandler = async () => {
-    const offsetTop = catalogListNode.getBoundingClientRect().top;
-    const height = catalogListNode.getBoundingClientRect().height;
-    
-    if (offsetTop + height + 100 > windowHeight || loading) {
-      return;
-    }
-    
-    await loadMore();
-  }
+  
+  let currentPage = +catalogListNode.dataset.currentPage;
+  let topPage = +catalogListNode.dataset.currentPage;
+  let sortActiveBtn = catalogNode.querySelector('.js-sort .js-variant-sort.active');
+  let priceRangeObject;
   let loading = false;
-  const loadMore = async () => {
-    loading = true;
-    
-    const url = new URL(window.location.href);
-    const response = await postman.get(`${websiteAddress}api/products${url.search ? url.search : '?'}&skip=${currentPage * countLoad}&limit=${countLoad}`);
-    const result = await response.json();
-    let pageHtml = `<div class="gameGrid js-page" data-page-num="${currentPage}">`;
   
-    loading = false;
-  
-    if (result.error) {
-      return;
-    }
-    
-    currentPage++;
-    result.isLast ? document.removeEventListener('scroll', scrollHandler) : '';
-    
-    result.products.forEach(product => {
-      pageHtml += `
-        <a
-          href="/games/${product.alias}"
-          class="cardGame js-cardGame"
-          data-id="${product._id}"
-          title="Перейти к странице товара"
-        >
-          <div class="actions${!product.inStock ? ' noInStock' : ''}">
-            ${result.isAuth ? `
-              <button class="btn like js-favoritesBtn${product.inFavorites ? ' js-active' : ''}" title="${product.inFavorites ? 'Удалить товар из избранного' : 'Добавить товар в избранное'}">
-                <span class="icon-static icon-static-actionLike js-icon${product.inFavorites ? ' active' : ''}"></span>
-              </button>
-            ` : ''}
-            ${product.inStock ? `
-              <button
-                class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart small js-addToCart${product.inCart ? ' active js-active' : ''}"
-                title="${product.inCart ? 'Перейти в корзину покупок' : 'Добавить данный товар в корзину покупок'}"
-              >
-                <span class="desktop js-text">
-                  ${product.inCart ? 'Добавлено' : 'В корзину'}
-                </span>
-                <span class="mobile icon-static icon-static-cartProduct${product.inCart ? ' active' : ''} js-icon"></span>
-              </button>
-            ` : `
-              <div class="noInStockMsg">Игры нет<br>в наличии :(</div>
-              <button
-                class="btn border rounded bg-darkPink hover-bg-pink small js-subscribeInStock"
-                title="Подписаться на уведомление о поступлении товара"
-              >Уведомить</button>
-            `}
-          </div>
-          ${product.dlc ? '<div class="dlc" title="Дополнение для игры">DLC</div>' : ''}
-          <div class="head">
-            <img class="img" src="${websiteAddress}${product.img}" alt="Картинка ${product.name}" title="${product.name}">
-            <div class="name">
-              ${product.name}
-            </div>
-          </div>
-          <div class="price">
-            <div class="toPrice">
-              <span class="value">${product.priceTo}</span>
-            </div>
-            ${
-        product.priceTo < product.priceFrom ? `
-                <div class="fromPrice">
-                  <span class="value">${product.priceFrom}</span>
-                </div>
-              ` : ''
-      }
-          </div>
-        </a>
-      `;
-    });
-    pageHtml += '</div';
-    catalogListNode.innerHTML += pageHtml;
-    
-    url.searchParams.set('page', currentPage);
-    history.pushState(null, null, url);
+  if (currentPage > 1) {
+    scrollToTop().then();
   }
   
   if (offsetTop + height + 100 < windowHeight) {
@@ -1609,9 +1513,6 @@ if (catalogNode) {
   }
   
   document.addEventListener('scroll', scrollHandler);
-  
-  
-  
   
   if (priceRangeNode) {
     const min = +priceRangeNode.dataset.min;
@@ -1721,12 +1622,11 @@ if (catalogNode) {
   })
   
   catalogNode.addEventListener('changeParams', async () => {
-    const catalogListNode = catalogNode.querySelector('.js-catalogList');
-    
-    catalogListNode.innerHTML = '';
+    /*catalogListNode.innerHTML = '';
     scrollToTop();
     currentPage = 1;
     document.removeEventListener('scroll', scrollHandler);
+    document.removeEventListener('scroll', scrollTopHandler);
     
     const url = new URL(window.location.href);
     const response = await postman.get(`${websiteAddress}api/products${url.search ? url.search : '?'}&limit=${countLoad}`);
@@ -1808,8 +1708,132 @@ if (catalogNode) {
   
     catalogListNode.innerHTML += pageHtml;
   
-    document.addEventListener('scroll', scrollHandler);
+    document.addEventListener('scroll', scrollHandler);*/
   });
+  
+  async function scrollToTop() {
+    const topOffset = document.querySelector('.js-header').offsetHeight;
+    const targetPosition = catalogListNode.getBoundingClientRect().top;
+    const offsetPosition = targetPosition - topOffset;
+    
+    await window.scrollBy({
+      top: offsetPosition,
+      behavior: 'smooth',
+    });
+  
+    document.addEventListener('scroll', scrollTopHandler);
+  }
+  
+  async function scrollHandler() {
+    const offsetTop = catalogListNode.getBoundingClientRect().top;
+    const height = catalogListNode.getBoundingClientRect().height;
+    
+    if (offsetTop + height + 100 > windowHeight || loading) {
+      return;
+    }
+    
+    currentPage++;
+    await loadMore(currentPage);
+  }
+  
+  async function scrollTopHandler() {
+    const offsetTop = catalogListNode.getBoundingClientRect().top;
+    const topOffset = document.querySelector('.js-header').offsetHeight;
+    
+    if (offsetTop - topOffset < 100 || loading) {
+      return;
+    }
+    
+    topPage--;
+    
+    if (topPage <= 0) {
+      return document.removeEventListener('scroll', scrollTopHandler)
+    }
+    
+    await loadMore(topPage, true);
+  }
+  
+  async function loadMore(page, top = false) {
+    const skip = (page - 1) * countLoad;
+    
+    loading = true;
+    
+    const url = new URL(window.location.href);
+    const response = await postman.get(`${websiteAddress}api/products${url.search ? url.search : '?'}&skip=${skip}&limit=${countLoad}`);
+    const result = await response.json();
+    const pageNode = document.createElement('div');
+    
+    pageNode.classList.add('gameGrid', 'js-page');
+    pageNode.dataset.pageNum = page;
+    
+    loading = false;
+    
+    if (result.error) {
+      return;
+    }
+    
+    result.isLast ? document.removeEventListener('scroll', scrollHandler) : '';
+    
+    result.products.forEach(product => {
+      pageNode.innerHTML += `
+        <a
+          href="/games/${product.alias}"
+          class="cardGame js-cardGame"
+          data-id="${product._id}"
+          title="Перейти к странице товара"
+        >
+          <div class="actions${!product.inStock ? ' noInStock' : ''}">
+            ${result.isAuth ? `
+              <button class="btn like js-favoritesBtn${product.inFavorites ? ' js-active' : ''}" title="${product.inFavorites ? 'Удалить товар из избранного' : 'Добавить товар в избранное'}">
+                <span class="icon-static icon-static-actionLike js-icon${product.inFavorites ? ' active' : ''}"></span>
+              </button>
+            ` : ''}
+            ${product.inStock ? `
+              <button
+                class="btn border rounded uppercase bg-darkPink hover-bg-pink inCart small js-addToCart${product.inCart ? ' active js-active' : ''}"
+                title="${product.inCart ? 'Перейти в корзину покупок' : 'Добавить данный товар в корзину покупок'}"
+              >
+                <span class="desktop js-text">
+                  ${product.inCart ? 'Добавлено' : 'В корзину'}
+                </span>
+                <span class="mobile icon-static icon-static-cartProduct${product.inCart ? ' active' : ''} js-icon"></span>
+              </button>
+            ` : `
+              <div class="noInStockMsg">Игры нет<br>в наличии :(</div>
+              <button
+                class="btn border rounded bg-darkPink hover-bg-pink small js-subscribeInStock"
+                title="Подписаться на уведомление о поступлении товара"
+              >Уведомить</button>
+            `}
+          </div>
+          ${product.dlc ? '<div class="dlc" title="Дополнение для игры">DLC</div>' : ''}
+          <div class="head">
+            <img class="img" src="${websiteAddress}${product.img}" alt="Картинка ${product.name}" title="${product.name}">
+            <div class="name">
+              ${product.name}
+            </div>
+          </div>
+          <div class="price">
+            <div class="toPrice">
+              <span class="value">${product.priceTo}</span>
+            </div>
+            ${
+        product.priceTo < product.priceFrom ? `
+                <div class="fromPrice">
+                  <span class="value">${product.priceFrom}</span>
+                </div>
+              ` : ''
+      }
+          </div>
+        </a>
+      `;
+    });
+    
+    top ? catalogListNode.prepend(pageNode) : catalogListNode.append(pageNode);
+    
+    url.searchParams.set('page', page);
+    history.pushState(null, null, url);
+  }
 }
 
 if (loginFormNode && btnSwitchAuthNode && btnSwitchRegNode && submitLoginNode) {

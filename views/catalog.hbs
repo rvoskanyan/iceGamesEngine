@@ -95,7 +95,7 @@
                 </div>
             </div>
         </div>
-        <div class="list js-catalogList{{#unless products.length}} notFound{{/unless}}" data-current-page="{{page}}">
+        <div class="list js-catalogList{{#unless products.length}} notFound{{/unless}}" data-current-page="{{page}}" data-load-limit="{{limit}}">
             {{#if products.length}}
                 <div class="gameGrid js-page" data-page-num="{{page}}">
                     {{#each products}}
