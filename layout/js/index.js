@@ -1622,7 +1622,7 @@ if (catalogNode) {
   })
   
   catalogNode.addEventListener('changeParams', async () => {
-    /*catalogListNode.innerHTML = '';
+    catalogListNode.innerHTML = '';
     scrollToTop();
     currentPage = 1;
     document.removeEventListener('scroll', scrollHandler);
@@ -1708,7 +1708,7 @@ if (catalogNode) {
   
     catalogListNode.innerHTML += pageHtml;
   
-    document.addEventListener('scroll', scrollHandler);*/
+    document.addEventListener('scroll', scrollHandler);
   });
   
   async function scrollToTop() {
