@@ -1623,7 +1623,7 @@ if (catalogNode) {
   
   catalogNode.addEventListener('changeParams', async () => {
     catalogListNode.innerHTML = '';
-    scrollToTop();
+    await scrollToTop();
     currentPage = 1;
     document.removeEventListener('scroll', scrollHandler);
     document.removeEventListener('scroll', scrollTopHandler);
