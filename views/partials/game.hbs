@@ -4,6 +4,7 @@
     data-id="{{id}}"
     {{#if inCart}}data-in-cart="true"{{/if}}
     title="Перейти к странице товара"
+    itemscope itemtype="https://schema.org/BuyAction"
 >
     <div class="actions{{#unless inStock}} noInStock{{/unless}}">
         {{#if @root.isAuth}}
@@ -31,12 +32,12 @@
         <div class="dlc" title="Дополнение для игры">DLC</div>
     {{/if}}
     <div class="head">
-        <img class="img" src="{{@root.websiteAddress}}{{img}}" alt="Картинка {{name}}" title="{{name}}">
-        <div class="name">{{name}}</div>
+        <img  itemprop="image" class="img" src="{{@root.websiteAddress}}{{img}}" alt="Картинка {{name}}" title="{{name}}">
+        <div itemprop="name" class="name">{{name}}</div>
     </div>
     <div class="price">
         <div class="toPrice">
-            <span class="value">{{priceTo}}</span>
+            <span itemprop="price" itemprop="priceCurrency" content="RUB" class="value">{{priceTo}}</span>
         </div>
         {{#iff priceTo '<' priceFrom}}
             <div class="fromPrice">

@@ -10,9 +10,6 @@
         <loc>https://icegames.store/sitemaps/blog.xml</loc>
     </sitemap>
     <sitemap>
-        <loc>https://icegames.store/sitemaps/rating.xml</loc>
-    </sitemap>
-    <sitemap>
         <loc>https://icegames.store/sitemaps/sitemap_images.xml</loc>
     </sitemap>
 </sitemapindex>

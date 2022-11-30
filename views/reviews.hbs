@@ -12,19 +12,22 @@
     <div class="contentContainer">
         <div class="reviewsList js-reviewsList">
             {{#each reviews}}
-                <div class="review">
+                <div class="review" itemscope itemtype="https://schema.org/Review">
                     <div class="head">
-                        <a class="btn link userName" href="{{websiteAddress}}rating/{{user.login}}" title="Перейти на страницу {{user.login}}">{{user.login}}</a>
+                        <a itemprop="author" class="btn link userName" href="{{websiteAddress}}rating/{{user.login}}" title="Перейти на страницу {{user.login}}">{{user.login}}</a>
                         <div class="forGame">Отзыв на игру: <a class="link gameName" href="{{websiteAddress}}games/{{product.alias}}">{{product.name}}</a></div>
                     </div>
-                    <div class="grade">
+                    <div itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating" class="grade">
+                        <meta itemprop="worstRating" content="1">
+                        <meta itemprop="ratingValue" content="{{ eval }}">
                         <span class="icon icon-star{{#iff eval '>=' 1}}Fill{{/iff}}"></span>
                         <span class="icon icon-star{{#iff eval '>=' 2}}Fill{{/iff}}"></span>
                         <span class="icon icon-star{{#iff eval '>=' 3}}Fill{{/iff}}"></span>
                         <span class="icon icon-star{{#iff eval '>=' 4}}Fill{{/iff}}"></span>
                         <span class="icon icon-star{{#iff eval '>=' 5}}Fill{{/iff}}"></span>
+                        <meta itemprop="bestRating" content="5">
                     </div>
-                    <div class="text">{{text}}</div>
+                    <div itemprop="reviewBody" class="text">{{text}}</div>
                 </div>
             {{/each}}
         </div>
