@@ -37,7 +37,8 @@
     </div>
     <div class="price">
         <div class="toPrice">
-            <span itemprop="price" itemprop="priceCurrency" content="RUB" class="value">{{priceTo}}</span>
+            <span itemprop="price" class="value">{{priceTo}}</span>
+            <meta itemprop="priceCurrency" content="RUB">
         </div>
         {{#iff priceTo '<' priceFrom}}
             <div class="fromPrice">
