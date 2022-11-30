@@ -161,33 +161,6 @@ export const blogSitemap = async (req, res) => {
   }
 }
 
-export const ratingSitemap = async (req, res) => {
-  try {
-    const users = await User.find({locked: false}).select(['login', 'updatedAt']).lean();
-    const params = [{
-      url: `${websiteAddress}rating`,
-      changeFreq: 'daily',
-      priority: '0.8',
-    }];
-  
-    users.forEach(user => {
-      params.push({
-        url: `${websiteAddress}rating/${user.login}`,
-        lastMod: getFormatDate(user.updatedAt, '-', ['y', 'm', 'd']),
-        changeFreq: 'monthly',
-        priority: '0.8',
-      })
-    });
-    
-    const siteMap = getSitemap(params);
-    
-    res.set('Content-Type', 'text/xml');
-    res.send(siteMap);
-  } catch (e) {
-    console.log(e);
-  }
-}
-
 export const imagesSitemap = async (req, res) => {
   try {
     const params = [];

@@ -1,92 +1,123 @@
 <!doctype html>
 <html lang="ru" prefix="og: http://ogp.me/ns#">
-<head>
+<head itemscope itemtype="https://schema.org/WPHeader">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-{{#if noIndex}}
-    <meta name="robots" content="noindex">
-{{/if}}
-{{#if noIndexGoogle}}
-    <meta name="googlebot" content="noindex">
-{{/if}}
-{{#if metaDescription}}
-    <meta name="description" content="{{metaDescription}}">
-{{/if}}
+    <meta name="og:locale" content="ru_RU">
+    {{#if noIndex}}
+        <meta name="robots" content="noindex">
+    {{/if}}
+    {{#if noIndexGoogle}}
+        <meta name="googlebot" content="noindex">
+    {{/if}}
+    {{#if metaDescription}}
+        <meta itemprop="description" name="description" content="{{metaDescription}}">
+    {{/if}}
     <meta property="og:site_name" content="ICE GAMES">
     <meta property="og:title" content="{{title}}">
     <meta property="og:url" content="{{websiteAddress}}{{ogPath}}"/>
-{{#if ogImage}}
-    <meta name="og:image" content="{{websiteAddress}}{{ogImage}}">
-    <meta name="og:image:secure_url" content="{{websiteAddress}}{{ogImage}}">
-{{else}}
-    <meta name="og:image" content="{{websiteAddress}}img/logo-ogImage.svg">
-    <meta name="og:image:secure_url" content="{{websiteAddress}}img/logo-ogImage.svg">
-{{/if}}
-{{#if ogType}}
-    <meta property="og:type" content="{{ogType}}"/>
-{{else}}
-    <meta property="og:type" content="website"/>
-{{/if}}
-{{#if ogArticlePublishedTime}}
-    <meta property="article:published_time" content="{{ogArticlePublishedTime}}"/>
-{{/if}}
-{{#if ogArticleModifiedTime}}
-    <meta property="article:modified_time" content="{{ogArticleModifiedTime}}"/>
-{{/if}}
-{{#if ogArticleSection}}
-    <meta property="article:section" content="{{ogArticleSection}}"/>
-{{/if}}
-{{#if canonical}}
-    <link rel="canonical" href="{{websiteAddress}}{{canonical}}"/>
-{{/if}}
+    {{#if ogImage}}
+        <meta name="og:image" content="{{websiteAddress}}{{ogImage}}">
+        <meta name="og:image:secure_url" content="{{websiteAddress}}{{ogImage}}">
+    {{else}}
+        <meta name="og:image" content="{{websiteAddress}}img/logo-ogImage.svg">
+        <meta name="og:image:secure_url" content="{{websiteAddress}}img/logo-ogImage.svg">
+    {{/if}}
+    {{#if ogType}}
+        <meta property="og:type" content="{{ogType}}"/>
+    {{else}}
+        <meta property="og:type" content="website"/>
+    {{/if}}
+    {{#if ogArticlePublishedTime}}
+        <meta property="article:published_time" content="{{ogArticlePublishedTime}}"/>
+    {{/if}}
+    {{#if ogArticleModifiedTime}}
+        <meta property="article:modified_time" content="{{ogArticleModifiedTime}}"/>
+    {{/if}}
+    {{#if ogArticleSection}}
+        <meta property="article:section" content="{{ogArticleSection}}"/>
+    {{/if}}
+    {{#if canonical}}
+        <link rel="canonical" href="{{websiteAddress}}{{canonical}}"/>
+    {{/if}}
     <link rel="shortcut icon" href="{{websiteAddress}}img/favicon.svg" type="image/x-icon">
-    <link rel="stylesheet" href="{{websiteAddress}}styles/bundle.css">
+    <link itemprop="cssSelector" rel="stylesheet" href="{{websiteAddress}}styles/bundle.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-    <title>{{title}}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+          rel="stylesheet">
+    <title itemprop="name">{{title}}</title>
 
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-BJFJNPJ1LW"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
         gtag('js', new Date());
 
         gtag('config', 'G-BJFJNPJ1LW');
     </script>
     <!-- /Google tag (gtag.js) -->
     <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-                new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-TVW524P');</script>
+    <script>(function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({
+            'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+        });
+        var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
+        j.async = true;
+        j.src =
+                'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+        f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-TVW524P');</script>
     <!-- /End Google Tag Manager -->
     <!-- Yandex.Metrika counter -->
-    <script type="text/javascript" >
-        (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-            m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    <script type="text/javascript">
+        (function (m, e, t, r, i, k, a) {
+            m[i] = m[i] || function () {
+                (m[i].a = m[i].a || []).push(arguments)
+            };
+            m[i].l = 1 * new Date();
+            k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(k, a)
+        })
         (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
 
         ym(69707947, "init", {
-            clickmap:true,
-            trackLinks:true,
-            accurateTrackBounce:true,
-            webvisor:true
+            clickmap: true,
+            trackLinks: true,
+            accurateTrackBounce: true,
+            webvisor: true
         });
     </script>
-    <noscript><div><img src="https://mc.yandex.ru/watch/69707947" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <noscript>
+        <div><img src="https://mc.yandex.ru/watch/69707947" style="position:absolute; left:-9999px;" alt=""/></div>
+    </noscript>
     <!-- /Yandex.Metrika counter -->
     <!-- Yandex.Metrika pixel -->
-    <script type="text/javascript">!function(){var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src='https://vk.com/js/api/openapi.js?169',t.onload=function(){VK.Retargeting.Init("VK-RTRG-1479708-6ukF0"),VK.Retargeting.Hit()},document.head.appendChild(t)}();</script><noscript><img src="https://vk.com/rtrg?p=VK-RTRG-1479708-6ukF0" style="position:fixed; left:-999px;" alt=""/></noscript>
+    <script type="text/javascript">!function () {
+        var t = document.createElement("script");
+        t.type = "text/javascript", t.async = !0, t.src = 'https://vk.com/js/api/openapi.js?169', t.onload = function () {
+            VK.Retargeting.Init("VK-RTRG-1479708-6ukF0"), VK.Retargeting.Hit()
+        }, document.head.appendChild(t)
+    }();</script>
+    <noscript><img src="https://vk.com/rtrg?p=VK-RTRG-1479708-6ukF0" style="position:fixed; left:-999px;" alt=""/>
+    </noscript>
     <!-- /Yandex.Metrika pixel -->
 </head>
 <body ontouchstart="">
 <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TVW524P"
-                  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TVW524P"
+            height="0" width="0" style="display:none;visibility:hidden"></iframe>
+</noscript>
 <!-- /End Google Tag Manager (noscript) -->
 {{#unless isAuth}}
     {{> loginForm}}
@@ -107,7 +138,8 @@
         {{#if isHome}}
             <div class="logo">
                 <div class="imgContainer">
-                    <img src="{{websiteAddress}}img/logo.svg" class="img" alt="Логотип ICE GAMES" title="Логотип ICE GAMES">
+                    <img src="{{websiteAddress}}img/logo.svg" class="img" alt="Логотип ICE GAMES"
+                         title="Логотип ICE GAMES">
                     <span class="eye"></span>
                 </div>
                 <div class="name">ICE GAMES<br>Store</div>
@@ -115,7 +147,8 @@
         {{else}}
             <a class="logo" href="{{websiteAddress}}" title="Перейти на главную страницу">
                 <div class="imgContainer">
-                    <img src="{{websiteAddress}}img/logo.svg" class="img" alt="Логотип ICE GAMES" title="Логотип ICE GAMES">
+                    <img src="{{websiteAddress}}img/logo.svg" class="img" alt="Логотип ICE GAMES"
+                         title="Логотип ICE GAMES">
                     <span class="eye"></span>
                 </div>
                 <div class="name">ICE GAMES<br>Store</div>
@@ -124,17 +157,25 @@
         <div class="navigateMobileContainer js-navigateMobileContainer">
             <div class="navigation js-mainNavigation">
                 {{> menu}}
-                <button title="Открыть каталог игр" class="btn bg-blur round border hover-bg-pink hover-border-pink openMenu js-toggleMainNavigation">Каталог</button>
-                <div class="searchBar">
-                    <input class="textField js-searchString" type="text"{{#if searchString}} value="{{searchString}}"{{/if}} placeholder="Поиск...">
+                <button title="Открыть каталог игр"
+                        class="btn bg-blur round border hover-bg-pink hover-border-pink openMenu js-toggleMainNavigation">
+                    Каталог
+                </button>
+                <div itemprop="potentialAction" class="searchBar" itemscope itemtype="https://schema.org/SearchAction">
+                    <meta itemprop="target" content="https://icegames.store/games?searchString={query}">
+                    <meta itemprop="url" content="https://icegames.store">
+                    <input itemprop="query-input" name="query" class="textField js-searchString" type="text"{{#if
+                            searchString}} value="{{searchString}}"{{/if}} placeholder="Поиск...">
                     <button class="btn goSearch js-goSearch" title="Выполнить поиск">
                         <span class="icon icon-search"></span>
                     </button>
                 </div>
                 {{#if isRating}}
-                    <span title="Рейтинг пользователей ICE GAMES" class="rating bg-blur btn round border hover-bg-pink hover-border-pink">Рейтинг</span>
+                    <span title="Рейтинг пользователей ICE GAMES"
+                          class="rating bg-blur btn round border hover-bg-pink hover-border-pink">Рейтинг</span>
                 {{else}}
-                    <a href="{{websiteAddress}}rating" title="Рейтинг пользователей ICE GAMES" class="rating bg-blur btn round border hover-bg-pink hover-border-pink">Рейтинг</a>
+                    <a href="{{websiteAddress}}rating" title="Рейтинг пользователей ICE GAMES"
+                       class="rating bg-blur btn round border hover-bg-pink hover-border-pink">Рейтинг</a>
                 {{/if}}
             </div>
             <div class="profile">
@@ -159,7 +200,8 @@
                         <span class="icon icon-fillDiamond"></span>
                     </div>
                 {{else}}
-                    <a href="{{websiteAddress}}cart" class="btn cart{{#if person.cart.length}} full{{/if}}" title="Перейти в корзину с товарами">
+                    <a href="{{websiteAddress}}cart" class="btn cart{{#if person.cart.length}} full{{/if}}"
+                       title="Перейти в корзину с товарами">
                         <span class="icon icon-cart"></span>
                         <span class="icon icon-fillDiamond"></span>
                     </a>
@@ -180,90 +222,121 @@
             Наш сайт использует cookie. Просматривая сайт и его контент вы соглашаетесь с Пользовательским соглашением
             <!--<a class="link" href="{{websiteAddress}}legal-info/agreement">Пользовательским соглашением</a>-->
         </span>
-        <button class="btn small round border hover-color-pink hover-border-pink js-sendAcceptAgreement">Принять</button>
+        <button class="btn small round border hover-color-pink hover-border-pink js-sendAcceptAgreement">Принять
+        </button>
     </div>
 {{/unless}}
 
 {{{body}}}
 
-<footer class="contentContainer homeSection footer">
+<footer itemscope itemtype="http://schema.org/WPFooter" class="contentContainer homeSection footer">
     <div class="navigation">
         {{#if isHome}}
             <div class="logo">
                 <div class="imgContainer">
-                    <img src="{{websiteAddress}}img/logo.svg" class="img" alt="Логотип ICE GAMES" title="Логотип ICE GAMES">
+                    <img src="{{websiteAddress}}img/logo.svg" class="img" alt="Логотип ICE GAMES"
+                         title="Логотип ICE GAMES">
                     <span class="eye"></span>
                 </div>
             </div>
         {{else}}
             <a class="logo" href="{{websiteAddress}}" title="Перейти на главную страницу">
                 <div class="imgContainer">
-                    <img src="{{websiteAddress}}img/logo.svg" class="img" alt="Логотип ICE GAMES" title="Логотип ICE GAMES">
+                    <img src="{{websiteAddress}}img/logo.svg" class="img" alt="Логотип ICE GAMES"
+                         title="Логотип ICE GAMES">
                     <span class="eye"></span>
                 </div>
             </a>
         {{/if}}
         <div class="social">
-            <a href="https://vk.com/ice.games" target="_blank" rel="nofollow" class="link" title="Перейти на страницу ICE GAMES во Вконтакте">
-                <img class="img" src="{{websiteAddress}}img/vkSocial.svg" alt="Логотип Вконтакте" title="Перейти на страницу ICE GAMES во Вконтакте">
+            <a href="https://vk.com/ice.games" target="_blank" rel="nofollow" class="link"
+               title="Перейти на страницу ICE GAMES во Вконтакте">
+                <img class="img" src="{{websiteAddress}}img/vkSocial.svg" alt="Логотип Вконтакте"
+                     title="Перейти на страницу ICE GAMES во Вконтакте">
             </a>
-            <a href="https://t.me/icegames_store" rel="nofollow" class="link" target="_blank" title="Перейти на страницу ICE GAMES в Telegram">
-                <img class="img" src="{{websiteAddress}}img/telegramSocial.svg" alt="Логотип Telegram" title="Перейти на страницу ICE GAMES в Telegram">
+            <a href="https://t.me/icegames_store" rel="nofollow" class="link" target="_blank"
+               title="Перейти на страницу ICE GAMES в Telegram">
+                <img class="img" src="{{websiteAddress}}img/telegramSocial.svg" alt="Логотип Telegram"
+                     title="Перейти на страницу ICE GAMES в Telegram">
             </a>
-            <a href="https://m.twitch.tv/surf1se/about" target="_blank" rel="nofollow" class="link" title="Перейти на страницу ICE GAMES в Twitch">
-                <img class="img" src="{{websiteAddress}}img/twitchSocial.svg" alt="Логотип Twitch" title="Перейти на страницу ICE GAMES в Twitch">
+            <a href="https://m.twitch.tv/surf1se/about" target="_blank" rel="nofollow" class="link"
+               title="Перейти на страницу ICE GAMES в Twitch">
+                <img class="img" src="{{websiteAddress}}img/twitchSocial.svg" alt="Логотип Twitch"
+                     title="Перейти на страницу ICE GAMES в Twitch">
             </a>
-            <a href="https://www.youtube.com/channel/UCMARO--DvWrjVlbVflNtczA" target="_blank" rel="nofollow" class="link" title="Перейти на страницу ICE GAMES в YouTube">
-                <img class="img" src="{{websiteAddress}}img/youtubeSocial.svg" alt="Логотип YouTube" title="Перейти на страницу ICE GAMES в YouTube">
+            <a href="https://www.youtube.com/channel/UCMARO--DvWrjVlbVflNtczA" target="_blank" rel="nofollow"
+               class="link" title="Перейти на страницу ICE GAMES в YouTube">
+                <img class="img" src="{{websiteAddress}}img/youtubeSocial.svg" alt="Логотип YouTube"
+                     title="Перейти на страницу ICE GAMES в YouTube">
             </a>
-            <a href="https://vt.tiktok.com/ZSRRFmTSm/" rel="nofollow" class="link" target="_blank" title="Перейти на страницу ICE GAMES в TikTok">
-                <img class="img" src="{{websiteAddress}}img/tiktokSocial.svg" alt="Логотип TikTok" title="Перейти на страницу ICE GAMES в TikTok">
+            <a href="https://vt.tiktok.com/ZSRRFmTSm/" rel="nofollow" class="link" target="_blank"
+               title="Перейти на страницу ICE GAMES в TikTok">
+                <img class="img" src="{{websiteAddress}}img/tiktokSocial.svg" alt="Логотип TikTok"
+                     title="Перейти на страницу ICE GAMES в TikTok">
             </a>
-            <a href="https://instagram.com/icegames.store" rel="nofollow" class="link" target="_blank" title="Перейти на страницу ICE GAMES в Instagram">
-                <img class="img" src="{{websiteAddress}}img/instagramSocial.svg" alt="Логотип Instagram" title="Перейти на страницу ICE GAMES в Instagram">
+            <a href="https://instagram.com/icegames.store" rel="nofollow" class="link" target="_blank"
+               title="Перейти на страницу ICE GAMES в Instagram">
+                <img class="img" src="{{websiteAddress}}img/instagramSocial.svg" alt="Логотип Instagram"
+                     title="Перейти на страницу ICE GAMES в Instagram">
             </a>
         </div>
-        <div class="menu">
-            {{#if isCatalog}}
-                <span class="link">Все игры</span>
-            {{else}}
-                <a href="{{websiteAddress}}games" class="link">Все игры</a>
-            {{/if}}
-            {{#if isSupport}}
-                <span class="link">Поддержка</span>
-            {{else}}
-                <a href="{{websiteAddress}}support" class="link">Поддержка</a>
-            {{/if}}
-            {{#if isPayment}}
-                <span class="link">Оплата</span>
-            {{else}}
-                <a href="{{websiteAddress}}payment" class="link">Оплата</a>
-            {{/if}}
-            {{#if isReviews}}
-                <span class="link">Отзывы</span>
-            {{else}}
-                <a href="{{websiteAddress}}reviews" class="link">Отзывы</a>
-            {{/if}}
-            {{#if isAbout}}
-                <span class="link">О магазине</span>
-            {{else}}
-                <a href="{{websiteAddress}}about" class="link">О нас</a>
-            {{/if}}
-            {{#if isBlog}}
-                <span class="link">Блог</span>
-            {{else}}
-                <a href="{{websiteAddress}}blog" class="link">Блог</a>
-            {{/if}}
-            {{#if isDiscounts}}
-                <span class="link">Скидки</span>
-            {{else}}
-                <a href="{{websiteAddress}}discounts" class="link">Скидки</a>
-            {{/if}}
-            {{#if isNovelty}}
-                <span class="link">Новинки</span>
-            {{else}}
-                <a href="{{websiteAddress}}novelty" class="link">Новинки</a>
-            {{/if}}
+        <div itemscope itemtype="https://schema.org/SiteNavigationElement" class="menu">
+            <p itemprop="name">
+                {{#if isCatalog}}
+                    <span class="link">Все игры</span>
+                {{else}}
+                    <a itemprop="url" href="{{websiteAddress}}games" class="link">Все игры</a>
+                {{/if}}
+            </p>
+            <p itemprop="name">
+                {{#if isSupport}}
+                    <span class="link">Поддержка</span>
+                {{else}}
+                    <a itemprop="url" href="{{websiteAddress}}support" class="link">Поддержка</a>
+                {{/if}}
+            </p>
+            <p itemprop="name">
+                {{#if isPayment}}
+                    <span class="link">Оплата</span>
+                {{else}}
+                    <a itemprop="url" href="{{websiteAddress}}payment" class="link">Оплата</a>
+                {{/if}}
+            </p>
+            <p itemprop="name">
+                {{#if isReviews}}
+                    <span class="link">Отзывы</span>
+                {{else}}
+                    <a itemprop="url" href="{{websiteAddress}}reviews" class="link">Отзывы</a>
+                {{/if}}
+            </p>
+            <p itemprop="name">
+                {{#if isAbout}}
+                    <span class="link">О магазине</span>
+                {{else}}
+                    <a itemprop="url" href="{{websiteAddress}}about" class="link">О нас</a>
+                {{/if}}
+            </p>
+            <p itemprop="name">
+                {{#if isBlog}}
+                    <span class="link">Блог</span>
+                {{else}}
+                    <a itemprop="url" href="{{websiteAddress}}blog" class="link">Блог</a>
+                {{/if}}
+            </p>
+            <p itemprop="name">
+                {{#if isDiscounts}}
+                    <span class="link">Скидки</span>
+                {{else}}
+                    <a itemprop="url" href="{{websiteAddress}}discounts" class="link">Скидки</a>
+                {{/if}}
+            </p>
+            <p itemprop="name">
+                {{#if isNovelty}}
+                    <span class="link">Новинки</span>
+                {{else}}
+                    <a itemprop="url" href="{{websiteAddress}}novelty" class="link">Новинки</a>
+                {{/if}}
+            </p>
             {{#if isPreorders}}
                 <!--<span class="link">Предзаказы</span>-->
             {{else}}
@@ -273,11 +346,14 @@
     </div>
     <div class="info">
         <img class="payments" src="{{websiteAddress}}img/payments.png" alt="Способы оплаты" title="Способы оплаты">
-        <a class="link legalInfo" href="{{websiteAddress}}legal-info" title="Перейти на страницу правовой информации">Правовая информация</a>
+        <a class="link legalInfo" href="{{websiteAddress}}legal-info" title="Перейти на страницу правовой информации">Правовая
+            информация</a>
         <span class="designBy">Дизайн: Beach</span>
     </div>
-    <div class="copy">
-        © {{currentYear}} ICE GAMES. Все права защищены. Копирование любых материалов сайта запрещено! Все названия продуктов и игр,
+    <div  itemprop="copyrightNotice" class="copy">
+        <meta itemprop="copyrightYear" content="{{currentYear}}">
+        © {{currentYear}} ICE GAMES. Все права защищены. Копирование любых материалов сайта запрещено! Все названия
+        продуктов и игр,
         компаний и марок, логотипы, товарные знаки и другие материалы являются собственностью
         соответствующих владельцев. Только лицензионные ключи ко всем игровым платформам: Steam, Uplay,
         Battle.net, Origin и другие. Выгодно, надежно и быстро!
