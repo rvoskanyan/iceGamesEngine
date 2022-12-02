@@ -695,7 +695,7 @@ export const gamePage = async (req, res) => {
     
     res.render('game', {
       title: `Купить лицензионный ключ ${product.name} по цене ${product.priceTo}₽ для ${product.activationServiceId.name} в магазине ICE GAMES`,
-      metaDescription: `Лицензионный ключ ${product.name} (${product.genres.map(item => item.name).join(', ')}) дешево для активации в ${product.activationServiceId.name} в магазине ICE GAMES${product.discount > 0 ? ` со скидкой ${product.discount}%` : ''}. Мгновенная доставка ключа на почту. Оплата удобным способом.`,
+      metaDescription: `Лицензионный ключ для ${product.name} (${product.genres.map(item => item.name).join(', ')}) дешево для активации в ${product.activationServiceId.name} в магазине ICE GAMES${product.discount > 0 ? ` со скидкой ${product.discount}%` : ''}. Мгновенная доставка ключа на почту. Оплата удобным способом.`,
       ogPath: `games/${product.alias}`,
       typeTrailerCover,
       product,

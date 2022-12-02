@@ -115,6 +115,7 @@
             @include for-big-phone-up
               margin-left: 20px
 
+
   & .more
     margin: 30px auto 0 auto
 
@@ -266,7 +267,43 @@
 
           @include for-big-phone-up
             column-gap: 30px
-
+          & .social-sharing-wrap
+            position: relative
+            .social-sharing
+              border-radius: 12px
+              border: 1px solid #6A439A
+              background: #2E075F
+              position: absolute
+              overflow: hidden
+              bottom: -8px
+              display: none
+              padding: 12px 20px 8px
+              z-index: 1
+              opacity: 0
+              height: 0
+              list-style: none
+              transition: 0.8s ease-in
+              li
+                display: flex
+                cursor: pointer
+                color: #fff
+                font-weight: 600
+                align-items: center
+                margin-bottom: 8px
+                transition: 0.2s ease-in
+                p
+                  margin-right: 8px
+                  min-width: 40px
+                  height: 40px
+                  display: flex
+                  justify-content: center
+                  align-items: center
+                span
+                  white-space: nowrap
+                &:last-child
+                  margin-bottom: 0
+                &:hover
+                  scale: 1.05
           & .block
             display: flex
             align-items: center
