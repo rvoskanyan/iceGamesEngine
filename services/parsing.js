@@ -68,6 +68,10 @@ const sync = async () => {
           continue;
         }
         
+        if (Array.isArray(productOnSite.shortNames)) {
+          productOnSite.shortNames = '';
+        }
+        
         productOnSite.priceTo = priceTo;
         productOnSite.discount = getDiscount(priceTo, productOnSite.priceFrom);
         
