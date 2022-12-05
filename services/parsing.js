@@ -68,7 +68,7 @@ const sync = async () => {
           continue;
         }
         
-        if (Array.isArray(productOnSite.shortNames)) {
+        if (Array.isArray(productOnSite.shortNames) || !productOnSite.shortNames) {
           productOnSite.shortNames = '';
         }
         
