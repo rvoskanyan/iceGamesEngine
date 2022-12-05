@@ -346,3 +346,58 @@
 
       @include for-middle-desktop-up
         padding: 20px 12px 0 12px
+
+  &-frame
+    background-color: #fff
+    position: relative
+
+    &.loading:before
+      content: ""
+      position: absolute
+      left: -70%
+      top: -10%
+      height: 110%
+      width: 80px
+      transform: rotate(15deg)
+      background: linear-gradient(to right, transparent 30%, rgba(255, 255, 255, 0.6) 70%, transparent 100%)
+      animation-name: gradient-animation
+      animation-duration: 1.2s
+      animation-iteration-count: infinite
+      z-index: 1
+
+    .elem
+      border-radius: 8px
+
+    .head
+      padding: 15px
+      background-color: #ccc
+
+      &:before
+        content: initial
+
+      .name
+        background-color: #a1a1a1
+        min-height: 30px
+        width: calc(100% - 30px)
+        bottom: 15px
+
+    .price
+      .fromPrice
+        min-width: 60px
+
+      .toPrice
+        min-width: 45px
+
+      & .toPrice, & .fromPrice
+        background-color: #ccc
+        min-height: 20px
+
+        &:after
+          content: initial
+
+
+@keyframes gradient-animation
+  from
+    left: -70%
+  to
+    left: 100%
