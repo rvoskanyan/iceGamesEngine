@@ -1417,6 +1417,10 @@ if (catalogNode) {
   let priceRangeObject;
   let loading = false;
   
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+  }
+  
   if (startPage > 1) {
     for (let i = 1; i < startPage; i++) {
       const pageNode = document.createElement('div');
