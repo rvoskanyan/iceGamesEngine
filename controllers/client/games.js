@@ -36,6 +36,10 @@ export const gamesPage = async (req, res, next) => {
     let metaDescription = 'Каталог лучших игр со скидками и удобным поиском. Топ продаж от магазина лицензионных ключей ICE GAMES.';
     let title = 'Каталог игр ICE GAMES';
     let hTitle = `Каталог игр`;
+    let breadcrumbs = [{
+      name: 'Каталог',
+      current: true,
+    }];
   
     if (sectionName) {
       section = await Genre.findOne({alias: sectionName}).select(['name', 'description']).lean();
@@ -50,6 +54,17 @@ export const gamesPage = async (req, res, next) => {
         return next();
       }
   
+      breadcrumbs = [
+        {
+          name: 'Каталог',
+          path: 'games',
+        },
+        {
+          name: section.name,
+          current: true,
+        },
+      ];
+  
       switch (sectionType) {
         case 'genres': {
           metaDescription = `Каталог лучших игр в жанре ${section.name} со скидками и удобным поиском. Топ продаж от магазина лицензионных ключей ICE GAMES.`;
@@ -62,7 +77,7 @@ export const gamesPage = async (req, res, next) => {
           metaDescription = `Каталог лучших игр с активацией в ${section.name} со скидками и удобным поиском. Топ продаж от магазина лицензионных ключей ICE GAMES.`;
           title = `Каталог игр ICE GAMES с активацией в ${section.name}`;
           hTitle = `Каталог игр с активацией в ${section.name}`;
-          genres.push(sectionName);
+          activationServices.push(sectionName);
           break;
         }
         default: return next();
@@ -412,10 +427,7 @@ export const gamesPage = async (req, res, next) => {
       priceTo: priceTo ? priceTo : maxPriceProduct.priceTo,
       minPrice: minPriceProduct.priceTo,
       maxPrice: maxPriceProduct.priceTo,
-      breadcrumbs: [{
-        name: 'Каталог',
-        current: true,
-      }],
+      breadcrumbs,
       sectionName,
       sectionType,
       onlyStock,
