@@ -11,12 +11,8 @@ import Review from "../../models/Review.js";
 import Article from "../../models/Article.js";
 import {getAlias, getChangeLayout, getGrams, toRoman} from "../../utils/functions.js";
 
-export const gamesPage = async (req, res) => {
+export const gamesPage = async (req, res, next) => {
   try {
-    let allCategories = await Category.find().select(['name', 'alias']).lean();
-    let allGenres = await Genre.find().select(['name', 'alias']).lean();
-    let allActivationServices = await ActivationService.find().select(['name', 'alias']).lean();
-  
     let {
       searchString = '',
       priceFrom = '',
@@ -32,6 +28,50 @@ export const gamesPage = async (req, res) => {
     categories = Array.isArray(categories) ? categories : [categories];
     genres = Array.isArray(genres) ? genres : [genres];
     activationServices = Array.isArray(activationServices) ? activationServices : [activationServices];
+    
+    const sectionName = req.params.sectionName;
+  
+    let section;
+    let sectionType;
+    let metaDescription = 'Каталог лучших игр со скидками и удобным поиском. Топ продаж от магазина лицензионных ключей ICE GAMES.';
+    let title = 'Каталог игр ICE GAMES';
+    let hTitle = `Каталог игр`;
+  
+    if (sectionName) {
+      section = await Genre.findOne({alias: sectionName}).select(['name', 'description']).lean();
+      sectionType = 'genres';
+    
+      if (!section) {
+        section = await ActivationService.findOne({alias: sectionName}).select(['name', 'description']).lean();
+        sectionType = 'activationServices';
+      }
+    
+      if (!section) {
+        return next();
+      }
+  
+      switch (sectionType) {
+        case 'genres': {
+          metaDescription = `Каталог лучших игр в жанре ${section.name} со скидками и удобным поиском. Топ продаж от магазина лицензионных ключей ICE GAMES.`;
+          title = `Каталог игр ICE GAMES в жанре ${section.name}`;
+          hTitle = `Каталог игр в жанре ${section.name}`;
+          genres.push(sectionName);
+          break;
+        }
+        case 'activationServices': {
+          metaDescription = `Каталог лучших игр с активацией в ${section.name} со скидками и удобным поиском. Топ продаж от магазина лицензионных ключей ICE GAMES.`;
+          title = `Каталог игр ICE GAMES с активацией в ${section.name}`;
+          hTitle = `Каталог игр с активацией в ${section.name}`;
+          genres.push(sectionName);
+          break;
+        }
+        default: return next();
+      }
+    }
+  
+    let allCategories = await Category.find().select(['name', 'alias']).lean();
+    let allGenres = await Genre.find().select(['name', 'alias']).lean();
+    let allActivationServices = await ActivationService.find().select(['name', 'alias']).lean();
     
     const minPriceProduct = await Product.findOne({active: true}).sort({priceTo: 1}).select(['priceTo']).lean();
     const maxPriceProduct = await Product.findOne({active: true}).sort({priceTo: -1}).select(['priceTo']).lean();
@@ -221,10 +261,11 @@ export const gamesPage = async (req, res) => {
   
     allGenres = allGenres.map(genre => {
       if (genres.findIndex(item => item === genre.alias) > -1) {
-        return {
-          ...genre,
-          checked: true,
-        }
+        genre.checked = true;
+      }
+  
+      if (section && section._id.toString() === genre._id.toString()) {
+        genre.disabled = true;
       }
     
       return genre;
@@ -232,10 +273,11 @@ export const gamesPage = async (req, res) => {
   
     allActivationServices = allActivationServices.map(activationService => {
       if (activationServices.findIndex(item => item === activationService.alias) > -1) {
-        return {
-          ...activationService,
-          checked: true,
-        }
+        activationService.checked = true;
+      }
+      
+      if (section && section._id.toString() === activationService._id.toString()) {
+        activationService.disabled = true;
       }
     
       return activationService;
@@ -361,8 +403,9 @@ export const gamesPage = async (req, res) => {
     }
     
     res.render('catalog', {
-      title: 'Каталог игр ICE GAMES',
-      metaDescription: 'Каталог лучших игр со скидками и удобным поиском. Топ продаж от магазина лицензионных ключей ICE GAMES.',
+      title,
+      metaDescription,
+      hTitle,
       ogPath: `games${req.url}`,
       isCatalog: true,
       priceFrom: priceFrom ? priceFrom : minPriceProduct.priceTo,
@@ -373,6 +416,8 @@ export const gamesPage = async (req, res) => {
         name: 'Каталог',
         current: true,
       }],
+      sectionName,
+      sectionType,
       onlyStock,
       allCategories,
       allGenres,

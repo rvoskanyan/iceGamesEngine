@@ -1406,6 +1406,8 @@ if (catalogNode) {
   const offsetTop = catalogListNode.getBoundingClientRect().top;
   const height = catalogListNode.getBoundingClientRect().height;
   const startPage = +catalogListNode.dataset.currentPage;
+  const sectionName = catalogNode.dataset.sectionName;
+  const sectionType = catalogNode.dataset.sectionType;
   const pageObjects = Array.from(catalogListNode.querySelectorAll('.js-page')).map(item => ({
     node: item,
     loaded: true,
@@ -1580,7 +1582,8 @@ if (catalogNode) {
     document.removeEventListener('scroll', scrollHandler);
     
     const url = new URL(window.location.href);
-    const response = await postman.get(`${websiteAddress}api/products${url.search ? url.search : '?'}&limit=${countLoad}`);
+    const queryUrl = `${websiteAddress}api/products${url.search ? url.search : '?'}&limit=${countLoad}${sectionName ? `&${sectionType}=${sectionName}` : ''}`;
+    const response = await postman.get(queryUrl);
     const result = await response.json();
   
     url.searchParams.set('page', currentPage);
@@ -1647,7 +1650,8 @@ if (catalogNode) {
     loading = true;
 
     const url = new URL(window.location.href);
-    const response = await postman.get(`${websiteAddress}api/products${url.search ? url.search : '?'}&skip=${skip}&limit=${countLoad}`);
+    const queryUrl = `${websiteAddress}api/products${url.search ? url.search : '?'}&skip=${skip}&limit=${countLoad}${sectionName ? `&${sectionType}=${sectionName}` : ''}`;
+    const response = await postman.get(queryUrl);
     const result = await response.json();
     const pageNode = document.createElement('div');
 

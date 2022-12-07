@@ -7,6 +7,7 @@ import {
 const router = Router();
 
 router.get('/', gamesPage);
+router.get('/:sectionName', gamesPage);
 router.get('/:alias', gamePage);
 
 export default router;
