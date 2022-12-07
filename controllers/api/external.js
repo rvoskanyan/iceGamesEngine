@@ -156,7 +156,7 @@ export const getFeedYML = async (req, res) => {
   try {
     const genres = await Genre.find().select(['alias', 'name']).lean();
     const products = await Product
-      .find({active: true})
+      .find({active: true, inStock: true})
       .select(['name', 'alias', 'img', 'description', 'priceTo', 'priceFrom', 'discount'])
       .populate(['activationServiceId', 'genres'])
       .lean();
