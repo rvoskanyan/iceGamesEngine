@@ -10,6 +10,20 @@ import Order from "../../models/Order.js";
 import ProductCategory from "../../models/Product_Category.js";
 
 export const homepage = async (req, res) => {
+  const inviter = req.query.inviter;
+  
+  if (inviter) {
+    if (!req.session.isAuth) {
+      res.cookie('inviterId', inviter);
+    }
+    
+    return res.redirect('/');
+  }
+  
+  if (Object.keys(req.query).length && !req.query.confirmEmail) {
+    return res.redirect('/');
+  }
+  
   const person = res.locals.person;
   let favoritesProducts;
   let cart;
@@ -30,7 +44,6 @@ export const homepage = async (req, res) => {
     .sort({createdAt: -1})
     .select(['name', 'alias', 'introText', 'type', 'createdAt', 'img'])
     .limit(9);
-  const inviter = req.query.inviter;
   const checkEmailHash = req.query.confirmEmail;
   const catalog = [];
   const day = new Date().getDay();
@@ -215,11 +228,7 @@ export const homepage = async (req, res) => {
   
       return item;
     }),
-  })
-  
-  if (inviter && !req.session.isAuth) {
-    res.cookie('inviterId', inviter).redirect('/');
-  }
+  });
   
   res.render('home', {
     title: "Ваши лицензионные ключи к «Стиму» в магазине ICE GAMES",
