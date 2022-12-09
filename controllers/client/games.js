@@ -520,6 +520,16 @@ export const gamePage = async (req, res) => {
         {bundleId: null}, //Иначе он не должен состоять в связке вовсе
       ],*/
     };
+    const sampleParams = {
+      name: product.name,
+      activationService: product.activationServiceId.name,
+      genres: product.genres.map(item => item.name).join(', '),
+      price: product.priceTo,
+      discount: product.discount,
+    };
+    const sampleParamNames = Object.keys(sampleParams);
+    let title = product.sampleTitle || `Купить лицензионный ключ ${product.name} по цене ${product.priceTo}₽ для ${product.activationServiceId.name} в магазине ICE GAMES`;
+    let metaDescription = product.sampleMetaDescription || `Лицензионный ключ для ${product.name} (${product.genres.map(item => item.name).join(', ')}) дешево для активации в ${product.activationServiceId.name} в магазине ICE GAMES${product.discount > 0 ? ` со скидкой ${product.discount}%` : ''}. Мгновенная доставка ключа на почту. Оплата удобным способом.`;
     let isProductNoReview = true;
     let isProductNotPurchased = true;
     let lastViewedProducts = [];
@@ -535,6 +545,18 @@ export const gamePage = async (req, res) => {
       .find({dlc: true, dlcForId: product._id})
       .select(['name', 'img', 'priceTo', 'priceFrom', 'dlc', 'inStock', 'alias'])
       .lean();
+  
+    sampleParamNames.forEach(item => {
+      const regExp = new RegExp(`{${item}}`, 'g');
+      
+      if (product.sampleTitle) {
+        title = title.replace(regExp, sampleParams[item]);
+      }
+  
+      if (product.sampleMetaDescription) {
+        metaDescription = metaDescription.replace(regExp, sampleParams[item]);
+      }
+    });
   
     if (person) {
       const email = person.email;
@@ -751,8 +773,8 @@ export const gamePage = async (req, res) => {
     }
     
     res.render('game', {
-      title: `Купить лицензионный ключ ${product.name} по цене ${product.priceTo}₽ для ${product.activationServiceId.name} в магазине ICE GAMES`,
-      metaDescription: `Лицензионный ключ для ${product.name} (${product.genres.map(item => item.name).join(', ')}) дешево для активации в ${product.activationServiceId.name} в магазине ICE GAMES${product.discount > 0 ? ` со скидкой ${product.discount}%` : ''}. Мгновенная доставка ключа на почту. Оплата удобным способом.`,
+      title,
+      metaDescription,
       ogPath: `games/${product.alias}`,
       typeTrailerCover,
       product,
