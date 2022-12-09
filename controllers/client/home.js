@@ -231,8 +231,8 @@ export const homepage = async (req, res) => {
   });
   
   res.render('home', {
-    title: "Ваши лицензионные ключи к «Стиму» в магазине ICE GAMES",
-    metaDescription: 'Магазин лицензионных ключей ICE GAMES. Более 2000 игр в каталоге, 16 жанров, сервисная поддержка. Увлекательные статьи и большое активное комьюнити.',
+    title: 'Купить лицензионные ключи Steam в магазине компьютерных игр ICE GAMES',
+    metaDescription: 'Магазин лицензионных ключей ICE GAMES. Более 2000 игр в каталоге, 16 жанров, сервисная поддержка, активация в Steam, Origin, Epic Games, GOG и других сервисах. Увлекательные статьи и большое активное комьюнити.',
     noIndex: !!checkEmailHash,
     noIndexGoogle: !!checkEmailHash,
     isHome: true,
