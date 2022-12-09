@@ -103,6 +103,12 @@
                         {{> game}}
                     {{/each}}
                 </div>
+                {{#if prevPage}}
+                    <a class="paginationLink" href="{{@root.websiteAddress}}{{prevPage}}">Prev page</a>
+                {{/if}}
+                {{#if nextPage}}
+                    <a class="paginationLink" href="{{@root.websiteAddress}}{{nextPage}}">Next page</a>
+                {{/if}}
             {{else}}
                 <img class="img" src="http://localhost:5000/img/notFound.svg">
                 <span class="text">Ничего не найдено...</span>

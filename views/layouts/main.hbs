@@ -42,6 +42,12 @@
     {{#if canonical}}
         <link rel="canonical" href="{{websiteAddress}}{{canonical}}"/>
     {{/if}}
+    {{#if prevPage}}
+        <link rel="prev" href="{{websiteAddress}}{{prevPage}}">
+    {{/if}}
+    {{#if nextPage}}
+        <link rel="next" href="{{websiteAddress}}{{nextPage}}">
+    {{/if}}
     <link rel="shortcut icon" href="{{websiteAddress}}img/favicon.svg" type="image/x-icon">
     <link itemprop="cssSelector" rel="stylesheet" href="{{websiteAddress}}styles/bundle.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">

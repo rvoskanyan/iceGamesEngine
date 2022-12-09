@@ -74,8 +74,8 @@ export const gamesPage = async (req, res, next) => {
           break;
         }
         case 'activationServices': {
-          metaDescription = `Каталог лучших игр с активацией в ${section.name} со скидками и удобным поиском. Топ продаж от магазина лицензионных ключей ICE GAMES.`;
-          title = `Каталог игр ICE GAMES с активацией в ${section.name}`;
+          metaDescription = `Ключи для ${section.name} в магазине ICE GAMES. Мгновенная доставка ключей активации. Широкий выбор игр, сервисная поддержка`;
+          title = `Ключи для ${section.name} со скидкой в магазине лицензионных ключей ICE GAMES`;
           hTitle = `Каталог игр с активацией в ${section.name}`;
           activationServices.push(sectionName);
           break;
@@ -416,6 +416,9 @@ export const gamesPage = async (req, res, next) => {
         return item;
       });
     }
+  
+    const count = await Product.countDocuments(filter);
+    const isLast = +skip + +limit >= count;
     
     res.render('catalog', {
       title,
@@ -439,6 +442,9 @@ export const gamesPage = async (req, res, next) => {
       products,
       limit,
       page,
+      prevPage: page > 1 && `games${section ? `/${sectionName}` : ''}?page=${+page - 1}`,
+      nextPage: !isLast && `games${section ? `/${sectionName}` : ''}?page=${+page + 1}`,
+      canonical: `games${section ? `/${sectionName}` : ''}`,
     });
   } catch (e) {
     console.log(e);
