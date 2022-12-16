@@ -2,14 +2,6 @@ import Review from "../../models/Review.js";
 
 export const pageReviews = async (req, res) => {
   try {
-    const allReviews = await Review.find();
-    
-    for (const item of allReviews) {
-      item.status = 'taken';
-      
-      await item.save();
-    }
-    
     const reviews = await Review.find({status: 'moderation'}).select(['text', 'eval']).lean();
     
     res.render('admReviewsModerationList', {
