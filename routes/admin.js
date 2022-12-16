@@ -21,6 +21,7 @@ import parsingRoute from './admin/parsing.js';
 import exportsRoute from './admin/exports.js';
 import partnersRoute from './admin/partners.js';
 import cheatReviewsRoute from './admin/cheatReviews.js';
+import reviewsRoute from './admin/reviews.js';
 
 const router = Router();
 
@@ -46,5 +47,6 @@ router.use('/parsing', parsingRoute);
 router.use('/exports', exportsRoute);
 router.use('/partners', partnersRoute);
 router.use('/cheat-reviews', cheatReviewsRoute);
+router.use('/reviews', reviewsRoute);
 
 export default router;

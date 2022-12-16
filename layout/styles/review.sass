@@ -15,6 +15,27 @@
     justify-content: space-between
     align-items: center
 
+    .moderationInfo
+      color: #8d1b1b
+      font-weight: 600
+
+      .rejectedBlock
+        display: flex
+        column-gap: 8px
+
+        .rejectionReason
+          background-color: #fff
+          padding: 5px 10px
+          border-radius: 5px
+          margin-top: 5px
+          width: max-content
+          max-width: 200px
+
+          @include for-big-phone-down
+            left: initial
+            transform: initial
+            right: 0
+
     & .forGame
       color: #fff
       font-size: 10px

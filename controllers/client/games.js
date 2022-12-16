@@ -479,11 +479,26 @@ export const gamePage = async (req, res) => {
           }
         }
       ]);
+    const person = res.locals.person;
+    const reviewsFilter = {
+      product: product._id,
+      active: true,
+    };
+    
+    if (person) {
+      reviewsFilter['$or'] = [
+        {user: person._id},
+        {status: 'taken'},
+      ];
+    } else {
+      reviewsFilter.status = 'taken';
+    }
+    
     const reviews = await Review
-      .find({product: product._id, active: true})
+      .find(reviewsFilter)
       .limit(5)
       .sort({createdAt: -1})
-      .select(['eval', 'text'])
+      .select(['eval', 'text', 'status', 'rejectionReason'])
       .populate([{
         path: 'user',
         select: ['login'],
@@ -508,7 +523,6 @@ export const gamePage = async (req, res) => {
       .sort({'createdAt': -1})
       .limit(3);
     const countComments = await Comment.estimatedDocumentCount();
-    const person = res.locals.person;
     const genreIds = product.genres.map(genre => genre._id);
     const maxPrice = await Product.findOne({active: true}).sort({priceTo: -1}).select(['priceTo']).lean();
     const scatter = 600;

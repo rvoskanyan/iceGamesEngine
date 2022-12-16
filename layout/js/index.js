@@ -233,7 +233,7 @@ counterAnimationNodes.forEach(counterAnimationNode => {
   const height = counterAnimationNode.getBoundingClientRect().height;
   const animate = () => {
     const count = parseInt(counterAnimationNode.innerText);
-    const step = Math.floor(count / 50);
+    const step = count >= 50 ? Math.floor(count / 50) : 1;
   
     counterAnimationNode.innerText = 0;
     counterAnimationNode.classList.add('active');
@@ -638,6 +638,7 @@ if (addReviewFormNode) {
         <div class="item review">
           <div class="head">
               <a class="btn link userName" href="/profile/view/${userName}" title="Перейти на страницу пользователя ${userName}">${userName}</a>
+              <div class="moderationInfo">Отзыв на модерации</div>
           </div>
           <div class="grade">
               <span class="icon icon-star${params.eval >= 1 ? 'Fill' : ''}"></span>

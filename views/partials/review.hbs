@@ -14,6 +14,20 @@
             {{userLogin}}
             <meta itemprop="name" content="{{userLogin}}">
         </a>
+        {{#iff status '!==' 'taken'}}
+            <div class="moderationInfo">
+                {{#iff status '===' 'moderation'}}Отзыв на модерации{{/iff}}
+                {{#iff status '===' 'rejected'}}
+                    <div class="rejectedBlock">
+                        Отзыв отклонен
+                        <div class="tooltip">
+                            <span class="icon icon-info"></span>
+                            <div class="prompt rejectionReason">Причина отлонения: {{rejectionReason}}</div>
+                        </div>
+                    </div>
+                {{/iff}}
+            </div>
+        {{/iff}}
         {{#if forGameName}}
             <div class="forGame">
                 Отзыв на игру: {{#if forGameAlias}}<a class="link gameName" href="/games/{{forGameAlias}}">{{forGameName}}</a>{{else}}<span class="gameName">{{forGameName}}</span>{{/if}}

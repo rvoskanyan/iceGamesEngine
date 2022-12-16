@@ -1,0 +1,17 @@
+{{#if reviews.length}}
+    <ul>
+        {{#each reviews}}
+            <li>
+                {{text}} <span style="color: #39bbce; font-weight: 600">({{this.eval}})</span>
+                <div style="display: flex; column-gap: 15px; margin-top: 12px">
+                    <form action="/admin/reviews/take/{{_id}}" method="post">
+                        <input type="submit" value="Принять">
+                    </form>
+                    <a href="/admin/reviews/reject/{{_id}}">Отклонить</a>
+                </div>
+            </li>
+        {{/each}}
+    </ul>
+{{else}}
+    Пока ни чего нет
+{{/if}}

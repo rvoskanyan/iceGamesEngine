@@ -8,6 +8,12 @@ const fields = {
     ref: 'User',
     required: true,
   },
+  status: {
+    type: String,
+    default: 'moderation',
+    enum: ['moderation', 'rejected', 'taken'],
+  },
+  rejectionReason: String,
   product: {
     type: Schema.Types.ObjectId,
     ref: 'Product',

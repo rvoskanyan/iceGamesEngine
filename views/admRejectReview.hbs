@@ -1,0 +1,13 @@
+<form action="/admin/reviews/reject/{{review._id}}" method="post">
+    <span style="color: #ff0000; font-weight: bold">Отклонение отзыва: </span>{{review.text}} <span style="color: #39bbce; font-weight: 600">({{review.eval}})</span>
+    <br>
+    <br>
+    <label>
+        *Причина отклонения:
+        <br>
+        <textarea name="rejectionReason" cols="30" rows="10"></textarea>
+    </label>
+    <br>
+    <br>
+    <input type="submit" value="Отклонить">
+</form>

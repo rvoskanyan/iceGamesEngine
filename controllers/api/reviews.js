@@ -3,7 +3,7 @@ import Review from "../../models/Review.js";
 export const getReviews = async (req, res) => {
   try {
     const {limit = 5, skip = 0, productId = null} = req.query;
-    const filter = {active: true};
+    const filter = {active: true, status: 'taken'};
   
     productId && (filter.product = productId);
   
