@@ -1,0 +1,152 @@
+<main>
+    <style>
+        form {
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 0 20px 40px;
+        }
+
+        form .field {
+            max-width: 480px;
+            margin: 0 auto 10px;
+        }
+
+        form .field label {
+            display: block;
+            font-size: 18px;
+            font-weight: 600;
+            color: #0F1339;
+        }
+
+        form .field input {
+            display: block;
+            width: 100%;
+            border: 2px solid darkgray;
+            border-radius: 8px;
+            font-size: 16px;
+            color: #0F1339;
+            padding: 8px 12px;
+            margin-top: 8px;
+            box-sizing: border-box;
+        }
+
+        form .field input[type=checkbox], form .field input[type=file] {
+            border: none;
+        }
+
+        form .field img {
+            width: 100%;
+            border-radius: 12px;
+        }
+
+        form .field p {
+            margin: 8px 0 0 8px;
+            font-size: 15px;
+        }
+
+        #is_active, form .field label[for=is_active] {
+            display: initial;
+            width: initial;
+            margin-left: 0;
+            margin-top: 0;
+        }
+
+        .button-wrap {
+            display: flex;
+            max-width: 480px;
+            margin: 12px auto;
+            justify-content: center;
+        }
+
+        .button-wrap button {
+            flex: 0.5;
+            border: none;
+            border-radius: 12px;
+            padding: 8px 12px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .button-wrap button[type=submit] {
+            background: #00af56;
+            color: #fff;
+        }
+
+        .button-wrap button[type=reset]:hover {
+            background: #960738;
+            color: #fff;
+        }
+
+        .button-wrap button:hover {
+            scale: 1.05;
+        }
+
+        .button-wrap button[type=submit]:active {
+            background: #018d45;
+        }
+
+        .button-wrap button[type=reset]:active {
+            background: #b70444;
+            color: #fff;
+        }
+
+        .button-wrap > div {
+            flex: 0.05;
+        }
+    </style>
+    <form enctype="multipart/form-data"
+          action="{{#if is_edit}}/admin/payment/method/{{paymentMethod.id}}{{else}}/admin/payment/method{{/if}}"
+          method="post">
+        <div class="field required">
+            <label for="name">Название</label>
+            <input {{#if is_edit}}value="{{paymentMethod.name}}"{{/if}} type="text" name="name" id="name" required>
+        </div>
+        <div class="field">
+            <label for="icons">Иконка</label>
+            <input type="file" name="icons" id="icons">
+            {{#if is_edit}}
+                <img src="/{{paymentMethod.icons}}" alt="">
+            {{/if}}
+        </div>
+        <div class="field">
+            <label for="secretToken">Секретный ключ</label>
+            <input {{#if is_edit}}value="{{paymentMethod.secretToken}}"{{/if}} type="text" name="secretToken"
+                   id="secretToken" required>
+            <p class="help-text">Секретный ключ предоставленный платежным модулем</p>
+        </div>
+        <div class="field">
+            <label for="privateToken">Приватный ключ</label>
+            <input type="text"
+                   {{#if is_edit}}value="{{paymentMethod.privateToken}}"{{/if}} name="privateToken" id="privateToken"
+                   required>
+            <p class="help-text">Приватный ключ предоставленный платежным модулем</p>
+        </div>
+        <div class="field">
+            <label for="publicToken">Публичный токен</label>
+            <input type="text"
+                   {{#if is_edit}}value="{{paymentMethod.publicToken}}"{{/if}} name="publicToken" id="publicToken">
+            <p class="help-text">Публичный токен предоставленный платежным модулем</p>
+        </div>
+        <div class="field">
+            <label for="webhookSecret">Секретный ключ для уведомлении</label>
+            <input type="text"
+                   {{#if is_edit}}value="{{paymentMethod.webhookSecret}}"{{/if}} name="webhookSecret" id="webhookSecret"
+                   value="icegames">
+        </div>
+        <div class="field">
+            <label for="is_active">Активный</label>
+            <input type="checkbox"
+                   {{#if is_edit}}{{#if paymentMethod.is_active}}checked{{/if}}{{else}}checked{{/if}} name="is_active"
+                   id="is_active">
+        </div>
+        <div class="button-wrap">
+            <button type="submit">{{#if is_edit}}Сохранить{{else}}Создать{{/if}}</button>
+            {{#iff false '===' is_edit}}
+                <div></div>
+                <button type="reset">Очистить</button>
+            {{/iff}}
+        </div>
+    </form>
+</main>

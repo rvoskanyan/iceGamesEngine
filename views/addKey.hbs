@@ -1,19 +1,56 @@
-<form action="/admin/keys/add" method="post">
+<style>
+    textarea {
+        display: block;
+        width: 300px;
+        border: 2px solid #efefef;
+        min-height: 220px;
+        border-radius: 8px;
+        padding: 8px 12px;
+        margin-top: 8px;
+    }
+</style>
+
+<form action="/admin/keys/{{#if is_edit}}edit/{{key.id}}{{else}}add{{/if}}" method="post">
+    {{#if is_edit}}
+        <label>
+            Введите ключь:
+            <input type="text" name="key" id="" value="{{key.key}}">
+        </label>
+    {{else}}
     <label>
-        Введите ключ:
-        <input type="text" name="key">
+        Введите ключи (через запятую каждый новый):
+        <textarea required name="keys" placeholder="FA12D-3FFAE-DDAF1-FFA13,FFDF21-FF12D-3FFAE-FFDF2"></textarea>
     </label>
+    {{/if}}
     <br>
     <br>
     <label>
         Выберите игру:
-        <select name="gameId">
+        <select name="product">
             {{#each games}}
-                <option value="{{id}}">{{name}}</option>
+                <option {{#if ../is_edit}}{{#iff id '===' ../selected_game}}selected{{/iff}}{{/if}}
+                        value="{{id}}">{{name}}</option>
             {{/each}}
         </select>
     </label>
     <br>
     <br>
-    <input type="submit" name="add" value="Добавить">
+    <label>
+        Срок действия:
+        <input type="date" {{#if is_edit}}value="{{expired}}"{{/if}} name="expired"
+               id="">
+    </label>
+    <br>
+    <br>
+    <label>
+        Активен:
+        <input {{#if is_edit}}{{#if key.is_active}}checked{{/if}}{{else}}checked{{/if}} type="checkbox" name="is_active"
+               id="">
+    </label>
+    {{#if is_edit}}
+        <input type="checkbox" name="is_edit" checked id="" hidden>
+    {{/if}}
+    <br>
+    <br>
+    <input type="submit" name="add" value="{{#if is_edit}}Сохранить{{else}}Добавить{{/if}}">
 </form>

@@ -4,22 +4,27 @@ import sharp from 'sharp';
 import path from "path";
 import {__dirname} from "../rootPathes.js";
 import {v4 as uuidv4} from "uuid";
+import Key from "../models/Key.js";
 
 const transporter = nodemailer.createTransport({
-  host: 'smtp.mail.ru',
-  secure: true,
-  auth: {
-    user: 'info@icegames.store',
-    pass: 'Yr*3TiyroA1E',
-  },
+    host: 'smtp.mail.ru',
+    auth: {
+        user: 'support@icegames.store',
+        pass: 'ghD9tBgbmnbS7RaW1rA6',
+    },
+    secure: true,
+    port: 465,
+    tls: {
+        rejectUnauthorized: false
+    },
 });
 
 export async function registrationMail(to, hash) {
-  await transporter.sendMail({
-    from: 'ICE GAMES <info@icegames.store>',
-    to: to,//'user@example.com, user@example.com',
-    subject: 'Подтверждение E-mail',
-    html: `
+    await transporter.sendMail({
+        from: 'ICE GAMES <support@icegames.store>',
+        to: to,//'user@example.com, user@example.com',
+        subject: 'Подтверждение E-mail',
+        html: `
       <p>
         Здравствуйте! Вы успешно зарегистрировались на ICE GAMES. Для продолжения работы Вам необходимо подтвердить свой
         адрес электронной почты, для этого перейдите по данной
@@ -28,46 +33,48 @@ export async function registrationMail(to, hash) {
       <p>Если Вы не создавали данный аккаунт, пожалуйста, проигноррируйте это письмо.</p>
       <p>С уважением, команда <a href="${process.env.WEB_SITE_ADDRESS}">ICE GAMES</a>!</p>
     `,
-  })
+    })
 }
 
 export async function restoreMail(to, password) {
-  await transporter.sendMail({
-    from: 'ICE GAMES <info@icegames.store>',
-    to: to,
-    subject: 'Смена пароля',
-    html: `
+    await transporter.sendMail({
+        from: 'ICE GAMES <support@icegames.store>',
+        to: to,
+        subject: 'Смена пароля',
+        html: `
       <p>Здравствуйте! Вы успешно изменили свой пароль на ICE GAMES. Для авторизации используйте следующие данные:</p>
       <p><b>E-mail:</b> <i>${to}</i></p>
       <p><b>Пароль:</b> <i>${password}</i></p>
       <p>Если Вы не выполняли данного действия, пожалуйста, обратитесь в <a href="https://vk.com/ice.games">поддержку</a>.</p>
       <p>С уважением, команда <a href="${process.env.WEB_SITE_ADDRESS}">ICE GAMES</a>!</p>
     `,
-  })
+    })
 }
 
-export async function mailingBuyProduct(productId, email) {
-  const product = await Product.findById(productId);
-  const websiteAddress = process.env.WEB_SITE_ADDRESS;
-  
-  if (!product.darkenCover) {
-    product.darkenCover = `${uuidv4()}.jpg`;
-    
-    await product.save();
-  }
-  
-  await sharp(path.join(__dirname, `/uploadedFiles/${product.coverImg}`))
-    .resize(600, 345)
-    .composite([
-      { input: path.join(__dirname, '/layout/img/darken.svg')},
-    ])
-    .toFile(path.join(__dirname, `/uploadedFiles/${product.darkenCover}`));
-  
-  await transporter.sendMail({
-    from: 'ICE GAMES <info@icegames.store>',
-    to: email,
-    subject: `Спасибо за покупку ${product.name}!`,
-    html: `
+export async function mailingBuyProduct(productId, email, isKey = false) {
+    let key;
+    if (isKey) key = await Key.findOne({product: productId, is_active: true}).select('key').exec()
+    const product = await Product.findById(productId);
+    const websiteAddress = process.env.WEB_SITE_ADDRESS;
+
+    if (!product.darkenCover) {
+        product.darkenCover = `${uuidv4()}.jpg`;
+
+        await product.save();
+    }
+
+    await sharp(path.join(__dirname, `/uploadedFiles/${product.coverImg}`))
+        .resize(600, 345)
+        .composite([
+            {input: path.join(__dirname, '/layout/img/darken.svg')},
+        ])
+        .toFile(path.join(__dirname, `/uploadedFiles/${product.darkenCover}`));
+
+    await transporter.sendMail({
+        from: 'ICE GAMES <support@icegames.store>',
+        to: email,
+        subject: `Спасибо за покупку ${product.name}!`,
+        html: `
       <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
       <html xmlns="http://www.w3.org/1999/xhtml">
       <head>
@@ -136,6 +143,7 @@ export async function mailingBuyProduct(productId, email) {
                               <p style="color: #ffffff; text-align: center; width: 310px; font-size: 16px; font-family: Montserrat, arial, sans-serif !important; line-height: 20px">
                                   Вы приобрели игру ${product.name}.<br>
                                   Мы очень рады, что Вы выбрали нас!
+                                  ${isKey ? '<br>Ваш ключ: ' + key.key : ''}
                               </p>
                           </td>
                       </tr>
@@ -209,31 +217,35 @@ export async function mailingBuyProduct(productId, email) {
       </body>
       </html>
     `,
-  })
+    })
+    if (!!key) {
+        key.is_active = false;
+        key.save()
+    }
 }
 
 export async function mailingInStockProduct(productId, emails) {
-  const product = await Product.findById(productId);
-  const websiteAddress = process.env.WEB_SITE_ADDRESS;
-  
-  if (!product.darkenCover) {
-    product.darkenCover = `${uuidv4()}.jpg`;
-    
-    await product.save();
-  }
-  
-  await sharp(path.join(__dirname, `/uploadedFiles/${product.coverImg}`))
-    .resize(600, 345)
-    .composite([
-      { input: path.join(__dirname, '/layout/img/darken.svg')},
-    ])
-    .toFile(path.join(__dirname, `/uploadedFiles/${product.darkenCover}`));
-  
-  await transporter.sendMail({
-    from: 'ICE GAMES <info@icegames.store>',
-    to: emails.join(', '),
-    subject: `${product.name} снова в наличии!`,
-    html: `
+    const product = await Product.findById(productId);
+    const websiteAddress = process.env.WEB_SITE_ADDRESS;
+
+    if (!product.darkenCover) {
+        product.darkenCover = `${uuidv4()}.jpg`;
+
+        await product.save();
+    }
+
+    await sharp(path.join(__dirname, `/uploadedFiles/${product.coverImg}`))
+        .resize(600, 345)
+        .composite([
+            {input: path.join(__dirname, '/layout/img/darken.svg')},
+        ])
+        .toFile(path.join(__dirname, `/uploadedFiles/${product.darkenCover}`));
+
+    await transporter.sendMail({
+        from: 'ICE GAMES <support@icegames.store>',
+        to: emails.join(', '),
+        subject: `${product.name} снова в наличии!`,
+        html: `
       <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
       <html xmlns="http://www.w3.org/1999/xhtml">
       <head>
@@ -367,5 +379,5 @@ export async function mailingInStockProduct(productId, emails) {
       </body>
       </html>
     `,
-  })
+    })
 }

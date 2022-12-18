@@ -1,10 +1,12 @@
+import Key from "../../models/Key.js";
+
 export const cartPage = async (req, res) => {
   try {
     const person = res.locals.person;
     let priceToTotal = 0;
     let priceFromTotal = 0;
     let cart = null;
-    
+    let is_keys = false
     if (person) {
       const result = await person
         .populate({
@@ -21,14 +23,14 @@ export const cartPage = async (req, res) => {
             }
           ]
         });
-      
+      is_keys = await Key.find({product: {$in: person.cart}, is_active: true}).distinct('product').exec()
+      is_keys = {is_keys: !!is_keys.length, products: is_keys}
       cart = result.cart;
       priceToTotal = cart.reduce((priceToTotal, item) => priceToTotal + item.priceTo, 0);
       priceFromTotal = cart.reduce((priceFromTotal, item) => {
         return priceFromTotal + (item.discount > 0 ? item.priceFrom : item.priceTo);
       }, 0);
     }
-    
     res.render('cart', {
       title: 'ICE GAMES — корзина покупок',
       metaDescription: 'Корзина для покупок в ICE GAMES. Все Ваши игры со скидками хранятся здесь.',
@@ -36,6 +38,7 @@ export const cartPage = async (req, res) => {
       noIndex: true,
       noIndexGoogle: true,
       isCart: true,
+      is_keys,
       cart: {
         items: cart,
         priceToTotal,

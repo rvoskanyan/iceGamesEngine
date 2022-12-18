@@ -17,6 +17,7 @@ import clientRoutes from './routes/client.js';
 import adminRoutes from './routes/admin.js';
 import apiRoutes from'./routes/api.js';
 import {admin} from "./middlewares/routeProtection.js";
+import webhook from "./routes/webhook.js";
 
 dotenv.config();
 
@@ -130,6 +131,7 @@ app.use(fileUpload({}));
 app.use('/', constClientMiddleware, clientRoutes);
 app.use('/admin', admin, adminRoutes);
 app.use('/api', apiRoutes);
+app.use('/webhook', webhook)
 
 app.use(function(req, res) {
   res.status(404);
