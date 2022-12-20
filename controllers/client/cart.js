@@ -38,6 +38,7 @@ export const cartPage = async (req, res) => {
       noIndex: true,
       noIndexGoogle: true,
       isCart: true,
+      is_auth: res.locals.isAuth || false,
       is_keys,
       cart: {
         items: cart,

@@ -381,3 +381,24 @@ export async function mailingInStockProduct(productId, emails) {
     `,
     })
 }
+
+export async function sendConfirmCode(email, code) {
+    await transporter.sendMail({
+        from: 'ICE GAMES <support@icegames.store>',
+        to: email,
+        subject: `Подтверждение почты`,
+        text: "Ващь код подтверждение: " + code
+    })
+}
+
+export async function sendUserAuthData(email, password) {
+    await transporter.sendMail({
+        from: 'ICE GAMES <support@icegames.store>',
+        to: email,
+        subject: `Успешно подтверждено`,
+        text: "Вы успешно подтвердили почту! Для ващего удобства мы создали и сгенерировали для вас аккаунт чтобы вам не " +
+            "приходилось при следующих покупках вводить свой e-mail и подтверждать его.\n\n" +
+            "Ващь логин: " + email + "\n" +
+            "Ващь пароль: " + password
+    })
+}

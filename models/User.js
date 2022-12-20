@@ -87,6 +87,13 @@ const fields = {
     type: Boolean,
     default: true,
   },
+  code: {
+    type: String,
+    default: ''
+  },
+  try_code: {
+    type: Date
+  }
 };
 
 const options = {

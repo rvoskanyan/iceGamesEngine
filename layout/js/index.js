@@ -691,6 +691,8 @@ if (cartNode) {
         const totalProductsNode = checkNode.querySelector('.js-totalProducts');
         const payBtnNode = checkNode.querySelector('.js-payBtn');
         const savingValueNode = checkNode.querySelector('.js-saving');
+        const formConfirm = checkNode.querySelector(".form-confirm_email")
+        let demandConfirm = !!formConfirm
         let savingValue = +savingValueNode.innerText;
         let countProducts = productNodes.length;
         let totalPriceToValue = +totalPriceToNode.innerText;
@@ -798,6 +800,71 @@ if (cartNode) {
         }
 
         if (countProducts) {
+
+            // Confirm
+            if (demandConfirm) {
+                formConfirm.addEventListener("submit", async function (e) {
+                    e.preventDefault();
+                    let {email, code} = this.elements
+                    let step = this.dataset.step ||'1'
+                    let btn = this.querySelector("button")
+                    switch (step) {
+                        case '1':
+                            btn.textContent = 'Отправка кода...'
+                            let getCode = await postman.post("/api/users/get-code", {
+                                email: email.value
+                            })
+                            let data = await getCode.json()
+                            if (getCode.status >= 400) {
+                                // Out error message
+                                if (data.message.toLowerCase() === 'authorized') document.location.reload()
+                                console.error(data)
+                                return;
+                            }
+                            email.setAttribute("readonly", '')
+                            code.hidden = false
+                            code.parentElement.style.display = 'initial'
+                            code.setAttribute('required', '')
+                            btn.textContent = 'Подтвердить'
+                            this.setAttribute("data-step", '2')
+                            break
+                        case '2':
+                            btn.textContent = 'Идет подтверждение...'
+                            let confirmCode = await postman.post('/api/users/confirm-code', {
+                                email: email.value,
+                                code: code.value
+                            })
+                            if (btn.classList.contains('error')) btn.classList.remove('error')
+                            let confirmData = await confirmCode.json()
+                            if (confirmCode.status >= 400) {
+                                //Out error message
+                                let {message} = confirmData
+                                if (message.toLowerCase() === 'invalid code') {
+                                    btn.nextElementSibling.textContent = 'Неверный код'
+                                }
+                                btn.textContent = 'Подтвердить'
+                                btn.classList.add('error')
+                                console.error(confirmCode)
+                                return
+                            }
+                            formConfirm.nextElementSibling.firstElementChild.textContent = 'Почта подтверждена'
+                            formConfirm.nextElementSibling.classList.add("color-blue")
+                            formConfirm.nextElementSibling.lastElementChild.style.display = 'inline'
+                            code.parentElement.style.display = 'none'
+                            btn.parentElement.style.display = 'none'
+                            btn.nextElementSibling.textContent = ''
+                            btn.textContent = 'Подтверждено'
+                            email.parentElement.classList.add("confirmed-code")
+                            demandConfirm = false
+                            if (payBtnNode.classList.contains('no-active')) payBtnNode.classList.remove('no-active')
+                            this.setAttribute("data-step", '3')
+                            break
+                    }
+                })
+            }
+
+            // Payment
+
             productNodes.forEach(productNode => {
                 const deleteFromCartBtn = productNode.querySelector('.js-deleteFromCart');
                 const productId = productNode.dataset.productId;
@@ -995,6 +1062,7 @@ if (cartNode) {
                 })
             }
             payBtnNode && payBtnNode.addEventListener('click', async () => {
+                if (demandConfirm) return;
                 if (our_products.length === productNodes.length) {
                     await get_checkout()
                     return

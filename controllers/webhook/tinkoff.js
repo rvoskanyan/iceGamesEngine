@@ -1,5 +1,6 @@
 import PaymentModule from "../../models/PaymentModule.js";
 import {mailingBuyProduct} from "../../services/mailer.js";
+import User from "../../models/User.js";
 
 export default async function (req, res) {
     try {
@@ -9,15 +10,14 @@ export default async function (req, res) {
             res.status(404).json({err:true, messages:"Forbidden"})
             return
         }
-        let {user} = await order.populate({
-            path: 'user',
-            select: ['email', 'cart']
-        })
+        let user = await User.findById(order.user).exec()
         if (Status === 'CONFIRMED') {
             let products = order.products_id
+            user.purchasedProducts += products.length
             for (let product of products) {
                 await mailingBuyProduct(product, user.email, true)
             }
+            await user.save()
         }
         if (Status !== 'REJECTED') {
             //Clear carts
