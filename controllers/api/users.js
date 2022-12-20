@@ -39,35 +39,16 @@ export const get_code = async (req, res) => {
             status = 402
             throw "Authorized"
         }
-        let exist_user = await User.findOne({email: email}).exec()
         let code = generation_number().toString()
         let now = new Date()
         let expired = new Date(now.getTime() + 2 * 60000) // 2 minutes
-        if (!!exist_user) {
-            exist_user.try_code = expired
-            exist_user.code = code
-            await sendConfirmCode(email, code)
-            exist_user.save()
-            res.json({
-                ok: true,
-                expired
-            })
-            return;
-        }
-        let login = email.split("@")[0].toLowerCase()
-        let checkLogin = async function (o, l, c = 0) {
-            let u = await User.findOne({login: login}).exec()
-            if (!l) l = o
-            if (!u) return l
-            c += 1
-            return checkLogin(o, l + c, c)
-        }
-        login = await checkLogin(login)
-        let user = User.create({email, login, code, try_code: expired, password: 'will_be_added_later'})
+        res.locals.person.code = code
+        res.locals.person.try_code = expired
+        res.locals.person.save()
         await sendConfirmCode(email, code)
         res.json({
             ok: true,
-            expired
+            expired,
         })
     } catch (e) {
         console.log(e)
@@ -77,7 +58,7 @@ export const get_code = async (req, res) => {
 
 export const confirm_email = async (req, res) => {
     try {
-        let {code, email} = req.body
+        let {code} = req.body
         if (!code) throw "Code is empty"
         if (typeof code === 'string') {
             code = parseInt(code)
@@ -85,27 +66,11 @@ export const confirm_email = async (req, res) => {
         }
         if (typeof code === "object" || typeof code === 'boolean') throw 'Type error'
         if (code.toString().length !== 4) throw 'Invalid code'
-        let user = await User.findOne({email}).exec()
-        if (!user) throw 'User with this email not found'
-        if (+user.code !== code) throw 'Invalid code'
-        user.code = ''
-        if (!user.emailChecked) user.emailChecked = true
-        if (user.password === 'will_be_added_later') {
-            let pass = generation_string()
-            user.password = await bcrypt.hash(pass, 10)
-            await sendUserAuthData(user.email, pass)
-        }
-        user.save()
-        user.cart = res.locals.person.cart
-        req.session.isAuth = true;
-        req.session.role = user['role'];
-        req.session.userId = user['_id'].toString();
-        req.session.save(function (e) {
-            if (e) throw e
-
-          return res.json({
+        if (+res.locals.person.code !== code) throw 'Invalid code'
+        res.locals.person.code = undefined
+        res.locals.person.save()
+        res.json({
             ok: true
-          })
         })
     } catch (e) {
         console.log(e)
@@ -116,7 +81,7 @@ export const confirm_email = async (req, res) => {
 export const resend_code = async (req, res) => {
     try {
         let {email} = req.body
-        let user = await User.findOne({email}).exec()
+        let user = res.locals.person
         if (!user) throw "User not found"
         let expired = user.try_code
         let now = new Date()

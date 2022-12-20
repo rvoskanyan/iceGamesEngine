@@ -930,8 +930,12 @@ if (cartNode) {
 
             async function get_checkout(isTwo) {
                 let payment = await Payment.get_method()
+                let email;
+                if (formConfirm) {
+                    email = formConfirm.elements.email.value
+                }
                 if (!payment) console.error('Payment is not support')
-                window.open(await payment.checkout(our_products, isTwo), '_self')
+                window.open(await payment.checkout(our_products, isTwo, email), '_self')
             }
 
             async function get_digiCheckout(products) {

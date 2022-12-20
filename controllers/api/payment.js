@@ -74,10 +74,13 @@ class Tinkoff {
 }
 
 let createCheckouts = {
-    async tinkoff(method, products_id, amount, currency, user, isTwo) {
+    async tinkoff(method, products_id, amount, currency, user, isGuest, isTwo, email) {
         let pCheckout = await PaymentModule.paymentCheckout.create({
             method_id: method._id, status: 'Created', date_create: Date.now(),
-            products_id, amount, currency, user: user._id
+            products_id, amount, currency, user: {
+                email: user.email || email,
+                id: user._id
+            }, isGuest
         })
         console.log('Id', pCheckout._id)
         let tinkoff = new Tinkoff(method.secretToken, method.privateToken, false)
@@ -94,7 +97,6 @@ let createCheckouts = {
     }
 }
 
-
 export default {
     async methods(req, res) {
         try {
@@ -110,9 +112,9 @@ export default {
     },
     async checkout(req, res) {
         try {
-            if (!res.locals.isAuth) throw "Forbidden"
+            let isGuest = !res.locals.isAuth
             let payment_method_id = req.params.methods
-            let {products, currency, isTwo} = req.body
+            let {products, currency, isTwo, email} = req.body
             currency = currency?.toUpperCase() || 'RUB'
             isTwo = !!isTwo
             if (typeof products === 'string') {
@@ -124,6 +126,7 @@ export default {
             }
             let paymentMethod = await paymentModule.paymentMethod.findById(payment_method_id).exec()
             if (!paymentMethod) throw 'This payment method is not support'
+            if (!email && isGuest) throw 'The email is required for guest'
             let user = res.locals.person
             products = products.map(function (el) {
                 return mongoose.Types.ObjectId(el)
@@ -150,7 +153,7 @@ export default {
                 return;
             }
             amount = amount - amount*0.05
-            let checkout = await actions(paymentMethod, products, amount, currency, user, isTwo)
+            let checkout = await actions(paymentMethod, products, amount, currency, user, isGuest, isTwo, email)
 
             res.send({checkout, ok:true})
         } catch (e) {

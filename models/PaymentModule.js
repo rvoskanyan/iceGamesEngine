@@ -71,9 +71,12 @@ const paymentCheckout = new Schema({
         type: String
     },
     user: {
-        type: Schema.Types.ObjectId,
-        required: true,
-        ref: "User"
+        type: Object,
+        required: true
+    },
+    isGuest: {
+        type: Boolean,
+        default: false
     }
 })
 

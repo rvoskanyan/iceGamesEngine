@@ -1,6 +1,7 @@
 import PaymentModule from "../../models/PaymentModule.js";
 import {mailingBuyProduct} from "../../services/mailer.js";
 import User from "../../models/User.js";
+import Guest from "../../models/Guest.js";
 
 export default async function (req, res) {
     try {
@@ -10,17 +11,24 @@ export default async function (req, res) {
             res.status(404).json({err:true, messages:"Forbidden"})
             return
         }
-        let user = await User.findById(order.user).exec()
+        let isGuest = order.isGuest
+        let user;
+         if (isGuest) user = order.user
+        else user = await User.findById(order.user.id).exec()
+
         if (Status === 'CONFIRMED') {
             let products = order.products_id
-            user.purchasedProducts += products.length
+            if (!isGuest) {
+                user.purchasedProducts += products.length
+                await user.save()
+            }
             for (let product of products) {
                 await mailingBuyProduct(product, user.email, true)
             }
-            await user.save()
         }
         if (Status !== 'REJECTED') {
             //Clear carts
+            user = isGuest ? await Guest.findById(user.id).exec() : user
             let {cart} = await user.populate({
                 path: 'cart',
                 select: ['_id']
