@@ -36,7 +36,7 @@ export const get_code = async (req, res) => {
         if (!email) throw "Email is empty"
         else if (!e_regx.test(email)) throw "Invalid email"
         if (res.locals.isAuth) {
-            status = 402
+            status = 401
             throw "Authorized"
         }
         let code = generation_number().toString()

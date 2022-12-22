@@ -152,7 +152,7 @@ export default {
                 })
                 return;
             }
-            amount = amount - amount*0.05
+            if (isTwo) amount = amount - amount*0.05
             let checkout = await actions(paymentMethod, products, amount, currency, user, isGuest, isTwo, email)
 
             res.send({checkout, ok:true})

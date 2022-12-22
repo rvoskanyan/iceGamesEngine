@@ -698,6 +698,7 @@ if (cartNode) {
         let totalPriceToValue = +totalPriceToNode.innerText;
         let totalPriceFromValue = +totalPriceFromNode.innerText;
         let our_products = payBtnNode.dataset.products.split(',')
+        let fee = 0.05
         if (!!our_products.length) {
             let _ = []
             for (let i of our_products) {
@@ -745,7 +746,7 @@ if (cartNode) {
                 '<div class="popup_payment-price">' +
                 '<p class="payment_price-from price-sale">' + ourPrice + '₽</p>' +
                 '<p class="payment_price-line"></p>' +
-                '<p class="payment_price-to">' + (ourPrice - ourPrice * 0.05) + '₽</p>' +
+                '<p class="payment_price-to">' + (ourPrice - ourPrice * fee) + '₽</p>' +
                 '</div>' +
                 '<button class="popup_payment-pay" data-step="1">Оплатить</button>'
             content += '</div>'
@@ -753,7 +754,7 @@ if (cartNode) {
             return parent
         }
 
-        function getProduct(products) {
+        function getProduct(products, is_fee=true) {
             let prd = ''
             let ourPrice = 0
             for (let i of products) {
@@ -763,9 +764,10 @@ if (cartNode) {
                 let price = el.querySelector(".main .top .toPrice")
                 let img = el.querySelector('.img')
                 title = title?.textContent || ''
-                price = price?.textContent || ''
+                price = parseFloat(price?.textContent) || 0
+                let fee_price = price - price * fee
                 img = img?.src || ''
-                ourPrice += parseFloat(price) || 0
+                ourPrice += price
                 prd += '' +
                     '<div class="payment-product slide js-slide">' +
                     '<div class="image-product">' +
@@ -773,8 +775,8 @@ if (cartNode) {
                     '</div>' +
                     '<p class="title">' + title + '</p>' +
                     '<p class="price">' +
-                    '<span class="price-to">' + (price - price * 0.05) + '₽</span>' +
-                    '<span class="price-from price-sale">' + price + '₽</span>' +
+                    '<span class="price-to">' + (is_fee ? `${fee_price.toString()}₽` : `${price}₽`) + '</span>' +
+                    '<span class="price-from price-sale">' + (is_fee ? `${price}` : '') + '</span>' +
                     '</p>' +
                     '<div class="background-effect"></div>' +
                     '</div>'
@@ -901,6 +903,8 @@ if (cartNode) {
 
                     const priceTo = +productNode.querySelector('.js-priceTo').innerText;
                     const priceFrom = +productNode.querySelector('.js-priceFrom')?.innerText;
+                    products.iceGame = products.iceGame.filter(ids=>productId!==ids)
+                    products.digiSeller = products.digiSeller.filter(obj=>obj.productId!==productId)
 
                     totalPriceToValue -= priceTo;
                     totalPriceFromValue -= priceFrom ? priceFrom : priceTo;
@@ -914,7 +918,7 @@ if (cartNode) {
                     productNode.remove();
                 })
                 const dsId = productNode.dataset.dsId;
-                for (let i_product of our_products) {
+                for (let i_product of our_products  ) {
                     if (productId !== i_product) continue
                     products.iceGame.push(productId)
                     break
@@ -935,7 +939,7 @@ if (cartNode) {
                     email = formConfirm.elements.email.value
                 }
                 if (!payment) console.error('Payment is not support')
-                window.open(await payment.checkout(our_products, isTwo, email), '_self')
+                window.open(await payment.checkout(products.iceGame, isTwo, email), '_self')
             }
 
             async function get_digiCheckout(products) {
@@ -1035,7 +1039,7 @@ if (cartNode) {
                     }
                 }
 
-            function change_step(steps, step_id, prices, product_els, payment_button) {
+            function change_step(steps, step_id, prices, product_els, payment_button, is_fee=true) {
                 let keyStep = step_id === '1' ? 'iceGame' : 'digiSeller'
                 for (let i of steps.children) {
                     let sid = i.dataset.step
@@ -1044,11 +1048,15 @@ if (cartNode) {
                     } else if (i.classList.contains('payment-step-active')) i.classList.remove('payment-step-active')
                 }
 
-                let [prd, ourPrice] = getProduct(products[keyStep])
+                let [prd, ourPrice] = getProduct(products[keyStep], is_fee)
                 let fromPrice = prices.firstElementChild
                 let toPrice = prices.lastElementChild
-                toPrice.textContent = (ourPrice - ourPrice * 0.05).toString() + '₽'
-                fromPrice.textContent = ourPrice.toString() + '₽'
+                let line = prices.children[1]
+                toPrice.textContent = is_fee ? (ourPrice - ourPrice * fee).toString() + '₽' : ourPrice.toString() + '₽'
+                fromPrice.textContent = is_fee ? ourPrice.toString() + '₽' : ''
+                if (!is_fee) {
+                    line && line.remove()
+                }
                 product_els.innerHTML = prd
                 payment_button.setAttribute('data-step', step_id)
                 console.log(step_id, keyStep)
@@ -1062,16 +1070,17 @@ if (cartNode) {
                     let prices = pop_up.querySelector(".popup_payment-price")
                     let product_els = pop_up.querySelector('.popup_payment-product .tape')
                     let payment_button = pop_up.querySelector(".popup_payment-pay")
-                    change_step(steps, '2', prices, product_els, payment_button)
+                    change_step(steps, '2', prices, product_els, payment_button, false)
                 })
             }
             payBtnNode && payBtnNode.addEventListener('click', async () => {
                 if (demandConfirm) return;
-                if (our_products.length === productNodes.length) {
-                    await get_checkout()
+                let productNodes = cartListNode.querySelectorAll('.js-product')
+                if (products.iceGame.length === productNodes.length) {
+                    await get_checkout(false)
                     return
                 }
-                else if (!our_products.length && !!productNodes.length) {
+                else if (!products.iceGame.length && !!productNodes.length) {
                     get_digiCheckout(products.digiSeller)
                     return;
                 }
