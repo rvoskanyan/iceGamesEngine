@@ -145,6 +145,8 @@
                 <input type="hidden" name="cart_uid" class="js-dsCartId"/>
                 {{#if @root.person.email}}
                     <input type="hidden" name="email" value="{{@root.person.email}}"/>
+                {{else}}
+                    <input type="hidden" name="email" class="js-emailFormDs"/>
                 {{/if}}
                 <input type="hidden" name="failpage" value="{{@root.websiteAddress}}cart"/>
                 <input type="hidden" name="agent" value="951647"/>

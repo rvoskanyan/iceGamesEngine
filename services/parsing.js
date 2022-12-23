@@ -68,8 +68,12 @@ const sync = async () => {
         if (!productOnSite) {
           continue;
         }
-        let keys = await Key.findOne({product: productOnSite._id, is_active: true}).exec()
-        if (!!keys) continue;
+        
+        let keys = await Key.findOne({product: productOnSite._id, is_active: true});
+        
+        if (keys) {
+          continue;
+        }
 
         if (Array.isArray(productOnSite.shortNames) || !productOnSite.shortNames) {
           productOnSite.shortNames = '';

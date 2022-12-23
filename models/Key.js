@@ -18,9 +18,9 @@ const fields = {
         required: true,
         ref: "Product"
     },
-    user_bought: {
+    boughtInOrder: {
         type: mongoose.Types.ObjectId,
-        ref: 'User'
+        ref: 'Order'
     }
 }
 
