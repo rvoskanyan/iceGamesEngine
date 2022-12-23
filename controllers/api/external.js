@@ -62,25 +62,53 @@ export const assignOrderPay = async (req, res) => {
         productId: product._id,
         purchasePrice: priceProduct,
       };
-    
-      if (order.status !== 'paid') {
-        order.status = 'paid';
-        order.products = [productByOrder];
-      } else {
-        order.products.push(productByOrder);
-      }
+      const firstDsPay = !order.paidTypes.includes('ds');
       
-      order.buyerEmail = buyerEmail;
+      if (firstDsPay) {
+        order.paidTypes.push('ds');
+        order.products = order.products.filter(product => product.dbi);
+        order.dsBuyerEmail = buyerEmail;
+  
+        switch (order.paymentType) {
+          case 'mixed': {
+            switch (order.status) {
+              case 'notPaid': {
+                order.status = 'partiallyPaid';
+                break;
+              }
+              case 'partiallyPaid': {
+                order.status = 'paid';
+                break;
+              }
+              case 'canceled': {
+                order.status = 'partiallyPaid';
+                break;
+              }
+            }
+      
+            break;
+          }
+          case 'ds': {
+            order.status = order.status !== 'paid' ? 'paid' : order.status;
+      
+            break;
+          }
+        }
+      }
+  
+      order.products.push(productByOrder);
     
       await order.save();
     
       if (order.userId) {
         const user = await User.findById(order.userId);
-      
-        user.purchasedProducts += 1;
-        await user.save();
-        await user.increaseRating(10);
-        await achievementEvent('productPurchase', user);
+        
+        if (user) {
+          user.purchasedProducts += 1;
+          await user.save();
+          await user.increaseRating(10);
+          await achievementEvent('productPurchase', user);
+        }
       }
     
       mailingBuyProduct(product._id, buyerEmail).then();

@@ -12,6 +12,7 @@ import './../styles/index.sass';
 import Range from "./Range.js";
 import SocialSharing from "./lib/socialSharing.js";
 import Message from "./lib/message.js";
+import Payment from "./lib/payment.js";
 
 const postman = new Postman();
 
@@ -201,31 +202,31 @@ openAboutHomeModalNode && openAboutHomeModalNode.addEventListener('click', () =>
 });
 
 openDescriptionSplitCatalogNode && openDescriptionSplitCatalogNode.addEventListener('click', () => {
-  const descriptionSplitCatalogNode = document.querySelector('.js-descriptionSplitCatalog');
-  
-  if (!descriptionSplitCatalogNode) {
-    return;
-  }
-  
-  const descriptionSplitCatalogCloseNode = document.querySelector('.js-descriptionSplitCatalogClose');
-  
-  descriptionSplitCatalogNode.classList.add('active');
-  
-  descriptionSplitCatalogCloseNode.addEventListener('click', () => {
-    descriptionSplitCatalogNode.classList.remove('active');
-  })
+    const descriptionSplitCatalogNode = document.querySelector('.js-descriptionSplitCatalog');
+
+    if (!descriptionSplitCatalogNode) {
+        return;
+    }
+
+    const descriptionSplitCatalogCloseNode = document.querySelector('.js-descriptionSplitCatalogClose');
+
+    descriptionSplitCatalogNode.classList.add('active');
+
+    descriptionSplitCatalogCloseNode.addEventListener('click', () => {
+        descriptionSplitCatalogNode.classList.remove('active');
+    })
 })
 
 openCompoundOrderNodes.forEach(item => {
-  item.addEventListener('click', () => {
-    const compoundNode = document.querySelector(`.js-compoundOrder-${item.dataset.compund}`);
-    let action;
-  
-    compoundNode.classList.contains('active') ? action = 'remove' : action = 'add';
-    
-    item.classList[action]('active');
-    compoundNode.classList[action]('active');
-  })
+    item.addEventListener('click', () => {
+        const compoundNode = document.querySelector(`.js-compoundOrder-${item.dataset.compund}`);
+        let action;
+
+        compoundNode.classList.contains('active') ? action = 'remove' : action = 'add';
+
+        item.classList[action]('active');
+        compoundNode.classList[action]('active');
+    })
 })
 
 counterAnimationNodes.forEach(counterAnimationNode => {
@@ -282,50 +283,50 @@ counterAnimationNodes.forEach(counterAnimationNode => {
 })
 
 loadMoreRatingNode && loadMoreRatingNode.addEventListener('click', async () => {
-  const skip = parseInt(loadMoreRatingNode.dataset.skip);
-  
-  const response = await postman.get(`${websiteAddress}api/users?skip=${skip}`);
-  const result = await response.json();
-  
-  if (result.email) {
-    return;
-  }
-  
-  result.users.forEach((user, index) => {
-    listRatingNode.innerHTML += `
+    const skip = parseInt(loadMoreRatingNode.dataset.skip);
+
+    const response = await postman.get(`${websiteAddress}api/users?skip=${skip}`);
+    const result = await response.json();
+
+    if (result.email) {
+        return;
+    }
+
+    result.users.forEach((user, index) => {
+        listRatingNode.innerHTML += `
       <a href="${websiteAddress}rating/${user.login}" class="item">
           <div class="position">${skip + index + 1} \\ ${result.countUsers}</div>
           <div class="name">${user.login}</div>
           <div class="rating">${user.rating}</div>
       </a>
     `;
-  });
-  
-  if (result.isLast) {
-    return loadMoreRatingNode.remove();
-  }
-  
-  loadMoreRatingNode.dataset.skip = parseInt(loadMoreRatingNode.dataset.skip) + 20;
+    });
+
+    if (result.isLast) {
+        return loadMoreRatingNode.remove();
+    }
+
+    loadMoreRatingNode.dataset.skip = parseInt(loadMoreRatingNode.dataset.skip) + 20;
 });
 
 loadModeProductReviewsNode && loadModeProductReviewsNode.addEventListener('click', async () => {
-  const skip = parseInt(loadModeProductReviewsNode.dataset.skip);
-  const productId = loadModeProductReviewsNode.dataset.productId;
-  const listReviewsNode = document.querySelector('.js-listProductReviews');
-  
-  if (!listReviewsNode) {
-    return;
-  }
-  
-  const response = await postman.get(`${websiteAddress}api/reviews?skip=${skip}&productId=${productId}`);
-  const result = await response.json();
-  
-  if (result.email) {
-    return;
-  }
-  
-  result.reviews.forEach(review => {
-    listReviewsNode.innerHTML += `
+    const skip = parseInt(loadModeProductReviewsNode.dataset.skip);
+    const productId = loadModeProductReviewsNode.dataset.productId;
+    const listReviewsNode = document.querySelector('.js-listProductReviews');
+
+    if (!listReviewsNode) {
+        return;
+    }
+
+    const response = await postman.get(`${websiteAddress}api/reviews?skip=${skip}&productId=${productId}`);
+    const result = await response.json();
+
+    if (result.email) {
+        return;
+    }
+
+    result.reviews.forEach(review => {
+        listReviewsNode.innerHTML += `
       <div class="item review">
           <div class="head">
               <a class="btn link userName" href="${websiteAddress}rating/${review.user.login}" title="Перейти на страницу ${review.user.login}">${review.user.login}</a>
@@ -340,27 +341,27 @@ loadModeProductReviewsNode && loadModeProductReviewsNode.addEventListener('click
           <div class="text">${review.text}</div>
       </div>
     `;
-  });
-  
-  if (result.isLast) {
-    return loadModeProductReviewsNode.remove();
-  }
-  
-  loadModeProductReviewsNode.dataset.skip = parseInt(loadModeProductReviewsNode.dataset.skip) + 5;
+    });
+
+    if (result.isLast) {
+        return loadModeProductReviewsNode.remove();
+    }
+
+    loadModeProductReviewsNode.dataset.skip = parseInt(loadModeProductReviewsNode.dataset.skip) + 5;
 })
 
 loadMoreReviewsBtnNode && loadMoreReviewsBtnNode.addEventListener('click', async () => {
-  const skip = parseInt(loadMoreReviewsBtnNode.dataset.skip);
-  
-  const response = await postman.get(`${websiteAddress}api/reviews?skip=${skip}`);
-  const result = await response.json();
-  
-  if (result.email) {
-    return;
-  }
-  
-  result.reviews.forEach(review => {
-    reviewsListNode.innerHTML += `
+    const skip = parseInt(loadMoreReviewsBtnNode.dataset.skip);
+
+    const response = await postman.get(`${websiteAddress}api/reviews?skip=${skip}`);
+    const result = await response.json();
+
+    if (result.email) {
+        return;
+    }
+
+    result.reviews.forEach(review => {
+        reviewsListNode.innerHTML += `
       <div class="review">
           <div class="head">
               <a class="btn link userName" href="${websiteAddress}rating/${review.user.login}" title="Перейти на страницу ${review.user.login}">${review.user.login}</a>
@@ -376,196 +377,196 @@ loadMoreReviewsBtnNode && loadMoreReviewsBtnNode.addEventListener('click', async
           <div class="text">${review.text}</div>
       </div>
     `;
-  });
-  
-  if (result.isLast) {
-    return loadMoreReviewsBtnNode.remove();
-  }
-  
-  loadMoreReviewsBtnNode.dataset.skip = parseInt(loadMoreReviewsBtnNode.dataset.skip) + 5;
+    });
+
+    if (result.isLast) {
+        return loadMoreReviewsBtnNode.remove();
+    }
+
+    loadMoreReviewsBtnNode.dataset.skip = parseInt(loadMoreReviewsBtnNode.dataset.skip) + 5;
 });
 
 if (largeImgNodes.length) {
-  largeImgNodes.forEach((item, index) => {
-    item.addEventListener('click', () => {
-      new Modal({
-        switching: true,
-        elems: Object.values(largeImgNodes).map(item => {
-          const newTargetImgNode = item.querySelector('.js-targetImg').cloneNode(true);
-  
-          newTargetImgNode.classList.add('enlargedImg');
-          
-          return newTargetImgNode;
-        }),
-        activeIndex: index,
-      });
+    largeImgNodes.forEach((item, index) => {
+        item.addEventListener('click', () => {
+            new Modal({
+                switching: true,
+                elems: Object.values(largeImgNodes).map(item => {
+                    const newTargetImgNode = item.querySelector('.js-targetImg').cloneNode(true);
+
+                    newTargetImgNode.classList.add('enlargedImg');
+
+                    return newTargetImgNode;
+                }),
+                activeIndex: index,
+            });
+        })
     })
-  })
 }
 
 if (acceptAgreementNode) {
-  const btnSendNode = acceptAgreementNode.querySelector('.js-sendAcceptAgreement');
-  
-  btnSendNode.addEventListener('click', async () => {
-    await postman.post(`${websiteAddress}api/external/acceptAgreement`);
-    acceptAgreementNode.classList.remove('active');
-  })
+    const btnSendNode = acceptAgreementNode.querySelector('.js-sendAcceptAgreement');
+
+    btnSendNode.addEventListener('click', async () => {
+        await postman.post(`${websiteAddress}api/external/acceptAgreement`);
+        acceptAgreementNode.classList.remove('active');
+    })
 }
 
 if (modalMessageNode) {
-  setTimeout(() => {
-    modalMessageNode.classList.add('active');
-    setTimeout(() => modalMessageNode.classList.remove('active'), 5000);
-  }, 300);
+    setTimeout(() => {
+        modalMessageNode.classList.add('active');
+        setTimeout(() => modalMessageNode.classList.remove('active'), 5000);
+    }, 300);
 }
 
 if (gamePageNode) {
-  const addToCartBtnNode = gamePageNode.querySelector('.js-addToCartBtn');
-  const subscribeInStockBtnNode = gamePageNode.querySelector('.js-subscribeInStock');
-  
-  if (subscribeInStockBtnNode) {
-    const subscribeModalNode = gamePageNode.querySelector('.js-subscribeModal');
-    const closeSubscribeModal = () => {
-      document.querySelector('body').classList.remove('noScrolling');
-      subscribeModalNode.classList.remove('active');
-      subscribeModalNode.removeEventListener('click', handleCloseSubscribeModal);
-    }
-    const openSubscribeModal = () => {
-      document.querySelector('body').classList.add('noScrolling');
-      subscribeModalNode.classList.add('active');
-      subscribeModalNode.addEventListener('click', handleCloseSubscribeModal);
-    }
-    const sendSubscribe = async (email = null) => {
-      const productId = subscribeInStockBtnNode.dataset.productId;
-      const params = email ? {email} : {};
-      const response = await postman.post(`${websiteAddress}api/products/${productId}/subscribeInStock`, params);
-    
-      return await response.json();
-    }
-    const replaceSubscribeBtn = () => {
-      const div = document.createElement('div');
-      
-      div.setAttribute('title', 'Когда товар появится в наличии, на Ваш E-mail придет уведомление.');
-      div.className = 'btn elongated rounded bg-pink';
-      div.innerText = 'Уведомление оформлено';
-  
-      subscribeInStockBtnNode.after(div);
-      subscribeInStockBtnNode.remove();
-    }
-  
-    if (subscribeModalNode) {
-      const senderField = subscribeModalNode.querySelector('.js-senderField');
-      const msgResultNode = subscribeModalNode.querySelector('.js-msgResult');
-    
-      if (senderField) {
-        const submitBtnNode = senderField.querySelector('.js-submit');
-        const valueNode = senderField.querySelector('.js-value');
-      
-        submitBtnNode.addEventListener('click', handleSendSubscribe);
-        valueNode.addEventListener('keypress', async (e) => {
-          if (e.key === 'Enter') {
-            e.returnValue = false;
-            await handleSendSubscribe();
-          }
-        });
-      
-        async function handleSendSubscribe() {
-          const email = valueNode.innerText;
-          const result = await sendSubscribe(email);
-        
-          if (result.error) {
-            msgResultNode.classList.add('error');
-            msgResultNode.innerText = result.msg;
-          
-            return;
-          }
-        
-          closeSubscribeModal();
-          replaceSubscribeBtn();
+    const addToCartBtnNode = gamePageNode.querySelector('.js-addToCartBtn');
+    const subscribeInStockBtnNode = gamePageNode.querySelector('.js-subscribeInStock');
+
+    if (subscribeInStockBtnNode) {
+        const subscribeModalNode = gamePageNode.querySelector('.js-subscribeModal');
+        const closeSubscribeModal = () => {
+            document.querySelector('body').classList.remove('noScrolling');
+            subscribeModalNode.classList.remove('active');
+            subscribeModalNode.removeEventListener('click', handleCloseSubscribeModal);
         }
-      }
+        const openSubscribeModal = () => {
+            document.querySelector('body').classList.add('noScrolling');
+            subscribeModalNode.classList.add('active');
+            subscribeModalNode.addEventListener('click', handleCloseSubscribeModal);
+        }
+        const sendSubscribe = async (email = null) => {
+            const productId = subscribeInStockBtnNode.dataset.productId;
+            const params = email ? {email} : {};
+            const response = await postman.post(`${websiteAddress}api/products/${productId}/subscribeInStock`, params);
+
+            return await response.json();
+        }
+        const replaceSubscribeBtn = () => {
+            const div = document.createElement('div');
+
+            div.setAttribute('title', 'Когда товар появится в наличии, на Ваш E-mail придет уведомление.');
+            div.className = 'btn elongated rounded bg-pink';
+            div.innerText = 'Уведомление оформлено';
+
+            subscribeInStockBtnNode.after(div);
+            subscribeInStockBtnNode.remove();
+        }
+
+        if (subscribeModalNode) {
+            const senderField = subscribeModalNode.querySelector('.js-senderField');
+            const msgResultNode = subscribeModalNode.querySelector('.js-msgResult');
+
+            if (senderField) {
+                const submitBtnNode = senderField.querySelector('.js-submit');
+                const valueNode = senderField.querySelector('.js-value');
+
+                submitBtnNode.addEventListener('click', handleSendSubscribe);
+                valueNode.addEventListener('keypress', async (e) => {
+                    if (e.key === 'Enter') {
+                        e.returnValue = false;
+                        await handleSendSubscribe();
+                    }
+                });
+
+                async function handleSendSubscribe() {
+                    const email = valueNode.innerText;
+                    const result = await sendSubscribe(email);
+
+                    if (result.error) {
+                        msgResultNode.classList.add('error');
+                        msgResultNode.innerText = result.msg;
+
+                        return;
+                    }
+
+                    closeSubscribeModal();
+                    replaceSubscribeBtn();
+                }
+            }
+        }
+
+        subscribeInStockBtnNode.addEventListener('click', async () => {
+            if (subscribeInStockBtnNode.classList.contains('js-notAuth')) {
+                return openSubscribeModal();
+            }
+
+            const result = await sendSubscribe();
+
+            if (!result.error) {
+                replaceSubscribeBtn();
+            }
+        });
+
+        function handleCloseSubscribeModal(e) {
+            if (e.target === e.currentTarget) {
+                closeSubscribeModal();
+            }
+        }
     }
-  
-    subscribeInStockBtnNode.addEventListener('click',  async () => {
-      if (subscribeInStockBtnNode.classList.contains('js-notAuth')) {
-        return openSubscribeModal();
-      }
-  
-      const result = await sendSubscribe();
-  
-      if (!result.error) {
-        replaceSubscribeBtn();
-      }
+
+    addToCartBtnNode && addToCartBtnNode.addEventListener('click', async () => {
+        if (addToCartBtnNode.classList.contains('js-active')) {
+            window.location.href = '/cart';
+            return;
+        }
+
+        const productId = addToCartBtnNode.dataset.productId;
+        const response = await postman.post(`/api/products/${productId}/cart`);
+        const result = await response.json();
+
+        if (result.error) {
+            return;
+        }
+
+        addToCartBtnNode.innerText = 'Добавлено';
+        addToCartBtnNode.classList.add('js-active');
+        addToCartBtnNode.setAttribute('title', 'Перейти в корзину покупок');
     });
-  
-    function handleCloseSubscribeModal(e) {
-      if (e.target === e.currentTarget) {
-        closeSubscribeModal();
-      }
-    }
-  }
-  
-  addToCartBtnNode && addToCartBtnNode.addEventListener('click', async () => {
-    if (addToCartBtnNode.classList.contains('js-active')) {
-      window.location.href = '/cart';
-      return;
-    }
-    
-    const productId = addToCartBtnNode.dataset.productId;
-    const response = await postman.post(`/api/products/${productId}/cart`);
-    const result = await response.json();
-    
-    if (result.error) {
-      return;
-    }
-    
-    addToCartBtnNode.innerText = 'Добавлено';
-    addToCartBtnNode.classList.add('js-active');
-    addToCartBtnNode.setAttribute('title', 'Перейти в корзину покупок');
-  });
 }
 
 if (autoSizeInputNodes) {
-  autoSizeInputNodes.forEach(autoSizeInput => {
-    const valueNode = autoSizeInput.querySelector('.js-value');
-    
-    valueNode.addEventListener('input', () => {
-      const isInputActive = autoSizeInput.classList.contains('active');
-      const isAddActive = !!valueNode.innerText.length;
-      
-      if (isAddActive && isInputActive) {
-        return;
-      }
-      
-      if (isAddActive && !isInputActive) {
-        return autoSizeInput.classList.add('active');
-      }
-  
-      autoSizeInput.classList.remove('active');
+    autoSizeInputNodes.forEach(autoSizeInput => {
+        const valueNode = autoSizeInput.querySelector('.js-value');
+
+        valueNode.addEventListener('input', () => {
+            const isInputActive = autoSizeInput.classList.contains('active');
+            const isAddActive = !!valueNode.innerText.length;
+
+            if (isAddActive && isInputActive) {
+                return;
+            }
+
+            if (isAddActive && !isInputActive) {
+                return autoSizeInput.classList.add('active');
+            }
+
+            autoSizeInput.classList.remove('active');
+        })
     })
-  })
 }
 
 if (commentProductFormNode) {
-  const loadMoreCommentBtnNode = document.querySelector('.js-loadMoreCommentBtn');
-  const listCommentsNode = document.querySelector('.js-listComments');
-  const subjectId = commentProductFormNode.dataset.subjectId;
-  const ref = commentProductFormNode.dataset.ref;
-  let skip = +commentProductFormNode.dataset.skip;
-  
-  new AsyncForm({
-    mainNode: commentProductFormNode,
-    extraParams: ['subjectId', 'ref'],
-    successHandler: (params) => {
-      const userName = listCommentsNode.dataset.userName;
-      const commentFieldNode = commentProductFormNode.querySelector('.js-autoSizeInput');
-      const commentValueNode = commentFieldNode.querySelector('.js-value');
-  
-      commentValueNode.innerText = '';
-      commentValueNode.dispatchEvent(new Event('input'));
-      
-  
-      listCommentsNode.innerHTML = `
+    const loadMoreCommentBtnNode = document.querySelector('.js-loadMoreCommentBtn');
+    const listCommentsNode = document.querySelector('.js-listComments');
+    const subjectId = commentProductFormNode.dataset.subjectId;
+    const ref = commentProductFormNode.dataset.ref;
+    let skip = +commentProductFormNode.dataset.skip;
+
+    new AsyncForm({
+        mainNode: commentProductFormNode,
+        extraParams: ['subjectId', 'ref'],
+        successHandler: (params) => {
+            const userName = listCommentsNode.dataset.userName;
+            const commentFieldNode = commentProductFormNode.querySelector('.js-autoSizeInput');
+            const commentValueNode = commentFieldNode.querySelector('.js-value');
+
+            commentValueNode.innerText = '';
+            commentValueNode.dispatchEvent(new Event('input'));
+
+
+            listCommentsNode.innerHTML = `
         <div class="item comment">
             <div class="head">
                 <a class="btn link" href="/profile/view/${userName}" title="Перейти в профиль пользователя ${userName}">${userName}</a>
@@ -584,23 +585,23 @@ if (commentProductFormNode) {
             <!--<button class="btn link action">Ответить</button>-->
         </div>
       ` + listCommentsNode.innerHTML;
-    }
-  });
-  
-  if (loadMoreCommentBtnNode) {
-    loadMoreCommentBtnNode.addEventListener('click', async () => {
-      const response = await postman.get(`${websiteAddress}api/comments`, {
-        subjectId,
-        ref,
-        skip,
-      });
-      const result = await response.json();
-  
-      skip += 3;
-      
-      if (result.items.length) {
-        result.items.forEach(comment => {
-          listCommentsNode.innerHTML = listCommentsNode.innerHTML + `
+        }
+    });
+
+    if (loadMoreCommentBtnNode) {
+        loadMoreCommentBtnNode.addEventListener('click', async () => {
+            const response = await postman.get(`${websiteAddress}api/comments`, {
+                subjectId,
+                ref,
+                skip,
+            });
+            const result = await response.json();
+
+            skip += 3;
+
+            if (result.items.length) {
+                result.items.forEach(comment => {
+                    listCommentsNode.innerHTML = listCommentsNode.innerHTML + `
             <div class="item comment">
               <div class="head">
                   <a class="btn link" href="/profile/view/${comment.author.login}" title="Перейти в профиль пользователя ${comment.author.login}">${comment.author.login}</a>
@@ -619,26 +620,25 @@ if (commentProductFormNode) {
               <!--<button class="btn link action">Ответить</button>-->
           </div>
           `;
+                })
+            }
         })
-      }
-    })
-  }
+    }
 }
 
 if (addReviewFormNode) {
-  new AsyncForm({
-    mainNode: addReviewFormNode,
-    successHandler: (params) => {
-      const listReviewsNode = document.querySelector('.js-listProductReviews');
-      const userName = listReviewsNode.dataset.userName;
-      
-      addReviewFormNode.remove();
-      
-      listReviewsNode.innerHTML = `
+    new AsyncForm({
+        mainNode: addReviewFormNode,
+        successHandler: (params) => {
+            const listReviewsNode = document.querySelector('.js-listProductReviews');
+            const userName = listReviewsNode.dataset.userName;
+
+            addReviewFormNode.remove();
+
+            listReviewsNode.innerHTML = `
         <div class="item review">
           <div class="head">
               <a class="btn link userName" href="/profile/view/${userName}" title="Перейти на страницу пользователя ${userName}">${userName}</a>
-              <div class="moderationInfo">Отзыв на модерации</div>
           </div>
           <div class="grade">
               <span class="icon icon-star${params.eval >= 1 ? 'Fill' : ''}"></span>
@@ -651,75 +651,245 @@ if (addReviewFormNode) {
               ${params.text}
           </div>
         </div>` + listReviewsNode.innerHTML;
-    }
-  })
+        }
+    })
 }
 
 if (collapseNodes.length) {
-  let activeCollapse = null;
-  
-  collapseNodes.forEach(collapse => {
-    collapse.addEventListener('click', (e) => {
-      const targetSelector = collapse.dataset.target;
-      let collapseContentNode = collapse;
-      
-      if (targetSelector) {
-        collapseContentNode = document.querySelector(targetSelector);
-      }
-      
-      activeCollapse && activeCollapse.classList.remove('active');
-      
-      if (activeCollapse === collapseContentNode) {
-        return activeCollapse = null;
-      }
-  
-      collapseContentNode.classList.add('active');
-      activeCollapse = collapseContentNode;
+    let activeCollapse = null;
+
+    collapseNodes.forEach(collapse => {
+        collapse.addEventListener('click', (e) => {
+            const targetSelector = collapse.dataset.target;
+            let collapseContentNode = collapse;
+
+            if (targetSelector) {
+                collapseContentNode = document.querySelector(targetSelector);
+            }
+
+            activeCollapse && activeCollapse.classList.remove('active');
+
+            if (activeCollapse === collapseContentNode) {
+                return activeCollapse = null;
+            }
+
+            collapseContentNode.classList.add('active');
+            activeCollapse = collapseContentNode;
+        })
     })
-  })
 }
 
 if (cartNode) {
-  const cartListNode = cartNode.querySelector('.js-cartList');
-  const cartTitleNode = cartNode.querySelector('.js-cartTitle');
-  
-  if (cartListNode) {
-    const productNodes = cartListNode.querySelectorAll('.js-product');
-    const checkNode = cartListNode.querySelector('.js-check');
-    const totalPriceToNode = checkNode.querySelector('.js-totalTo');
-    const totalPriceFromNode = checkNode.querySelector('.js-totalFrom');
-    const totalProductsNode = checkNode.querySelector('.js-totalProducts');
-    const payBtnNode = checkNode.querySelector('.js-payBtn');
-    const savingValueNode = checkNode.querySelector('.js-saving');
-    let savingValue = +savingValueNode.innerText;
-    let countProducts = productNodes.length;
-    let totalPriceToValue = +totalPriceToNode.innerText;
-    let totalPriceFromValue = +totalPriceFromNode.innerText;
-  
-    if (countProducts) {
-      productNodes.forEach(productNode => {
-        const deleteFromCartBtn = productNode.querySelector('.js-deleteFromCart');
-        const productId = productNode.dataset.productId;
+    const cartListNode = cartNode.querySelector('.js-cartList');
+    const cartTitleNode = cartNode.querySelector('.js-cartTitle');
 
-        deleteFromCartBtn.addEventListener('click', async () => {
-          if (!productId) {
-            return;
-          }
+    if (cartListNode) {
+        const productNodes = cartListNode.querySelectorAll('.js-product');
+        const checkNode = cartListNode.querySelector('.js-check');
+        const totalPriceToNode = checkNode.querySelector('.js-totalTo');
+        const totalPriceFromNode = checkNode.querySelector('.js-totalFrom');
+        const totalProductsNode = checkNode.querySelector('.js-totalProducts');
+        const payBtnNode = checkNode.querySelector('.js-payBtn');
+        const savingValueNode = checkNode.querySelector('.js-saving');
+        const formConfirm = checkNode.querySelector(".form-confirm_email")
+        let demandConfirm = !!formConfirm
+        let savingValue = +savingValueNode.innerText;
+        let countProducts = productNodes.length;
+        let totalPriceToValue = +totalPriceToNode.innerText;
+        let totalPriceFromValue = +totalPriceFromNode.innerText;
+        let our_products = payBtnNode.dataset.products.split(',')
+        let fee = 0.05
+        if (!!our_products.length) {
+            let _ = []
+            for (let i of our_products) {
+                if (!!i) _.push(i)
+            }
+            our_products = _
+        }
+        let products = {
+            digiSeller: [],
+            iceGame: []
+        }
 
-          const response = await postman.delete(`/api/products/${productId}/cart`);
-          const result = await response.json();
+        function popUpPayment() {
+            let parent = document.createElement("div")
+            parent.classList.add("popup_payment_wrap")
+            parent.setAttribute('id', 'popup-payment-cart')
+            let content = '' +
+                '<div class="popup_payment-content modalChanges">' +
+                '<div class="popup_payment-logo">' +
+                '<div class="popup_payment-logo_child">' +
+                '<img src="/img/fullLogo.svg" width="98" alt="">' +
+                '</div>' +
+                '</div>' +
+                '<p class="popup_payment-title">Корзина</p>' +
+                '<p class="popup_payment-text">В связи с техническими неполадками была создана двухэтапная оплата в которую мы включили для вас 5% скидку на покупку первого слота.</p>' +
+                '<div class="popup_payment-steps">' +
+                '<div class="payment-step payment-step-active" data-step="1" data-sale="5">1</div>' +
+                '<div class="payment-step-line"></div>' +
+                '<div class="payment-step" data-step="2">2</div>' +
+                '</div>' +
+                '<div class="popup_payment-product slider">' +
+                '<button class="btn prev js-prevBtn">' +
+                '<span class="icon-static icon-static-arrow"></span>' +
+                '</button>' +
+                '<div class="visibleArea js-visibleArea">' +
+                '<div class="tape js-tape">'
+            let [prd, ourPrice] = getProduct(products.iceGame)
+            content += prd
+            content += '' +
+                '</div></div>' +
+                '<div class="btn next js-nextBtn">' +
+                '<span class="icon-static icon-static-arrow"></span>' +
+                '</div>' +
+                '</div>' +
+                '<div class="popup_payment-price">' +
+                '<p class="payment_price-from price-sale">' + ourPrice + '₽</p>' +
+                '<p class="payment_price-line"></p>' +
+                '<p class="payment_price-to">' + (ourPrice - ourPrice * fee) + '₽</p>' +
+                '</div>' +
+                '<button class="popup_payment-pay" data-step="1">Оплатить</button>'
+            content += '</div>'
+            parent.innerHTML = content
+            return parent
+        }
 
-          if (result.error) {
-            return;
-          }
+        function getProduct(products, is_fee=true) {
+            let prd = ''
+            let ourPrice = 0
+            for (let i of products) {
+                if (typeof i !== 'string') i = i.productId
+                let el = document.querySelector(`.js-product[data-product-id="${i}"]`)
+                let title = el.querySelector('.main .top .name')
+                let price = el.querySelector(".main .top .toPrice")
+                let img = el.querySelector('.img')
+                title = title?.textContent || ''
+                price = parseFloat(price?.textContent) || 0
+                let fee_price = price - price * fee
+                img = img?.src || ''
+                ourPrice += price
+                prd += '' +
+                    '<div class="payment-product slide js-slide">' +
+                    '<div class="image-product">' +
+                    `<img width="192" height="281" src="${img}" alt="">` +
+                    '</div>' +
+                    '<p class="title">' + title + '</p>' +
+                    '<p class="price">' +
+                    '<span class="price-to">' + (is_fee ? `${fee_price.toString()}₽` : `${price}₽`) + '</span>' +
+                    '<span class="price-from price-sale">' + (is_fee ? `${price}` : '') + '</span>' +
+                    '</p>' +
+                    '<div class="background-effect"></div>' +
+                    '</div>'
+            }
+            return [prd, ourPrice]
+        }
 
-          countProducts -= 1;
+        function createPopupPayment(openPayment) {
+            let pop = popUpPayment()
+            let old_pop = document.getElementById('popup-payment-cart')
+            let payment_button = pop.querySelector(".popup_payment-pay")
+            if (!!old_pop) old_pop.remove()
+            pop.onclick = function () {
+                this.remove()
+            }
+            document.body.append(pop)
+            pop.firstElementChild.onclick = function (e) {
+                e.stopPropagation()
+            }
+            pop.classList.add('active')
+            payment_button.onclick = () => openPayment(payment_button)
+            return pop
+        }
 
-          if (countProducts === 0)   {
-            cartListNode.remove();
-            cartTitleNode.remove();
-  
-            return cartNode.innerHTML += `
+        if (countProducts) {
+
+            // Confirm
+            if (demandConfirm) {
+                formConfirm.addEventListener("submit", async function (e) {
+                    e.preventDefault();
+                    let {email, code} = this.elements
+                    let step = this.dataset.step ||'1'
+                    let btn = this.querySelector("button")
+                    switch (step) {
+                        case '1':
+                            btn.textContent = 'Отправка кода...'
+                            let getCode = await postman.post("/api/users/get-code", {
+                                email: email.value
+                            })
+                            let data = await getCode.json()
+                            if (getCode.status >= 400) {
+                                // Out error message
+                                if (data.message.toLowerCase() === 'authorized') document.location.reload()
+                                console.error(data)
+                                return;
+                            }
+                            email.setAttribute("readonly", '')
+                            code.hidden = false
+                            code.parentElement.style.display = 'initial'
+                            code.setAttribute('required', '')
+                            btn.textContent = 'Подтвердить'
+                            this.setAttribute("data-step", '2')
+                            break
+                        case '2':
+                            btn.textContent = 'Идет подтверждение...'
+                            let confirmCode = await postman.post('/api/users/confirm-code', {
+                                email: email.value,
+                                code: code.value
+                            })
+                            if (btn.classList.contains('error')) btn.classList.remove('error')
+                            let confirmData = await confirmCode.json()
+                            if (confirmCode.status >= 400) {
+                                //Out error message
+                                let {message} = confirmData
+                                if (message.toLowerCase() === 'invalid code') {
+                                    btn.nextElementSibling.textContent = 'Неверный код'
+                                }
+                                btn.textContent = 'Подтвердить'
+                                btn.classList.add('error')
+                                console.error(confirmCode)
+                                return
+                            }
+                            formConfirm.nextElementSibling.firstElementChild.textContent = 'Почта подтверждена'
+                            formConfirm.nextElementSibling.classList.add("color-blue")
+                            formConfirm.nextElementSibling.lastElementChild.style.display = 'inline'
+                            code.parentElement.style.display = 'none'
+                            btn.parentElement.style.display = 'none'
+                            btn.nextElementSibling.textContent = ''
+                            btn.textContent = 'Подтверждено'
+                            email.parentElement.classList.add("confirmed-code")
+                            demandConfirm = false
+                            if (payBtnNode.classList.contains('no-active')) payBtnNode.classList.remove('no-active')
+                            this.setAttribute("data-step", '3')
+                            break
+                    }
+                })
+            }
+
+            // Payment
+
+            productNodes.forEach(productNode => {
+                const deleteFromCartBtn = productNode.querySelector('.js-deleteFromCart');
+                const productId = productNode.dataset.productId;
+
+                deleteFromCartBtn.addEventListener('click', async () => {
+                    if (!productId) {
+                        return;
+                    }
+
+                    const response = await postman.delete(`/api/products/${productId}/cart`);
+                    const result = await response.json();
+
+                    if (result.error) {
+                        return;
+                    }
+
+                    countProducts -= 1;
+
+                    if (countProducts === 0) {
+                        cartListNode.remove();
+                        cartTitleNode.remove();
+
+                        return cartNode.innerHTML += `
               <div class="notFound">
                 <img src="${websiteAddress}img/notFound.svg" class="img" alt="Иконка расстроенного смайла" title="Корзина пуста :(">
                 <div class="text">
@@ -729,284 +899,416 @@ if (cartNode) {
                 <a href="${websiteAddress}games" class="btn big border round hover-border-pink hover-color-pink" title="Перейти в каталог">В каталог</a>
               </div>
             `;
-          }
+                    }
 
-          const priceTo = +productNode.querySelector('.js-priceTo').innerText;
-          const priceFrom = +productNode.querySelector('.js-priceFrom')?.innerText;
+                    const priceTo = +productNode.querySelector('.js-priceTo').innerText;
+                    const priceFrom = +productNode.querySelector('.js-priceFrom')?.innerText;
+                    products.iceGame = products.iceGame.filter(ids=>productId!==ids)
+                    products.digiSeller = products.digiSeller.filter(obj=>obj.productId!==productId)
 
-          totalPriceToValue -= priceTo;
-          totalPriceFromValue -= priceFrom ? priceFrom : priceTo;
-          savingValue -= priceFrom ? priceFrom - priceTo : 0;
+                    totalPriceToValue -= priceTo;
+                    totalPriceFromValue -= priceFrom ? priceFrom : priceTo;
+                    savingValue -= priceFrom ? priceFrom - priceTo : 0;
 
-          totalPriceToNode.innerText = totalPriceToValue;
-          totalPriceFromNode.innerText = totalPriceFromValue;
-          totalProductsNode.innerText = countProducts;
-          savingValueNode.innerText = savingValue;
+                    totalPriceToNode.innerText = totalPriceToValue;
+                    totalPriceFromNode.innerText = totalPriceFromValue;
+                    totalProductsNode.innerText = countProducts;
+                    savingValueNode.innerText = savingValue;
 
-          productNode.remove();
-        })
-        
-      });
-  
-      payBtnNode && payBtnNode.addEventListener('click', async () => {
-        const formData = new FormData();
-        const changes = [];
-        let dsCartId = null;
-    
-        formData.append('product_cnt', '1');
-        formData.append('typecurr', 'wmr');
-        formData.append('lang', 'ru-RU');
-    
-        for (const productNode of productNodes) {
-          const dsId = productNode.dataset.dsId;
-          const productId = productNode.dataset.productId;
-      
-          formData.set('product_id', dsId);
-      
-          const responseAddCartDs = await fetch('https://shop.digiseller.ru/xml/shop_cart_add.asp', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: urlEncodeFormData(formData),
-          });
-      
-          const resultAddCartDs = await responseAddCartDs.json();
-      
-          if (resultAddCartDs.cart_err === "Товар закончился или временно отключен.") {
-            const deleteFromCartBtn = productNode.querySelector('.js-deleteFromCart');
-  
-            deleteFromCartBtn.dispatchEvent(new Event('click'));
-            await postman.put(`/api/products/${productId}/revise`);
-            changes.push({
-              name: productNode.querySelector('.name').innerText,
-              notInStock: true,
-              productId,
+                    productNode.remove();
+                })
+                const dsId = productNode.dataset.dsId;
+                for (let i_product of our_products  ) {
+                    if (productId !== i_product) continue
+                    products.iceGame.push(productId)
+                    break
+                }
+                if (!products.iceGame.includes(productId)) products.digiSeller.push({productId, dsId})
             });
-          }
-      
-          if (resultAddCartDs.cart_err_num !== '0') {
-            return;
-          }
-      
-          const product = resultAddCartDs.products.find(product => +product.id === +dsId);
-          const priceToNode = productNode.querySelector('.js-priceTo');
-          const currentPrice = +priceToNode.innerText;
-      
-          /*if (+product.price !== currentPrice) {
-            const priceFrom = +productNode.querySelector('.js-priceFrom').innerText;
-            const dsPrice = parseInt(product.price);
-            const discountNode = productNode.querySelector('.js-discount');
+            let urlParam = new URLSearchParams(document.location.search)
+            let stepId = urlParam.get("step") || '1'
+            let orderId = urlParam.get("OrderId")
+            if (isNaN(parseInt(stepId))) stepId = '1'
+            if (parseInt(stepId) > 2) stepId = '2'
+            else if (parseInt(stepId) < 1) stepId = '1'
+
+            async function get_checkout(isTwo) {
+                const orderId = cartNode.dataset.orderId;
+                let payment = await Payment.get_method()
+                let email;
+                
+                if (formConfirm) {
+                    email = formConfirm.elements.email.value
+                }
+                
+                if (!payment) {
+                    console.error('Payment method not set')
+                }
+                
+                const result = await payment.checkout(products.iceGame, isTwo, email, orderId);
+                
+                if (result.err) {
+                    return;
+                }
+                
+                const data = result.data;
+    
+                cartNode.dataset.orderId = data.orderId;
+                
+                window.open(data.paymentUrl, '_self')
+            }
+
+            async function get_digiCheckout(products, isTwo = false) {
+                const formData = new FormData();
+                const changes = [];
+                let dsCartId = null;
+                
+                formData.append('product_cnt', '1');
+                formData.append('typecurr', 'wmr');
+                formData.append('lang', 'ru-RU');
+                
+                for (const prd of products) {
+                    const productId = prd.productId;
+                    const productNode = document.querySelector(`.js-product[data-product-id="${productId}"]`);
+                    const dsId = prd.dsId;
+                    
+                    formData.set('product_id', dsId);
+
+                    const responseAddCartDs = await fetch('https://shop.digiseller.ru/xml/shop_cart_add.asp', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: urlEncodeFormData(formData),
+                    });
+
+                    const resultAddCartDs = await responseAddCartDs.json();
+
+                    if (resultAddCartDs.cart_err === "Товар закончился или временно отключен.") {
+                        const deleteFromCartBtn = productNode.querySelector('.js-deleteFromCart');
+
+                        deleteFromCartBtn.dispatchEvent(new Event('click'));
+                        
+                        await postman.put(`/api/products/${productId}/revise`);
+                        location.reload();
+                        
+                        changes.push({
+                            name: productNode.querySelector('.name').innerText,
+                            notInStock: true,
+                            productId,
+                        });
+                    }
+
+                    if (resultAddCartDs.cart_err_num !== '0') {
+                        return;
+                    }
+
+                    const product = resultAddCartDs.products.find(product => +product.id === +dsId);
+                    const priceToNode = productNode.querySelector('.js-priceTo');
+                    const currentPrice = +priceToNode.innerText;
+
+                    if (+product.price !== currentPrice) {
+                        await postman.put(`/api/products/${productId}/revise`);
+                        location.reload();
+                        
+                      /*const priceFrom = +productNode.querySelector('.js-priceFrom').innerText;
+                      const dsPrice = parseInt(product.price);
+                      const discountNode = productNode.querySelector('.js-discount');
+
+                      await postman.put(`/api/products/${productId}/revise`);
+
+                      savingValueNode.innerText = +savingValueNode.innerText - (dsPrice - currentPrice);
+                      totalPriceToNode.innerText = totalPriceFromNode.innerText - savingValueNode.innerText;
+                      discountNode.innerText = Math.floor(100 - dsPrice / (priceFrom / 100));
+                      priceToNode.innerText = dsPrice;
+                      changes.push({
+                        name: productNode.querySelector('.name').innerText,
+                        fromPrice: currentPrice,
+                        toPrice: dsPrice,
+                      });*/
+                    }
+
+                    if (!dsCartId) {
+                        dsCartId = resultAddCartDs.cart_uid;
+                        formData.set('cart_uid', dsCartId);
+                    }
+                }
+
+                if (!changes.length) {
+                    const orderId = cartNode.dataset.orderId;
+                    let email;
+    
+                    if (formConfirm) {
+                        email = formConfirm.elements.email.value
+                    }
+                    
+                    const response = await postman.post('/api/order', {dsCartId, orderId, email, isTwo});
+                    const result = await response.json();
+
+                    if (result.error) {
+                        return;
+                    }
+
+                    const payFormNode = cartListNode.querySelector('.js-payForm');
+                    const dsCartIdInputNodes = payFormNode.querySelectorAll('.js-dsCartId');
+                    const emailFormDsNode = payFormNode.querySelector('.js-emailFormDs');
+    
+                    emailFormDsNode && (emailFormDsNode.value = email);
+                    dsCartIdInputNodes.forEach(item => item.value = dsCartId);
+
+                    return payFormNode.submit();
+                }
+            }
+
+             async function openPayment(payment_button) {
+                    let keyStep = payment_button.dataset.step
+                    keyStep = keyStep || '1'
+                    switch (keyStep) {
+                        case '1':
+                            get_checkout(true)
+                            break
+                        case '2':
+                            get_digiCheckout(products.digiSeller, true)
+                            break
+                    }
+                }
+
+            function change_step(steps, step_id, prices, product_els, payment_button, is_fee=true) {
+                let keyStep = step_id === '1' ? 'iceGame' : 'digiSeller'
+                for (let i of steps.children) {
+                    let sid = i.dataset.step
+                    if (sid === step_id) {
+                        if (!i.classList.contains('payment-step-active')) i.classList.add('payment-step-active')
+                    } else if (i.classList.contains('payment-step-active')) i.classList.remove('payment-step-active')
+                }
+
+                let [prd, ourPrice] = getProduct(products[keyStep], is_fee)
+                let fromPrice = prices.firstElementChild
+                let toPrice = prices.lastElementChild
+                let line = prices.children[1]
+                toPrice.textContent = is_fee ? (ourPrice - ourPrice * fee).toString() + '₽' : ourPrice.toString() + '₽'
+                fromPrice.textContent = is_fee ? ourPrice.toString() + '₽' : ''
+                if (!is_fee) {
+                    line && line.remove()
+                }
+                product_els.innerHTML = prd
+                payment_button.setAttribute('data-step', step_id)
+                console.log(step_id, keyStep)
+            }
+
+            if (orderId) {
+                cartNode.dataset.orderId = orderId;
+            }
             
-            await postman.put(`/api/products/${productId}/revise`);
-  
-            savingValueNode.innerText = +savingValueNode.innerText - (dsPrice - currentPrice);
-            totalPriceToNode.innerText = totalPriceFromNode.innerText - savingValueNode.innerText;
-            discountNode.innerText = Math.floor(100 - dsPrice / (priceFrom / 100));
-            priceToNode.innerText = dsPrice;
-            changes.push({
-              name: productNode.querySelector('.name').innerText,
-              fromPrice: currentPrice,
-              toPrice: dsPrice,
-            });
-          }*/
-      
-          if (!dsCartId) {
-            formData.set('cart_uid', resultAddCartDs.cart_uid);
-            dsCartId = resultAddCartDs.cart_uid;
-          }
+            payBtnNode && payBtnNode.addEventListener('click', async () => {
+                if (demandConfirm) {
+                    return;
+                }
+                
+                let productNodes = cartListNode.querySelectorAll('.js-product')
+                
+                if (products.iceGame.length === productNodes.length) {
+                    return await get_checkout(false);
+                } else if (!products.iceGame.length && !!productNodes.length) {
+                    return get_digiCheckout(products.digiSeller);
+                }
+                
+                let pop_up = createPopupPayment(openPayment)
+                let prices = pop_up.querySelector(".popup_payment-price")
+                let steps = pop_up.querySelector(".popup_payment-steps")
+                let product_els = pop_up.querySelector('.popup_payment-product .tape')
+                let payment_button = pop_up.querySelector(".popup_payment-pay")
+                for (let step of steps.children) {
+                    // Полностью рабочая но на время выключена. при желании можно включить
+                    // Просьба включать после согласования в tg: https://t.me/rvoskanyan
+                    break
+                    let step_id = step.dataset.step
+                    if (!step_id) continue
+                    step.onclick = function () {
+                        change_step(steps, step_id, prices, product_els, payment_button)
+                    }
+                }
+
+                /*changes.forEach(item => {
+
+                })*/
+            })
         }
-    
-        if (!changes.length) {
-          const response = await postman.post('/api/order', {dsCartId});
-          const result = await response.json();
-      
-          if (result.error) {
-            return;
-          }
-      
-          const payFormNode = cartListNode.querySelector('.js-payForm');
-          const dsCartIdInputNodes = payFormNode.querySelectorAll('.js-dsCartId');
-  
-          dsCartIdInputNodes.forEach(item => item.value = dsCartId);
-          
-          return payFormNode.submit();
-        }
-        
-        /*changes.forEach(item => {
-        
-        })*/
-      })
     }
-  }
 }
 
 addInFavoritesProductPageNode && addInFavoritesProductPageNode.addEventListener('click', async (e) => {
-  const addToFavoriteIconNode = addInFavoritesProductPageNode.querySelector('.js-icon');
-  const productId = addInFavoritesProductPageNode.dataset.productId;
-  
-  e.preventDefault();
-  
-  if (addInFavoritesProductPageNode.classList.contains('js-active')) {
-    const response = await postman.delete(`/api/products/${productId}/favorites`);
-    const result = await response.json();
-    
-    if (result.error) {
-      return;
+    const addToFavoriteIconNode = addInFavoritesProductPageNode.querySelector('.js-icon');
+    const productId = addInFavoritesProductPageNode.dataset.productId;
+
+    e.preventDefault();
+
+    if (addInFavoritesProductPageNode.classList.contains('js-active')) {
+        const response = await postman.delete(`/api/products/${productId}/favorites`);
+        const result = await response.json();
+
+        if (result.error) {
+            return;
+        }
+
+        addInFavoritesProductPageNode.setAttribute('title', 'Добавить товар в избранное');
+        addInFavoritesProductPageNode.classList.remove('js-active');
+        addToFavoriteIconNode.classList.remove('active');
+        return;
     }
-  
-    addInFavoritesProductPageNode.setAttribute('title', 'Добавить товар в избранное');
-    addInFavoritesProductPageNode.classList.remove('js-active');
-    addToFavoriteIconNode.classList.remove('active');
-    return;
-  }
-  
-  const response = await postman.post(`/api/products/${productId}/favorites`);
-  const result = await response.json();
-  
-  if (result.error) {
-    return;
-  }
-  
-  addInFavoritesProductPageNode.setAttribute('title', 'Удалить товар из избранного');
-  addInFavoritesProductPageNode.classList.add('js-active');
-  addToFavoriteIconNode.classList.add('active');
+
+    const response = await postman.post(`/api/products/${productId}/favorites`);
+    const result = await response.json();
+
+    if (result.error) {
+        return;
+    }
+
+    addInFavoritesProductPageNode.setAttribute('title', 'Удалить товар из избранного');
+    addInFavoritesProductPageNode.classList.add('js-active');
+    addToFavoriteIconNode.classList.add('active');
 })
 
 document.addEventListener('click', async (e) => {
-  const target = e.target;
-  const productCardNode = target.closest('.js-cardGame');
-  
-  if (productCardNode) {
-    if (target === productCardNode) {
-      return;
-    }
-  
-    const productId = productCardNode.dataset.id;
-    const dsId = productCardNode.dataset.dsId;
-    const addToFavoriteBtnNode = target.closest('.js-favoritesBtn');
-    const addToCartBtnNode = target.closest('.js-addToCart');
-  
-    if (addToFavoriteBtnNode) {
-      const addToFavoriteIconNode = addToFavoriteBtnNode.querySelector('.js-icon');
-      
-      e.preventDefault();
-  
-      if (addToFavoriteBtnNode.classList.contains('js-active')) {
-        const response = await postman.delete(`/api/products/${productId}/favorites`);
-        const result = await response.json();
-    
-        if (result.error) {
-          return;
+    const target = e.target;
+    const productCardNode = target.closest('.js-cardGame');
+
+    if (productCardNode) {
+        if (target === productCardNode) {
+            return;
         }
-  
-        addToFavoriteBtnNode.setAttribute('title', 'Добавить товар в избранное');
-        addToFavoriteBtnNode.classList.remove('js-active');
-        addToFavoriteIconNode.classList.remove('active');
-        return;
+        const productId = productCardNode.dataset.id;
+        const dsId = productCardNode.dataset.dsId;
+        const addToFavoriteBtnNode = target.closest('.js-favoritesBtn');
+        const addToCartBtnNode = target.closest('.js-addToCart');
+
+        if (addToFavoriteBtnNode) {
+            const addToFavoriteIconNode = addToFavoriteBtnNode.querySelector('.js-icon');
+
+            e.preventDefault();
+
+            if (addToFavoriteBtnNode.classList.contains('js-active')) {
+                const response = await postman.delete(`/api/products/${productId}/favorites`);
+                const result = await response.json();
+
+                if (result.error) {
+                    return;
+                }
+
+                addToFavoriteBtnNode.setAttribute('title', 'Добавить товар в избранное');
+                addToFavoriteBtnNode.classList.remove('js-active');
+                addToFavoriteIconNode.classList.remove('active');
+                return;
+            }
+
+            const response = await postman.post(`/api/products/${productId}/favorites`);
+            const result = await response.json();
+
+            if (result.error) {
+                return;
+            }
+
+            addToFavoriteBtnNode.setAttribute('title', 'Удалить товар из избранного');
+            addToFavoriteBtnNode.classList.add('js-active');
+            addToFavoriteIconNode.classList.add('active');
+        }
+
+        if (addToCartBtnNode) {
+            const addToCartBtnText = addToCartBtnNode.querySelector('.js-text');
+            const addToCartBtnIcon = addToCartBtnNode.querySelector('.js-icon');
+
+            e.preventDefault();
+
+            if (addToCartBtnNode.classList.contains('js-active')) {
+                window.location.href = '/cart';
+                return;
+            }
+
+            const response = await postman.post(`/api/products/${productId}/cart`);
+            const result = await response.json();
+
+            if (result.error) {
+                return;
+            }
+
+            addToCartBtnText.innerText = 'Добавлено';
+            addToCartBtnIcon.classList.add('active');
+            addToCartBtnNode.classList.add('js-active', 'active');
+            addToCartBtnNode.setAttribute('title', 'Перейти в корзину покупок');
+        }
+    }
+
+    /*class Menu { //Шаблон для переписывания js на классы, сделать кланый класс Page
+      constructor(elem) {
+        this._elem = elem;
+        elem.onclick = this.onClick.bind(this); // (*)
       }
-  
-      const response = await postman.post(`/api/products/${productId}/favorites`);
-      const result = await response.json();
-  
-      if (result.error) {
-        return;
+
+      save() {
+        alert('сохраняю');
       }
-  
-      addToFavoriteBtnNode.setAttribute('title', 'Удалить товар из избранного');
-      addToFavoriteBtnNode.classList.add('js-active');
-      addToFavoriteIconNode.classList.add('active');
-    }
-    
-    if (addToCartBtnNode) {
-      const addToCartBtnText = addToCartBtnNode.querySelector('.js-text');
-      const addToCartBtnIcon = addToCartBtnNode.querySelector('.js-icon');
-      
-      e.preventDefault();
-  
-      if (addToCartBtnNode.classList.contains('js-active')) {
-        window.location.href = '/cart';
-        return;
+
+      load() {
+        alert('загружаю');
       }
-      
-      const response = await postman.post(`/api/products/${productId}/cart`);
-      const result = await response.json();
-  
-      if (result.error) {
-        return;
+
+      search() {
+        alert('ищу');
       }
-  
-      addToCartBtnText.innerText = 'Добавлено';
-      addToCartBtnIcon.classList.add('active');
-      addToCartBtnNode.classList.add('js-active', 'active');
-      addToCartBtnNode.setAttribute('title', 'Перейти в корзину покупок');
-    }
-  }
-  
-  /*class Menu { //Шаблон для переписывания js на классы, сделать кланый класс Page
-    constructor(elem) {
-      this._elem = elem;
-      elem.onclick = this.onClick.bind(this); // (*)
-    }
-    
-    save() {
-      alert('сохраняю');
-    }
-    
-    load() {
-      alert('загружаю');
-    }
-    
-    search() {
-      alert('ищу');
-    }
-    
-    onClick(event) {
-      let action = event.target.dataset.action;
-      if (action) {
-        this[action]();
+
+      onClick(event) {
+        let action = event.target.dataset.action;
+        if (action) {
+          this[action]();
+        }
       }
     }
-  }
-  
-  new Menu(menu);*/
+
+    new Menu(menu);*/
 })
 
-goSearchNode.addEventListener('click', () => {goSearch(searchStringNode.value)})
-goSearchMobileNode.addEventListener('click', () => {goSearch(mobileSearchStringNode.value)})
+goSearchNode.addEventListener('click', () => {
+    goSearch(searchStringNode.value)
+})
+goSearchMobileNode.addEventListener('click', () => {
+    goSearch(mobileSearchStringNode.value)
+})
 
 mobileSearchStringNode.addEventListener('keypress', (e) => {
-  if (e.key === 'Enter') {
-    e.returnValue = false;
-    return goSearch(mobileSearchStringNode.value);
-  }
+    if (e.key === 'Enter') {
+        e.returnValue = false;
+        return goSearch(mobileSearchStringNode.value);
+    }
 })
 
 mobileSearchStringNode.addEventListener('input', async () => {
-  const response = await postman.get(`${websiteAddress}api/products`, {searchString: mobileSearchStringNode.value, limit: 7});
-  const result = await response.json();
-  const searchResultNode = document.querySelector('.js-mobileSearchResult');
-  
-  if (result.error) {
-    return;
-  }
-  
-  if (result.products?.length === 0) {
-    return searchResultNode.innerHTML = '<p class="textInfo">Ни чего не найдено</p>';
-  }
-  
-  searchResultNode.innerHTML = '';
-  
-  result.products.forEach(product => {
-    searchResultNode.append(getProductCardNode({
-      ...product,
-      isAuth: result.isAuth,
-      size: 'small',
-    }));
-  });
-  
-  if (!result.isLast) {
-    searchResultNode.innerHTML += `
+    const response = await postman.get(`${websiteAddress}api/products`, {
+        searchString: mobileSearchStringNode.value,
+        limit: 7
+    });
+    const result = await response.json();
+    const searchResultNode = document.querySelector('.js-mobileSearchResult');
+
+    if (result.error) {
+        return;
+    }
+
+    if (result.products?.length === 0) {
+        return searchResultNode.innerHTML = '<p class="textInfo">Ни чего не найдено</p>';
+    }
+
+    searchResultNode.innerHTML = '';
+
+    result.products.forEach(product => {
+        searchResultNode.append(getProductCardNode({
+            ...product,
+            isAuth: result.isAuth,
+            size: 'small',
+        }));
+    });
+
+    if (!result.isLast) {
+        searchResultNode.innerHTML += `
         <a class="goToAllSearchResults" href="/games${mobileSearchStringNode.value ? `?searchString=${mobileSearchStringNode.value}` : ''}">
             <div class="">
                 <span class="icon icon-allResults"></span>
@@ -1014,51 +1316,54 @@ mobileSearchStringNode.addEventListener('input', async () => {
             <div class="text">Все результаты</div>
         </a>
     `;
-  }
+    }
 })
 
 searchStringNode.addEventListener('keypress', async (e) => {
-  if (catalogNode) {
-    return;
-  }
-  
-  if (e.key === 'Enter') {
-    e.returnValue = false;
-    return goSearch(searchStringNode.value);
-  }
+    if (catalogNode) {
+        return;
+    }
+
+    if (e.key === 'Enter') {
+        e.returnValue = false;
+        return goSearch(searchStringNode.value);
+    }
 })
 
 searchStringNode.addEventListener('input', async (e) => {
-  if (catalogNode) {
-    return;
-  }
-  
-  popupController.activateById('navigate');
-  
-  const response = await postman.get(`${websiteAddress}api/products`, {searchString: searchStringNode.value, limit: 7});
-  const result = await response.json();
-  const menuNode = document.querySelector('.js-menu');
-  const searchResultNode = document.querySelector('.js-searchResult');
-  
-  if (result.error) {
-    return;
-  }
-  
-  menuNode.classList.add('activeSearchResult');
-  
-  if (result.products?.length === 0) {
-    return searchResultNode.innerHTML = '<p style="color: #fff">Ни чего не найдено</p>';
-  }
-  
-  searchResultNode.innerHTML = '';
-  
-  result.products.forEach(product => {
-    searchResultNode.append(getProductCardNode({
-      ...product,
-      isAuth: result.isAuth,
-      size: 'small',
-    }));
-  });
+    if (catalogNode) {
+        return;
+    }
+
+    popupController.activateById('navigate');
+
+    const response = await postman.get(`${websiteAddress}api/products`, {
+        searchString: searchStringNode.value,
+        limit: 7
+    });
+    const result = await response.json();
+    const menuNode = document.querySelector('.js-menu');
+    const searchResultNode = document.querySelector('.js-searchResult');
+
+    if (result.error) {
+        return;
+    }
+
+    menuNode.classList.add('activeSearchResult');
+
+    if (result.products?.length === 0) {
+        return searchResultNode.innerHTML = '<p style="color: #fff">Ни чего не найдено</p>';
+    }
+
+    searchResultNode.innerHTML = '';
+
+    result.products.forEach(product => {
+        searchResultNode.append(getProductCardNode({
+            ...product,
+            isAuth: result.isAuth,
+            size: 'small',
+        }));
+    });
 
     if (!result.isLast) {
         searchResultNode.innerHTML += `
@@ -1602,53 +1907,53 @@ if (catalogNode) {
         <img class="img" src="${websiteAddress}img/notFound.svg">
         <span class="text">Ничего не найдено...</span>
       `;
-    }
-  
-    const pageNode = document.createElement('div');
-  
-    pageNode.classList.add('gameGrid', 'js-page');
-    pageNode.dataset.pageNum = '1';
+        }
 
-    result.products.forEach(product => {
-      pageNode.append(getProductCardNode({
-        ...product,
-        isAuth: result.isAuth,
-      }));
+        const pageNode = document.createElement('div');
+
+        pageNode.classList.add('gameGrid', 'js-page');
+        pageNode.dataset.pageNum = '1';
+
+        result.products.forEach(product => {
+            pageNode.append(getProductCardNode({
+                ...product,
+                isAuth: result.isAuth,
+            }));
+        });
+
+        catalogListNode.append(pageNode);
+        document.addEventListener('scroll', scrollHandler);
     });
 
-    catalogListNode.append(pageNode);
-    document.addEventListener('scroll', scrollHandler);
-  });
-  
-  function initialCatalogListeners() {
-    document.addEventListener('scroll', scrollHandler);
-    document.addEventListener('scroll', pageActivation);
-  }
-
-  function scrollToActive() {
-    const topOffset = document.querySelector('.js-header').offsetHeight;
-    const targetPosition = pageObjects[pageObjects.length - 1].node.getBoundingClientRect().top;
-    const offsetPosition = targetPosition - topOffset;
-
-    scrollTo(offsetPosition, initialCatalogListeners);
-  }
-
-  async function scrollHandler() {
-    const offsetTop = catalogListNode.getBoundingClientRect().top;
-    const height = catalogListNode.getBoundingClientRect().height;
-
-    if (offsetTop + height + 100 > windowHeight || loading) {
-        return;
+    function initialCatalogListeners() {
+        document.addEventListener('scroll', scrollHandler);
+        document.addEventListener('scroll', pageActivation);
     }
 
-    currentPage++;
-    await loadMore(currentPage);
-  }
+    function scrollToActive() {
+        const topOffset = document.querySelector('.js-header').offsetHeight;
+        const targetPosition = pageObjects[pageObjects.length - 1].node.getBoundingClientRect().top;
+        const offsetPosition = targetPosition - topOffset;
 
-  async function loadMore(page) {
-    const skip = (page - 1) * countLoad;
+        scrollTo(offsetPosition, initialCatalogListeners);
+    }
 
-    loading = true;
+    async function scrollHandler() {
+        const offsetTop = catalogListNode.getBoundingClientRect().top;
+        const height = catalogListNode.getBoundingClientRect().height;
+
+        if (offsetTop + height + 100 > windowHeight || loading) {
+            return;
+        }
+
+        currentPage++;
+        await loadMore(currentPage);
+    }
+
+    async function loadMore(page) {
+        const skip = (page - 1) * countLoad;
+
+        loading = true;
 
     const url = new URL(window.location.href);
     const queryUrl = `${websiteAddress}api/products${url.search ? url.search : '?'}&skip=${skip}&limit=${countLoad}${sectionName ? `&${sectionType}=${sectionName}` : ''}`;
@@ -1656,90 +1961,90 @@ if (catalogNode) {
     const result = await response.json();
     const pageNode = document.createElement('div');
 
-    pageNode.classList.add('gameGrid', 'js-page');
-    loading = false;
-
-    if (result.error) {
-      return;
-    }
-
-    result.isLast ? document.removeEventListener('scroll', scrollHandler) : '';
-
-    result.products.forEach(product => {
-      pageNode.append(getProductCardNode({
-        ...product,
-        isAuth: result.isAuth,
-      }));
-    });
-  
-    catalogListNode.append(pageNode);
-    pageObjects.push({
-      node: pageNode,
-      loaded: true,
-      num: page,
-    })
-    
-    history.pushState(null, null, url);
-  }
-  
-  async function pageActivation() {
-    const windowHeight = document.documentElement.clientHeight;
-    const headerOffset = document.querySelector('.js-header').offsetHeight;
-    const url = new URL(window.location.href);
-    
-    const activeObjects = pageObjects.filter(pageObject => {
-      const topOffset = pageObject.node.getBoundingClientRect().top;
-      const bottomOffset = pageObject.node.getBoundingClientRect().top + pageObject.node.getBoundingClientRect().height;
-      
-      if (
-        (topOffset <= windowHeight && topOffset > headerOffset) ||
-        (bottomOffset <= windowHeight && bottomOffset > headerOffset) ||
-        (topOffset < headerOffset && bottomOffset > windowHeight)
-      ) {
-        return true;
-      }
-    });
-    
-    if (activeObjects.length === 1) {
-      url.searchParams.set('page', activeObjects[0].num.toString());
-      history.pushState(null, null, url);
-    }
-    
-    for (const activeObject of activeObjects) {
-      if (activeObject.loaded || loading) {
-        return;
-      }
-  
-      const pageNode = activeObject.node;
-      const skip = (activeObject.num - 1) * countLoad;
-  
-      pageNode.querySelectorAll('.cardGame-frame').forEach(item => {
-        item.classList.add('loading');
-      });
-  
-      loading = true;
-      
-      setTimeout(async () => {
-        const response = await postman.get(`${websiteAddress}api/products${url.search ? url.search : '?'}&skip=${skip}&limit=${countLoad}`);
-        const result = await response.json();
-  
+        pageNode.classList.add('gameGrid', 'js-page');
         loading = false;
-  
+
         if (result.error) {
-          return;
+            return;
         }
-  
-        pageNode.innerHTML = '';
-  
+
+        result.isLast ? document.removeEventListener('scroll', scrollHandler) : '';
+
         result.products.forEach(product => {
-          pageNode.append(getProductCardNode({
-            ...product,
-            isAuth: result.isAuth,
-          }));
+            pageNode.append(getProductCardNode({
+                ...product,
+                isAuth: result.isAuth,
+            }));
         });
-      }, 1000)
+
+        catalogListNode.append(pageNode);
+        pageObjects.push({
+            node: pageNode,
+            loaded: true,
+            num: page,
+        })
+
+        history.pushState(null, null, url);
     }
-  }
+
+    async function pageActivation() {
+        const windowHeight = document.documentElement.clientHeight;
+        const headerOffset = document.querySelector('.js-header').offsetHeight;
+        const url = new URL(window.location.href);
+
+        const activeObjects = pageObjects.filter(pageObject => {
+            const topOffset = pageObject.node.getBoundingClientRect().top;
+            const bottomOffset = pageObject.node.getBoundingClientRect().top + pageObject.node.getBoundingClientRect().height;
+
+            if (
+                (topOffset <= windowHeight && topOffset > headerOffset) ||
+                (bottomOffset <= windowHeight && bottomOffset > headerOffset) ||
+                (topOffset < headerOffset && bottomOffset > windowHeight)
+            ) {
+                return true;
+            }
+        });
+
+        if (activeObjects.length === 1) {
+            url.searchParams.set('page', activeObjects[0].num.toString());
+            history.pushState(null, null, url);
+        }
+
+        for (const activeObject of activeObjects) {
+            if (activeObject.loaded || loading) {
+                return;
+            }
+
+            const pageNode = activeObject.node;
+            const skip = (activeObject.num - 1) * countLoad;
+
+            pageNode.querySelectorAll('.cardGame-frame').forEach(item => {
+                item.classList.add('loading');
+            });
+
+            loading = true;
+
+            setTimeout(async () => {
+                const response = await postman.get(`${websiteAddress}api/products${url.search ? url.search : '?'}&skip=${skip}&limit=${countLoad}`);
+                const result = await response.json();
+
+                loading = false;
+
+                if (result.error) {
+                    return;
+                }
+
+                pageNode.innerHTML = '';
+
+                result.products.forEach(product => {
+                    pageNode.append(getProductCardNode({
+                        ...product,
+                        isAuth: result.isAuth,
+                    }));
+                });
+            }, 1000)
+        }
+    }
 }
 
 if (loginFormNode && btnSwitchAuthNode && btnSwitchRegNode && submitLoginNode) {

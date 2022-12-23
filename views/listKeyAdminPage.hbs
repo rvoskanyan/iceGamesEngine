@@ -1,0 +1,36 @@
+<style>
+    li p {
+        display: inline;
+        margin-right: 8px;
+    }
+    .table_name {
+        display: flex;
+    }
+    .table_name p:first-child {
+        margin-left: 20px;
+        margin-right: 100px;
+    }
+     .table_name p:nth-child(2) {
+         margin-right: 90px;
+     }
+     .table_name p:nth-child(3) {
+         margin-right: 80px;
+     }
+</style>
+
+<a href="/admin/{{section}}/add/">{{addTitle}}</a>
+<div class="table_name">
+    <p>Id</p>
+    <p>Key</p>
+    <p>Active</p>
+    <p>expired</p>
+</div>
+<ol>
+    {{#each elements}}
+        <li>
+            <p><a href="/admin/keys/edit/{{id}}">{{key}}</a></p>
+            <p>{{is_active}}</p>
+            <p>{{expired}}</p>
+        </li>
+    {{/each}}
+</ol>

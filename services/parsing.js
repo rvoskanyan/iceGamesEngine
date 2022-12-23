@@ -14,6 +14,7 @@ import path from "path";
 import {__dirname} from "../rootPathes.js";
 import {v4 as uuidv4} from "uuid";
 import Browser from "./Browser.js";
+import Key from "../models/Key.js";
 
 let int;
 
@@ -68,6 +69,12 @@ const sync = async () => {
           continue;
         }
         
+        let keys = await Key.findOne({product: productOnSite._id, is_active: true});
+        
+        if (keys) {
+          continue;
+        }
+
         if (Array.isArray(productOnSite.shortNames) || !productOnSite.shortNames) {
           productOnSite.shortNames = '';
         }

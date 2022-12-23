@@ -209,7 +209,7 @@ img
   max-height: 100%
 
 
-.containerModalChanges
+.containerModalChanges, .popup_payment_wrap
   display: none
   position: fixed
   top: 0
@@ -277,6 +277,167 @@ img
           display: block
           height: 1px
           background: linear-gradient(270deg, rgba(255, 255, 255, 0) 0%, #fff 100%)
+
+#popup-payment-cart
+  color: #fff
+  &.active
+    display: flex
+    cursor: pointer
+
+  .popup_payment
+    &-content
+      cursor: initial
+      z-index: 4
+      position: relative
+      background: linear-gradient(83.06deg, #000340 2.96%, #000ADA 120.44%)
+      opacity: 0.9
+      border-radius: 16px
+      padding-top: 95px
+      button
+        cursor: pointer
+      .price-sale
+        color: #8244D9
+        position: relative
+        overflow: hidden
+        &:before
+          content: url("data:image/svg+xml,%3Csvg width='58' height='33' viewBox='0 0 58 33' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg opacity='0.9' filter='url(%23filter0_d_162_7608)'%3E%3Cpath d='M11.002 21.4492L47.142 11.4361' stroke='%238043D7' stroke-width='2'/%3E%3C/g%3E%3Cdefs%3E%3Cfilter id='filter0_d_162_7608' x='0.733398' y='0.472656' width='56.6777' height='31.9395' filterUnits='userSpaceOnUse' color-interpolation-filters='sRGB'%3E%3CfeFlood flood-opacity='0' result='BackgroundImageFix'/%3E%3CfeColorMatrix in='SourceAlpha' type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0' result='hardAlpha'/%3E%3CfeOffset/%3E%3CfeGaussianBlur stdDeviation='5'/%3E%3CfeComposite in2='hardAlpha' operator='out'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0'/%3E%3CfeBlend mode='normal' in2='BackgroundImageFix' result='effect1_dropShadow_162_7608'/%3E%3CfeBlend mode='normal' in='SourceGraphic' in2='effect1_dropShadow_162_7608' result='shape'/%3E%3C/filter%3E%3C/defs%3E%3C/svg%3E%0A")
+          left: -16.5px
+          bottom: -10px
+          position: absolute
+          width: 10px
+    &-title
+      text-align: center
+      font-weight: 500
+      font-size: 30px
+      line-height: 37px
+    &-text
+      width: 80%
+      margin: 30px auto 35px
+      text-align: center
+      font-weight: 500
+      font-size: 20px
+      line-height: 24px
+    &-logo
+      display: flex
+      justify-content: center
+
+    &-logo_child
+      position: absolute
+      top: -74px
+      border-top: 3px solid #733CC6
+      width: 141px
+      height: 141px
+      border-radius: 50%
+      background: linear-gradient(66.72deg, #000340 -46.26%, #000ADA 153.92%)
+      display: flex
+      justify-content: center
+      align-items: center
+    &-steps
+      display: flex
+      justify-content: center
+      align-items: center
+      .payment-step
+        cursor: pointer
+        &-active
+          background: #733CC6
+        &-line
+          width: 73px
+          height: 2px
+          background: #733CC6
+          margin: 0 17px
+        border: 2px solid #733CC6
+        display: flex
+        justify-content: center
+        align-items: center
+        width: 55px
+        height: 55px
+        border-radius: 50%
+        font-weight: 500
+        font-size: 24px
+        line-height: 29px
+    &-product
+      padding-top: 32px
+      padding-bottom: 32px
+      .payment-product
+        position: relative
+        width: 192px
+        height: 281px
+        background: #02043D
+        border: 2px solid #FFFFFF
+        border-radius: 22px
+        overflow: hidden
+        margin-right: 20px
+        font-weight: 400
+        font-size: 18px
+        line-height: 22px
+        &:last-child
+          margin-right: 0
+        .image-product
+          width: 100%
+          height: 224px
+          img
+            width: 100%
+            height: 100%
+            object-fit: cover
+        .title, .price
+          position: absolute
+          left: 12px
+          right: 20px
+          bottom: 60px
+          z-index: 1
+        .price
+          bottom: 15px
+          display: flex
+          justify-content: space-between
+        .background-effect
+          background: linear-gradient(180deg, rgba(70, 11, 110, 0) 0%, #02043D 100%)
+          position: absolute
+          left: 0
+          bottom: 0
+          top: 0
+          right: 0
+      .slider
+        margin-top: 10px
+        .visibleArea
+          max-width: 100%
+          min-width: 100%
+          overflow: hidden
+      .btn
+        display: none
+      .tape
+        display: flex
+        transition: transform .3s ease-in
+    &-price
+      font-weight: 400
+      font-size: 30px
+      line-height: 37px
+      display: flex
+      justify-content: center
+      align-items: center
+      margin-bottom: 13px
+      .payment_price
+        &-from
+          &:before
+            bottom: -8px
+            transform: rotate(-3deg)
+            content: url("data:image/svg+xml,%3Csvg width='110' height='30' viewBox='0 0 72 22' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cline x1='70.3086' y1='1.23368' x2='1.23368' y2='20.6914' stroke='%237F42D6' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E%0A")
+        &-line
+          width: 42px
+          height: 1px
+          background: #ffffff
+          margin-right: 14px
+          margin-left: 14px
+    &-pay
+      display: block
+      margin: 0 auto
+      background: transparent
+      color: #fff
+      border: 1px solid #FFFFFF
+      border-radius: 43px
+      padding: 6px 16px
+      font-weight: 600
+      font-size: 18px
+      line-height: 22px
 
 
 .likes, .views

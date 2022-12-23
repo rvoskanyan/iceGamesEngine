@@ -7,6 +7,7 @@ import externalRoute from './api/external.js';
 import commentsRoute from './api/comments.js';
 import reviewsRoute from './api/rewiews.js';
 import usersRoute from './api/users.js';
+import paymentRoute from "./api/payment.js";
 
 const router = Router();
 
@@ -18,5 +19,6 @@ router.use('/external', externalRoute);
 router.use('/comments', commentsRoute);
 router.use('/reviews', reviewsRoute);
 router.use('/users', usersRoute);
+router.use('/beta/payment', paymentRoute)
 
 export default router;
