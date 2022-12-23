@@ -111,7 +111,7 @@ export const assignOrderPay = async (req, res) => {
         }
       }
     
-      mailingBuyProduct(product._id, buyerEmail).then();
+      await mailingBuyProduct(product._id, buyerEmail).then();
     
       res.json({
         success: true,

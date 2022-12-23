@@ -723,7 +723,7 @@ if (cartNode) {
                 '</div>' +
                 '</div>' +
                 '<p class="popup_payment-title">Корзина</p>' +
-                '<p class="popup_payment-text">В связи с техническими неполадками была создана двухэтапная оплата в которую мы включили для вас 5% скидку на покупку первого слота.</p>' +
+                '<p class="popup_payment-text">В связи с нагрузкой на платежную систему нам пришлось разделить Вашу покупку на 2 этапа. За оплату первого из которых мы дополнительно дарим Вам скидку 5%. Спасибо за понимание!</p>' +
                 '<div class="popup_payment-steps">' +
                 '<div class="payment-step payment-step-active" data-step="1" data-sale="5">1</div>' +
                 '<div class="payment-step-line"></div>' +

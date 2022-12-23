@@ -98,6 +98,10 @@ export default {
                 status: 'notPaid',
                 products: [],
             });
+            
+            if (isAuth) {
+                order.userId = person.email;
+            }
     
             const receiptItems = [];
             let amount = 0;
