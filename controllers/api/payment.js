@@ -100,7 +100,7 @@ export default {
             });
             
             if (isAuth) {
-                order.userId = person.email;
+                order.userId = person._id;
             }
     
             const receiptItems = [];
