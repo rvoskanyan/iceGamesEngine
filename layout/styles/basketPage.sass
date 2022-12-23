@@ -229,13 +229,66 @@
         padding: 10px 0
         margin-top: 10px
 
+        &.no-active
+          background: #E5E2F1
+          opacity: 0.4
         @include for-desktop-up
           margin-top: 18px
 
         @include for-middle-desktop-up
           margin-top: 25px
           padding: 15px 0
+      .form-confirm_email
+        label
+          display: block
+          &:first-child
+            margin-top: 40px
+            margin-bottom: 22px
+          &.confirm_code
+            display: none
+        input
+          width: 100%
+          padding: 12px 0 12px 26px
+          margin-top: 12px
+          display: block
+          border: 1px solid #FA00FF
+          border-radius: 30px
+          color: #fff
+          background: transparent
+          &:focus
+            border: 1px solid #fff
+        .wrap-button
+          display: flex
+          flex-wrap: wrap
+          align-items: center
+          button
+            width: initial
+            padding: 12px 26px
+            font-weight: 400
+            font-size: 18px
+            line-height: 22px
+            margin-bottom: 12px
+            margin-right: 4px
+            &:active
+              background: #410074
+            &.error
+              border-color: #fa00ff
+          .error-message, .error
+              color: #FA00FF
+          .error-message
+            margin-bottom: 8px
+            margin-top: 4px
 
+      .help-text_auth
+        span
+          margin-right: 4px
+        svg
+          display: none
+
+        &.color-blue
+          color: #00BEFF
+          display: flex
+          align-items: center
   & .notFound
     display: flex
     flex-direction: column

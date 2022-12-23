@@ -6,6 +6,12 @@ const fields = {
     type: Schema.Types.ObjectId,
     ref: 'Product',
   }],
+  code: {
+    type: Number
+  },
+  try_code: {
+    type: Date
+  }
 };
 
 const options = {
