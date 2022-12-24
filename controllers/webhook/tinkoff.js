@@ -13,6 +13,8 @@ export default async function (req, res) {
         }
         
         if (Success && Status === 'CONFIRMED') {
+            res.send("OK");
+            
             let products = order.products.filter(item => item.dbi);
             
             for (const product of products) {
@@ -59,9 +61,7 @@ export default async function (req, res) {
                 }
             }
             
-            await order.save();
-            
-            return res.send("OK");
+            return await order.save();
         }
         
         order.status = 'canceled';
