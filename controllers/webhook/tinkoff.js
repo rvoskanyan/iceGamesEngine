@@ -15,7 +15,7 @@ export default async function (req, res) {
         if (Success && Status === 'CONFIRMED') {
             res.send("OK");
             
-            if (order.status === 'canceled' || 'paid') {
+            if (order.status === 'paid') {
                 return;
             }
             
