@@ -18,6 +18,7 @@ const fields = {
         required: true,
         ref: "Product"
     },
+    purchasePrice: Number,
     boughtInOrder: {
         type: mongoose.Types.ObjectId,
         ref: 'Order'

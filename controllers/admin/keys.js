@@ -19,80 +19,106 @@ export const pageKeys = async (req, res) => {
 
 export const pageAddKey = async (req, res) => {
     try {
-        const games = await Product.find({}).select(['name']);
+        const products = await Product.find().select(['name']).lean();
 
         res.render('addKey', {
             layout: 'admin',
-            games: games,
+            products,
         });
     } catch (e) {
         console.log(e);
-        res.json('Page error');
+        res.redirect('/admin/keys');
     }
 }
-// TODO rename function on FormActionKey
+
 export const addKey = async (req, res) => {
     let error_obj = {}
     let status = 200
     let $exp;
+    
     try {
-        const {key, product, is_active, expired, is_edit} = req.body;
-        let keys = req.body.keys
-        // Validation
-        if (typeof key !== 'string' && typeof keys !== 'string') {
+        const {productId, is_active, expired, is_edit} = req.body;
+        const purchasePrice = req.body.purchasePrice;
+        let keys = req.body.keys;
+        let keyValue = req.body.key;
+        
+        if (typeof keyValue !== 'string' && typeof keys !== 'string') {
             error_obj.key = 'Не правильный тип данных ключа'
             status = 400
-        } else if (!key && !keys) {
+        } else if (!keyValue && !keys) {
             error_obj.key = 'Ключ обязательный аргумент'
             status = 400
         }
-        let pd = await Product.findById(product).exec()
-        if (!pd) {
-            error_obj.product = 'Данная игра не существует в базе'
-            status = 400
-        }
+    
         if (!!expired) {
-            $exp = new Date(expired)
-            let today = new Date()
-
+            const today = new Date();
+            $exp = new Date(expired);
+        
             if (today > $exp) {
                 error_obj.expired = 'Срок ключа истек'
                 status = 400
             }
         }
-        if (status > 200) throw 'Error'
+        
+        const product = await Product.findById(productId);
+        
+        if (!product) {
+            error_obj.product = 'Данная игра не существует в базе'
+            status = 400
+        }
+        
+        if (status > 200) {
+            throw 'Error'
+        }
+        
         if (!is_edit) {
-            keys = keys.split(' ').join('').split(',')
-            if (keys <= 0) {
-                keys = [key]
+            const regExp = new RegExp('\\s');
+            
+            keys = keys.trim().split(regExp).map(key => key.trim()).filter(key => key.length && typeof key === 'string');
+            
+            if (!keys.length) {
+                throw new Error('Keys not found');
             }
-            let stock = false
+            
             for (let key of keys) {
-                await Key.create({key, product, is_active: is_active === 'on', expired: $exp || null});
-                stock = true
+                const keyObj = new Key({
+                    key,
+                    purchasePrice,
+                    product: productId,
+                    is_active: is_active === 'on',
+                    expired: $exp || undefined,
+                });
+                
+                await keyObj.save();
             }
-            if (stock) {
-                let $p = await Product.findById(product).exec()
-                if (!!$p) {
-                    $p.inStock = true
-                    $p.countKeys +=  keys.length
-                    await $p.save()
-                }
+    
+            product.countKeys = keys.length;
+            await product.save();
+            await product.changeInStock(true);
+        } else {
+            const key = await Key.findById(req.params.keyId);
+            
+            if (!key) {
+                throw 'Error';
             }
+            
+            key.key = keyValue
+            key.product = productId
+            key.is_active = is_active === 'on'
+            key.expired = expired || undefined
+            key.purchasePrice = purchasePrice;
+            
+            await key.save()
         }
-        else {
-            let $k = await Key.findById(req.params.key_id).exec()
-            if (!$k) throw 'Error'
-            $k.key = key
-            $k.product = product
-            $k.is_active = is_active === 'on'
-            $k.expired = expired || null
-            await $k.save()
-        }
+        
         res.redirect('/admin/keys');
     } catch (e) {
         console.log(e, error_obj);
-        if (Object.keys(error_obj).length <= 0) res.redirect('/admin/keys/add');
+        
+        if (Object.keys(error_obj).length <= 0) {
+            res.redirect('/admin/keys/add');
+        }
+        
         res.render('addKey', {
             layout: 'admin',
             is_error: true,
@@ -105,23 +131,26 @@ export const addKey = async (req, res) => {
 
 export const editKeyPage = async (req, res) => {
     try {
-        const games = await Product.find({}).select(['name']);
-        let key = await Key.findById(req.params.key_id).exec()
+        let key = await Key.findById(req.params.keyId);
+        
         if (!key) {
-            res.redirect('/admin/keys/add')
-            return
+            return res.redirect('/admin/keys/add');
         }
+    
+        const products = await Product.find().select(['name']).lean();
         let expired = new Date(key.expired)
         let format_num = m=> m < 10 ? `0${m}`:m
-        let get_month = x => format_num(x.getMonth()+1)
-        expired = `${expired.getFullYear()}-${get_month(expired)}-${format_num(expired.getDate())}`
-        //TODO rename hbs template file to formActionKey
+        let get_month = x => format_num(x.getMonth()+1);
+        
+        expired = `${expired.getFullYear()}-${get_month(expired)}-${format_num(expired.getDate())}`;
+        
         res.render('addKey', {
             layout: 'admin',
-            games,
-            key, expired,
+            products,
+            key,
+            expired,
             is_edit: true,
-            selected_game: key.product._id.toString()})
+        });
     } catch (e) {
         console.log(e)
         res.redirect('/admin/keys/')
