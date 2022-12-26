@@ -1131,7 +1131,7 @@ export const comparePricePage = async (req, res) => {
     
     res.render('comparePrice', {
       layout: 'admin',
-      products: products.map(product => ({...product, dsPrice: product.dsPrice * 0.01 || 0})),
+      products: products.map(product => ({...product, dsPrice: product.dsPrice + product.dsPrice * 0.01 || 0})),
     });
   } catch (e) {
     console.log(e);
