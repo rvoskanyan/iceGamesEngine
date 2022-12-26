@@ -24,7 +24,12 @@ const fields = {
     }
 }
 
-let schema = new mongoose.Schema(fields)
+const options = {
+    timestamps: true,
+    versionKey: false,
+};
+
+let schema = new mongoose.Schema(fields, options)
 
 
 export default  mongoose.model('Key', schema)
