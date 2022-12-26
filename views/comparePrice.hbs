@@ -1,0 +1,16 @@
+<table>
+    <tr>
+        <th style="padding-bottom: 10px">Товар</th>
+        <th style="padding-bottom: 10px">Цена с DigiSeller</th>
+        <th style="padding-bottom: 10px">Наша цена</th>
+    </tr>
+    {{#each products}}
+        <tr style="vertical-align: top; text-align: center">
+            <td style="padding: 3px 50px">
+                <a href="/admin/products/edit/{{_id}}">{{name}}</a>
+            </td>
+            <td style="padding: 3px 50px">{{dsPrice}} ₽</td>
+            <td style="padding: 3px 50px">{{priceTo}} ₽</td>
+        </tr>
+    {{/each}}
+</table>

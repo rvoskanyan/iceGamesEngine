@@ -3,16 +3,6 @@ import {getDiscount, getFormatDate} from "../utils/functions.js";
 import {mailingInStockProduct} from "../services/mailer.js";
 
 const {Schema, model} = Mongoose;
-const keySchema = new Schema({
-  value: {
-    type: String,
-    required: true,
-  },
-  sold: {
-    type: Boolean,
-    default: false,
-  },
-});
 
 const elementSchema = new Schema({
   name: {
@@ -68,6 +58,7 @@ const fields = {
     type: Number,
     //required: true,
   },
+  dsPrice: Number,
   discount: {
     type: Number,
     default: 0,
@@ -150,10 +141,6 @@ const fields = {
   },
   elements: {
     type: [elementSchema],
-    default: [],
-  },
-  keys: {
-    type: [keySchema],
     default: [],
   },
   inStock: {

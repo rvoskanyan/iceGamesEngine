@@ -1124,3 +1124,17 @@ export const parseBySteambuy = async (req, res) => {
     res.redirect(`/admin/products/${productId}/parse-by-steam-buy`);
   }
 }
+
+export const comparePricePage = async (req, res) => {
+  try {
+    const products = await Product.find({countKeys: {$gt: 0}}).select(['name', 'priceTo', 'dsPrice']).lean();
+    
+    res.render('comparePrice', {
+      layout: 'admin',
+      products: products.map(product => ({...product, dsPrice: product.dsPrice * 0.01 || 0})),
+    });
+  } catch (e) {
+    console.log(e);
+    res.redirect('/admin');
+  }
+}
