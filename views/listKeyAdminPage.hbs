@@ -103,7 +103,7 @@
             <td><a href="/admin/keys/edit/{{id}}">{{shortOut key 5}}</a></td>
             <td><a href="/admin/keys?page=1{{#if is_active}}&is_active=on{{/if}}&product_id={{product._id}}">{{product.name}}</a></td>
             <td>{{#if expired}}{{dateFormat expired}}{{else}}---{{/if}}</td>
-            <td>{{#if user_bought}}{{user_bought.email}}{{else}}Нет{{/if}}</td>
+            <td>{{#if boughtInOrder}}{{boughtInOrder.buyerEmail}}{{else}}Нет{{/if}}</td>
             <td><input disabled type="checkbox" {{#if is_active}}checked{{/if}}></td>
         </tr>
     {{/each}}

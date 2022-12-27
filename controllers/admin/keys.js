@@ -1,5 +1,6 @@
 import Key from "../../models/Key.js";
 import Product from "../../models/Product.js";
+import {log} from "sharp/lib/libvips.js";
 
 
 //Наддо сделать пагинацию..
@@ -19,7 +20,7 @@ export const pageKeys = async (req, res) => {
         let pages = Math.ceil(count / limit)
         if (pages < page) page = pages || 1
         let skip = (page - 1) * limit
-        const keys = await Key.find(filter).populate({path: 'product', select: 'name'}).skip(skip).limit(limit).exec();
+        const keys = await Key.find(filter).populate([{path: 'product', select: 'name'}, {path:'boughtInOrder', select:'buyerEmail'}]).skip(skip).limit(limit).exec();
         res.render('listKeyAdminPage', {
             layout: 'admin',
             title: 'Список ключей',

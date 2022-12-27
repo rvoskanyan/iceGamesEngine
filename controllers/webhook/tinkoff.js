@@ -7,7 +7,6 @@ export default async function (req, res) {
     try {
         const {OrderId, Success, Status} = req.body;
         const order = await Order.findById(OrderId);
-
         if (!order) {
             return res.status(404).json({err:true, messages:"Forbidden"});
         }
@@ -16,7 +15,9 @@ export default async function (req, res) {
             let products = order.products.filter(item => item.dbi);
 
             for (const product of products) {
-                await mailingBuyProduct(product.productId, order.buyerEmail, true);
+                let key = await mailingBuyProduct(product.productId, order.buyerEmail, true);
+                key.boughtInOrder = order._id
+                await key.save()
             }
 
             order.paidTypes.push('dbi');

@@ -14,6 +14,8 @@ const fields = {
       enum: ['ds', 'dbi'],
       validate: {
         validator: function(value) {
+          if (typeof value === 'string') return true
+          // Приходит строка из-за этого не пропускает. валидацию надо переделать.
           if (value.length > 2) {
             return false;
           }
