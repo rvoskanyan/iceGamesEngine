@@ -12,17 +12,11 @@ const fields = {
     type: [{
       type: String,
       enum: ['ds', 'dbi'],
-      validate: {
-        validator: function(value) {
-          if (value.length > 2) {
-            return false;
-          }
-      
-          return !(value.length === 2 && value[0] === value[1]);
-        },
-        message: 'There are more than two values or they are repeated: {VALUE}'
-      },
     }],
+    validate: {
+      validator: (value) => !(value.length > 2 || value.length === 2 && value[0] === value[1]),
+      message: 'There are more than two values or they are repeated: {VALUE}'
+    },
     default: [],
   },
   dsCartId: String,
