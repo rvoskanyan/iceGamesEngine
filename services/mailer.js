@@ -218,9 +218,11 @@ export async function mailingBuyProduct(productId, email, isKey = false) {
       </html>
     `,
     })
+
     if (!!key) {
         key.is_active = false;
-        key.save()
+        await key.save()
+        return key
     }
 }
 

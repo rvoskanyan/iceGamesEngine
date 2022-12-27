@@ -82,7 +82,6 @@ let createCheckouts = {
                 id: user._id
             }, isGuest
         })
-        console.log('Id', pCheckout._id)
         let tinkoff = new Tinkoff(method.secretToken, method.privateToken, false)
         let checkout = await tinkoff.checkout(amount, pCheckout._id, method.webhookSecret, currency, isTwo)
         if (!checkout) return
@@ -114,9 +113,12 @@ export default {
         try {
             let isGuest = !res.locals.isAuth
             let payment_method_id = req.params.methods
-            let {products, currency, isTwo, email} = req.body
+            let {products, currency, isTwo, email, clientId} = req.body
             currency = currency?.toUpperCase() || 'RUB'
             isTwo = !!isTwo
+            if (!clientId) {
+                throw "ClientId is required"
+            }
             if (typeof products === 'string') {
                 products = JSON.parse(products)
             } else if (typeof products === 'object' && !Array.isArray(products) && products.id) {

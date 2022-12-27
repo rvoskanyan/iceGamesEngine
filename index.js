@@ -18,6 +18,7 @@ import adminRoutes from './routes/admin.js';
 import apiRoutes from'./routes/api.js';
 import {admin} from "./middlewares/routeProtection.js";
 import webhook from "./routes/webhook.js";
+import {getFormatDate} from "./utils/functions.js";
 
 dotenv.config();
 
@@ -108,6 +109,14 @@ const hbs = exphbs.create({
     sub: (lvalue, rvalue) => {
       return lvalue - rvalue;
     },
+    dateFormat(date) {
+      return getFormatDate(date, '-', ['d', 'm', 'y'], true)
+    },
+    shortOut(text, count) {
+      count = parseInt(count) || 5
+      if (text.length <= count*2+3) return text
+      return (t=>t.slice(0, count)+'...'+t.slice(t.length-count, text.length))(text.toString())
+    }
   },
 })
 

@@ -12,19 +12,33 @@ export default async function (req, res) {
             return
         }
         let isGuest = order.isGuest
-        let user;
+        let user, metadata;
          if (isGuest) user = order.user
         else user = await User.findById(order.user.id).exec()
 
         if (Status === 'CONFIRMED') {
             let products = order.products_id
+            metadata = order.metadata
+            metadata = JSON.parse(metadata)
             if (!isGuest) {
                 user.purchasedProducts += products.length
                 await user.save()
             }
             for (let product of products) {
-                await mailingBuyProduct(product, user.email, true)
+                let key = await mailingBuyProduct(product, user.email, true)
+                if (!metadata.keys) metadata.keys = []
+                if (!key) {
+                    metadata.keys.push({product: product, fail: 'Key empty'})
+                    continue;
+                }
+                metadata.keys.push({product: product, id: key._id.toString()})
+                key.user_bought = {
+                    id: isGuest ? null : user._id.toString(),
+                    email: user.email
+                }
+                 await key.save()
             }
+            metadata = JSON.stringify(metadata)
         }
         if (Status !== 'REJECTED') {
             //Clear carts
@@ -42,7 +56,7 @@ export default async function (req, res) {
 
         await PaymentModule.paymentHistory.create({
             reference: order._id,
-            changeField: JSON.stringify({status:order.status, amount:order.amount}),
+            changeField: JSON.stringify({status:order.status, amount:order.amount, metadata}),
             date_create: Date.now()
         })
         order.status = Status

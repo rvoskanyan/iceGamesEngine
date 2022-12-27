@@ -802,7 +802,6 @@ if (cartNode) {
         }
 
         if (countProducts) {
-
             // Confirm
             if (demandConfirm) {
                 formConfirm.addEventListener("submit", async function (e) {
@@ -934,12 +933,14 @@ if (cartNode) {
 
             async function get_checkout(isTwo) {
                 let payment = await Payment.get_method()
+                let clientId;
+                if (window.yaCounter69707947 && window.yaCounter69707947?.getClientID) clientId = yaCounter69707947.getClientID()
                 let email;
                 if (formConfirm) {
                     email = formConfirm.elements.email.value
                 }
                 if (!payment) console.error('Payment is not support')
-                window.open(await payment.checkout(products.iceGame, isTwo, email), '_self')
+                window.open(await payment.checkout(products.iceGame, isTwo, email, clientId), '_self')
             }
 
             async function get_digiCheckout(products) {
@@ -1041,6 +1042,7 @@ if (cartNode) {
 
             function change_step(steps, step_id, prices, product_els, payment_button, is_fee=true) {
                 let keyStep = step_id === '1' ? 'iceGame' : 'digiSeller'
+
                 for (let i of steps.children) {
                     let sid = i.dataset.step
                     if (sid === step_id) {
@@ -1204,7 +1206,6 @@ document.addEventListener('click', async (e) => {
             if (result.error) {
                 return;
             }
-
             addToCartBtnText.innerText = 'Добавлено';
             addToCartBtnIcon.classList.add('active');
             addToCartBtnNode.classList.add('js-active', 'active');
@@ -1480,74 +1481,76 @@ if (gamePageNode) {
 if (homeSliderNode) {
     const addToCartBtn = homeSliderNode.querySelectorAll('.js-addToCart');
     let playVideoTimeOutId;
+    try {
+        const homeSlider = new Slider({
+            mainNode: homeSliderNode,
+            onSwitch: switchHomeSlider,
+            navigate: true,
+            progressNavigate: true,
+            switchingTime: 5000,
+        });
 
-    const homeSlider = new Slider({
-        mainNode: homeSliderNode,
-        onSwitch: switchHomeSlider,
-        navigate: true,
-        progressNavigate: true,
-        switchingTime: 5000,
-    });
+        function switchHomeSlider(slides, prevSlides = []) {
+            const slideNode = slides[0];
+            const videoNode = slideNode.querySelector('.video');
+            const prevSlideNode = prevSlides[0];
+            const videoName = slideNode.dataset.videoName;
+            let canplaythrough = true;
 
-    function switchHomeSlider(slides, prevSlides = []) {
-        const slideNode = slides[0];
-        const videoNode = slideNode.querySelector('.video');
-        const prevSlideNode = prevSlides[0];
-        const videoName = slideNode.dataset.videoName;
-        let canplaythrough = true;
+            window.addEventListener('resize', handleResize);
 
-        window.addEventListener('resize', handleResize);
-
-        if (getComputedStyle(videoNode).display === 'none') {
-            return;
-        }
-
-        clearTimeout(playVideoTimeOutId);
-
-        if (slideNode === prevSlideNode) {
-            return;
-        }
-
-        if (prevSlideNode) {
-            const prevSlideVideoNode = prevSlideNode.querySelector('.video');
-
-            prevSlideNode.classList.remove('activeVideo');
-            prevSlideVideoNode.removeAttribute('src');
-            prevSlideVideoNode.removeEventListener('canplaythrough', onCanplaythrough);
-        }
-
-        videoNode.addEventListener('canplaythrough', onCanplaythrough);
-        videoNode.setAttribute('src', `${websiteAddress}${videoName}`);
-
-        function handleResize() {
-            if (getComputedStyle(videoNode).display === 'none' && videoNode.hasAttribute('src')) {
-                clearTimeout(playVideoTimeOutId);
-                slideNode.classList.remove('activeVideo');
-                homeSlider.changeTimeoutOnce(5000);
-                videoNode.removeAttribute('src');
-                videoNode.removeEventListener('canplaythrough', onCanplaythrough);
-                canplaythrough = true;
-            } else if (getComputedStyle(videoNode).display !== 'none' && !videoNode.hasAttribute('src')) {
-                videoNode.addEventListener('canplaythrough', onCanplaythrough);
-                videoNode.setAttribute('src', `${websiteAddress}${videoName}`);
-            }
-        }
-
-        function onCanplaythrough() {
-            if (!canplaythrough) {
+            if (getComputedStyle(videoNode).display === 'none') {
                 return;
             }
 
-            playVideoTimeOutId = setTimeout(() => {
-                slideNode.classList.add('activeVideo');
-                homeSlider.changeTimeoutOnce(videoNode.duration * 1000);
-                videoNode.play();
-            }, 2000);
+            clearTimeout(playVideoTimeOutId);
 
-            canplaythrough = false;
+            if (slideNode === prevSlideNode) {
+                return;
+            }
+
+            if (prevSlideNode) {
+                const prevSlideVideoNode = prevSlideNode.querySelector('.video');
+
+                prevSlideNode.classList.remove('activeVideo');
+                prevSlideVideoNode.removeAttribute('src');
+                prevSlideVideoNode.removeEventListener('canplaythrough', onCanplaythrough);
+            }
+
+            videoNode.addEventListener('canplaythrough', onCanplaythrough);
+            videoNode.setAttribute('src', `${websiteAddress}${videoName}`);
+
+            function handleResize() {
+                if (getComputedStyle(videoNode).display === 'none' && videoNode.hasAttribute('src')) {
+                    clearTimeout(playVideoTimeOutId);
+                    slideNode.classList.remove('activeVideo');
+                    homeSlider.changeTimeoutOnce(5000);
+                    videoNode.removeAttribute('src');
+                    videoNode.removeEventListener('canplaythrough', onCanplaythrough);
+                    canplaythrough = true;
+                } else if (getComputedStyle(videoNode).display !== 'none' && !videoNode.hasAttribute('src')) {
+                    videoNode.addEventListener('canplaythrough', onCanplaythrough);
+                    videoNode.setAttribute('src', `${websiteAddress}${videoName}`);
+                }
+            }
+
+            function onCanplaythrough() {
+                if (!canplaythrough) {
+                    return;
+                }
+
+                playVideoTimeOutId = setTimeout(() => {
+                    slideNode.classList.add('activeVideo');
+                    homeSlider.changeTimeoutOnce(videoNode.duration * 1000);
+                    videoNode.play();
+                }, 2000);
+
+                canplaythrough = false;
+            }
         }
+    } catch (e) {
+        console.log(e)
     }
-
     addToCartBtn.forEach(btn => {
         btn.addEventListener('click', async () => {
             if (btn.classList.contains('js-active')) {

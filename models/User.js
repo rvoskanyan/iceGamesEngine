@@ -87,6 +87,9 @@ const fields = {
     type: Boolean,
     default: true,
   },
+  yaId: {
+    type: String
+  }
 };
 
 const options = {

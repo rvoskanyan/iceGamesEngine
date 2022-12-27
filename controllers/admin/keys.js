@@ -1,15 +1,33 @@
 import Key from "../../models/Key.js";
 import Product from "../../models/Product.js";
+
+
 //Наддо сделать пагинацию..
 export const pageKeys = async (req, res) => {
     try {
-        const keys = await Key.find({}).limit(100).exec();
+        let {page, product_id, is_active} = req.query
+        if (typeof page === "string") page = parseInt(page) || 1
+        if (typeof page !== 'number') page = 1
+        let limit = 10
+        is_active = is_active?.toLowerCase() === 'on'
+        let filter = {product: product_id || undefined, is_active: true}
+        if (is_active) filter['is_active'] = undefined
+        filter = JSON.parse(JSON.stringify(filter))
+        let games = await Key.find(filter).distinct("product").exec();
+        games = await Product.find({_id: {$in: games}}).select("name").exec()
+        let count = await Key.countDocuments(filter)
+        let pages = Math.ceil(count / limit)
+        if (pages < page) page = pages || 1
+        let skip = (page - 1) * limit
+        const keys = await Key.find(filter).populate({path: 'product', select: 'name'}).skip(skip).limit(limit).exec();
         res.render('listKeyAdminPage', {
             layout: 'admin',
             title: 'Список ключей',
             section: 'keys',
             elements: keys,
             addTitle: "Добавить ключ",
+            pages: pages, selected_game:product_id,
+            count, page, games, is_active
         });
     } catch (e) {
         console.log(e);
@@ -75,12 +93,11 @@ export const addKey = async (req, res) => {
                 let $p = await Product.findById(product).exec()
                 if (!!$p) {
                     $p.inStock = true
-                    $p.countKeys +=  keys.length
+                    $p.countKeys += keys.length
                     await $p.save()
                 }
             }
-        }
-        else {
+        } else {
             let $k = await Key.findById(req.params.key_id).exec()
             if (!$k) throw 'Error'
             $k.key = key
@@ -112,8 +129,8 @@ export const editKeyPage = async (req, res) => {
             return
         }
         let expired = new Date(key.expired)
-        let format_num = m=> m < 10 ? `0${m}`:m
-        let get_month = x => format_num(x.getMonth()+1)
+        let format_num = m => m < 10 ? `0${m}` : m
+        let get_month = x => format_num(x.getMonth() + 1)
         expired = `${expired.getFullYear()}-${get_month(expired)}-${format_num(expired.getDate())}`
         //TODO rename hbs template file to formActionKey
         res.render('addKey', {
@@ -121,7 +138,8 @@ export const editKeyPage = async (req, res) => {
             games,
             key, expired,
             is_edit: true,
-            selected_game: key.product._id.toString()})
+            selected_game: key.product._id.toString()
+        })
     } catch (e) {
         console.log(e)
         res.redirect('/admin/keys/')

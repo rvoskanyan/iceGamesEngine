@@ -19,8 +19,7 @@ const fields = {
         ref: "Product"
     },
     user_bought: {
-        type: mongoose.Types.ObjectId,
-        ref: 'User'
+        type: Object
     }
 }
 
