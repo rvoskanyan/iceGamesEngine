@@ -7,7 +7,7 @@ const fields = {
     ref: 'Product',
   }],
   code: {
-    type: String
+    type: Number
   },
   try_code: {
     type: Date

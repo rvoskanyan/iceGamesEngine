@@ -35,27 +35,27 @@ class Payment {
         }
     }
 
-    async checkout(product_ids, isTwo, email, clientId) {
-        let post = await this.#_options.request.post(this.#_options.base_url+'api/beta/payment/checkout/'+this.#_options.method, {products:product_ids, isTwo, email, clientId})
-        let data = await post.json()
+    async checkout(product_ids, isTwo, email, orderId, clientId) {
+        let response = await this.#_options.request.post(
+          this.#_options.base_url + 'api/beta/payment/checkout/' + this.#_options.method,
+          {products: product_ids, isTwo, email, orderId, clientId}
+        );
 
-        return data.checkout
+        return await response.json();
     }
 
-    static get_method(base_url) {
-        if (!base_url) base_url = default_url
-        console.log(base_url)
-        let post = new Postman().get(base_url+'api/beta/payment/methods')
-        return post.then(data=>data.json()).then(p=>{
-            let a = []
-            let {data} = p
-            console.log(data, p)
-            for (let i of data) {
-                a.push(new Payment(i._id, {base_url}))
-            }
-            if (!!a.length) return  a[0]
-            return null
-        })
+    static async get_method(base_url) {
+        base_url = base_url || default_url;
+
+        const response = await new Postman().get(base_url + 'api/beta/payment/method')
+        const result = await response.json();
+        const method = result.data;
+
+        if (result.err) {
+            return null;
+        }
+
+        return new Payment(method._id, {base_url});
     }
 
     static check_order(orderId) {

@@ -2,9 +2,9 @@ import {Router} from "express";
 import PaymentController from '../../controllers/api/payment.js'
 const router = Router();
 
-router.get('/methods', PaymentController.methods);
+router.get('/method', PaymentController.methods);
 router.post('/checkout/status', PaymentController.checkPayment)
-router.post('/checkout/:methods', PaymentController.checkout);
+router.post('/checkout/:paymentMethodId', PaymentController.checkout);
 
 
 export default router;

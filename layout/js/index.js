@@ -926,34 +926,53 @@ if (cartNode) {
             });
             let urlParam = new URLSearchParams(document.location.search)
             let stepId = urlParam.get("step") || '1'
-            let OrderId = urlParam.get("OrderId")
+            let orderId = urlParam.get("OrderId")
             if (isNaN(parseInt(stepId))) stepId = '1'
             if (parseInt(stepId) > 2) stepId = '2'
             else if (parseInt(stepId) < 1) stepId = '1'
 
             async function get_checkout(isTwo) {
+                const orderId = cartNode.dataset.orderId;
                 let payment = await Payment.get_method()
                 let clientId;
                 if (window.yaCounter69707947 && window.yaCounter69707947?.getClientID) clientId = yaCounter69707947.getClientID()
                 let email;
+
                 if (formConfirm) {
                     email = formConfirm.elements.email.value
                 }
-                if (!payment) console.error('Payment is not support')
-                window.open(await payment.checkout(products.iceGame, isTwo, email, clientId), '_self')
+
+                if (!payment) {
+                    console.error('Payment method not set')
+                }
+
+                const result = await payment.checkout(products.iceGame, isTwo, email, orderId, clientId);
+
+                if (result.err) {
+                    return;
+                }
+
+                const data = result.data;
+
+                cartNode.dataset.orderId = data.orderId;
+
+                window.open(data.paymentUrl, '_self')
             }
 
-            async function get_digiCheckout(products) {
+            async function get_digiCheckout(products, isTwo = false) {
                 const formData = new FormData();
+                const changes = [];
+                let dsCartId = null;
+
                 formData.append('product_cnt', '1');
                 formData.append('typecurr', 'wmr');
                 formData.append('lang', 'ru-RU');
-                const changes = [];
-                let dsCartId = null;
+
                 for (const prd of products) {
                     const productId = prd.productId;
-                    const productNode = document.querySelector(`.js-product[data-product-id="${productId}"]`)
+                    const productNode = document.querySelector(`.js-product[data-product-id="${productId}"]`);
                     const dsId = prd.dsId;
+
                     formData.set('product_id', dsId);
 
                     const responseAddCartDs = await fetch('https://shop.digiseller.ru/xml/shop_cart_add.asp', {
@@ -970,7 +989,10 @@ if (cartNode) {
                         const deleteFromCartBtn = productNode.querySelector('.js-deleteFromCart');
 
                         deleteFromCartBtn.dispatchEvent(new Event('click'));
+
                         await postman.put(`/api/products/${productId}/revise`);
+                        location.reload();
+
                         changes.push({
                             name: productNode.querySelector('.name').innerText,
                             notInStock: true,
@@ -986,8 +1008,11 @@ if (cartNode) {
                     const priceToNode = productNode.querySelector('.js-priceTo');
                     const currentPrice = +priceToNode.innerText;
 
-                    /*if (+product.price !== currentPrice) {
-                      const priceFrom = +productNode.querySelector('.js-priceFrom').innerText;
+                    if (+product.price !== currentPrice) {
+                        await postman.put(`/api/products/${productId}/revise`);
+                        location.reload();
+
+                      /*const priceFrom = +productNode.querySelector('.js-priceFrom').innerText;
                       const dsPrice = parseInt(product.price);
                       const discountNode = productNode.querySelector('.js-discount');
 
@@ -1001,17 +1026,24 @@ if (cartNode) {
                         name: productNode.querySelector('.name').innerText,
                         fromPrice: currentPrice,
                         toPrice: dsPrice,
-                      });
-                    }*/
+                      });*/
+                    }
 
                     if (!dsCartId) {
-                        formData.set('cart_uid', resultAddCartDs.cart_uid);
                         dsCartId = resultAddCartDs.cart_uid;
+                        formData.set('cart_uid', dsCartId);
                     }
                 }
 
                 if (!changes.length) {
-                    const response = await postman.post('/api/order', {dsCartId});
+                    const orderId = cartNode.dataset.orderId;
+                    let email;
+
+                    if (formConfirm) {
+                        email = formConfirm.elements.email.value
+                    }
+
+                    const response = await postman.post('/api/order', {dsCartId, orderId, email, isTwo});
                     const result = await response.json();
 
                     if (result.error) {
@@ -1020,7 +1052,9 @@ if (cartNode) {
 
                     const payFormNode = cartListNode.querySelector('.js-payForm');
                     const dsCartIdInputNodes = payFormNode.querySelectorAll('.js-dsCartId');
+                    const emailFormDsNode = payFormNode.querySelector('.js-emailFormDs');
 
+                    emailFormDsNode && (emailFormDsNode.value = email);
                     dsCartIdInputNodes.forEach(item => item.value = dsCartId);
 
                     return payFormNode.submit();
@@ -1035,7 +1069,7 @@ if (cartNode) {
                             get_checkout(true)
                             break
                         case '2':
-                            get_digiCheckout(products.digiSeller)
+                            get_digiCheckout(products.digiSeller, true)
                             break
                     }
                 }
@@ -1064,36 +1098,31 @@ if (cartNode) {
                 console.log(step_id, keyStep)
             }
 
-            if (OrderId) {
-                let check = Payment.check_order(OrderId)
-                check.then(a => {
-                    let pop_up = createPopupPayment(openPayment)
-                    let steps = pop_up.querySelector(".popup_payment-steps")
-                    let prices = pop_up.querySelector(".popup_payment-price")
-                    let product_els = pop_up.querySelector('.popup_payment-product .tape')
-                    let payment_button = pop_up.querySelector(".popup_payment-pay")
-                    change_step(steps, '2', prices, product_els, payment_button, false)
-                })
+            if (orderId) {
+                cartNode.dataset.orderId = orderId;
             }
+
             payBtnNode && payBtnNode.addEventListener('click', async () => {
-                if (demandConfirm) return;
-                let productNodes = cartListNode.querySelectorAll('.js-product')
-                if (products.iceGame.length === productNodes.length) {
-                    await get_checkout(false)
-                    return
-                }
-                else if (!products.iceGame.length && !!productNodes.length) {
-                    get_digiCheckout(products.digiSeller)
+                if (demandConfirm) {
                     return;
                 }
-                let pop_up = createPopupPayment(openPayment)
 
+                let productNodes = cartListNode.querySelectorAll('.js-product')
+
+                if (products.iceGame.length === productNodes.length) {
+                    return await get_checkout(false);
+                } else if (!products.iceGame.length && !!productNodes.length) {
+                    return get_digiCheckout(products.digiSeller);
+                }
+
+                let pop_up = createPopupPayment(openPayment)
                 let prices = pop_up.querySelector(".popup_payment-price")
                 let steps = pop_up.querySelector(".popup_payment-steps")
                 let product_els = pop_up.querySelector('.popup_payment-product .tape')
                 let payment_button = pop_up.querySelector(".popup_payment-pay")
                 for (let step of steps.children) {
                     // Полностью рабочая но на время выключена. при желании можно включить
+                    // Просьба включать после согласования в tg: https://t.me/rvoskanyan
                     break
                     let step_id = step.dataset.step
                     if (!step_id) continue
@@ -1101,9 +1130,6 @@ if (cartNode) {
                         change_step(steps, step_id, prices, product_els, payment_button)
                     }
                 }
-
-                console.log(products)
-                return;
 
                 /*changes.forEach(item => {
 
@@ -1481,76 +1507,74 @@ if (gamePageNode) {
 if (homeSliderNode) {
     const addToCartBtn = homeSliderNode.querySelectorAll('.js-addToCart');
     let playVideoTimeOutId;
-    try {
-        const homeSlider = new Slider({
-            mainNode: homeSliderNode,
-            onSwitch: switchHomeSlider,
-            navigate: true,
-            progressNavigate: true,
-            switchingTime: 5000,
-        });
 
-        function switchHomeSlider(slides, prevSlides = []) {
-            const slideNode = slides[0];
-            const videoNode = slideNode.querySelector('.video');
-            const prevSlideNode = prevSlides[0];
-            const videoName = slideNode.dataset.videoName;
-            let canplaythrough = true;
+    const homeSlider = new Slider({
+        mainNode: homeSliderNode,
+        onSwitch: switchHomeSlider,
+        navigate: true,
+        progressNavigate: true,
+        switchingTime: 5000,
+    });
 
-            window.addEventListener('resize', handleResize);
+    function switchHomeSlider(slides, prevSlides = []) {
+        const slideNode = slides[0];
+        const videoNode = slideNode.querySelector('.video');
+        const prevSlideNode = prevSlides[0];
+        const videoName = slideNode.dataset.videoName;
+        let canplaythrough = true;
 
-            if (getComputedStyle(videoNode).display === 'none') {
-                return;
-            }
+        window.addEventListener('resize', handleResize);
 
-            clearTimeout(playVideoTimeOutId);
+        if (getComputedStyle(videoNode).display === 'none') {
+            return;
+        }
 
-            if (slideNode === prevSlideNode) {
-                return;
-            }
+        clearTimeout(playVideoTimeOutId);
 
-            if (prevSlideNode) {
-                const prevSlideVideoNode = prevSlideNode.querySelector('.video');
+        if (slideNode === prevSlideNode) {
+            return;
+        }
 
-                prevSlideNode.classList.remove('activeVideo');
-                prevSlideVideoNode.removeAttribute('src');
-                prevSlideVideoNode.removeEventListener('canplaythrough', onCanplaythrough);
-            }
+        if (prevSlideNode) {
+            const prevSlideVideoNode = prevSlideNode.querySelector('.video');
 
-            videoNode.addEventListener('canplaythrough', onCanplaythrough);
-            videoNode.setAttribute('src', `${websiteAddress}${videoName}`);
+            prevSlideNode.classList.remove('activeVideo');
+            prevSlideVideoNode.removeAttribute('src');
+            prevSlideVideoNode.removeEventListener('canplaythrough', onCanplaythrough);
+        }
 
-            function handleResize() {
-                if (getComputedStyle(videoNode).display === 'none' && videoNode.hasAttribute('src')) {
-                    clearTimeout(playVideoTimeOutId);
-                    slideNode.classList.remove('activeVideo');
-                    homeSlider.changeTimeoutOnce(5000);
-                    videoNode.removeAttribute('src');
-                    videoNode.removeEventListener('canplaythrough', onCanplaythrough);
-                    canplaythrough = true;
-                } else if (getComputedStyle(videoNode).display !== 'none' && !videoNode.hasAttribute('src')) {
-                    videoNode.addEventListener('canplaythrough', onCanplaythrough);
-                    videoNode.setAttribute('src', `${websiteAddress}${videoName}`);
-                }
-            }
+        videoNode.addEventListener('canplaythrough', onCanplaythrough);
+        videoNode.setAttribute('src', `${websiteAddress}${videoName}`);
 
-            function onCanplaythrough() {
-                if (!canplaythrough) {
-                    return;
-                }
-
-                playVideoTimeOutId = setTimeout(() => {
-                    slideNode.classList.add('activeVideo');
-                    homeSlider.changeTimeoutOnce(videoNode.duration * 1000);
-                    videoNode.play();
-                }, 2000);
-
-                canplaythrough = false;
+        function handleResize() {
+            if (getComputedStyle(videoNode).display === 'none' && videoNode.hasAttribute('src')) {
+                clearTimeout(playVideoTimeOutId);
+                slideNode.classList.remove('activeVideo');
+                homeSlider.changeTimeoutOnce(5000);
+                videoNode.removeAttribute('src');
+                videoNode.removeEventListener('canplaythrough', onCanplaythrough);
+                canplaythrough = true;
+            } else if (getComputedStyle(videoNode).display !== 'none' && !videoNode.hasAttribute('src')) {
+                videoNode.addEventListener('canplaythrough', onCanplaythrough);
+                videoNode.setAttribute('src', `${websiteAddress}${videoName}`);
             }
         }
-    } catch (e) {
-        console.log(e)
+
+        function onCanplaythrough() {
+            if (!canplaythrough) {
+                return;
+            }
+
+            playVideoTimeOutId = setTimeout(() => {
+                slideNode.classList.add('activeVideo');
+                homeSlider.changeTimeoutOnce(videoNode.duration * 1000);
+                videoNode.play();
+            }, 2000);
+
+            canplaythrough = false;
+        }
     }
+
     addToCartBtn.forEach(btn => {
         btn.addEventListener('click', async () => {
             if (btn.classList.contains('js-active')) {

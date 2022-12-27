@@ -1,7 +1,6 @@
 import User from "../../models/User.js";
-import {generation_number, generation_string} from "../../utils/functions.js";
-import {sendConfirmCode, sendUserAuthData} from "../../services/mailer.js";
-import bcrypt from "bcryptjs";
+import {generation_number} from "../../utils/functions.js";
+import {sendConfirmCode} from "../../services/mailer.js";
 
 export const getUsers = async (req, res) => {
     try {
@@ -29,23 +28,29 @@ export const getUsers = async (req, res) => {
 
 export const get_code = async (req, res) => {
     let status = 400
+    
     try {
-        let {email} = req.body
-      console.log(res.locals.person)
-        let e_regx = /([-!#-'*+/-9=?A-Z^-~]+(\.[-!#-'*+/-9=?A-Z^-~]+)*|"([]!#-[^-~ \t]|(\\[\t -~]))+")@[0-9A-Za-z]([0-9A-Za-z-]{0,61}[0-9A-Za-z])?(\.[0-9A-Za-z]([0-9A-Za-z-]{0,61}[0-9A-Za-z])?)+/gm;
-        if (!email) throw "Email is empty"
-        else if (!e_regx.test(email)) throw "Invalid email"
         if (res.locals.isAuth) {
             status = 401
             throw "Authorized"
         }
-        let code = generation_number().toString()
-        let now = new Date()
-        let expired = new Date(now.getTime() + 2 * 60000) // 2 minutes
+        
+        const code = generation_number().toString()
+        const {email} = req.body
+        const e_regx = /([-!#-'*+/-9=?A-Z^-~]+(\.[-!#-'*+/-9=?A-Z^-~]+)*|"([]!#-[^-~ \t]|(\\[\t -~]))+")@[0-9A-Za-z]([0-9A-Za-z-]{0,61}[0-9A-Za-z])?(\.[0-9A-Za-z]([0-9A-Za-z-]{0,61}[0-9A-Za-z])?)+/gm;
+        const now = new Date()
+        const expired = new Date(now.getTime() + 2 * 60000) // 2 minutes
+        
+        if (!email || !e_regx.test(email)) {
+            throw "Invalid email"
+        }
+        
         res.locals.person.code = code
         res.locals.person.try_code = expired
-        res.locals.person.save()
+        
+        await res.locals.person.save()
         await sendConfirmCode(email, code)
+        
         res.json({
             ok: true,
             expired,
@@ -58,17 +63,19 @@ export const get_code = async (req, res) => {
 
 export const confirm_email = async (req, res) => {
     try {
-        let {code} = req.body
-        if (!code) throw "Code is empty"
-        if (typeof code === 'string') {
-            code = parseInt(code)
-            if (isNaN(code)) throw 'Type not number'
+        if (res.locals.isAuth) {
+            throw "Authorized"
         }
-        if (typeof code === "object" || typeof code === 'boolean') throw 'Type error'
-        if (code.toString().length !== 4) throw 'Invalid code'
-        if (+res.locals.person.code !== code) throw 'Invalid code'
+        
+        const code = parseInt(req.body.code);
+        
+        if (res.locals.person.code !== code) {
+            throw "Invalid code";
+        }
+        
         res.locals.person.code = undefined
-        res.locals.person.save()
+        await res.locals.person.save()
+        
         res.json({
             ok: true
         })
@@ -80,6 +87,10 @@ export const confirm_email = async (req, res) => {
 
 export const resend_code = async (req, res) => {
     try {
+        if (res.locals.isAuth) {
+            throw "Authorized"
+        }
+        
         let {email} = req.body
         let user = res.locals.person
         if (!user) throw "User not found"

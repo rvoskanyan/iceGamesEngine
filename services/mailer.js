@@ -6,10 +6,12 @@ import {__dirname} from "../rootPathes.js";
 import {v4 as uuidv4} from "uuid";
 import Key from "../models/Key.js";
 
+const fromMail = 'support@icegames.store';
+
 const transporter = nodemailer.createTransport({
     host: 'smtp.mail.ru',
     auth: {
-        user: 'support@icegames.store',
+        user: fromMail,
         pass: 'ghD9tBgbmnbS7RaW1rA6',
     },
     secure: true,
@@ -21,7 +23,7 @@ const transporter = nodemailer.createTransport({
 
 export async function registrationMail(to, hash) {
     await transporter.sendMail({
-        from: 'ICE GAMES <support@icegames.store>',
+        from: `ICE GAMES <${fromMail}>`,
         to: to,//'user@example.com, user@example.com',
         subject: 'Подтверждение E-mail',
         html: `
@@ -38,7 +40,7 @@ export async function registrationMail(to, hash) {
 
 export async function restoreMail(to, password) {
     await transporter.sendMail({
-        from: 'ICE GAMES <support@icegames.store>',
+        from: `ICE GAMES <${fromMail}>`,
         to: to,
         subject: 'Смена пароля',
         html: `
@@ -53,7 +55,10 @@ export async function restoreMail(to, password) {
 
 export async function mailingBuyProduct(productId, email, isKey = false) {
     let key;
-    if (isKey) key = await Key.findOne({product: productId, is_active: true}).select('key').exec()
+    if (isKey) {
+        key = await Key.findOne({product: productId, is_active: true}).select('key');
+    }
+
     const product = await Product.findById(productId);
     const websiteAddress = process.env.WEB_SITE_ADDRESS;
 
@@ -71,7 +76,7 @@ export async function mailingBuyProduct(productId, email, isKey = false) {
         .toFile(path.join(__dirname, `/uploadedFiles/${product.darkenCover}`));
 
     await transporter.sendMail({
-        from: 'ICE GAMES <support@icegames.store>',
+        from: `ICE GAMES <${fromMail}>`,
         to: email,
         subject: `Спасибо за покупку ${product.name}!`,
         html: `
@@ -218,7 +223,6 @@ export async function mailingBuyProduct(productId, email, isKey = false) {
       </html>
     `,
     })
-
     if (!!key) {
         key.is_active = false;
         await key.save()
@@ -244,7 +248,7 @@ export async function mailingInStockProduct(productId, emails) {
         .toFile(path.join(__dirname, `/uploadedFiles/${product.darkenCover}`));
 
     await transporter.sendMail({
-        from: 'ICE GAMES <support@icegames.store>',
+        from: `ICE GAMES <${fromMail}>`,
         to: emails.join(', '),
         subject: `${product.name} снова в наличии!`,
         html: `
@@ -386,16 +390,16 @@ export async function mailingInStockProduct(productId, emails) {
 
 export async function sendConfirmCode(email, code) {
     await transporter.sendMail({
-        from: 'ICE GAMES <support@icegames.store>',
+        from: `ICE GAMES <${fromMail}>`,
         to: email,
         subject: `Подтверждение почты`,
-        text: "Ващь код подтверждение: " + code
+        text: "Ваш код подтверждения: " + code
     })
 }
 
 export async function sendUserAuthData(email, password) {
     await transporter.sendMail({
-        from: 'ICE GAMES <support@icegames.store>',
+        from: `ICE GAMES <${fromMail}>`,
         to: email,
         subject: `Успешно подтверждено`,
         text: "Вы успешно подтвердили почту! Для ващего удобства мы создали и сгенерировали для вас аккаунт чтобы вам не " +
