@@ -22,7 +22,7 @@ export default async function (req, res) {
             let products = order.products.filter(item => item.dbi);
             
             for (const product of products) {
-                await mailingBuyProduct(product.productId, order.buyerEmail, true);
+                await mailingBuyProduct(product.productId, order.buyerEmail, true, product.purchasePrice);
             }
             
             order.paidTypes.push('dbi');

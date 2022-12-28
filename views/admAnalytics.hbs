@@ -1,0 +1,30 @@
+<table>
+    <tr>
+        <th style="padding: 0 30px 10px 30px">Товар</th>
+        <th style="padding: 0 30px 10px 30px">Цена закупки</th>
+        <th style="padding: 0 30px 10px 30px">Кол-во ключей</th>
+        <th style="padding: 0 30px 10px 30px">Текущая цена продажи</th>
+        <th style="padding: 0 30px 10px 30px">Цена конкурента + 1%</th>
+        <th style="padding: 0 30px 10px 30px">ПВП с 1 ед.</th>
+        <th style="padding: 0 30px 10px 30px">В наличии</th>
+        <th style="padding: 0 30px 10px 30px">Сумма ПВП</th>
+        <th style="padding: 0 30px 10px 30px">Продано</th>
+        <th style="padding: 0 30px 10px 30px">ФВП</th>
+    </tr>
+    {{#each rows}}
+        <tr style="vertical-align: top; text-align: center">
+            <td style="padding: 3px 50px">
+                <a href="/admin/products/edit/{{productId}}">{{productName}}</a>
+            </td>
+            <td style="padding: 3px 50px">{{purchasePrice}} ₽</td>
+            <td style="padding: 3px 50px">{{countKeys}}</td>
+            <td style="padding: 3px 50px">{{currentSallePrice}} ₽</td>
+            <td style="padding: 3px 50px">{{dsPrice}} ₽</td>
+            <td style="padding: 3px 50px">{{pvpPerSale}} ₽</td>
+            <td style="padding: 3px 50px">{{countInStock}}</td>
+            <td style="padding: 3px 50px">{{pvp}} ₽</td>
+            <td style="padding: 3px 50px">{{countSelling}}</td>
+            <td style="padding: 3px 50px">{{fvp}} ₽</td>
+        </tr>
+    {{/each}}
+</table>

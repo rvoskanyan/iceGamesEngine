@@ -53,7 +53,7 @@ export async function restoreMail(to, password) {
     })
 }
 
-export async function mailingBuyProduct(productId, email, isKey = false) {
+export async function mailingBuyProduct(productId, email, isKey = false, sellingPrice = 0) {
     let key;
     if (isKey) {
         key = await Key.findOne({product: productId, is_active: true}).select('key');
@@ -226,6 +226,7 @@ export async function mailingBuyProduct(productId, email, isKey = false) {
     
     if (!!key) {
         key.is_active = false;
+        key.sellingPrice = sellingPrice;
         await key.save()
     }
 }

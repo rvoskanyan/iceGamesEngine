@@ -19,10 +19,7 @@ const fields = {
         ref: "Product"
     },
     purchasePrice: Number,
-    boughtInOrder: {
-        type: mongoose.Types.ObjectId,
-        ref: 'Order'
-    }
+    sellingPrice: Number,
 }
 
 const options = {
