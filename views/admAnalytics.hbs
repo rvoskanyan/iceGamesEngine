@@ -1,30 +1,63 @@
-<table>
+<style>
+    table tr {
+        vertical-align: top; text-align: center
+    }
+
+    table tr th {
+        padding: 0 30px 10px 30px;
+        border-bottom: 2px solid #d7d7d7;
+    }
+
+    table tr th:not(:first-child) {
+        border-left: 1px solid #d7d7d7
+    }
+
+    table tr th:not(:last-child) {
+        border-right: 1px solid #d7d7d7
+    }
+
+    table tr td {
+        padding: 3px 50px;
+        border-bottom: 2px solid #d7d7d7;
+    }
+
+    table tr td:not(:first-child) {
+        border-left: 1px solid #d7d7d7
+    }
+
+    table tr td:not(:last-child) {
+        border-right: 1px solid #d7d7d7
+    }
+</style>
+
+
+<table cellpadding="0" cellspacing="0">
     <tr>
-        <th style="padding: 0 30px 10px 30px">Товар</th>
-        <th style="padding: 0 30px 10px 30px">Цена закупки</th>
-        <th style="padding: 0 30px 10px 30px">Кол-во ключей</th>
-        <th style="padding: 0 30px 10px 30px">Текущая цена продажи</th>
-        <th style="padding: 0 30px 10px 30px">Цена конкурента + 1%</th>
-        <th style="padding: 0 30px 10px 30px">ПВП с 1 ед.</th>
-        <th style="padding: 0 30px 10px 30px">В наличии</th>
-        <th style="padding: 0 30px 10px 30px">Сумма ПВП</th>
-        <th style="padding: 0 30px 10px 30px">Продано</th>
-        <th style="padding: 0 30px 10px 30px">ФВП</th>
+        <th>Товар</th>
+        <th>Цена закупки</th>
+        <th>Кол-во ключей</th>
+        <th>Текущая цена продажи</th>
+        <th>Цена конкурента + 1%</th>
+        <th>ПВП с 1 ед.</th>
+        <th>В наличии</th>
+        <th>Сумма ПВП</th>
+        <th>Продано</th>
+        <th>ФВП</th>
     </tr>
     {{#each rows}}
-        <tr style="vertical-align: top; text-align: center">
-            <td style="padding: 3px 50px">
+        <tr>
+            <td>
                 <a href="/admin/products/edit/{{productId}}">{{productName}}</a>
             </td>
-            <td style="padding: 3px 50px">{{purchasePrice}} ₽</td>
-            <td style="padding: 3px 50px">{{countKeys}}</td>
-            <td style="padding: 3px 50px">{{currentSallePrice}} ₽</td>
-            <td style="padding: 3px 50px">{{dsPrice}} ₽</td>
-            <td style="padding: 3px 50px">{{pvpPerSale}} ₽</td>
-            <td style="padding: 3px 50px">{{countInStock}}</td>
-            <td style="padding: 3px 50px">{{pvp}} ₽</td>
-            <td style="padding: 3px 50px">{{countSelling}}</td>
-            <td style="padding: 3px 50px">{{fvp}} ₽</td>
+            <td>{{purchasePrice}} ₽</td>
+            <td>{{countKeys}}</td>
+            <td>{{currentSallePrice}} ₽</td>
+            <td>{{dsPrice}} ₽</td>
+            <td>{{pvpPerSale}} ₽</td>
+            <td>{{countInStock}}</td>
+            <td>{{pvp}} ₽</td>
+            <td>{{countSelling}}</td>
+            <td>{{fvp}} ₽</td>
         </tr>
     {{/each}}
 </table>
