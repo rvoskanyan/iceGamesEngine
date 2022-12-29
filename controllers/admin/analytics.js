@@ -21,6 +21,7 @@ export const analyticsPage = async (req, res) => {
             keys: { $push: {
               isActive: "$is_active",
               sellingPrice: "$sellingPrice",
+              purchasePrice: "$sellingPrice",
             }},
           }
         },
@@ -45,7 +46,12 @@ export const analyticsPage = async (req, res) => {
           }
   
           countSelling++;
-          amountOfIncome += key.sellingPrice ? key.sellingPrice : 0;
+          
+          if (!key.sellingPrice) {
+            key.sellingPrice = 0;
+          }
+          
+          amountOfIncome += Math.floor((key.sellingPrice - key.sellingPrice * 0.025 - key.purchasePrice) / 100) * 100;
         });
         
         rows.push({
