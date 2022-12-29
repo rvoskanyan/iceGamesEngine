@@ -34,7 +34,7 @@ export const analyticsPage = async (req, res) => {
       groups.forEach(group => {
         const purchasePrice = group._id;
         const currentSallePrice = product.priceTo;
-        const pvpPerSale = currentSallePrice - currentSallePrice * 0.025 - purchasePrice;
+        const pvpPerSale = Math.floor((currentSallePrice - currentSallePrice * 0.025 - purchasePrice) * 100) / 100;
         let countInStock = 0;
         let countSelling = 0;
         let amountOfIncome = 0;
