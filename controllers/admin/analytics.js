@@ -65,7 +65,7 @@ export const analyticsPage = async (req, res) => {
           countInStock,
           pvp: pvpPerSale * countInStock,
           countSelling,
-          fvp: amountOfIncome - amountOfIncome * 0.025,
+          fvp: amountOfIncome,
         });
       });
     }
