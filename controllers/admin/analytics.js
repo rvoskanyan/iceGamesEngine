@@ -51,7 +51,7 @@ export const analyticsPage = async (req, res) => {
             key.sellingPrice = 0;
           }
           
-          amountOfIncome += Math.floor((key.sellingPrice - key.sellingPrice * 0.025 - key.purchasePrice) / 100) * 100;
+          amountOfIncome += Math.floor((key.sellingPrice - key.sellingPrice * 0.025 - key.purchasePrice) * 100) / 100;
         });
         
         rows.push({
