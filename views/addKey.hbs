@@ -1,4 +1,4 @@
-<form action="/admin/keys/{{#if is_edit}}edit/{{key.id}}{{else}}add{{/if}}" method="post">
+<form action="/admin/keys/{{#if is_edit}}edit/{{key._id}}{{else}}add{{/if}}" method="post">
     {{#if is_edit}}
         <label>
             Введите ключ:
@@ -17,7 +17,7 @@
         Выберите игру:
         <select name="productId">
             {{#each products}}
-                <option value="{{_id}}" {{#iff key.product '===' _id}} selected{{/iff}}>
+                <option value="{{_id}}" {{#iff @root.key.product '===' _id}} selected{{/iff}}>
                     {{name}}
                 </option>
             {{/each}}

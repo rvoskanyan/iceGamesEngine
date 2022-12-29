@@ -32,8 +32,6 @@ export const pageAddKey = async (req, res) => {
 }
 
 export const addKey = async (req, res) => {
-    let error_obj = {}
-    let status = 200
     let $exp;
     
     try {
@@ -43,11 +41,9 @@ export const addKey = async (req, res) => {
         let keyValue = req.body.key;
         
         if (typeof keyValue !== 'string' && typeof keys !== 'string') {
-            error_obj.key = 'Не правильный тип данных ключа'
-            status = 400
+            throw new Error('Не правильный тип данных ключа');
         } else if (!keyValue && !keys) {
-            error_obj.key = 'Ключ обязательный аргумент'
-            status = 400
+            throw new Error('Ключ обязательный аргумент');
         }
     
         if (!!expired) {
@@ -55,20 +51,14 @@ export const addKey = async (req, res) => {
             $exp = new Date(expired);
         
             if (today > $exp) {
-                error_obj.expired = 'Срок ключа истек'
-                status = 400
+                throw new Error('Срок ключа истек');
             }
         }
         
         const product = await Product.findById(productId);
         
         if (!product) {
-            error_obj.product = 'Данная игра не существует в базе'
-            status = 400
-        }
-        
-        if (status > 200) {
-            throw 'Error'
+            throw new Error('Данная игра не существует в базе');
         }
         
         if (!is_edit) {
@@ -113,36 +103,29 @@ export const addKey = async (req, res) => {
         
         res.redirect('/admin/keys');
     } catch (e) {
-        console.log(e, error_obj);
-        
-        if (Object.keys(error_obj).length <= 0) {
-            res.redirect('/admin/keys/add');
-        }
-        
-        res.render('addKey', {
-            layout: 'admin',
-            is_error: true,
-            error_obj,
-            games: await Product.find({}).exec()
-        })
+        console.log(e);
+        res.redirect('/admin/keys');
     }
 }
 
 
 export const editKeyPage = async (req, res) => {
     try {
-        let key = await Key.findById(req.params.keyId);
+        let key = await Key.findById(req.params.keyId).lean();
         
         if (!key) {
             return res.redirect('/admin/keys/add');
         }
+        
+        key.product = key.product.toString();
     
-        const products = await Product.find().select(['name']).lean();
+        let products = await Product.find().select(['name']).lean();
         let expired = new Date(key.expired)
         let format_num = m=> m < 10 ? `0${m}`:m
         let get_month = x => format_num(x.getMonth()+1);
         
         expired = `${expired.getFullYear()}-${get_month(expired)}-${format_num(expired.getDate())}`;
+        products = products.map(product => ({...product, '_id': product._id.toString()}))
         
         res.render('addKey', {
             layout: 'admin',
