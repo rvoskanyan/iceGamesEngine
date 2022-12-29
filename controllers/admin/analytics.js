@@ -21,7 +21,7 @@ export const analyticsPage = async (req, res) => {
             keys: { $push: {
               isActive: "$is_active",
               sellingPrice: "$sellingPrice",
-              purchasePrice: "$sellingPrice",
+              purchasePrice: "$purchasePrice",
             }},
           }
         },
