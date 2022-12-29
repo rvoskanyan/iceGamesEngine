@@ -32,7 +32,9 @@ export const analyticsPage = async (req, res) => {
       }
   
       groups.forEach(group => {
-        const pvpPerSale = product.priceTo - product.priceTo * 0.025;
+        const purchasePrice = group._id;
+        const currentSallePrice = product.priceTo;
+        const pvpPerSale = currentSallePrice - currentSallePrice * 0.025 - purchasePrice;
         let countInStock = 0;
         let countSelling = 0;
         let amountOfIncome = 0;
@@ -49,9 +51,9 @@ export const analyticsPage = async (req, res) => {
         rows.push({
           productId: product._id,
           productName: product.name,
-          purchasePrice: group._id,
+          purchasePrice,
           countKeys: group.count,
-          currentSallePrice: product.priceTo,
+          currentSallePrice,
           dsPrice: product.dsPrice + product.dsPrice * 0.01,
           pvpPerSale,
           countInStock,
