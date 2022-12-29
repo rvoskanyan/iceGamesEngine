@@ -18,7 +18,10 @@ const fields = {
         required: true,
         ref: "Product"
     },
-    purchasePrice: Number,
+    purchasePrice: {
+        type: Number,
+        default: 0,
+    },
     sellingPrice: Number,
 }
 

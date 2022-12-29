@@ -4,6 +4,58 @@ import Product from "../../models/Product.js";
 export const pageKeys = async (req, res) => {
     try {
         const keys = await Key.find({}).limit(100).exec();
+        
+        const prices = [
+            {
+                name: 'Elden Ring',
+                price: 2435,
+            },
+            {
+                name: 'Resident Evil 7',
+                price: 330,
+            },
+            {
+                name: 'Dark Souls Remastered',
+                price: 1043,
+            },
+            {
+                name: 'Resident Evil Village - Winters’ Expansion',
+                price: 1065,
+            },
+            {
+                name: 'Days Gone',
+                price: 634,
+            },
+            {
+                name: 'God of War',
+                price: 1323,
+            },
+            {
+                name: 'ELEX II',
+                price: 869,
+            },
+            {
+                name: 'Horizon Zero Dawn — Complete Edition',
+                price: 691,
+            },
+        ];
+        
+        for (const price of prices) {
+            const product = await Product.findOne({name: price.name}).select(['_id']).lean();
+            
+            if (!product) {
+                continue;
+            }
+            
+            const keys = await Key.find({product: product._id, purchasePrice: 0}).select(['purchasePrice']);
+            
+            for (const key of keys) {
+                key.purchasePrice = price.price;
+                
+                await key.save();
+            }
+        }
+        
         res.render('listKeyAdminPage', {
             layout: 'admin',
             title: 'Список ключей',

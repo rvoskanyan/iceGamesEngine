@@ -24,6 +24,7 @@ export const analyticsPage = async (req, res) => {
             }},
           }
         },
+        {$sort: {_id: 1}},
       ]);
       
       if (!groups.length) {
