@@ -47,7 +47,7 @@ export const pageKeys = async (req, res) => {
                 continue;
             }
             
-            const keys = await Key.find({product: product._id, purchasePrice: 0}).select(['purchasePrice']);
+            const keys = await Key.find({product: product._id, $or: [{purchasePrice: 0}, {purchasePrice: undefined}, {purchasePrice: null}]}).select(['purchasePrice']);
             
             for (const key of keys) {
                 key.purchasePrice = price.price;
