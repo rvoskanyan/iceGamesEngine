@@ -1,18 +1,47 @@
 import Key from "../../models/Key.js";
 import Product from "../../models/Product.js";
 
-
-//Наддо сделать пагинацию..
 export const pageKeys = async (req, res) => {
     try {
-        const keys = await Key.find({}).limit(100).exec();
+        const productId = req.query.productId;
+        const isActive = req.query.isActive;
+        const page = +req.query.page || 1;
+        const limit = 10;
+        const skip = limit * (page - 1);
+        const keyFilter = {};
+        const products = await Product.find({countKeys: {$gt: 0}}).select(['name']).lean();
+    
+        if (productId && productId !== 'notSelected') {
+            keyFilter.product = productId;
+        }
+    
+        if (isActive === 'on') {
+            keyFilter.is_active = true;
+        }
+    
+        const countKeys = await Key.countDocuments(keyFilter);
+        const isLast = skip + limit >= countKeys;
+        const isFirst = skip === 0;
+        const isSinglePage = countKeys <= limit;
+        const keys = await Key.find(keyFilter).limit(limit).skip(skip).populate([{
+            path: 'product',
+            select: ['name'],
+        }]).lean();
         
         res.render('listKeyAdminPage', {
             layout: 'admin',
             title: 'Список ключей',
             section: 'keys',
-            elements: keys,
             addTitle: "Добавить ключ",
+            products: products.map(product => ({...product, selected: keyFilter.product === product._id.toString()})),
+            isActive: keyFilter.is_active,
+            productId: keyFilter.product,
+            prevPage: +page - 1,
+            nextPage: +page + 1,
+            keys,
+            isLast,
+            isFirst,
+            isSinglePage,
         });
     } catch (e) {
         console.log(e);

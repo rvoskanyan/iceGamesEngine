@@ -22,16 +22,17 @@ export default async function (req, res) {
             
             let products = order.products.filter(item => item.dbi);
             let amount = 0
+            
             for (const product of products) {
                 amount += product.purchasePrice || 0
-                let key = await mailingBuyProduct(product.productId, order.buyerEmail, true, product.purchasePrice);
-                key.boughtInOrder = order._id
-                await key.save()
+                await mailingBuyProduct(product.productId, order.buyerEmail, true, product.purchasePrice);
             }
+            
             if (order.yaId) {
                 metrica.offlineConversation(order.yaId, "payment_success", amount, "RUB")
                     .catch(a=>console.log(a))
             }
+            
             order.paidTypes.push('dbi');
 
             switch (order.paymentType) {

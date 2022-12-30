@@ -66,62 +66,58 @@
 </style>
 
 <a href="/admin/{{section}}/add/">{{addTitle}}</a>
-<br><br>
+<br>
+<br>
+<br>
 <form action="/admin/keys">
-    <input type="text" readonly hidden value="1" name="page">
     <label>
-        Поиск по играм
-        <select name="product_id">
-            <option value="">-*-*-*-*-*-*</option>
-            {{#each games}}
-                <option {{#iff id '===' ../selected_game}}selected{{/iff}}
-                        value="{{id}}">{{name}}</option>
+        Показать ключи для:
+        <select name="productId">
+            <option value="notSelected">Не выбран</option>
+            {{#each products}}
+                <option value="{{_id}}"{{#if selected}} selected{{/if}}>{{name}}</option>
             {{/each}}
         </select>
     </label>
+    <br>
+    <br>
     <label>
-        Поиск и по не активным:
-        <input type="checkbox" name="is_active" id="" {{#if is_active}}checked{{/if}}>
+        Показать только в наличии:
+        <input type="checkbox" name="isActive" {{#if isActive}}checked{{/if}}>
     </label>
+    <br>
+    <br>
     <button type="submit">Найти</button>
-    <a href="/admin/keys?page=1"> Сбросить</a>
+    <a href="/admin/keys">Сбросить</a>
 </form>
-<p>Ключей найдено: {{count}}</p>
 <table>
     <thead>
     <tr>
-        <th>Key</th>
-        <th>Product</th>
-        <th>Expired</th>
-        <th>Buyer</th>
-        <th>Active</th>
+        <th>Ключ</th>
+        <th>Продукт</th>
+        <th>Истекает</th>
+        <th>В наличии</th>
     </tr>
     </thead>
     <tbody>
-    {{#each elements}}
+    {{#each keys}}
         <tr>
-            <td><a href="/admin/keys/edit/{{id}}">{{shortOut key 5}}</a></td>
-            <td><a href="/admin/keys?page=1{{#if is_active}}&is_active=on{{/if}}&product_id={{product._id}}">{{product.name}}</a></td>
+            <td><a href="{{@root.websiteAddress}}admin/keys/edit/{{_id}}">{{key}}</a></td>
+            <td><a href="{{@root.websiteAddress}}admin/keys?productId={{product._id}}{{#if isActive}}&isActive=on{{/if}}">{{product.name}}</a></td>
             <td>{{#if expired}}{{dateFormat expired}}{{else}}---{{/if}}</td>
-            <td>{{#if boughtInOrder}}{{boughtInOrder.buyerEmail}}{{else}}Нет{{/if}}</td>
             <td><input disabled type="checkbox" {{#if is_active}}checked{{/if}}></td>
         </tr>
     {{/each}}
     </tbody>
 </table>
-<div>
-    {{#iff page '!==' 1}}
-        <a href="/admin/keys?page={{sub page 1}}{{#if is_active}}&is_active=on{{/if}}&product_id={{selected_game}}">
-        <button>Prev</button>
-        </a>
-    {{else}}
-        <button>Prev</button>
-    {{/iff}}
-    {{#iff page '!==' pages}}
-        <a href="/admin/keys?page={{inc 1 page}}{{#if is_active}}&is_active=on{{/if}}&product_id={{selected_game}}">
-        <button>Next</button>
-        </a>
-    {{else}}
-        <button>Next</button>
-    {{/iff}}
-</div>
+<br>
+{{#unless isSinglePage}}
+    <div style="display: flex; max-width: max-content; column-gap: 30px">
+        {{#unless isFirst}}
+            <a href="{{@root.websiteAddress}}admin/keys?page={{prevPage}}{{#if isActive}}&isActive=on{{/if}}{{#if productId}}&productId={{productId}}{{/if}}">Предыдущая</a>
+        {{/unless}}
+        {{#unless isLast}}
+            <a href="{{@root.websiteAddress}}admin/keys?page={{nextPage}}{{#if isActive}}&isActive=on{{/if}}{{#if productId}}&productId={{productId}}{{/if}}">Следующая</a>
+        {{/unless}}
+    </div>
+{{/unless}}

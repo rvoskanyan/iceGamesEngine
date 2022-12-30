@@ -226,8 +226,7 @@ export async function mailingBuyProduct(productId, email, isKey = false, selling
     if (!!key) {
         key.is_active = false;
         key.sellingPrice = sellingPrice;
-        await key.save()
-        return key
+        await key.save();
     }
 }
 

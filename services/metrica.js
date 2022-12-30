@@ -30,6 +30,8 @@ let confing = {
         action.call && (action = action(this.counter, ...args))
         return `${is_crm ? this.url_crm : this.url_manage}${action}`
     },
+    
+    // !!!НЕ ИЗМЕНЯТЬ!!! key - внутреннее обозначение, value - обозначение в яндексе.
     status: {
         "created": "new",
         "awaited": "wait",
