@@ -111,7 +111,7 @@ export const assignOrderPay = async (req, res) => {
         }
       }
     
-      mailingBuyProduct(product._id, buyerEmail).then();
+      await mailingBuyProduct(product._id, buyerEmail).then();
     
       res.json({
         success: true,
@@ -184,7 +184,7 @@ export const getFeedYML = async (req, res) => {
   try {
     const genres = await Genre.find().select(['alias', 'name']).lean();
     const products = await Product
-      .find({active: true})
+      .find({active: true, inStock: true})
       .select(['name', 'alias', 'img', 'description', 'priceTo', 'priceFrom', 'discount'])
       .populate(['activationServiceId', 'genres'])
       .lean();

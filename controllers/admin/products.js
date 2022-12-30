@@ -121,6 +121,8 @@ export const addProduct = async (req, res) => {
     const {
       name,
       shortNames,
+      sampleTitle,
+      sampleMetaDescription,
       metaDescription,
       dsId,
       description,
@@ -167,6 +169,8 @@ export const addProduct = async (req, res) => {
     const creator = req.session.userId;
     const product = new Product({
       name,
+      sampleTitle: sampleTitle.trim(),
+      sampleMetaDescription: sampleMetaDescription.trim(),
       nameGrams: getGrams(name),
       shortNames,
       normalizeName: normalizeStr(name),
@@ -379,6 +383,8 @@ export const editProduct = async (req, res) => {
   try {
     const {
       name,
+      sampleTitle,
+      sampleMetaDescription,
       shortNames,
       metaDescription,
       dsId,
@@ -424,6 +430,8 @@ export const editProduct = async (req, res) => {
   
     Object.assign(product, {
       name,
+      sampleTitle: sampleTitle.trim(),
+      sampleMetaDescription: sampleMetaDescription.trim(),
       nameGrams: getGrams(name),
       shortNames,
       normalizeName: normalizeStr(name),
@@ -1114,5 +1122,19 @@ export const parseBySteambuy = async (req, res) => {
   } catch (e) {
     console.log(e);
     res.redirect(`/admin/products/${productId}/parse-by-steam-buy`);
+  }
+}
+
+export const comparePricePage = async (req, res) => {
+  try {
+    const products = await Product.find({countKeys: {$gt: 0}}).select(['name', 'priceTo', 'dsPrice']).lean();
+    
+    res.render('comparePrice', {
+      layout: 'admin',
+      products: products.map(product => ({...product, dsPrice: product.dsPrice + product.dsPrice * 0.01 || 0})),
+    });
+  } catch (e) {
+    console.log(e);
+    res.redirect('/admin');
   }
 }

@@ -12,6 +12,6 @@ const router = Router();
 router.get('/', pageKeys);
 router.get('/add', pageAddKey);
 router.post('/add', addKey);
-router.get('/edit/:key_id', editKeyPage);
-router.post('/edit/:key_id', addKey);
+router.get('/edit/:keyId', editKeyPage);
+router.post('/edit/:keyId', addKey);
 export default router;

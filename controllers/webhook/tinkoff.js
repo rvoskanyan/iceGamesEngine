@@ -8,16 +8,23 @@ export default async function (req, res) {
     try {
         const {OrderId, Success, Status} = req.body;
         const order = await Order.findById(OrderId);
+    
         if (!order) {
             return res.status(404).json({err:true, messages:"Forbidden"});
         }
 
         if (Success && Status === 'CONFIRMED') {
+            res.send("OK");
+            
+            if (order.status === 'paid') {
+                return;
+            }
+            
             let products = order.products.filter(item => item.dbi);
             let amount = 0
             for (const product of products) {
                 amount += product.purchasePrice || 0
-                let key = await mailingBuyProduct(product.productId, order.buyerEmail, true);
+                let key = await mailingBuyProduct(product.productId, order.buyerEmail, true, product.purchasePrice);
                 key.boughtInOrder = order._id
                 await key.save()
             }
@@ -64,10 +71,8 @@ export default async function (req, res) {
                     await achievementEvent('productPurchase', user);
                 }
             }
-
-            await order.save();
-
-            return res.send("OK");
+            
+            return await order.save();
         }
 
         order.status = 'canceled';

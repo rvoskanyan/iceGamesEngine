@@ -12,6 +12,7 @@ import {
   addProductElements,
   pageParseBySteambuy,
   parseBySteambuy,
+  comparePricePage,
 } from '../../controllers/admin/products.js';
 
 const router = Router();
@@ -33,5 +34,7 @@ router.post('/:productId/addElements', addProductElements);
 
 router.get('/:productId/parse-by-steam-buy', pageParseBySteambuy);
 router.post('/:productId/parse-by-steam-buy', parseBySteambuy);
+
+router.get('/compare', comparePricePage);
 
 export default router;

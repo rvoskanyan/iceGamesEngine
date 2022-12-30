@@ -6,29 +6,14 @@ import {log} from "sharp/lib/libvips.js";
 //Наддо сделать пагинацию..
 export const pageKeys = async (req, res) => {
     try {
-        let {page, product_id, is_active} = req.query
-        if (typeof page === "string") page = parseInt(page) || 1
-        if (typeof page !== 'number') page = 1
-        let limit = 10
-        is_active = is_active?.toLowerCase() === 'on'
-        let filter = {product: product_id || undefined, is_active: true}
-        if (is_active) filter['is_active'] = undefined
-        filter = JSON.parse(JSON.stringify(filter))
-        let games = await Key.find(filter).distinct("product").exec();
-        games = await Product.find({_id: {$in: games}}).select("name").exec()
-        let count = await Key.countDocuments(filter)
-        let pages = Math.ceil(count / limit)
-        if (pages < page) page = pages || 1
-        let skip = (page - 1) * limit
-        const keys = await Key.find(filter).populate([{path: 'product', select: 'name'}, {path:'boughtInOrder', select:'buyerEmail'}]).skip(skip).limit(limit).exec();
+        const keys = await Key.find({}).limit(100).exec();
+        
         res.render('listKeyAdminPage', {
             layout: 'admin',
             title: 'Список ключей',
             section: 'keys',
             elements: keys,
             addTitle: "Добавить ключ",
-            pages: pages, selected_game:product_id,
-            count, page, games, is_active
         });
     } catch (e) {
         console.log(e);
@@ -38,109 +23,121 @@ export const pageKeys = async (req, res) => {
 
 export const pageAddKey = async (req, res) => {
     try {
-        const games = await Product.find({}).select(['name']);
+        const products = await Product.find().select(['name']).lean();
 
         res.render('addKey', {
             layout: 'admin',
-            games: games,
+            products,
         });
     } catch (e) {
         console.log(e);
-        res.json('Page error');
+        res.redirect('/admin/keys');
     }
 }
-// TODO rename function on FormActionKey
-export const addKey = async (req, res) => {
-    let error_obj = {}
-    let status = 200
-    let $exp;
-    try {
-        const {key, product, is_active, expired, is_edit} = req.body;
-        let keys = req.body.keys
-        // Validation
-        if (typeof key !== 'string' && typeof keys !== 'string') {
-            error_obj.key = 'Не правильный тип данных ключа'
-            status = 400
-        } else if (!key && !keys) {
-            error_obj.key = 'Ключ обязательный аргумент'
-            status = 400
-        }
-        let pd = await Product.findById(product).exec()
-        if (!pd) {
-            error_obj.product = 'Данная игра не существует в базе'
-            status = 400
-        }
-        if (!!expired) {
-            $exp = new Date(expired)
-            let today = new Date()
 
+export const addKey = async (req, res) => {
+    let $exp;
+    
+    try {
+        const {productId, is_active, expired, is_edit} = req.body;
+        const purchasePrice = req.body.purchasePrice;
+        let keys = req.body.keys;
+        let keyValue = req.body.key;
+        
+        if (typeof keyValue !== 'string' && typeof keys !== 'string') {
+            throw new Error('Не правильный тип данных ключа');
+        } else if (!keyValue && !keys) {
+            throw new Error('Ключ обязательный аргумент');
+        }
+    
+        if (!!expired) {
+            const today = new Date();
+            $exp = new Date(expired);
+        
             if (today > $exp) {
-                error_obj.expired = 'Срок ключа истек'
-                status = 400
+                throw new Error('Срок ключа истек');
             }
         }
-        if (status > 200) throw 'Error'
+        
+        const product = await Product.findById(productId);
+        
+        if (!product) {
+            throw new Error('Данная игра не существует в базе');
+        }
+        
         if (!is_edit) {
-            keys = keys.split(' ').join('').split(',')
-            if (keys <= 0) {
-                keys = [key]
+            const regExp = new RegExp('\\s');
+            
+            keys = keys.trim().split(regExp).map(key => key.trim()).filter(key => key.length && typeof key === 'string');
+            
+            if (!keys.length) {
+                throw new Error('Keys not found');
             }
-            let stock = false
+            
             for (let key of keys) {
-                await Key.create({key, product, is_active: is_active === 'on', expired: $exp || null});
-                stock = true
+                const keyObj = new Key({
+                    key,
+                    purchasePrice,
+                    product: productId,
+                    is_active: is_active === 'on',
+                    expired: $exp || undefined,
+                });
+                
+                await keyObj.save();
             }
-            if (stock) {
-                let $p = await Product.findById(product).exec()
-                if (!!$p) {
-                    $p.inStock = true
-                    $p.countKeys += keys.length
-                    await $p.save()
-                }
-            }
+    
+            product.countKeys = keys.length;
+            await product.save();
+            await product.changeInStock(true);
         } else {
-            let $k = await Key.findById(req.params.key_id).exec()
-            if (!$k) throw 'Error'
-            $k.key = key
-            $k.product = product
-            $k.is_active = is_active === 'on'
-            $k.expired = expired || null
-            await $k.save()
+            const key = await Key.findById(req.params.keyId);
+            
+            if (!key) {
+                throw 'Error';
+            }
+            
+            key.key = keyValue
+            key.product = productId
+            key.is_active = is_active === 'on'
+            key.expired = expired || undefined
+            key.purchasePrice = purchasePrice;
+            
+            await key.save()
         }
+        
         res.redirect('/admin/keys');
     } catch (e) {
-        console.log(e, error_obj);
-        if (Object.keys(error_obj).length <= 0) res.redirect('/admin/keys/add');
-        res.render('addKey', {
-            layout: 'admin',
-            is_error: true,
-            error_obj,
-            games: await Product.find({}).exec()
-        })
+        console.log(e);
+        res.redirect('/admin/keys');
     }
 }
 
 
 export const editKeyPage = async (req, res) => {
     try {
-        const games = await Product.find({}).select(['name']);
-        let key = await Key.findById(req.params.key_id).exec()
+        let key = await Key.findById(req.params.keyId).lean();
+        
         if (!key) {
-            res.redirect('/admin/keys/add')
-            return
+            return res.redirect('/admin/keys/add');
         }
+        
+        key.product = key.product.toString();
+    
+        let products = await Product.find().select(['name']).lean();
         let expired = new Date(key.expired)
-        let format_num = m => m < 10 ? `0${m}` : m
-        let get_month = x => format_num(x.getMonth() + 1)
-        expired = `${expired.getFullYear()}-${get_month(expired)}-${format_num(expired.getDate())}`
-        //TODO rename hbs template file to formActionKey
+        let format_num = m=> m < 10 ? `0${m}`:m
+        let get_month = x => format_num(x.getMonth()+1);
+        
+        expired = `${expired.getFullYear()}-${get_month(expired)}-${format_num(expired.getDate())}`;
+        products = products.map(product => ({...product, '_id': product._id.toString()}))
+        
         res.render('addKey', {
             layout: 'admin',
-            games,
-            key, expired,
+            products,
+            key,
+            expired,
             is_edit: true,
-            selected_game: key.product._id.toString()
-        })
+        });
     } catch (e) {
         console.log(e)
         res.redirect('/admin/keys/')

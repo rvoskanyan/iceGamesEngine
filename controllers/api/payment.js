@@ -102,7 +102,11 @@ export default {
                 products: [],
                 yaId: person.yaId
             });
-
+            
+            if (isAuth) {
+                order.userId = person._id;
+            }
+    
             const receiptItems = [];
             let amount = 0;
 

@@ -22,6 +22,9 @@ import exportsRoute from './admin/exports.js';
 import partnersRoute from './admin/partners.js';
 import cheatReviewsRoute from './admin/cheatReviews.js';
 import Payment from './admin/payment.js'
+import reviewsRoute from './admin/reviews.js';
+import analyticsRoute from './admin/analytics.js';
+
 const router = Router();
 
 router.use('/', indexRoute);
@@ -47,4 +50,7 @@ router.use('/exports', exportsRoute);
 router.use('/partners', partnersRoute);
 router.use('/cheat-reviews', cheatReviewsRoute);
 router.use('/payment', Payment)
+router.use('/reviews', reviewsRoute);
+router.use('/analytics', analyticsRoute);
+
 export default router;

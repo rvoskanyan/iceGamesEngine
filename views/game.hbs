@@ -79,9 +79,17 @@
                 </div>
                 <h1 class="name">Ключ для <span itemprop="name">{{product.name}}</span></h1>
                 {{#if product.totalGradeParse}}
-                    <span class="totalGrade {{stepRating}}" title="Оценка игры по результатам опросов" itemprop="aggregateRating" itemscope itemtype="https://schema.org/AggregateRating">
+                    <span
+                        class="totalGrade {{stepRating}}"
+                        title="Оценка игры по результатам опросов"
+                        itemprop="aggregateRating"
+                        itemscope
+                        itemtype="https://schema.org/AggregateRating"
+                    >
                         <meta itemprop="ratingValue" content="{{product.totalGradeParse}}">
                         <meta itemprop="ratingCount" content="{{product.ratingCountParse}}">
+                        <meta itemprop="worstRating" content = "1">
+                        <meta itemprop="bestRating" content = "10">
                         {{totalGradeParse}}
                     </span>
                 {{/if}}
@@ -719,6 +727,8 @@
                                             userLogin=user.login
                                             eval=eval
                                             text=text
+                                            status=status
+                                            rejectionReason=rejectionReason
                                     }}
                                 {{/each}}
                             </div>

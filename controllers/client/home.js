@@ -10,6 +10,20 @@ import Order from "../../models/Order.js";
 import ProductCategory from "../../models/Product_Category.js";
 
 export const homepage = async (req, res) => {
+  const inviter = req.query.inviter;
+  
+  if (inviter) {
+    if (!req.session.isAuth) {
+      res.cookie('inviterId', inviter);
+    }
+    
+    return res.redirect('/');
+  }
+  
+  if (Object.keys(req.query).length && !req.query.confirmEmail) {
+    return res.redirect('/');
+  }
+  
   const person = res.locals.person;
   let favoritesProducts;
   let cart;
@@ -21,7 +35,7 @@ export const homepage = async (req, res) => {
   const categories = await Category.find().select('name').lean();
   const genres = await Genre.find().select(['name', 'img', 'bgColor', 'alias']).sort({order: 1}).lean();
   const partners = await Partner.find().select(['name', 'img', 'link']).sort({createdAt: 1}).lean();
-  const countReviews = await Review.countDocuments({active: true});
+  const countReviews = await Review.countDocuments({active: true, status: 'taken'});
   const countProducts = await Product.countDocuments({active: true});
   const orders = await Order.find({status: 'paid'}).select(['products']).lean();
   const countSales = orders.reduce((countSales, order) => countSales + order.products.length, 9000);
@@ -30,7 +44,6 @@ export const homepage = async (req, res) => {
     .sort({createdAt: -1})
     .select(['name', 'alias', 'introText', 'type', 'createdAt', 'img'])
     .limit(9);
-  const inviter = req.query.inviter;
   const checkEmailHash = req.query.confirmEmail;
   const catalog = [];
   const day = new Date().getDay();
@@ -215,15 +228,11 @@ export const homepage = async (req, res) => {
   
       return item;
     }),
-  })
-  
-  if (inviter && !req.session.isAuth) {
-    res.cookie('inviterId', inviter).redirect('/');
-  }
+  });
   
   res.render('home', {
-    title: "Ваши лицензионные ключи к «Стиму» в магазине ICE GAMES",
-    metaDescription: 'Магазин лицензионных ключей ICE GAMES. Более 2000 игр в каталоге, 16 жанров, сервисная поддержка. Увлекательные статьи и большое активное комьюнити.',
+    title: 'Купить лицензионные ключи Steam в магазине компьютерных игр ICE GAMES',
+    metaDescription: 'Магазин лицензионных ключей ICE GAMES. Более 2000 игр в каталоге, 16 жанров, сервисная поддержка, активация в Steam, Origin, Epic Games, GOG и других сервисах. Увлекательные статьи и большое активное комьюнити.',
     noIndex: !!checkEmailHash,
     noIndexGoogle: !!checkEmailHash,
     isHome: true,

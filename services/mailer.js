@@ -53,7 +53,7 @@ export async function restoreMail(to, password) {
     })
 }
 
-export async function mailingBuyProduct(productId, email, isKey = false) {
+export async function mailingBuyProduct(productId, email, isKey = false, sellingPrice = 0) {
     let key;
     if (isKey) {
         key = await Key.findOne({product: productId, is_active: true}).select('key');
@@ -148,14 +148,14 @@ export async function mailingBuyProduct(productId, email, isKey = false) {
                               <p style="color: #ffffff; text-align: center; width: 310px; font-size: 16px; font-family: Montserrat, arial, sans-serif !important; line-height: 20px">
                                   Вы приобрели игру ${product.name}.<br>
                                   Мы очень рады, что Вы выбрали нас!
-                                  ${isKey ? '<br>Ваш ключ: ' + key.key : ''}
+                                  ${isKey ? '<br><br>Ваш ключ: ' + key.key : ''}
                               </p>
                           </td>
                       </tr>
                       <tr>
                           <td align="center" style="padding-bottom: 50px">
                               <img src="${websiteAddress}img/anchorLink.png" style="display: inline-block; width: 9px; height: 11px" alt="Иконка якоря ссылки">
-                              <a href="${websiteAddress}" style="color: rgba(255,255,255,0.5); font-family: Montserrat, arial, sans-serif !important; font-size: 14px">Инструкция по активации ключа</a>
+                              <a href="${websiteAddress}blog/kak-aktivirovat-klyuch-v-steam-origin-i-uplay" style="color: rgba(255,255,255,0.5); font-family: Montserrat, arial, sans-serif !important; font-size: 14px">Инструкция по активации ключа</a>
                           </td>
                       </tr>
                       <tr>
@@ -225,6 +225,7 @@ export async function mailingBuyProduct(productId, email, isKey = false) {
     })
     if (!!key) {
         key.is_active = false;
+        key.sellingPrice = sellingPrice;
         await key.save()
         return key
     }

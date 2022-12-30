@@ -4,9 +4,12 @@ import Review from "../../models/Review.js";
 export const reviewsPage = async (req, res) => {
   try {
     let lastViewedProducts = [];
-    const countReviews = await Review.countDocuments({active: true});
+    const countReviews = await Review.countDocuments({active: true, status: 'taken'});
     const reviews = await Review
-      .find({active: true})
+      .find({
+        active: true,
+        status: 'taken',
+      })
       .limit(5)
       .sort({createdAt: -1})
       .select(['eval', 'text'])

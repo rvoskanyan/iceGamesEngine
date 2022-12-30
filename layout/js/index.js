@@ -230,56 +230,56 @@ openCompoundOrderNodes.forEach(item => {
 })
 
 counterAnimationNodes.forEach(counterAnimationNode => {
-    const offsetTop = counterAnimationNode.getBoundingClientRect().top;
-    const height = counterAnimationNode.getBoundingClientRect().height;
-    const animate = () => {
-        const count = parseInt(counterAnimationNode.innerText);
-        const step = Math.floor(count / 50);
-
-        counterAnimationNode.innerText = 0;
-        counterAnimationNode.classList.add('active');
-
-        const int = setInterval(() => {
-            const currentValue = parseInt(counterAnimationNode.innerText);
-
-            if (currentValue < count) {
-                return counterAnimationNode.innerText = currentValue + step <= count ? currentValue + step : count;
-            }
-
-            clearInterval(int);
-        }, 50);
-    }
-    let handler;
-    let active = false;
-
-    if (offsetTop < topGap) {
-        handler = () => {
-            const offsetTop = counterAnimationNode.getBoundingClientRect().top;
-
-            if (!active && offsetTop >= topGap) {
-                document.removeEventListener('scroll', handler);
-                animate();
-            }
-        }
-    } else if (offsetTop > windowHeight - height) {
-        handler = () => {
-            const offsetTop = counterAnimationNode.getBoundingClientRect().top;
-
-            if (!active && offsetTop <= windowHeight - height) {
-                document.removeEventListener('scroll', handler);
-                animate();
-            }
-        }
-    } else {
-        active = true;
+  const offsetTop = counterAnimationNode.getBoundingClientRect().top;
+  const height = counterAnimationNode.getBoundingClientRect().height;
+  const animate = () => {
+    const count = parseInt(counterAnimationNode.innerText);
+    const step = count >= 50 ? Math.floor(count / 50) : 1;
+  
+    counterAnimationNode.innerText = 0;
+    counterAnimationNode.classList.add('active');
+    
+    const int = setInterval(() => {
+      const currentValue = parseInt(counterAnimationNode.innerText);
+      
+      if (currentValue < count) {
+        return counterAnimationNode.innerText = currentValue + step <= count ? currentValue + step : count;
+      }
+      
+      clearInterval(int);
+    }, 50);
+  }
+  let handler;
+  let active = false;
+  
+  if (offsetTop < topGap) {
+    handler = () => {
+      const offsetTop = counterAnimationNode.getBoundingClientRect().top;
+      
+      if (!active && offsetTop >= topGap) {
+        document.removeEventListener('scroll', handler);
         animate();
+      }
     }
-
-    if (active) {
-        return;
+  } else if (offsetTop > windowHeight - height) {
+    handler = () => {
+      const offsetTop = counterAnimationNode.getBoundingClientRect().top;
+      
+      if (!active && offsetTop <= windowHeight - height) {
+        document.removeEventListener('scroll', handler);
+        animate();
+      }
     }
-
-    document.addEventListener('scroll', handler)
+  } else {
+    active = true;
+    animate();
+  }
+  
+  if (active) {
+    return;
+  }
+  
+  document.addEventListener('scroll', handler)
 })
 
 loadMoreRatingNode && loadMoreRatingNode.addEventListener('click', async () => {
@@ -723,7 +723,7 @@ if (cartNode) {
                 '</div>' +
                 '</div>' +
                 '<p class="popup_payment-title">Корзина</p>' +
-                '<p class="popup_payment-text">В связи с техническими неполадками была создана двухэтапная оплата в которую мы включили для вас 5% скидку на покупку первого слота.</p>' +
+                '<p class="popup_payment-text">В связи с нагрузкой на платежную систему нам пришлось разделить Вашу покупку на 2 этапа. За оплату первого из которых мы дополнительно дарим Вам скидку 5%. Спасибо за понимание!</p>' +
                 '<div class="popup_payment-steps">' +
                 '<div class="payment-step payment-step-active" data-step="1" data-sale="5">1</div>' +
                 '<div class="payment-step-line"></div>' +
@@ -1703,39 +1703,41 @@ if (blogPageNode) {
 }
 
 if (catalogNode) {
-    const priceRangeNode = catalogNode.querySelector('.js-range');
-    const filterNode = catalogNode.querySelector('.js-filter');
-    const sortNode = catalogNode.querySelector('.js-sort');
-    const catalogListNode = catalogNode.querySelector('.js-catalogList');
-    const countLoad = catalogListNode.dataset.loadLimit;
-    const checkbox = [...filterNode.querySelectorAll('.js-checkbox')];
-    const sortBtnNodes = sortNode.querySelectorAll('.js-variant-sort');
-    const offsetTop = catalogListNode.getBoundingClientRect().top;
-    const height = catalogListNode.getBoundingClientRect().height;
-    const startPage = +catalogListNode.dataset.currentPage;
-    const pageObjects = Array.from(catalogListNode.querySelectorAll('.js-page')).map(item => ({
-        node: item,
-        loaded: true,
-        num: startPage,
-    }));
-
-    let currentPage = startPage;
-    let sortActiveBtn = catalogNode.querySelector('.js-sort .js-variant-sort.active');
-    let priceRangeObject;
-    let loading = false;
-
-    if ('scrollRestoration' in history) {
-        history.scrollRestoration = 'manual';
-    }
-
-    if (startPage > 1) {
-        for (let i = 1; i < startPage; i++) {
-            const pageNode = document.createElement('div');
-
-            pageNode.classList.add('gameGrid', 'js-page');
-
-            for (let j = 1; j <= 20; j++) {
-                pageNode.innerHTML += `
+  const priceRangeNode = catalogNode.querySelector('.js-range');
+  const filterNode = catalogNode.querySelector('.js-filter');
+  const sortNode = catalogNode.querySelector('.js-sort');
+  const catalogListNode = catalogNode.querySelector('.js-catalogList');
+  const countLoad = catalogListNode.dataset.loadLimit;
+  const checkbox = [...filterNode.querySelectorAll('.js-checkbox')];
+  const sortBtnNodes = sortNode.querySelectorAll('.js-variant-sort');
+  const offsetTop = catalogListNode.getBoundingClientRect().top;
+  const height = catalogListNode.getBoundingClientRect().height;
+  const startPage = +catalogListNode.dataset.currentPage;
+  const sectionName = catalogNode.dataset.sectionName;
+  const sectionType = catalogNode.dataset.sectionType;
+  const pageObjects = Array.from(catalogListNode.querySelectorAll('.js-page')).map(item => ({
+    node: item,
+    loaded: true,
+    num: startPage,
+  }));
+  
+  let currentPage = startPage;
+  let sortActiveBtn = catalogNode.querySelector('.js-sort .js-variant-sort.active');
+  let priceRangeObject;
+  let loading = false;
+  
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+  }
+  
+  if (startPage > 1) {
+    for (let i = 1; i < startPage; i++) {
+      const pageNode = document.createElement('div');
+  
+      pageNode.classList.add('gameGrid', 'js-page');
+      
+      for (let j = 1; j <= 20; j++) {
+        pageNode.innerHTML += `
           <div class="cardGame cardGame-frame">
             <div class="head elem">
               <div class="img"></div>
@@ -1747,161 +1749,162 @@ if (catalogNode) {
             </div>
           </div>
         `;
-            }
-
-            catalogListNode.prepend(pageNode);
-            pageObjects.unshift({
-                node: pageNode,
-                loaded: false,
-                num: startPage - i,
-            })
-        }
-
-        scrollToActive();
-    } else {
-        initialCatalogListeners();
+      }
+  
+      catalogListNode.prepend(pageNode);
+      pageObjects.unshift({
+        node: pageNode,
+        loaded: false,
+        num: startPage - i,
+      })
     }
-
-    if (offsetTop + height + 100 < windowHeight) {
-        loadMore().then();
+    
+    scrollToActive();
+  } else {
+    initialCatalogListeners();
+  }
+  
+  if (offsetTop + height + 100 < windowHeight) {
+    loadMore().then();
+  }
+  
+  if (priceRangeNode) {
+    const min = +priceRangeNode.dataset.min;
+    const max = +priceRangeNode.dataset.max;
+    const firstPointValue = +priceRangeNode.dataset.firstValue;
+    const secondPointValue = +priceRangeNode.dataset.secondValue;
+  
+    priceRangeObject = new Range({
+      mainNode: priceRangeNode,
+      min,
+      max,
+      points: [
+        {
+          value: firstPointValue,
+          name: 'first',
+        },
+        {
+          value: secondPointValue,
+          name: 'second',
+        },
+      ],
+    });
+  }
+  
+  searchStringNode.addEventListener('input', () => {
+    const url = new URL(window.location.href);
+    const value = searchStringNode.value;
+    
+    url.searchParams.set('searchString', value);
+    
+    if (!value.length) {
+      url.searchParams.delete('searchString');
     }
-
-    if (priceRangeNode) {
-        const min = +priceRangeNode.dataset.min;
-        const max = +priceRangeNode.dataset.max;
-        const firstPointValue = +priceRangeNode.dataset.firstValue;
-        const secondPointValue = +priceRangeNode.dataset.secondValue;
-
-        priceRangeObject = new Range({
-            mainNode: priceRangeNode,
-            min,
-            max,
-            points: [
-                {
-                    value: firstPointValue,
-                    name: 'first',
-                },
-                {
-                    value: secondPointValue,
-                    name: 'second',
-                },
-            ],
-        });
+    
+    history.pushState(null, null, url);
+    catalogNode.dispatchEvent(new Event('changeParams'));
+  });
+  
+  priceRangeObject.addChangeListener((values) => {
+    const url = new URL(window.location.href);
+    let min = values[0].value;
+    let max = values[1].value
+    
+    if (min > max) {
+      max = min;
+      min = values[1].value;
     }
-
-    searchStringNode.addEventListener('input', () => {
-        const url = new URL(window.location.href);
-        const value = searchStringNode.value;
-
-        url.searchParams.set('searchString', value);
-
-        if (!value.length) {
-            url.searchParams.delete('searchString');
-        }
-
-        history.pushState(null, null, url);
-        catalogNode.dispatchEvent(new Event('changeParams'));
-    });
-
-    priceRangeObject.addChangeListener((values) => {
-        const url = new URL(window.location.href);
-        let min = values[0].value;
-        let max = values[1].value
-
-        if (min > max) {
-            max = min;
-            min = values[1].value;
-        }
-
-        url.searchParams.set('priceFrom', min);
-        url.searchParams.set('priceTo', max);
-
-        history.pushState(null, null, url);
-        catalogNode.dispatchEvent(new Event('changeParams'));
-    });
-
-    sortBtnNodes.forEach(sortBtnNode => {
-        const value = sortBtnNode.dataset.sort;
-
-        sortBtnNode.addEventListener('click', () => {
-            const url = new URL(window.location.href);
-
-            if (sortActiveBtn !== sortBtnNode) {
-                url.searchParams.set('sort', value);
-                sortBtnNode.classList.add('active');
-                sortActiveBtn && sortActiveBtn.classList.remove('active');
-                sortActiveBtn = sortBtnNode;
-            } else {
-                sortActiveBtn = null;
-                sortBtnNode.classList.remove('active');
-                url.searchParams.delete('sort');
-            }
-
-            history.pushState(null, null, url);
-            catalogNode.dispatchEvent(new Event('changeParams'));
-        })
-    });
-
-    checkbox.forEach(item => {
-        const input = item.querySelector('.input');
-        const inputName = input.name;
-        const inputValue = input.value;
-
-        input.addEventListener('click', (e) => {
-            const url = new URL(window.location.href);
-
-            if (input.checked) {
-                url.searchParams.append(inputName, inputValue);
-            } else {
-                const entriesParams = [...url.searchParams.entries()];
-
-                for (item of entriesParams) {
-                    url.searchParams.delete(item[0]);
-                }
-
-                for (item of entriesParams) {
-                    if (item[1] === inputValue) {
-                        continue;
-                    }
-
-                    url.searchParams.append(item[0], item[1]);
-                }
-            }
-
-            history.pushState(null, null, url);
-            catalogNode.dispatchEvent(new Event('changeParams'));
-        });
+  
+    url.searchParams.set('priceFrom', min);
+    url.searchParams.set('priceTo', max);
+  
+    history.pushState(null, null, url);
+    catalogNode.dispatchEvent(new Event('changeParams'));
+  });
+  
+  sortBtnNodes.forEach(sortBtnNode => {
+    const value = sortBtnNode.dataset.sort;
+    
+    sortBtnNode.addEventListener('click', () => {
+      const url = new URL(window.location.href);
+      
+      if (sortActiveBtn !== sortBtnNode) {
+        url.searchParams.set('sort', value);
+        sortBtnNode.classList.add('active');
+        sortActiveBtn && sortActiveBtn.classList.remove('active');
+        sortActiveBtn = sortBtnNode;
+      } else {
+        sortActiveBtn = null;
+        sortBtnNode.classList.remove('active');
+        url.searchParams.delete('sort');
+      }
+  
+      history.pushState(null, null, url);
+      catalogNode.dispatchEvent(new Event('changeParams'));
     })
-
-    catalogNode.addEventListener('changeParams', async () => {
-        const topOffset = document.querySelector('.js-header').offsetHeight;
-        const targetPosition = catalogListNode.getBoundingClientRect().top;
-        const offsetPosition = window.pageYOffset + targetPosition - topOffset;
-
-        catalogListNode.innerHTML = '';
-        currentPage = 1;
-        window.scrollTo({
-            top: offsetPosition,
-            behavior: 'smooth',
-        });
-        document.removeEventListener('scroll', scrollHandler);
-
-        const url = new URL(window.location.href);
-        const response = await postman.get(`${websiteAddress}api/products${url.search ? url.search : '?'}&limit=${countLoad}`);
-        const result = await response.json();
-
-        url.searchParams.set('page', currentPage);
-        history.pushState(null, null, url);
-
-        if (result.error) {
-            return;
+  });
+  
+  checkbox.forEach(item => {
+    const input = item.querySelector('.input');
+    const inputName = input.name;
+    const inputValue = input.value;
+    
+    input.addEventListener('click', (e) => {
+      const url = new URL(window.location.href);
+      
+      if (input.checked) {
+        url.searchParams.append(inputName, inputValue);
+      } else {
+        const entriesParams = [...url.searchParams.entries()];
+      
+        for (item of entriesParams) {
+          url.searchParams.delete(item[0]);
         }
-
-        catalogListNode.classList.remove('notFound');
-
-        if (!result.products.length) {
-            catalogListNode.classList.add('notFound');
-            return catalogListNode.innerHTML = `
+      
+        for (item of entriesParams) {
+          if (item[1] === inputValue) {
+            continue;
+          }
+        
+          url.searchParams.append(item[0], item[1]);
+        }
+      }
+    
+      history.pushState(null, null, url);
+      catalogNode.dispatchEvent(new Event('changeParams'));
+    });
+  })
+  
+  catalogNode.addEventListener('changeParams', async () => {
+    const topOffset = document.querySelector('.js-header').offsetHeight;
+    const targetPosition = catalogListNode.getBoundingClientRect().top;
+    const offsetPosition = window.pageYOffset + targetPosition - topOffset;
+    
+    catalogListNode.innerHTML = '';
+    currentPage = 1;
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: 'smooth',
+    });
+    document.removeEventListener('scroll', scrollHandler);
+    
+    const url = new URL(window.location.href);
+    const queryUrl = `${websiteAddress}api/products${url.search ? url.search : '?'}&limit=${countLoad}${sectionName ? `&${sectionType}=${sectionName}` : ''}`;
+    const response = await postman.get(queryUrl);
+    const result = await response.json();
+  
+    url.searchParams.set('page', currentPage);
+    history.pushState(null, null, url);
+    
+    if (result.error) {
+      return;
+    }
+  
+    catalogListNode.classList.remove('notFound');
+    
+    if (!result.products.length) {
+      catalogListNode.classList.add ('notFound');
+      return catalogListNode.innerHTML = `
         <img class="img" src="${websiteAddress}img/notFound.svg">
         <span class="text">Ничего не найдено...</span>
       `;
@@ -1953,10 +1956,11 @@ if (catalogNode) {
 
         loading = true;
 
-        const url = new URL(window.location.href);
-        const response = await postman.get(`${websiteAddress}api/products${url.search ? url.search : '?'}&skip=${skip}&limit=${countLoad}`);
-        const result = await response.json();
-        const pageNode = document.createElement('div');
+    const url = new URL(window.location.href);
+    const queryUrl = `${websiteAddress}api/products${url.search ? url.search : '?'}&skip=${skip}&limit=${countLoad}${sectionName ? `&${sectionType}=${sectionName}` : ''}`;
+    const response = await postman.get(queryUrl);
+    const result = await response.json();
+    const pageNode = document.createElement('div');
 
         pageNode.classList.add('gameGrid', 'js-page');
         loading = false;

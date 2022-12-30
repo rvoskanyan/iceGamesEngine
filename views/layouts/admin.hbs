@@ -13,6 +13,8 @@
 <ul>
     <li><a href="/admin/products">Игры</a></li>
     {{#iff person.role '===' 'admin'}}
+        <li><a href="/admin/products/compare">Сравнение цен</a></li>
+        <li><a href="/admin/analytics">Аналитика</a></li>
         <li><a href="/admin/categories">Категории</a></li>
         <li><a href="/admin/genres">Жанры</a></li>
         <li><a href="/admin/editions">Версии</a></li>
@@ -31,7 +33,7 @@
         <li><a href="/admin/parsing">Парсинг</a></li>
         <li><a href="/admin/payment/checkout">Checkout</a></li>
         <li><a href="/admin/payment/method">Способ оплаты</a></li>
-        <li><a href="https://steambuy.com/">Steambuy</a></li>
+        <li><a href="/admin/reviews">Отзывы на модерации</a></li>
     {{/iff}}
 </ul>
 

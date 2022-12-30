@@ -1,0 +1,63 @@
+<style>
+    table tr {
+        vertical-align: center; text-align: center
+    }
+
+    table tr th {
+        padding: 0 30px 10px 30px;
+        border-bottom: 2px solid #d7d7d7;
+    }
+
+    table tr th:not(:first-child) {
+        border-left: 1px solid #d7d7d7
+    }
+
+    table tr th:not(:last-child) {
+        border-right: 1px solid #d7d7d7
+    }
+
+    table tr td {
+        padding: 3px 50px;
+        border-bottom: 2px solid #d7d7d7;
+    }
+
+    table tr td:not(:first-child) {
+        border-left: 1px solid #d7d7d7
+    }
+
+    table tr td:not(:last-child) {
+        border-right: 1px solid #d7d7d7
+    }
+</style>
+
+
+<table cellpadding="0" cellspacing="0">
+    <tr>
+        <th>Товар</th>
+        <th>Цена закупки</th>
+        <th>Кол-во ключей</th>
+        <th>Текущая цена продажи</th>
+        <th>Цена конкурента + 1%</th>
+        <th>ПВП с 1 ед.</th>
+        <th>В наличии</th>
+        <th>Сумма ПВП</th>
+        <th>Продано</th>
+        <th>ФВП</th>
+    </tr>
+    {{#each rows}}
+        <tr>
+            <td>
+                <a href="/admin/products/edit/{{productId}}">{{productName}}</a>
+            </td>
+            <td>{{purchasePrice}} ₽</td>
+            <td>{{countKeys}}</td>
+            <td>{{currentSallePrice}} ₽</td>
+            <td>{{dsPrice}} ₽</td>
+            <td>{{pvpPerSale}} ₽</td>
+            <td>{{countInStock}}</td>
+            <td>{{pvp}} ₽</td>
+            <td>{{countSelling}}</td>
+            <td>{{fvp}} ₽</td>
+        </tr>
+    {{/each}}
+</table>
