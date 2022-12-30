@@ -1,6 +1,5 @@
 import Key from "../../models/Key.js";
 import Product from "../../models/Product.js";
-import {log} from "sharp/lib/libvips.js";
 
 
 //Наддо сделать пагинацию..
