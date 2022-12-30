@@ -2,6 +2,7 @@ import {mailingBuyProduct} from "../../services/mailer.js";
 import User from "../../models/User.js";
 import Order from "../../models/Order.js";
 import {achievementEvent} from "../../services/achievement.js";
+import metrica from "../../services/metrica.js";
 
 export default async function (req, res) {
     try {
@@ -13,13 +14,17 @@ export default async function (req, res) {
 
         if (Success && Status === 'CONFIRMED') {
             let products = order.products.filter(item => item.dbi);
-
+            let amount = 0
             for (const product of products) {
+                amount += product.purchasePrice || 0
                 let key = await mailingBuyProduct(product.productId, order.buyerEmail, true);
                 key.boughtInOrder = order._id
                 await key.save()
             }
-
+            if (order.yaId) {
+                metrica.offlineConversation(order.yaId, "payment_success", amount, "RUB")
+                    .catch(a=>console.log(a))
+            }
             order.paidTypes.push('dbi');
 
             switch (order.paymentType) {

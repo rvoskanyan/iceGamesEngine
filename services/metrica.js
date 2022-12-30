@@ -1,22 +1,26 @@
 import fetch from "node-fetch";
 import {getFormatDate} from "../utils/functions.js";
-
+import FormData from "form-data";
 let now = () => getFormatDate(new Date().toString(), '-', ['y', 'm', 'd'], false, "")
 
 let confing = {
     oAuth: "y0_AgAAAABGbH3nAAjx_AAAAADX0BTTJK-O3zY6SDeJPnPS5GkGIUjtK7c",
-    url: "https://api-metrika.yandex.net/cdp/api/v1/counter",
+    url_crm: "https://api-metrika.yandex.net/cdp/api/v1/counter",
+    url_manage: "https://api-metrika.yandex.net/management/v1/counter",
     counter: 69707947,
-    get_url(p, a, ...args) {
+    get_url(p, a, is_crm, ...args) {
         let urls = {
             product: {
                 rebase: x => `/${x}/data/orders?merge_mode=SAVE`,
                 append: x => `/${x}/data/orders?merge_mode=APPEND`,
                 update: x => `/${x}/data/orders?merge_mode=UPDATE`
             }, user: {
-                rebase: x=>`/${x}/data/contacts?merge_mode=SAVE`,
-                append: x=>`/${x}/data/contacts?merge_mode=APPEND`,
-                update: x=>`/${x}/data/contacts?merge_mode=UPDATE`,
+                rebase: x => `/${x}/data/contacts?merge_mode=SAVE`,
+                append: x => `/${x}/data/contacts?merge_mode=APPEND`,
+                update: x => `/${x}/data/contacts?merge_mode=UPDATE`,
+            },
+            conversion: {
+                offline: x=>`/${x}/offline_conversions/upload?client_id_type=CLIENT_ID`,
             }
         }
         let parent = urls[p]
@@ -24,7 +28,7 @@ let confing = {
         let action = parent[a]
         if (!action) throw  "No support " + a
         action.call && (action = action(this.counter, ...args))
-        return `${this.url}${action}`
+        return `${is_crm ? this.url_crm : this.url_manage}${action}`
     },
     status: {
         "created": "new",
@@ -62,19 +66,23 @@ let confing = {
     }
 }
 
-async function connect(url, body, method) {
+async function connect(url, body, method, isJson=true) {
+    let headers = {
+        "Authorization": `OAuth ${confing.oAuth}`
+    }
+    if (isJson) {
+        headers['Content-Type'] = 'application/json'
+        body = JSON.stringify(body)
+    }
     return fetch(url, {
-        method, body: JSON.stringify(body),
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": `OAuth ${confing.oAuth}`
-        }
+        method, body,
+        headers
     })
 }
 
 export default {
 
-    async updateStatus(id, client_id, status, is_finish=false) {
+    async updateStatus(id, client_id, status, is_finish = false) {
         let url = confing.get_url("product", 'update')
         let payload = confing.payloads.product(id, client_id, undefined, status, true, is_finish)
         let req = await connect(url, payload, 'post')
@@ -100,4 +108,26 @@ export default {
         let data = await req.json()
     },
 
+    async offlineConversation(clientId, target, price, currency = 'RUB') {
+        let getUnixTimeUTC = now => Math.floor(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds())/1000)
+        let dateTime = getUnixTimeUTC(new Date())
+        let data = [
+            ['ClientId', "Target", "DateTime", "Price", "Currency"],
+            [clientId, target, dateTime, price, currency]
+        ];
+        let csv = "";
+        let seperator = ',';
+        for (let i of data) {
+            csv += i.join(seperator) + '\n';
+        }
+        let form = new FormData()
+        let csv_buffer = Buffer.from(csv, 'utf-8')
+        form.append("file", csv_buffer, {contentType: 'text/csv', filename: 'data.csv'})
+        let url = confing.get_url("conversion", 'offline', false)
+        let req = await connect(url, form, "POST", false)
+        if (req.status > 399) {
+            throw await req.json()
+        }
+        return await req.json()
+    }
 }
