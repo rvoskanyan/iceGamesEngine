@@ -11,6 +11,7 @@ import ProductCategory from "../../models/Product_Category.js";
 
 export const homepage = async (req, res) => {
   const inviter = req.query.inviter;
+  const successPayment = req.query.successPayment;
   
   if (inviter) {
     if (!req.session.isAuth) {
@@ -20,7 +21,7 @@ export const homepage = async (req, res) => {
     return res.redirect('/');
   }
   
-  if (Object.keys(req.query).length && !req.query.confirmEmail) {
+  if (Object.keys(req.query).length && !req.query.confirmEmail && !req.query.successPayment) {
     return res.redirect('/');
   }
   
@@ -236,6 +237,7 @@ export const homepage = async (req, res) => {
     noIndex: !!checkEmailHash,
     noIndexGoogle: !!checkEmailHash,
     isHome: true,
+    successPayment: successPayment === 'true',
     sliderProducts,
     catalog,
     genres,

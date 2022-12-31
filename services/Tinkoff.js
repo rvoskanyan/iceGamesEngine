@@ -33,7 +33,7 @@ export default class Tinkoff {
   async checkout(amount, orderId, token = undefined, currency = 'RUB', isTwo, receipt) {
     currency = this.get_currency(currency)
     let url = this.#_get_url('init')
-    let get_success = isTwo ? `https://icegames.store/cart?step=2&OrderId=${orderId}` : 'https://icegames.store/'
+    let get_success = isTwo ? `https://icegames.store/cart?step=2&OrderId=${orderId}` : 'https://icegames.store?successPayment=true'
     
     let res = await fetch(url, {
       method: 'POST',

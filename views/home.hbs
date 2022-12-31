@@ -2,6 +2,26 @@
     {{#if checkedEmail}}
         <div class="modalMessage js-modalMessage">E-mail успешно подтвержден! ✔</div>
     {{/if}}
+    {{#if successPayment}}
+        <div class="successPayment js-successPayment">
+            <div class="title">Спасибо за покупку</div>
+            <div class="text">
+                Благодарим, что выбрали наш интернет-магазин!
+                Ключ активации направлен на E-mail, указанный в Вашем профиле или при оформлении заказа.
+                Если Вам не удалось найти письмо с ключом активации, убедительная просьба проверить папку "Спам" или иные папки рассылок.
+                Так же в случае возникновения проблем, Вы всегда можете обратиться в службу поддержки нашего магазина в социальных сетях.
+            </div>
+            <div class="socials">
+                <a href="https://vk.com/ice.games" target="_blank" rel="nofollow" class="link">
+                    <img class="img" src="{{websiteAddress}}img/vkSocial.svg">
+                </a>
+                <a href="https://t.me/ICE_supportBot" rel="nofollow" class="link" target="_blank">
+                    <img class="img" src="{{websiteAddress}}img/telegramSocial.svg">
+                </a>
+            </div>
+            <button class="btn rounded increase bg-pink js-closeSuccessPayment">Ок, спасибо!</button>
+        </div>
+    {{/if}}
     <div class="homeSlider js-homeSlider">
         <div class="tape js-tapeSlider">
             {{#each sliderProducts}}

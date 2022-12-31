@@ -71,6 +71,7 @@ const openAboutHomeModalNode = document.querySelector('.js-openAboutHomeModal');
 const openDescriptionSplitCatalogNode = document.querySelector('.js-openDescriptionSplitCatalog');
 const addInFavoritesProductPageNode = document.querySelector('.js-addInFavoritesProductPage');
 const showAboutAsHomeNode = document.querySelector('.js-showAboutAsHome');
+const successPaymentNode = document.querySelector('.js-successPayment');
 const popupController = new PopupController([
     {
         id: 'loginFrom',
@@ -170,6 +171,14 @@ promptProductNodes.forEach(promptProductNode => {
         promptProductNode.classList.remove('right')
     }
 })
+
+if (successPaymentNode) {
+    const closeSuccessPaymentNode = successPaymentNode.querySelector('.js-closeSuccessPayment');
+    
+    closeSuccessPaymentNode && closeSuccessPaymentNode.addEventListener('click', () => {
+        successPaymentNode.remove();
+    })
+}
 
 showAboutAsHomeNode && showAboutAsHomeNode.addEventListener('click', () => {
     const aboutUsContentHomeNode = document.querySelector('.js-aboutUsContentHome');
