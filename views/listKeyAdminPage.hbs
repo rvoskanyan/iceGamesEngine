@@ -3,34 +3,121 @@
         display: inline;
         margin-right: 8px;
     }
+
     .table_name {
         display: flex;
     }
+
     .table_name p:first-child {
         margin-left: 20px;
         margin-right: 100px;
     }
-     .table_name p:nth-child(2) {
-         margin-right: 90px;
-     }
-     .table_name p:nth-child(3) {
-         margin-right: 80px;
-     }
+
+    .table_name p:nth-child(2) {
+        margin-right: 90px;
+    }
+
+    .table_name p:nth-child(3) {
+        margin-right: 80px;
+    }
+
+    table,
+    th,
+    td {
+        border: 1px solid;
+    }
+
+    table {
+        margin-top: 18px;
+        border-spacing: 0;
+        text-align: center;
+    }
+
+    table a, table a:visited {
+        color: #0045e0;
+    }
+
+    tbody {
+        white-space: nowrap;
+    }
+
+    th,
+    td {
+        padding: 5px 10px;
+        border-top-width: 0;
+        border-left-width: 0;
+    }
+
+    th {
+        position: sticky;
+        top: 0;
+
+        vertical-align: bottom;
+    }
+
+    th:last-child,
+    td:last-child {
+        border-right-width: 0;
+    }
+
+    tr:last-child td {
+        border-bottom-width: 0;
+    }
 </style>
 
 <a href="/admin/{{section}}/add/">{{addTitle}}</a>
-<div class="table_name">
-    <p>Id</p>
-    <p>Key</p>
-    <p>Active</p>
-    <p>expired</p>
-</div>
-<ol>
-    {{#each elements}}
-        <li>
-            <p><a href="/admin/keys/edit/{{id}}">{{key}}</a></p>
-            <p>{{is_active}}</p>
-            <p>{{expired}}</p>
-        </li>
+<br>
+<br>
+<br>
+<form action="/admin/keys">
+    <label>
+        Показать ключи для:
+        <select name="productId">
+            <option value="notSelected">Не выбран</option>
+            {{#each products}}
+                <option value="{{_id}}"{{#if selected}} selected{{/if}}>{{name}}</option>
+            {{/each}}
+        </select>
+    </label>
+    <br>
+    <br>
+    <label>
+        Показать только в наличии:
+        <input type="checkbox" name="isActive" {{#if isActive}}checked{{/if}}>
+    </label>
+    <br>
+    <br>
+    <button type="submit">Найти</button>
+    <a href="/admin/keys">Сбросить</a>
+</form>
+<table>
+    <thead>
+    <tr>
+        <th>Ключ</th>
+        <th>Продукт</th>
+        <th>Истекает</th>
+        <th>В наличии</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#each keys}}
+        <tr>
+            <td><a href="{{@root.websiteAddress}}admin/keys/edit/{{_id}}">{{key}}</a></td>
+            <td><a href="{{@root.websiteAddress}}admin/keys?productId={{product._id}}{{#if isActive}}&isActive=on{{/if}}">{{product.name}}</a></td>
+            <td>{{#if expired}}{{dateFormat expired}}{{else}}---{{/if}}</td>
+            <td><input disabled type="checkbox" {{#if is_active}}checked{{/if}}></td>
+        </tr>
     {{/each}}
-</ol>
+    </tbody>
+</table>
+<br>
+{{#unless isSinglePage}}
+    <div style="display: flex; max-width: max-content; column-gap: 30px">
+        {{#unless isFirst}}
+            <a href="{{@root.websiteAddress}}admin/keys?page={{prevPage}}{{#if isActive}}&isActive=on{{/if}}{{#if productId}}&productId={{productId}}{{/if}}">Предыдущая</a>
+        {{/unless}}
+        {{#unless isLast}}
+            <a href="{{@root.websiteAddress}}admin/keys?page={{nextPage}}{{#if isActive}}&isActive=on{{/if}}{{#if productId}}&productId={{productId}}{{/if}}">Следующая</a>
+        {{/unless}}
+    </div>
+{{/unless}}

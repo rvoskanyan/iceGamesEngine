@@ -2,6 +2,7 @@ import {mailingBuyProduct} from "../../services/mailer.js";
 import User from "../../models/User.js";
 import Order from "../../models/Order.js";
 import {achievementEvent} from "../../services/achievement.js";
+import metrica from "../../services/metrica.js";
 
 export default async function (req, res) {
     try {
@@ -11,7 +12,7 @@ export default async function (req, res) {
         if (!order) {
             return res.status(404).json({err:true, messages:"Forbidden"});
         }
-        
+
         if (Success && Status === 'CONFIRMED') {
             res.send("OK");
             
@@ -20,13 +21,19 @@ export default async function (req, res) {
             }
             
             let products = order.products.filter(item => item.dbi);
+            let amount = 0
             
             for (const product of products) {
+                amount += product.purchasePrice || 0
                 await mailingBuyProduct(product.productId, order.buyerEmail, true, product.purchasePrice);
             }
             
-            order.paidTypes.push('dbi');
+            if (order.yaClientId) {
+                metrica.offlineConversation(order.yaClientId, "payment_success", amount, "RUB").then()
+            }
             
+            order.paidTypes.push('dbi');
+
             switch (order.paymentType) {
                 case 'mixed': {
                     switch (order.status) {
@@ -43,7 +50,7 @@ export default async function (req, res) {
                             break;
                         }
                     }
-    
+
                     break;
                 }
                 case 'dbi': {
@@ -51,13 +58,13 @@ export default async function (req, res) {
                     break;
                 }
             }
-    
+
             if (order.userId) {
                 const user = await User.findById(order.userId);
-                
+
                 if (user) {
                     const countPurchases = products.length;
-                    
+
                     user.purchasedProducts += countPurchases;
                     await user.save();
                     await user.increaseRating(countPurchases * 10);
@@ -67,10 +74,10 @@ export default async function (req, res) {
             
             return await order.save();
         }
-        
+
         order.status = 'canceled';
         await order.save();
-        
+
         res.send("OK");
     } catch (e) {
         console.log(e);

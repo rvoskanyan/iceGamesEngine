@@ -58,7 +58,7 @@ export async function mailingBuyProduct(productId, email, isKey = false, selling
     if (isKey) {
         key = await Key.findOne({product: productId, is_active: true}).select('key');
     }
-    
+
     const product = await Product.findById(productId);
     const websiteAddress = process.env.WEB_SITE_ADDRESS;
 
@@ -223,11 +223,10 @@ export async function mailingBuyProduct(productId, email, isKey = false, selling
       </html>
     `,
     })
-    
     if (!!key) {
         key.is_active = false;
         key.sellingPrice = sellingPrice;
-        await key.save()
+        await key.save();
     }
 }
 

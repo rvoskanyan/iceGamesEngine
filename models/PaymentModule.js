@@ -41,7 +41,7 @@ const paymentCheckout = new Schema({
         type: String,
     },
     status: {
-        type: String, //Created, Waiting, Waiting-Waiting Rejected, Canceled, Success, Fail, Expire
+        type: String, //Created, Waiting, Waiting-Waiting Rejected, Canceled, Confirmed, Fail, Expire
         required: true
     },
     date_create: {

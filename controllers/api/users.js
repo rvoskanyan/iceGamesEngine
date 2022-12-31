@@ -5,7 +5,7 @@ import {sendConfirmCode} from "../../services/mailer.js";
 export const getUsers = async (req, res) => {
     try {
         const {limit = 20, skip = 0} = req.query;
-        const countUsers = await User.estimatedDocumentCount({locked: false, active: true});
+        const countUsers = await User.countDocuments({locked: false, active: true});
         const users = await User
             .find({locked: false, active: true})
             .sort({rating: -1, createdAt: 1})

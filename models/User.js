@@ -87,6 +87,7 @@ const fields = {
     type: Boolean,
     default: true,
   },
+  yaClientIds: [String],
 };
 
 const options = {

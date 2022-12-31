@@ -802,7 +802,6 @@ if (cartNode) {
         }
 
         if (countProducts) {
-
             // Confirm
             if (demandConfirm) {
                 formConfirm.addEventListener("submit", async function (e) {
@@ -935,26 +934,28 @@ if (cartNode) {
             async function get_checkout(isTwo) {
                 const orderId = cartNode.dataset.orderId;
                 let payment = await Payment.get_method()
+                let yaClientId;
+                if (window.yaCounter69707947 && window.yaCounter69707947?.getClientID) yaClientId = yaCounter69707947.getClientID()
                 let email;
-                
+
                 if (formConfirm) {
                     email = formConfirm.elements.email.value
                 }
-                
+
                 if (!payment) {
                     console.error('Payment method not set')
                 }
-                
-                const result = await payment.checkout(products.iceGame, isTwo, email, orderId);
-                
+
+                const result = await payment.checkout(products.iceGame, isTwo, email, orderId, yaClientId);
+
                 if (result.err) {
                     return;
                 }
-                
+
                 const data = result.data;
-    
+
                 cartNode.dataset.orderId = data.orderId;
-                
+
                 window.open(data.paymentUrl, '_self')
             }
 
@@ -962,16 +963,16 @@ if (cartNode) {
                 const formData = new FormData();
                 const changes = [];
                 let dsCartId = null;
-                
+
                 formData.append('product_cnt', '1');
                 formData.append('typecurr', 'wmr');
                 formData.append('lang', 'ru-RU');
-                
+
                 for (const prd of products) {
                     const productId = prd.productId;
                     const productNode = document.querySelector(`.js-product[data-product-id="${productId}"]`);
                     const dsId = prd.dsId;
-                    
+
                     formData.set('product_id', dsId);
 
                     const responseAddCartDs = await fetch('https://shop.digiseller.ru/xml/shop_cart_add.asp', {
@@ -988,10 +989,10 @@ if (cartNode) {
                         const deleteFromCartBtn = productNode.querySelector('.js-deleteFromCart');
 
                         deleteFromCartBtn.dispatchEvent(new Event('click'));
-                        
+
                         await postman.put(`/api/products/${productId}/revise`);
                         location.reload();
-                        
+
                         changes.push({
                             name: productNode.querySelector('.name').innerText,
                             notInStock: true,
@@ -1010,7 +1011,7 @@ if (cartNode) {
                     if (+product.price !== currentPrice) {
                         await postman.put(`/api/products/${productId}/revise`);
                         location.reload();
-                        
+
                       /*const priceFrom = +productNode.querySelector('.js-priceFrom').innerText;
                       const dsPrice = parseInt(product.price);
                       const discountNode = productNode.querySelector('.js-discount');
@@ -1037,11 +1038,11 @@ if (cartNode) {
                 if (!changes.length) {
                     const orderId = cartNode.dataset.orderId;
                     let email;
-    
+
                     if (formConfirm) {
                         email = formConfirm.elements.email.value
                     }
-                    
+
                     const response = await postman.post('/api/order', {dsCartId, orderId, email, isTwo});
                     const result = await response.json();
 
@@ -1052,7 +1053,7 @@ if (cartNode) {
                     const payFormNode = cartListNode.querySelector('.js-payForm');
                     const dsCartIdInputNodes = payFormNode.querySelectorAll('.js-dsCartId');
                     const emailFormDsNode = payFormNode.querySelector('.js-emailFormDs');
-    
+
                     emailFormDsNode && (emailFormDsNode.value = email);
                     dsCartIdInputNodes.forEach(item => item.value = dsCartId);
 
@@ -1075,6 +1076,7 @@ if (cartNode) {
 
             function change_step(steps, step_id, prices, product_els, payment_button, is_fee=true) {
                 let keyStep = step_id === '1' ? 'iceGame' : 'digiSeller'
+
                 for (let i of steps.children) {
                     let sid = i.dataset.step
                     if (sid === step_id) {
@@ -1099,20 +1101,20 @@ if (cartNode) {
             if (orderId) {
                 cartNode.dataset.orderId = orderId;
             }
-            
+
             payBtnNode && payBtnNode.addEventListener('click', async () => {
                 if (demandConfirm) {
                     return;
                 }
-                
+
                 let productNodes = cartListNode.querySelectorAll('.js-product')
-                
+
                 if (products.iceGame.length === productNodes.length) {
                     return await get_checkout(false);
                 } else if (!products.iceGame.length && !!productNodes.length) {
                     return get_digiCheckout(products.digiSeller);
                 }
-                
+
                 let pop_up = createPopupPayment(openPayment)
                 let prices = pop_up.querySelector(".popup_payment-price")
                 let steps = pop_up.querySelector(".popup_payment-steps")
@@ -1230,7 +1232,6 @@ document.addEventListener('click', async (e) => {
             if (result.error) {
                 return;
             }
-
             addToCartBtnText.innerText = 'Добавлено';
             addToCartBtnIcon.classList.add('active');
             addToCartBtnNode.classList.add('js-active', 'active');

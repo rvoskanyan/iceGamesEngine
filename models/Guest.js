@@ -11,7 +11,8 @@ const fields = {
   },
   try_code: {
     type: Date
-  }
+  },
+  yaClientIds: [String],
 };
 
 const options = {

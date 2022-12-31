@@ -35,26 +35,26 @@ class Payment {
         }
     }
 
-    async checkout(product_ids, isTwo, email, orderId) {
+    async checkout(product_ids, isTwo, email, orderId, yaClientId) {
         let response = await this.#_options.request.post(
           this.#_options.base_url + 'api/beta/payment/checkout/' + this.#_options.method,
-          {products: product_ids, isTwo, email, orderId}
+          {products: product_ids, isTwo, email, orderId, yaClientId}
         );
-        
+
         return await response.json();
     }
 
     static async get_method(base_url) {
         base_url = base_url || default_url;
-        
+
         const response = await new Postman().get(base_url + 'api/beta/payment/method')
         const result = await response.json();
         const method = result.data;
-        
+
         if (result.err) {
             return null;
         }
-        
+
         return new Payment(method._id, {base_url});
     }
 
