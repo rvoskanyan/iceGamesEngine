@@ -934,8 +934,8 @@ if (cartNode) {
             async function get_checkout(isTwo) {
                 const orderId = cartNode.dataset.orderId;
                 let payment = await Payment.get_method()
-                let clientId;
-                if (window.yaCounter69707947 && window.yaCounter69707947?.getClientID) clientId = yaCounter69707947.getClientID()
+                let yaClientId;
+                if (window.yaCounter69707947 && window.yaCounter69707947?.getClientID) yaClientId = yaCounter69707947.getClientID()
                 let email;
 
                 if (formConfirm) {
@@ -946,7 +946,7 @@ if (cartNode) {
                     console.error('Payment method not set')
                 }
 
-                const result = await payment.checkout(products.iceGame, isTwo, email, orderId, clientId);
+                const result = await payment.checkout(products.iceGame, isTwo, email, orderId, yaClientId);
 
                 if (result.err) {
                     return;

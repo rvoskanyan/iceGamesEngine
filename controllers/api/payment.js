@@ -45,7 +45,7 @@ export default {
         try {
             const person = res.locals.person;
             const isAuth = res.locals.isAuth;
-            let {products, isTwo, email, currency, clientId} = req.body;
+            let {products, isTwo, email, currency, yaClientId} = req.body;
             let orderId = req.body.orderId;
 
             isTwo = !!isTwo;
@@ -71,8 +71,8 @@ export default {
             if (!products.length) {
                 throw new Error('No products');
             }
-            if (!!clientId && !person.yaId) {
-                person.yaId = clientId
+            if (yaClientId) {
+                person.yaClientIds.addToSet(yaClientId);
                 await person.save()
             }
             let paymentMethod = await paymentModule.paymentMethod.findById(req.params.paymentMethodId).lean();
@@ -100,7 +100,7 @@ export default {
                 buyerEmail: isAuth ? person.email : email,
                 status: 'notPaid',
                 products: [],
-                yaId: person.yaId
+                yaClientId,
             });
             
             if (isAuth) {

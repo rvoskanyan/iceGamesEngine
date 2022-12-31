@@ -35,10 +35,10 @@ class Payment {
         }
     }
 
-    async checkout(product_ids, isTwo, email, orderId, clientId) {
+    async checkout(product_ids, isTwo, email, orderId, yaClientId) {
         let response = await this.#_options.request.post(
           this.#_options.base_url + 'api/beta/payment/checkout/' + this.#_options.method,
-          {products: product_ids, isTwo, email, orderId, clientId}
+          {products: product_ids, isTwo, email, orderId, yaClientId}
         );
 
         return await response.json();

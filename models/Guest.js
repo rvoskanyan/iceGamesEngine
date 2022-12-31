@@ -12,9 +12,7 @@ const fields = {
   try_code: {
     type: Date
   },
-  yaId: {
-    type: String
-  }
+  yaClientIds: [String],
 };
 
 const options = {

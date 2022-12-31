@@ -30,7 +30,7 @@ const fields = {
     type: Schema.Types.ObjectId,
     ref: 'User',
   },
-  yaId: String,
+  yaClientId: String,
   buyerEmail: String,
   dsBuyerEmail: String,
   products: [{

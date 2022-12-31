@@ -28,9 +28,8 @@ export default async function (req, res) {
                 await mailingBuyProduct(product.productId, order.buyerEmail, true, product.purchasePrice);
             }
             
-            if (order.yaId) {
-                metrica.offlineConversation(order.yaId, "payment_success", amount, "RUB")
-                    .catch(a=>console.log(a))
+            if (order.yaClientId) {
+                metrica.offlineConversation(order.yaClientId, "payment_success", amount, "RUB").then()
             }
             
             order.paidTypes.push('dbi');
