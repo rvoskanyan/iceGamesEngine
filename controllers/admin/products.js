@@ -121,6 +121,7 @@ export const addProduct = async (req, res) => {
     const {
       name,
       shortNames,
+      sampleH1,
       sampleTitle,
       sampleMetaDescription,
       metaDescription,
@@ -168,7 +169,8 @@ export const addProduct = async (req, res) => {
     const imgName = `${uuidv4()}.${imgExtend}`;
     const creator = req.session.userId;
     const product = new Product({
-      name,
+      name: name.trim(),
+      sampleH1: sampleH1.trim(),
       sampleTitle: sampleTitle.trim(),
       sampleMetaDescription: sampleMetaDescription.trim(),
       nameGrams: getGrams(name),
@@ -383,6 +385,7 @@ export const editProduct = async (req, res) => {
   try {
     const {
       name,
+      sampleH1,
       sampleTitle,
       sampleMetaDescription,
       shortNames,
@@ -429,7 +432,8 @@ export const editProduct = async (req, res) => {
     const lastEditorId = req.session.userId;
   
     Object.assign(product, {
-      name,
+      name: name.trim(),
+      sampleH1: sampleH1.trim(),
       sampleTitle: sampleTitle.trim(),
       sampleMetaDescription: sampleMetaDescription.trim(),
       nameGrams: getGrams(name),
