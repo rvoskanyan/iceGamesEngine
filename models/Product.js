@@ -34,6 +34,7 @@ const fields = {
   normalizeName: String,
   soundName: [],
   shortNames: String,
+  sampleH1: String,
   sampleTitle: String,
   sampleMetaDescription: String,
   alias: {

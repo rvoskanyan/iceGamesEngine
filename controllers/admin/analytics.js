@@ -4,6 +4,11 @@ import Key from "../../models/Key.js";
 export const analyticsPage = async (req, res) => {
   try {
     const products = await Product.find({countKeys: {$gt: 0}}).select(['name', 'priceTo', 'dsPrice']).lean();
+    let totalCountKeys = 0;
+    let totalInStockKeys = 0;
+    let totalPVP = 0;
+    let totalSellingKeys = 0;
+    let totalFVP = 0;
     let rows = [];
     
     for (const product of products) {
@@ -38,7 +43,7 @@ export const analyticsPage = async (req, res) => {
         const pvpPerSale = Math.floor((currentSallePrice - currentSallePrice * 0.025 - purchasePrice) * 100) / 100;
         let countInStock = 0;
         let countSelling = 0;
-        let amountOfIncome = 0;
+        let fvp = 0;
   
         group.keys.forEach(key => {
           if (key.isActive) {
@@ -50,8 +55,8 @@ export const analyticsPage = async (req, res) => {
           if (!key.sellingPrice) {
             key.sellingPrice = 0;
           }
-          
-          amountOfIncome += Math.floor((key.sellingPrice - key.sellingPrice * 0.025 - key.purchasePrice) * 100) / 100;
+  
+          fvp += Math.floor((key.sellingPrice - key.sellingPrice * 0.025 - key.purchasePrice) * 100) / 100;
         });
         
         rows.push({
@@ -65,14 +70,25 @@ export const analyticsPage = async (req, res) => {
           countInStock,
           pvp: pvpPerSale * countInStock,
           countSelling,
-          fvp: amountOfIncome,
+          fvp,
         });
+  
+        totalCountKeys += group.count;
+        totalInStockKeys += countInStock;
+        totalPVP += pvpPerSale * countInStock;
+        totalSellingKeys += countSelling;
+        totalFVP += fvp;
       });
     }
     
     res.render('admAnalytics', {
       layout: 'admin',
       rows,
+      totalCountKeys,
+      totalInStockKeys,
+      totalPVP,
+      totalSellingKeys,
+      totalFVP,
     });
   } catch (e) {
     console.log(e);

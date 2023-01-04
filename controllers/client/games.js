@@ -548,6 +548,7 @@ export const gamePage = async (req, res) => {
       discount: product.discount,
     };
     const sampleParamNames = Object.keys(sampleParams);
+    let h1 = product.sampleH1 || `Ключ для ${product.name}`;
     let title = product.sampleTitle || `Купить лицензионный ключ ${product.name} по цене ${product.priceTo}₽ для ${product.activationServiceId.name} в магазине ICE GAMES`;
     let metaDescription = product.sampleMetaDescription || `Лицензионный ключ для ${product.name} (${product.genres.map(item => item.name).join(', ')}) дешево для активации в ${product.activationServiceId.name} в магазине ICE GAMES${product.discount > 0 ? ` со скидкой ${product.discount}%` : ''}. Мгновенная доставка ключа на почту. Оплата удобным способом.`;
     let isProductNoReview = true;
@@ -568,6 +569,10 @@ export const gamePage = async (req, res) => {
   
     sampleParamNames.forEach(item => {
       const regExp = new RegExp(`{${item}}`, 'g');
+      
+      if (product.sampleH1) {
+        h1 = h1.replace(regExp, sampleParams[item]);
+      }
       
       if (product.sampleTitle) {
         title = title.replace(regExp, sampleParams[item]);
@@ -793,6 +798,7 @@ export const gamePage = async (req, res) => {
     }
     
     res.render('game', {
+      h1,
       title,
       metaDescription,
       ogPath: `games/${product.alias}`,

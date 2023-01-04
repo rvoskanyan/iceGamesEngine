@@ -59,7 +59,10 @@ export async function mailingBuyProduct(productId, email, isKey = false, selling
         key = await Key.findOne({product: productId, is_active: true}).select('key');
     }
 
-    const product = await Product.findById(productId);
+    const product = await Product.findById(productId).populate([{
+        path: 'activationServiceId',
+        select: 'name',
+    }]);
     const websiteAddress = process.env.WEB_SITE_ADDRESS;
 
     if (!product.darkenCover) {
@@ -146,7 +149,7 @@ export async function mailingBuyProduct(productId, email, isKey = false, selling
                                   <a href="${websiteAddress}" style="color: #fff; text-decoration: underline">ICEGAMES.STORE</a>
                               </h1>
                               <p style="color: #ffffff; text-align: center; width: 310px; font-size: 16px; font-family: Montserrat, arial, sans-serif !important; line-height: 20px">
-                                  Вы приобрели игру ${product.name}.<br>
+                                  Вы приобрели игру ${product.name} с активацией в ${product.activationServiceId.name}.<br>
                                   Мы очень рады, что Вы выбрали нас!
                                   ${isKey ? '<br><br>Ваш ключ: ' + key.key : ''}
                               </p>

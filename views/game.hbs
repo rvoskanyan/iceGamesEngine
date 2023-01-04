@@ -77,7 +77,8 @@
                 <div class="mobileImgContainer">
                     <img class="mobileImg" src="{{websiteAddress}}{{product.img}}" alt="{{product.name}}" title="{{product.name}}" itemprop="image">
                 </div>
-                <h1 class="name">Ключ для <span itemprop="name">{{product.name}}</span></h1>
+                <h1 class="name">{{h1}}</h1>
+                <meta itemprop="name" content="{{product.name}}">
                 {{#if product.totalGradeParse}}
                     <span
                         class="totalGrade {{stepRating}}"
