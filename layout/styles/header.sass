@@ -96,12 +96,16 @@
     flex-grow: 1
     margin: 0 45px
     display: contents
+    align-items: center
 
     @include for-desktop-up
       display: flex
 
     @include for-big-desktop-up
       margin: 0 100px
+    & > a, & > button
+      font-weight: 500
+      font-size: 20px
 
     &.active
       & .containerMenu
@@ -233,7 +237,6 @@
 
     & .searchBar
       display: none
-
       @include for-desktop-up
         display: flex
 
