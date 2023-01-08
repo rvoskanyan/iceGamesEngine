@@ -5,14 +5,15 @@ import path from "path";
 import {achievementEvent} from "../../services/achievement.js";
 import {getToken} from "../../services/digiseller.js";
 import {mailingBuyProduct} from "../../services/mailer.js";
+import {getTurboArticlesRssFeedText, getYmlFeed} from "../../utils/functions.js";
 import Turn from "../../services/Turn.js";
 
 import Order from "./../../models/Order.js";
 import Product from "./../../models/Product.js";
 import User from "./../../models/User.js";
 import Genre from "../../models/Genre.js";
+import Article from "../../models/Article.js";
 
-import {getYmlFeed} from "../../utils/functions.js";
 import {__dirname} from "../../rootPathes.js";
 
 export const assignOrderPay = async (req, res) => {
@@ -58,6 +59,11 @@ export const assignOrderPay = async (req, res) => {
       const resultOrder = await responseOrder.json();
       const priceProduct = resultOrder.content.amount;
       const product = await Product.findOne({dsId: dsProductId}).select(['_id']).lean();
+      
+      if (!product) {
+        throw new Error('Product not found')
+      }
+      
       const productByOrder = {
         productId: product._id,
         purchasePrice: priceProduct,
@@ -193,6 +199,18 @@ export const getFeedYML = async (req, res) => {
   
     res.set('Content-Type', 'text/xml');
     res.send(ymlFeed);
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+export const getTurboArticlesRssFeed = async (req, res) => {
+  try {
+    const articles = await Article.find({active: true}).select(['name', 'alias', 'img', 'blocks', 'createdAt']).lean();
+    const turboArticlesRssFeedText = getTurboArticlesRssFeedText(articles);
+    
+    res.set('Content-Type', 'text/xml');
+    res.send(turboArticlesRssFeedText);
   } catch (e) {
     console.log(e);
   }
