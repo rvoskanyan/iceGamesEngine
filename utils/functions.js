@@ -206,7 +206,7 @@ export function getTurboArticlesRssFeedText(articles) {
                     
                     return `${!block.img ? '' : `
                 <img class="img" src="${srcImg}"`}
-                ${block.text}`;
+                <div>${block.text}</div>`;
                 }).join('')}
             ]]>
         </turbo:content>
