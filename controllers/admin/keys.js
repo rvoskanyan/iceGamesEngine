@@ -17,6 +17,7 @@ export const pageKeys = async (req, res) => {
         console.log(allOrders.length);
     
         for (const order of allOrders) {
+            console.log(order);
             if (order.isDBI || order.isDBI === false) {
                 continue;
             }
