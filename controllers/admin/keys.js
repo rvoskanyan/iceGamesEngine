@@ -104,6 +104,8 @@ export const pageKeys = async (req, res) => {
             });
             
             order.products = undefined;
+    
+            console.log(order);
         
             await order.save();
         }
