@@ -24,7 +24,8 @@ export const analyticsPage = async (req, res) => {
             _id: '$purchasePrice',
             count: { $count: { } },
             keys: { $push: {
-              isActive: "$is_active",
+              isActive: "$isActive",
+              isSold: "$isSold",
               sellingPrice: "$sellingPrice",
               purchasePrice: "$purchasePrice",
             }},
@@ -46,7 +47,7 @@ export const analyticsPage = async (req, res) => {
         let fvp = 0;
   
         group.keys.forEach(key => {
-          if (key.isActive) {
+          if (!key.isSold) {
             return countInStock++
           }
   
