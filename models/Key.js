@@ -1,14 +1,6 @@
 import mongoose from "mongoose";
 
 const fields = {
-    is_active: {
-        type: Boolean,
-        default: true
-    },
-    key: {
-        type: String,
-    },
-    
     value: {
         type: String,
         required: true,

@@ -13,22 +13,34 @@
                             {{#iff status '===' 'paid'}}
                                 <div class="orderBlock__status orderBlock__status-positive">Оплачен</div>
                             {{else}}
-                                <div class="orderBlock__status orderBlock__status-negative">
-                                    {{#iff status '===' 'awaiting'}}Ожидает оплаты{{else}}Отменен{{/iff}}
-                                </div>
+                                {{#if isDBI}}
+                                    <div class="orderBlock__status orderBlock__status-negative">
+                                        {{#iff status '===' 'awaiting'}}Ожидает оплаты{{else}}Отменен{{/iff}}
+                                    </div>
+                                {{else}}
+                                    {{#if dsCartId}}
+                                        <div class="orderBlock__status orderBlock__status-negative">
+                                            {{#iff status '===' 'awaiting'}}Ожидает оплаты{{else}}Отменен{{/iff}}
+                                        </div>
+                                    {{else}}
+                                        <div class="orderBlock__status orderBlock__status-negative">Отменен</div>
+                                    {{/if}}
+                                {{/if}}
                             {{/iff}}
                             <div class="orderBlock__actions">
-                                {{#iff status '===' 'awaiting'}}
-                                    <form action="https://oplata.info/asp2/pay.asp" method="post">
-                                        <input type="hidden" name="cart_uid" value="{{dsCartId}}" />
-                                        <input type="hidden" name="email" value="{{@root.person.email}}" />
-                                        <input type="hidden" name="failpage" value="{{@root.websiteAddress}}cart" />
-                                        <input type="hidden" name="agent" value="951647" />
-                                        <input type="hidden" name="typecurr" value="RUB" />
-                                        <input type="hidden" name="dsCartId" value="{{dsCartId}}" />
-                                        <input type="submit" class="btn bg-violet rounded small font-weight-average" title="Перейти на страницу оплаты заказа" value="Оплатить">
-                                    </form>
-                                {{/iff}}
+                                {{#if dsCartId}}
+                                    {{#iff status '===' 'awaiting'}}
+                                        <form action="https://oplata.info/asp2/pay.asp" method="post">
+                                            <input type="hidden" name="cart_uid" value="{{dsCartId}}" />
+                                            <input type="hidden" name="email" value="{{@root.person.email}}" />
+                                            <input type="hidden" name="failpage" value="{{@root.websiteAddress}}cart" />
+                                            <input type="hidden" name="agent" value="951647" />
+                                            <input type="hidden" name="typecurr" value="RUB" />
+                                            <input type="hidden" name="dsCartId" value="{{dsCartId}}" />
+                                            <input type="submit" class="btn bg-violet rounded small font-weight-average" title="Перейти на страницу оплаты заказа" value="Оплатить">
+                                        </form>
+                                    {{/iff}}
+                                {{/if}}
                                 <button class="btn bg-violet rounded small font-weight-average translucent js-openCompoundOrder" data-compund="{{@index}}">Состав заказа</button>
                             </div>
                             <div class="orderBlock__compound js-compoundOrder-{{@index}}">

@@ -68,10 +68,15 @@ export const assignOrderPay = async (req, res) => {
         productId: product._id,
         sellingPrice: priceProduct,
       };
-  
-      order.items.push(productByOrder);
+      
+      if (order.status !== 'paid') {
+        order.status = 'paid';
+        order.items = [productByOrder];
+      } else {
+        order.items.push(productByOrder);
+      }
+      
       order.dsBuyerEmail = buyerEmail;
-      order.status = 'paid';
     
       await order.save();
     

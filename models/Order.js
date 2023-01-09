@@ -2,22 +2,6 @@ import Mongoose from "mongoose";
 
 const {Schema, model} = Mongoose;
 const fields = {
-  paymentType: {
-    type: String,
-    default: 'ds',
-    enum: ['ds', 'dbi', 'mixed'], //ds: DigiSeller, dbi: delivery by ICE GAMES, mixed: ds & dbi
-  },
-  paidTypes: {
-    type: [{
-      type: String,
-      enum: ['ds', 'dbi'],
-    }],
-    validate: {
-      validator: (value) => !(value.length > 2 || value.length === 2 && value[0] === value[1]),
-      message: 'There are more than two values or they are repeated: {VALUE}'
-    },
-    default: [],
-  },
   products: [{
     purchasePrice: Number,
     dbi: Boolean,

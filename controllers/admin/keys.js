@@ -12,60 +12,84 @@ export const pageKeys = async (req, res) => {
         const keyFilter = {};
         const products = await Product.find({countKeys: {$gt: 0}}).select(['name']).lean();
         
-        const allKeys = await Key.find();
-        const allOrders = await Order.find();
-        
-        for (const key of allKeys) {
-            if (!key.key) {
+        const allOrders = await Order.find().sort({createdAt: -1});
+    
+        for (const order of allOrders) {
+            if (order.isDBI || order.isDBI === false) {
                 continue;
             }
             
-            key.isActive = true;
-            key.isSold = key.sellingPrice !== undefined;
-            key.value = key.key + '';
-            key.is_active = undefined;
-            key.key = undefined;
-            
-            await key.save();
-        }
+            if (order.dsCartId) {
+                if (!order.products.length) {
+                    const clone = await Order.findOne({dsCartId: order.dsCartId}).sort({createdAt: 1});
+                    const hasClone = clone._id.toString() !== order._id.toString();
     
-        for (const order of allOrders) {
-            if (order.paymentType === 'ds' || order.paymentType === undefined) {
-                order.dsBuyerEmail = order.buyerEmail;
-                order.isDBI = false;
-            }
-            
-            if (order.paymentType === 'dbi') {
-                order.isDBI = true;
-            }
-    
-            if (order.paymentType === 'mixed') {
-                if (order.paidTypes.includes('ds')) {
-                    const newOrder = new Order({
-                        dsCartId: order.dsCartId,
-                        dsBuyerEmail: order.buyerEmail,
-                        userId: order.userId ? order.userId : undefined,
-                        buyerEmail: order.buyerEmail,
-                        items: order.products.filter(item => !item.dbi).map(item => ({
-                            sellingPrice: item.purchasePrice,
-                            productId: item.productId,
-                        })),
-                        status: 'paid',
-                    });
-                    
-                    await newOrder.save();
-                }
-                
-                if (order.paidTypes.includes('dbi')) {
-                    order.status = 'paid';
+                    if (hasClone) {
+                        order.products = clone.products.filter(item => !item.dbi);
+                        order.isDBI = false;
+                    }
                 } else {
-                    order.status = 'canceled';
-                }
+                    const clone = await Order.findOne({dsCartId: order.dsCartId}).sort({createdAt: -1});
+                    const hasClone = clone._id.toString() !== order._id.toString();
+                    const dbiProducts = order.products.filter(item => item.dbi);
     
-                order.dsCartId = undefined;
-                order.dsBuyerEmail = undefined;
-                order.isDBI = true;
-                order.products = order.products.filter(item => item.dbi);
+                    if (hasClone) {
+                        order.products = dbiProducts;
+                        order.isDBI = true;
+                        order.dsBuyerEmail = undefined;
+                        order.dsCartId = undefined;
+                    } else if (dbiProducts.length) {
+                        const newOrder = new Order({
+                            dsCartId: order.dsCartId,
+                            isDBI: false,
+                            dsBuyerEmail: order.dsBuyerEmail || order.buyerEmail,
+                            userId: order.userId ? order.userId : undefined,
+                            buyerEmail: order.buyerEmail || order.dsBuyerEmail,
+                            items: order.products.filter(item => !item.dbi).map(item => ({
+                                sellingPrice: item.purchasePrice,
+                                productId: item.productId,
+                            })),
+                            status: 'paid',
+                        });
+    
+                        await newOrder.save();
+    
+                        order.products = dbiProducts;
+                        order.isDBI = true;
+                        order.dsBuyerEmail = undefined;
+                        order.dsCartId = undefined;
+                    } else {
+                        order.isDBI = false;
+                    }
+                }
+            } else {
+                const dbiProducts = order.products.filter(item => item.dbi);
+                
+                if (dbiProducts.length) {
+                    const hasDs = dbiProducts.length !== order.products.length;
+    
+                    if (hasDs) {
+                        const newOrder = new Order({
+                            dsBuyerEmail: order.dsBuyerEmail || order.buyerEmail,
+                            isDBI: false,
+                            userId: order.userId ? order.userId : undefined,
+                            buyerEmail: order.buyerEmail || order.dsBuyerEmail,
+                            items: order.products.filter(item => !item.dbi).map(item => ({
+                                sellingPrice: item.purchasePrice,
+                                productId: item.productId,
+                            })),
+                            status: 'paid',
+                        });
+        
+                        await newOrder.save();
+        
+                        order.products = dbiProducts;
+                        order.dsBuyerEmail = undefined;
+                        order.dsCartId = undefined;
+                    }
+    
+                    order.isDBI = true;
+                }
             }
     
             if (order.status === 'notPaid') {
@@ -80,8 +104,6 @@ export const pageKeys = async (req, res) => {
             });
             
             order.products = undefined;
-            order.paidTypes = undefined;
-            order.paymentType = undefined;
         
             await order.save();
         }
