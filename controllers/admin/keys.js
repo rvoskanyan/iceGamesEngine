@@ -14,6 +14,8 @@ export const pageKeys = async (req, res) => {
         
         const allOrders = await Order.find().sort({createdAt: -1});
     
+        console.log(allOrders);
+    
         for (const order of allOrders) {
             if (order.isDBI || order.isDBI === false) {
                 continue;
