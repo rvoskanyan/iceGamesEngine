@@ -1,6 +1,5 @@
 import Key from "../../models/Key.js";
 import Product from "../../models/Product.js";
-import Order from "../../models/Order.js";
 
 export const pageKeys = async (req, res) => {
     try {
@@ -11,102 +10,6 @@ export const pageKeys = async (req, res) => {
         const skip = limit * (page - 1);
         const keyFilter = {};
         const products = await Product.find({countKeys: {$gt: 0}}).select(['name']).lean();
-        
-        const allOrders = await Order.find().sort({createdAt: -1});
-    
-        for (const order of allOrders) {
-            if (order.isDBI || order.isDBI === false) {
-                continue;
-            }
-            
-            if (order.dsCartId) {
-                if (!order.products.length) {
-                    const clone = await Order.findOne({dsCartId: order.dsCartId}).sort({createdAt: 1});
-                    const hasClone = clone._id.toString() !== order._id.toString();
-    
-                    if (hasClone) {
-                        order.products = clone.products.filter(item => !item.dbi);
-                        order.isDBI = false;
-                    }
-                } else {
-                    const clone = await Order.findOne({dsCartId: order.dsCartId}).sort({createdAt: -1});
-                    const hasClone = clone._id.toString() !== order._id.toString();
-                    const dbiProducts = order.products.filter(item => item.dbi);
-    
-                    if (hasClone) {
-                        order.products = dbiProducts;
-                        order.isDBI = true;
-                        order.dsBuyerEmail = undefined;
-                        order.dsCartId = undefined;
-                    } else if (dbiProducts.length) {
-                        const newOrder = new Order({
-                            dsCartId: order.dsCartId,
-                            isDBI: false,
-                            dsBuyerEmail: order.dsBuyerEmail || order.buyerEmail,
-                            userId: order.userId ? order.userId : undefined,
-                            buyerEmail: order.buyerEmail || order.dsBuyerEmail,
-                            items: order.products.filter(item => !item.dbi).map(item => ({
-                                sellingPrice: item.purchasePrice,
-                                productId: item.productId,
-                            })),
-                            status: 'paid',
-                        });
-    
-                        await newOrder.save();
-    
-                        order.products = dbiProducts;
-                        order.isDBI = true;
-                        order.dsBuyerEmail = undefined;
-                        order.dsCartId = undefined;
-                    } else {
-                        order.isDBI = false;
-                    }
-                }
-            } else {
-                const dbiProducts = order.products.filter(item => item.dbi);
-                
-                if (dbiProducts.length) {
-                    const hasDs = dbiProducts.length !== order.products.length;
-    
-                    if (hasDs) {
-                        const newOrder = new Order({
-                            dsBuyerEmail: order.dsBuyerEmail || order.buyerEmail,
-                            isDBI: false,
-                            userId: order.userId ? order.userId : undefined,
-                            buyerEmail: order.buyerEmail || order.dsBuyerEmail,
-                            items: order.products.filter(item => !item.dbi).map(item => ({
-                                sellingPrice: item.purchasePrice,
-                                productId: item.productId,
-                            })),
-                            status: 'paid',
-                        });
-        
-                        await newOrder.save();
-        
-                        order.products = dbiProducts;
-                        order.dsBuyerEmail = undefined;
-                        order.dsCartId = undefined;
-                    }
-    
-                    order.isDBI = true;
-                }
-            }
-    
-            if (order.status === 'notPaid') {
-                order.status = 'awaiting';
-            }
-    
-            order.items = order.products.map(item => {
-                return {
-                    sellingPrice: item.purchasePrice ? item.purchasePrice : undefined,
-                    productId: item.productId,
-                }
-            });
-            
-            order.products = undefined;
-        
-            await order.save();
-        }
     
         if (productId && productId !== 'notSelected') {
             keyFilter.product = productId;
