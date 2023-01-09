@@ -14,10 +14,7 @@ export const pageKeys = async (req, res) => {
         
         const allOrders = await Order.find().sort({createdAt: -1});
     
-        console.log(allOrders.length);
-    
         for (const order of allOrders) {
-            console.log(order);
             if (order.isDBI || order.isDBI === false) {
                 continue;
             }
@@ -107,8 +104,6 @@ export const pageKeys = async (req, res) => {
             });
             
             order.products = undefined;
-    
-            console.log(order);
         
             await order.save();
         }

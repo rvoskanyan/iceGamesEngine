@@ -15,7 +15,7 @@ const fields = {
   dsBuyerEmail: String,
   isDBI: { //DBI: delivery by ICE GAMES
     type: Boolean,
-    default: false,
+    //default: false,
   },
   paymentUrl: String,
   paymentId: Number,
