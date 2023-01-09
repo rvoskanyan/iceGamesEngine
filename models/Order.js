@@ -2,15 +2,6 @@ import Mongoose from "mongoose";
 
 const {Schema, model} = Mongoose;
 const fields = {
-  products: [{
-    purchasePrice: Number,
-    dbi: Boolean,
-    productId: {
-      type: Schema.Types.ObjectId,
-      ref: 'Product',
-    },
-  }],
-  
   dsCartId: String,
   dsBuyerEmail: String,
   isDBI: { //DBI: delivery by ICE GAMES
