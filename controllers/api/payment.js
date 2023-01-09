@@ -3,7 +3,6 @@ import mongoose from "mongoose";
 import Tinkoff from "../../services/Tinkoff.js";
 
 import PaymentModule from "../../models/PaymentModule.js";
-import paymentModule from "../../models/PaymentModule.js";
 import Product from "../../models/Product.js";
 import Order from "../../models/Order.js";
 
@@ -16,19 +15,19 @@ let createCheckouts = {
             return;
         }
 
-        let {PaymentURL, PaymentId} = checkout;
+        const {PaymentURL, PaymentId} = checkout;
 
         return {PaymentURL, PaymentId};
     }
 }
 
 export default {
-    async methods(req, res) {
+    async getPaymentMethod(req, res) {
         try {
             let method = await PaymentModule
               .paymentMethod
-              .findOne({is_active: true})
-              .select(['name', '_id', 'icons'])
+              .findOne({isActive: true})
+              .select(['name', 'icon'])
               .lean();
 
             if (!method) {
@@ -41,14 +40,15 @@ export default {
         }
 
     },
+    
     async checkout(req, res) {
         try {
             const person = res.locals.person;
             const isAuth = res.locals.isAuth;
+            const receiptItems = [];
+            let amount = 0;
             let {products, isTwo, email, currency, yaClientId} = req.body;
-            let orderId = req.body.orderId;
-
-            isTwo = !!isTwo;
+            
             currency = currency || 'RUB';
             currency = currency.toUpperCase();
 
@@ -71,17 +71,19 @@ export default {
             if (!products.length) {
                 throw new Error('No products');
             }
+            
             if (yaClientId) {
                 person.yaClientIds.addToSet(yaClientId);
                 await person.save()
             }
-            let paymentMethod = await paymentModule.paymentMethod.findById(req.params.paymentMethodId).lean();
+            
+            const paymentMethod = await PaymentModule.paymentMethod.findById(req.params.paymentMethodId).lean();
 
             if (!paymentMethod) {
                 throw new Error('Payment method not found');
             }
 
-            let actions = createCheckouts[paymentMethod.name];
+            const actions = createCheckouts[paymentMethod.name];
 
             if (!actions) {
                 return res.status(503).json({
@@ -90,32 +92,19 @@ export default {
                 })
             }
 
-            products = products.map(function (el) {
-                return mongoose.Types.ObjectId(el)
-            })
-
             const order = new Order({
-                paymentType: isTwo ? 'mixed' : 'dbi',
                 paymentMethod: paymentMethod._id,
-                buyerEmail: isAuth ? person.email : email,
-                status: 'notPaid',
-                products: [],
-                yaClientId,
+                buyerEmail: person.email || email,
+                status: 'awaiting',
+                isDBI: true,
+                yaClientId: yaClientId ? yaClientId : undefined,
+                userId: isAuth ? person._id : undefined,
             });
-            
-            if (isAuth) {
-                order.userId = person._id;
-            }
     
-            const receiptItems = [];
-            let amount = 0;
+            products = products.map(item => mongoose.Types.ObjectId(item))
 
             for (const productId of products) {
-                const product = await Product.findById(productId).select(['name', 'priceTo']).lean();
-                const orderProduct = {
-                    productId,
-                    dbi: true,
-                };
+                const product = await Product.findOne({_id: productId, active: true}).select(['name', 'priceTo']).lean();
 
                 if (!product) {
                     continue;
@@ -125,8 +114,10 @@ export default {
 
                 price = isTwo ? Math.floor( price - price * 0.05) : price;
                 amount += price;
-                orderProduct.purchasePrice = price;
-                order.products.push(orderProduct);
+                order.items.push({
+                    productId,
+                    sellingPrice: price,
+                });
                 receiptItems.push({
                     Name: product.name,
                     Quantity: 1,
@@ -136,7 +127,7 @@ export default {
                 });
             }
 
-            if (!order.products.length) {
+            if (!order.items.length) {
                 throw new Error('Products not found');
             }
 
@@ -146,7 +137,7 @@ export default {
                 Items: receiptItems,
             }
 
-            let checkout = await actions({method: paymentMethod, amount, currency, isTwo, orderId: order._id, receipt});
+            const checkout = await actions({method: paymentMethod, amount, currency, isTwo, orderId: order._id, receipt});
 
             if (!checkout) {
                 return res.status(503).json({
@@ -157,27 +148,16 @@ export default {
 
             order.paymentUrl = checkout.PaymentURL;
             order.paymentId = checkout.PaymentId;
-
-            await order.save();
-
-            /*if (isTwo) {
-                products = products.map(item => item.toString());
-                const dsProducts = person.cart
-                  .filter(item => !products.includes(item.toString()))
-                  .map(item => ({productId: item}));
-
-                order.products = [...order.products, ...dsProducts];
-            }*/
-
+    
             products = products.map(item => item.toString());
-
             person.cart = person.cart.filter(item => !products.includes(item.toString()));
+            
             await person.save();
+            await order.save();
 
             res.send({
                 data: {
                     paymentUrl: checkout.PaymentURL,
-                    orderId: order._id,
                 },
                 ok: true
             });
@@ -190,18 +170,4 @@ export default {
             })
         }
     },
-
-    async checkPayment(req, res) {
-        try {
-            if (!res.locals.isAuth) throw "Forbidden"
-            let {orderId} = req.body
-            if (!orderId) throw "Key \"orderId\" is required"
-            let order = await PaymentModule.paymentCheckout.findById(orderId).exec()
-            if (!order) throw 'Not found'
-            let metadata = JSON.parse(order.metadata)
-            res.json({status: order.status, isTwo: metadata?.isTwo || false, game: order.products_id})
-        } catch (e) {
-            res.json({err:true, message: e})
-        }
-    }
 }

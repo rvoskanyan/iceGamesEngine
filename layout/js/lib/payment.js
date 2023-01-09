@@ -35,10 +35,10 @@ class Payment {
         }
     }
 
-    async checkout(product_ids, isTwo, email, orderId, yaClientId) {
+    async checkout(product_ids, isTwo, email, yaClientId) {
         let response = await this.#_options.request.post(
           this.#_options.base_url + 'api/beta/payment/checkout/' + this.#_options.method,
-          {products: product_ids, isTwo, email, orderId, yaClientId}
+          {products: product_ids, isTwo, email, yaClientId}
         );
 
         return await response.json();
@@ -56,14 +56,6 @@ class Payment {
         }
 
         return new Payment(method._id, {base_url});
-    }
-
-    static check_order(orderId) {
-        if (!orderId) throw "orderId is required"
-        let post = new Postman().post(default_url+"api/beta/payment/checkout/status", {
-            orderId
-        })
-        return post.then(a => a.json())
     }
 }
 

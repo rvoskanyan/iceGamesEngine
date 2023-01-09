@@ -1,5 +1,6 @@
 import Key from "../../models/Key.js";
 import Product from "../../models/Product.js";
+import Order from "../../models/Order.js";
 
 export const pageKeys = async (req, res) => {
     try {
@@ -10,13 +11,87 @@ export const pageKeys = async (req, res) => {
         const skip = limit * (page - 1);
         const keyFilter = {};
         const products = await Product.find({countKeys: {$gt: 0}}).select(['name']).lean();
+        
+        const allKeys = await Key.find();
+        const allOrders = await Order.find();
+        
+        for (const key of allKeys) {
+            if (!key.key) {
+                continue;
+            }
+            
+            key.isActive = true;
+            key.isSold = key.sellingPrice !== undefined;
+            key.value = key.key + '';
+            key.is_active = undefined;
+            key.key = undefined;
+            
+            await key.save();
+        }
+    
+        for (const order of allOrders) {
+            if (order.paymentType === 'ds' || order.paymentType === undefined) {
+                order.dsBuyerEmail = order.buyerEmail;
+                order.isDBI = false;
+            }
+            
+            if (order.paymentType === 'dbi') {
+                order.isDBI = true;
+            }
+    
+            if (order.paymentType === 'mixed') {
+                if (order.paidTypes.includes('ds')) {
+                    const newOrder = new Order({
+                        dsCartId: order.dsCartId,
+                        dsBuyerEmail: order.buyerEmail,
+                        userId: order.userId ? order.userId : undefined,
+                        buyerEmail: order.buyerEmail,
+                        items: order.products.filter(item => !item.dbi).map(item => ({
+                            sellingPrice: item.purchasePrice,
+                            productId: item.productId,
+                        })),
+                        status: 'paid',
+                    });
+                    
+                    await newOrder.save();
+                }
+                
+                if (order.paidTypes.includes('dbi')) {
+                    order.status = 'paid';
+                } else {
+                    order.status = 'canceled';
+                }
+    
+                order.dsCartId = undefined;
+                order.dsBuyerEmail = undefined;
+                order.isDBI = true;
+                order.products = order.products.filter(item => item.dbi);
+            }
+    
+            if (order.status === 'notPaid') {
+                order.status = 'awaiting';
+            }
+    
+            order.items = order.products.map(item => {
+                return {
+                    sellingPrice: item.purchasePrice ? item.purchasePrice : undefined,
+                    productId: item.productId,
+                }
+            });
+            
+            order.products = undefined;
+            order.paidTypes = undefined;
+            order.paymentType = undefined;
+        
+            await order.save();
+        }
     
         if (productId && productId !== 'notSelected') {
             keyFilter.product = productId;
         }
     
         if (isActive === 'on') {
-            keyFilter.is_active = true;
+            keyFilter.isActive = true;
         }
     
         const countKeys = await Key.countDocuments(keyFilter);
@@ -34,7 +109,7 @@ export const pageKeys = async (req, res) => {
             section: 'keys',
             addTitle: "Добавить ключ",
             products: products.map(product => ({...product, selected: keyFilter.product === product._id.toString()})),
-            isActive: keyFilter.is_active,
+            isActive: keyFilter.isActive,
             productId: keyFilter.product,
             prevPage: +page - 1,
             nextPage: +page + 1,
@@ -68,7 +143,7 @@ export const addKey = async (req, res) => {
     
     try {
         const {productId, is_active, expired, is_edit} = req.body;
-        const purchasePrice = req.body.purchasePrice;
+        const purchasePrice = +req.body.purchasePrice;
         let keys = req.body.keys;
         let keyValue = req.body.key;
         
@@ -78,7 +153,7 @@ export const addKey = async (req, res) => {
             throw new Error('Ключ обязательный аргумент');
         }
     
-        if (!!expired) {
+        if (expired) {
             const today = new Date();
             $exp = new Date(expired);
         
@@ -104,10 +179,10 @@ export const addKey = async (req, res) => {
             
             for (let key of keys) {
                 const keyObj = new Key({
-                    key,
-                    purchasePrice,
+                    purchasePrice: purchasePrice || 0,
+                    value: key,
                     product: productId,
-                    is_active: is_active === 'on',
+                    isActive: is_active === 'on',
                     expired: $exp || undefined,
                 });
                 
@@ -124,11 +199,12 @@ export const addKey = async (req, res) => {
                 throw 'Error';
             }
             
-            key.key = keyValue
+            key.value = keyValue
             key.product = productId
-            key.is_active = is_active === 'on'
+            key.isActive = is_active === 'on'
             key.expired = expired || undefined
-            key.purchasePrice = purchasePrice;
+            key.purchasePrice = purchasePrice || 0;
+            key.deactivationReason = is_active === 'on' ? undefined : req.body.deactivationReason || undefined;
             
             await key.save()
         }

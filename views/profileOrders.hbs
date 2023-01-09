@@ -13,10 +13,12 @@
                             {{#iff status '===' 'paid'}}
                                 <div class="orderBlock__status orderBlock__status-positive">Оплачен</div>
                             {{else}}
-                                <div class="orderBlock__status orderBlock__status-negative">Ожидает оплаты</div>
+                                <div class="orderBlock__status orderBlock__status-negative">
+                                    {{#iff status '===' 'awaiting'}}Ожидает оплаты{{else}}Отменен{{/iff}}
+                                </div>
                             {{/iff}}
                             <div class="orderBlock__actions">
-                                {{#iff status '===' 'notPaid'}}
+                                {{#iff status '===' 'awaiting'}}
                                     <form action="https://oplata.info/asp2/pay.asp" method="post">
                                         <input type="hidden" name="cart_uid" value="{{dsCartId}}" />
                                         <input type="hidden" name="email" value="{{@root.person.email}}" />
@@ -30,7 +32,7 @@
                                 <button class="btn bg-violet rounded small font-weight-average translucent js-openCompoundOrder" data-compund="{{@index}}">Состав заказа</button>
                             </div>
                             <div class="orderBlock__compound js-compoundOrder-{{@index}}">
-                                {{#each products}}
+                                {{#each items}}
                                     <div class="orderBlock__compoundItem">
                                         <img src="{{@root.websiteAddress}}{{productId.img}}" alt="Картинка игры {{productId.name}}" class="compoundItem__img">
                                         <div class="compoundItem__info">
@@ -46,7 +48,7 @@
                                                         </div>
                                                     {{/iff}}
                                                     <div class="toPrice">
-                                                        <span class="value">{{purchasePrice}}</span>
+                                                        <span class="value">{{sellingPrice}}</span>
                                                     </div>
                                                 </div>
                                                 {{#if productId.preorder}}

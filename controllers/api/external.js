@@ -44,7 +44,7 @@ export const assignOrderPay = async (req, res) => {
     
       const order = await Order.findOne({dsCartId});
     
-      if (!order) {
+      if (!order || order.isDBI) {
         throw new Error('Order not found');
       }
     
@@ -66,43 +66,12 @@ export const assignOrderPay = async (req, res) => {
       
       const productByOrder = {
         productId: product._id,
-        purchasePrice: priceProduct,
+        sellingPrice: priceProduct,
       };
-      const firstDsPay = !order.paidTypes.includes('ds');
-      
-      if (firstDsPay) {
-        order.paidTypes.push('ds');
-        order.products = order.products.filter(product => product.dbi);
-        order.dsBuyerEmail = buyerEmail;
   
-        switch (order.paymentType) {
-          case 'mixed': {
-            switch (order.status) {
-              case 'notPaid': {
-                order.status = 'partiallyPaid';
-                break;
-              }
-              case 'partiallyPaid': {
-                order.status = 'paid';
-                break;
-              }
-              case 'canceled': {
-                order.status = 'partiallyPaid';
-                break;
-              }
-            }
-      
-            break;
-          }
-          case 'ds': {
-            order.status = order.status !== 'paid' ? 'paid' : order.status;
-      
-            break;
-          }
-        }
-      }
-  
-      order.products.push(productByOrder);
+      order.items.push(productByOrder);
+      order.dsBuyerEmail = buyerEmail;
+      order.status = 'paid';
     
       await order.save();
     
@@ -117,7 +86,7 @@ export const assignOrderPay = async (req, res) => {
         }
       }
     
-      await mailingBuyProduct(product._id, buyerEmail).then();
+      await mailingBuyProduct(product._id, buyerEmail);
     
       res.json({
         success: true,

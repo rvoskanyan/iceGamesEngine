@@ -4,7 +4,6 @@ const {Schema, model} = Mongoose;
 const fields = {
   paymentType: {
     type: String,
-    required: true,
     default: 'ds',
     enum: ['ds', 'dbi', 'mixed'], //ds: DigiSeller, dbi: delivery by ICE GAMES, mixed: ds & dbi
   },
@@ -19,7 +18,21 @@ const fields = {
     },
     default: [],
   },
+  products: [{
+    purchasePrice: Number,
+    dbi: Boolean,
+    productId: {
+      type: Schema.Types.ObjectId,
+      ref: 'Product',
+    },
+  }],
+  
   dsCartId: String,
+  dsBuyerEmail: String,
+  isDBI: { //DBI: delivery by ICE GAMES
+    type: Boolean,
+    default: false,
+  },
   paymentUrl: String,
   paymentId: Number,
   paymentMethod: {
@@ -32,10 +45,8 @@ const fields = {
   },
   yaClientId: String,
   buyerEmail: String,
-  dsBuyerEmail: String,
-  products: [{
-    purchasePrice: Number,
-    dbi: Boolean,
+  items: [{
+    sellingPrice: Number,
     productId: {
       type: Schema.Types.ObjectId,
       ref: 'Product',
@@ -44,9 +55,10 @@ const fields = {
   status: {
     type: String,
     required: true,
-    default: 'notPaid',
-    enum: ['paid', 'notPaid', 'partiallyPaid', 'canceled'],
+    default: 'awaiting',
+    enum: ['paid', 'notPaid', 'awaiting', 'partiallyPaid', 'canceled', 'refunded', 'partialRefunded'],
   },
+  messages: [String],
 };
 
 const options = {

@@ -2,7 +2,7 @@
     {{#if is_edit}}
         <label>
             Введите ключ:
-            <input type="text" name="key" id="" value="{{key.key}}">
+            <input type="text" name="key" id="" value="{{key.value}}">
         </label>
     {{else}}
         <label>
@@ -41,6 +41,13 @@
         Активен:
         <input {{#if is_edit}}{{#if key.is_active}}checked{{/if}}{{else}}checked{{/if}} type="checkbox" name="is_active">
     </label>
+    {{#if isEdit}}
+        <label>
+            Причина деактивации:
+            <br>
+            <textarea name="deactivationReason" cols="50" rows="15"></textarea>
+        </label>
+    {{/if}}
     {{#if is_edit}}
         <input type="checkbox" name="is_edit" checked id="" hidden>
     {{/if}}
