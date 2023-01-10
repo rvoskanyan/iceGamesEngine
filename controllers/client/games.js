@@ -67,16 +67,16 @@ export const gamesPage = async (req, res, next) => {
   
       switch (sectionType) {
         case 'genres': {
-          metaDescription = `Каталог лучших игр в жанре ${section.name} со скидками и удобным поиском. Топ продаж от магазина лицензионных ключей ICE GAMES.`;
-          title = `Каталог игр ICE GAMES в жанре ${section.name}`;
-          hTitle = `Каталог игр в жанре ${section.name}`;
+          metaDescription = `Каталог лучших игр в жанре ${section.name} со скидками и удобным поиском. Топ продаж от магазина лицензионных ключей ICE GAMES. (страница ${page})`;
+          title = `Каталог игр ICE GAMES в жанре ${section.name} (страница ${page})`;
+          hTitle = `Купить игры в жанре ${section.name} дешево для PC`;
           genres.push(sectionName);
           break;
         }
         case 'activationServices': {
-          metaDescription = `Ключи для ${section.name} в магазине ICE GAMES. Мгновенная доставка ключей активации. Широкий выбор игр, сервисная поддержка`;
-          title = `Ключи для ${section.name} со скидкой в магазине лицензионных ключей ICE GAMES`;
-          hTitle = `Каталог игр с активацией в ${section.name}`;
+          metaDescription = `Ключи для ${section.name} в магазине ICE GAMES. Мгновенная доставка ключей активации. Широкий выбор игр, сервисная поддержка (страница ${page})`;
+          title = `Ключи для ${section.name} со скидкой в магазине лицензионных ключей ICE GAMES (страница ${page})`;
+          hTitle = `Купить ключи активации ${section.name} дешево`;
           activationServices.push(sectionName);
           break;
         }
