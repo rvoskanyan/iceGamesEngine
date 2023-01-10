@@ -38,8 +38,8 @@ export const homepage = async (req, res) => {
   const partners = await Partner.find().select(['name', 'img', 'link']).sort({createdAt: 1}).lean();
   const countReviews = await Review.countDocuments({active: true, status: 'taken'});
   const countProducts = await Product.countDocuments({active: true});
-  const orders = await Order.find({status: 'paid'}).select(['products']).lean();
-  const countSales = orders.reduce((countSales, order) => countSales + order.products.length, 9000);
+  const orders = await Order.find({status: 'paid'}).select(['items']).lean();
+  const countSales = orders.reduce((countSales, order) => countSales + order.items.length, 9000);
   const articles = await Article
     .find({active: true})
     .sort({createdAt: -1})

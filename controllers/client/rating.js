@@ -53,19 +53,19 @@ export const profileViewPage = async (req, res) => {
         .sort({'createdAt': -1})
         .limit(1)
         .skip(skipOrder)
-        .select('products')
-        .populate('products.productId', ['name', 'alias', 'priceTo', 'priceFrom', 'img', 'dsId', 'inStock']);
+        .select('items')
+        .populate('items.productId', ['name', 'alias', 'priceTo', 'priceFrom', 'img', 'dsId', 'inStock']);
       
       if (!order) {
         break;
       }
       
-      for (let i = 0; i < order.products.length; i++) {
+      for (let i = 0; i < order.items.length; i++) {
         if (lastPurchasedProducts.length > 3) {
           break;
         }
         
-        lastPurchasedProducts.push(order.products[i].productId)
+        lastPurchasedProducts.push(order.items[i].productId)
       }
   
       skipOrder++;

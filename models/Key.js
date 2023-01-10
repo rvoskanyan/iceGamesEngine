@@ -1,18 +1,25 @@
 import mongoose from "mongoose";
 
-
 const fields = {
-    key: {
+    value: {
         type: String,
-        required: true
+        required: true,
     },
-    is_active: {
+    isActive: {
         type: Boolean,
-        required: true
+        default: true,
     },
-    expired: {
-        type: Date
+    deactivationReason: String,
+    isSold: {
+        type: Boolean,
+        default: false,
     },
+    soldOrder: {
+        type: mongoose.Types.ObjectId,
+        //required: true,
+        ref: 'Order',
+    },
+    expired: Date,
     product: {
         type: mongoose.Types.ObjectId,
         required: true,
@@ -29,8 +36,6 @@ const options = {
     timestamps: true,
     versionKey: false,
 };
+const schema = new mongoose.Schema(fields, options)
 
-let schema = new mongoose.Schema(fields, options)
-
-
-export default  mongoose.model('Key', schema)
+export default mongoose.model('Key', schema)

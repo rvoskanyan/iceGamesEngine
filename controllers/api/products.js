@@ -503,7 +503,7 @@ export const addReview = async (req, res) => {
     const text = req.body.text;
     const validErrors = [];
     const evalValue = parseInt(req.body.eval);
-    const order = await Order.findOne({status: 'paid', userId: user._id, products: {$elemMatch: {productId}}});
+    const order = await Order.findOne({status: 'paid', userId: user._id, items: {$elemMatch: {productId}}});
     
     if (!order) {
       throw new Error('Product not purchased');

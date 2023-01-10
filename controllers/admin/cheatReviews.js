@@ -57,9 +57,9 @@ export const addPurchasesToFavorites = async (req, res) => {
           continue;
         }
   
-        order.products.push({
+        order.items.push({
           productId: products[productIndex]._id,
-          purchasePrice: products[productIndex].priceTo,
+          sellingPrice: products[productIndex].priceTo,
         });
   
         orderProducts.push(products[productIndex]);
@@ -171,9 +171,9 @@ export const importReviews = async (req, res) => {
           continue;
         }
     
-        order.products.push({
+        order.items.push({
           productId: candidateProduct._id,
-          purchasePrice: candidateProduct.priceTo,
+          sellingPrice: candidateProduct.priceTo,
         });
     
         orderProducts.push(candidateProduct);
@@ -274,9 +274,9 @@ export const importForProducts = async (req, res) => {
         userId: user._id,
         buyerEmail: email,
         status: 'paid',
-        products: [{
+        items: [{
           productId: product._id,
-          purchasePrice: product.priceTo,
+          sellingPrice: product.priceTo,
         }],
       });
       

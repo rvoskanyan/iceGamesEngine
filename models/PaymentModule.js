@@ -1,14 +1,11 @@
-import Mongoose from "mongoose";
+import mongoose from "mongoose";
 
-
-const {Schema, model} = Mongoose;
-
-const paymentMethods = new Schema({
+const fields = {
     name: {
         type: String,
         required: true,
     },
-    icons: {
+    icon: {
         type: String,
     },
     secretToken: {
@@ -26,77 +23,18 @@ const paymentMethods = new Schema({
         type: String,
         required: true
     },
-    is_active: {
+    isActive: {
         type: Boolean,
         default: true
     },
-})
+}
 
-const paymentCheckout = new Schema({
-    method_id: {
-        type: String,
-        required: true
-    },
-    checkout_url: {
-        type: String,
-    },
-    status: {
-        type: String, //Created, Waiting, Waiting-Waiting Rejected, Canceled, Confirmed, Fail, Expire
-        required: true
-    },
-    date_create: {
-        type: Date,
-    },
-    date_update: {
-        type: Date
-    },
-    checkout_expire: {
-        type: Date
-    },
-    products_id: {
-        type: [String]
-    },
-    amount: {
-        type: Number,
-        required: true,
-    },
-    currency: {
-        type: String,
-        required: true
-    },
-    metadata: {
-        type: String
-    },
-    checkoutId: {
-        type: String
-    },
-    user: {
-        type: Object,
-        required: true
-    },
-    isGuest: {
-        type: Boolean,
-        default: false
-    }
-})
-
-const paymentHistory = new Schema({
-    reference: {
-        type: String,
-        required: true
-    },
-    changeField: {
-        type: String, // amount, metadata, currency, products_id, amount, status, checkout_url, method_id
-        required: true
-    },
-    date_create: {
-        type: Date,
-    },
-})
-
+const options = {
+    timestamps: true,
+    versionKey: false,
+};
+const schema = new mongoose.Schema(fields, options)
 
 export default {
-    paymentMethod: model('PaymentMethod', paymentMethods),
-    paymentHistory: model('PaymentHistory', paymentHistory),
-    paymentCheckout: model('PaymentCheckout', paymentCheckout)
+    paymentMethod: mongoose.model('PaymentMethod', schema),
 }

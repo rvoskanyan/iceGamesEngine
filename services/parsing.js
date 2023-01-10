@@ -69,6 +69,11 @@ const sync = async () => {
           continue;
         }
         
+        if (priceTo >= 9999) {
+          await productOnSite.changeInStock(false);
+          continue;
+        }
+        
         productOnSite.dsPrice = priceTo;
         await productOnSite.save();
         
