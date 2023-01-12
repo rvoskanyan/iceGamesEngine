@@ -31,7 +31,7 @@ const fields = {
     type: String,
     required: true,
     default: 'awaiting',
-    enum: ['paid', 'notPaid', 'awaiting', 'partiallyPaid', 'canceled', 'refunded', 'partialRefunded'],
+    enum: ['paid', 'awaiting', 'canceled', 'refunded', 'partialRefunded'],
   },
   messages: [String],
 };

@@ -78,3 +78,93 @@
         <th>{{totalFVP}} ₽</th>
     </tr>
 </table>
+
+
+<div style="max-width: 600px; height: 400px">
+    <canvas id="countSales"></canvas>
+</div>
+<div style="max-width: 600px; height: 400px">
+    <canvas id="cost"></canvas>
+</div>
+<div style="max-width: 600px; height: 400px">
+    <canvas id="fvp"></canvas>
+</div>
+<div style="max-width: 600px; height: 400px">
+    <canvas id="turnover"></canvas>
+</div>
+<div style="max-width: 600px; height: 400px">
+    <canvas id="countOrders"></canvas>
+</div>
+<div style="max-width: 600px; height: 400px">
+    <canvas id="averageCheck"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const countSales = document.getElementById('countSales');
+    const cost = document.getElementById('cost');
+    const fvp = document.getElementById('fvp');
+    const turnover = document.getElementById('turnover');
+    const countOrders = document.getElementById('countOrders');
+    const averageCheck = document.getElementById('averageCheck');
+
+    const labels = JSON.parse({{labels}});
+    const currentCountSales = JSON.parse({{currentCountSales}});
+    const currentCost = JSON.parse({{currentCost}});
+    const currentFvp = JSON.parse({{currentFvp}});
+    const currentTurnover = JSON.parse({{currentTurnover}});
+    const currentCountOrders = JSON.parse({{currentCountOrders}});
+    const currentAverageCheck = JSON.parse({{currentAverageCheck}});
+    const previousCountSales = JSON.parse({{previousCountSales}});
+    const previousCost = JSON.parse({{previousCost}});
+    const previousFvp = JSON.parse({{previousFvp}});
+    const previousTurnover = JSON.parse({{previousTurnover}});
+    const previousCountOrders = JSON.parse({{previousCountOrders}});
+    const previousAverageCheck = JSON.parse({{previousAverageCheck}});
+
+    new Chart(countSales, getConfig('Количество продаж', labels, currentCountSales, previousCountSales));
+    new Chart(cost, getConfig('Себестоимость', labels, currentCost, previousCost));
+    new Chart(fvp, getConfig('ФВП', labels, currentFvp, previousFvp));
+    new Chart(turnover, getConfig('Оборот', labels, currentTurnover, previousTurnover));
+    new Chart(countOrders, getConfig('Количество заказов', labels, currentCountOrders, previousCountOrders));
+    new Chart(averageCheck, getConfig('Средний чек', labels, currentAverageCheck, previousAverageCheck));
+
+    function getConfig(title, labels, currentData, previousData) {
+      return {
+          type: 'line',
+          data: {
+              labels: labels,
+              datasets: [
+                  {
+                      label: 'За период в 30 дней',
+                      fill: false,
+                      backgroundColor: 'rgb(54, 162, 235)',
+                      borderColor: 'rgb(54, 162, 235)',
+                      data: currentData,
+                  },
+                  {
+                      label: 'За предыдущий период в 30 дней',
+                      fill: false,
+                      backgroundColor: 'rgb(75, 192, 192)',
+                      borderColor: 'rgb(75, 192, 192)',
+                      borderDash: [5, 5],
+                      data: previousData,
+                  },
+              ]
+          },
+          options: {
+              responsive: true,
+              plugins: {
+                  title: {
+                      display: true,
+                      text: title,
+                  },
+              },
+              interaction: {
+                  mode: 'index',
+                  intersect: false,
+              },
+          },
+      };
+    }
+</script>
