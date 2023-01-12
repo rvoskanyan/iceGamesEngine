@@ -15,18 +15,18 @@ export const analyticsPage = async (req, res) => {
     const currentDateTime = new Date();
     const todayDate = new Date(currentDateTime.getFullYear(), currentDateTime.getMonth(), currentDateTime.getDate());
     const labels = [];
-    //const currentCountSales = [];
-    //const currentCost = [];
-    //const currentFvp = [];
-    //const currentTurnover = [];
+    const currentCountSales = [];
+    const currentCost = [];
+    const currentFvp = [];
+    const currentTurnover = [];
     const currentCountOrders = [];
-    //const currentAverageCheck = [];
-    //const previousCountSales = [];
-    //const previousCost = [];
-    //const previousFvp = [];
-    //const previousTurnover = [];
+    const currentAverageCheck = [];
+    const previousCountSales = [];
+    const previousCost = [];
+    const previousFvp = [];
+    const previousTurnover = [];
     const previousCountOrders = [];
-    //const previousAverageCheck = [];
+    const previousAverageCheck = [];
     
     for (let i = 30; i >= 0; i--) {
       const dateForCurrent = new Date(todayDate);
@@ -37,21 +37,21 @@ export const analyticsPage = async (req, res) => {
   
       const label = dateForCurrent.getDate();
       const currentData = await getDataPerDay(dateForCurrent);
-      //const previousData = await getDataPerDay(dateForPrevious);
+      const previousData = await getDataPerDay(dateForPrevious);
   
-      //currentCountSales.push(currentData.countSales);
-      //currentCost.push(currentData.cost);
-      //currentFvp.push(currentData.fvp);
-      //currentTurnover.push(currentData.turnover);
+      currentCountSales.push(currentData.countSales);
+      currentCost.push(currentData.cost);
+      currentFvp.push(currentData.fvp);
+      currentTurnover.push(currentData.turnover);
       currentCountOrders.push(currentData.countOrders);
-      //currentAverageCheck.push(currentData.averageCheck);
+      currentAverageCheck.push(currentData.averageCheck);
   
-      //previousCountSales.push(previousData.countSales);
-      //previousCost.push(previousData.cost);
-      //previousFvp.push(previousData.fvp);
-      //previousTurnover.push(previousData.turnover);
-      //previousCountOrders.push(previousData.countOrders);
-      //previousAverageCheck.push(previousData.averageCheck);
+      previousCountSales.push(previousData.countSales);
+      previousCost.push(previousData.cost);
+      previousFvp.push(previousData.fvp);
+      previousTurnover.push(previousData.turnover);
+      previousCountOrders.push(previousData.countOrders);
+      previousAverageCheck.push(previousData.averageCheck);
       
       labels.push(label < 10 ? `0${label}` : label.toString());
   
@@ -69,7 +69,7 @@ export const analyticsPage = async (req, res) => {
         let fvp = 0;
         let turnover = 0;
   
-        /*for (const order of orders) {
+        for (const order of orders) {
           const orderKeys = await Key.find({soldOrder: order._id}).lean();
     
           Array.prototype.push.apply(keys, orderKeys);
@@ -84,15 +84,15 @@ export const analyticsPage = async (req, res) => {
           cost += purchasePrice;
           fvp += Math.floor((sellingPrice - sellingPrice * 0.025 - purchasePrice) * 100) / 100;
           turnover += sellingPrice;
-        });*/
+        });
   
         return {
-          //countSales: keys.length,
-          //cost: cost,
-          //fvp: fvp,
-          //turnover: turnover,
+          countSales: keys.length,
+          cost: cost,
+          fvp: fvp,
+          turnover: turnover,
           countOrders: countOrders,
-          //averageCheck: turnover / countOrders,
+          averageCheck: turnover / countOrders || 0,
         };
       }
     }
@@ -176,18 +176,18 @@ export const analyticsPage = async (req, res) => {
       totalPVP,
       totalSellingKeys,
       totalFVP,
-      //currentCountSales: JSON.stringify(currentCountSales),
-      //currentCost: JSON.stringify(currentCost),
-      //currentFvp: JSON.stringify(currentFvp),
-      //currentTurnover: JSON.stringify(currentTurnover),
+      currentCountSales: JSON.stringify(currentCountSales),
+      currentCost: JSON.stringify(currentCost),
+      currentFvp: JSON.stringify(currentFvp),
+      currentTurnover: JSON.stringify(currentTurnover),
       currentCountOrders: JSON.stringify(currentCountOrders),
-      //currentAverageCheck: JSON.stringify(currentAverageCheck),
-      //previousCountSales: JSON.stringify(previousCountSales),
-      //previousCost: JSON.stringify(previousCost),
-      //previousFvp: JSON.stringify(previousFvp),
-      //previousTurnover: JSON.stringify(previousTurnover),
+      currentAverageCheck: JSON.stringify(currentAverageCheck),
+      previousCountSales: JSON.stringify(previousCountSales),
+      previousCost: JSON.stringify(previousCost),
+      previousFvp: JSON.stringify(previousFvp),
+      previousTurnover: JSON.stringify(previousTurnover),
       previousCountOrders: JSON.stringify(previousCountOrders),
-      //previousAverageCheck: JSON.stringify(previousAverageCheck),
+      previousAverageCheck: JSON.stringify(previousAverageCheck),
       labels: JSON.stringify(labels),
     });
   } catch (e) {

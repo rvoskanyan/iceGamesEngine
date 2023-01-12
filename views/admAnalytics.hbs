@@ -79,54 +79,55 @@
     </tr>
 </table>
 
-<div style="max-width: 600px; height: 400px">
-    <canvas id="countOrders"></canvas>
-</div>
-<div style="max-width: 600px; height: 400px">
+
+<div style="max-width: 800px; height: 400px; margin-top: 30px">
     <canvas id="countSales"></canvas>
 </div>
-<div style="max-width: 600px; height: 400px">
+<div style="max-width: 800px; height: 400px; margin-top: 30px">
     <canvas id="cost"></canvas>
 </div>
-<div style="max-width: 600px; height: 400px">
+<div style="max-width: 800px; height: 400px; margin-top: 30px">
     <canvas id="fvp"></canvas>
 </div>
-<div style="max-width: 600px; height: 400px">
+<div style="max-width: 800px; height: 400px; margin-top: 30px">
     <canvas id="turnover"></canvas>
 </div>
-<div style="max-width: 600px; height: 400px">
+<div style="max-width: 800px; height: 400px; margin-top: 30px">
+    <canvas id="countOrders"></canvas>
+</div>
+<div style="max-width: 800px; height: 400px; margin-top: 30px">
     <canvas id="averageCheck"></canvas>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    //const countSales = document.getElementById('countSales');
-    //const cost = document.getElementById('cost');
-    //const fvp = document.getElementById('fvp');
-    //const turnover = document.getElementById('turnover');
+    const countSales = document.getElementById('countSales');
+    const cost = document.getElementById('cost');
+    const fvp = document.getElementById('fvp');
+    const turnover = document.getElementById('turnover');
     const countOrders = document.getElementById('countOrders');
-    //const averageCheck = document.getElementById('averageCheck');
+    const averageCheck = document.getElementById('averageCheck');
 
     const labels = JSON.parse('{"data": {{encodeString labels}} }').data;
-    //const currentCountSales = JSON.parse({{currentCountSales}});
-    //const currentCost = JSON.parse({{currentCost}});
-    //const currentFvp = JSON.parse({{currentFvp}});
-    //const currentTurnover = JSON.parse({{currentTurnover}});
+    const currentCountSales = JSON.parse('{"data": {{encodeString currentCountSales}} }').data;
+    const currentCost = JSON.parse('{"data": {{encodeString currentCost}} }').data;
+    const currentFvp = JSON.parse('{"data": {{encodeString currentFvp}} }').data;
+    const currentTurnover = JSON.parse('{"data": {{encodeString currentTurnover}} }').data;
     const currentCountOrders = JSON.parse('{"data": {{encodeString currentCountOrders}} }').data;
-    //const currentAverageCheck = JSON.parse({{currentAverageCheck}});
-    //const previousCountSales = JSON.parse({{previousCountSales}});
-    //const previousCost = JSON.parse({{previousCost}});
-    //const previousFvp = JSON.parse({{previousFvp}});
-    //const previousTurnover = JSON.parse({{previousTurnover}});
+    const currentAverageCheck = JSON.parse('{"data": {{encodeString currentAverageCheck}} }').data;
+    const previousCountSales = JSON.parse('{"data": {{encodeString previousCountSales}} }').data;
+    const previousCost = JSON.parse('{"data": {{encodeString previousCost}} }').data;
+    const previousFvp = JSON.parse('{"data": {{encodeString previousFvp}} }').data;
+    const previousTurnover = JSON.parse('{"data": {{encodeString previousTurnover}} }').data;
     const previousCountOrders = JSON.parse('{"data": {{encodeString previousCountOrders}} }').data;
-    //const previousAverageCheck = JSON.parse({{previousAverageCheck}});
+    const previousAverageCheck = JSON.parse('{"data": {{encodeString previousAverageCheck}} }').data;
 
-    //new Chart(countSales, getConfig('Количество продаж', labels, currentCountSales, previousCountSales));
-    //new Chart(cost, getConfig('Себестоимость', labels, currentCost, previousCost));
-    //new Chart(fvp, getConfig('ФВП', labels, currentFvp, previousFvp));
-    //new Chart(turnover, getConfig('Оборот', labels, currentTurnover, previousTurnover));
+    new Chart(countSales, getConfig('Количество продаж', labels, currentCountSales, previousCountSales));
+    new Chart(cost, getConfig('Себестоимость', labels, currentCost, previousCost));
+    new Chart(fvp, getConfig('ФВП', labels, currentFvp, previousFvp));
+    new Chart(turnover, getConfig('Оборот', labels, currentTurnover, previousTurnover));
     new Chart(countOrders, getConfig('Количество заказов', labels, currentCountOrders, previousCountOrders));
-    //new Chart(averageCheck, getConfig('Средний чек', labels, currentAverageCheck, previousAverageCheck));
+    new Chart(averageCheck, getConfig('Средний чек', labels, currentAverageCheck, previousAverageCheck));
 
     function getConfig(title, labels, currentData, previousData) {
       return {
