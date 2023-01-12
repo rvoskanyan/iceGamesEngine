@@ -108,18 +108,18 @@
     const countOrders = document.getElementById('countOrders');
     //const averageCheck = document.getElementById('averageCheck');
 
-    const labels = JSON.parse('{{labels}}');
+    const labels = JSON.parse('{"data": {{encodeString labels}} }').data;
     //const currentCountSales = JSON.parse({{currentCountSales}});
     //const currentCost = JSON.parse({{currentCost}});
     //const currentFvp = JSON.parse({{currentFvp}});
     //const currentTurnover = JSON.parse({{currentTurnover}});
-    const currentCountOrders = JSON.parse('{{currentCountOrders}}');
+    const currentCountOrders = JSON.parse('{"data": {{encodeString currentCountOrders}} }').data;
     //const currentAverageCheck = JSON.parse({{currentAverageCheck}});
     //const previousCountSales = JSON.parse({{previousCountSales}});
     //const previousCost = JSON.parse({{previousCost}});
     //const previousFvp = JSON.parse({{previousFvp}});
     //const previousTurnover = JSON.parse({{previousTurnover}});
-    const previousCountOrders = JSON.parse('{{previousCountOrders}}');
+    const previousCountOrders = JSON.parse('{"data": {{encodeString previousCountOrders}} }').data;
     //const previousAverageCheck = JSON.parse({{previousAverageCheck}});
 
     //new Chart(countSales, getConfig('Количество продаж', labels, currentCountSales, previousCountSales));

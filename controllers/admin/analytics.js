@@ -28,13 +28,16 @@ export const analyticsPage = async (req, res) => {
     const previousCountOrders = [];
     //const previousAverageCheck = [];
     
-    for (let i = 30; i <= 0; i--) {
-      const dateForCurrent = new Date(todayDate).setDate(this.getDate() - i);
-      const dateForPrevious = new Date(todayDate).setDate(this.getDate() - i - 30);
+    for (let i = 30; i >= 0; i--) {
+      const dateForCurrent = new Date(todayDate);
+      const dateForPrevious = new Date(todayDate);
+  
+      dateForCurrent.setDate(dateForCurrent.getDate() - i);
+      dateForPrevious.setDate(dateForPrevious.getDate() - i - 30);
+  
       const label = dateForCurrent.getDate();
-      
       const currentData = await getDataPerDay(dateForCurrent);
-      const previousData = await getDataPerDay(dateForPrevious);
+      //const previousData = await getDataPerDay(dateForPrevious);
   
       //currentCountSales.push(currentData.countSales);
       //currentCost.push(currentData.cost);
@@ -47,17 +50,19 @@ export const analyticsPage = async (req, res) => {
       //previousCost.push(previousData.cost);
       //previousFvp.push(previousData.fvp);
       //previousTurnover.push(previousData.turnover);
-      previousCountOrders.push(previousData.countOrders);
+      //previousCountOrders.push(previousData.countOrders);
       //previousAverageCheck.push(previousData.averageCheck);
       
-      labels.push(label < 10 ? `0${label}` : label);
+      labels.push(label < 10 ? `0${label}` : label.toString());
   
       async function getDataPerDay(startDate) {
-        const endDate = new Date(startDate).setDate(this.getDate() + i);
-        const orders = await Order.find({status: 'paid', updatedAt: {
-            $gte: dateForCurrent,
+        const endDate = new Date(startDate);
+        endDate.setDate(endDate.getDate() + 1);
+        
+        const orders = await Order.find({isDBI: true, status: 'paid', createdAt: {
+            $gte: startDate,
             $lt: endDate,
-          }}).lean();
+        }}).lean();
         const keys = [];
         const countOrders = orders.length;
         let cost = 0;
