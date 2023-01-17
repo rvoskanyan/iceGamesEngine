@@ -12,21 +12,6 @@ export const pageKeys = async (req, res) => {
         const keyFilter = {};
         const products = await Product.find({countKeys: {$gt: 0}}).select(['name']).lean();
         
-        const productsSync = await Product.find();
-        
-        for (const product of productsSync) {
-            const keys = await Key.countDocuments({isActive: true, isSold: false, product: product._id});
-    
-            !product.shortNames && (product.shortNames = "")
-            
-            if (Array.isArray(product.shortNames)) {
-                product.shortNames = product.shortNames.join(' ');
-            }
-    
-            product.countKeys = +keys;
-            await product.save();
-            await product.changeInStock(product.countKeys > 0);
-        }
     
         if (productId && productId !== 'notSelected') {
             keyFilter.product = productId;
