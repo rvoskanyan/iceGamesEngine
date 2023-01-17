@@ -52,7 +52,7 @@ export const homepage = async (req, res) => {
   const skipRecommend = day * 5 + 5;
   let recommend = await Product
     .find({active: true, top: true, inStock: true, priceTo: {$gt: 300}})
-    .select(['name', 'alias', 'priceTo', 'priceFrom', 'img', 'dsId', 'inStock'])
+    .select(['name', 'alias', 'priceTo', 'priceFrom', 'img', 'dsId', 'inStock', 'preOrder'])
     .skip(countRecommend > skipRecommend ? skipRecommend : countRecommend > 5 ? countRecommend  - 5 : countRecommend)
     .limit(5)
     .lean();
@@ -109,20 +109,20 @@ export const homepage = async (req, res) => {
   
   const noveltiesProduct = await Product
     .find({preOrder: false, active: true})
-    .select(['name', 'alias', 'img', 'priceTo', 'priceFrom', 'dlc', 'dsId', 'inStock'])
+    .select(['name', 'alias', 'img', 'priceTo', 'priceFrom', 'dlc', 'dsId', 'inStock', 'preOrder'])
     .sort({'releaseDate': -1})
     .limit(10)
     .lean();
   
   const preOrders = await Product
     .find({preOrder: true, active: true})
-    .select(['name', 'alias', 'img', 'priceTo', 'priceFrom', 'dlc', 'dsId', 'inStock'])
+    .select(['name', 'alias', 'img', 'priceTo', 'priceFrom', 'dlc', 'dsId', 'inStock', 'preOrder'])
     .limit(10)
     .lean();
   
   const discounts = await Product
     .find({discount: {$gt: 60}, active: true, inStock: true})
-    .select(['name', 'alias', 'img', 'priceTo', 'priceFrom', 'dlc', 'dsId', 'inStock'])
+    .select(['name', 'alias', 'img', 'priceTo', 'priceFrom', 'dlc', 'dsId', 'inStock', 'preOrder'])
     .sort({'priceFrom': -1})
     .limit(10)
     .lean();
@@ -170,6 +170,7 @@ export const homepage = async (req, res) => {
           priceFrom: '$product.priceFrom',
           dlc: '$product.dlc',
           inStock: '$product.inStock',
+          preOrder: '$product.preOrder',
         }
       }
     ]);

@@ -564,7 +564,7 @@ export const gamePage = async (req, res) => {
     let typeTrailerCover;
     let additions = await Product
       .find({dlc: true, dlcForId: product._id})
-      .select(['name', 'img', 'priceTo', 'priceFrom', 'dlc', 'inStock', 'alias'])
+      .select(['name', 'img', 'priceTo', 'priceFrom', 'dlc', 'inStock', 'alias', 'preOrder'])
       .lean();
   
     sampleParamNames.forEach(item => {
@@ -616,7 +616,7 @@ export const gamePage = async (req, res) => {
         .findById(person._id)
         .select('viewedProducts')
         .slice('viewedProducts', 7)
-        .populate('viewedProducts', ['alias', 'name', 'img', 'priceTo', 'priceFrom', 'dsId', 'dlc', 'inStock'])
+        .populate('viewedProducts', ['alias', 'name', 'img', 'priceTo', 'priceFrom', 'dsId', 'dlc', 'inStock', 'preOrder'])
         .lean();
   
       lastViewedProducts = viewedProductsResult.viewedProducts;
@@ -688,7 +688,7 @@ export const gamePage = async (req, res) => {
       recProductsFilter.seriesId = {$ne: product.seriesId}; //Отсеиваем товары, которые есть в серии текущей игры
       seriesProducts = await Product
         .find({_id: {$ne: product._id}, seriesId: product.seriesId, active: true})
-        .select(['name', 'alias', 'priceTo', 'priceFrom', 'img', 'inStock'])
+        .select(['name', 'alias', 'priceTo', 'priceFrom', 'img', 'inStock', 'preOrder'])
         .lean();
     } else if (product.bundleId) {
       const originalProduct = await Product.findOne({bundleId: product.bundleId, isOriginalInBundle: true});
@@ -721,7 +721,7 @@ export const gamePage = async (req, res) => {
             $gte: product.priceTo,
           },
         })
-        .select(['name', 'alias', 'inStock', 'img', 'priceTo', 'priceFrom'])
+        .select(['name', 'alias', 'inStock', 'img', 'priceTo', 'priceFrom', 'preOrder'])
         .limit(8 - recProducts.length)
         .lean();
       

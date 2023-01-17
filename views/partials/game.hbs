@@ -11,20 +11,28 @@
                 <span class="icon-static icon-static-actionLike js-icon{{#if inFavorites}} active{{/if}}"></span>
             </button>
         {{/if}}
-        {{#if inStock}}
-            <button
-                class="btn border rounded uppercase bg-darkPink hover-bg-pink active-bg-darkBlue inCart small js-addToCart{{#if inCart}} active js-active{{/if}}"
-                title="{{#if inCart}}Перейти в корзину покупок{{else}}Добавить данный товар в корзину покупок{{/if}}"
-            >
-                <span class="desktop js-text">{{#if inCart}}Добавлено{{else}}В корзину{{/if}}</span>
-                <span class="mobile icon-static icon-static-cartProduct{{#if inCart}} active{{/if}} js-icon"></span>
-            </button>
-        {{else}}
-            <div class="noInStockMsg">Игры нет<br>в наличии :(</div>
+        {{#if preOrder}}
+            <div class="noInStockMsg">Скоро<br>в наличии!</div>
             <button
                     class="btn border rounded bg-darkPink hover-bg-pink small js-subscribeInStock"
                     title="Подписаться на уведомление о поступлении товара"
             >Уведомить</button>
+        {{else}}
+            {{#if inStock}}
+                <button
+                        class="btn border rounded uppercase bg-darkPink hover-bg-pink active-bg-darkBlue inCart small js-addToCart{{#if inCart}} active js-active{{/if}}"
+                        title="{{#if inCart}}Перейти в корзину покупок{{else}}Добавить данный товар в корзину покупок{{/if}}"
+                >
+                    <span class="desktop js-text">{{#if inCart}}Добавлено{{else}}В корзину{{/if}}</span>
+                    <span class="mobile icon-static icon-static-cartProduct{{#if inCart}} active{{/if}} js-icon"></span>
+                </button>
+            {{else}}
+                <div class="noInStockMsg">Игры нет<br>в наличии :(</div>
+                <button
+                        class="btn border rounded bg-darkPink hover-bg-pink small js-subscribeInStock"
+                        title="Подписаться на уведомление о поступлении товара"
+                >Уведомить</button>
+            {{/if}}
         {{/if}}
     </div>
     {{#if dlc}}

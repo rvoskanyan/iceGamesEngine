@@ -3,9 +3,7 @@
     <h1 class="title">{{selectionName}}</h1>
     <div class="list">
         {{#each products}}
-            {{> game
-                id=_id
-            }}
+            {{> game}}
         {{/each}}
     </div>
     <a class="inCatalog btn rounded bg-pink increase big" href="/games?sort={{sort}}">В каталог</a>

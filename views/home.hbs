@@ -89,7 +89,6 @@
             <div class="homeRecommend mobileScroll">
                 {{#each recommend}}
                     {{> game
-                            id=_id
                             size='big'
                     }}
                 {{/each}}
@@ -129,7 +128,6 @@
                         <div class="item mobileScroll js-tabBlock-{{@index}}{{#if @first}} active{{/if}}">
                             {{#each products}}
                                 {{> game
-                                    id=_id
                                     size='big'
                                 }}
                             {{/each}}

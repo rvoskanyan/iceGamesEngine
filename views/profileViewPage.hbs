@@ -102,7 +102,7 @@
             <div class="items mobileScroll">
                 {{#each lastPurchasedProducts}}
                     {{> game
-                            id=_id
+                            _id=_id
                             name=name
                             alias=alias
                             img=img
@@ -110,6 +110,7 @@
                             priceFrom=priceFrom
                             dsId=dsId
                             inStock=inStock
+                            preOrder=preOrder
                             size='big'
                     }}
                 {{/each}}

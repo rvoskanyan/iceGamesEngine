@@ -14,9 +14,7 @@
     </div>
     <div class="list">
         {{#each products}}
-            {{> game
-                    id=_id
-            }}
+            {{> game}}
         {{/each}}
     </div>
     {{#iff pagination.length '>' 2}}
