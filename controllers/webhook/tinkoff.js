@@ -41,6 +41,10 @@ export default async function (req, res) {
                 key.soldOrder = order._id;
                 key.sellingPrice = item.sellingPrice;
                 await key.save();
+    
+                product.countKeys--;
+                await product.save();
+                await product.changeInStock(product.countKeys > 0);
                 
                 await mailingBuyProduct({
                     product,

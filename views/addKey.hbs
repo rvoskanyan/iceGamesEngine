@@ -1,8 +1,8 @@
-<form action="/admin/keys/{{#if is_edit}}edit/{{key._id}}{{else}}add{{/if}}" method="post">
-    {{#if is_edit}}
+<form action="/admin/keys/{{#if isEdit}}edit/{{key._id}}{{else}}add{{/if}}" method="post">
+    {{#if isEdit}}
         <label>
             Введите ключ:
-            <input type="text" name="key" id="" value="{{key.value}}">
+            <input type="text" name="key"{{#if key.value}} value="{{key.value}}{{/if}}">
         </label>
     {{else}}
         <label>
@@ -17,7 +17,7 @@
         Выберите игру:
         <select name="productId">
             {{#each products}}
-                <option value="{{_id}}" {{#iff @root.key.product '===' _id}} selected{{/iff}}>
+                <option value="{{_id}}"{{#iff @root.key.product '===' _id}} selected{{/iff}}>
                     {{name}}
                 </option>
             {{/each}}
@@ -27,19 +27,19 @@
     <br>
     <label>
         Срок действия:
-        <input type="date" {{#if is_edit}}value="{{expired}}"{{/if}} name="expired" id="">
+        <input type="date" name="expired"{{#if key.expired}} value="{{key.expired}}"{{/if}}>
     </label>
     <br>
     <br>
     <label>
         Цена закупки:
-        <input type="number" name="purchasePrice" value="{{key.purchasePrice}}">
+        <input type="number" name="purchasePrice"{{#if key.purchasePrice}} value="{{key.purchasePrice}}{{/if}}">
     </label>
     <br>
     <br>
     <label>
         Активен:
-        <input {{#if is_edit}}{{#if key.isActive}}checked{{/if}}{{else}}checked{{/if}} type="checkbox" name="is_active">
+        <input type="checkbox" name="isActive"{{#unless isEdit}} checked{{/unless}}{{#if key.isActive}} checked{{/if}}>
     </label>
     {{#if isEdit}}
         <label>
@@ -47,9 +47,6 @@
             <br>
             <textarea name="deactivationReason" cols="50" rows="15"></textarea>
         </label>
-    {{/if}}
-    {{#if is_edit}}
-        <input type="checkbox" name="is_edit" checked id="" hidden>
     {{/if}}
     <br>
     <br>

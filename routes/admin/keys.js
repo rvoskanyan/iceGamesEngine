@@ -2,7 +2,9 @@ import {Router} from 'express';
 import {
   pageKeys,
   pageAddKey,
-  addKey, editKeyPage
+  addKey,
+  editKeyPage,
+  editKey,
 } from "../../controllers/admin/keys.js";
 
 const router = Router();
@@ -13,5 +15,5 @@ router.get('/', pageKeys);
 router.get('/add', pageAddKey);
 router.post('/add', addKey);
 router.get('/edit/:keyId', editKeyPage);
-router.post('/edit/:keyId', addKey);
+router.post('/edit/:keyId', editKey);
 export default router;

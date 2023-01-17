@@ -1,5 +1,6 @@
 import Key from "../../models/Key.js";
 import Product from "../../models/Product.js";
+import {getFormatDate} from "../../utils/functions.js";
 
 export const pageKeys = async (req, res) => {
     try {
@@ -10,6 +11,16 @@ export const pageKeys = async (req, res) => {
         const skip = limit * (page - 1);
         const keyFilter = {};
         const products = await Product.find({countKeys: {$gt: 0}}).select(['name']).lean();
+        
+        const productsSync = await Product.find();
+        
+        for (const product of productsSync) {
+            const keys = await Key.countDocuments({isActive: true, isSold: false, product: product._id});
+    
+            product.countKeys = +keys;
+            await product.save();
+            await product.changeInStock(product.countKeys > 0);
+        }
     
         if (productId && productId !== 'notSelected') {
             keyFilter.product = productId;
@@ -64,25 +75,108 @@ export const pageAddKey = async (req, res) => {
 }
 
 export const addKey = async (req, res) => {
-    let $exp;
-    
     try {
-        const {productId, is_active, expired, is_edit} = req.body;
         const purchasePrice = +req.body.purchasePrice;
+        const productId = req.body.productId;
+        const isActive = req.body.isActive === 'on';
         let keys = req.body.keys;
-        let keyValue = req.body.key;
+        let expired = req.body.expired;
         
-        if (typeof keyValue !== 'string' && typeof keys !== 'string') {
-            throw new Error('Не правильный тип данных ключа');
-        } else if (!keyValue && !keys) {
+        if (!keys) {
             throw new Error('Ключ обязательный аргумент');
         }
     
         if (expired) {
-            const today = new Date();
-            $exp = new Date(expired);
+            expired = new Date(expired);
         
-            if (today > $exp) {
+            if (Date.now() > expired) {
+                throw new Error('Срок ключа истек');
+            }
+        }
+        
+        const product = await Product.findById(productId);
+        
+        if (!product) {
+            throw new Error('Данная игра не существует в базе');
+        }
+    
+        const regExp = new RegExp('\\s');
+    
+        keys = keys.trim().split(regExp).map(key => key.trim()).filter(key => key.length && typeof key === 'string');
+    
+        if (!keys.length) {
+            throw new Error('Keys not set');
+        }
+    
+        for (let key of keys) {
+            const keyObj = new Key({
+                purchasePrice: purchasePrice || 0,
+                value: key,
+                product: productId,
+                expired: expired || undefined,
+                isActive,
+            });
+        
+            await keyObj.save();
+        }
+        
+        if (isActive) {
+            product.countKeys += keys.length;
+            
+            await product.save();
+            await product.changeInStock(true);
+        }
+        
+        res.redirect('/admin/keys');
+    } catch (e) {
+        console.log(e);
+        res.redirect('/admin/keys/add');
+    }
+}
+
+export const editKeyPage = async (req, res) => {
+    try {
+        const keyId = req.params.keyId;
+        const key = await Key.findById(keyId).lean();
+        
+        if (!key) {
+            throw new Error('Key not found');
+        }
+    
+        let products = await Product.find().select(['name']).lean();
+    
+        key.product = key.product.toString();
+        key.expired = key.expired ? getFormatDate(key.expired, '-', ['y', 'm', 'd']) : undefined;
+        products = products.map(product => ({...product, '_id': product._id.toString()}))
+        
+        res.render('addKey', {
+            layout: 'admin',
+            isEdit: true,
+            products,
+            key,
+        });
+    } catch (e) {
+        console.log(e)
+        res.redirect(`/admin/keys`)
+    }
+}
+
+export const editKey = async (req, res) => {
+    const keyId = req.params.keyId;
+    
+    try {
+        const {productId, key} = req.body;
+        const purchasePrice = +req.body.purchasePrice;
+        const deactivationReason = req.body.deactivationReason;
+        const isActive = req.body.isActive === 'on';
+        let expired = +req.body.expired;
+        let prevProductId = undefined;
+        let changeActive = false;
+        
+        if (expired) {
+            expired = new Date(expired);
+            
+            if (Date.now() > expired) {
                 throw new Error('Срок ключа истек');
             }
         }
@@ -93,82 +187,48 @@ export const addKey = async (req, res) => {
             throw new Error('Данная игра не существует в базе');
         }
         
-        if (!is_edit) {
-            const regExp = new RegExp('\\s');
-            
-            keys = keys.trim().split(regExp).map(key => key.trim()).filter(key => key.length && typeof key === 'string');
-            
-            if (!keys.length) {
-                throw new Error('Keys not found');
-            }
-            
-            for (let key of keys) {
-                const keyObj = new Key({
-                    purchasePrice: purchasePrice || 0,
-                    value: key,
-                    product: productId,
-                    isActive: is_active === 'on',
-                    expired: $exp || undefined,
-                });
-                
-                await keyObj.save();
-            }
+        const keyObj = await Key.findById(keyId);
+        
+        if (!keyObj) {
+            throw 'Error';
+        }
+        
+        if (productId !== keyObj.product.toString()) {
+            prevProductId = keyObj.product;
+        }
     
-            product.countKeys = keys.length;
-            await product.save();
-            await product.changeInStock(true);
-        } else {
-            const key = await Key.findById(req.params.keyId);
+        changeActive = keyObj.isActive !== isActive;
+    
+        keyObj.value = key;
+        keyObj.product = productId;
+        keyObj.isActive = isActive;
+        keyObj.expired = expired || undefined;
+        keyObj.purchasePrice = purchasePrice || 0;
+        keyObj.deactivationReason = isActive === 'on' ? undefined : deactivationReason || undefined;
+        
+        await key.save();
+        
+        if (prevProductId && !keyObj.isSold) {
+            const prevProduct = await Product.findById(prevProductId);
             
-            if (!key) {
-                throw 'Error';
+            prevProduct.countKeys--;
+            await prevProduct.save();
+            await prevProduct.changeInStock(product.countKeys > 0);
+            
+            if (isActive) {
+                product.countKeys++;
+                await product.save();
+                await product.changeInStock(true);
             }
-            
-            key.value = keyValue
-            key.product = productId
-            key.isActive = is_active === 'on'
-            key.expired = expired || undefined
-            key.purchasePrice = purchasePrice || 0;
-            key.deactivationReason = is_active === 'on' ? undefined : req.body.deactivationReason || undefined;
-            
-            await key.save()
+        } else if (changeActive && !keyObj.isSold) {
+            isActive ? product.countKeys++ : product.countKeys--;
+            await product.save();
+            await product.changeInStock(product.countKeys > 0);
         }
         
         res.redirect('/admin/keys');
     } catch (e) {
         console.log(e);
-        res.redirect('/admin/keys');
-    }
-}
-
-
-export const editKeyPage = async (req, res) => {
-    try {
-        let key = await Key.findById(req.params.keyId).lean();
-        
-        if (!key) {
-            return res.redirect('/admin/keys/add');
-        }
-        
-        key.product = key.product.toString();
-    
-        let products = await Product.find().select(['name']).lean();
-        let expired = new Date(key.expired)
-        let format_num = m=> m < 10 ? `0${m}`:m
-        let get_month = x => format_num(x.getMonth()+1);
-        
-        expired = `${expired.getFullYear()}-${get_month(expired)}-${format_num(expired.getDate())}`;
-        products = products.map(product => ({...product, '_id': product._id.toString()}))
-        
-        res.render('addKey', {
-            layout: 'admin',
-            products,
-            key,
-            expired,
-            is_edit: true,
-        });
-    } catch (e) {
-        console.log(e)
-        res.redirect('/admin/keys/')
+        res.redirect(`/admin/keys/edit/${keyId}`)
     }
 }

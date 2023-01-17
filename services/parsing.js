@@ -77,9 +77,7 @@ const sync = async () => {
         productOnSite.dsPrice = priceTo;
         await productOnSite.save();
         
-        let keys = await Key.findOne({product: productOnSite._id, is_active: true});
-        
-        if (keys) {
+        if (productOnSite.countKeys) {
           continue;
         }
 
