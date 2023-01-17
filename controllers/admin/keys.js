@@ -17,6 +17,12 @@ export const pageKeys = async (req, res) => {
         for (const product of productsSync) {
             const keys = await Key.countDocuments({isActive: true, isSold: false, product: product._id});
     
+            !product.shortNames && (product.shortNames = "")
+            
+            if (Array.isArray(product.shortNames)) {
+                product.shortNames = product.shortNames.join(' ');
+            }
+    
             product.countKeys = +keys;
             await product.save();
             await product.changeInStock(product.countKeys > 0);
