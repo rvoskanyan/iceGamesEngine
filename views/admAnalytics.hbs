@@ -33,6 +33,15 @@
     table tr td:not(:last-child) {
         border-right: 1px solid #d7d7d7
     }
+
+    .graphic {
+        max-width: 800px;
+        margin-top: 30px;
+    }
+
+    .total {
+        margin: 15px auto 0 auto;
+    }
 </style>
 
 
@@ -80,23 +89,126 @@
 </table>
 
 
-<div style="max-width: 800px; max-height: 400px; margin-top: 30px">
+<div class="graphic">
     <canvas id="countSales"></canvas>
+    <table cellpadding="0" cellspacing="0" class="total">
+        <tr>
+            <th>Период, дней</th>
+            <th>Предыдущий</th>
+            <th>Текущий</th>
+        </tr>
+        <tr>
+            <td>7</td>
+            <td>{{total.week.prev.countSales}}</td>
+            <td>{{total.week.current.countSales}}</td>
+        </tr>
+        <tr>
+            <td>30</td>
+            <td>{{total.month.prev.countSales}}</td>
+            <td>{{total.month.current.countSales}}</td>
+        </tr>
+    </table>
 </div>
-<div style="max-width: 800px; max-height: 400px; margin-top: 30px">
+
+<div class="graphic">
     <canvas id="cost"></canvas>
+    <table cellpadding="0" cellspacing="0" class="total">
+        <tr>
+            <th>Период, дней</th>
+            <th>Предыдущий</th>
+            <th>Текущий</th>
+        </tr>
+        <tr>
+            <td>7</td>
+            <td>{{total.week.prev.cost}}</td>
+            <td>{{total.week.current.cost}}</td>
+        </tr>
+        <tr>
+            <td>30</td>
+            <td>{{total.month.prev.cost}}</td>
+            <td>{{total.month.current.cost}}</td>
+        </tr>
+    </table>
 </div>
-<div style="max-width: 800px; max-height: 400px; margin-top: 30px">
+<div class="graphic">
     <canvas id="fvp"></canvas>
+    <table cellpadding="0" cellspacing="0" class="total">
+        <tr>
+            <th>Период, дней</th>
+            <th>Предыдущий</th>
+            <th>Текущий</th>
+        </tr>
+        <tr>
+            <td>7</td>
+            <td>{{total.week.prev.fvp}}</td>
+            <td>{{total.week.current.fvp}}</td>
+        </tr>
+        <tr>
+            <td>30</td>
+            <td>{{total.month.prev.fvp}}</td>
+            <td>{{total.month.current.fvp}}</td>
+        </tr>
+    </table>
 </div>
-<div style="max-width: 800px; max-height: 400px; margin-top: 30px">
+<div class="graphic">
     <canvas id="turnover"></canvas>
+    <table cellpadding="0" cellspacing="0" class="total">
+        <tr>
+            <th>Период, дней</th>
+            <th>Предыдущий</th>
+            <th>Текущий</th>
+        </tr>
+        <tr>
+            <td>7</td>
+            <td>{{total.week.prev.turnover}}</td>
+            <td>{{total.week.current.turnover}}</td>
+        </tr>
+        <tr>
+            <td>30</td>
+            <td>{{total.month.prev.turnover}}</td>
+            <td>{{total.month.current.turnover}}</td>
+        </tr>
+    </table>
 </div>
-<div style="max-width: 800px; max-height: 400px; margin-top: 30px">
+<div class="graphic">
     <canvas id="countOrders"></canvas>
+    <table cellpadding="0" cellspacing="0" class="total">
+        <tr>
+            <th>Период, дней</th>
+            <th>Предыдущий</th>
+            <th>Текущий</th>
+        </tr>
+        <tr>
+            <td>7</td>
+            <td>{{total.week.prev.countOrders}}</td>
+            <td>{{total.week.current.countOrders}}</td>
+        </tr>
+        <tr>
+            <td>30</td>
+            <td>{{total.month.prev.countOrders}}</td>
+            <td>{{total.month.current.countOrders}}</td>
+        </tr>
+    </table>
 </div>
-<div style="max-width: 800px; max-height: 400px; margin-top: 30px">
+<div class="graphic">
     <canvas id="averageCheck"></canvas>
+    <table cellpadding="0" cellspacing="0" class="total">
+        <tr>
+            <th>Период, дней</th>
+            <th>Предыдущий</th>
+            <th>Текущий</th>
+        </tr>
+        <tr>
+            <td>7</td>
+            <td>{{total.week.prev.countSales}}</td>
+            <td>{{total.week.current.countSales}}</td>
+        </tr>
+        <tr>
+            <td>30</td>
+            <td>{{total.month.prev.countSales}}</td>
+            <td>{{total.month.current.countSales}}</td>
+        </tr>
+    </table>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

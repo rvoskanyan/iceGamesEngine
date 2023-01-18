@@ -27,6 +27,16 @@ export const analyticsPage = async (req, res) => {
     const previousTurnover = [];
     const previousCountOrders = [];
     const previousAverageCheck = [];
+    const total = {
+      week: {
+        current: {},
+        prev: {},
+      },
+      month: {
+        current: {},
+        prev: {},
+      },
+    };
     
     for (let i = 30; i >= 0; i--) {
       const dateForCurrent = new Date(todayDate);
@@ -52,6 +62,38 @@ export const analyticsPage = async (req, res) => {
       previousTurnover.push(previousData.turnover);
       previousCountOrders.push(previousData.countOrders);
       previousAverageCheck.push(previousData.averageCheck);
+  
+      total.month.current.countSales += currentData.countSales;
+      total.month.current.cost += currentData.cost;
+      total.month.current.fvp += currentData.fvp;
+      total.month.current.turnover += currentData.turnover;
+      total.month.current.countOrders += currentData.countOrders;
+      total.month.current.averageCheck += currentData.averageCheck;
+  
+      total.month.prev.countSales += previousData.countSales;
+      total.month.prev.cost += previousData.cost;
+      total.month.prev.fvp += previousData.fvp;
+      total.month.prev.turnover += previousData.turnover;
+      total.month.prev.countOrders += previousData.countOrders;
+      total.month.prev.averageCheck += previousData.averageCheck;
+      
+      if (i < 14 && i > 6) {
+        total.week.prev.countSales += previousData.countSales;
+        total.week.prev.cost += previousData.cost;
+        total.week.prev.fvp += previousData.fvp;
+        total.week.prev.turnover += previousData.turnover;
+        total.week.prev.countOrders += previousData.countOrders;
+        total.week.prev.averageCheck += previousData.averageCheck;
+      }
+      
+      if (i < 7) {
+        total.week.current.countSales += currentData.countSales;
+        total.week.current.cost += currentData.cost;
+        total.week.current.fvp += currentData.fvp;
+        total.week.current.turnover += currentData.turnover;
+        total.week.current.countOrders += currentData.countOrders;
+        total.week.current.averageCheck += currentData.averageCheck;
+      }
       
       labels.push(label < 10 ? `0${label}` : label.toString());
   
@@ -87,12 +129,12 @@ export const analyticsPage = async (req, res) => {
         });
   
         return {
-          countSales: keys.length,
-          cost: cost,
-          fvp: fvp,
-          turnover: turnover,
-          countOrders: countOrders,
-          averageCheck: turnover / countOrders || 0,
+          countSales: keys.length || 0,
+          cost: cost || 0,
+          fvp: fvp || 0,
+          turnover: turnover || 0,
+          countOrders: countOrders || 0,
+          averageCheck: (turnover / countOrders) || 0,
         };
       }
     }
@@ -176,6 +218,7 @@ export const analyticsPage = async (req, res) => {
       totalPVP,
       totalSellingKeys,
       totalFVP,
+      total,
       currentCountSales: JSON.stringify(currentCountSales),
       currentCost: JSON.stringify(currentCost),
       currentFvp: JSON.stringify(currentFvp),
