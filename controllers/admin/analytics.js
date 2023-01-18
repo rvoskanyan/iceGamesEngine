@@ -84,12 +84,12 @@ export const analyticsPage = async (req, res) => {
       total.month.prev.averageCheck += previousData.averageCheck;
       
       if (i < 14 && i > 6) {
-        total.week.prev.countSales += previousData.countSales;
-        total.week.prev.cost += previousData.cost;
-        total.week.prev.fvp += previousData.fvp;
-        total.week.prev.turnover += previousData.turnover;
-        total.week.prev.countOrders += previousData.countOrders;
-        total.week.prev.averageCheck += previousData.averageCheck;
+        total.week.prev.countSales += currentData.countSales;
+        total.week.prev.cost += currentData.cost;
+        total.week.prev.fvp += currentData.fvp;
+        total.week.prev.turnover += currentData.turnover;
+        total.week.prev.countOrders += currentData.countOrders;
+        total.week.prev.averageCheck += currentData.averageCheck;
       }
       
       if (i < 7) {
