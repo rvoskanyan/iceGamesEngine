@@ -27,15 +27,21 @@ export const analyticsPage = async (req, res) => {
     const previousTurnover = [];
     const previousCountOrders = [];
     const previousAverageCheck = [];
+    const indicatorsBlank = {
+      countSales: 0,
+      cost: 0,
+      fvp: 0,
+      turnover: 0,
+      countOrders: 0,
+      averageCheck: 0,
+    };
+    const periodsBlank = {
+      current: {...indicatorsBlank},
+      prev: {...indicatorsBlank},
+    };
     const total = {
-      week: {
-        current: {},
-        prev: {},
-      },
-      month: {
-        current: {},
-        prev: {},
-      },
+      week: {...periodsBlank},
+      month: {...periodsBlank},
     };
     
     for (let i = 30; i >= 0; i--) {
