@@ -35,13 +35,15 @@ export const analyticsPage = async (req, res) => {
       countOrders: 0,
       averageCheck: 0,
     };
-    const periodsBlank = {
-      current: {...indicatorsBlank},
-      prev: {...indicatorsBlank},
-    };
     const total = {
-      week: {...periodsBlank},
-      month: {...periodsBlank},
+      week: {
+        current: {...indicatorsBlank},
+        prev: {...indicatorsBlank},
+      },
+      month: {
+        current: {...indicatorsBlank},
+        prev: {...indicatorsBlank},
+      },
     };
     
     for (let i = 30; i >= 0; i--) {
