@@ -208,7 +208,7 @@ export function getTurboArticlesRssFeedText(articles) {
                 <img class="img" src="${srcImg}"`}
                 <div>${block.text}</div>`;
                 }).join('')}
-                ${article.products.length && `<h3>Игры из статьи</h3>
+                ${article.products.length ? `<h3>Игры из статьи</h3>
                     <ul>
                         ${article.products.map(product => {
                         const link = `${websiteAddress}games/${product.alias}`;
@@ -217,7 +217,7 @@ export function getTurboArticlesRssFeedText(articles) {
                                             <a href="${link}">${product.name}</a>
                                         </li>`;
                     }).join('')}
-                </ul>`}
+                </ul>` : ''}
             ]]>
         </turbo:content>
     </item>
