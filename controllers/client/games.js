@@ -530,7 +530,7 @@ export const gamePage = async (req, res) => {
       .find({products: {$in: [product._id.toString()]}})
       .select(['alias', 'img', 'name', 'type', 'created', 'createdAt', 'introText']);
     const recProductsFilter = { //Фильтры для подборки рекомендаций
-      _id: {$ne: product._id}, //Отсеивает товар, на котором сейчас находимся
+      $and: [{_id: {$ne: product._id}}], //Отсеивает товар, на котором сейчас находимся
       inStock: true,
       active: true,
       dlc: false,
@@ -710,13 +710,12 @@ export const gamePage = async (req, res) => {
       return {...item.toObject()};
     });
     
+    recProductsFilter.$and.push({_id: {$nin: recommendIds}});
+    
     if (recProducts.length < 8) {
       const dopRect = await Product
         .find({
           ...recProductsFilter,
-          _id: {
-            $nin: recommendIds,
-          },
           priceTo: {
             $gte: product.priceTo,
           },
@@ -732,9 +731,6 @@ export const gamePage = async (req, res) => {
       const dopRect = await Product
         .find({
           ...recProductsFilter,
-          _id: {
-            $nin: recommendIds,
-          },
           priceTo: {
             $lt: product.priceTo,
           },
