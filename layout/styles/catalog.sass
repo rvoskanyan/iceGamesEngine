@@ -9,19 +9,26 @@
   .headTitle
     display: flex
     flex-direction: column
+    justify-content: center
     align-items: center
     row-gap: 10px
+    margin-bottom: 20px
 
     @include for-desktop-up
       flex-direction: initial
       column-gap: 25px
+      margin-bottom: 30px
 
   .mainTitle
     color: #fff
-    font-weight: 400
+    font-weight: 100
     font-family: 'Lemon Milk'
-    margin-bottom: 30px
     text-align: center
+    font-size: 20px
+
+    @include for-desktop-up
+      font-size: 40px
+
 
   .descriptionContainer
     position: relative
