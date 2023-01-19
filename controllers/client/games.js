@@ -433,6 +433,7 @@ export const gamesPage = async (req, res, next) => {
       breadcrumbs,
       sectionName,
       sectionType,
+      section,
       onlyStock,
       allCategories,
       allGenres,
