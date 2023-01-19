@@ -43,10 +43,7 @@ const fields = {
     //unique: true,
     //index: true,
   },
-  dsId: {
-    type: Number,
-    unique: true,
-  },
+  dsId: Number,
   description: {
     type: String,
     //required: true,
