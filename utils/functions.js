@@ -208,16 +208,16 @@ export function getTurboArticlesRssFeedText(articles) {
                 <img class="img" src="${srcImg}"`}
                 <div>${block.text}</div>`;
                 }).join('')}
-                <h3>Игры из статьи</h3>
-                <ul>
-                    ${article.products.map(product => {
+                ${article.products.length && `<h3>Игры из статьи</h3>
+                    <ul>
+                        ${article.products.map(product => {
                         const link = `${websiteAddress}games/${product.alias}`;
-    
+                
                         return `<li>
-                                <a href="${link}">${product.name}</a>
-                            </li>`;
+                                            <a href="${link}">${product.name}</a>
+                                        </li>`;
                     }).join('')}
-                </ul>
+                </ul>`}
             ]]>
         </turbo:content>
     </item>
