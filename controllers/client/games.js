@@ -67,8 +67,8 @@ export const gamesPage = async (req, res, next) => {
   
       switch (sectionType) {
         case 'genres': {
-          metaDescription = `Каталог лучших игр в жанре ${section.name} со скидками и удобным поиском. Топ продаж от магазина лицензионных ключей ICE GAMES. (страница ${page})`;
-          title = `Каталог игр ICE GAMES в жанре ${section.name} (страница ${page})`;
+          metaDescription = `Каталог лучших игр в жанре ${section.name} со скидками и удобным поиском. Топ продаж от магазина лицензионных ключей ICE GAMES. Страница ${page}`;
+          title = `Каталог игр ICE GAMES в жанре ${section.name} — страница ${page}`;
           hTitle = `Купить игры в жанре ${section.name} дешево для PC`;
           genres.push(sectionName);
           break;
