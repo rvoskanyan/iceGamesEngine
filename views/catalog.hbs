@@ -2,12 +2,12 @@
     {{> breadcrumbs}}
     <div class="headTitle">
         <h1 class="mainTitle">{{hTitle}}</h1>
-        {{#if section.description}}
+        {{#if pageDescription}}
             <div class="descriptionContainer">
                 <button class="btn round info border js-openDescriptionSplitCatalog">i</button>
                 <div class="description js-descriptionSplitCatalog">
                     <button class="btn round-close close js-descriptionSplitCatalogClose"></button>
-                    {{encodeString section.description}}
+                    {{encodeString pageDescription}}
                 </div>
             </div>
         {{/if}}
