@@ -17,12 +17,14 @@ import ratingRoute from './client/rating.js';
 import sitemapsRoute from './client/sitemaps.js';
 import legalInfo from './client/legalinfo.js';
 import splitCatalogRoute from './client/splitCatalog.js';
+import yaAuthRoute from "./client/yaAuth.js";
 
 const router = Router();
 
 router.use('/', homeRoute);
 router.use('/', formActionsRoute);
 router.use('/', systemRoute);
+router.use('/yaAuth', yaAuthRoute);
 router.use('/games', gamesRoute);
 router.use('/profile', profileRoute);
 router.use('/blog', blogRoute);
