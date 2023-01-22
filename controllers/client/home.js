@@ -234,7 +234,7 @@ export const homepage = async (req, res) => {
   
   res.render('home', {
     title: 'Купить лицензионные ключи Steam в магазине компьютерных игр ICE GAMES',
-    metaDescription: 'Магазин лицензионных ключей ICE GAMES. Более 2000 игр в каталоге, 16 жанров, сервисная поддержка, активация в Steam, Origin, Epic Games, GOG и других сервисах. Увлекательные статьи и большое активное комьюнити.',
+    metaDescription: 'Магазин лицензионных ключей ICE GAMES. Активация игр Steam, Origin, Epic Games, GOG и других сервисах для более, чем 2000 игр в 16 различных жанрах, сервисная поддержка, увлекательные статьи и большое активное комьюнити.',
     noIndex: !!checkEmailHash,
     noIndexGoogle: !!checkEmailHash,
     isHome: true,
