@@ -11,9 +11,14 @@ router.get('/', async (req, res) => {
   try {
     const token = req.query.access_token;
     const error = req.query.error;
+    let person = undefined;
   
     if (req.session.isAuth) {
-      throw new Error('Already signed in');
+      person = req.locals.person;
+      
+      if (person.yaId) {
+        throw new Error('Already signed in');
+      }
     }
   
     if (!token && !error) {
@@ -38,6 +43,13 @@ router.get('/', async (req, res) => {
     const data = await responseInfo.json();
     const yaId = +data.id;
     const user = await User.findOne({yaId});
+    
+    if (person) {
+      person.yaId = yaId;
+      await person.save();
+  
+      return res.redirect(`${websiteAddress}profile`);
+    }
     
     if (user) {
       req.session.isAuth = true;

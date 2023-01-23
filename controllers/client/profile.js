@@ -42,7 +42,7 @@ export const profilePage = async (req, res) => {
 
 export const profileEditPage = async (req, res) => {
   try {
-    const {userId} = req.session;
+    const userId = req.session.userId;
     const user = await User.findById(userId);
   
     res.render('profileEdit', {
