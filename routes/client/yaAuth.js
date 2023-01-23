@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
     let person = undefined;
   
     if (req.session.isAuth) {
-      person = req.locals.person;
+      person = res.locals.person;
       
       if (person.yaId) {
         throw new Error('Already signed in');
@@ -42,7 +42,6 @@ router.get('/', async (req, res) => {
     const responseInfo = await fetch('https://login.yandex.ru/info', {headers: {'Authorization': `OAuth ${token}`}});
     const data = await responseInfo.json();
     const yaId = +data.id;
-    const user = await User.findOne({yaId});
     
     if (person) {
       person.yaId = yaId;
@@ -50,6 +49,8 @@ router.get('/', async (req, res) => {
   
       return res.redirect(`${websiteAddress}profile`);
     }
+  
+    const user = await User.findOne({yaId});
     
     if (user) {
       req.session.isAuth = true;
