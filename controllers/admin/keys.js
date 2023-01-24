@@ -197,7 +197,7 @@ export const editKey = async (req, res) => {
         keyObj.purchasePrice = purchasePrice || 0;
         keyObj.deactivationReason = !isActive && deactivationReason ? deactivationReason : undefined;
         
-        await key.save();
+        await keyObj.save();
         
         if (prevProductId && !keyObj.isSold) {
             const prevProduct = await Product.findById(prevProductId);
