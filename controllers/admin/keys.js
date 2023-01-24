@@ -195,7 +195,7 @@ export const editKey = async (req, res) => {
         keyObj.isActive = isActive;
         keyObj.expired = expired || undefined;
         keyObj.purchasePrice = purchasePrice || 0;
-        keyObj.deactivationReason = isActive ? undefined : (deactivationReason || undefined);
+        keyObj.deactivationReason = !isActive && deactivationReason ? deactivationReason : undefined;
         
         await key.save();
         
