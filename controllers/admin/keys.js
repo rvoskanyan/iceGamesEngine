@@ -195,7 +195,7 @@ export const editKey = async (req, res) => {
         keyObj.isActive = isActive;
         keyObj.expired = expired || undefined;
         keyObj.purchasePrice = purchasePrice || 0;
-        keyObj.deactivationReason = isActive === 'on' ? undefined : deactivationReason || undefined;
+        keyObj.deactivationReason = isActive ? undefined : (deactivationReason || undefined);
         
         await key.save();
         
@@ -204,7 +204,7 @@ export const editKey = async (req, res) => {
             
             prevProduct.countKeys--;
             await prevProduct.save();
-            await prevProduct.changeInStock(product.countKeys > 0);
+            await prevProduct.changeInStock(prevProduct.countKeys > 0);
             
             if (isActive) {
                 product.countKeys++;
