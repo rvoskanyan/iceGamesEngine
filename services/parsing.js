@@ -69,7 +69,7 @@ const sync = async () => {
           continue;
         }
         
-        if (priceTo >= 9999) {
+        if (priceTo >= 9999 || productOnSite.preOrder) {
           await productOnSite.changeInStock(false);
           continue;
         }
