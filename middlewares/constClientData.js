@@ -7,7 +7,7 @@ export default async (req, res, next) => {
     ...res.locals,
     allActivationServices: await ActivationService.find().select(['name', 'alias']).lean(),
     allGenres: await Genre.find().select(['name', 'alias']).lean(),
-    allCategories: await Category.find().select(['name']).lean(),
+    allCategories: await Category.find().select(['name', 'alias']).lean(),
   }
   
   next();
