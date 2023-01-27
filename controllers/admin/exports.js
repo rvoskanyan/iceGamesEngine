@@ -56,11 +56,11 @@ export const monthlySales = async (req, res) => {
   
     orders.forEach(order => {
       const email = order.buyerEmail;
+      const date = getFormatDate(order.createdAt, '-', ['d', 'm', 'y']);
       
       order.items.forEach(item => {
         const price = item.sellingPrice;
         const name = item.productId.name;
-        const date = getFormatDate(item.createdAt, '-', ['d', 'm', 'y']);
   
         worksheet.addRow({
           email,
