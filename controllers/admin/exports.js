@@ -3,6 +3,7 @@ import exceljs from "exceljs";
 import Product from "../../models/Product.js";
 import Order from "../../models/Order.js";
 import {__dirname} from "../../rootPathes.js";
+import fs from "fs";
 
 export const exportProductInStock = async (req, res) => {
   try {
@@ -27,7 +28,7 @@ export const exportProductInStock = async (req, res) => {
 
 export const monthlySales = async (req, res) => {
   try {
-    const fileName = 'monthly-sales.xlsx';
+    const fileName = '/monthly-sales.xlsx';
     const orders = await Order
       .find({
         isDBI: true,
@@ -66,9 +67,16 @@ export const monthlySales = async (req, res) => {
       })
     });
     
-    await workbook.xlsx.writeFile(path.join(__dirname, `secureFiles/${fileName}`));
+    const dir = path.join(__dirname, 'secureFiles');
+    const filePath = dir + fileName;
   
-    res.sendFile(path.join(__dirname, `secureFiles/${fileName}`));
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir);
+    }
+    
+    await workbook.xlsx.writeFile(filePath);
+  
+    res.sendFile(filePath);
   } catch (e) {
     console.log(e);
     res.redirect('/admin')
