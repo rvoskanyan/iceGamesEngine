@@ -4,6 +4,7 @@ import Product from "../../models/Product.js";
 import Order from "../../models/Order.js";
 import {__dirname} from "../../rootPathes.js";
 import fs from "fs";
+import {getFormatDate} from "../../utils/functions.js";
 
 export const exportProductInStock = async (req, res) => {
   try {
@@ -36,7 +37,7 @@ export const monthlySales = async (req, res) => {
         createdAt: {$gte: new Date().setDate(new Date().getDate() - 30)},
       })
       .sort({buyerEmail: -1})
-      .select(['buyerEmail', 'items'])
+      .select(['buyerEmail', 'items', 'createdAt'])
       .populate([{
         path: 'items.productId',
         select: ['name'],
@@ -50,6 +51,7 @@ export const monthlySales = async (req, res) => {
       {header: 'E-mail', key: 'email', width: 10},
       {header: 'Название товара', key: 'name', width: 10},
       {header: 'Цена покупки', key: 'price', width: 10},
+      {header: 'Дата покупки', key: 'date', width: 10},
     ];
   
     orders.forEach(order => {
@@ -58,11 +60,13 @@ export const monthlySales = async (req, res) => {
       order.items.forEach(item => {
         const price = item.sellingPrice;
         const name = item.productId.name;
+        const date = getFormatDate(item.createdAt, '-', ['d', 'm', 'y']);
   
         worksheet.addRow({
           email,
           price,
           name,
+          date,
         });
       })
     });

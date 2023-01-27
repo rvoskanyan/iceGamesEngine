@@ -15,7 +15,7 @@ export const getDiscount = (priceTo, priceFrom) => {
     return Math.floor(100 - priceTo / (priceFrom / 100));
 }
 
-export const getFormatDate = (date, separator, pattern, monthString, timeSeparator) => {
+export const getFormatDate = (date, separator, pattern, monthString = false, timeSeparator) => {
     const dateObject = new Date(Date.parse(date));
     let newDate = '';
     let timeInit = false;
