@@ -44,7 +44,6 @@ export const gamesPage = async (req, res, next) => {
     if (sectionName) {
       section = await Genre.findOne({alias: sectionName}).select(['name', 'description']).lean();
       sectionType = 'genres';
-    
       if (!section) {
         section = await ActivationService.findOne({alias: sectionName}).select(['name', 'description']).lean();
         sectionType = 'activationServices';
@@ -745,7 +744,7 @@ export const gamePage = async (req, res) => {
     
       recProducts = [...recProducts, ...dopRect];
     }
-  
+
     recProducts = recProducts.map(item => {
       const productId = item._id.toString();
   

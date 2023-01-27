@@ -1,8 +1,8 @@
 import {Router} from "express";
-import {gamesPage} from "../../controllers/client/games.js";
+import {pageSplitCatalog} from "../../controllers/client/splitCatalog.js";
 
 const router = Router();
 
-router.get('/:sectionName', gamesPage)
+router.get('/:alias', pageSplitCatalog)
 
 export default router;
