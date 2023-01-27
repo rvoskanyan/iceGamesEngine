@@ -30,13 +30,20 @@ export const exportProductInStock = async (req, res) => {
 export const monthlySales = async (req, res) => {
   try {
     const fileName = '/monthly-sales.xlsx';
+    const date = new Date();
+    
+    date.setMonth(date.getMonth() - 1);
+    date.setHours(0);
+    date.setMinutes(0);
+    date.setSeconds(0);
+    
     const orders = await Order
       .find({
         isDBI: true,
         status: 'paid',
-        createdAt: {$gte: new Date().setDate(new Date().getDate() - 30)},
+        createdAt: {$gte: date},
       })
-      .sort({createdAt: -1, buyerEmail: -1})
+      .sort({createdAt: 1, buyerEmail: -1})
       .select(['buyerEmail', 'items', 'createdAt'])
       .populate([{
         path: 'items.productId',
