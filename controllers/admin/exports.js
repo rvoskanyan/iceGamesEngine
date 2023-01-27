@@ -36,7 +36,7 @@ export const monthlySales = async (req, res) => {
         status: 'paid',
         createdAt: {$gte: new Date().setDate(new Date().getDate() - 30)},
       })
-      .sort({buyerEmail: -1})
+      .sort({createdAt: -1, buyerEmail: -1})
       .select(['buyerEmail', 'items', 'createdAt'])
       .populate([{
         path: 'items.productId',
