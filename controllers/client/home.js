@@ -216,7 +216,7 @@ export const homepage = async (req, res) => {
   })
   
   catalog.push({
-    category: {name: 'Предзаказы'},
+    category: {name: 'Скоро'},
     products: preOrders.map(item => {
       const productId = item._id.toString();
   
