@@ -218,10 +218,10 @@ export const profileOrdersPage = async (req, res) => {
     let orders = await Order
       .find({userId: user._id})
       .sort({'createdAt': -1})
-      .select(['products', 'createdAt', 'status', 'dsCartId'])
+      .select(['items', 'createdAt', 'status', 'dsCartId'])
       .populate([
         {
-          path: 'products.productId',
+          path: 'items.productId',
           select: ['name', 'alias', 'priceTo', 'priceFrom', 'img', 'preorder', 'releaseDate', 'activationServiceId', 'activationRegions'],
           populate: [
             {
@@ -238,7 +238,7 @@ export const profileOrdersPage = async (req, res) => {
       .lean();
     
     orders = orders.map(order => {
-      order.products = order.products.map(item => {
+      order.items = order.items.map(item => {
         const productId = item.productId._id.toString();
     
         if (favoritesProducts && favoritesProducts.includes(productId)) {
@@ -249,8 +249,8 @@ export const profileOrdersPage = async (req, res) => {
           item.productId.inCart = true;
         }
   
-        item.purchasePrice = item.purchasePrice ? item.purchasePrice : item.productId.priceTo;
-        item.discount = getDiscount(item.purchasePrice, item.productId.priceFrom);
+        item.sellingPrice = item.sellingPrice ? item.sellingPrice : item.productId.priceTo;
+        item.discount = getDiscount(item.sellingPrice, item.productId.priceFrom);
         item.productId.releaseDate = getFormatDate(item.productId.releaseDate, '.', ['d', 'm', 'y']);
     
         return item;

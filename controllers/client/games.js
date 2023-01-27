@@ -605,7 +605,7 @@ export const gamePage = async (req, res) => {
     if (req.session.isAuth) {
       const favoritesProducts = person.favoritesProducts;
       const cart = person.cart;
-      const order = await Order.findOne({status: 'paid', userId: res.locals.person._id, products: {$elemMatch: {productId: product._id}}});
+      const order = await Order.findOne({status: 'paid', userId: res.locals.person._id, items: {$elemMatch: {productId: product._id}}});
   
       if (order) {
         isProductNotPurchased = false;

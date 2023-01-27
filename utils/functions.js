@@ -169,6 +169,56 @@ export function getYmlOffer(data) {
         </offer>`;
 }
 
+export function getTurboArticlesRssFeedText(articles) {
+    let turboArticlesRssFeedText = `<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:yandex="http://news.yandex.ru"
+     xmlns:media="http://search.yahoo.com/mrss/"
+     xmlns:turbo="http://turbo.yandex.ru"
+     version="2.0">
+  <channel>
+    <title>Блог ICE GAMES</title>
+    <link>https://icegames.store/</link>
+    <description>Обзоры игр, познавательные статьи и актуальные новости — всё самое интересное в магазине лицензионных ключей ICE GAMES.</description>
+    <language>ru</language>
+    ${articles.map(article => {
+        const date = new Date(article.createdAt).toUTCString();
+        const link = htmlEntities(`${websiteAddress}blog/${article.alias}`);
+        const headerImg = htmlEntities(`${websiteAddress}${article.img}`);
+        const name = htmlEntities(article.name);
+        
+        return  `<item turbo="true">
+        <link>${link}</link>
+        <pubDate>${date}</pubDate>
+        <turbo:content>
+            <![CDATA[
+                <header>
+                    <h1>${name}</h1>
+                    <figure>
+                      <img src="${headerImg}">
+                    </figure>
+                    <div data-block="breadcrumblist">
+                        <a href="https://icegames.store">Главная</a>
+                        <a href="https://icegames.store/blog">Блог</a>
+                        <a href="${link}">${name}</a>
+                    </div>
+                </header>${article.blocks.map(block => {
+                    const srcImg = `${websiteAddress}${block.img}`;
+                    
+                    return `${!block.img ? '' : `
+                <img class="img" src="${srcImg}"`}
+                <div>${block.text}</div>`;
+                }).join('')}
+            ]]>
+        </turbo:content>
+    </item>
+`
+    }).join('')}
+  </channel>
+</rss>`;
+    
+    return turboArticlesRssFeedText;
+}
+
 export function htmlEntities(str) {
     return String(str)
         .replace(/&/g, '&amp;')

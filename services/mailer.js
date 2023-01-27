@@ -4,7 +4,6 @@ import sharp from 'sharp';
 import path from "path";
 import {__dirname} from "../rootPathes.js";
 import {v4 as uuidv4} from "uuid";
-import Key from "../models/Key.js";
 
 const fromMail = 'support@icegames.store';
 
@@ -53,24 +52,15 @@ export async function restoreMail(to, password) {
     })
 }
 
-export async function mailingBuyProduct(productId, email, isKey = false, sellingPrice = 0) {
-    let key;
-    if (isKey) {
-        key = await Key.findOne({product: productId, is_active: true}).select('key');
-    }
-
-    const product = await Product.findById(productId).populate([{
-        path: 'activationServiceId',
-        select: 'name',
-    }]);
+export async function mailingBuyProduct({product, email, key = null}) {
     const websiteAddress = process.env.WEB_SITE_ADDRESS;
-
+    
     if (!product.darkenCover) {
         product.darkenCover = `${uuidv4()}.jpg`;
-
+        
         await product.save();
     }
-
+    
     await sharp(path.join(__dirname, `/uploadedFiles/${product.coverImg}`))
         .resize(600, 345)
         .composite([
@@ -151,7 +141,7 @@ export async function mailingBuyProduct(productId, email, isKey = false, selling
                               <p style="color: #ffffff; text-align: center; width: 310px; font-size: 16px; font-family: Montserrat, arial, sans-serif !important; line-height: 20px">
                                   Вы приобрели игру ${product.name} с активацией в ${product.activationServiceId.name}.<br>
                                   Мы очень рады, что Вы выбрали нас!
-                                  ${isKey ? '<br><br>Ваш ключ: ' + key.key : ''}
+                                  ${key && `<br><br>Ваш ключ: ${key}`}
                               </p>
                           </td>
                       </tr>
@@ -226,11 +216,6 @@ export async function mailingBuyProduct(productId, email, isKey = false, selling
       </html>
     `,
     })
-    if (!!key) {
-        key.is_active = false;
-        key.sellingPrice = sellingPrice;
-        await key.save();
-    }
 }
 
 export async function mailingInStockProduct(productId, emails) {

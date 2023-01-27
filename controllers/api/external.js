@@ -5,14 +5,15 @@ import path from "path";
 import {achievementEvent} from "../../services/achievement.js";
 import {getToken} from "../../services/digiseller.js";
 import {mailingBuyProduct} from "../../services/mailer.js";
+import {getTurboArticlesRssFeedText, getYmlFeed} from "../../utils/functions.js";
 import Turn from "../../services/Turn.js";
 
 import Order from "./../../models/Order.js";
 import Product from "./../../models/Product.js";
 import User from "./../../models/User.js";
 import Genre from "../../models/Genre.js";
+import Article from "../../models/Article.js";
 
-import {getYmlFeed} from "../../utils/functions.js";
 import {__dirname} from "../../rootPathes.js";
 
 export const assignOrderPay = async (req, res) => {
@@ -43,7 +44,7 @@ export const assignOrderPay = async (req, res) => {
     
       const order = await Order.findOne({dsCartId});
     
-      if (!order) {
+      if (!order || order.isDBI) {
         throw new Error('Order not found');
       }
     
@@ -58,45 +59,24 @@ export const assignOrderPay = async (req, res) => {
       const resultOrder = await responseOrder.json();
       const priceProduct = resultOrder.content.amount;
       const product = await Product.findOne({dsId: dsProductId}).select(['_id']).lean();
+      
+      if (!product) {
+        throw new Error('Product not found')
+      }
+      
       const productByOrder = {
         productId: product._id,
-        purchasePrice: priceProduct,
+        sellingPrice: priceProduct,
       };
-      const firstDsPay = !order.paidTypes.includes('ds');
       
-      if (firstDsPay) {
-        order.paidTypes.push('ds');
-        order.products = order.products.filter(product => product.dbi);
-        order.dsBuyerEmail = buyerEmail;
-  
-        switch (order.paymentType) {
-          case 'mixed': {
-            switch (order.status) {
-              case 'notPaid': {
-                order.status = 'partiallyPaid';
-                break;
-              }
-              case 'partiallyPaid': {
-                order.status = 'paid';
-                break;
-              }
-              case 'canceled': {
-                order.status = 'partiallyPaid';
-                break;
-              }
-            }
-      
-            break;
-          }
-          case 'ds': {
-            order.status = order.status !== 'paid' ? 'paid' : order.status;
-      
-            break;
-          }
-        }
+      if (order.status !== 'paid') {
+        order.status = 'paid';
+        order.items = [productByOrder];
+      } else {
+        order.items.push(productByOrder);
       }
-  
-      order.products.push(productByOrder);
+      
+      order.dsBuyerEmail = buyerEmail;
     
       await order.save();
     
@@ -111,7 +91,7 @@ export const assignOrderPay = async (req, res) => {
         }
       }
     
-      await mailingBuyProduct(product._id, buyerEmail).then();
+      await mailingBuyProduct(product._id, buyerEmail);
     
       res.json({
         success: true,
@@ -193,6 +173,18 @@ export const getFeedYML = async (req, res) => {
   
     res.set('Content-Type', 'text/xml');
     res.send(ymlFeed);
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+export const getTurboArticlesRssFeed = async (req, res) => {
+  try {
+    const articles = await Article.find({active: true}).select(['name', 'alias', 'img', 'blocks', 'createdAt']).lean();
+    const turboArticlesRssFeedText = getTurboArticlesRssFeedText(articles);
+    
+    res.set('Content-Type', 'text/xml');
+    res.send(turboArticlesRssFeedText);
   } catch (e) {
     console.log(e);
   }

@@ -941,29 +941,29 @@ if (cartNode) {
             else if (parseInt(stepId) < 1) stepId = '1'
 
             async function get_checkout(isTwo) {
-                const orderId = cartNode.dataset.orderId;
-                let payment = await Payment.get_method()
+                const payment = await Payment.get_method()
                 let yaClientId;
-                if (window.yaCounter69707947 && window.yaCounter69707947?.getClientID) yaClientId = yaCounter69707947.getClientID()
                 let email;
+    
+                if (!payment) {
+                    return console.error('Payment method not set')
+                }
+    
+                if (window.yaCounter69707947?.getClientID) {
+                    yaClientId = yaCounter69707947.getClientID()
+                }
 
                 if (formConfirm) {
                     email = formConfirm.elements.email.value
                 }
 
-                if (!payment) {
-                    console.error('Payment method not set')
-                }
-
-                const result = await payment.checkout(products.iceGame, isTwo, email, orderId, yaClientId);
+                const result = await payment.checkout(products.iceGame, isTwo, email, yaClientId);
 
                 if (result.err) {
                     return;
                 }
 
                 const data = result.data;
-
-                cartNode.dataset.orderId = data.orderId;
 
                 window.open(data.paymentUrl, '_self')
             }
@@ -1045,14 +1045,13 @@ if (cartNode) {
                 }
 
                 if (!changes.length) {
-                    const orderId = cartNode.dataset.orderId;
                     let email;
 
                     if (formConfirm) {
                         email = formConfirm.elements.email.value
                     }
 
-                    const response = await postman.post('/api/order', {dsCartId, orderId, email, isTwo});
+                    const response = await postman.post('/api/order', {dsCartId, email});
                     const result = await response.json();
 
                     if (result.error) {
@@ -1105,10 +1104,6 @@ if (cartNode) {
                 product_els.innerHTML = prd
                 payment_button.setAttribute('data-step', step_id)
                 console.log(step_id, keyStep)
-            }
-
-            if (orderId) {
-                cartNode.dataset.orderId = orderId;
             }
 
             payBtnNode && payBtnNode.addEventListener('click', async () => {
@@ -1670,7 +1665,7 @@ if (youtubePlayNodes.length) {
             iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
             iframe.setAttribute('allowFullScreen', '');
 
-            new Modal(iframe);
+            new Modal({contentNode: iframe});
         })
     })
 }

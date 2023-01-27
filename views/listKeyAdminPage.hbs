@@ -97,15 +97,19 @@
         <th>Продукт</th>
         <th>Истекает</th>
         <th>В наличии</th>
+        <th>Активен</th>
+        <th>Причина деактивации</th>
     </tr>
     </thead>
     <tbody>
     {{#each keys}}
         <tr>
-            <td><a href="{{@root.websiteAddress}}admin/keys/edit/{{_id}}">{{key}}</a></td>
-            <td><a href="{{@root.websiteAddress}}admin/keys?productId={{product._id}}{{#if isActive}}&isActive=on{{/if}}">{{product.name}}</a></td>
+            <td><a href="{{@root.websiteAddress}}admin/keys/edit/{{_id}}">{{value}}</a></td>
+            <td><a href="{{@root.websiteAddress}}admin/keys?productId={{product._id}}{{#if @root.isActive}}&isActive=on{{/if}}">{{product.name}}</a></td>
             <td>{{#if expired}}{{dateFormat expired}}{{else}}---{{/if}}</td>
-            <td><input disabled type="checkbox" {{#if is_active}}checked{{/if}}></td>
+            <td><input disabled type="checkbox"{{#unless isSold}} checked{{/unless}}></td>
+            <td><input disabled type="checkbox"{{#if isActive}} checked{{/if}}></td>
+            <td>{{#if deactivationReason}}{{deactivationReason}}{{else}}---{{/if}}</td>
         </tr>
     {{/each}}
     </tbody>
