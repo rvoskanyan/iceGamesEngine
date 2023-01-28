@@ -11,7 +11,7 @@ import {
 
 export const articlesPage = async (req, res) => {
   try {
-    const articles = await Article.find().select(['name']);
+    const articles = await Article.find().sort({createdAt: -1}).select(['name']).lean();
   
     res.render('listElements', {
       layout: 'admin',

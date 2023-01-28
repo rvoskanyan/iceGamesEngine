@@ -42,15 +42,18 @@ router.get('/', async (req, res) => {
     const responseInfo = await fetch('https://login.yandex.ru/info', {headers: {'Authorization': `OAuth ${token}`}});
     const data = await responseInfo.json();
     const yaId = +data.id;
+    const user = await User.findOne({yaId});
     
     if (person) {
+      if (user) {
+        throw new Error('This YaID taken');
+      }
+      
       person.yaId = yaId;
       await person.save();
   
       return res.redirect(`${websiteAddress}profile`);
     }
-  
-    const user = await User.findOne({yaId});
     
     if (user) {
       req.session.isAuth = true;
