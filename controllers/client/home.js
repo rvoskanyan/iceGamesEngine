@@ -153,6 +153,7 @@ export const homepage = async (req, res) => {
       },
       {
         $sort: {
+          'product.countKeys': -1,
           order: 1,
           'product.createdAt': -1,
         }
