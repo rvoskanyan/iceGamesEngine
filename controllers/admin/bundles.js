@@ -3,7 +3,7 @@ import Product from './../../models/Product.js';
 
 export const bundlePage = async (req, res) => {
   try {
-    const bundles = await Bundle.find().select(['name']);
+    const bundles = await Bundle.find().select(['name']).lean();
     
     res.render('listElements', {
       layout: 'admin',

@@ -2,7 +2,7 @@ import Platform from "./../../models/Platform.js";
 
 export const pagePlatforms = async (req, res) => {
   try {
-    const platforms = await Platform.find().select('name');
+    const platforms = await Platform.find().select('name').lean();
   
     res.render('listElements', {
       layout: 'admin',

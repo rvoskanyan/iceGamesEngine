@@ -12,7 +12,7 @@ const types = Object.entries(typesAchievements).map(([key, name]) => {
 
 export const achievementsPage = async (req, res) => {
   try {
-    const achievements = await Achievement.find().select(['name']);
+    const achievements = await Achievement.find().select(['name']).lean();
     
     res.render('listElements', {
       layout: 'admin',

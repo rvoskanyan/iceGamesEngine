@@ -6,7 +6,7 @@ import {__dirname} from "../../rootPathes.js";
 
 export const pagePartners = async (req, res) => {
   try {
-    const partners = await Partner.find();
+    const partners = await Partner.find().lean();
   
     res.render('listElements', {
       layout: 'admin',

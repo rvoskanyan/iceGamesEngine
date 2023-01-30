@@ -2,7 +2,7 @@ import ActivationService from './../../models/ActivationService.js';
 
 export const pageActivationServices = async (req, res) => {
   try {
-    const activationServices = await ActivationService.find().select(['name']);
+    const activationServices = await ActivationService.find().select(['name']).lean();
     
     res.render('listElements', {
       layout: 'admin',

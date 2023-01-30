@@ -2,7 +2,7 @@ import Region from './../../models/Region.js';
 
 export const pageRegions = async (req, res) => {
   try {
-    const regions = await Region.find().select(['name']);
+    const regions = await Region.find().select(['name']).lean();
     
     res.render('listElements', {
       layout: 'admin',
