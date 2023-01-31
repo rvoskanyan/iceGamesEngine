@@ -295,7 +295,7 @@ export const userAnalyticsPage = async (req, res) => {
           totalSales: 1,
           countLastSales: 1,
           revenue: 1,
-          averageCheck: { $divide: [ "$revenue", "$totalSales" ] },
+          averageCheck: {$round : [ { $divide: [ "$revenue", "$totalSales" ] }, 0]},
         }
       },
       {$sort: {revenue: -1}}
