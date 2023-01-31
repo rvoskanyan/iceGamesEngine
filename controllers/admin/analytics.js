@@ -272,7 +272,7 @@ export const userAnalyticsPage = async (req, res) => {
       }},
     ]);
   
-    rows = rows.map((row, index) => {
+    rows = rows.map(row => {
       const startPeriodDate = new Date();
       const res = {
         email: row._id,
@@ -286,16 +286,16 @@ export const userAnalyticsPage = async (req, res) => {
       startPeriodDate.setMinutes(0);
       startPeriodDate.setSeconds(0);
       
-      if (index === 0) {
-        res.lastSaleDate = getFormatDate(row.createdAt, '.', ['d', 'm', 'y']);
-      }
-      
-      row.orders.forEach(order => {
+      row.orders.forEach((order, index) => {
         const countSales = order.items.length;
         const orderRevenue = order.items.reduce((accum, item) => accum + item.sellingPrice, 0);
         
         if (order.createdAt >= startPeriodDate) {
           res.countLastSales += countSales;
+        }
+  
+        if (index === 0) {
+          res.lastSaleDate = getFormatDate(order.createdAt, '.', ['d', 'm', 'y']);
         }
         
         res.totalSales += countSales;
