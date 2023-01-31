@@ -279,6 +279,7 @@ export const userAnalyticsPage = async (req, res) => {
           orderRevenue: { $sum: "$items.sellingPrice" },
           orderLastSales: {$cond: [{$gte: ['$createdAt', startPeriodDate]}, { $size: "$items" }, 0]},
           buyerEmail: 1,
+          createdAt: 1,
         }
       },
       {
@@ -286,6 +287,7 @@ export const userAnalyticsPage = async (req, res) => {
           _id: '$buyerEmail',
           totalSales: {$sum: "$orderSalesCount"},
           countLastSales: {$sum: "$orderLastSales"},
+          lastSaleDate: { $max: "$createdAt"},
           revenue: {$sum: "$orderRevenue"},
         },
       },
@@ -294,6 +296,7 @@ export const userAnalyticsPage = async (req, res) => {
           _id: 1,
           totalSales: 1,
           countLastSales: 1,
+          lastSaleDate: 1,
           revenue: {$round : ["$revenue", 0]},
           averageCheck: {$round : [ { $divide: [ "$revenue", "$totalSales" ] }, 0]},
         }
