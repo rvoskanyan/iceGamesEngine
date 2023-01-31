@@ -251,66 +251,55 @@ export const analyticsPage = async (req, res) => {
 
 export const userAnalyticsPage = async (req, res) => {
   try {
+    const startPeriodDate = new Date();
+  
+    startPeriodDate.setDate(startPeriodDate.getDate() - 30);
+    startPeriodDate.setHours(0);
+    startPeriodDate.setMinutes(0);
+    startPeriodDate.setSeconds(0);
+    
     let rows = await Order.aggregate([
-      {$match: {status: 'paid'}},
-      {$sort: {buyerEmail: -1, createdAt: -1}},
+      {$lookup: {
+        from: 'users',
+        localField: 'userId',
+        foreignField: '_id',
+        as: 'user',
+      }},
+      {$replaceRoot: { newRoot: { $mergeObjects: [ { $arrayElemAt: [ "$user", 0 ] }, "$$ROOT" ] } }},
+      {$match: {
+        status: 'paid',
+        $or: [
+          {bot: undefined},
+          {bot: false},
+        ],
+      }},
       {
-        $lookup: {
-          from: 'users',
-          localField: 'userId',
-          foreignField: '_id',
-          as: 'user',
+        $project: {
+          orderSalesCount: { $size: "$items" },
+          orderRevenue: { $sum: "$items.sellingPrice" },
+          orderLastSales: {$cond: [{$gte: ['$createdAt', startPeriodDate]}, { $size: "$items" }, 0]},
+          buyerEmail: 1,
         }
       },
-      {$replaceRoot: { newRoot: { $mergeObjects: [ { $arrayElemAt: [ "$user", 0 ] }, "$$ROOT" ] } }},
-      {$project: {bot: 1, createdAt: 1, buyerEmail: 1, items: 1}},
-      {$match: {$or: [
-        {bot: undefined},
-        {bot: false},
-      ]}},
-      {$group: {
-        _id: '$buyerEmail',
-        orders: { $push: {
-            items: "$items",
-            createdAt: "$createdAt",
-        }},
-      }},
+      {
+        $group: {
+          _id: '$buyerEmail',
+          totalSales: {$sum: "$orderSalesCount"},
+          countLastSales: {$sum: "$orderLastSales"},
+          revenue: {$sum: "$orderRevenue"},
+        },
+      },
+      {
+        $project: {
+          _id: 1,
+          totalSales: 1,
+          countLastSales: 1,
+          revenue: 1,
+          averageCheck: { $divide: [ "$revenue", "$totalSales" ] },
+        }
+      },
+      {$sort: {revenue: -1}}
     ]);
-  
-    rows = rows.map(row => {
-      const startPeriodDate = new Date();
-      const res = {
-        email: row._id,
-        countLastSales: 0,
-        totalSales: 0,
-        revenue: 0,
-      };
-  
-      startPeriodDate.setDate(startPeriodDate.getDate() - 30);
-      startPeriodDate.setHours(0);
-      startPeriodDate.setMinutes(0);
-      startPeriodDate.setSeconds(0);
-      
-      row.orders.forEach((order, index) => {
-        const countSales = order.items.length;
-        const orderRevenue = order.items.reduce((accum, item) => accum + item.sellingPrice, 0);
-        
-        if (order.createdAt >= startPeriodDate) {
-          res.countLastSales += countSales;
-        }
-  
-        if (index === 0) {
-          res.lastSaleDate = getFormatDate(order.createdAt, '.', ['d', 'm', 'y']);
-        }
-        
-        res.totalSales += countSales;
-        res.revenue += orderRevenue;
-      });
-      
-      res.averageCheck = res.revenue / row.orders.length;
-      
-      return res;
-    });
     
     res.render('admUserAnalytics', {
       layout: 'admin',
