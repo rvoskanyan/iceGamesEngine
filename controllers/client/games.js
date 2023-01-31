@@ -522,6 +522,7 @@ export const gamePage = async (req, res) => {
       product: product._id,
       active: true,
     };
+    const shortDescription = product.description.replace(/<[^>]+>/ig, '').replace(/\s{2,}/ig, ' ').trim().slice(0, 200);
     
     if (person) {
       reviewsFilter['$or'] = [
@@ -858,6 +859,7 @@ export const gamePage = async (req, res) => {
       countReviews,
       articles,
       additions,
+      shortDescription,
       ogImage: product.img,
       breadcrumbs: [
         {

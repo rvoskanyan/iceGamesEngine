@@ -95,7 +95,7 @@
                     </span>
                 {{/if}}
             </div>
-            <div class="description" itemprop="description">{{encodeString product.description}}</div>
+            <div class="description" itemprop="description">{{shortDescription}}</div>
             <div class="offerMacro" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
                 {{#if product.preOrder}}
                     <link itemprop="availability" href="http://schema.org/PreOrder">
