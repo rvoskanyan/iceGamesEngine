@@ -253,7 +253,7 @@ export const userAnalyticsPage = async (req, res) => {
   try {
     let rows = await Order.aggregate([
       {$match: {status: 'paid'}},
-      {$sort: {createdAt: -1}},
+      {$sort: {buyerEmail: -1, createdAt: -1}},
       {
         $lookup: {
           from: 'users',
@@ -262,7 +262,10 @@ export const userAnalyticsPage = async (req, res) => {
           as: 'user',
         }
       },
-      {$match: {'user.bot': false}},
+      {$match: {$or: [
+        {user: undefined},
+        {'user.bot': false},
+      ]}},
       {$group: {
         _id: '$buyerEmail',
         orders: { $push: {
