@@ -294,7 +294,7 @@ export const userAnalyticsPage = async (req, res) => {
           _id: 1,
           totalSales: 1,
           countLastSales: 1,
-          revenue: 1,
+          revenue: {$round : ["$revenue", 0]},
           averageCheck: {$round : [ { $divide: [ "$revenue", "$totalSales" ] }, 0]},
         }
       },
