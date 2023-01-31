@@ -53,7 +53,7 @@ export const pageKeys = async (req, res) => {
 
 export const pageAddKey = async (req, res) => {
     try {
-        const products = await Product.find().select(['name']).lean();
+        const products = await Product.find().select(['name']).sort({countKeys: 1}).lean();
 
         res.render('addKey', {
             layout: 'admin',
