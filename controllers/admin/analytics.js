@@ -251,6 +251,8 @@ export const analyticsPage = async (req, res) => {
 
 export const userAnalyticsPage = async (req, res) => {
   try {
+    await Order.deleteMany({buyerEmail: undefined, userId: undefined, status: 'awaiting'});
+    
     const startPeriodDate = new Date();
   
     startPeriodDate.setDate(startPeriodDate.getDate() - 30);
