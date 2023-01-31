@@ -254,6 +254,15 @@ export const userAnalyticsPage = async (req, res) => {
     let rows = await Order.aggregate([
       {$match: {status: 'paid'}},
       {$sort: {createdAt: -1}},
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'userId',
+          foreignField: '_id',
+          as: 'user',
+        }
+      },
+      {$match: {'user.bot': false}},
       {$group: {
         _id: '$buyerEmail',
         orders: { $push: {
