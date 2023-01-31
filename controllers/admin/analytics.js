@@ -1,6 +1,7 @@
 import Product from "../../models/Product.js";
 import Key from "../../models/Key.js";
 import Order from "../../models/Order.js";
+import {getFormatDate} from "../../utils/functions.js";
 
 export const analyticsPage = async (req, res) => {
   try {
@@ -244,6 +245,65 @@ export const analyticsPage = async (req, res) => {
   } catch (e) {
     console.log(e);
     
+    res.redirect('/admin');
+  }
+}
+
+export const userAnalyticsPage = async (req, res) => {
+  try {
+    let rows = await Order.aggregate([
+      {$match: {status: 'paid'}},
+      {$sort: {createdAt: -1}},
+      {$group: {
+        _id: '$buyerEmail',
+        orders: { $push: {
+            items: "$items",
+            createdAt: "$createdAt",
+        }},
+      }},
+    ]);
+  
+    rows = rows.map((row, index) => {
+      const startPeriodDate = new Date();
+      const res = {
+        email: row._id,
+        countLastSales: 0,
+        totalSales: 0,
+        revenue: 0,
+      };
+  
+      startPeriodDate.setDate(startPeriodDate.getDate() - 30);
+      startPeriodDate.setHours(0);
+      startPeriodDate.setMinutes(0);
+      startPeriodDate.setSeconds(0);
+      
+      if (index === 0) {
+        res.lastSaleDate = getFormatDate(row.createdAt, '.', ['d', 'm', 'y']);
+      }
+      
+      row.orders.forEach(order => {
+        const countSales = order.items.length;
+        const orderRevenue = order.items.reduce((accum, item) => accum + item.sellingPrice, 0);
+        
+        if (order.createdAt >= startPeriodDate) {
+          res.countLastSales += countSales;
+        }
+        
+        res.totalSales += countSales;
+        res.revenue += orderRevenue;
+      });
+      
+      res.averageCheck = res.revenue / row.orders.length;
+      
+      return res;
+    });
+    
+    res.render('admUserAnalytics', {
+      layout: 'admin',
+      rows,
+    });
+  } catch (e) {
+    console.log(e);
     res.redirect('/admin');
   }
 }
