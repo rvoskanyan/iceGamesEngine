@@ -522,7 +522,7 @@ export const gamePage = async (req, res) => {
       product: product._id,
       active: true,
     };
-    const shortDescription = product.description.replace(/<h[2-6]>.+<\/h[2-6]>/ig, '').replace(/<[^>]+>/ig, '').replace(/\s{2,}/ig, ' ').trim().slice(0, 200);
+    const shortDescription = product.description.replace(/<h[2-6]>.+<\/h[2-6]>/ig, '').replace(/<[^>]+>/ig, '').replace(/\s{2,}/ig, ' ').trim().slice(0, 200).trim();
     
     if (person) {
       reviewsFilter['$or'] = [
