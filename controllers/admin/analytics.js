@@ -262,9 +262,11 @@ export const userAnalyticsPage = async (req, res) => {
           as: 'user',
         }
       },
+      {$replaceRoot: { newRoot: { $mergeObjects: [ { $arrayElemAt: [ "$user", 0 ] }, "$$ROOT" ] } }},
+      {$project: {bot: 1, createdAt: 1, buyerEmail: 1, items: 1}},
       {$match: {$or: [
-        {user: undefined},
-        {'user.bot': false},
+        {bot: undefined},
+        {bot: false},
       ]}},
       {$group: {
         _id: '$buyerEmail',
