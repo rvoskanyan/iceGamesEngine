@@ -25,10 +25,20 @@ export const pageKeys = async (req, res) => {
         const isLast = skip + limit >= countKeys;
         const isFirst = skip === 0;
         const isSinglePage = countKeys <= limit;
-        const keys = await Key.find(keyFilter).limit(limit).skip(skip).populate([{
+        let keys = await Key.find(keyFilter).limit(limit).skip(skip).populate([{
             path: 'product',
             select: ['name'],
         }]).lean();
+        
+        keys = keys.map(key => {
+            const start = key.value[0] + key.value[1] + key.value[2];
+            const end = key.value[key.value.length - 2] + key.value[key.value.length - 1];
+            const center = key.value.slice(3, -2).split('').map(char => char === '-' ? char : '*').join('');
+    
+            key.value = start + center + end;
+            
+            return key;
+        });
         
         res.render('listKeyAdminPage', {
             layout: 'admin',
@@ -129,6 +139,11 @@ export const editKeyPage = async (req, res) => {
     try {
         const keyId = req.params.keyId;
         const key = await Key.findById(keyId).lean();
+        const start = key.value[0] + key.value[1] + key.value[2];
+        const end = key.value[key.value.length - 2] + key.value[key.value.length - 1];
+        const center = key.value.slice(3, -2).split('').map(char => char === '-' ? char : '*').join('');
+    
+        key.value = start + center + end;
         
         if (!key) {
             throw new Error('Key not found');
@@ -156,7 +171,7 @@ export const editKey = async (req, res) => {
     const keyId = req.params.keyId;
     
     try {
-        const {productId, key} = req.body;
+        const {productId} = req.body;
         const purchasePrice = +req.body.purchasePrice;
         const deactivationReason = req.body.deactivationReason;
         const isActive = req.body.isActive === 'on';
@@ -189,8 +204,7 @@ export const editKey = async (req, res) => {
         }
     
         changeActive = keyObj.isActive !== isActive;
-    
-        keyObj.value = key;
+        
         keyObj.product = productId;
         keyObj.isActive = isActive;
         keyObj.expired = expired || undefined;
