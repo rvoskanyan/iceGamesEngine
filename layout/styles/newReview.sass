@@ -1,0 +1,136 @@
+@import './breakPoints'
+
+.feedback
+  &-card
+    font-family: 'Montserrat', sans-serif
+    border: 2px solid
+    border-image-source: conic-gradient(from 222.15deg at 50% 51.41%, rgba(250, 0, 255, 0) 0deg, #FA00FF 5.63deg, #FA00FF 255deg, rgba(250, 0, 255, 0.0212766) 275.91deg, rgba(250, 0, 255, 0) 360deg)
+    border-image-slice: 1
+    width: 500px
+    height: 460px
+    background: rgba(1, 3, 59, 0.45)
+    backdrop-filter: blur(58px)
+    padding: 94px 35px 110px
+    position: relative
+    transition: 1s linear
+
+    @include for-middle-desktop-down
+      width: 428px
+      height: 394px
+
+    @include for-desktop-down
+      width: 368px
+      height: 339px
+
+    &__title, &__text
+      font-weight: 500
+      font-size: 24px
+      line-height: 29px
+      color: #fff
+      text-align: center
+
+      @include for-middle-desktop-down
+        font-size: 20px
+        line-height: 24px
+
+      @include for-desktop-down
+        font-size: 18px
+        line-height: 22px
+
+    &__title, &__game
+      margin-bottom: 31px
+      transition: 0.5s
+      cursor: pointer
+
+      &:hover
+        a
+          color: #CC00FF
+
+    &__game
+      font-weight: 400
+      font-size: 18px
+      line-height: 22px
+      text-align: center
+
+    &__stars
+      position: absolute
+      bottom: -30px
+      left: 60px
+      @include for-middle-desktop-down
+        left: 41px
+        bottom: -23px
+
+      .stars
+        display: flex
+        align-items: center
+
+
+        .icon
+          background-color: #CC00FF
+          margin-right: 35px
+
+          @include for-middle-desktop-down
+            margin-right: 30px
+
+          @include for-desktop-down
+            margin-right: 25px
+
+          &:last-child
+            margin-right: 0
+
+          &:first-child, &:last-child
+            width: 40px
+            height: 40px
+
+            @include for-middle-desktop-down
+              width: 34px
+              height: 34px
+
+            @include for-desktop-down
+              width: 29px
+              height: 29px
+
+          &:nth-child(2), &:nth-child(4)
+            width: 50px
+            height: 50px
+
+            @include for-middle-desktop-down
+              width: 43px
+              height: 43px
+
+            @include for-desktop-down
+              width: 36px
+              height: 36px
+
+          &:nth-child(3)
+            width: 60px
+            height: 60px
+
+            @include for-middle-desktop-down
+              width: 51px
+              height: 51px
+
+            @include for-desktop-down
+              width: 45px
+              height: 45px
+
+
+#pagination-review
+  display: flex
+  justify-content: center
+  font-weight: 500
+  font-size: 30px
+  line-height: 37px
+  margin-top: 53px
+
+  p
+    cursor: pointer
+    transition: 0.5s
+    margin-right: 32px
+
+    &:hover, &.active
+      scale: 1.5
+      color: #8043D7
+
+    &:last-child
+      margin-right: 0

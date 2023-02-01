@@ -17,7 +17,7 @@ const fields = {
   product: {
     type: Schema.Types.ObjectId,
     ref: 'Product',
-    required: true,
+    // required: true, Для отзывов оставленных для нашего сервиса не обязательно иметь product_id
   },
   eval: {
     type: Number,
@@ -30,6 +30,14 @@ const fields = {
   active: {
     type: Boolean,
     default: true,
+  },
+  is_our: {
+    type: Boolean,
+    default: false
+  },
+  is_best: {
+    type: Boolean,
+    default: false
   }
 };
 

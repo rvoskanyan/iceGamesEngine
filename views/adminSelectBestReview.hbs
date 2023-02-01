@@ -1,0 +1,11 @@
+<form action="/admin/reviews/best" method="post">
+    <h1>Добавить лучшие отзывы</h1>
+    <select name="reviews" multiple size="20" id="">
+        {{#each reviews}}
+            <option value="{{_id}}">
+                {{ eval }}:{{text}}
+            </option>
+        {{/each}}
+    </select>
+    <button type="submit">Сохранить</button>
+</form>

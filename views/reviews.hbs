@@ -1,50 +1,99 @@
 <main class="reviewsPage article">
     {{> breadcrumbs}}
-    <div class="cover">
-        <img class="img" src="{{websiteAddress}}img/reviewsCover.png" alt="Постер для страницы отзывов" title="Постер для страницы отзывов">
-        <div class="textContent">
-            <h1 class="title">Отзывы</h1>
-        </div>
-        <button class="btn translucent js-scroller" data-target="listReviews">
-            <span class="icon icon-arrowBottom"></span>
-        </button>
-    </div>
-    <div class="contentContainer">
-        <div class="reviewsList js-reviewsList">
-            {{#each reviews}}
-                <div class="review" itemscope itemtype="https://schema.org/Review">
-                    <div class="head">
-                        <a itemprop="author" class="btn link userName" href="{{websiteAddress}}rating/{{user.login}}" title="Перейти на страницу {{user.login}}">{{user.login}}</a>
-                        <div class="forGame">Отзыв на игру: <a class="link gameName" href="{{websiteAddress}}games/{{product.alias}}">{{product.name}}</a></div>
-                    </div>
-                    <div itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating" class="grade">
-                        <meta itemprop="worstRating" content="1">
-                        <meta itemprop="ratingValue" content="{{ eval }}">
-                        <span class="icon icon-star{{#iff eval '>=' 1}}Fill{{/iff}}"></span>
-                        <span class="icon icon-star{{#iff eval '>=' 2}}Fill{{/iff}}"></span>
-                        <span class="icon icon-star{{#iff eval '>=' 3}}Fill{{/iff}}"></span>
-                        <span class="icon icon-star{{#iff eval '>=' 4}}Fill{{/iff}}"></span>
-                        <span class="icon icon-star{{#iff eval '>=' 5}}Fill{{/iff}}"></span>
-                        <meta itemprop="bestRating" content="5">
-                    </div>
-                    <div itemprop="reviewBody" class="text">{{text}}</div>
-                </div>
+    <div class="main__feedback">
+        <h1 class="main__feedback-title">Лучшие отзывы</h1>
+        <div class="main__feedback-cards main__feedback-best">
+            {{#each bestReviews}}
+                {{> newReview}}
             {{/each}}
         </div>
-        {{#iff countReviews '>' 5}}
-            <button class="btn link translucent loadMore js-loadMoreReviewsBtn" data-skip="5">Загрузить еще</button>
-        {{/iff}}
-        {{#if lastViewedProducts.length}}
-            <div class="lastViews">
+    </div>
+    <div class="form__feedback make_review">
+        <h2 class="form__feedback-title">Оставить отзыв о сайте</h2>
+        <div class="form__feedback-wrap make-review_main-block">
+            <form action="/api/reviews/our" method="post"
+                  class="addNew infoBlock {{#if isProductNotPurchased}} locked{{/if}}">
+                <div class="starRating js-error-eval">
+                    <div class="form__feedback-eval">
+                        <div class="label">Поставьте оценку</div>
+                        <div class="stars">
+                            <input class="input" type="radio" name="eval" value="5" id="star5"{{#if
+                                    isProductNotPurchased}}
+                                   disabled{{/if}}>
+                            <label class="star" for="star5">
+                                <span class="icon icon-star"></span>
+                            </label>
+                            <input class="input" type="radio" name="eval" value="4" id="star4"{{#if
+                                    isProductNotPurchased}}
+                                   disabled{{/if}}>
+                            <label class="star" for="star4">
+                                <span class="icon icon-star"></span>
+                            </label>
+                            <input class="input" type="radio" name="eval" value="3" id="star3"{{#if
+                                    isProductNotPurchased}}
+                                   disabled{{/if}}>
+                            <label class="star" for="star3">
+                                <span class="icon icon-star"></span>
+                            </label>
+                            <input class="input" type="radio" name="eval" value="2" id="star2"{{#if
+                                    isProductNotPurchased}}
+                                   disabled{{/if}}>
+                            <label class="star" for="star2">
+                                <span class="icon icon-star"></span>
+                            </label>
+                            <input class="input" type="radio" name="eval" value="1" id="star1"{{#if
+                                    isProductNotPurchased}}
+                                   disabled{{/if}}>
+                            <label class="star" for="star1">
+                                <span class="icon icon-star"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="label write-review">Напишите отзыв</div>
+                </div>
+                <div class="senderField textReview js-error-text">
+                    <div class="autoSizeInput js-autoSizeInput" data-name="text">
+                        <span class="placeholder js-placeholder">До 1000 символов</span>
+                        <div class="value js-value"{{#unless isProductNotPurchased}} contentEditable{{/unless}}></div>
+                    </div>
+                    <button class="btn" type="submit"{{#if isProductNotPurchased}} disabled{{/if}}>
+                        <span class="icon icon-send"></span>
+                    </button>
+                </div>
+                {{#if isProductNotPurchased}}
+                    <div class="lockBlock">
+                        <span class="icon icon-lock"></span>
+                        <div class="text">
+                            Для предотвращения накрутки, добавление отзыва
+                            доступно только авторизованным пользователям
+                        </div>
+                    </div>
+                {{/if}}
+            </form>
+        </div>
+    </div>
+    <div id="reviewPage" class="contentContainer">
+        <div class="select__feedback">
+            <div class="select__feedback-text">
+                <p class="active-select">Отзывы по играм</p>
+                <p>Отзывы по сайту</p>
+            </div>
+        </div>
+        <div class="loading">
+            <div class="loading-line"></div>
+        </div>
+        <div class="reviewsList js-reviewsList"></div>
+        <div class="lastViews">
+            {{#if lastViewedProducts.length}}
                 <div class="title">Вы недавно смотрели</div>
                 <div class="games mobileScroll">
                     {{#each lastViewedProducts}}
                         {{> game
-                            id=_id
+                                id=_id
                         }}
                     {{/each}}
                 </div>
-            </div>
-        {{/if}}
+            {{/if}}
+        </div>
     </div>
 </main>

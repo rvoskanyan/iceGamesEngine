@@ -1,7 +1,228 @@
 @import './breakPoints'
 
+.main__feedback-cards::-webkit-scrollbar, .main__feedback-cards::-moz-viewport-scroll
+  width: 0
+  height: 0
+
 .reviewsPage
+  background: url("../img/bgReview.webp") top 175px left 0px / contain no-repeat
+  color: #fff
+
+  .main__feedback
+    padding-top: 230px
+
+    &-title
+      text-align: center
+      @include for-middle-desktop-down
+        font-size: 30px
+        line-height: 37px
+
+    &-cards
+      display: flex
+      justify-content: center
+      height: auto
+
+      @include for-middle-desktop-down
+        max-width: 1260px
+        margin: 0 auto
+        justify-content: space-between
+        padding: 0 20px
+
+      @include for-desktop-down
+        width: 100vw
+        padding: 0 54px 50px
+        overflow-x: auto
+        overflow-y: visible
+
+        &::-webkit-scrollbar
+          display: none
+
+        .feedback-card
+          min-width: 368px
+
+      .feedback-card
+        margin-right: 43px
+
+        @include for-mobile-down
+          margin-right: 17px
+
+        &:last-child
+          margin-right: 0
+
+    &-best
+      margin-top: 62px
+
+      & > div
+        &:first-child, &:last-child
+          margin-top: 32px
+
+  .form__feedback
+    margin-top: 100px
+    padding: 0 20px
+
+    &-title
+      font-weight: 400
+      font-size: 30px
+      line-height: 37px
+      display: flex
+      justify-content: center
+      color: #FFFFFF
+
+      @include for-mobile-down
+        font-size: 14px
+        line-height: 17px
+
+    &-wrap
+      border: 2px solid
+      border-image-source: linear-gradient(180deg, #FA00FF 0%, rgba(250, 0, 255, 0.12) 99.99%)
+      border-image-slice: 1
+      max-width: 1280px
+      margin: 32px auto 100px
+      position: relative
+
+      & .lockBlock
+        position: absolute
+        top: 0
+        left: 0
+        width: 100%
+        height: 100%
+        color: #fff
+        z-index: 1
+        background-color: rgba(50, 0, 101, 0.85)
+        display: flex
+        flex-direction: column
+        align-items: center
+        justify-content: center
+        text-align: center
+
+        & .text
+          margin-top: 8px
+          width: 260px
+          font-size: 12px
+
+          @include for-big-phone-up
+            width: 450px
+            margin-top: 12px
+            font-size: 16px
+
+    .label
+      font-weight: 500
+      font-size: 24px
+      line-height: 29px
+      margin-right: 28px
+
+      @include for-mobile-down
+        font-size: 10px
+
+      &.write-review
+        margin-bottom: 25px
+
+    &-eval
+      display: flex
+      align-items: center
+      margin-bottom: 28px
+
+      .icon
+        background-color: #00D1FF
+        margin-right: 3px
+
+      .stars
+        margin-top: 0
+
+  form
+    padding: 25px 32px 37px 32px
+
+    .senderField
+      background: rgba(217, 217, 217, 0.01)
+      border-color: #F900FF
+      backdrop-filter: blur(21px)
+      color: rgba(249, 0, 255, 0.71)
+      font-weight: 500
+      font-size: 24px
+
+  .contentContainer
+    @include for-middle-desktop-up
+      padding: 0
+      max-width: 1575px
+
+  .select__feedback
+    margin: 0 auto 22px
+
+    @include for-mobile-down
+      margin: 0 auto 9px
+
+    &-text
+      display: flex
+
+
+      p
+        font-family: 'Montserrat', sans-serif
+        margin-left: 70px
+        cursor: pointer
+        font-weight: 200
+        font-size: 30px
+        line-height: 37px
+        color: #A9A9A9
+        transition: 0.5s ease
+
+        @include for-mobile-down
+          font-size: 14px
+          line-height: 17px
+
+        &:first-child
+          margin-left: 0
+
+        &.active-select
+          color: #fff
+          font-weight: 400
+
+
+  .loading
+    background: rgba(255, 255, 255, 0.16)
+    border-radius: 9px
+    height: 2px
+    margin: 22px auto
+
+
+  .loading-line
+    background: #FFFFFF
+    border-radius: 9px
+    height: 2px
+    width: 260px
+
+    @include  for-mobile-down
+      width: 126px
+
   & .reviewsList
+    display: flex
+    flex-wrap: wrap
+    gap: 30px
+
+
+
+    @include for-desktop-down
+      .feedback-card
+        width: 310px
+        &__stars
+          left: 31px
+          bottom: -17px
+          .icon
+            &:first-child, &:last-child
+              width: 20px
+              height: 20px
+            &:nth-child(2), &:nth-child(4)
+              width: 30px
+              height: 30px
+            &:nth-child(3)
+              width: 38px
+              height: 38px
+
+    @include for-mobile-down
+      justify-content: center
+      width: 340px
+      margin: 0 auto
+
+
     & .review:not(:last-child)
       margin-bottom: 15px
 

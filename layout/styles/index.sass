@@ -16,6 +16,7 @@
 @import './senderField'
 @import './autoSizeInput'
 @import './review'
+@import './newReview'
 @import './comment'
 @import './lastViews'
 @import './collapse'
@@ -496,3 +497,33 @@ img
   & > .input
     display: flex
     column-gap: 10px
+
+.mobile_add_cart
+  display: none
+  @include for-mobile-down
+    position: fixed
+    bottom: 30px
+    right: 15px
+    border-radius: 50%
+    background: radial-gradient(50% 50% at 50% 50%, rgba(199, 69, 203, 0.4) 0%, rgba(199, 69, 203, 0.4) 23.44%, rgba(199, 69, 203, 0.096) 100%)
+    backdrop-filter: blur(15px)
+    width: 40px
+    height: 40px
+    display: flex
+    justify-content: center
+    align-items: center
+    animation-name: cart-mobile
+    animation-timing-function: linear
+    animation-iteration-count: infinite
+    animation-duration: 2s
+    z-index: 9999
+    @keyframes cart-mobile
+      0%
+        box-shadow: 0 0 15px rgba(152, 75, 251, 0.5)
+        scale: 1
+      50%
+        box-shadow: 0 0 22px rgba(152, 75, 251, 0.8)
+        scale: 1.2
+      100%
+        box-shadow: 0 0 15px rgba(152, 75, 251, 0.5)
+        scale: 1

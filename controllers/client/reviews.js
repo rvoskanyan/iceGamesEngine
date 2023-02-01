@@ -4,13 +4,13 @@ import Review from "../../models/Review.js";
 export const reviewsPage = async (req, res) => {
   try {
     let lastViewedProducts = [];
-    const countReviews = await Review.countDocuments({active: true, status: 'taken'});
-    const reviews = await Review
+    const bestReviews = await Review
       .find({
         active: true,
         status: 'taken',
+        is_best: true
       })
-      .limit(5)
+      .limit(3)
       .sort({createdAt: -1})
       .select(['eval', 'text'])
       .populate([
@@ -61,9 +61,9 @@ export const reviewsPage = async (req, res) => {
         name: 'Отзывы',
         current: true,
       }],
-      reviews,
       lastViewedProducts,
-      countReviews,
+      bestReviews,
+      isProductNotPurchased: !req.session.isAuth
     });
   } catch (e) {
     console.log(e);

@@ -1,0 +1,30 @@
+<div class="review feedback-card" itemscope itemtype="https://schema.org/Review">
+    <div class="feedback-card__content">
+        <p itemprop="author" class="feedback-card__title">
+            <a class="link userName" href="{{websiteAddress}}rating/{{user.login}}"
+               title="Перейти на страницу {{user.login}}">{{user.login}}</a>
+        </p>
+        <p class="feedback-card__game">
+            {{#if product}}
+                Отзыв на игру: <a class="link" href="{{websiteAddress}}games/{{product.alias}}">{{product.name}}</a>
+            {{/if}}
+        </p>
+        <p itemprop="reviewBody" class="feedback-card__text">
+            {{text}}
+        </p>
+    </div>
+    <div itemprop="reviewRating"
+         itemscope itemtype="https://schema.org/Rating"
+         class="feedback-card__stars">
+        <meta itemprop="worstRating" content="1">
+        <meta itemprop="ratingValue" content="{{ eval }}">
+        <div class="stars">
+            <span class="icon icon-star{{#iff eval '>=' 1}}Fill{{/iff}}"></span>
+            <span class="icon icon-star{{#iff eval '>=' 2}}Fill{{/iff}}"></span>
+            <span class="icon icon-star{{#iff eval '>=' 3}}Fill{{/iff}}"></span>
+            <span class="icon icon-star{{#iff eval '>=' 4}}Fill{{/iff}}"></span>
+            <span class="icon icon-star{{#iff eval '>=' 5}}Fill{{/iff}}"></span>
+        </div>
+        <meta itemprop="bestRating" content="5">
+    </div>
+</div>

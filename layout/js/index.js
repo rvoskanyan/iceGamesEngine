@@ -13,6 +13,7 @@ import Range from "./Range.js";
 import SocialSharing from "./lib/socialSharing.js";
 import Message from "./lib/message.js";
 import Payment from "./lib/payment.js";
+import animate from "./lib/animate.js";
 
 const postman = new Postman();
 
@@ -72,6 +73,8 @@ const openDescriptionSplitCatalogNode = document.querySelector('.js-openDescript
 const addInFavoritesProductPageNode = document.querySelector('.js-addInFavoritesProductPage');
 const showAboutAsHomeNode = document.querySelector('.js-showAboutAsHome');
 const successPaymentNode = document.querySelector('.js-successPayment');
+const reviewPage = document.querySelector("#reviewPage")
+
 const popupController = new PopupController([
     {
         id: 'loginFrom',
@@ -174,7 +177,7 @@ promptProductNodes.forEach(promptProductNode => {
 
 if (successPaymentNode) {
     const closeSuccessPaymentNode = successPaymentNode.querySelector('.js-closeSuccessPayment');
-    
+
     closeSuccessPaymentNode && closeSuccessPaymentNode.addEventListener('click', () => {
         successPaymentNode.remove();
     })
@@ -239,56 +242,56 @@ openCompoundOrderNodes.forEach(item => {
 })
 
 counterAnimationNodes.forEach(counterAnimationNode => {
-  const offsetTop = counterAnimationNode.getBoundingClientRect().top;
-  const height = counterAnimationNode.getBoundingClientRect().height;
-  const animate = () => {
-    const count = parseInt(counterAnimationNode.innerText);
-    const step = count >= 50 ? Math.floor(count / 50) : 1;
-  
-    counterAnimationNode.innerText = 0;
-    counterAnimationNode.classList.add('active');
-    
-    const int = setInterval(() => {
-      const currentValue = parseInt(counterAnimationNode.innerText);
-      
-      if (currentValue < count) {
-        return counterAnimationNode.innerText = currentValue + step <= count ? currentValue + step : count;
-      }
-      
-      clearInterval(int);
-    }, 50);
-  }
-  let handler;
-  let active = false;
-  
-  if (offsetTop < topGap) {
-    handler = () => {
-      const offsetTop = counterAnimationNode.getBoundingClientRect().top;
-      
-      if (!active && offsetTop >= topGap) {
-        document.removeEventListener('scroll', handler);
-        animate();
-      }
+    const offsetTop = counterAnimationNode.getBoundingClientRect().top;
+    const height = counterAnimationNode.getBoundingClientRect().height;
+    const animate = () => {
+        const count = parseInt(counterAnimationNode.innerText);
+        const step = count >= 50 ? Math.floor(count / 50) : 1;
+
+        counterAnimationNode.innerText = 0;
+        counterAnimationNode.classList.add('active');
+
+        const int = setInterval(() => {
+            const currentValue = parseInt(counterAnimationNode.innerText);
+
+            if (currentValue < count) {
+                return counterAnimationNode.innerText = currentValue + step <= count ? currentValue + step : count;
+            }
+
+            clearInterval(int);
+        }, 50);
     }
-  } else if (offsetTop > windowHeight - height) {
-    handler = () => {
-      const offsetTop = counterAnimationNode.getBoundingClientRect().top;
-      
-      if (!active && offsetTop <= windowHeight - height) {
-        document.removeEventListener('scroll', handler);
+    let handler;
+    let active = false;
+
+    if (offsetTop < topGap) {
+        handler = () => {
+            const offsetTop = counterAnimationNode.getBoundingClientRect().top;
+
+            if (!active && offsetTop >= topGap) {
+                document.removeEventListener('scroll', handler);
+                animate();
+            }
+        }
+    } else if (offsetTop > windowHeight - height) {
+        handler = () => {
+            const offsetTop = counterAnimationNode.getBoundingClientRect().top;
+
+            if (!active && offsetTop <= windowHeight - height) {
+                document.removeEventListener('scroll', handler);
+                animate();
+            }
+        }
+    } else {
+        active = true;
         animate();
-      }
     }
-  } else {
-    active = true;
-    animate();
-  }
-  
-  if (active) {
-    return;
-  }
-  
-  document.addEventListener('scroll', handler)
+
+    if (active) {
+        return;
+    }
+
+    document.addEventListener('scroll', handler)
 })
 
 loadMoreRatingNode && loadMoreRatingNode.addEventListener('click', async () => {
@@ -763,7 +766,7 @@ if (cartNode) {
             return parent
         }
 
-        function getProduct(products, is_fee=true) {
+        function getProduct(products, is_fee = true) {
             let prd = ''
             let ourPrice = 0
             for (let i of products) {
@@ -816,7 +819,7 @@ if (cartNode) {
                 formConfirm.addEventListener("submit", async function (e) {
                     e.preventDefault();
                     let {email, code} = this.elements
-                    let step = this.dataset.step ||'1'
+                    let step = this.dataset.step || '1'
                     let btn = this.querySelector("button")
                     switch (step) {
                         case '1':
@@ -911,8 +914,8 @@ if (cartNode) {
 
                     const priceTo = +productNode.querySelector('.js-priceTo').innerText;
                     const priceFrom = +productNode.querySelector('.js-priceFrom')?.innerText;
-                    products.iceGame = products.iceGame.filter(ids=>productId!==ids)
-                    products.digiSeller = products.digiSeller.filter(obj=>obj.productId!==productId)
+                    products.iceGame = products.iceGame.filter(ids => productId !== ids)
+                    products.digiSeller = products.digiSeller.filter(obj => obj.productId !== productId)
 
                     totalPriceToValue -= priceTo;
                     totalPriceFromValue -= priceFrom ? priceFrom : priceTo;
@@ -926,7 +929,7 @@ if (cartNode) {
                     productNode.remove();
                 })
                 const dsId = productNode.dataset.dsId;
-                for (let i_product of our_products  ) {
+                for (let i_product of our_products) {
                     if (productId !== i_product) continue
                     products.iceGame.push(productId)
                     break
@@ -944,11 +947,11 @@ if (cartNode) {
                 const payment = await Payment.get_method()
                 let yaClientId;
                 let email;
-    
+
                 if (!payment) {
                     return console.error('Payment method not set')
                 }
-    
+
                 if (window.yaCounter69707947?.getClientID) {
                     yaClientId = yaCounter69707947.getClientID()
                 }
@@ -1021,21 +1024,21 @@ if (cartNode) {
                         await postman.put(`/api/products/${productId}/revise`);
                         location.reload();
 
-                      /*const priceFrom = +productNode.querySelector('.js-priceFrom').innerText;
-                      const dsPrice = parseInt(product.price);
-                      const discountNode = productNode.querySelector('.js-discount');
+                        /*const priceFrom = +productNode.querySelector('.js-priceFrom').innerText;
+                        const dsPrice = parseInt(product.price);
+                        const discountNode = productNode.querySelector('.js-discount');
 
-                      await postman.put(`/api/products/${productId}/revise`);
+                        await postman.put(`/api/products/${productId}/revise`);
 
-                      savingValueNode.innerText = +savingValueNode.innerText - (dsPrice - currentPrice);
-                      totalPriceToNode.innerText = totalPriceFromNode.innerText - savingValueNode.innerText;
-                      discountNode.innerText = Math.floor(100 - dsPrice / (priceFrom / 100));
-                      priceToNode.innerText = dsPrice;
-                      changes.push({
-                        name: productNode.querySelector('.name').innerText,
-                        fromPrice: currentPrice,
-                        toPrice: dsPrice,
-                      });*/
+                        savingValueNode.innerText = +savingValueNode.innerText - (dsPrice - currentPrice);
+                        totalPriceToNode.innerText = totalPriceFromNode.innerText - savingValueNode.innerText;
+                        discountNode.innerText = Math.floor(100 - dsPrice / (priceFrom / 100));
+                        priceToNode.innerText = dsPrice;
+                        changes.push({
+                          name: productNode.querySelector('.name').innerText,
+                          fromPrice: currentPrice,
+                          toPrice: dsPrice,
+                        });*/
                     }
 
                     if (!dsCartId) {
@@ -1069,20 +1072,20 @@ if (cartNode) {
                 }
             }
 
-             async function openPayment(payment_button) {
-                    let keyStep = payment_button.dataset.step
-                    keyStep = keyStep || '1'
-                    switch (keyStep) {
-                        case '1':
-                            get_checkout(true)
-                            break
-                        case '2':
-                            get_digiCheckout(products.digiSeller, true)
-                            break
-                    }
+            async function openPayment(payment_button) {
+                let keyStep = payment_button.dataset.step
+                keyStep = keyStep || '1'
+                switch (keyStep) {
+                    case '1':
+                        get_checkout(true)
+                        break
+                    case '2':
+                        get_digiCheckout(products.digiSeller, true)
+                        break
                 }
+            }
 
-            function change_step(steps, step_id, prices, product_els, payment_button, is_fee=true) {
+            function change_step(steps, step_id, prices, product_els, payment_button, is_fee = true) {
                 let keyStep = step_id === '1' ? 'iceGame' : 'digiSeller'
 
                 for (let i of steps.children) {
@@ -1706,41 +1709,41 @@ if (blogPageNode) {
 }
 
 if (catalogNode) {
-  const priceRangeNode = catalogNode.querySelector('.js-range');
-  const filterNode = catalogNode.querySelector('.js-filter');
-  const sortNode = catalogNode.querySelector('.js-sort');
-  const catalogListNode = catalogNode.querySelector('.js-catalogList');
-  const countLoad = catalogListNode.dataset.loadLimit;
-  const checkbox = [...filterNode.querySelectorAll('.js-checkbox')];
-  const sortBtnNodes = sortNode.querySelectorAll('.js-variant-sort');
-  const offsetTop = catalogListNode.getBoundingClientRect().top;
-  const height = catalogListNode.getBoundingClientRect().height;
-  const startPage = +catalogListNode.dataset.currentPage;
-  const sectionName = catalogNode.dataset.sectionName;
-  const sectionType = catalogNode.dataset.sectionType;
-  const pageObjects = Array.from(catalogListNode.querySelectorAll('.js-page')).map(item => ({
-    node: item,
-    loaded: true,
-    num: startPage,
-  }));
-  
-  let currentPage = startPage;
-  let sortActiveBtn = catalogNode.querySelector('.js-sort .js-variant-sort.active');
-  let priceRangeObject;
-  let loading = false;
-  
-  if ('scrollRestoration' in history) {
-    history.scrollRestoration = 'manual';
-  }
-  
-  if (startPage > 1) {
-    for (let i = 1; i < startPage; i++) {
-      const pageNode = document.createElement('div');
-  
-      pageNode.classList.add('gameGrid', 'js-page');
-      
-      for (let j = 1; j <= 20; j++) {
-        pageNode.innerHTML += `
+    const priceRangeNode = catalogNode.querySelector('.js-range');
+    const filterNode = catalogNode.querySelector('.js-filter');
+    const sortNode = catalogNode.querySelector('.js-sort');
+    const catalogListNode = catalogNode.querySelector('.js-catalogList');
+    const countLoad = catalogListNode.dataset.loadLimit;
+    const checkbox = [...filterNode.querySelectorAll('.js-checkbox')];
+    const sortBtnNodes = sortNode.querySelectorAll('.js-variant-sort');
+    const offsetTop = catalogListNode.getBoundingClientRect().top;
+    const height = catalogListNode.getBoundingClientRect().height;
+    const startPage = +catalogListNode.dataset.currentPage;
+    const sectionName = catalogNode.dataset.sectionName;
+    const sectionType = catalogNode.dataset.sectionType;
+    const pageObjects = Array.from(catalogListNode.querySelectorAll('.js-page')).map(item => ({
+        node: item,
+        loaded: true,
+        num: startPage,
+    }));
+
+    let currentPage = startPage;
+    let sortActiveBtn = catalogNode.querySelector('.js-sort .js-variant-sort.active');
+    let priceRangeObject;
+    let loading = false;
+
+    if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+    }
+
+    if (startPage > 1) {
+        for (let i = 1; i < startPage; i++) {
+            const pageNode = document.createElement('div');
+
+            pageNode.classList.add('gameGrid', 'js-page');
+
+            for (let j = 1; j <= 20; j++) {
+                pageNode.innerHTML += `
           <div class="cardGame cardGame-frame">
             <div class="head elem">
               <div class="img"></div>
@@ -1752,162 +1755,162 @@ if (catalogNode) {
             </div>
           </div>
         `;
-      }
-  
-      catalogListNode.prepend(pageNode);
-      pageObjects.unshift({
-        node: pageNode,
-        loaded: false,
-        num: startPage - i,
-      })
+            }
+
+            catalogListNode.prepend(pageNode);
+            pageObjects.unshift({
+                node: pageNode,
+                loaded: false,
+                num: startPage - i,
+            })
+        }
+
+        scrollToActive();
+    } else {
+        initialCatalogListeners();
     }
-    
-    scrollToActive();
-  } else {
-    initialCatalogListeners();
-  }
-  
-  if (offsetTop + height + 100 < windowHeight) {
-    loadMore().then();
-  }
-  
-  if (priceRangeNode) {
-    const min = +priceRangeNode.dataset.min;
-    const max = +priceRangeNode.dataset.max;
-    const firstPointValue = +priceRangeNode.dataset.firstValue;
-    const secondPointValue = +priceRangeNode.dataset.secondValue;
-  
-    priceRangeObject = new Range({
-      mainNode: priceRangeNode,
-      min,
-      max,
-      points: [
-        {
-          value: firstPointValue,
-          name: 'first',
-        },
-        {
-          value: secondPointValue,
-          name: 'second',
-        },
-      ],
+
+    if (offsetTop + height + 100 < windowHeight) {
+        loadMore().then();
+    }
+
+    if (priceRangeNode) {
+        const min = +priceRangeNode.dataset.min;
+        const max = +priceRangeNode.dataset.max;
+        const firstPointValue = +priceRangeNode.dataset.firstValue;
+        const secondPointValue = +priceRangeNode.dataset.secondValue;
+
+        priceRangeObject = new Range({
+            mainNode: priceRangeNode,
+            min,
+            max,
+            points: [
+                {
+                    value: firstPointValue,
+                    name: 'first',
+                },
+                {
+                    value: secondPointValue,
+                    name: 'second',
+                },
+            ],
+        });
+    }
+
+    searchStringNode.addEventListener('input', () => {
+        const url = new URL(window.location.href);
+        const value = searchStringNode.value;
+
+        url.searchParams.set('searchString', value);
+
+        if (!value.length) {
+            url.searchParams.delete('searchString');
+        }
+
+        history.pushState(null, null, url);
+        catalogNode.dispatchEvent(new Event('changeParams'));
     });
-  }
-  
-  searchStringNode.addEventListener('input', () => {
-    const url = new URL(window.location.href);
-    const value = searchStringNode.value;
-    
-    url.searchParams.set('searchString', value);
-    
-    if (!value.length) {
-      url.searchParams.delete('searchString');
-    }
-    
-    history.pushState(null, null, url);
-    catalogNode.dispatchEvent(new Event('changeParams'));
-  });
-  
-  priceRangeObject.addChangeListener((values) => {
-    const url = new URL(window.location.href);
-    let min = values[0].value;
-    let max = values[1].value
-    
-    if (min > max) {
-      max = min;
-      min = values[1].value;
-    }
-  
-    url.searchParams.set('priceFrom', min);
-    url.searchParams.set('priceTo', max);
-  
-    history.pushState(null, null, url);
-    catalogNode.dispatchEvent(new Event('changeParams'));
-  });
-  
-  sortBtnNodes.forEach(sortBtnNode => {
-    const value = sortBtnNode.dataset.sort;
-    
-    sortBtnNode.addEventListener('click', () => {
-      const url = new URL(window.location.href);
-      
-      if (sortActiveBtn !== sortBtnNode) {
-        url.searchParams.set('sort', value);
-        sortBtnNode.classList.add('active');
-        sortActiveBtn && sortActiveBtn.classList.remove('active');
-        sortActiveBtn = sortBtnNode;
-      } else {
-        sortActiveBtn = null;
-        sortBtnNode.classList.remove('active');
-        url.searchParams.delete('sort');
-      }
-  
-      history.pushState(null, null, url);
-      catalogNode.dispatchEvent(new Event('changeParams'));
+
+    priceRangeObject.addChangeListener((values) => {
+        const url = new URL(window.location.href);
+        let min = values[0].value;
+        let max = values[1].value
+
+        if (min > max) {
+            max = min;
+            min = values[1].value;
+        }
+
+        url.searchParams.set('priceFrom', min);
+        url.searchParams.set('priceTo', max);
+
+        history.pushState(null, null, url);
+        catalogNode.dispatchEvent(new Event('changeParams'));
+    });
+
+    sortBtnNodes.forEach(sortBtnNode => {
+        const value = sortBtnNode.dataset.sort;
+
+        sortBtnNode.addEventListener('click', () => {
+            const url = new URL(window.location.href);
+
+            if (sortActiveBtn !== sortBtnNode) {
+                url.searchParams.set('sort', value);
+                sortBtnNode.classList.add('active');
+                sortActiveBtn && sortActiveBtn.classList.remove('active');
+                sortActiveBtn = sortBtnNode;
+            } else {
+                sortActiveBtn = null;
+                sortBtnNode.classList.remove('active');
+                url.searchParams.delete('sort');
+            }
+
+            history.pushState(null, null, url);
+            catalogNode.dispatchEvent(new Event('changeParams'));
+        })
+    });
+
+    checkbox.forEach(item => {
+        const input = item.querySelector('.input');
+        const inputName = input.name;
+        const inputValue = input.value;
+
+        input.addEventListener('click', (e) => {
+            const url = new URL(window.location.href);
+
+            if (input.checked) {
+                url.searchParams.append(inputName, inputValue);
+            } else {
+                const entriesParams = [...url.searchParams.entries()];
+
+                for (item of entriesParams) {
+                    url.searchParams.delete(item[0]);
+                }
+
+                for (item of entriesParams) {
+                    if (item[1] === inputValue) {
+                        continue;
+                    }
+
+                    url.searchParams.append(item[0], item[1]);
+                }
+            }
+
+            history.pushState(null, null, url);
+            catalogNode.dispatchEvent(new Event('changeParams'));
+        });
     })
-  });
-  
-  checkbox.forEach(item => {
-    const input = item.querySelector('.input');
-    const inputName = input.name;
-    const inputValue = input.value;
-    
-    input.addEventListener('click', (e) => {
-      const url = new URL(window.location.href);
-      
-      if (input.checked) {
-        url.searchParams.append(inputName, inputValue);
-      } else {
-        const entriesParams = [...url.searchParams.entries()];
-      
-        for (item of entriesParams) {
-          url.searchParams.delete(item[0]);
+
+    catalogNode.addEventListener('changeParams', async () => {
+        const topOffset = document.querySelector('.js-header').offsetHeight;
+        const targetPosition = catalogListNode.getBoundingClientRect().top;
+        const offsetPosition = window.pageYOffset + targetPosition - topOffset;
+
+        catalogListNode.innerHTML = '';
+        currentPage = 1;
+        window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth',
+        });
+        document.removeEventListener('scroll', scrollHandler);
+
+        const url = new URL(window.location.href);
+        const queryUrl = `${websiteAddress}api/products${url.search ? url.search : '?'}&limit=${countLoad}${sectionName ? `&${sectionType}=${sectionName}` : ''}`;
+        const response = await postman.get(queryUrl);
+        const result = await response.json();
+
+        url.searchParams.set('page', currentPage);
+        history.pushState(null, null, url);
+
+        if (result.error) {
+            return;
         }
-      
-        for (item of entriesParams) {
-          if (item[1] === inputValue) {
-            continue;
-          }
-        
-          url.searchParams.append(item[0], item[1]);
-        }
-      }
-    
-      history.pushState(null, null, url);
-      catalogNode.dispatchEvent(new Event('changeParams'));
-    });
-  })
-  
-  catalogNode.addEventListener('changeParams', async () => {
-    const topOffset = document.querySelector('.js-header').offsetHeight;
-    const targetPosition = catalogListNode.getBoundingClientRect().top;
-    const offsetPosition = window.pageYOffset + targetPosition - topOffset;
-    
-    catalogListNode.innerHTML = '';
-    currentPage = 1;
-    window.scrollTo({
-      top: offsetPosition,
-      behavior: 'smooth',
-    });
-    document.removeEventListener('scroll', scrollHandler);
-    
-    const url = new URL(window.location.href);
-    const queryUrl = `${websiteAddress}api/products${url.search ? url.search : '?'}&limit=${countLoad}${sectionName ? `&${sectionType}=${sectionName}` : ''}`;
-    const response = await postman.get(queryUrl);
-    const result = await response.json();
-  
-    url.searchParams.set('page', currentPage);
-    history.pushState(null, null, url);
-    
-    if (result.error) {
-      return;
-    }
-  
-    catalogListNode.classList.remove('notFound');
-    
-    if (!result.products.length) {
-      catalogListNode.classList.add ('notFound');
-      return catalogListNode.innerHTML = `
+
+        catalogListNode.classList.remove('notFound');
+
+        if (!result.products.length) {
+            catalogListNode.classList.add('notFound');
+            return catalogListNode.innerHTML = `
         <img class="img" src="${websiteAddress}img/notFound.svg">
         <span class="text">Ничего не найдено...</span>
       `;
@@ -1959,11 +1962,11 @@ if (catalogNode) {
 
         loading = true;
 
-    const url = new URL(window.location.href);
-    const queryUrl = `${websiteAddress}api/products${url.search ? url.search : '?'}&skip=${skip}&limit=${countLoad}${sectionName ? `&${sectionType}=${sectionName}` : ''}`;
-    const response = await postman.get(queryUrl);
-    const result = await response.json();
-    const pageNode = document.createElement('div');
+        const url = new URL(window.location.href);
+        const queryUrl = `${websiteAddress}api/products${url.search ? url.search : '?'}&skip=${skip}&limit=${countLoad}${sectionName ? `&${sectionType}=${sectionName}` : ''}`;
+        const response = await postman.get(queryUrl);
+        const result = await response.json();
+        const pageNode = document.createElement('div');
 
         pageNode.classList.add('gameGrid', 'js-page');
         loading = false;
@@ -2208,3 +2211,238 @@ new Promise(resolve => {
     socialShare.init()
     resolve()
 }).catch(a => console.warn(a))
+
+if (reviewPage) {
+    let select_types = reviewPage.firstElementChild.firstElementChild
+    let loading = reviewPage.querySelector(".loading")
+    let form_feedback = document.querySelector(".reviewsPage .form__feedback-wrap form")
+    new AsyncForm({
+        mainNode: form_feedback,
+        successHandler: (params) => {
+            document.location.reload()
+        }
+    })
+
+    let feedback_el = {
+        game: select_types.children[0],
+        review: select_types.children[1],
+        selected: 'game'
+    }
+    load_review(feedback_el.selected)
+
+    function get_el_review(review) {
+        let {user, product, text, eval: _eval} = review
+        let is_product = !!product && product._id ?
+            '<p class="feedback-card__game">\n' +
+            '   Отзыв на игру: <a class="link" href="{{websiteAddress}}games/{{product.alias}}">' + product.name + '</a>\n' +
+            '</p>' : '<p class="feedback-card__game"></p>'
+        text = text || ''
+        let is_star = x => _eval >= x ? 'Fill' : ''
+        let el = document.createElement('div')
+        el.innerHTML = '<div class="review feedback-card" itemscope itemtype="https://schema.org/Review">\n' +
+            '    <div class="feedback-card__content">\n' +
+            '        <p itemprop="author" class="feedback-card__title">\n' +
+            '            <a class="link userName" href="' + websiteAddress + 'rating/' + user.login + '"\n' +
+            '               title="Перейти на страницу ' + user.login + '">' + user.login + '</a>\n' +
+            '        </p>\n' + is_product +
+            '        <p itemprop="reviewBody" class="feedback-card__text">\n' +
+            text +
+            '        </p>\n' +
+            '    </div>\n' +
+            '    <div itemprop="reviewRating"\n' +
+            '         itemscope itemtype="https://schema.org/Rating"\n' +
+            '         class="feedback-card__stars">\n' +
+            '        <meta itemprop="worstRating" content="1">\n' +
+            '        <meta itemprop="ratingValue" content="' + _eval + '">\n' +
+            '        <div class="stars">\n' +
+            '            <span class="icon icon-star' + is_star(1) + '"></span>\n' +
+            '            <span class="icon icon-star' + is_star(2) + '"></span>\n' +
+            '            <span class="icon icon-star' + is_star(3) + '"></span>\n' +
+            '            <span class="icon icon-star' + is_star(4) + '"></span>\n' +
+            '            <span class="icon icon-star' + is_star(5) + '"></span>\n' +
+            '        </div>\n' +
+            '        <meta itemprop="bestRating" content="5">\n' +
+            '    </div>\n' +
+            '</div>'
+        return el.firstElementChild
+    }
+
+    function get_pagination(count, active) {
+        let pp = document.querySelector("#pagination-review") ?? document.createElement("div") // Pagination parent
+        pp.setAttribute("id", 'pagination-review')
+        pp.innerHTML = ''
+        for (let i = 1; i <= count; i++) {
+            let v = i
+            if (i === 5&&count!==5) {
+                v = '...'
+            }
+            if (i > 5 && (count-1<5||count-1>i)) continue
+            if (pp.children.length >= 8) break
+            let p = document.createElement('p')
+            if (i === active) {
+                p.classList.add("active")
+            }
+            p.textContent = v
+            p.onclick = function () {
+                if (v === '...') return;
+                load_review(feedback_el.selected, i)
+            }
+            pp.append(p)
+        }
+        reviewPage.lastElementChild.previousElementSibling.after(pp)
+    }
+
+    async function load_review(type, page = 1) {
+        feedback_el.selected = type
+        let reviews = await postman.get(`${websiteAddress}api/reviews/all`, {
+            type, page
+        })
+
+        if (reviews.status > 299) {
+            console.error('Fail load reviews')
+            // Заглушка на момент создание
+            // экрана для ошибки об загрузке отзывов (в дизайне готовится)
+            return
+        }
+
+        reviews = await reviews.json()
+        let parentReviews = reviewPage.querySelector(".reviewsList")
+
+        async function out_review(reviews) {
+            let tasks = []
+            for (let review of Array.from(reviews.children)) {
+                review.style.scale = 0
+                review.style.opacity = 0
+                tasks.push(new Promise(resolve => setTimeout(() => resolve(review.remove()), 1200)))
+                await new Promise(resolve => setTimeout(() => resolve(), 400))
+            }
+            await Promise.all(tasks)
+        }
+
+        function in_review(reviews, parent) {
+            let {reviews: review} = reviews
+            for (let i of review) {
+                let child = get_el_review(i)
+                console.log(child)
+                child.style.scale = 0
+                child.style.opacity = 0
+                parent.append(child)
+                setTimeout(() => {
+                    child.style.scale = 1
+                    child.style.opacity = 1
+                }, 100)
+            }
+        }
+
+        await out_review(parentReviews)
+        in_review(reviews, parentReviews)
+        get_pagination(reviews.pages, page)
+        console.log()
+    }
+
+    function setReviewSelect() {
+        let margin = 0
+        let width = window.screen.width > 520 ? 260 : 126
+        let maxWidth = window.screen.width > 520 ? 260 : 126
+        let maxMargin = window.screen.width > 520 ? 340 : 190
+        let step1Margin = window.screen.width > 520 ? 245 : 120
+        let duration = 700
+
+        let gradientText = {
+            from: 0,
+            to: 0
+        }
+        if (feedback_el.review.classList.contains('active-select')) return;
+        let load = loading.firstElementChild
+
+        function step_1() {
+            gradientText.from += 100 / this.count_animate
+            if (width > 0) width -= maxWidth / this.count_animate
+            else width = 0
+            if (margin < step1Margin) margin += step1Margin / this.count_animate
+            else margin = step1Margin
+            load.style.marginLeft = `${margin}px`
+            load.style.width = `${width}px`
+            feedback_el.selected = 'our'
+            if (this.is_finish) {
+                load_review('our', 1)
+                load.style.marginLeft = `${step1Margin}px`
+                load.style.width = '0px'
+                if (feedback_el.game.classList.contains('active-select')) feedback_el.game.classList.remove('active-select')
+                if (!feedback_el.review.classList.contains('active-select')) feedback_el.review.classList.add('active-select')
+                animate(duration, step_2)
+                return;
+            }
+
+        }
+
+        function step_2() {
+            if (width < maxWidth) width += maxWidth / this.count_animate
+            else width = maxWidth
+            if (margin < maxMargin) margin += maxMargin / this.count_animate
+            else margin = maxMargin
+            load.style.marginLeft = `${margin}px`
+            load.style.width = `${width}px`
+            console.log(margin, width, this)
+            if (this.is_finish) {
+                load.style.marginLeft = `${maxMargin}px`
+                load.style.width = `${maxWidth}px`
+                return;
+            }
+
+        }
+
+        animate(duration, step_1)
+    }
+
+    function setGameSelect() {
+        let margin = window.screen.width > 520 ? 245 : 120
+        let width = window.screen.width > 520 ? 260 : 126
+        let maxWidth =  window.screen.width > 520 ? 260 : 126
+        let step1Margin = window.screen.width > 520 ? 245 : 120
+        let duration = 700
+
+        if (feedback_el.game.classList.contains('active-select')) return;
+        let load = loading.firstElementChild
+
+        function step_1() {
+            if (width > 0) width -= maxWidth / this.count_animate
+            else width = 0
+            load.style.width = `${width}px`
+            if (this.is_finish) {
+                load_review('game', 1)
+                load.style.marginLeft = `${step1Margin}px`
+                load.style.width = '0px'
+                if (feedback_el.review.classList.contains('active-select')) feedback_el.review.classList.remove('active-select')
+                if (!feedback_el.game.classList.contains('active-select')) feedback_el.game.classList.add('active-select')
+                animate(duration, step_2)
+                return;
+            }
+
+        }
+
+        function step_2() {
+            if (width < maxWidth) width += maxWidth / this.count_animate
+            else width = maxWidth
+            if (margin > 0) margin -= step1Margin / this.count_animate
+            else margin = 0
+            load.style.marginLeft = `${margin}px`
+            load.style.width = `${width}px`
+            if (this.is_finish) {
+                load.style.marginLeft = `${0}px`
+                load.style.width = `${maxWidth}px`
+                return;
+            }
+
+        }
+
+        animate(duration, step_1)
+    }
+
+    function changeSelect(el, type) {
+
+    }
+
+    feedback_el.game.onclick = x => setGameSelect(feedback_el.game, 'game')
+    feedback_el.review.onclick = x => setReviewSelect(feedback_el.review, 'review')
+}

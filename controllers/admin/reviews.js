@@ -14,6 +14,33 @@ export const pageReviews = async (req, res) => {
   }
 }
 
+export const pageBestReviews = async (req, res) => {
+  try {
+    const reviews = await Review.find({status: 'taken', active: true}).select(['text', 'eval']).lean()
+    res.render('adminSelectBestReview', {
+      layout: 'admin',
+      reviews
+    })
+
+  } catch (e) {
+    console.log(e);
+    res.redirect('/admin')
+  }
+}
+
+export const bestReviews = async (req, res) => {
+  try {
+    let {reviews} = req.body
+    await Review.updateMany({}, {is_best:false}) // Закончить
+    await Review.updateMany({id: {$in: reviews}}, {is_best:true})
+    console.log(reviews)
+    res.redirect('/admin/reviews/best')
+  } catch (e) {
+    console.log(e)
+    res.redirect('/admin')
+  }
+}
+
 export const rejectPage = async (req, res) => {
   try {
     const reviewId = req.params.reviewId;
