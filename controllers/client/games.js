@@ -33,9 +33,44 @@ export const gamesPage = async (req, res, next) => {
   
     let section;
     let sectionType;
-    let metaDescription = 'Каталог лучших игр со скидками и удобным поиском. Топ продаж от магазина лицензионных ключей ICE GAMES.';
-    let title = 'Каталог игр ICE GAMES';
+    let metaDescription = `Каталог лучших игр со скидками и удобным поиском. Топ продаж от магазина лицензионных ключей ICE GAMES. Страница ${page}`;
+    let title = `Каталог игр для ПК: купить ключи активации со скидкой в магазине ICE GAMES — страница ${page}`;
     let hTitle = `Каталог игр`;
+    let pageDescription = `
+      <h2>Игры на ПК</h2>
+      <p>
+        Выбирай любимые игры для ПК и крутые новинки в интернет-магазине ICE GAMES. Присылаем код мгновенно после
+        оплаты, чтобы ты мог сразу окунуться в новое приключение. Нужна помощь или совет, во что поиграть? Следи за
+        обзорами новинок и культовых серий в нашем
+        <a href="https://icegames.store/blog" class="link" title="Перейти на страницу блога ICE GAMES" target="_blank">блоге</a>.
+      </p>
+      <p>
+        Лицензия, в отличие от пиратского кода, открывает для тебя все возможности мультиплеера и достижений, а также
+        исключает риски. Тебе не грозят блокировка аккаунта и другие санкции — играй без проблем.
+      </p>
+      <h3>Отличный выбор и удобный сервис</h3>
+      <p>ICE GAMES — это:</p>
+      <ul>
+        <li>
+            2500+ тайтлов, включая требовательные проекты, которые идут на крутых игровых ПК, и нетяжелые игры с простой
+            графикой для старых машин или базовой сборки;
+        </li>
+        <li>
+            лицензионные ключи для всех популярных компьютерных платформ — Steam, Epic Games, GOG, Ubisoft Connect,
+            Origin, Microsoft Store и других;
+        </li>
+        <li>
+            лучшие цены и регулярные онлайн-распродажи — мы закупаем коды дешево у разработчиков, издателей и ведущих
+            поставщиков;
+        </li>
+        <li>все доступные способы цифровой оплаты покупки;</li>
+        <li>мгновенная отправка активатора после оплаты с гарантией замены, если что-то пошло не так.</li>
+      </ul>
+      <p>
+        Не знаешь, как активировать игру на ПК? Обратись в наш центр поддержки. Оператор поможет с любым вопросом
+        профессионально и доброжелательно.
+      </p>
+    `;
     let breadcrumbs = [{
       name: 'Каталог',
       current: true,
@@ -64,18 +99,20 @@ export const gamesPage = async (req, res, next) => {
         },
       ];
   
+      pageDescription = section.description;
+  
       switch (sectionType) {
         case 'genres': {
-          metaDescription = `Каталог лучших игр в жанре ${section.name} со скидками и удобным поиском. Топ продаж от магазина лицензионных ключей ICE GAMES.`;
-          title = `Каталог игр ICE GAMES в жанре ${section.name}`;
-          hTitle = `Каталог игр в жанре ${section.name}`;
+          metaDescription = `Каталог лучших игр в жанре ${section.name} со скидками и удобным поиском. Топ продаж от магазина лицензионных ключей ICE GAMES. Страница ${page}`;
+          title = `Каталог игр ICE GAMES в жанре ${section.name} — страница ${page}`;
+          hTitle = `Купить игры в жанре ${section.name} для PC`;
           genres.push(sectionName);
           break;
         }
         case 'activationServices': {
-          metaDescription = `Ключи для ${section.name} в магазине ICE GAMES. Мгновенная доставка ключей активации. Широкий выбор игр, сервисная поддержка`;
-          title = `Ключи для ${section.name} со скидкой в магазине лицензионных ключей ICE GAMES`;
-          hTitle = `Каталог игр с активацией в ${section.name}`;
+          metaDescription = `Ключи для ${section.name} в магазине ICE GAMES. Мгновенная доставка ключей активации. Широкий выбор игр, сервисная поддержка. Страница ${page}`;
+          title = `Ключи для каталога игр ${section.name} со скидкой в магазине ICE GAMES — страница ${page}`;
+          hTitle = `Купить ключи активации ${section.name}`;
           activationServices.push(sectionName);
           break;
         }
@@ -432,6 +469,7 @@ export const gamesPage = async (req, res, next) => {
       breadcrumbs,
       sectionName,
       sectionType,
+      pageDescription,
       onlyStock,
       allCategories,
       allGenres,
@@ -483,6 +521,7 @@ export const gamePage = async (req, res) => {
       product: product._id,
       active: true,
     };
+    const shortDescription = product.description.replace(/<h[2-6]>.+<\/h[2-6]>/ig, '').replace(/<[^>]+>/ig, '').replace(/\s{2,}/ig, ' ').trim().slice(0, 200).trim();
     
     if (person) {
       reviewsFilter['$or'] = [
@@ -529,7 +568,7 @@ export const gamePage = async (req, res) => {
       .find({products: {$in: [product._id.toString()]}})
       .select(['alias', 'img', 'name', 'type', 'created', 'createdAt', 'introText']);
     const recProductsFilter = { //Фильтры для подборки рекомендаций
-      _id: {$ne: product._id}, //Отсеивает товар, на котором сейчас находимся
+      $and: [{_id: {$ne: product._id}}], //Отсеивает товар, на котором сейчас находимся
       inStock: true,
       active: true,
       dlc: false,
@@ -563,7 +602,7 @@ export const gamePage = async (req, res) => {
     let typeTrailerCover;
     let additions = await Product
       .find({dlc: true, dlcForId: product._id})
-      .select(['name', 'img', 'priceTo', 'priceFrom', 'dlc', 'inStock', 'alias'])
+      .select(['name', 'img', 'priceTo', 'priceFrom', 'dlc', 'inStock', 'alias', 'preOrder'])
       .lean();
   
     sampleParamNames.forEach(item => {
@@ -615,7 +654,7 @@ export const gamePage = async (req, res) => {
         .findById(person._id)
         .select('viewedProducts')
         .slice('viewedProducts', 7)
-        .populate('viewedProducts', ['alias', 'name', 'img', 'priceTo', 'priceFrom', 'dsId', 'dlc', 'inStock'])
+        .populate('viewedProducts', ['alias', 'name', 'img', 'priceTo', 'priceFrom', 'dsId', 'dlc', 'inStock', 'preOrder'])
         .lean();
   
       lastViewedProducts = viewedProductsResult.viewedProducts;
@@ -687,7 +726,7 @@ export const gamePage = async (req, res) => {
       recProductsFilter.seriesId = {$ne: product.seriesId}; //Отсеиваем товары, которые есть в серии текущей игры
       seriesProducts = await Product
         .find({_id: {$ne: product._id}, seriesId: product.seriesId, active: true})
-        .select(['name', 'alias', 'priceTo', 'priceFrom', 'img', 'inStock'])
+        .select(['name', 'alias', 'priceTo', 'priceFrom', 'img', 'inStock', 'preOrder'])
         .lean();
     } else if (product.bundleId) {
       const originalProduct = await Product.findOne({bundleId: product.bundleId, isOriginalInBundle: true});
@@ -709,18 +748,17 @@ export const gamePage = async (req, res) => {
       return {...item.toObject()};
     });
     
+    recProductsFilter.$and.push({_id: {$nin: recommendIds}});
+    
     if (recProducts.length < 8) {
       const dopRect = await Product
         .find({
           ...recProductsFilter,
-          _id: {
-            $nin: recommendIds,
-          },
           priceTo: {
             $gte: product.priceTo,
           },
         })
-        .select(['name', 'alias', 'inStock', 'img', 'priceTo', 'priceFrom'])
+        .select(['name', 'alias', 'inStock', 'img', 'priceTo', 'priceFrom', 'preOrder'])
         .limit(8 - recProducts.length)
         .lean();
       
@@ -731,9 +769,6 @@ export const gamePage = async (req, res) => {
       const dopRect = await Product
         .find({
           ...recProductsFilter,
-          _id: {
-            $nin: recommendIds,
-          },
           priceTo: {
             $lt: product.priceTo,
           },
@@ -823,6 +858,7 @@ export const gamePage = async (req, res) => {
       countReviews,
       articles,
       additions,
+      shortDescription,
       ogImage: product.img,
       breadcrumbs: [
         {

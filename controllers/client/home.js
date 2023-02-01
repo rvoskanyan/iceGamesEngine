@@ -52,7 +52,7 @@ export const homepage = async (req, res) => {
   const skipRecommend = day * 5 + 5;
   let recommend = await Product
     .find({active: true, top: true, inStock: true, priceTo: {$gt: 300}})
-    .select(['name', 'alias', 'priceTo', 'priceFrom', 'img', 'dsId', 'inStock'])
+    .select(['name', 'alias', 'priceTo', 'priceFrom', 'img', 'dsId', 'inStock', 'preOrder'])
     .skip(countRecommend > skipRecommend ? skipRecommend : countRecommend > 5 ? countRecommend  - 5 : countRecommend)
     .limit(5)
     .lean();
@@ -109,20 +109,20 @@ export const homepage = async (req, res) => {
   
   const noveltiesProduct = await Product
     .find({preOrder: false, active: true})
-    .select(['name', 'alias', 'img', 'priceTo', 'priceFrom', 'dlc', 'dsId', 'inStock'])
+    .select(['name', 'alias', 'img', 'priceTo', 'priceFrom', 'dlc', 'dsId', 'inStock', 'preOrder'])
     .sort({'releaseDate': -1})
     .limit(10)
     .lean();
   
   const preOrders = await Product
     .find({preOrder: true, active: true})
-    .select(['name', 'alias', 'img', 'priceTo', 'priceFrom', 'dlc', 'dsId', 'inStock'])
+    .select(['name', 'alias', 'img', 'priceTo', 'priceFrom', 'dlc', 'dsId', 'inStock', 'preOrder'])
     .limit(10)
     .lean();
   
   const discounts = await Product
     .find({discount: {$gt: 60}, active: true, inStock: true})
-    .select(['name', 'alias', 'img', 'priceTo', 'priceFrom', 'dlc', 'dsId', 'inStock'])
+    .select(['name', 'alias', 'img', 'priceTo', 'priceFrom', 'dlc', 'dsId', 'inStock', 'preOrder'])
     .sort({'priceFrom': -1})
     .limit(10)
     .lean();
@@ -153,6 +153,7 @@ export const homepage = async (req, res) => {
       },
       {
         $sort: {
+          'product.countKeys': -1,
           order: 1,
           'product.createdAt': -1,
         }
@@ -170,6 +171,7 @@ export const homepage = async (req, res) => {
           priceFrom: '$product.priceFrom',
           dlc: '$product.dlc',
           inStock: '$product.inStock',
+          preOrder: '$product.preOrder',
         }
       }
     ]);
@@ -215,7 +217,7 @@ export const homepage = async (req, res) => {
   })
   
   catalog.push({
-    category: {name: 'Предзаказы'},
+    category: {name: 'Скоро'},
     products: preOrders.map(item => {
       const productId = item._id.toString();
   
@@ -233,7 +235,7 @@ export const homepage = async (req, res) => {
   
   res.render('home', {
     title: 'Купить лицензионные ключи Steam в магазине компьютерных игр ICE GAMES',
-    metaDescription: 'Магазин лицензионных ключей ICE GAMES. Более 2000 игр в каталоге, 16 жанров, сервисная поддержка, активация в Steam, Origin, Epic Games, GOG и других сервисах. Увлекательные статьи и большое активное комьюнити.',
+    metaDescription: 'Магазин лицензионных ключей ICE GAMES. Активация игр Steam, Origin, Epic Games, GOG и других сервисах для более, чем 2000 игр в 16 различных жанрах, сервисная поддержка, увлекательные статьи и большое активное комьюнити.',
     noIndex: !!checkEmailHash,
     noIndexGoogle: !!checkEmailHash,
     isHome: true,

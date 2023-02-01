@@ -89,7 +89,6 @@
             <div class="homeRecommend mobileScroll">
                 {{#each recommend}}
                     {{> game
-                            id=_id
                             size='big'
                     }}
                 {{/each}}
@@ -98,7 +97,7 @@
         <div class="homeSection homeStatistics mobileInvisibleScroll">
             <div class="item">
                 <div class="label">комьюнити</div>
-                <div class="value js-counterAnimation">3712</div>
+                <div class="value js-counterAnimation">3875</div>
             </div>
             <div class="item">
                 <div class="label">игр куплено</div>
@@ -129,7 +128,6 @@
                         <div class="item mobileScroll js-tabBlock-{{@index}}{{#if @first}} active{{/if}}">
                             {{#each products}}
                                 {{> game
-                                    id=_id
                                     size='big'
                                 }}
                             {{/each}}

@@ -54,7 +54,7 @@ export const profileViewPage = async (req, res) => {
         .limit(1)
         .skip(skipOrder)
         .select('items')
-        .populate('items.productId', ['name', 'alias', 'priceTo', 'priceFrom', 'img', 'dsId', 'inStock']);
+        .populate('items.productId', ['name', 'alias', 'priceTo', 'priceFrom', 'img', 'dsId', 'inStock', 'preOrder']);
       
       if (!order) {
         break;

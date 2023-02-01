@@ -182,6 +182,7 @@ export const addProduct = async (req, res) => {
       lastEditorId: creator,
       alias: getAlias(name),
       description,
+      dsId: dsId || undefined,
       priceTo,
       priceFrom,
       discount: getDiscount(priceTo, priceFrom),
@@ -267,10 +268,6 @@ export const addProduct = async (req, res) => {
     
     if (edition !== '0') {
       product.editionId = edition;
-    }
-    
-    if (dsId !== '0') {
-      product.dsId = dsId;
     }
     
     await product.save();
@@ -441,6 +438,7 @@ export const editProduct = async (req, res) => {
       normalizeName: normalizeStr(name),
       soundName: getSoundIndex(name),
       metaDescription,
+      dsId: dsId || undefined,
       lastEditorId,
       alias: getAlias(name),
       description,
@@ -550,12 +548,6 @@ export const editProduct = async (req, res) => {
       product.editionId = null
     } else {
       product.editionId = edition;
-    }
-  
-    if (dsId === '0') {
-      product.dsId = null;
-    } else {
-      product.dsId = dsId;
     }
   
     await product.save();

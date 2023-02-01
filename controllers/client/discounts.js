@@ -5,7 +5,7 @@ export const discountsPage = async (req, res) => {
     const person = res.locals.person;
     let products = await Product.find()
       .find({discount: {$gt: 60}, active: true})
-      .select(['name', 'alias', 'img', 'priceTo', 'priceFrom', 'dsId', 'dlc', 'inStock'])
+      .select(['name', 'alias', 'img', 'priceTo', 'priceFrom', 'dsId', 'dlc', 'inStock', 'preOrder'])
       .sort({'priceFrom': -1})
       .limit(14)
       .lean();

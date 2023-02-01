@@ -2,7 +2,7 @@ import Edition from "./../../models/Edition.js";
 
 export const pageEditions = async (req, res) => {
   try {
-    const editions = await Edition.find().select(['name']);
+    const editions = await Edition.find().select(['name']).lean();
     
     res.render('listElements', {
       layout: 'admin',

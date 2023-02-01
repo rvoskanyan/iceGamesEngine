@@ -5,6 +5,14 @@
         <form class="content personalDataForm js-profileEditForm" method="post" action="/profile/edit">
             <div class="personalData">
                 <div class="subtitle">Личные данные</div>
+                {{#unless user.yaId}}
+                    <div class="bindYaId">
+                        <div class="subtitle">Связать с аккаунтом Яндекс:</div>
+                        <a href="https://oauth.yandex.ru/authorize?response_type=token&client_id=016a39e179904eadaa9186999b0a01f2" class="yaIdAuthLink" title="Перейти на Яндекс для авторизации">
+                            <img src="{{websiteAddress}}img/yaIdBtnContent.svg" class="yaIdAuthLinkIcon" alt="Иконка авторизации через Яндекс ID">
+                        </a>
+                    </div>
+                {{/unless}}
                 <label class="input-frame">
                     <span class="label">Ник</span>
                     <input class="textField" type="text" name="login" placeholder="Укажите желаемый ник" value="{{user.login}}">

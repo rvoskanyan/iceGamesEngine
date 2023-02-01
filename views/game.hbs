@@ -95,7 +95,7 @@
                     </span>
                 {{/if}}
             </div>
-            <div class="description" itemprop="description">{{encodeString product.description}}</div>
+            <div class="description" itemprop="description">{{shortDescription}}</div>
             <div class="offerMacro" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
                 {{#if product.preOrder}}
                     <link itemprop="availability" href="http://schema.org/PreOrder">
@@ -112,40 +112,16 @@
                     </div>
                 {{/if}}
                 <div class="buyContainer">
-                    <div class="price">
-                        {{#iff product.discount '>' 0}}
-                            <div class="rowDiscount">
-                                <div class="fromPrice">
-                                    <span class="value">{{product.priceFrom}}</span>
-                                </div>
-                                <div class="discount">{{product.discount}}</div>
-                            </div>
-                        {{/iff}}
-                        <div itemscope itemtype="https://schema.org/BuyAction" class="toPrice">
-                            <span class="value" itemprop="price">{{product.priceTo}}</span>
-                            <meta itemprop="priceCurrency" content="RUB">
+                    {{#if product.preOrder}}
+                        <div class="price">
+                            <style>
+                                .gamePage .cover .offer .buyContainer .price .toPrice:after {
+                                    content: ''!important;
+                                }
+                            </style>
+                            <div class="toPrice">Скоро в наличии!</div>
                         </div>
-                    </div>
-                    <div class="actions">
-                        {{#if @root.isAuth}}
-                            <button class="btn js-addInFavoritesProductPage{{#if currentProductInFavorite}} js-active{{/if}}" title="{{#if currentProductInFavorite}}Удалить товар из избранного{{else}}Добавить товар в избранное{{/if}}" data-product-id="{{product._id}}">
-                                <span class="icon icon-static icon-static-bigLike js-icon{{#if currentProductInFavorite}} active{{/if}}"></span>
-                            </button>
-                        {{/if}}
-                        {{#if product.inStock}}
-                            {{#if currentProductInCart}}
-                                <button
-                                        title="Перейти в корзину покупок"
-                                        class="btn elongated rounded increase bg-pink js-addToCartBtn js-active"
-                                >Добавлено</button>
-                            {{else}}
-                                <button
-                                        title="Добавить данный товар в корзину покупок"
-                                        class="btn elongated rounded increase bg-pink js-addToCartBtn"
-                                        data-product-id="{{product._id}}"
-                                >В корзину</button>
-                            {{/if}}
-                        {{else}}
+                        <div class="actions">
                             {{#if subscribed}}
                                 <div
                                         title="Когда товар появится в наличии, на Ваш E-mail придет уведомление."
@@ -161,16 +137,72 @@
                                         data-product-id="{{product._id}}"
                                 >Уведомить</button>
                             {{/if}}
-                        {{/if}}
-                    </div>
+                        </div>
+                    {{else}}
+                        <div class="price">
+                            {{#iff product.discount '>' 0}}
+                                <div class="rowDiscount">
+                                    <div class="fromPrice">
+                                        <span class="value">{{product.priceFrom}}</span>
+                                    </div>
+                                    <div class="discount">{{product.discount}}</div>
+                                </div>
+                            {{/iff}}
+                            <div itemscope itemtype="https://schema.org/BuyAction" class="toPrice">
+                                <span class="value" itemprop="price">{{product.priceTo}}</span>
+                                <meta itemprop="priceCurrency" content="RUB">
+                            </div>
+                        </div>
+                        <div class="actions">
+                            {{#if @root.isAuth}}
+                                <button class="btn js-addInFavoritesProductPage{{#if currentProductInFavorite}} js-active{{/if}}" title="{{#if currentProductInFavorite}}Удалить товар из избранного{{else}}Добавить товар в избранное{{/if}}" data-product-id="{{product._id}}">
+                                    <span class="icon icon-static icon-static-bigLike js-icon{{#if currentProductInFavorite}} active{{/if}}"></span>
+                                </button>
+                            {{/if}}
+                            {{#if product.inStock}}
+                                {{#if currentProductInCart}}
+                                    <button
+                                            title="Перейти в корзину покупок"
+                                            class="btn elongated rounded increase bg-pink js-addToCartBtn js-active"
+                                    >Добавлено</button>
+                                {{else}}
+                                    <button
+                                            title="Добавить данный товар в корзину покупок"
+                                            class="btn elongated rounded increase bg-pink js-addToCartBtn"
+                                            data-product-id="{{product._id}}"
+                                    >В корзину</button>
+                                {{/if}}
+                            {{else}}
+                                {{#if subscribed}}
+                                    <div
+                                            title="Когда товар появится в наличии, на Ваш E-mail придет уведомление."
+                                            class="btn elongated rounded bg-pink"
+                                    >Уведомление оформлено</div>
+                                {{else}}
+                                    <button
+                                            title="Подписаться на уведомление о поступлении товара"
+                                            class="
+                                    btn elongated rounded increase bg-pink hover-backlight-blue js-subscribeInStock
+                                    {{#unless @root.isAuth}} js-notAuth{{/unless}}
+                                "
+                                            data-product-id="{{product._id}}"
+                                    >Уведомить</button>
+                                {{/if}}
+                            {{/if}}
+                        </div>
+                    {{/if}}
                     {{#orIf product.preOrder product.dlc}}
                         <div class="moreInfoBlocks">
-                            {{#if product.preOrder}}
+
+                            <!-- !!!Разблокировать вывод блока при доработке предзаказов!!! -->
+
+                            <!--{{#if product.preOrder}}
                                 <div class="moreInfo preOrderInfo">
                                     Внимание! Это предзаказ. Ключ будет доставлен Вам
                                     <span class="date">{{product.pointReleaseDate}}</span>
                                 </div>
-                            {{/if}}
+                            {{/if}}-->
+
                             {{#if product.dlc}}
                                 <div class="moreInfo dlcInfo">
                                     Для активации дополнения требуется наличие
@@ -308,7 +340,6 @@
                                         {{#each additions}}
                                             <div class="slide js-slide{{#iff @index '<' 2}} active{{/iff}}">
                                                 {{> game
-                                                        id=_id
                                                         size='small'
                                                 }}
                                             </div>
@@ -369,7 +400,6 @@
                                         {{#each recProducts}}
                                             <div class="slide js-slide{{#iff @index '<' 2}} active{{/iff}}">
                                                 {{> game
-                                                        id=_id
                                                         size='small'
                                                 }}
                                             </div>
@@ -610,7 +640,6 @@
                                 {{/if}}
                                 {{> game
                                         size='small'
-                                        id=_id
                                 }}
                                 {{#if @root.seriesIsSlider}}
                                 </div>
@@ -836,9 +865,7 @@
                 <div class="games mobileInvisibleScroll">
                     {{#each lastViewedProducts}}
                         {{#unless currentPorductPage}}
-                            {{> game
-                                id=_id
-                            }}
+                            {{> game}}
                         {{/unless}}
                     {{/each}}
                 </div>

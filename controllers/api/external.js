@@ -180,7 +180,14 @@ export const getFeedYML = async (req, res) => {
 
 export const getTurboArticlesRssFeed = async (req, res) => {
   try {
-    const articles = await Article.find({active: true}).select(['name', 'alias', 'img', 'blocks', 'createdAt']).lean();
+    const articles = await Article
+      .find({active: true})
+      .select(['name', 'alias', 'img', 'blocks', 'createdAt', 'products'])
+      .populate([{
+        path: 'products',
+        select: ['name', 'alias'],
+      }])
+      .lean();
     const turboArticlesRssFeedText = getTurboArticlesRssFeedText(articles);
     
     res.set('Content-Type', 'text/xml');

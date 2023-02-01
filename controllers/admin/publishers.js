@@ -2,7 +2,7 @@ import Publisher from "./../../models/Publisher.js";
 
 export const pagePublishers = async (req, res) => {
   try {
-    const publishers = await Publisher.find().select(['name']);
+    const publishers = await Publisher.find().select(['name']).lean();
     
     res.render('listElements', {
       layout: 'admin',

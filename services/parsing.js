@@ -69,7 +69,7 @@ const sync = async () => {
           continue;
         }
         
-        if (priceTo >= 9999) {
+        if (priceTo >= 9999 || productOnSite.preOrder) {
           await productOnSite.changeInStock(false);
           continue;
         }
@@ -77,9 +77,7 @@ const sync = async () => {
         productOnSite.dsPrice = priceTo;
         await productOnSite.save();
         
-        let keys = await Key.findOne({product: productOnSite._id, is_active: true});
-        
-        if (keys) {
+        if (productOnSite.countKeys) {
           continue;
         }
 

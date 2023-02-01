@@ -42,7 +42,7 @@ export const profilePage = async (req, res) => {
 
 export const profileEditPage = async (req, res) => {
   try {
-    const {userId} = req.session;
+    const userId = req.session.userId;
     const user = await User.findById(userId);
   
     res.render('profileEdit', {
@@ -222,7 +222,7 @@ export const profileOrdersPage = async (req, res) => {
       .populate([
         {
           path: 'items.productId',
-          select: ['name', 'alias', 'priceTo', 'priceFrom', 'img', 'preorder', 'releaseDate', 'activationServiceId', 'activationRegions'],
+          select: ['name', 'alias', 'priceTo', 'priceFrom', 'img', 'preorder', 'releaseDate', 'activationServiceId', 'activationRegions', 'preOrder'],
           populate: [
             {
               path: 'activationServiceId',
@@ -288,7 +288,8 @@ export const profileOrdersPage = async (req, res) => {
 
 export const profileFavoritesPage = async (req, res) => {
   try {
-    const user = await res.locals.person.populate('favoritesProducts', ['name', 'alias', 'img', 'priceTo', 'priceFrom', 'dsId', 'dlc', 'inStock']);
+    const user = await res.locals.person
+      .populate('favoritesProducts', ['name', 'alias', 'img', 'priceTo', 'priceFrom', 'dsId', 'dlc', 'inStock', 'preOrder']);
     
     user.favoritesProducts = user.favoritesProducts.map(product => {
       if (user.cart && user.cart.includes(product._id)) {

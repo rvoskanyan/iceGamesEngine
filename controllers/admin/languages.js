@@ -2,7 +2,7 @@ import Language from './../../models/Language.js';
 
 export const pageLanguages = async (req, res) => {
   try {
-    const languages = await Language.find().select(['name']);
+    const languages = await Language.find().select(['name']).lean();
     
     res.render('listElements', {
       layout: 'admin',

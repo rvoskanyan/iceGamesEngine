@@ -23,7 +23,7 @@ export const cartPage = async (req, res) => {
             }
           ]
         });
-      is_keys = await Key.find({product: {$in: person.cart}, is_active: true}).distinct('product').exec()
+      is_keys = await Key.find({product: {$in: person.cart}, isActive: true, isSold: false}).distinct('product');
       is_keys = {is_keys: !!is_keys.length, products: is_keys}
       cart = result.cart;
       priceToTotal = cart.reduce((priceToTotal, item) => priceToTotal + item.priceTo, 0);

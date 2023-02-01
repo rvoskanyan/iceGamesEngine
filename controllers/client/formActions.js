@@ -75,7 +75,6 @@ export const auth = async (req, res) => {
         
         if (isPassValid) {
           req.session.isAuth = true;
-          req.session.role = candidate['role'];
           req.session.userId = candidate['_id'].toString();
           req.session.save(err => {
             if (err) {

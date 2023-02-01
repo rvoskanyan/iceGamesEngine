@@ -4,7 +4,7 @@ import ProductCategory from "../../models/Product_Category.js";
 
 export const pageCategories = async (req, res) => {
   try {
-    const categories = await Category.find().select(['name']);
+    const categories = await Category.find().select(['name']).lean();
   
     res.render('listElements', {
       layout: 'admin',

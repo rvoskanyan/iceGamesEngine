@@ -3,7 +3,7 @@ import Product from './../../models/Product.js';
 
 export const pageSeries = async (req, res) => {
   try {
-    const series = await Series.find().select(['name']);
+    const series = await Series.find().select(['name']).lean();
   
     res.render('listElements', {
       layout: 'admin',

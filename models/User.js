@@ -19,10 +19,7 @@ const fields = {
     type: String,
     index: true,
   },
-  password: {
-    type: String,
-    required: true,
-  },
+  password: String,
   purchasedProducts: {
     type: Number,
     default: 0,
@@ -79,6 +76,7 @@ const fields = {
     default: false,
   },
   lockingMessage: String,
+  yaId: Number,
   bot: {
     type: Boolean,
     default: false,

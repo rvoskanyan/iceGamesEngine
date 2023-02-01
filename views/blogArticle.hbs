@@ -129,7 +129,7 @@
                                 {{#each article.products}}
                                     <div class="slide js-slide">
                                         {{> game
-                                                id=_id
+                                                _id=_id
                                                 name=name
                                                 alias=alias
                                                 img=img
@@ -138,6 +138,7 @@
                                                 dsId=dsId
                                                 dlc=dlc
                                                 inStock=inStock
+                                                preOrder=preOrder
                                         }}
                                     </div>
                                 {{/each}}
@@ -149,7 +150,7 @@
                     <div class="games mobileScroll">
                         {{#each article.products}}
                             {{> game
-                                    id=_id
+                                    _id=_id
                                     name=name
                                     alias=alias
                                     img=img
@@ -158,6 +159,7 @@
                                     dsId=dsId
                                     dlc=dlc
                                     inStock=inStock
+                                    preOrder=preOrder
                             }}
                         {{/each}}
                     </div>

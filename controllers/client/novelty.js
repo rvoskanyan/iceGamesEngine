@@ -5,7 +5,7 @@ export const noveltyPage = async (req, res) => {
     const person = res.locals.person;
     let products = await Product
       .find({active: true})
-      .select(['name', 'alias', 'img', 'priceTo', 'priceFrom', 'dsId', 'dlc', 'inStock'])
+      .select(['name', 'alias', 'img', 'priceTo', 'priceFrom', 'dsId', 'dlc', 'inStock', 'preOrder'])
       .sort({'releaseDate': -1})
       .limit(14)
       .lean();

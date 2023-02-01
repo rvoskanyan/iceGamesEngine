@@ -14,18 +14,27 @@
   transition: .5s cubic-bezier(0.6, -0.28, 0.74, 0.05)
   transition-property: right, opacity
   opacity: 0
-  padding: 68px 40px
+  padding: 40px 25px
   display: grid
 
+  @include for-desktop-up
+    padding: 68px 40px
+
   & .close
-    top: 15px
-    right: 15px
-    width: 30px
-    height: 35px
+    top: 10px
+    right: 10px
+    width: 25px
+    height: 30px
     position: absolute
     display: flex
     justify-content: center
     align-items: center
+
+    @include for-desktop-up
+      top: 15px
+      right: 15px
+      width: 30px
+      height: 35px
 
     &:before, &:after
       content: ''
@@ -63,10 +72,10 @@
         margin-top: 30px
 
       & .submit
-        margin: 15px auto 0 auto
+        margin: 10px auto 0 auto
 
         @include for-desktop-up
-          margin: 25px auto 0 auto
+          margin: 15px auto 0 auto
 
   &.active
     opacity: 1
@@ -102,10 +111,10 @@
           transition-property: opacity, visibility
 
       &.auth
-        height: 148px
+        height: 143px
 
         @include for-desktop-up
-          height: 189px
+          height: 179px
 
         & .input-labelInField:first-child
           transition-delay: 0s
@@ -153,3 +162,43 @@
 
       @include for-desktop-up
         margin: 30px auto 0 auto
+
+  .orSeparator
+    display: flex
+    justify-content: center
+    align-items: center
+    color: #DADDEE
+    line-height: 1
+    margin-top: 10px
+    font-size: 14px
+    column-gap: 10px
+
+    @include for-desktop-up
+      font-size: 16px
+      margin-top: 15px
+
+    &:before, &:after
+      content: ''
+      flex-grow: 1
+      height: 1px
+      background-color: #DADDEE
+
+  .yaIdAuth
+    display: flex
+    justify-content: center
+    margin-top: 10px
+
+    @include for-desktop-up
+      margin-top: 15px
+
+    .yaIdAuthLink
+      display: flex
+      justify-content: center
+      background-color: #fff
+      border-radius: 100px
+      padding: 9px 18px
+      width: 100%
+      border: 1px solid #000
+
+      .yaIdAuthLinkIcon
+        display: block

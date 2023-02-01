@@ -112,7 +112,7 @@ export default {
 
                 let price = product.priceTo;
 
-                price = isTwo ? Math.floor( price - price * 0.05) : price;
+                price = isTwo ? Math.floor( price - price * 0.03) : price;
                 amount += price;
                 order.items.push({
                     productId,

@@ -6,7 +6,7 @@ import {getExtendFile} from "./../../utils/functions.js";
 
 export const pageExtends = async (req, res) => {
   try {
-    const allExtends = await Extend.find().select(['name']);
+    const allExtends = await Extend.find().select(['name']).lean();
     
     res.render('listElements', {
       layout: 'admin',

@@ -2,7 +2,7 @@ import Developer from "./../../models/Developer.js";
 
 export const pageDevelopers = async (req, res) => {
   try {
-    const developers = await Developer.find().select('name');
+    const developers = await Developer.find().select('name').lean();
     
     res.render('listElements', {
       layout: 'admin',

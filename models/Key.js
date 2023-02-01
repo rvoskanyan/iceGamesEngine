@@ -16,7 +16,6 @@ const fields = {
     },
     soldOrder: {
         type: mongoose.Types.ObjectId,
-        //required: true,
         ref: 'Order',
     },
     expired: Date,

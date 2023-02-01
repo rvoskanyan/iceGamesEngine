@@ -71,12 +71,15 @@
           flex-grow: 1
 
           & .title
-            font-size: 20px
+            font-size: 18px
             font-family: 'Lemon Milk'
             color: #fff
 
-            @include for-big-phone-up
-              font-size: 36px
+            @include for-desktop-up
+              font-size: 21px
+
+            @include for-big-desktop-up
+              font-size: 24px
 
           & .description
             color: #fff

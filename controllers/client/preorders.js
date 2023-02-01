@@ -4,7 +4,7 @@ export const preordersPage = async (req, res) => {
   try {
     const person = res.locals.person;
     let products = await Product.find({preOrder: true})
-      .select(['name', 'alias', 'img', 'priceTo', 'priceFrom', 'dsId', 'dlc', 'inStock'])
+      .select(['name', 'alias', 'img', 'priceTo', 'priceFrom', 'dsId', 'dlc', 'inStock', 'preOrder'])
       .limit(8)
       .lean();
     
@@ -28,13 +28,13 @@ export const preordersPage = async (req, res) => {
     }
     
     res.render('selection', {
-      title: 'ICE GAMES — Предзаказы',
+      title: 'ICE GAMES — Скоро',
       metaDescription: 'Подборка игр для предзаказа от ICE Games',
       ogPath: 'preorders',
       isPreorders: true,
-      selectionName: 'Предзаказы',
+      selectionName: 'Скоро',
       breadcrumbs: [{
-        name: 'Предзаказы',
+        name: 'Скоро',
         current: true,
       }],
       products,

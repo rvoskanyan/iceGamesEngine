@@ -15,7 +15,7 @@ export const getDiscount = (priceTo, priceFrom) => {
     return Math.floor(100 - priceTo / (priceFrom / 100));
 }
 
-export const getFormatDate = (date, separator, pattern, monthString, timeSeparator) => {
+export const getFormatDate = (date, separator, pattern, monthString = false, timeSeparator) => {
     const dateObject = new Date(Date.parse(date));
     let newDate = '';
     let timeInit = false;
@@ -208,6 +208,16 @@ export function getTurboArticlesRssFeedText(articles) {
                 <img class="img" src="${srcImg}"`}
                 <div>${block.text}</div>`;
                 }).join('')}
+                ${article.products && article.products.length ? `<h3>Игры из статьи</h3>
+                    <ul>
+                        ${article.products.map(product => {
+                        const link = `${websiteAddress}games/${product.alias}`;
+                
+                        return `<li>
+                                            <a href="${link}">${product.name}</a>
+                                        </li>`;
+                    }).join('')}
+                </ul>` : ''}
             ]]>
         </turbo:content>
     </item>
