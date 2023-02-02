@@ -13,6 +13,7 @@ import {
   pageParseBySteambuy,
   parseBySteambuy,
   comparePricePage,
+  deleteSliderImg,
 } from '../../controllers/admin/products.js';
 
 const router = Router();
@@ -36,5 +37,7 @@ router.get('/:productId/parse-by-steam-buy', pageParseBySteambuy);
 router.post('/:productId/parse-by-steam-buy', parseBySteambuy);
 
 router.get('/compare', comparePricePage);
+
+router.post('/:productId/deleteSliderImg/:imgId', deleteSliderImg);
 
 export default router;

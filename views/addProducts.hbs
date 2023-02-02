@@ -1,3 +1,21 @@
+<style>
+    .images {
+        display: flex;
+        flex-wrap: wrap;
+        column-gap: 10px;
+        align-items: start;
+    }
+
+    .images img {
+        max-width: 150px;
+    }
+
+    .images .img {
+        display: flex;
+        align-items: start;
+    }
+</style>
+
 {{#iff person.role '===' 'admin'}}
     {{#if isEdit}}
         {{#unless product.active}}
@@ -31,6 +49,21 @@
         <a href="/admin/products/{{product.id}}/addElements">Добавить несколько элементов</a>
         <br>
         <br>
+        {{#if product.images.length}}
+            <h2>Изображения слайдера</h2>
+            <div class="images">
+                {{#each product.images}}
+                    <div class="img">
+                        <img src="{{@root.websiteAddress}}{{name}}">
+                        <form action="/admin/products/{{@root.product._id}}/deleteSliderImg/{{_id}}" class="delete" method="post">
+                            <input type="submit" value="X">
+                        </form>
+                    </div>
+                {{/each}}
+            </div>
+            <br>
+            <br>
+        {{/if}}
     {{/if}}
 {{/iff}}
 <form method="post" action="/admin/products/{{#if isEdit}}edit/{{product.id}}{{else}}add{{/if}}" enctype="multipart/form-data">
@@ -127,18 +160,9 @@
     <br>
     <br>
     <label>
-        Изображения слайдера*:
+        Выбрать Изображения слайдера*:
         <input type="file" name="gameImages" multiple{{#iff person.role '!==' 'admin'}} disabled{{/iff}}>
     </label>
-    <br>
-    <br>
-    {{#if gameImages}}
-        <div style="display: flex; flex-wrap: wrap">
-            {{#each gameImages}}
-                <img src="{{@root.websiteAddress}}{{name}}" alt="Изображение{{@index}} из игры {{../game.name}}" style="height: 200px; max-width: 300px; margin: 5px; object-fit: cover">
-            {{/each}}
-        </div>
-    {{/if}}
     <br>
     <br>
     <label>

@@ -1134,3 +1134,21 @@ export const comparePricePage = async (req, res) => {
     res.redirect('/admin');
   }
 }
+
+export const deleteSliderImg = async (req, res) => {
+  const productId = req.params.productId;
+  
+  try {
+    const imgId = req.params.imgId;
+    const product = await Product.findById(productId).select(['images']);
+    
+    product.images = product.images.filter(img => img._id.toString() !== imgId);
+    
+    await product.save();
+  
+    res.redirect(`/admin/products/edit/${productId}`);
+  } catch (e) {
+    console.log(e);
+    res.redirect(`/admin/products/edit/${productId}`);
+  }
+}
