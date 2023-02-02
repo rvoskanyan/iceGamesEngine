@@ -70,7 +70,20 @@ export const getProductCardNode = (data) => {
     actionsNode.append(favoritesBtnNode);
   }
   
-  if (data.inStock) {
+  if (data.preOrder) {
+    const preOrderTextNode = document.createElement('div');
+    const subscribeBtnNode = document.createElement('button');
+  
+    preOrderTextNode.setAttribute('class', 'noInStockMsg');
+    preOrderTextNode.innerHTML = 'Скоро<br>в наличии!';
+  
+    subscribeBtnNode.setAttribute('class', 'btn border rounded bg-darkPink hover-bg-pink small js-subscribeInStock');
+    subscribeBtnNode.setAttribute('title', 'Подписаться на уведомление о поступлении товара');
+    subscribeBtnNode.innerText = 'Уведомить';
+  
+    actionsNode.append(preOrderTextNode);
+    actionsNode.append(subscribeBtnNode);
+  } else if (data.inStock) {
     const addToCartBtnNode = document.createElement('button');
     const desktopTextNode = document.createElement('span');
     const mobileIconNode = document.createElement('span');
