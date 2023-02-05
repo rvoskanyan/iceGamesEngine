@@ -235,6 +235,7 @@ const fields = {
 
 const options = {
   timestamps: true,
+  versionKey: false,
 };
 
 const productSchema = new Schema(fields, options);

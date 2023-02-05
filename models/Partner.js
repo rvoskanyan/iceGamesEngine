@@ -18,6 +18,7 @@ const fields = {
 
 const options = {
   timestamps: true,
+  versionKey: false,
 };
 
 const partnerSchema = new Schema(fields, options);

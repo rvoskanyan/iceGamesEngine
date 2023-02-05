@@ -16,6 +16,7 @@ const fields = {
 
 const options = {
   timestamps: true,
+  versionKey: false,
 };
 
 const faqSchema = new Schema(fields, options);

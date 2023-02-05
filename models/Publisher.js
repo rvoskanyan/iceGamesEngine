@@ -12,6 +12,7 @@ const fields = {
 
 const options = {
   timestamps: true,
+  versionKey: false,
 };
 
 const publisherSchema = new Schema(fields, options);

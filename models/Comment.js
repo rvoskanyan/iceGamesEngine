@@ -40,6 +40,7 @@ const fields = {
 
 const options = {
   timestamps: true,
+  versionKey: false,
 };
 
 const CommentSchema = new Schema(fields, options);

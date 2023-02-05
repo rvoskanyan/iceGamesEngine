@@ -21,6 +21,7 @@ const fields = {
 
 const options = {
   timestamps: true,
+  versionKey: false,
 };
 
 const productCategorySchema = new Schema(fields, options);

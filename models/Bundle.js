@@ -11,6 +11,7 @@ const fields = {
 
 const options = {
   timestamps: true,
+  versionKey: false,
 };
 
 const bundleSchema = new Schema(fields, options);
