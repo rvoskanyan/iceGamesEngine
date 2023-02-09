@@ -15,10 +15,6 @@
     {{#if metaDescription}}
         <meta itemprop="description" name="description" content="{{metaDescription}}">
     {{/if}}
-    <meta name="yandex-verification" content="c4761c2b7abd519a"/>
-    <meta name="yandex-verification" content="91c3f9faff523f84"/>
-    <meta name="yandex-verification" content="f423dd51aa98cfc6"/>
-    <meta name="yandex-verification" content="13c93539de2f7470"/>
     <meta property="og:site_name" content="ICE GAMES">
     <meta property="og:title" content="{{title}}">
     <meta property="og:url" content="{{websiteAddress}}{{ogPath}}"/>
@@ -168,23 +164,9 @@
             <div class="navigation js-mainNavigation">
                 {{> menu}}
                 <button title="Открыть каталог игр"
-                        class="btn openMenu js-toggleMainNavigation">
-                    <span>Каталог</span>
-                    <svg width="16" height="9" viewBox="0 0 16 9" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M1.8252 1L8.3252 7L14.8252 1" stroke="white" stroke-width="2" stroke-linecap="round"/>
-                    </svg>
+                        class="btn bg-blur round border hover-bg-pink hover-border-pink openMenu js-toggleMainNavigation">
+                    Каталог
                 </button>
-                <a href="{{websiteAddress}}reviews" title="Перейти на страницу отзывов"
-                   class="link">
-                    Отзывы
-                </a>
-                {{#if isRating}}
-                    <span title="Рейтинг пользователей ICE GAMES"
-                          class="rating bg-blur btn round border hover-bg-pink hover-border-pink">Рейтинг</span>
-                {{else}}
-                    <a href="{{websiteAddress}}rating" title="Рейтинг пользователей ICE GAMES"
-                       class="rating link">Рейтинг</a>
-                {{/if}}
                 <div itemprop="potentialAction" class="searchBar" itemscope itemtype="https://schema.org/SearchAction">
                     <meta itemprop="target" content="https://icegames.store/games?searchString={query}">
                     <meta itemprop="url" content="https://icegames.store">
@@ -194,6 +176,13 @@
                         <span class="icon icon-search"></span>
                     </button>
                 </div>
+                {{#if isRating}}
+                    <span title="Рейтинг пользователей ICE GAMES"
+                          class="rating bg-blur btn round border hover-bg-pink hover-border-pink">Рейтинг</span>
+                {{else}}
+                    <a href="{{websiteAddress}}rating" title="Рейтинг пользователей ICE GAMES"
+                       class="rating bg-blur btn round border hover-bg-pink hover-border-pink">Рейтинг</a>
+                {{/if}}
             </div>
             <div class="profile">
                 {{#if isAuth}}
