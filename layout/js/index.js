@@ -2226,7 +2226,7 @@ if (reviewPage) {
     let feedback_el = {
         game: select_types.children[0],
         review: select_types.children[1],
-        selected: 'game'
+        selected: 'product'
     }
     load_review(feedback_el.selected)
 
@@ -2294,8 +2294,11 @@ if (reviewPage) {
 
     async function load_review(type, page = 1) {
         feedback_el.selected = type
-        let reviews = await postman.get(`${websiteAddress}api/reviews/all`, {
-            type, page
+        // get width window
+        let limit = window.innerWidth > 1000 ? 3 : 2
+        console.log(limit)
+        let reviews = await postman.get(`${websiteAddress}api/reviews`, {
+            type, limit: limit, skip: page * limit - limit
         })
 
         if (reviews.status > 299) {
@@ -2310,7 +2313,7 @@ if (reviewPage) {
 
         async function out_review(reviews) {
             let tasks = []
-            for (let review of Array.from(reviews.children)) {
+            for (let review of Array.from(reviews)) {
                 review.style.scale = 0
                 review.style.opacity = 0
                 tasks.push(new Promise(resolve => setTimeout(() => resolve(review.remove()), 1200)))
@@ -2320,7 +2323,7 @@ if (reviewPage) {
         }
 
         function in_review(reviews, parent) {
-            let {reviews: review} = reviews
+            let {data: review} = reviews
             for (let i of review) {
                 let child = get_el_review(i)
                 console.log(child)
@@ -2334,18 +2337,17 @@ if (reviewPage) {
             }
         }
 
-        await out_review(parentReviews)
+        await out_review(parentReviews.children)
         in_review(reviews, parentReviews)
         get_pagination(reviews.pages, page)
-        console.log()
     }
 
     function setReviewSelect() {
         let margin = 0
-        let width = window.screen.width > 520 ? 260 : 126
-        let maxWidth = window.screen.width > 520 ? 260 : 126
-        let maxMargin = window.screen.width > 520 ? 340 : 190
-        let step1Margin = window.screen.width > 520 ? 245 : 120
+        let width = window.screen.width > 520 ? 215 : 156
+        let maxWidth = window.screen.width > 520 ? 215 : 156
+        let maxMargin = window.screen.width > 520 ? 275 : 230
+        let step1Margin = window.screen.width > 520 ? 210 : 162
         let duration = 700
 
         let gradientText = {
@@ -2396,10 +2398,10 @@ if (reviewPage) {
     }
 
     function setGameSelect() {
-        let margin = window.screen.width > 520 ? 245 : 120
-        let width = window.screen.width > 520 ? 260 : 126
-        let maxWidth =  window.screen.width > 520 ? 260 : 126
-        let step1Margin = window.screen.width > 520 ? 245 : 120
+        let margin = window.screen.width > 520 ? 210 : 162
+        let width = window.screen.width > 520 ? 215 : 156
+        let maxWidth =  window.screen.width > 520 ? 215 : 156
+        let step1Margin = window.screen.width > 520 ? 210 : 162
         let duration = 700
 
         if (feedback_el.game.classList.contains('active-select')) return;
@@ -2410,7 +2412,7 @@ if (reviewPage) {
             else width = 0
             load.style.width = `${width}px`
             if (this.is_finish) {
-                load_review('game', 1)
+                load_review('product', 1)
                 load.style.marginLeft = `${step1Margin}px`
                 load.style.width = '0px'
                 if (feedback_el.review.classList.contains('active-select')) feedback_el.review.classList.remove('active-select')

@@ -31,9 +31,13 @@ export const pageBestReviews = async (req, res) => {
 export const bestReviews = async (req, res) => {
   try {
     let {reviews} = req.body
-    await Review.updateMany({}, {is_best:false}) // Закончить
-    await Review.updateMany({id: {$in: reviews}}, {is_best:true})
-    console.log(reviews)
+    if (typeof reviews === 'string') reviews = [reviews]
+    await Review.updateMany({}, {isBest:false})
+    let review = await Review.find({_id: {$in: reviews}}).exec()
+    for (let r of review) {
+        r.isBest = true
+        await r.save()
+    }
     res.redirect('/admin/reviews/best')
   } catch (e) {
     console.log(e)

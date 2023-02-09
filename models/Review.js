@@ -31,11 +31,13 @@ const fields = {
     type: Boolean,
     default: true,
   },
-  is_our: {
-    type: Boolean,
-    default: false
+  type: {
+    type: String,
+    enum: ['product', 'our'],
+    default: 'product',
+    required: true,
   },
-  is_best: {
+  isBest: {
     type: Boolean,
     default: false
   }

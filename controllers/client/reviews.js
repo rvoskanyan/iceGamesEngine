@@ -8,7 +8,7 @@ export const reviewsPage = async (req, res) => {
       .find({
         active: true,
         status: 'taken',
-        is_best: true
+        isBest: true
       })
       .limit(3)
       .sort({createdAt: -1})

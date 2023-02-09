@@ -13,42 +13,17 @@
 
     &-title
       text-align: center
-      @include for-middle-desktop-down
-        font-size: 30px
-        line-height: 37px
 
     &-cards
       display: flex
-      justify-content: center
-      height: auto
-
-      @include for-middle-desktop-down
-        max-width: 1260px
-        margin: 0 auto
-        justify-content: space-between
-        padding: 0 20px
-
-      @include for-desktop-down
-        width: 100vw
-        padding: 0 54px 50px
-        overflow-x: auto
-        overflow-y: visible
-
-        &::-webkit-scrollbar
-          display: none
-
-        .feedback-card
-          min-width: 368px
-
-      .feedback-card
-        margin-right: 43px
-
-        @include for-mobile-down
-          margin-right: 17px
-
-        &:last-child
-          margin-right: 0
-
+      padding-left: 15px
+      padding-bottom: 20px
+      overflow-x: scroll
+      gap: 17px
+      &::-webkit-scrollbar
+        display: none
+      @include for-tablet-landscape-up
+        justify-content: center
     &-best
       margin-top: 62px
 
@@ -62,16 +37,14 @@
 
     &-title
       font-weight: 400
-      font-size: 30px
-      line-height: 37px
       display: flex
       justify-content: center
       color: #FFFFFF
-
-      @include for-mobile-down
-        font-size: 14px
-        line-height: 17px
-
+      font-size: 14px
+      line-height: 17px
+      @include for-tablet-portrait-up
+        font-size: 28px
+        line-height: 37px
     &-wrap
       border: 2px solid
       border-image-source: linear-gradient(180deg, #FA00FF 0%, rgba(250, 0, 255, 0.12) 99.99%)
@@ -107,13 +80,12 @@
 
     .label
       font-weight: 500
-      font-size: 24px
       line-height: 29px
       margin-right: 28px
+      font-size: 10px
 
-      @include for-mobile-down
-        font-size: 10px
-
+      @include for-tablet-portrait-up
+        font-size: 24px
       &.write-review
         margin-bottom: 25px
 
@@ -125,9 +97,6 @@
       .icon
         background-color: #00D1FF
         margin-right: 3px
-
-      .stars
-        margin-top: 0
 
   form
     padding: 25px 32px 37px 32px
@@ -146,28 +115,21 @@
       max-width: 1575px
 
   .select__feedback
-    margin: 0 auto 22px
-
-    @include for-mobile-down
-      margin: 0 auto 9px
 
     &-text
       display: flex
-
 
       p
         font-family: 'Montserrat', sans-serif
         margin-left: 70px
         cursor: pointer
-        font-weight: 200
-        font-size: 30px
-        line-height: 37px
+        line-height: 26px
         color: #A9A9A9
         transition: 0.5s ease
-
-        @include for-mobile-down
-          font-size: 14px
-          line-height: 17px
+        font-size: 18px
+        @include for-tablet-portrait-up
+          font-weight: 200
+          font-size: 24px
 
         &:first-child
           margin-left: 0
@@ -176,58 +138,33 @@
           color: #fff
           font-weight: 400
 
-
   .loading
     background: rgba(255, 255, 255, 0.16)
     border-radius: 9px
     height: 2px
     margin: 22px auto
 
-
   .loading-line
     background: #FFFFFF
     border-radius: 9px
     height: 2px
-    width: 260px
+    width: 120px
 
-    @include  for-mobile-down
-      width: 126px
+    @include for-tablet-portrait-up
+      width: 215px
 
   & .reviewsList
     display: flex
-    flex-wrap: wrap
-    gap: 30px
-
-
-
-    @include for-desktop-down
-      .feedback-card
-        width: 310px
-        &__stars
-          left: 31px
-          bottom: -17px
-          .icon
-            &:first-child, &:last-child
-              width: 20px
-              height: 20px
-            &:nth-child(2), &:nth-child(4)
-              width: 30px
-              height: 30px
-            &:nth-child(3)
-              width: 38px
-              height: 38px
-
-    @include for-mobile-down
+    gap: 40px
+    width: 100%
+    align-items: center
+    flex-direction: column
+    margin: 0 auto
+    @include for-tablet-landscape-up
+      align-items: stretch
+      margin: 0
+      flex-direction: row
       justify-content: center
-      width: 340px
-      margin: 0 auto
-
-
-    & .review:not(:last-child)
-      margin-bottom: 15px
-
-      @include for-big-phone-up
-        margin-bottom: 30px
 
   & .loadMore
     margin: 30px auto 0 auto
