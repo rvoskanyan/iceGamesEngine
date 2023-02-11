@@ -28,6 +28,7 @@ const fields = {
 
 const options = {
   timestamps: true,
+  versionKey: false,
 }
 
 const activationServiceSchema = new Schema(fields, options);

@@ -35,6 +35,7 @@ const fields = {
 
 const options = {
   timestamps: true,
+  versionKey: false,
 };
 
 const parsingTaskSchema = new Schema(fields, options);

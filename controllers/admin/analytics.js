@@ -1,7 +1,6 @@
 import Product from "../../models/Product.js";
 import Key from "../../models/Key.js";
 import Order from "../../models/Order.js";
-import {getFormatDate} from "../../utils/functions.js";
 
 export const analyticsPage = async (req, res) => {
   try {
@@ -224,9 +223,11 @@ export const analyticsPage = async (req, res) => {
       rows,
       totalCountKeys,
       totalInStockKeys,
-      totalPVP,
+      totalPVP: Math.floor(totalPVP),
+      averagePVP: Math.floor(totalPVP / totalInStockKeys),
       totalSellingKeys,
-      totalFVP,
+      totalFVP: Math.floor(totalFVP),
+      countItems: products.length,
       total,
       currentCountSales: JSON.stringify(currentCountSales),
       currentCost: JSON.stringify(currentCost),

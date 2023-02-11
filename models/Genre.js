@@ -26,6 +26,7 @@ const fields = {
 
 const options = {
   timestamps: true,
+  versionKey: false,
 };
 
 const genreSchema = new Schema(fields, options);

@@ -90,6 +90,7 @@ const fields = {
 
 const options = {
   timestamps: true,
+  versionKey: false,
 };
 
 const userSchema = new Schema(fields, options);

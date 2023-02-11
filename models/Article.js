@@ -89,6 +89,7 @@ const fields = {
 
 const options = {
   timestamps: true,
+  versionKey: false,
 };
 
 const articleSchema = new Schema(fields, options);

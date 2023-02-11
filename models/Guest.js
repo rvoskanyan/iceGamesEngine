@@ -17,6 +17,7 @@ const fields = {
 
 const options = {
   timestamps: true,
+  versionKey: false,
 };
 
 const GuestSchema = new Schema(fields, options);

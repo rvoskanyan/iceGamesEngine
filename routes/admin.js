@@ -24,6 +24,7 @@ import cheatReviewsRoute from './admin/cheatReviews.js';
 import Payment from './admin/payment.js'
 import reviewsRoute from './admin/reviews.js';
 import analyticsRoute from './admin/analytics.js';
+import selectionsRoute from './admin/selections.js';
 
 const router = Router();
 
@@ -52,5 +53,6 @@ router.use('/cheat-reviews', cheatReviewsRoute);
 router.use('/payment', Payment)
 router.use('/reviews', reviewsRoute);
 router.use('/analytics', analyticsRoute);
+router.use('/selections', selectionsRoute);
 
 export default router;

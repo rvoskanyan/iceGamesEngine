@@ -12,6 +12,7 @@ const fields = {
 
 const options = {
   timestamps: true,
+  versionKey: false,
 };
 
 const regionSchema = new Schema(fields, options);

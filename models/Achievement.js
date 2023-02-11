@@ -29,6 +29,7 @@ const fields = {
 
 const options = {
   timestamps: true,
+  versionKey: false,
 };
 
 const achievementSchema = new Schema(fields, options);

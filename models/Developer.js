@@ -11,6 +11,7 @@ const fields = {
 
 const options = {
   timestamps: true,
+  versionKey: false,
 };
 
 const developerSchema = new Schema(fields, options);

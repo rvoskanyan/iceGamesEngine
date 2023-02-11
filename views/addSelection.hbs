@@ -1,0 +1,47 @@
+{{#if isEdit}}
+    {{#if selection.items.length}}
+        <h3>Товары подборки</h3>
+        <ul>
+            {{#each selection.items}}
+                <li>
+                    <form action="/admin/selections/{{ @root.selection._id }}/deleteItem/{{ _id }}" style="display: inline-block" method="post">
+                        <input type="submit" value="X">
+                    </form>
+                    <a href="/admin/selections/{{ @root.selection._id }}/editItem/{{ _id }}">{{ product.name }}</a>
+                    <input type="checkbox"{{#if ourChoice}} checked{{/if}} disabled>
+                </li>
+            {{/each}}
+        </ul>
+    {{/if}}
+    <a href="/admin/selections/{{ selection._id }}/addItem">Добавить товар в подборку</a>
+    <br>
+    <br>
+    <br>
+{{/if}}
+<form action="/admin/selections/{{#if isEdit}}edit/{{selection._id}}{{else}}add{{/if}}" method="post" enctype="multipart/form-data">
+    <label>
+        *Название:
+        <input type="text" name="name"{{#if selection.name}} value="{{ selection.name }}{{/if}}">
+    </label>
+    <br>
+    <br>
+    <label>
+        {{#unless isEdit}}*{{/unless}}Картинка:
+        <input type="file" name="img">
+    </label>
+    <br>
+    <br>
+    {{#if selection.img}}
+        <img src="{{websiteAddress}}{{selection.img}}" alt="Картинка подборки">
+        <br>
+        <br>
+    {{/if}}
+    <label>
+        *Описание:
+        <br>
+        <textarea name="description" cols="50" rows="15">{{ selection.description }}</textarea>
+    </label>
+    <br>
+    <br>
+    <input type="submit" name="add" value="{{#if isEdit}}Сохранить{{else}}Добавить{{/if}}">
+</form>
