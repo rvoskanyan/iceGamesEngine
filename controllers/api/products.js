@@ -37,6 +37,7 @@ export const getProducts = async (req, res) => {
       priceTo = '',
       sort = '',
       onlyStock = '',
+      noCommission = '',
       categories = [],
       genres = [],
       activationServices = [],
@@ -251,6 +252,10 @@ export const getProducts = async (req, res) => {
     
     if (onlyStock) {
       filter.inStock = true;
+    }
+    
+    if (noCommission) {
+      filter.countKeys = {$gt: 0};
     }
     
     if (searchString.length) {

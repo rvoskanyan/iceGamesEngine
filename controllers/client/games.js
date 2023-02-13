@@ -19,6 +19,7 @@ export const gamesPage = async (req, res, next) => {
       priceTo = '',
       sort = '',
       onlyStock = '',
+      noCommission = '',
       categories = [],
       genres = [],
       activationServices = [],
@@ -366,6 +367,10 @@ export const gamesPage = async (req, res, next) => {
       filter.inStock = true;
     }
   
+    if (noCommission) {
+      filter.countKeys = {$gt: 0};
+    }
+  
     if (searchString.length) {
       const paramsFilter = {...filter};
     
@@ -472,6 +477,7 @@ export const gamesPage = async (req, res, next) => {
       sectionType,
       pageDescription,
       onlyStock,
+      noCommission,
       allCategories,
       allGenres,
       allActivationServices,
