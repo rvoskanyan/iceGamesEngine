@@ -725,11 +725,6 @@ if (cartNode) {
             parent.setAttribute('id', 'popup-payment-cart')
             let content = '' +
                 '<div class="popup_payment-content modalChanges">' +
-                '<div class="popup_payment-logo">' +
-                '<div class="popup_payment-logo_child">' +
-                '<img src="/img/fullLogo.svg" width="98" alt="">' +
-                '</div>' +
-                '</div>' +
                 '<p class="popup_payment-title">Корзина</p>' +
                 '<p class="popup_payment-text">В связи с нагрузкой на платежную систему нам пришлось разделить Вашу покупку на 2 этапа. За оплату первого из которых мы берем всю комиссию платежной системы на себя. Спасибо за понимание!</p>' +
                 '<div class="popup_payment-steps">' +
@@ -790,25 +785,21 @@ if (cartNode) {
 
         function createPopupPayment(openPayment) {
             let pop = popUpPayment()
-            let old_pop = document.getElementById('popup-payment-cart')
             let payment_button = pop.querySelector(".popup_payment-pay")
-            
-            if (!!old_pop) {
-                old_pop.remove()
-            }
             
             pop.onclick = function () {
                 this.remove()
+                document.body.classList.remove('noScrolling')
             }
-            
-            document.body.append(pop)
             
             pop.firstElementChild.onclick = function (e) {
                 e.stopPropagation()
             }
             
-            pop.classList.add('active')
             payment_button.onclick = () => openPayment(payment_button)
+    
+            document.body.append(pop)
+            document.body.classList.add('noScrolling');
             
             return pop
         }
