@@ -707,7 +707,6 @@ if (cartNode) {
         let totalPriceToValue = +totalPriceToNode.innerText;
         let totalPriceFromValue = +totalPriceFromNode.innerText;
         let our_products = payBtnNode.dataset.products.split(',')
-        let fee = 0.03
         if (!!our_products.length) {
             let _ = []
             for (let i of our_products) {
@@ -732,7 +731,7 @@ if (cartNode) {
                 '</div>' +
                 '</div>' +
                 '<p class="popup_payment-title">Корзина</p>' +
-                '<p class="popup_payment-text">В связи с нагрузкой на платежную систему нам пришлось разделить Вашу покупку на 2 этапа. За оплату первого из которых мы дополнительно дарим Вам скидку 3%. Спасибо за понимание!</p>' +
+                '<p class="popup_payment-text">В связи с нагрузкой на платежную систему нам пришлось разделить Вашу покупку на 2 этапа. За оплату первого из которых мы берем всю комиссию платежной системы на себя. Спасибо за понимание!</p>' +
                 '<div class="popup_payment-steps">' +
                 '<div class="payment-step payment-step-active" data-step="1" data-sale="5">1</div>' +
                 '<div class="payment-step-line"></div>' +
@@ -753,9 +752,7 @@ if (cartNode) {
                 '</div>' +
                 '</div>' +
                 '<div class="popup_payment-price">' +
-                '<p class="payment_price-from price-sale">' + ourPrice + '₽</p>' +
-                '<p class="payment_price-line"></p>' +
-                '<p class="payment_price-to">' + (ourPrice - ourPrice * fee) + '₽</p>' +
+                '<p class="payment_price-to">' + ourPrice + '₽</p>' +
                 '</div>' +
                 '<button class="popup_payment-pay" data-step="1">Оплатить</button>'
             content += '</div>'
@@ -763,7 +760,7 @@ if (cartNode) {
             return parent
         }
 
-        function getProduct(products, is_fee=true) {
+        function getProduct(products) {
             let prd = ''
             let ourPrice = 0
             for (let i of products) {
@@ -774,7 +771,6 @@ if (cartNode) {
                 let img = el.querySelector('.img')
                 title = title?.textContent || ''
                 price = parseFloat(price?.textContent) || 0
-                let fee_price = price - price * fee
                 img = img?.src || ''
                 ourPrice += price
                 prd += '' +
@@ -784,8 +780,7 @@ if (cartNode) {
                     '</div>' +
                     '<p class="title">' + title + '</p>' +
                     '<p class="price">' +
-                    '<span class="price-to">' + (is_fee ? `${fee_price.toString()}₽` : `${price}₽`) + '</span>' +
-                    '<span class="price-from price-sale">' + (is_fee ? `${price}` : '') + '</span>' +
+                    '<span class="price-to">' + `${price}₽` + '</span>' +
                     '</p>' +
                     '<div class="background-effect"></div>' +
                     '</div>'
@@ -797,16 +792,24 @@ if (cartNode) {
             let pop = popUpPayment()
             let old_pop = document.getElementById('popup-payment-cart')
             let payment_button = pop.querySelector(".popup_payment-pay")
-            if (!!old_pop) old_pop.remove()
+            
+            if (!!old_pop) {
+                old_pop.remove()
+            }
+            
             pop.onclick = function () {
                 this.remove()
             }
+            
             document.body.append(pop)
+            
             pop.firstElementChild.onclick = function (e) {
                 e.stopPropagation()
             }
+            
             pop.classList.add('active')
             payment_button.onclick = () => openPayment(payment_button)
+            
             return pop
         }
 
@@ -1082,7 +1085,7 @@ if (cartNode) {
                     }
                 }
 
-            function change_step(steps, step_id, prices, product_els, payment_button, is_fee=true) {
+            function change_step(steps, step_id, prices, product_els, payment_button) {
                 let keyStep = step_id === '1' ? 'iceGame' : 'digiSeller'
 
                 for (let i of steps.children) {
@@ -1092,18 +1095,15 @@ if (cartNode) {
                     } else if (i.classList.contains('payment-step-active')) i.classList.remove('payment-step-active')
                 }
 
-                let [prd, ourPrice] = getProduct(products[keyStep], is_fee)
+                let [prd, ourPrice] = getProduct(products[keyStep])
                 let fromPrice = prices.firstElementChild
                 let toPrice = prices.lastElementChild
                 let line = prices.children[1]
-                toPrice.textContent = is_fee ? (ourPrice - ourPrice * fee).toString() + '₽' : ourPrice.toString() + '₽'
-                fromPrice.textContent = is_fee ? ourPrice.toString() + '₽' : ''
-                if (!is_fee) {
-                    line && line.remove()
-                }
+                toPrice.textContent = ourPrice.toString() + '₽'
+                fromPrice.textContent = ''
+                line && line.remove()
                 product_els.innerHTML = prd
                 payment_button.setAttribute('data-step', step_id)
-                console.log(step_id, keyStep)
             }
 
             payBtnNode && payBtnNode.addEventListener('click', async () => {
