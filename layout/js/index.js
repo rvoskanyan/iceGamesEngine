@@ -785,21 +785,25 @@ if (cartNode) {
 
         function createPopupPayment(openPayment) {
             let pop = popUpPayment()
+            let old_pop = document.getElementById('popup-payment-cart')
             let payment_button = pop.querySelector(".popup_payment-pay")
+            
+            if (!!old_pop) {
+                old_pop.remove()
+            }
             
             pop.onclick = function () {
                 this.remove()
-                document.body.classList.remove('noScrolling')
             }
+            
+            document.body.append(pop)
             
             pop.firstElementChild.onclick = function (e) {
                 e.stopPropagation()
             }
             
+            pop.classList.add('active')
             payment_button.onclick = () => openPayment(payment_button)
-    
-            document.body.append(pop)
-            document.body.classList.add('noScrolling');
             
             return pop
         }
