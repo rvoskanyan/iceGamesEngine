@@ -724,12 +724,7 @@ if (cartNode) {
             parent.classList.add("popup_payment_wrap")
             parent.setAttribute('id', 'popup-payment-cart')
             let content = '' +
-                '<div class="popup_payment-content modalChanges">' +
-                '<div class="popup_payment-logo">' +
-                '<div class="popup_payment-logo_child">' +
-                '<img src="/img/fullLogo.svg" width="98" alt="">' +
-                '</div>' +
-                '</div>' +
+                '<div class="popup_payment-content">' +
                 '<p class="popup_payment-title">Корзина</p>' +
                 '<p class="popup_payment-text">В связи с нагрузкой на платежную систему нам пришлось разделить Вашу покупку на 2 этапа. За оплату первого из которых мы берем всю комиссию платежной системы на себя. Спасибо за понимание!</p>' +
                 '<div class="popup_payment-steps">' +
@@ -737,19 +732,12 @@ if (cartNode) {
                 '<div class="payment-step-line"></div>' +
                 '<div class="payment-step" data-step="2">2</div>' +
                 '</div>' +
-                '<div class="popup_payment-product slider">' +
-                '<button class="btn prev js-prevBtn">' +
-                '<span class="icon-static icon-static-arrow"></span>' +
-                '</button>' +
-                '<div class="visibleArea js-visibleArea">' +
-                '<div class="tape js-tape">'
-            let [prd, ourPrice] = getProduct(products.iceGame)
-            content += prd
-            content += '' +
-                '</div></div>' +
-                '<div class="btn next js-nextBtn">' +
-                '<span class="icon-static icon-static-arrow"></span>' +
-                '</div>' +
+                '<div class="popup_payment-product mobileScroll">';
+            
+                let [prd, ourPrice] = getProduct(products.iceGame)
+                content += prd
+            
+                content += '' +
                 '</div>' +
                 '<div class="popup_payment-price">' +
                 '<p class="payment_price-to">' + ourPrice + '₽</p>' +
@@ -763,6 +751,7 @@ if (cartNode) {
         function getProduct(products) {
             let prd = ''
             let ourPrice = 0
+            
             for (let i of products) {
                 if (typeof i !== 'string') i = i.productId
                 let el = document.querySelector(`.js-product[data-product-id="${i}"]`)
@@ -773,36 +762,42 @@ if (cartNode) {
                 price = parseFloat(price?.textContent) || 0
                 img = img?.src || ''
                 ourPrice += price
-                prd += '' +
-                    '<div class="payment-product slide js-slide">' +
-                    '<div class="image-product">' +
-                    `<img width="192" height="281" src="${img}" alt="">` +
-                    '</div>' +
-                    '<p class="title">' + title + '</p>' +
-                    '<p class="price">' +
-                    '<span class="price-to">' + `${price}₽` + '</span>' +
-                    '</p>' +
-                    '<div class="background-effect"></div>' +
-                    '</div>'
+                prd += `
+                    <div class="cardGame">
+                        <div class="head">
+                            <img class="img" src="${img}">
+                            <div class="name">${title}</div>
+                        </div>
+                        <div class="price">
+                            <div class="toPrice">
+                                <span class="value">${price}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
             }
+            
             return [prd, ourPrice]
         }
 
         function createPopupPayment(openPayment) {
             let pop = popUpPayment()
-            let old_pop = document.getElementById('popup-payment-cart')
             let payment_button = pop.querySelector(".popup_payment-pay")
             
-            if (!!old_pop) old_pop.remove()
             pop.onclick = function () {
                 this.remove()
+                document.body.classList.remove('noScrolling')
             }
-            document.body.append(pop)
+            
             pop.firstElementChild.onclick = function (e) {
                 e.stopPropagation()
             }
-            pop.classList.add('active')
+            
             payment_button.onclick = () => openPayment(payment_button)
+    
+            document.body.append(pop)
+            document.body.classList.add('noScrolling')
+            
             return pop
         }
 
