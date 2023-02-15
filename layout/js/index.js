@@ -174,7 +174,7 @@ promptProductNodes.forEach(promptProductNode => {
 
 if (successPaymentNode) {
     const closeSuccessPaymentNode = successPaymentNode.querySelector('.js-closeSuccessPayment');
-    
+
     closeSuccessPaymentNode && closeSuccessPaymentNode.addEventListener('click', () => {
         successPaymentNode.remove();
     })
@@ -896,7 +896,13 @@ if (cartNode) {
                     if (countProducts === 0) {
                         cartListNode.remove();
                         cartTitleNode.remove();
-
+                        const basketElements = document.querySelectorAll(".basket");
+                        for (const basketElement of basketElements) {
+                            if (basketElement.classList.contains("full")) {
+                                basketElement.classList.remove("full");
+                                basketElement.classList.remove("isShow");
+                            }
+                        }
                         return cartNode.innerHTML += `
               <div class="notFound">
                 <img src="${websiteAddress}img/notFound.svg" class="img" alt="Иконка расстроенного смайла" title="Корзина пуста :(">
@@ -1245,6 +1251,13 @@ document.addEventListener('click', async (e) => {
             addToCartBtnIcon.classList.add('active');
             addToCartBtnNode.classList.add('js-active', 'active');
             addToCartBtnNode.setAttribute('title', 'Перейти в корзину покупок');
+            const basketElements = document.querySelectorAll('.basket')
+            for (const basketElement of basketElements) {
+                if (!basketElement.classList.contains("full")) {
+                    basketElement.classList.add("full");
+                    basketElement.classList.add("isShow");
+                }
+            }
         }
     }
 

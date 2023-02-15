@@ -234,7 +234,23 @@
 {{/unless}}
 
 {{{body}}}
-
+<a href="{{websiteAddress}}cart" class="basket cart{{#if person.cart.length}} full isShow{{/if}}">
+    <div class="mobile_add_cart">
+        <svg width="23" height="21" viewBox="0 0 23 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8.17686 14.1055L6.92871 16.9138H19.4103" stroke="white" stroke-width="1.2" stroke-linecap="round"
+                  stroke-linejoin="round"/>
+            <path d="M1 1L4.12039 2.56019L8.48892 14.1056H18.4742L21.5945 5.0565H8.48892" stroke="white"
+                  stroke-width="1.2"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M20.3461 8.17578H10.0488M19.41 11.2962H10.9849" stroke="white" stroke-width="1.2"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="9.72002" cy="18.769" r="1.33612" transform="rotate(-23.3832 9.72002 18.769)" stroke="white"
+                    stroke-width="0.8"/>
+            <circle cx="17.2083" cy="18.769" r="1.33612" transform="rotate(-23.3832 17.2083 18.769)" stroke="white"
+                    stroke-width="0.8"/>
+        </svg>
+    </div>
+</a>
 <footer itemscope itemtype="http://schema.org/WPFooter" class="contentContainer homeSection footer">
     <div class="navigation">
         {{#if isHome}}
