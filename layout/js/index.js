@@ -1853,7 +1853,7 @@ if (catalogNode) {
         }
       
         for (item of entriesParams) {
-          if (item[1] === inputValue) {
+          if (item[1] === inputValue && item[0] === inputName) {
             continue;
           }
         
