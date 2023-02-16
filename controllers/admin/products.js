@@ -428,6 +428,9 @@ export const editProduct = async (req, res) => {
     const product = await Product.findById(productId);
     const lastEditorId = req.session.userId;
   
+    console.log(getDiscount(priceTo, priceFrom));
+    console.log(priceTo, priceFrom)
+  
     Object.assign(product, {
       name: name.trim(),
       sampleH1: sampleH1.trim(),
