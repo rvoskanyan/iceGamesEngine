@@ -178,7 +178,19 @@ export const homepage = async (req, res) => {
     
     catalog.push({
       category,
-      products,
+      products: products.map(item => {
+        const productId = item._id.toString();
+  
+        if (favoritesProducts && favoritesProducts.includes(productId)) {
+          item.inFavorites = true;
+        }
+  
+        if (cart && cart.includes(productId)) {
+          item.inCart = true;
+        }
+  
+        return item;
+      }),
     });
   }
   
