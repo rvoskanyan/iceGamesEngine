@@ -537,6 +537,11 @@ if (gamePageNode) {
         addToCartBtnNode.innerText = 'Добавлено';
         addToCartBtnNode.classList.add('js-active');
         addToCartBtnNode.setAttribute('title', 'Перейти в корзину покупок');
+    
+        if (mobileCartLinkNode) {
+            !mobileCartLinkNode.classList.contains('active') && mobileCartLinkNode.classList.add('active');
+            mobileCartLinkNode.classList.add('adding');
+        }
     });
 }
 
@@ -1595,6 +1600,11 @@ if (homeSliderNode) {
             btn.innerText = 'Добавлено';
             btn.classList.add('js-active');
             btn.setAttribute('title', 'Перейти в корзину покупок');
+    
+            if (mobileCartLinkNode) {
+                !mobileCartLinkNode.classList.contains('active') && mobileCartLinkNode.classList.add('active');
+                mobileCartLinkNode.classList.add('adding');
+            }
         })
     })
 }
