@@ -72,6 +72,7 @@ const openDescriptionSplitCatalogNode = document.querySelector('.js-openDescript
 const addInFavoritesProductPageNode = document.querySelector('.js-addInFavoritesProductPage');
 const showAboutAsHomeNode = document.querySelector('.js-showAboutAsHome');
 const successPaymentNode = document.querySelector('.js-successPayment');
+const mobileCartLinkNode = document.querySelector('.js-mobileCartLink');
 const popupController = new PopupController([
     {
         id: 'loginFrom',
@@ -159,6 +160,10 @@ const popupController = new PopupController([
 const windowHeight = document.documentElement.clientHeight;
 const windowWidth = document.documentElement.clientWidth;
 const topGap = document.querySelector('.js-header').getBoundingClientRect().height + 10;
+
+mobileCartLinkNode && mobileCartLinkNode.addEventListener('transitionend', () => {
+    mobileCartLinkNode.classList.remove('adding');
+})
 
 promptProductNodes.forEach(promptProductNode => {
     const coordinates = promptProductNode.getBoundingClientRect();
@@ -1224,10 +1229,16 @@ document.addEventListener('click', async (e) => {
             if (result.error) {
                 return;
             }
+            
             addToCartBtnText.innerText = 'Добавлено';
             addToCartBtnIcon.classList.add('active');
             addToCartBtnNode.classList.add('js-active', 'active');
             addToCartBtnNode.setAttribute('title', 'Перейти в корзину покупок');
+            
+            if (mobileCartLinkNode) {
+                !mobileCartLinkNode.classList.contains('active') && mobileCartLinkNode.classList.add('active');
+                mobileCartLinkNode.classList.add('adding');
+            }
         }
     }
 

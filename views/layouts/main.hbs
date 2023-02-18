@@ -235,6 +235,13 @@
 
 {{{body}}}
 
+{{#unless hideMobileCart}}
+    <a href="{{websiteAddress}}cart" class="mobileCartLink js-mobileCartLink{{#if person.cart.length}} active{{/if}}" title="Перейти в корзину">
+        <span class="icon icon-cart"></span>
+        <span class="icon icon-fillDiamond"></span>
+    </a>
+{{/unless}}
+
 <footer itemscope itemtype="http://schema.org/WPFooter" class="contentContainer homeSection footer">
     <div class="navigation">
         {{#if isHome}}

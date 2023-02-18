@@ -1,0 +1,40 @@
+@import './breakPoints'
+
+
+.mobileCartLink
+  display: flex
+  align-items: center
+  justify-content: center
+  visibility: hidden
+  opacity: 0
+  transition: .3s ease-in
+  transition-property: opacity, visibility, transform
+  position: fixed
+  bottom: 20px
+  right: 10px
+  border-radius: 100%
+  background: rgba(63, 94, 251, 0.9)
+  width: 52px
+  height: 52px
+  z-index: 1
+
+  @include for-desktop-up
+    display: none
+
+  &.active
+    visibility: visible
+    opacity: 1
+
+  &.adding
+    transform: scale(1.1, 1.1)
+    transition: .3s linear
+
+  & .icon-fillDiamond
+    position: absolute
+    background-color: #FF00E5
+    width: 22px
+    height: 18px
+    z-index: -1
+    top: 50%
+    right: 50%
+    transform: translate(calc(50% + 4px), calc(-50% - 7px))
