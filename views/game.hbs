@@ -94,6 +94,9 @@
                         {{totalGradeParse}}
                     </span>
                 {{/if}}
+                {{#iff person.role '===' 'admin'}}
+                    <a href="{{websiteAddress}}admin/products/edit/{{product._id}}" target="_blank" style="font-size: 21px">Edit</a>
+                {{/iff}}
             </div>
             <div class="description" itemprop="description">{{shortDescription}}</div>
             <div class="offerMacro" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
@@ -148,7 +151,7 @@
                                     <div class="discount">{{product.discount}}</div>
                                 </div>
                             {{/iff}}
-                            <div itemscope itemtype="https://schema.org/BuyAction" class="toPrice">
+                            <div class="toPrice">
                                 <span class="value" itemprop="price">{{product.priceTo}}</span>
                                 <meta itemprop="priceCurrency" content="RUB">
                             </div>
@@ -170,6 +173,7 @@
                                             title="Добавить данный товар в корзину покупок"
                                             class="btn elongated rounded increase bg-pink js-addToCartBtn"
                                             data-product-id="{{product._id}}"
+                                            itemscope itemtype="https://schema.org/BuyAction"
                                     >В корзину</button>
                                 {{/if}}
                             {{else}}

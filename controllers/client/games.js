@@ -513,6 +513,7 @@ export const gamePage = async (req, res) => {
         {
           path: 'recommends',
           select: ['name', 'alias', 'inStock', 'img', 'priceTo', 'priceFrom'],
+          match: {inStock: true, active: true},
         },
         {
           path: 'elements',

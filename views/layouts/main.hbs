@@ -128,7 +128,8 @@
 {{#unless isAuth}}
     {{> loginForm}}
 {{/unless}}
-<header class="header js-header">
+<header class="header js-header" itemscope itemtype="https://schema.org/WebSite">
+    <meta itemprop="url" content="{{websiteAddress}}"/>
     <div class="mobileQuickSearch js-mobileQuickSearchContainer">
         <div class="searchBar">
             <input class="textField js-mobileSearchString" type="text" placeholder="Поиск...">
@@ -167,15 +168,27 @@
                         class="btn bg-blur round border hover-bg-pink hover-border-pink openMenu js-toggleMainNavigation">
                     Каталог
                 </button>
-                <div itemprop="potentialAction" class="searchBar" itemscope itemtype="https://schema.org/SearchAction">
-                    <meta itemprop="target" content="https://icegames.store/games?searchString={query}">
-                    <meta itemprop="url" content="https://icegames.store">
-                    <input itemprop="query-input" name="query" class="textField js-searchString" type="text"{{#if
-                            searchString}} value="{{searchString}}"{{/if}} placeholder="Поиск...">
-                    <button class="btn goSearch js-goSearch" title="Выполнить поиск">
+                <form
+                        method="get"
+                        action="{{websiteAddress}}games"
+                        class="searchBar"
+                        itemprop="potentialAction"
+                        itemscope
+                        itemtype="https://schema.org/SearchAction"
+                >
+                    <meta itemprop="target" content="{{websiteAddress}}games?searchString={searchString}">
+                    <input
+                            itemprop="query-input"
+                            name="searchString"
+                            class="textField js-searchString"
+                            type="text"
+                            {{#if searchString}} value="{{searchString}}"{{/if}}
+                            placeholder="Поиск..."
+                    >
+                    <button class="btn goSearch js-goSearch" title="Выполнить поиск" type="submit">
                         <span class="icon icon-search"></span>
                     </button>
-                </div>
+                </form>
                 {{#if isRating}}
                     <span title="Рейтинг пользователей ICE GAMES"
                           class="rating bg-blur btn round border hover-bg-pink hover-border-pink">Рейтинг</span>
