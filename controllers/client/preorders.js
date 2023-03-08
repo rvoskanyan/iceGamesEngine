@@ -3,7 +3,7 @@ import Product from "./../../models/Product.js";
 export const preordersPage = async (req, res) => {
   try {
     const person = res.locals.person;
-    let products = await Product.find({preOrder: true})
+    let products = await Product.find({preOrder: true, active: true})
       .select(['name', 'alias', 'img', 'priceTo', 'priceFrom', 'dsId', 'dlc', 'inStock', 'preOrder'])
       .limit(8)
       .lean();
