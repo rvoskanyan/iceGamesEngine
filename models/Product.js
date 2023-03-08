@@ -48,6 +48,7 @@ const fields = {
     type: String,
     //required: true,
   },
+  additionalInfo: String,
   priceTo: {
     type: Number,
     //required: true,

@@ -188,8 +188,11 @@
                             {{/if}}
                         </div>
                     {{/if}}
-                    {{#orIf product.preOrder product.dlc}}
+                    {{#orIf product.preOrder product.dlc product.additionalInfo}}
                         <div class="moreInfoBlocks">
+                            {{#if product.additionalInfo}}
+                                <div class="moreInfo">{{ product.additionalInfo }}</div>
+                            {{/if}}
 
                             <!-- !!!Разблокировать вывод блока при доработке предзаказов!!! -->
 
