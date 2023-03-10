@@ -87,7 +87,13 @@
         <th>{{ totalFVP }}₽</th>
     </tr>
 </table>
-
+<br>
+<br>
+<form action="/admin/analytics">
+    <input type="date" name="endDate" value="{{endDate}}">
+    <input type="submit" value="Применить">
+    <a href="/admin/analytics">Очистить</a>
+</form>
 
 <div class="graphic">
     <canvas id="countSales"></canvas>

@@ -4,6 +4,7 @@ import Order from "../../models/Order.js";
 
 export const analyticsPage = async (req, res) => {
   try {
+    const endDate = req.query.endDate;
     const products = await Product.find({countKeys: {$gt: 0}}).select(['name', 'priceTo', 'dsPrice']).lean();
     let totalCountKeys = 0;
     let totalInStockKeys = 0;
@@ -12,7 +13,7 @@ export const analyticsPage = async (req, res) => {
     let totalFVP = 0;
     let rows = [];
   
-    const currentDateTime = new Date();
+    const currentDateTime = endDate ? new Date(endDate) : new Date();
     const todayDate = new Date(currentDateTime.getFullYear(), currentDateTime.getMonth(), currentDateTime.getDate());
     const labels = [];
     const currentCountSales = [];
@@ -242,6 +243,7 @@ export const analyticsPage = async (req, res) => {
       previousCountOrders: JSON.stringify(previousCountOrders),
       previousAverageCheck: JSON.stringify(previousAverageCheck),
       labels: JSON.stringify(labels),
+      endDate,
     });
   } catch (e) {
     console.log(e);
