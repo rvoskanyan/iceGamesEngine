@@ -62,7 +62,11 @@ export default class AsyncForm {
         checked,
       } = field;
       
-      if (type === 'radio') {
+      if (type === 'submit') {
+        return;
+      }
+      
+      if (type === 'radio' || type === 'checkbox') {
         if (!checked) {
           return;
         }
@@ -98,7 +102,7 @@ export default class AsyncForm {
     }
   
     if (!result.error && this.successHandler) {
-      this.successHandler(this.sendParams);
+      this.successHandler(this.sendParams, result);
     }
     
     if (!this.messageNode) {

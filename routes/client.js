@@ -18,6 +18,7 @@ import sitemapsRoute from './client/sitemaps.js';
 import legalInfo from './client/legalinfo.js';
 import splitCatalogRoute from './client/splitCatalog.js';
 import yaAuthRoute from "./client/yaAuth.js";
+import fillUpSteamRoute from './client/fillUpSteam.js';
 
 const router = Router();
 
@@ -40,5 +41,6 @@ router.use('/rating', ratingRoute);
 router.use('/sitemaps', sitemapsRoute);
 router.use('/legal-info', legalInfo);
 router.use('/', splitCatalogRoute);
+router.use('/fill-up-steam', fillUpSteamRoute);
 
 export default router;

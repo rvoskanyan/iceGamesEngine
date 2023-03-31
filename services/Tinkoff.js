@@ -58,17 +58,5 @@ export default class Tinkoff {
     } else {
       console.log(data)
     }
-    /*
-    * {
-       "Success" : true, //success or false = error
-       "ErrorCode" : "0", // success
-       "TerminalKey" : "TinkoffBankTest",
-       "Status" : "NEW",
-       "PaymentId": "13660", // session for payment
-       "OrderId" : "21050", // our order Id
-       "Amount" : 100000, // amount
-       "PaymentURL" : "https://securepay.tinkoff.ru/rest/Authorize/1B63Y1" //checkout url
-     }
-    * */
   }
 }

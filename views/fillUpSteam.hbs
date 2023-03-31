@@ -1,0 +1,62 @@
+<main class="contentContainer withoutCover fillUpSteamPage">
+    {{> breadcrumbs}}
+    <div class="mainContent">
+        <h1 class="title">Пополнить баланс STEAM</h1>
+        <p class="description">
+            Специально для вас от сервиса ICE GAMES мы предоставляем услугу пополнения кошелька Steam в рублях.
+            Теперь вы можете легко и быстро пополнить баланс стим.
+        </p>
+        <form class="form js-fillUpSteamFrom" action="{{websiteAddress}}api/fillUpSteam/getPaymentLink">
+            <label class="input-frame">
+                <input class="textField" type="text" name="steamLogin" placeholder="Логин Steam">
+            </label>
+            <label class="input-frame js-amount-input">
+                <input class="textField" type="text" name="amount" placeholder="Сумма для пополнения (до 10 000₽)">
+            </label>
+            <label class="input-frame">
+                <input class="textField" type="email" name="email" placeholder="E-mail, на который будет отправлен чек">
+            </label>
+            {{> checkbox
+                    value='true'
+                    label='Я подтверждаю, что мною указан именно логин Steam аккаунта, а не свой никнейм'
+                    name='confirmIndicationCorrectData'
+            }}
+            <div class="paymentMethods">
+                <label class="variant">
+                    <input class="input js-switch-card" type="radio" name="paymentMethod" value="card">
+                    <div class="block">
+                        <div class="name">Оплата картой</div>
+                        <div class="description">Комиссия сервиса (30%)</div>
+                    </div>
+                </label>
+                <label class="variant sbp">
+                    <input class="input js-switch-sbp" type="radio" name="paymentMethod" value="sbp" checked>
+                    <div class="block">
+                        <div class="name">Оплата через СБП</div>
+                        <div class="description">Комиссия сервиса (24.5%)</div>
+                    </div>
+                </label>
+            </div>
+            <div class="check">
+                <div class="title">Оплата</div>
+                <div class="body">
+                    <div class="item">
+                        <div class="name">Сумма</div>
+                        <div class="value js-amount">0 ₽</div>
+                    </div>
+                    <div class="item">
+                        <div class="name js-commission">Комиссия сервиса (24.5%)</div>
+                        <div class="value js-amount-commission">0 ₽</div>
+                    </div>
+                </div>
+                <div class="total">
+                    <div class="name">К оплате</div>
+                    <div class="value js-total">0 ₽</div>
+                </div>
+                <input type="submit" value="Оплатить" class="btn uppercase rounded bg-pink small">
+            </div>
+            <div class="js-fillUpSubmitResult fillUpSubmitResult"></div>
+        </form>
+    </div>
+    <div class="additional"></div>
+</main>

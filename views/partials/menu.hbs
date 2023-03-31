@@ -20,26 +20,23 @@
                 <a href="{{websiteAddress}}games?noCommission=true" class="link" title="Оплата без комиссии">Оплата без комиссии</a>
             </li>
         </ul>
-        <div class="containerMainMenuSearch">
-            <div class="searchResult js-searchResult"></div>
-            <div class="mainMenu">
-                <ul class="col">
-                    <li class="title">Жанры</li>
-                    {{#each allGenres}}
-                        <li class="colLink">
-                            <a href="{{@root.websiteAddress}}games/{{alias}}" class="link" title="Открыть товары жанра {{name}}">{{name}}</a>
-                        </li>
-                    {{/each}}
-                </ul>
-                <ul class="col">
-                    <li class="title">Активация</li>
-                    {{#each allActivationServices}}
-                        <li class="colLink">
-                            <a href="{{@root.websiteAddress}}games/{{alias}}" class="link" title="Открыть товары с активацией в {{name}}">{{name}}</a>
-                        </li>
-                    {{/each}}
-                </ul>
-            </div>
+        <div class="mainMenu">
+            <ul class="col">
+                <li class="title">Жанры</li>
+                {{#each allGenres}}
+                    <li class="colLink">
+                        <a href="{{@root.websiteAddress}}games/{{alias}}" class="link" title="Открыть товары жанра {{name}}">{{name}}</a>
+                    </li>
+                {{/each}}
+            </ul>
+            <ul class="col">
+                <li class="title">Активация</li>
+                {{#each allActivationServices}}
+                    <li class="colLink">
+                        <a href="{{@root.websiteAddress}}games/{{alias}}" class="link" title="Открыть товары с активацией в {{name}}">{{name}}</a>
+                    </li>
+                {{/each}}
+            </ul>
         </div>
     </nav>
 </div>

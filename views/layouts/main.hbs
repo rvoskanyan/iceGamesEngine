@@ -164,38 +164,60 @@
         <div class="navigateMobileContainer js-navigateMobileContainer">
             <div class="navigation js-mainNavigation">
                 {{> menu}}
-                <button title="Открыть каталог игр"
-                        class="btn bg-blur round border hover-bg-pink hover-border-pink openMenu js-toggleMainNavigation">
-                    Каталог
-                </button>
-                <form
-                        method="get"
-                        action="{{websiteAddress}}games"
-                        class="searchBar"
-                        itemprop="potentialAction"
-                        itemscope
-                        itemtype="https://schema.org/SearchAction"
-                >
-                    <meta itemprop="target" content="{{websiteAddress}}games?searchString={searchString}">
-                    <input
-                            itemprop="query-input"
-                            name="searchString"
-                            class="textField js-searchString"
-                            type="text"
-                            {{#if searchString}} value="{{searchString}}"{{/if}}
-                            placeholder="Поиск..."
+                <nav class="links">
+                    <button
+                        title="Открыть каталог игр"
+                        class="btn item openMenu js-toggleMainNavigation"
                     >
-                    <button class="btn goSearch js-goSearch" title="Выполнить поиск" type="submit">
-                        <span class="icon icon-search"></span>
+                        <span class="icon icon-arrowBottom"></span>
+                        Каталог
                     </button>
-                </form>
-                {{#if isRating}}
-                    <span title="Рейтинг пользователей ICE GAMES"
-                          class="rating bg-blur btn round border hover-bg-pink hover-border-pink">Рейтинг</span>
-                {{else}}
-                    <a href="{{websiteAddress}}rating" title="Рейтинг пользователей ICE GAMES"
-                       class="rating bg-blur btn round border hover-bg-pink hover-border-pink">Рейтинг</a>
-                {{/if}}
+                    {{#if isReviews}}
+                        <span title="Отзывы пользователей Ice Games" class="item">Отзывы</span>
+                    {{else}}
+                        <a href="{{websiteAddress}}reviews" title="Рейтинг пользователей ICE GAMES" class="item">Отзывы</a>
+                    {{/if}}
+                    {{#if isRating}}
+                        <span title="Рейтинг пользователей ICE GAMES" class="item">Рейтинг</span>
+                    {{else}}
+                        <a href="{{websiteAddress}}rating" title="Рейтинг пользователей ICE GAMES" class="item">Рейтинг</a>
+                    {{/if}}
+                    {{#if isFillUpSteam}}
+                        <span title="Пополнить баланс аккаунта Steam" class="item">Рейтинг</span>
+                    {{else}}
+                        <a
+
+                            title="Что-то назревает... уже совсем скоро!"
+                            class="item"
+                        >????????? ?????</a>
+                    {{/if}}
+                </nav>
+                <div class="searchBlock">
+                    <div class="searchResultsContainer js-searchResultsContainer">
+                        <div class="searchResult js-searchResult"></div>
+                    </div>
+                    <form
+                            method="get"
+                            action="{{websiteAddress}}games"
+                            class="searchBar"
+                            itemprop="potentialAction"
+                            itemscope
+                            itemtype="https://schema.org/SearchAction"
+                    >
+                        <meta itemprop="target" content="{{websiteAddress}}games?searchString={searchString}">
+                        <input
+                                itemprop="query-input"
+                                name="searchString"
+                                class="textField js-searchString"
+                                type="text"
+                            {{#if searchString}} value="{{searchString}}"{{/if}}
+                                placeholder="Поиск..."
+                        >
+                        <button class="btn goSearch js-goSearch" title="Выполнить поиск" type="submit">
+                            <span class="icon icon-search"></span>
+                        </button>
+                    </form>
+                </div>
             </div>
             <div class="profile">
                 {{#if isAuth}}

@@ -65,6 +65,7 @@ const loadMoreRatingNode = document.querySelector('.js-loadMoreRating');
 const loadModeProductReviewsNode = document.querySelector('.js-loadModeProductReviews');
 const listRatingNode = document.querySelector('.js-listRating');
 const restorePasswordFormNode = document.querySelector('.js-restorePasswordForm');
+const fillUpSteamFrom = document.querySelector('.js-fillUpSteamFrom');
 const counterAnimationNodes = document.querySelectorAll('.js-counterAnimation');
 const openCompoundOrderNodes = document.querySelectorAll('.js-openCompoundOrder');
 const openAboutHomeModalNode = document.querySelector('.js-openAboutHomeModal');
@@ -90,6 +91,10 @@ const popupController = new PopupController([
                 blockSelector: '.js-restoreFomContainer',
             },
         ],
+    },
+    {
+        id: 'searchResultsContainer',
+        popupSelector: '.js-searchResultsContainer',
     },
     {
         id: 'navigate',
@@ -1343,22 +1348,19 @@ searchStringNode.addEventListener('input', async (e) => {
     if (catalogNode) {
         return;
     }
-
-    popupController.activateById('navigate');
+    
+    popupController.activateById('searchResultsContainer');
 
     const response = await postman.get(`${websiteAddress}api/products`, {
         searchString: searchStringNode.value,
         limit: 7
     });
     const result = await response.json();
-    const menuNode = document.querySelector('.js-menu');
     const searchResultNode = document.querySelector('.js-searchResult');
 
     if (result.error) {
         return;
     }
-
-    menuNode.classList.add('activeSearchResult');
 
     if (result.products?.length === 0) {
         return searchResultNode.innerHTML = '<p style="color: #fff">Ни чего не найдено</p>';
@@ -2101,6 +2103,63 @@ if (restorePasswordFormNode) {
             restorePasswordFormNode.remove();
         },
     })
+}
+
+if (fillUpSteamFrom) {
+    const resultNode = fillUpSteamFrom.querySelector('.js-fillUpSubmitResult');
+    const commissionNode = document.querySelector('.js-commission');
+    const amountInputNode = document.querySelector('.js-amount-input');
+    const switchCardNode = document.querySelector('.js-switch-card');
+    const switchSbpNode = document.querySelector('.js-switch-sbp');
+    const amountNode = document.querySelector('.js-amount');
+    const amountCommissionNode = document.querySelector('.js-amount-commission');
+    const totalNode = document.querySelector('.js-total');
+    let commission = 24.5;
+    let amount = 0;
+    let amountCommission = 0;
+    let total = 0;
+    
+    switchCardNode.addEventListener('change', () => {
+        if (switchCardNode.checked) {
+            commission = 30;
+            changeParams();
+        }
+    });
+    
+    switchSbpNode.addEventListener('change', () => {
+        if (switchSbpNode.checked) {
+            commission = 24.5;
+            changeParams();
+        }
+    });
+    
+    amountInputNode.addEventListener('input', (e) => {
+        amount = +e.target.value;
+        changeParams();
+    });
+    
+    function changeParams() {
+        amountCommission = Math.floor(amount / 100 * commission);
+        total = amountCommission + amount;
+        
+        commissionNode.innerText = `Комиссия сервиса (${commission}%)`;
+        amountNode.innerText = `${amount} ₽`;
+        amountCommissionNode.innerText = `${amountCommission} ₽`;
+        totalNode.innerText = `${total} ₽`;
+    }
+    
+    new AsyncForm({
+        mainNode: fillUpSteamFrom,
+        resultMessageNode: resultNode,
+        successHandler: (sendParams, results) => {
+            if (results.card) {
+                return window.open(results.link, '_self');
+            }
+    
+            window.open(results.link, '_blank');
+            window.open(`${websiteAddress}fill-up-steam/check-status?fillUpId=${results.fillUpId}`, '_self');
+        }
+    });
 }
 
 if (loginFormNode) {

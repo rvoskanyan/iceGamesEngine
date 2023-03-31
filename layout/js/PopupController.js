@@ -19,7 +19,7 @@ export default class PopupController {
       const btnNode = document.querySelector(item.btnSelector);
       const closeBtnNode = document.querySelector(item.closeBtnSelector);
       
-      if (!popupNode || !btnNode) {
+      if (!popupNode) {
         return;
       }
       
@@ -49,7 +49,7 @@ export default class PopupController {
           const btnNode = document.querySelector(item.btnSelector);
           const closeBtnNode = document.querySelector(item.closeBtnSelector);
           
-          if (!popupNode || !btnNode) {
+          if (!popupNode) {
             return;
           }
           
@@ -62,8 +62,8 @@ export default class PopupController {
           });
           
           const index = this.popupNodes.length - 1;
-          
-          btnNode.addEventListener('click', () => {
+  
+          btnNode && btnNode.addEventListener('click', () => {
             this.handleOpenPopup(index);
           })
           
@@ -83,8 +83,8 @@ export default class PopupController {
       });
       
       const index = this.popupNodes.length - 1;
-      
-      btnNode.addEventListener('click', () => {
+  
+      btnNode && btnNode.addEventListener('click', () => {
         this.handleOpenPopup(index);
       })
       
@@ -101,6 +101,10 @@ export default class PopupController {
     
     if (index === -1 || index === this.openedIndex) {
       return;
+    }
+    
+    if (this.openedIndex !== null) {
+      this.closePopup(this.openedIndex);
     }
     
     this.openPopup(index);
@@ -126,7 +130,7 @@ export default class PopupController {
     const btnNode = popup.btnNode;
     
     popupNode.classList.add('active');
-    btnNode.classList.add('active');
+    btnNode && btnNode.classList.add('active');
     
     if (popup.children) {
       return this.openedChildIndex = index;
@@ -138,7 +142,7 @@ export default class PopupController {
     document.removeEventListener('click', this.docClickListener);
     
     this.docClickListener = (e) => {
-      if (!popupNode.contains(e.target) && !btnNode.contains(e.target)) {
+      if (!popupNode.contains(e.target) && !btnNode?.contains(e.target)) {
         this.closePopup(index);
       }
     }
@@ -150,7 +154,7 @@ export default class PopupController {
     const popup = this.popupNodes[index];
     
     popup.popupNode.classList.remove('active');
-    popup.btnNode.classList.remove('active');
+    popup.btnNode?.classList.remove('active');
     
     if (popup.children) {
       return this.openedChildIndex = null;
@@ -160,7 +164,7 @@ export default class PopupController {
       const childPopup = this.popupNodes[this.openedChildIndex];
       
       childPopup.popupNode.classList.remove('active');
-      childPopup.btnNode.classList.remove('active');
+      childPopup.btnNode?.classList.remove('active');
       this.openedChildIndex = null;
     }
     

@@ -107,9 +107,7 @@
       & .containerMenu
         opacity: 1
         visibility: visible
-
-      & .searchBar
-        background-color: rgba(235, 0, 255, 0.4)
+        transform: translateY(0%)
 
     & .containerMenu
       position: absolute
@@ -118,9 +116,10 @@
       width: 100vw
       top: -36px
       left: -35px
-      padding: 140px 0 80px 40px
+      padding: 110px 0 80px 40px
+      transform: translateY(-100%)
       transition: .3s ease-in
-      transition-property: opacity, visibility
+      transition-property: opacity, visibility, transform
       z-index: $ZIndex-Header-ContainerMenu
       display: contents
 
@@ -130,31 +129,26 @@
         visibility: hidden
 
       & .menu
-        justify-content: space-between
-        max-width: 1100px
-        height: 100%
         display: contents
 
         @include for-desktop-up
           display: flex
-
-        &.active
-          & .mainMenu, & .searchResult
-            transform: initial
-
-        &.activeSearchResult
-          & .mainMenu, & .searchResult
-            transform: translateY(0%)
-
-        & .mainMenu, & .searchResult
-          overflow: auto
+          column-gap: 100px
+          max-width: 1100px
           height: 100%
-          padding-right: 30px
-          transform: translateY(-100%)
-          transition: transform .3s ease
 
-          &::-webkit-scrollbar
-            width: 6px
+        & .mainMenu
+          display: none
+
+          @include for-desktop-up
+            display: flex
+            column-gap: 100px
+            overflow: auto
+            height: 100%
+            padding-right: 30px
+
+            &::-webkit-scrollbar
+              width: 6px
 
         & .col
           list-style: none
@@ -173,20 +167,24 @@
             font-family: 'Lemon Milk'
             font-size: 30px
             color: #FF00F5
-            margin-bottom: 35px
+            margin-bottom: 20px
             text-shadow: 0 0 60px #004C5C
 
           & .colLink
             &:not(:last-child)
-              margin-bottom: 10px
+              margin-bottom: 8px
 
               @include for-big-phone-up
-                margin-bottom: 15px
+                margin-bottom: 12px
 
             & .link
               font-family: Montserrat
-              font-size: 20px
-              font-weight: 700
+              font-size: 18px
+              font-weight: 600
+              line-height: 1
+
+              @include for-desktop-up
+                font-size: 20px
 
         & .categoriesMenu
           @include for-desktop-up
@@ -197,44 +195,121 @@
               color: #fff
 
             & .link
-              font-size: 20px
+              font-size: 18px
               color: #FF00F5
-              text-shadow: 0 0 50px rgba(0, 0, 0, 0.5)
 
               @include for-big-phone-up
                 font-size: 25px
 
-        & .containerMainMenuSearch
-          flex-grow: 1
-          height: 100%
-          overflow: hidden
-          display: none
+    & .links
+      display: flex
+      flex-direction: column
 
-          @include for-desktop-up
-            display: initial
+      @include for-desktop-up
+        flex-direction: initial
+        align-items: center
+        column-gap: 20px
+        z-index: 1
 
-          & .searchResult
-            padding: 30px
-            display: grid
-            grid-template-columns: repeat(4, max-content)
+      @include for-middle-desktop-up
+        column-gap: 30px
+
+      & .item
+        font-family: 'Montserrat'
+        font-size: 18px
+        font-style: normal
+        font-weight: 600
+        line-height: 1
+        color: #FFFFFF
+        text-shadow: 0 0 60px #000000
+        text-decoration: none
+        transition: initial
+
+        @include for-big-phone-down
+          &:not(:last-child)
+            margin-bottom: 8px
+
+        @include for-desktop-up
+          font-size: 16px
+          font-weight: 400
+
+          &:hover
+            color: #EB00FF
+            text-decoration: underline
+
+          &.active
+            color: #EB00FF
+
+        @include for-middle-desktop-up
+          font-size: 18px
+
+
+      & .openMenu
+        display: none
+
+        @include for-desktop-up
+          display: flex
+          align-items: center
+          column-gap: 3px
+
+          &:hover .icon
+            background-color: #EB00FF
+
+          &.active .icon
+            transform: rotate(-180deg)
+            background-color: #EB00FF
+
+          & .icon
+            width: 13px
+            height: 7px
+            transition: transform .3s ease-in
+
+    & .searchBlock
+      display: none
+      z-index: 1
+
+      @include for-desktop-up
+        display: block
+        position: relative
+        flex-grow: 1
+        margin-left: 30px
+
+      @include for-middle-desktop-up
+        margin-left: 60px
+
+      & .searchResultsContainer
+        background-color: rgba(0, 0, 0, 0.9)
+        position: absolute
+        width: 100vw
+        height: 100vh
+        top: -36px
+        left: -15px
+        padding: 110px 0 0 15px
+        opacity: 0
+        visibility: hidden
+        transform: translateY(-100%)
+        transition: .3s ease-in
+        transition-property: opacity, visibility, transform
+
+        @include for-middle-desktop-up
+          left: -30px
+          padding: 110px 0 0 30px
+
+        &.active
+          visibility: visible
+          opacity: 1
+          transform: translateY(0%)
+
+        .searchResult
+          display: grid
+          max-width: 650px
+          grid-template-columns: repeat(4, max-content)
+          grid-row-gap: 30px
+          justify-content: space-between
+
+          @include for-middle-desktop-up
+            max-width: 750px
             grid-row-gap: 50px
-            justify-content: space-between
-
-          & .mainMenu
-            display: flex
-            justify-content: space-around
-
-    & .openMenu
-      z-index: $ZIndex-Header-OpenMenu
-      display: none
-
-      @include for-desktop-up
-        display: initial
-
-    & .searchBar
-      display: none
-      @include for-desktop-up
-        display: flex
 
   & .mobileNavBtn
     display: flex
@@ -327,8 +402,8 @@
     & .searchBar
       margin: 0
 
-      @include for-big-phone-up
-        margin: 0 140px 0 140px
+      @include for-desktop-up
+        margin: 0 140px
 
     & .searchResults
       padding-right: 10px
