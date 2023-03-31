@@ -4,15 +4,16 @@
     <div class="check">
         <div class="item">
             <div class="name">Логин</div>
-            <div class="value"></div>
+            <div class="value">{{ fillUp.steamLogin }}</div>
         </div>
         <div class="item">
             <div class="name">Сумма пополнения</div>
-            <div class="value"></div>
+            <div class="value">{{ fillUp.amount }} ₽</div>
         </div>
         <div class="item">
             <div class="name">Статус заявки</div>
-            <div class="value"></div>
+            <div class="value">{{ status }}</div>
         </div>
+        <button class="btn rounded bg-violet js-reloadCheckFillUpStatus">Обновить</button>
     </div>
 </main>

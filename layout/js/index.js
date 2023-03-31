@@ -74,6 +74,7 @@ const addInFavoritesProductPageNode = document.querySelector('.js-addInFavorites
 const showAboutAsHomeNode = document.querySelector('.js-showAboutAsHome');
 const successPaymentNode = document.querySelector('.js-successPayment');
 const mobileCartLinkNode = document.querySelector('.js-mobileCartLink');
+const reloadCheckFillUpStatusNode = document.querySelector('.js-reloadCheckFillUpStatus');
 const popupController = new PopupController([
     {
         id: 'loginFrom',
@@ -189,6 +190,10 @@ if (successPaymentNode) {
         successPaymentNode.remove();
     })
 }
+
+reloadCheckFillUpStatusNode && reloadCheckFillUpStatusNode.addEventListener('click', () => {
+    document.location.reload();
+})
 
 showAboutAsHomeNode && showAboutAsHomeNode.addEventListener('click', () => {
     const aboutUsContentHomeNode = document.querySelector('.js-aboutUsContentHome');

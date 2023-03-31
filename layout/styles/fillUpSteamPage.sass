@@ -1,3 +1,5 @@
+@import './breakPoints'
+
 .fillUpSteamPage
   width: 100%
   display: flex
@@ -10,16 +12,26 @@
       font-family: "Lemon Milk"
       font-style: normal
       font-weight: 400
-      font-size: 36px
+      font-size: 21px
       color: #FFFFFF
+      text-align: center
+
+      @include for-desktop-up
+        font-size: 36px
+        text-align: initial
 
     .description
       font-family: 'Montserrat'
       font-style: normal
       font-weight: 400
-      font-size: 16px
+      font-size: 14px
       color: #FFFFFF
       margin-top: 5px
+      text-align: center
+
+      @include for-desktop-up
+        font-size: 16px
+        text-align: initial
 
     .form
       margin-top: 40px
@@ -32,8 +44,14 @@
 
       .paymentMethods
         display: flex
-        justify-content: space-between
-        margin-top: 50px
+        flex-direction: column
+        row-gap: 40px
+        margin-top: 20px
+
+        @include for-desktop-up
+          flex-direction: initial
+          justify-content: space-between
+          margin-top: 50px
 
         .variant
           cursor: pointer
@@ -48,18 +66,28 @@
             font-family: 'Montserrat'
             border: 1px solid #FFFFFF
             border-radius: 8px
-            padding: 8px 12px
+            padding: 5px 8px
             color: #fff
             line-height: 1
 
+            @include for-desktop-up
+              padding: 8px 12px
+
             .name
-              font-weight: 700
-              font-size: 21px
+              font-weight: 500
+              font-size: 16px
+
+              @include for-desktop-up
+                font-weight: 700
+                font-size: 21px
 
             .description
               font-weight: 400
-              font-size: 16px
+              font-size: 14px
               margin-top: 5px
+
+              @include for-desktop-up
+                font-size: 16px
 
           &.sbp
             position: relative
