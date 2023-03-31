@@ -2,8 +2,10 @@
 
 .fillUpSteamPage
   width: 100%
-  display: flex
-  justify-content: space-between
+
+  @include for-desktop-up
+    display: flex
+    justify-content: space-between
 
   .mainContent
     max-width: 530px
@@ -165,6 +167,10 @@
 
   .additional
     max-width: 600px
+    margin-top: 50px
+
+    @include for-desktop-up
+      margin-top: initial
 
     .instruction
       margin-top: 20px
