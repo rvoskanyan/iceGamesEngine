@@ -25,6 +25,7 @@ import Payment from './admin/payment.js'
 import reviewsRoute from './admin/reviews.js';
 import analyticsRoute from './admin/analytics.js';
 import selectionsRoute from './admin/selections.js';
+import filUpRoute from './admin/fillUp.js';
 
 const router = Router();
 
@@ -54,5 +55,6 @@ router.use('/payment', Payment)
 router.use('/reviews', reviewsRoute);
 router.use('/analytics', analyticsRoute);
 router.use('/selections', selectionsRoute);
+router.use('/fill-up-analytics', filUpRoute);
 
 export default router;
