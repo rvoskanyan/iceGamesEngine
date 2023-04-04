@@ -172,20 +172,55 @@
     @include for-desktop-up
       margin-top: initial
 
-    .instruction
-      margin-top: 20px
-      border: 1px solid #FFFFFF
-      border-radius: 20px
-      color: #fff
-      padding: 20px
+    .fillUpTabInfo
+      .actionsBtn
+        display: flex
+        column-gap: 15px
 
-      .list
-        padding-left: 20px
+        .btn
+          background-color: #410074
+
+          &.active
+            background-color: #984BFB
+
+      .blocks
+        margin-top: 20px
+        border: 1px solid #FFFFFF
+        border-radius: 20px
+        color: #fff
+        padding: 20px
 
         .item
+          display: none
 
-          &:not(:last-child)
-            margin-bottom: 10px
+          &.active
+            display: block
 
-          .link
-            color: #984BFB
+          .collapse
+            background-color: initial
+            padding: 0
+            border-radius: initial
+            max-height: 17px
+
+            &:not(:first-child)
+              margin-top: 15px
+
+            &.active
+              max-height: 500px
+
+            .title
+              color: #984BFB
+
+            .content
+              margin-top: 8px
+
+        .list
+          padding-left: 20px
+
+          .element
+
+            &:not(:last-child)
+              margin-bottom: 10px
+
+            .link
+              color: #984BFB

@@ -32,6 +32,7 @@ const gameGallerySliderNode = document.querySelector('.js-gameGallerySlider');
 const gameInfoTabsNode = document.querySelector('.js-gameInfoTabs');
 const gameInfoSystemParamsNode = document.querySelector('.js-gameInfoSystemParams');
 const feedbackProductTabsNode = document.querySelector('.js-feedbackProductTabs');
+const fillUpInfoTabs = document.querySelector('.js-fillUpInfoTabs');
 const youtubePlayNodes = document.querySelectorAll('.js-playYouTubeVideo');
 const catalogNode = document.querySelector('.js-catalog');
 const loginFormNode = document.querySelector('.js-loginForm');
@@ -1665,6 +1666,12 @@ if (gameInfoSystemParamsNode) {
 if (feedbackProductTabsNode) {
     new Tabs({
         mainNode: feedbackProductTabsNode,
+    });
+}
+
+if (fillUpInfoTabs) {
+    new Tabs({
+        mainNode: fillUpInfoTabs,
     });
 }
 
