@@ -1,9 +1,10 @@
 import FillUp from "../../models/FillUp.js";
 import fetch from "node-fetch";
 
-export const fillUpSteamPage = (req, res) => {
-  const fillUps = 1396;
-  const amount = 927234;
+export const fillUpSteamPage = async (req, res) => {
+  const successFillUps = await FillUp.find({status: 'success'}).select(['amount']).lean();
+  const countFillUps = successFillUps.length;
+  const amount = successFillUps.reduce((accum, fillUp) => accum + fillUp.amount, 0);
   let seconds = new Date().getHours() + new Date().getMinutes();
   
   seconds = seconds >= 60 ? 17 : seconds;
@@ -15,7 +16,7 @@ export const fillUpSteamPage = (req, res) => {
       name: 'Пополнить Steam',
       current: true,
     }],
-    fillUps,
+    countFillUps,
     amount,
     seconds,
   });
