@@ -2,6 +2,12 @@ import FillUp from "../../models/FillUp.js";
 import fetch from "node-fetch";
 
 export const fillUpSteamPage = (req, res) => {
+  const fillUps = 1396;
+  const amount = 927234;
+  let seconds = new Date().getHours() + new Date().getMinutes();
+  
+  seconds = seconds >= 60 ? 17 : seconds;
+  
   res.render('fillUpSteam', {
     title: 'ICE GAMES — Пополнение баланса Steam аккаунта',
     metaDescription: '⚡️Быстрое пополнение баланса кошелька Steam в 2023 году. ✔️Пополнение от 100 рублей. ✔️Оплата любым удобным способом: банковские карты, СПБ, Yandex Pay, Tinkoff Pay. ✔️Низкая комиссия. ✔️Зачисление в течение 2х минут. ⌚️Поддержка 24/7',
@@ -9,6 +15,9 @@ export const fillUpSteamPage = (req, res) => {
       name: 'Пополнить Steam',
       current: true,
     }],
+    fillUps,
+    amount,
+    seconds,
   });
 }
 

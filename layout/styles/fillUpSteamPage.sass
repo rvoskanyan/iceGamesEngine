@@ -8,7 +8,10 @@
     justify-content: space-between
 
   .mainContent
-    max-width: 530px
+    max-width: 500px
+
+    @include for-middle-desktop-up
+      max-width: 575px
 
     & > .title
       font-family: "Lemon Milk"
@@ -19,8 +22,11 @@
       text-align: center
 
       @include for-desktop-up
-        font-size: 36px
+        font-size: 28px
         text-align: initial
+
+      @include for-middle-desktop-up
+        font-size: 36px
 
     .description
       font-family: 'Montserrat'
@@ -166,13 +172,39 @@
           color: #960738
 
   .additional
-    max-width: 600px
     margin-top: 50px
 
     @include for-desktop-up
       margin-top: initial
+      max-width: 550px
+
+    @include for-middle-desktop-up
+      max-width: 600px
+
+    .fillUpStatistics
+      display: flex
+      flex-wrap: wrap
+      justify-content: space-between
+      row-gap: 15px
+
+      @include for-desktop-up
+        row-gap: 25px
+
+      .statisticInput
+        flex-basis: 48%
+
+        @include for-desktop-up
+          flex-basis: 45%
+
+        .value
+          padding: 12px
 
     .fillUpTabInfo
+      margin-top: 30px
+
+      @include for-desktop-up
+        margin-top: 40px
+
       .actionsBtn
         display: flex
         column-gap: 15px

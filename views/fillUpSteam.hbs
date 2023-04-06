@@ -62,6 +62,24 @@
         </form>
     </div>
     <div class="additional">
+        <div class="fillUpStatistics">
+            <div class="statisticInput">
+                <div class="label">успешных<br>пополнений</div>
+                <div class="value">{{ fillUps }}</div>
+            </div>
+            <div class="statisticInput">
+                <div class="label">среднее<br>время зачисления</div>
+                <div class="value">1 мин {{ seconds }} сек</div>
+            </div>
+            <div class="statisticInput">
+                <div class="label">пополнений<br>на сумму</div>
+                <div class="value">{{ amount }}</div>
+            </div>
+            <div class="statisticInput">
+                <div class="label">работа<br>сервиса</div>
+                <div class="value">24/7</div>
+            </div>
+        </div>
         <div class="fillUpTabInfo js-fillUpInfoTabs">
             <div class="actionsBtn">
                 <button class="btn bg-violet rounded active js-tabBtn" data-target-id="instruction">Инструкция</button>
