@@ -123,17 +123,22 @@
 
       .paymentMethods
         display: flex
-        flex-direction: column
+        flex-wrap: wrap
+        justify-content: space-between
         row-gap: 40px
         margin-top: 20px
+        column-gap: 20px
 
         @include for-desktop-up
-          flex-direction: initial
-          justify-content: space-between
+          column-gap: 25px
           margin-top: 50px
+
+        @include for-middle-desktop-up
+          column-gap: 30px
 
         .variant
           cursor: pointer
+          flex-grow: 1
 
           .input
             display: none
@@ -152,13 +157,15 @@
 
             @include for-desktop-up
               padding: 8px 12px
-              text-align: initial
 
             .name
               font-weight: 500
               font-size: 16px
 
               @include for-desktop-up
+                font-size: 18px
+
+              @include for-middle-desktop-up
                 font-weight: 700
                 font-size: 21px
 
@@ -166,8 +173,12 @@
               font-weight: 400
               font-size: 14px
               margin-top: 5px
+              text-align: center
 
               @include for-desktop-up
+                font-size: 14px
+
+              @include for-middle-desktop-up
                 font-size: 16px
 
           &.sbp
