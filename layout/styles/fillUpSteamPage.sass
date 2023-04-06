@@ -234,10 +234,16 @@
           width: 100%
 
       .fillUpSubmitResult
+        margin-top: 10px
         color: #00b048
+        text-align: center
+        font-size: 14px
+
+        @include for-desktop-up
+          font-size: 16px
 
         &.error
-          color: #960738
+          color: #ff669a
 
   .additional
     margin-top: 50px
@@ -318,6 +324,10 @@
           padding-left: 20px
 
           .element
+            font-size: 14px
+
+            @include for-desktop-up
+              font-size: 16px
 
             &:not(:last-child)
               margin-bottom: 10px
