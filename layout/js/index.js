@@ -18,6 +18,8 @@ const postman = new Postman();
 
 const profileMenuNode = document.querySelector('.js-profileMenu');
 const homeSliderNode = document.querySelector('.js-homeSlider');
+const fillUpPageModalNode = document.querySelector('.js-fillUpPageModal');
+const whereLoginNode = document.querySelector('.js-whereLogin');
 const recProductSliderNode = document.querySelector('.js-recProductSlider');
 const additionsProductSliderNode = document.querySelector('.js-additionsProductSlider');
 const articlesProductSliderNode = document.querySelector('.js-articlesGameSlider');
@@ -428,6 +430,18 @@ if (largeImgNodes.length) {
         })
     })
 }
+
+whereLoginNode && whereLoginNode.addEventListener('click', () => {
+    document.body.classList.add('noScrolling');
+    
+    fillUpPageModalNode.classList.add('active');
+})
+
+fillUpPageModalNode && fillUpPageModalNode.querySelector('.js-closeFillUpPageModal').addEventListener('click', () => {
+    document.body.classList.remove('noScrolling');
+    
+    fillUpPageModalNode.classList.remove('active');
+})
 
 if (acceptAgreementNode) {
     const btnSendNode = acceptAgreementNode.querySelector('.js-sendAcceptAgreement');

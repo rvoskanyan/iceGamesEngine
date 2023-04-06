@@ -1,4 +1,12 @@
 <main class="contentContainer withoutCover fillUpSteamPage">
+    <div class="modalContainer js-fillUpPageModal">
+        <div class="content">
+            <div class="title">Где найти логин?</div>
+            <img class="img" src="{{ websiteAddress }}img/whereSteamLogin.jpg" alt="Где находится логин Steam">
+            <a href="https://store.steampowered.com/account/" target="_blank" class="link" rel="nofollow">Посмотреть логин можно тут</a>
+            <button class="btn border round js-closeFillUpPageModal">Закрыть</button>
+        </div>
+    </div>
     {{> breadcrumbs}}
     <div class="mainContent">
         <h1 class="title">Пополнение баланса Steam</h1>
@@ -88,13 +96,13 @@
             <div class="blocks">
                 <div class="item active js-tabBlock-instruction">
                     <ol class="list">
-                        <li class="element">Введите свой логин Steam. Обратите внимание! Логин - это то, что Вы указываете при входе в Steam. Если Вы укажете неверный логин, то средства уйдут другому пользователю Steam.</li>
+                        <li class="element">Введите свой логин Steam. <span style="color: #f4d91d">Обратите внимание! Логин - это то, что Вы указываете при входе в Steam. Если Вы укажете неверный логин, то <span style="color: #f25050; font-weight: 600; text-decoration: underline">средства уйдут другому пользователю</span> Steam. <span class="link js-whereLogin">Где найти логин?</span></span></li>
                         <li class="element">Введите сумму, на которую хотите пополнить аккаунт.</li>
                         <li class="element">Проверьте, что указали именно логин, а не никнейм и подтвердите это галкой.</li>
                         <li class="element">Нажмите кнопку «Оплатить».</li>
                         <li class="element">Вы перейдете на страницу, где необходимо выбрать метод оплаты.</li>
                         <li class="element">После успешной оплаты деньги поступят на баланс аккаунта в течение 2-15 минут.</li>
-                        <li class="element">При возникновении вопросов <a href="https://vk.com/ice.games" rel="nofollow" target="_blank" class="link">свяжитесь с поддержкой</a>.</li>
+                        <li class="element">При возникновении вопросов <a href="https://vk.com/ice.games" title="Перейти на страницу сообщества ICE GAMES в VK" rel="nofollow" target="_blank" class="link">свяжитесь с поддержкой</a>.</li>
                     </ol>
                 </div>
                 <div class="item js-tabBlock-faq">

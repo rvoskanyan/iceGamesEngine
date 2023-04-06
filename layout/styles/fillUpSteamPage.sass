@@ -7,6 +7,74 @@
     display: flex
     justify-content: space-between
 
+  .modalContainer
+    display: flex
+    justify-content: center
+    align-items: center
+    position: fixed
+    top: 0
+    left: 0
+    width: 100%
+    height: 100vh
+    background: rgba(1, 3, 58, 0.5)
+    z-index: 3
+    opacity: 0
+    visibility: hidden
+    transition: .3s ease-in
+    transition-property: opacity, visibility
+
+    &.active
+      opacity: 1
+      visibility: visible
+
+    .content
+      background-color: #01033A
+      border: 1px solid #FFFFFF
+      border-radius: 18px
+      padding: 20px
+      max-width: 300px
+
+      @include for-desktop-up
+        max-width: initial
+        padding: 35px
+
+      .title
+        font-family: 'Lemon Milk'
+        font-size: 18px
+        line-height: 1
+        color: #FFFFFF
+        text-align: center
+
+        @include for-desktop-up
+          font-size: 32px
+
+      .img
+        margin-top: 15px
+        display: block
+        width: 100%
+
+        @include for-desktop-up
+          max-width: initial
+          margin-top: 30px
+
+      .link
+        color: #984BFB
+        text-decoration: underline
+        display: block
+        text-align: center
+        margin-top: 10px
+        font-size: 14px
+
+        @include for-desktop-up
+          margin-top: 20px
+          font-size: 16px
+
+      .btn
+        margin: 10px auto 0 auto
+
+        @include for-desktop-up
+          margin: 20px auto 0 auto
+
   .mainContent
     max-width: 500px
 
@@ -256,3 +324,5 @@
 
             .link
               color: #984BFB
+              text-decoration: underline
+              cursor: pointer
