@@ -2215,7 +2215,9 @@ if (fillUpSteamFrom) {
                 return window.open(results.link, '_self');
             }
     
-            window.open(results.link, '_blank');
+            setTimeout(() => {
+                window.open(results.link, '_blank');
+            });
             window.open(`${websiteAddress}fill-up-steam/check-status?fillUpId=${results.fillUpId}`, '_self');
         }
     });
