@@ -1,11 +1,43 @@
 import FillUp from "../../models/FillUp.js";
 import fetch from "node-fetch";
+import Review from "../../models/Review.js";
 
 export const fillUpSteamPage = async (req, res) => {
   const successFillUps = await FillUp.find({status: 'success'}).select(['amount']).lean();
   const countFillUps = successFillUps.length + 1400;
   const amount = successFillUps.reduce((accum, fillUp) => accum + fillUp.amount, 0) + 850000;
+  const reviews = await Review
+    .find({status: 'taken', target: 'FillUpSteam', active: true})
+    .populate({
+      path: 'user',
+      select: ['login'],
+    })
+    .lean();
   let seconds = new Date().getHours() + new Date().getMinutes();
+  let canAddReview = false;
+  let reviewExists = false;
+  
+  if (req.session.isAuth) {
+    const person = res.locals.person;
+  
+    [canAddReview, reviewExists] = await checkCanAddReview(person);
+  }
+  
+  async function checkCanAddReview(person) {
+    const review = await Review.findOne({user: person._id, target: 'FillUpSteam'}).select(['_id']).lean();
+    
+    if (review) {
+      return [false, true];
+    }
+    
+    const fillUp = await FillUp.findOne({user: person._id, type: 'steam', status: 'success'}).select(['_id']).lean();
+    
+    if (fillUp) {
+      return [true, false];
+    }
+    
+    return [false, false];
+  }
   
   seconds = seconds >= 60 ? 17 : seconds;
   
@@ -16,9 +48,12 @@ export const fillUpSteamPage = async (req, res) => {
       name: 'Пополнить Steam',
       current: true,
     }],
+    canAddReview,
+    reviewExists,
     countFillUps,
     amount,
     seconds,
+    reviews,
   });
 }
 

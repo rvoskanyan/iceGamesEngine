@@ -3,19 +3,30 @@ import Review from "../../models/Review.js";
 
 export const reviewsPage = async (req, res) => {
   try {
+    const productReviews = await Review.find({product: {$ne: undefined}});
+    
+    for (const review of productReviews) {
+      review.targetId = review.product;
+      review.target = 'Product';
+      review.product = undefined;
+      
+      await review.save();
+    }
+    
     let lastViewedProducts = [];
-    const countReviews = await Review.countDocuments({active: true, status: 'taken'});
+    const countReviews = await Review.countDocuments({active: true, status: 'taken', target: 'Product'});
     const reviews = await Review
       .find({
         active: true,
         status: 'taken',
+        target: 'Product',
       })
       .limit(5)
       .sort({createdAt: -1})
-      .select(['eval', 'text'])
+      .select(['eval', 'text', 'target'])
       .populate([
         {
-          path: 'product',
+          path: 'targetId',
           select: ['name', 'alias'],
         },
         {

@@ -10,24 +10,6 @@ import Review from "../../models/Review.js";
 import Category from "../../models/Category.js";
 import Genre from "../../models/Genre.js";
 import ActivationService from "../../models/ActivationService.js";
-/*
-  Articles.find({_id: {$ne: article._id}})
- */
-
-/*
-  const products = await Product.find({
-    _id: {
-      $nin: article.products,
-    }
-  }).select(['name']);
-*/
-
-/*const result = await Product.aggregate.lookup({
-  from: 'users',
-  localField: 'userId',
-  foreignField: '_id',
-  as: 'users',
-});*/
 
 export const getProducts = async (req, res) => {
   try {
@@ -539,7 +521,8 @@ export const addReview = async (req, res) => {
     
     review = new Review({
       user: user._id,
-      product: productId,
+      targetId: productId,
+      target: 'Product',
       eval: evalValue,
       text,
     });

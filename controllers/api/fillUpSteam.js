@@ -1,6 +1,7 @@
 import fetch from "node-fetch";
 import crypto from "crypto";
 import FillUp from "../../models/FillUp.js";
+import Review from "../../models/Review.js";
 
 export const getPaymentLink = async (req, res) => {
   try {
@@ -184,5 +185,69 @@ export const notifications = async (req, res) => {
   } catch (e) {
     console.log(e);
     res.status(500).json({err: true, message: e});
+  }
+}
+
+export const addReview = async (req, res) => {
+  try {
+    if (!req.session.isAuth) {
+      throw new Error('No auth');
+    }
+  
+    const person = res.locals.person;
+    const text = req.body.text;
+    const evalValue = parseInt(req.body.eval);
+    const validErrors = [];
+  
+    if (!evalValue || evalValue < 1 || evalValue > 5) {
+      validErrors.push('eval');
+    }
+  
+    if (!text || typeof text !== 'string') {
+      validErrors.push('text');
+    }
+  
+    if (validErrors.length) {
+      return res.json({
+        error: true,
+        validErrors,
+      });
+    }
+    
+    const canAddReview = await checkCanAddReview(person);
+    
+    if (!canAddReview) {
+      throw new Error('Can not add review');
+    }
+  
+    const review = new Review({
+      user: person._id,
+      target: 'FillUpSteam',
+      eval: evalValue,
+      text,
+    });
+  
+    await review.save();
+  
+    res.json({
+      success: true,
+    });
+  
+    async function checkCanAddReview(person) {
+      const review = await Review.findOne({user: person._id, target: 'FillUpSteam'}).select(['_id']).lean();
+    
+      if (review) {
+        return false;
+      }
+    
+      const fillUp = await FillUp.findOne({user: person._id, type: 'steam', status: 'success'}).select(['_id']).lean();
+    
+      return !!fillUp;
+    }
+  } catch (e) {
+    console.log(e);
+    res.json({
+      err: true,
+    });
   }
 }

@@ -525,15 +525,16 @@ export const gamePage = async (req, res) => {
       ]);
     const person = res.locals.person;
     const reviewsFilter = {
-      product: product._id,
+      targetId: product._id,
+      target: 'Product',
       active: true,
     };
     const shortDescription = product.description.replace(/<h[2-6]>.+<\/h[2-6]>/ig, '').replace(/<[^>]+>/ig, '').replace(/\s{2,}/ig, ' ').trim().slice(0, 200).trim();
     
     if (person) {
       reviewsFilter['$or'] = [
-        {user: person._id},
-        {status: 'taken'},
+        { user: person._id },
+        { status: 'taken' },
       ];
     } else {
       reviewsFilter.status = 'taken';

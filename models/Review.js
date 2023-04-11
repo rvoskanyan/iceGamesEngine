@@ -14,10 +14,19 @@ const fields = {
     enum: ['moderation', 'rejected', 'taken'],
   },
   rejectionReason: String,
+  targetId: {
+    type: Schema.Types.ObjectId,
+    refPath: 'target',
+  },
+  target: {
+    type: String,
+    enum: ['Product', 'FillUpSteam'],
+    default: 'Product',
+    required: true,
+  },
   product: {
     type: Schema.Types.ObjectId,
     ref: 'Product',
-    required: true,
   },
   eval: {
     type: Number,

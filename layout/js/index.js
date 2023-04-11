@@ -57,6 +57,7 @@ const collapseNodes = document.querySelectorAll('.js-collapse');
 const autoSizeInputNodes = document.querySelectorAll('.js-autoSizeInput');
 const largeImgNodes = document.querySelectorAll('.js-largeImg');
 const addReviewFormNode = document.querySelector('.js-addReviewForm');
+const fillUpAddReviewFromNode = document.querySelector('.js-fillUpAddReviewFrom');
 const commentProductFormNode = document.querySelector('.js-commentProductForm');
 const gamePageNode = document.querySelector('.js-gamePage');
 const modalMessageNode = document.querySelector('.js-modalMessage');
@@ -695,6 +696,38 @@ if (addReviewFormNode) {
               ${params.text}
           </div>
         </div>` + listReviewsNode.innerHTML;
+        }
+    })
+}
+
+if (fillUpAddReviewFromNode) {
+    new AsyncForm({
+        mainNode: fillUpAddReviewFromNode,
+        successHandler: (params) => {
+            const listReviewsNode = document.querySelector('.js-filUpReviewsList');
+            const userName = listReviewsNode.dataset.userName;
+            const review = document.createElement('div');
+            
+            review.classList.add('item review');
+            fillUpAddReviewFromNode.remove();
+            
+            review.innerHTML = `
+                <div class="head">
+                    <a class="btn link userName" href="/profile/view/${userName}" title="Перейти на страницу пользователя ${userName}">${userName}</a>
+                </div>
+                <div class="grade">
+                    <span class="icon icon-star${params.eval >= 1 ? 'Fill' : ''}"></span>
+                    <span class="icon icon-star${params.eval >= 2 ? 'Fill' : ''}"></span>
+                    <span class="icon icon-star${params.eval >= 3 ? 'Fill' : ''}"></span>
+                    <span class="icon icon-star${params.eval >= 4 ? 'Fill' : ''}"></span>
+                    <span class="icon icon-star${params.eval >= 5 ? 'Fill' : ''}"></span>
+                </div>
+                <div class="text">
+                    ${params.text}
+                </div>
+            `;
+    
+            listReviewsNode.prepend(review);
         }
     })
 }

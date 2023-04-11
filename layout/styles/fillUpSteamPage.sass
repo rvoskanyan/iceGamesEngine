@@ -110,7 +110,7 @@
         text-align: initial
 
       &.warning
-        color: #f4d91d
+        color: #EB00FF
 
     .form
       margin-top: 40px
@@ -349,3 +349,32 @@
               color: #984BFB
               text-decoration: underline
               cursor: pointer
+
+    .fillUpReviews
+      margin-top: 40px
+      border: 1px solid #FFFFFF
+      border-radius: 20px
+      padding: 20px
+      color: #fff
+
+      .title
+        font-size: 21px
+        font-weight: 600
+
+      .description
+        margin-top: 10px
+
+      .addReviewForm
+        margin-top: 20px
+
+        .senderField
+          margin-top: 10px
+
+      .reviewsList
+        margin-top: 30px
+
+        .item:not(:last-child)
+          margin-bottom: 8px
+
+          @include for-desktop-up
+            margin-bottom: 10px
