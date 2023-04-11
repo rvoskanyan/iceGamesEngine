@@ -2173,6 +2173,7 @@ if (fillUpSteamFrom) {
     const amountNode = document.querySelector('.js-amount');
     const amountCommissionNode = document.querySelector('.js-amount-commission');
     const totalNode = document.querySelector('.js-total');
+    const windowRefOpen = window.open();
     let commission = 22.5;
     let amount = 0;
     let amountCommission = 0;
@@ -2215,10 +2216,8 @@ if (fillUpSteamFrom) {
                 return window.open(results.link, '_self');
             }
     
-            setTimeout(() => {
-                window.open(results.link, '_blank');
-                window.open(`${websiteAddress}fill-up-steam/check-status?fillUpId=${results.fillUpId}`, '_self');
-            });
+            windowRefOpen.location = results.link;
+            window.open(`${websiteAddress}fill-up-steam/check-status?fillUpId=${results.fillUpId}`, '_self');
         }
     });
 }
