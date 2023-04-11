@@ -2173,7 +2173,7 @@ if (fillUpSteamFrom) {
     const amountNode = document.querySelector('.js-amount');
     const amountCommissionNode = document.querySelector('.js-amount-commission');
     const totalNode = document.querySelector('.js-total');
-    let commission = 24.5;
+    let commission = 22.5;
     let amount = 0;
     let amountCommission = 0;
     let total = 0;
@@ -2187,7 +2187,7 @@ if (fillUpSteamFrom) {
     
     switchSbpNode.addEventListener('change', () => {
         if (switchSbpNode.checked) {
-            commission = 24.5;
+            commission = 22.5;
             changeParams();
         }
     });
