@@ -346,7 +346,7 @@ loadModeProductReviewsNode && loadModeProductReviewsNode.addEventListener('click
         return;
     }
 
-    const response = await postman.get(`${websiteAddress}api/reviews?skip=${skip}&productId=${productId}`);
+    const response = await postman.get(`${websiteAddress}api/reviews?skip=${skip}&targetId=${productId}&target=Product`);
     const result = await response.json();
 
     if (result.email) {
@@ -357,16 +357,16 @@ loadModeProductReviewsNode && loadModeProductReviewsNode.addEventListener('click
         listReviewsNode.innerHTML += `
       <div class="item review">
           <div class="head">
-              <a class="btn link userName" href="${websiteAddress}rating/${review.user.login}" title="Перейти на страницу ${review.user.login}">${review.user.login}</a>
+              <a class="btn link userName" href="${ websiteAddress }rating/${ review.user.login }" title="Перейти на страницу ${ review.user.login }">${ review.user.login }</a>
           </div>
           <div class="grade">
-              <span class="icon icon-star${review.eval >= 1 ? 'Fill' : ''}"></span>
-              <span class="icon icon-star${review.eval >= 2 ? 'Fill' : ''}"></span>
-              <span class="icon icon-star${review.eval >= 3 ? 'Fill' : ''}"></span>
-              <span class="icon icon-star${review.eval >= 4 ? 'Fill' : ''}"></span>
-              <span class="icon icon-star${review.eval >= 5 ? 'Fill' : ''}"></span>
+              <span class="icon icon-star${ review.eval >= 1 ? 'Fill' : '' }"></span>
+              <span class="icon icon-star${ review.eval >= 2 ? 'Fill' : '' }"></span>
+              <span class="icon icon-star${ review.eval >= 3 ? 'Fill' : '' }"></span>
+              <span class="icon icon-star${ review.eval >= 4 ? 'Fill' : '' }"></span>
+              <span class="icon icon-star${ review.eval >= 5 ? 'Fill' : '' }"></span>
           </div>
-          <div class="text">${review.text}</div>
+          <div class="text">${ review.text }</div>
       </div>
     `;
     });
