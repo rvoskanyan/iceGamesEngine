@@ -2215,13 +2215,7 @@ if (fillUpSteamFrom) {
                 return window.open(results.link, '_self');
             }
     
-            const link = document.createElement('a');
-            const click = new Event('click');
-    
-            link.setAttribute('target', '_blank');
-            link.setAttribute('href', results.link);
-            link.dispatchEvent(click);
-    
+            window.open(results.link, '_blank');
             window.open(`${websiteAddress}fill-up-steam/check-status?fillUpId=${results.fillUpId}`, '_self');
         }
     });
