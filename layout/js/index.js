@@ -381,7 +381,7 @@ loadModeProductReviewsNode && loadModeProductReviewsNode.addEventListener('click
 loadMoreReviewsBtnNode && loadMoreReviewsBtnNode.addEventListener('click', async () => {
     const skip = parseInt(loadMoreReviewsBtnNode.dataset.skip);
 
-    const response = await postman.get(`${websiteAddress}api/reviews?skip=${skip}`);
+    const response = await postman.get(`${websiteAddress}api/reviews?skip=${skip}&target=Product`);
     const result = await response.json();
 
     if (result.email) {
@@ -392,8 +392,8 @@ loadMoreReviewsBtnNode && loadMoreReviewsBtnNode.addEventListener('click', async
         reviewsListNode.innerHTML += `
       <div class="review">
           <div class="head">
-              <a class="btn link userName" href="${websiteAddress}rating/${review.user.login}" title="Перейти на страницу ${review.user.login}">${review.user.login}</a>
-              <div class="forGame">Отзыв на игру: <a class="link gameName" href="${websiteAddress}games/${review.product.alias}">${review.product.name}</a></div>
+              <a class="btn link userName" href="${ websiteAddress }rating/${ review.user.login }" title="Перейти на страницу ${ review.user.login }">${ review.user.login }</a>
+              <div class="forGame">Отзыв на игру: <a class="link gameName" href="${ websiteAddress }games/${ review.targetId.alias }">${ review.targetId.name }</a></div>
           </div>
           <div class="grade">
               <span class="icon icon-star${review.eval >= 1 ? 'Fill' : ''}"></span>

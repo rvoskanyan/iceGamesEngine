@@ -2,22 +2,29 @@ import Review from "../../models/Review.js";
 
 export const getReviews = async (req, res) => {
   try {
-    const {limit = 5, skip = 0, productId = null} = req.query;
-    const filter = {active: true, status: 'taken'};
+    const {
+      limit = 5,
+      skip = 0,
+      target = '',
+      targetId = null,
+    } = req.query;
+    
+    if (!target.length) {
+      throw new Error('Target is require param');
+    }
+    
+    const filter = {active: true, status: 'taken', target};
   
-    productId && (filter.product = productId);
+    targetId && (filter.targetId = targetId);
   
     const countReviews = await Review.countDocuments(filter);
     const reviews = await Review
       .find(filter)
       .skip(skip)
       .limit(limit)
-      .select(['text', 'eval'])
+      .select(['text', 'eval', 'target', 'targetId'])
       .populate([
-        {
-          path: 'product',
-          select: ['name', 'alias'],
-        },
+        'targetId',
         {
           path: 'user',
           select: ['login'],

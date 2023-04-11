@@ -24,10 +24,6 @@ const fields = {
     default: 'Product',
     required: true,
   },
-  product: {
-    type: Schema.Types.ObjectId,
-    ref: 'Product',
-  },
   eval: {
     type: Number,
     required: true,
