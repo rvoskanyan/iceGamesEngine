@@ -103,6 +103,8 @@ export const checkStatus = async (req, res) => {
     res.render('checkFillUpStatus', {
       fillUp,
       status,
+      noIndex: true,
+      noIndexGoogle: true,
       breadcrumbs: [
         {
           name: 'Пополнить Steam',
