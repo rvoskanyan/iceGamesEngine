@@ -2207,6 +2207,10 @@ if (fillUpSteamFrom) {
         totalNode.innerText = `${total} ₽`;
     }
     
+    const a = document.createElement("a");
+    document.body.appendChild(a);
+    a.style = "display: none";
+    
     new AsyncForm({
         mainNode: fillUpSteamFrom,
         resultMessageNode: resultNode,
@@ -2215,8 +2219,11 @@ if (fillUpSteamFrom) {
                 return window.open(results.link, '_self');
             }
     
-            window.open(results.link, '_blank');
-            //window.open(`${websiteAddress}fill-up-steam/check-status?fillUpId=${results.fillUpId}`, '_self');
+            a.href = results.link;
+            a.setAttribute('target', '_blank');
+            a.click();
+    
+            window.open(`${websiteAddress}fill-up-steam/check-status?fillUpId=${results.fillUpId}`, '_self');
         }
     });
 }
