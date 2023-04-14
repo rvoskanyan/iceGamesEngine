@@ -2201,7 +2201,7 @@ if (fillUpSteamFrom) {
         amountCommission = Math.floor(amount / 100 * commission);
         total = amountCommission + amount;
         
-        commissionNode.innerText = `Комиссия сервиса и банка (${commission}%)`;
+        commissionNode.innerText = `Комиссия сервиса (${commission}%)`;
         amountNode.innerText = `${amount} ₽`;
         amountCommissionNode.innerText = `${amountCommission} ₽`;
         totalNode.innerText = `${total} ₽`;
@@ -2216,7 +2216,7 @@ if (fillUpSteamFrom) {
             }
     
             window.open(results.link, '_blank');
-            window.open(`${websiteAddress}fill-up-steam/check-status?fillUpId=${results.fillUpId}`, '_self');
+            //window.open(`${websiteAddress}fill-up-steam/check-status?fillUpId=${results.fillUpId}`, '_self');
         }
     });
 }
