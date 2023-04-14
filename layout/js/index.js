@@ -2201,7 +2201,7 @@ if (fillUpSteamFrom) {
         amountCommission = Math.floor(amount / 100 * commission);
         total = amountCommission + amount;
         
-        commissionNode.innerText = `Комиссия сервиса (${commission}%)`;
+        commissionNode.innerText = `Комиссия сервиса и банка (${commission}%)`;
         amountNode.innerText = `${amount} ₽`;
         amountCommissionNode.innerText = `${amountCommission} ₽`;
         totalNode.innerText = `${total} ₽`;
