@@ -14,6 +14,13 @@
             <div class="name">Статус заявки</div>
             <div class="value">{{ status }}</div>
         </div>
-        <button class="btn rounded bg-violet js-reloadCheckFillUpStatus">Обновить</button>
+        {{#if showActions}}
+            <div class="actions">
+                {{#iff fillUp.status '===' 'paymentAwaiting'}}
+                    <a href="{{ fillUp.sbpUrl }}" class="btn round border bg-darkPurple hover-bg-violet" target="_blank">Оплатить</a>
+                {{/iff}}
+                <button class="btn round bg-darkPurple js-reloadCheckFillUpStatus">Обновить</button>
+            </div>
+        {{/if}}
     </div>
 </main>

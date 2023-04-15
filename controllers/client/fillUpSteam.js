@@ -103,6 +103,7 @@ export const checkStatus = async (req, res) => {
     res.render('checkFillUpStatus', {
       fillUp,
       status,
+      showActions: fillUp.status === 'paymentAwaiting' || fillUp.status === 'pending',
       noIndex: true,
       noIndexGoogle: true,
       breadcrumbs: [
