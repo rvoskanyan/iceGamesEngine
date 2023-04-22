@@ -6,8 +6,11 @@ export const fillUpSteamPage = async (req, res) => {
   const successFillUps = await FillUp.find({status: 'success'}).select(['amount']).lean();
   const countFillUps = successFillUps.length + 1400;
   const amount = successFillUps.reduce((accum, fillUp) => accum + fillUp.amount, 0) + 850000;
+  const countReviews = await Review.countDocuments({active: true, status: 'taken', target: 'FillUpSteam'});
   const reviews = await Review
     .find({status: 'taken', target: 'FillUpSteam', active: true})
+    .limit(5)
+    .sort({createdAt: -1})
     .populate({
       path: 'user',
       select: ['login'],
@@ -54,6 +57,7 @@ export const fillUpSteamPage = async (req, res) => {
     amount,
     seconds,
     reviews,
+    countReviews,
   });
 }
 

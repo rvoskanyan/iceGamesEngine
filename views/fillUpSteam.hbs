@@ -213,6 +213,9 @@
                     }}
                 {{/each}}
             </div>
+            {{#iff countReviews '>' 5}}
+                <button class="btn link translucent loadMore js-loadMoreFillUpReviewsBtn" data-skip="5">Загрузить еще</button>
+            {{/iff}}
         </div>
     </div>
 </main>

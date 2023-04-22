@@ -63,6 +63,8 @@ const gamePageNode = document.querySelector('.js-gamePage');
 const modalMessageNode = document.querySelector('.js-modalMessage');
 const acceptAgreementNode = document.querySelector('.js-acceptAgreement');
 const blogPageNode = document.querySelector('.js-blogPage');
+const loadMoreFillUpReviewsBtnNode = document.querySelector('.js-loadMoreFillUpReviewsBtn');
+const listFillUpReviewsNode = document.querySelector('.js-filUpReviewsList');
 const loadMoreReviewsBtnNode = document.querySelector('.js-loadMoreReviewsBtn');
 const reviewsListNode = document.querySelector('.js-reviewsList');
 const loadMoreRatingNode = document.querySelector('.js-loadMoreRating');
@@ -376,6 +378,42 @@ loadModeProductReviewsNode && loadModeProductReviewsNode.addEventListener('click
     }
 
     loadModeProductReviewsNode.dataset.skip = parseInt(loadModeProductReviewsNode.dataset.skip) + 5;
+})
+
+loadMoreFillUpReviewsBtnNode && loadMoreFillUpReviewsBtnNode.addEventListener('click', async () => {
+    const skip = parseInt(loadMoreFillUpReviewsBtnNode.dataset.skip);
+    
+    const response = await postman.get(`${websiteAddress}api/reviews?skip=${skip}&target=FillUpSteam`);
+    const result = await response.json();
+    
+    if (result.email) {
+        return;
+    }
+    
+    result.reviews.forEach(review => {
+        listFillUpReviewsNode.innerHTML += `
+      <div class="review">
+          <div class="head">
+              <a class="btn link userName" href="${ websiteAddress }rating/${ review.user.login }" title="Перейти на страницу ${ review.user.login }">${ review.user.login }</a>
+              <div class="forGame">Отзыв на игру: <a class="link gameName" href="${ websiteAddress }games/${ review.targetId.alias }">${ review.targetId.name }</a></div>
+          </div>
+          <div class="grade">
+              <span class="icon icon-star${review.eval >= 1 ? 'Fill' : ''}"></span>
+              <span class="icon icon-star${review.eval >= 2 ? 'Fill' : ''}"></span>
+              <span class="icon icon-star${review.eval >= 3 ? 'Fill' : ''}"></span>
+              <span class="icon icon-star${review.eval >= 4 ? 'Fill' : ''}"></span>
+              <span class="icon icon-star${review.eval >= 5 ? 'Fill' : ''}"></span>
+          </div>
+          <div class="text">${review.text}</div>
+      </div>
+    `;
+    });
+    
+    if (result.isLast) {
+        return loadMoreFillUpReviewsBtnNode.remove();
+    }
+    
+    loadMoreFillUpReviewsBtnNode.dataset.skip = parseInt(loadMoreFillUpReviewsBtnNode.dataset.skip) + 5;
 })
 
 loadMoreReviewsBtnNode && loadMoreReviewsBtnNode.addEventListener('click', async () => {
@@ -704,8 +742,7 @@ if (fillUpAddReviewFromNode) {
     new AsyncForm({
         mainNode: fillUpAddReviewFromNode,
         successHandler: (params) => {
-            const listReviewsNode = document.querySelector('.js-filUpReviewsList');
-            const userName = listReviewsNode.dataset.userName;
+            const userName = listFillUpReviewsNode.dataset.userName;
             const review = document.createElement('div');
             
             review.classList.add('item review');
@@ -727,7 +764,7 @@ if (fillUpAddReviewFromNode) {
                 </div>
             `;
     
-            listReviewsNode.prepend(review);
+            listFillUpReviewsNode.prepend(review);
         }
     })
 }
