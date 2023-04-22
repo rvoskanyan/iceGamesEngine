@@ -1069,7 +1069,7 @@ if (cartNode) {
                 let dsCartId = null;
 
                 formData.append('product_cnt', '1');
-                formData.append('typecurr', 'wmr');
+                formData.append('typecurr', 'WMR');
                 formData.append('lang', 'ru-RU');
 
                 for (const prd of products) {
@@ -1088,6 +1088,8 @@ if (cartNode) {
                     });
 
                     const resultAddCartDs = await responseAddCartDs.json();
+    
+                    console.log(resultAddCartDs);
 
                     if (resultAddCartDs.cart_err === "Товар закончился или временно отключен.") {
                         const deleteFromCartBtn = productNode.querySelector('.js-deleteFromCart');
