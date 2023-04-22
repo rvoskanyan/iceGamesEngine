@@ -392,7 +392,7 @@ loadMoreFillUpReviewsBtnNode && loadMoreFillUpReviewsBtnNode.addEventListener('c
     
     result.reviews.forEach(review => {
         listFillUpReviewsNode.innerHTML += `
-      <div class="review">
+      <div class="item review">
           <div class="head">
               <a class="btn link userName" href="${ websiteAddress }rating/${ review.user.login }" title="Перейти на страницу ${ review.user.login }">${ review.user.login }</a>
           </div>
