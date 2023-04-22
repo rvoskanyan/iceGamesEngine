@@ -1,7 +1,9 @@
 <div class="item review" itemscope itemtype="https://schema.org/Review">
-    <span itemprop="itemReviewed" itemscope itemtype=”https://schema.org/Game”>
-        <meta itemprop="name" content="{{#if forGameName}}{{forGameName}}{{else}}{{@root.product.name}}{{/if}}">
-    </span>
+    {{#if forProduct}}
+        <span itemprop="itemReviewed" itemscope itemtype=”https://schema.org/Game”>
+            <meta itemprop="name" content="{{#if forGameName}}{{forGameName}}{{else}}{{@root.product.name}}{{/if}}">
+        </span>
+    {{/if}}
     <div class="head">
         <a
             class="btn link userName"

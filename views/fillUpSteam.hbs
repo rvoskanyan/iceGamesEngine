@@ -94,24 +94,56 @@
                 <button class="btn bg-violet rounded js-tabBtn" data-target-id="faq">FAQ</button>
             </div>
             <div class="blocks">
-                <div class="item active js-tabBlock-instruction">
+                <div class="item active js-tabBlock-instruction" itemscope itemtype="https://schema.org/HowTo">
+                    <div class="instructionTitle" itemprop="name">Как успешно пополнить баланс Steam с ICE GAMES</div>
                     <ol class="list">
-                        <li class="element">Введите свой логин Steam. <span style="color: #EB00FF">Обратите внимание! Логин - это то, что Вы указываете при входе в Steam. Если Вы укажете неверный логин, то средства уйдут другому пользователю Steam. <span class="link js-whereLogin">Где найти логин?</span></span></li>
-                        <li class="element">Введите сумму, на которую хотите пополнить аккаунт.</li>
-                        <li class="element">Проверьте, что указали именно логин, а не никнейм и подтвердите это галкой.</li>
-                        <li class="element">Нажмите кнопку «Оплатить».</li>
-                        <li class="element">Вы перейдете на страницу, где необходимо выбрать метод оплаты.</li>
-                        <li class="element">После успешной оплаты деньги поступят на баланс аккаунта в течение 2-15 минут.</li>
-                        <li class="element">При возникновении вопросов <a href="https://vk.com/ice.games" title="Перейти на страницу сообщества ICE GAMES в VK" rel="nofollow" target="_blank" class="link">свяжитесь с поддержкой</a>.</li>
+                        <li class="element" itemprop="step" itemscope itemtype="http://schema.org/HowToSection">
+                            <meta itemprop="position" content="1"/>
+                            <span itemprop="text">
+                                Введите свой логин Steam. <span style="color: #EB00FF">Обратите внимание! Логин - это то, что Вы указываете при входе в Steam. Если Вы укажете неверный логин, то средства уйдут другому пользователю Steam. <span class="link js-whereLogin">Где найти логин?</span></span>
+                            </span>
+                        </li>
+                        <li class="element" itemprop="step" itemscope itemtype="http://schema.org/HowToSection">
+                            <meta itemprop="position" content="2"/>
+                            <span itemprop="text">Введите сумму, на которую хотите пополнить аккаунт.</span>
+                        </li>
+                        <li class="element" itemprop="step" itemscope itemtype="http://schema.org/HowToSection">
+                            <meta itemprop="position" content="3"/>
+                            <span itemprop="text">
+                                Проверьте, что указали именно логин, а не никнейм и подтвердите это галкой.
+                            </span>
+                        </li>
+                        <li class="element" itemprop="step" itemscope itemtype="http://schema.org/HowToSection">
+                            <meta itemprop="position" content="4"/>
+                            <span itemprop="text">Нажмите кнопку «Оплатить».</span>
+                        </li>
+                        <li class="element" itemprop="step" itemscope itemtype="http://schema.org/HowToSection">
+                            <meta itemprop="position" content="5"/>
+                            <span itemprop="text">
+                                Вы перейдете на страницу, где необходимо выбрать метод оплаты.
+                            </span>
+                        </li>
+                        <li class="element" itemprop="step" itemscope itemtype="http://schema.org/HowToSection">
+                            <meta itemprop="position" content="6"/>
+                            <span itemprop="text">
+                                После успешной оплаты деньги поступят на баланс аккаунта в течение 2-15 минут.
+                            </span>
+                        </li>
+                        <li class="element" itemprop="step" itemscope itemtype="http://schema.org/HowToSection">
+                            <meta itemprop="position" content="7"/>
+                            <span itemprop="text">
+                                При возникновении вопросов <a href="https://vk.com/ice.games" title="Перейти на страницу сообщества ICE GAMES в VK" rel="nofollow" target="_blank" class="link">свяжитесь с поддержкой</a>.
+                            </span>
+                        </li>
                     </ol>
                 </div>
-                <div class="item js-tabBlock-faq">
-                    <div class="collapse js-collapse" itemscope itemtype="http://schema.org/Question">
+                <div class="item js-tabBlock-faq" itemscope itemtype="https://schema.org/FAQPage">
+                    <div class="collapse js-collapse" itemscope itemtype="https://schema.org/Question">
                         <button class="btn head">
-                            <span class="title"><span itemprop="name">Лимиты и ограничения</span></span>
+                            <span class="title" itemprop="name">Лимиты и ограничения</span>
                             <span class="control"></span>
                         </button>
-                        <div class="content" itemprop="suggestedAnswer" itemscope itemtype="http://schema.org/Answer">
+                        <div class="content" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
                             <span itemprop="text">
                                 Ограничения на минимальные суммы для всех способов зачисления – 100 рублей. Лимит на максимальное пополнение баланса Steam за 24 часа – равен 500$
                                 <br>
@@ -119,23 +151,23 @@
                             </span>
                         </div>
                     </div>
-                    <div class="collapse js-collapse" itemscope itemtype="http://schema.org/Question">
+                    <div class="collapse js-collapse" itemscope itemtype="https://schema.org/Question">
                         <button class="btn head">
-                            <span class="title"><span itemprop="name">Что такое "Логин"?</span></span>
+                            <span class="title" itemprop="name">Что такое "Логин"?</span>
                             <span class="control"></span>
                         </button>
-                        <div class="content" itemprop="suggestedAnswer" itemscope itemtype="http://schema.org/Answer">
+                        <div class="content" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
                             <span itemprop="text">
                                 Логин — это то, что вы вводите при авторизации, у каждого пользователя он уникальный, а никнейм вы можете менять по своему усмотрению.
                             </span>
                         </div>
                     </div>
-                    <div class="collapse js-collapse" itemscope itemtype="http://schema.org/Question">
+                    <div class="collapse js-collapse" itemscope itemtype="https://schema.org/Question">
                         <button class="btn head">
-                            <span class="title"><span itemprop="name">У меня новый или ранее НЕ пополнявшийся аккаунт</span></span>
+                            <span class="title" itemprop="name">У меня новый или ранее НЕ пополнявшийся аккаунт</span>
                             <span class="control"></span>
                         </button>
-                        <div class="content" itemprop="suggestedAnswer" itemscope itemtype="http://schema.org/Answer">
+                        <div class="content" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
                             <span itemprop="text">
                                 Если совершаете первое пополнение аккаунта Steam, то валюта аккаунта может смениться на одну из списка ($, ₸, € и другие). Страна аккаунта тоже будет изменена автоматически.
                                 <br>
@@ -143,12 +175,12 @@
                             </span>
                         </div>
                     </div>
-                    <div class="collapse js-collapse" itemscope itemtype="http://schema.org/Question">
+                    <div class="collapse js-collapse" itemscope itemtype="https://schema.org/Question">
                         <button class="btn head">
-                            <span class="title"><span itemprop="name">Не пришли деньги</span></span>
+                            <span class="title" itemprop="name">Не пришли деньги</span>
                             <span class="control"></span>
                         </button>
-                        <div class="content" itemprop="suggestedAnswer" itemscope itemtype="http://schema.org/Answer">
+                        <div class="content" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
                             <span itemprop="text">
                                 Если Вы указали верно ЛОГИН (это не никнейм) и баланс Вашего аккаунта - рубли (₽), пополнение происходит моментально.
                                 <br>
