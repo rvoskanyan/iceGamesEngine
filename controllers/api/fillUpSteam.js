@@ -43,7 +43,7 @@ export const getPaymentLink = async (req, res) => {
       });
     }
     
-    const commissionPercent = paymentMethod === 'sbp' ? 22.5 : 30;
+    const commissionPercent = paymentMethod === 'sbp' ? 22.5 : 28;
     const commissionAmount = Math.floor(amount / 100 * commissionPercent);
     const total = amount + commissionAmount;
     

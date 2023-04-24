@@ -2219,7 +2219,7 @@ if (fillUpSteamFrom) {
     
     switchCardNode.addEventListener('change', () => {
         if (switchCardNode.checked) {
-            commission = 30;
+            commission = 28;
             changeParams();
         }
     });
