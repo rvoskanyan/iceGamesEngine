@@ -5,10 +5,10 @@ import Review from "../../models/Review.js";
 
 export const getPaymentLink = async (req, res) => {
   try {
-    return res.json({
+    /*return res.json({
       error: true,
       message: 'Уважаемый клиент, в данным момент ведутся тех.работы, в связи с этим пополнение кошелька Steam временно не доступно. Приносим свои извинения за доставленные неудобства, надеемся на Ваше понимание!',
-    });
+    });*/
     
     const {
       steamLogin = '',
@@ -41,10 +41,10 @@ export const getPaymentLink = async (req, res) => {
   
     amount = parseInt(amount);
     
-    if (amount < 100 || amount > 10000) {
+    if (amount < 150 || amount > 10000) {
       return res.json({
         error: true,
-        message: 'Сумма пополнения должна быть не менее 100₽ и не более 10 000₽',
+        message: 'Сумма пополнения должна быть не менее 150₽ и не более 10 000₽',
       });
     }
     
