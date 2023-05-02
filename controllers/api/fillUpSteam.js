@@ -41,10 +41,10 @@ export const getPaymentLink = async (req, res) => {
   
     amount = parseInt(amount);
     
-    if (amount < 150 || amount > 10000) {
+    if (amount < 100 || amount > 10000) {
       return res.json({
         error: true,
-        message: 'Сумма пополнения должна быть не менее 150₽ и не более 10 000₽',
+        message: 'Сумма пополнения должна быть не менее 100₽ и не более 10 000₽',
       });
     }
     
