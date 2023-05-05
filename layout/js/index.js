@@ -2238,7 +2238,7 @@ if (restorePasswordFormNode) {
 if (fillUpSteamFrom) {
     const resultNode = fillUpSteamFrom.querySelector('.js-fillUpSubmitResult');
     const commissionNode = document.querySelector('.js-commission');
-    const amountInputNode = document.querySelector('.js-amount-input');
+    const amountInputNode = document.querySelector('.js-amountFillUp');
     const switchCardNode = document.querySelector('.js-switch-card');
     const switchSbpNode = document.querySelector('.js-switch-sbp');
     const amountNode = document.querySelector('.js-amount');
