@@ -1254,9 +1254,7 @@ function startBind() {
 
         item.addEventListener('click', () => {
             bindField.value = value;
-            currentActive?.classList.remove('active');
-            item.classList.add('active');
-            currentActive = item;
+            bindField.dispatchEvent(new Event('input'))
         })
     });
     
