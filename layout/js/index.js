@@ -80,6 +80,7 @@ const addInFavoritesProductPageNode = document.querySelector('.js-addInFavorites
 const showAboutAsHomeNode = document.querySelector('.js-showAboutAsHome');
 const successPaymentNode = document.querySelector('.js-successPayment');
 const mobileCartLinkNode = document.querySelector('.js-mobileCartLink');
+const fastSelect = document.querySelector('.js-fastSelect');
 const reloadCheckFillUpStatusNode = document.querySelector('.js-reloadCheckFillUpStatus');
 const popupController = new PopupController([
     {
@@ -1236,6 +1237,39 @@ if (cartNode) {
             })
         }
     }
+}
+
+fastSelect && startBind();
+
+function startBind() {
+    const items = fastSelect.querySelectorAll('.js-fastSelectItem');
+    const bindField = document.querySelector(`.js-${fastSelect.dataset.bindSelector}`);
+    const itemsOnValues = {};
+    let currentActive;
+    
+    items.forEach(item => {
+        const value = parseInt(item.innerText);
+    
+        itemsOnValues[value] = item;
+
+        item.addEventListener('click', () => {
+            bindField.value = value;
+            currentActive?.classList.remove('active');
+            item.classList.add('active');
+            currentActive = item;
+        })
+    });
+    
+    bindField.addEventListener('input', () => {
+        const item = itemsOnValues[bindField.value];
+    
+        currentActive?.classList.remove('active');
+        
+        if (item) {
+            item.classList.add('active');
+            currentActive = item;
+        }
+    })
 }
 
 addInFavoritesProductPageNode && addInFavoritesProductPageNode.addEventListener('click', async (e) => {

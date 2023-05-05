@@ -118,8 +118,40 @@
       .input-frame
         margin-bottom: 15px
 
+        @include for-desktop-up
+          margin-bottom: 20px
+
         .textField
           width: 100%
+
+      .fastSelect
+        display: flex
+        justify-content: space-between
+        border: 1px solid #FFFFFF
+        padding: 5px
+        border-radius: 100px
+        margin-top: 4px
+
+        @include for-desktop-up
+          padding: 6px
+          margin-top: 6px
+
+        &-item
+          border: 1px solid transparent
+          font-family: 'Montserrat'
+          font-weight: 400
+          font-size: 14px
+          line-height: 1
+          padding: 4px 12px
+          border-radius: 100px
+
+          @include for-desktop-up
+            padding: 4px 14px
+            font-size: 16px
+
+          &.active
+            border: 1px solid #EB00FF
+            color: #EB00FF
 
       .paymentMethods
         display: flex
