@@ -22,7 +22,7 @@
                 <input class="textField" type="text" name="steamLogin" placeholder="Логин Steam">
             </label>
             <label class="input-frame js-amount-input">
-                <input class="textField js-amountFillUp" type="text" name="amount" placeholder="Сумма для пополнения (От 100₽ до 10 000₽)">
+                <input class="textField js-amountFillUp" type="text" name="amount" placeholder="Сумма пополнения (От 100₽ до 10 000₽)">
                 <div class="fastSelect js-fastSelect" data-bind-selector="amountFillUp">
                     <button class="fastSelect-item btn js-fastSelectItem" type="button">100</button>
                     <button class="fastSelect-item btn js-fastSelectItem" type="button">300</button>
@@ -43,7 +43,7 @@
                     <input class="input js-switch-card" type="radio" name="paymentMethod" value="card">
                     <div class="block">
                         <div class="name">Оплата картой</div>
-                        <div class="description">Комиссия сервиса (28%)</div>
+                        <div class="description">Комиссия сервиса (26.5%)</div>
                     </div>
                 </label>
                 <label class="variant sbp">
@@ -58,7 +58,7 @@
                 <div class="title">Оплата</div>
                 <div class="body">
                     <div class="item">
-                        <div class="name">Сумма</div>
+                        <div class="name">Сумма на Steam</div>
                         <div class="value js-amount">0 ₽</div>
                     </div>
                     <div class="item">
@@ -191,6 +191,19 @@
                                 Если Вы указали верно ЛОГИН (это не никнейм) и баланс Вашего аккаунта - рубли (₽), пополнение происходит моментально.
                                 <br>
                                 Если Вам не поступили средства на баланс в течение часа, пожалуйста, обратитесь в Техническую поддержку.
+                            </span>
+                        </div>
+                    </div>
+                    <div class="collapse js-collapse" itemscope itemtype="https://schema.org/Question">
+                        <button class="btn head">
+                            <span class="title" itemprop="name">Какая политика возврата?</span>
+                            <span class="control"></span>
+                        </button>
+                        <div class="content" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                            <span itemprop="text">
+                                Если ваш аккаунт находится в регионе в котором мы не сможем реализовать пополнение, Вы в праве запросить возврат средств.
+                                <br>
+                                На Карту банка средства будут возвращены с вычетом 50р и 3% от суммы списания в течение 1 рабочего дня.
                             </span>
                         </div>
                     </div>

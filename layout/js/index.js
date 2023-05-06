@@ -2251,7 +2251,7 @@ if (fillUpSteamFrom) {
     
     switchCardNode.addEventListener('change', () => {
         if (switchCardNode.checked) {
-            commission = 28;
+            commission = 26.5
             changeParams();
         }
     });
