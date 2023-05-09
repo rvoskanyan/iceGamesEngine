@@ -17,6 +17,7 @@
 .input
   &-frame
     display: block
+    position: relative
 
     .label
       display: block
@@ -40,6 +41,31 @@
 
         @include for-desktop-up
           font-size: 16px
+
+    .prompt
+      font-family: 'Montserrat'
+      font-weight: 400
+      line-height: 1
+      color: #fff
+      position: absolute
+      background-color: #111351
+      border-radius: 100px
+      top: 50%
+      transform: translateY(-50%)
+      opacity: 1
+      visibility: visible
+      transition: .3s ease-in
+      transition-property: opacity, visibility
+      padding: 5px 7px
+      right: 6px
+      font-size: 12px
+
+      @include for-desktop-up
+        font-size: 14px
+
+    &.active .prompt
+      opacity: 0
+      visibility: hidden
 
   &-labelInField
     position: relative

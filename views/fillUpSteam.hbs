@@ -18,8 +18,9 @@
             Внимание! Пополнить баланс возможно только Российского Steam аккаунта, кроме республики Крым, Луганской и Донецкой областей.
         </p>
         <form class="form js-fillUpSteamFrom" action="{{websiteAddress}}api/fillUpSteam/getPaymentLink">
-            <label class="input-frame">
+            <label class="input-frame js-inputFrame">
                 <input class="textField" type="text" name="steamLogin" placeholder="Логин Steam">
+                <button class="btn prompt js-howToGetLogin">Как узнать логин?</button>
             </label>
             <label class="input-frame js-amount-input">
                 <input class="textField js-amountFillUp" type="text" name="amount" placeholder="Сумма пополнения (От 100₽ до 10 000₽)">

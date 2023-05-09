@@ -20,6 +20,8 @@ const profileMenuNode = document.querySelector('.js-profileMenu');
 const homeSliderNode = document.querySelector('.js-homeSlider');
 const fillUpPageModalNode = document.querySelector('.js-fillUpPageModal');
 const whereLoginNode = document.querySelector('.js-whereLogin');
+const howToGetLoginNode = document.querySelector('.js-howToGetLogin');
+const inputFrameNodes = document.querySelectorAll('.js-inputFrame');
 const recProductSliderNode = document.querySelector('.js-recProductSlider');
 const additionsProductSliderNode = document.querySelector('.js-additionsProductSlider');
 const articlesProductSliderNode = document.querySelector('.js-articlesGameSlider');
@@ -476,11 +478,27 @@ whereLoginNode && whereLoginNode.addEventListener('click', () => {
     fillUpPageModalNode.classList.add('active');
 })
 
+howToGetLoginNode && howToGetLoginNode.addEventListener('click', () => {
+    document.body.classList.add('noScrolling');
+    
+    fillUpPageModalNode.classList.add('active');
+})
+
 fillUpPageModalNode && fillUpPageModalNode.querySelector('.js-closeFillUpPageModal').addEventListener('click', () => {
     document.body.classList.remove('noScrolling');
     
     fillUpPageModalNode.classList.remove('active');
 })
+
+inputFrameNodes.forEach(inputFrameNode => {
+    inputFrameNode.addEventListener('input', (e) => {
+        if (e.target.value === '') {
+            return inputFrameNode.classList.remove('active');
+        }
+    
+        inputFrameNode.classList.add('active');
+    })
+});
 
 if (acceptAgreementNode) {
     const btnSendNode = acceptAgreementNode.querySelector('.js-sendAcceptAgreement');

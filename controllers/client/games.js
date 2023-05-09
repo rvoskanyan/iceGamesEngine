@@ -685,8 +685,8 @@ export const gamePage = async (req, res) => {
         return viewedProduct;
       });
       
-      isProductNoReview = await Review.find({product: product._id, user: res.locals.person._id});
-      isProductNoReview = !isProductNoReview.length;
+      isProductNoReview = await Review.findOne({targetId: product._id, user: res.locals.person._id, target: 'Product'});
+      isProductNoReview = !isProductNoReview;
       
       let viewedProducts = person.viewedProducts;
       const viewedProductIndex = viewedProducts.findIndex(viewedProductId => {
