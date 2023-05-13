@@ -2262,21 +2262,21 @@ if (fillUpSteamFrom) {
     const amountNode = document.querySelector('.js-amount');
     const amountCommissionNode = document.querySelector('.js-amount-commission');
     const totalNode = document.querySelector('.js-total');
-    let commission = 22.5;
+    let commission = 21.5;
     let amount = 0;
     let amountCommission = 0;
     let total = 0;
     
     switchCardNode.addEventListener('change', () => {
         if (switchCardNode.checked) {
-            commission = 26.5
+            commission = 25.5
             changeParams();
         }
     });
     
     switchSbpNode.addEventListener('change', () => {
         if (switchSbpNode.checked) {
-            commission = 22.5;
+            commission = 21.5;
             changeParams();
         }
     });

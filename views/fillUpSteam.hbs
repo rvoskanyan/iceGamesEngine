@@ -20,7 +20,7 @@
         <form class="form js-fillUpSteamFrom" action="{{websiteAddress}}api/fillUpSteam/getPaymentLink">
             <label class="input-frame js-inputFrame">
                 <input class="textField" type="text" name="steamLogin" placeholder="Логин Steam">
-                <button class="btn prompt js-howToGetLogin">Как узнать логин?</button>
+                <button class="btn prompt js-howToGetLogin" type="button">Как узнать логин?</button>
             </label>
             <label class="input-frame js-amount-input">
                 <input class="textField js-amountFillUp" type="text" name="amount" placeholder="Сумма пополнения (От 100₽ до 10 000₽)">
@@ -44,14 +44,14 @@
                     <input class="input js-switch-card" type="radio" name="paymentMethod" value="card">
                     <div class="block">
                         <div class="name">Оплата картой</div>
-                        <div class="description">Комиссия сервиса (26.5%)</div>
+                        <div class="description">Комиссия сервиса (25.5%)</div>
                     </div>
                 </label>
                 <label class="variant sbp">
                     <input class="input js-switch-sbp" type="radio" name="paymentMethod" value="sbp" checked>
                     <div class="block">
                         <div class="name">Оплата через СБП</div>
-                        <div class="description">Комиссия сервиса (22.5%)</div>
+                        <div class="description">Комиссия сервиса (21.5%)</div>
                     </div>
                 </label>
             </div>
@@ -63,7 +63,7 @@
                         <div class="value js-amount">0 ₽</div>
                     </div>
                     <div class="item">
-                        <div class="name js-commission">Комиссия сервиса (22.5%)</div>
+                        <div class="name js-commission">Комиссия сервиса (21.5%)</div>
                         <div class="value js-amount-commission">0 ₽</div>
                     </div>
                 </div>
