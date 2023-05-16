@@ -3,7 +3,11 @@
         <div class="content">
             <div class="title">Где найти логин?</div>
             <img class="img" src="{{ websiteAddress }}img/whereSteamLogin.jpg" alt="Где находится логин Steam">
-            <a href="https://store.steampowered.com/account/" target="_blank" class="link" rel="nofollow">Посмотреть логин можно тут</a>
+            <a href="https://store.steampowered.com/account/" target="_blank" class="link" rel="nofollow">Открыть страницу Steam с логином</a>
+            <div class="moreInfoLogin">
+                Подробнее о том, как узнать логин в
+                <a class="moreInfoLoginLink" href="https://icegames.store/blog/kak-uznat-svoio-login-v-steam" target="_blank">нашей статье</a>
+            </div>
             <button class="btn border round js-closeFillUpPageModal">Закрыть</button>
         </div>
     </div>
@@ -16,6 +20,12 @@
         </p>
         <p class="description warning">
             Внимание! Пополнить баланс возможно только Российского Steam аккаунта, кроме республики Крым, Луганской и Донецкой областей.
+        </p>
+        <p class="description warning">
+            Узнать о том, как обойти ограничение Вы можете в
+            <a class="link" href="https://icegames.store/blog/kak-popolnit-koshyelyek-steam-iz-ryespubliki-krym-luganskoio-i-donyetskoio-oblastyeio" target="_blank">
+                нашей статье
+            </a>
         </p>
         <form class="form js-fillUpSteamFrom" action="{{websiteAddress}}api/fillUpSteam/getPaymentLink">
             <label class="input-frame js-inputFrame">

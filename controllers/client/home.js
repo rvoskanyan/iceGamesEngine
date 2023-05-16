@@ -39,7 +39,7 @@ export const homepage = async (req, res) => {
   const countReviews = await Review.countDocuments({active: true, status: 'taken'});
   const countProducts = await Product.countDocuments({active: true});
   const orders = await Order.find({status: 'paid'}).select(['items']).lean();
-  const countSales = orders.reduce((countSales, order) => countSales + order.items.length, 6500);
+  const countSales = orders.reduce((countSales, order) => countSales + order.items.length, 6000);
   const articles = await Article
     .find({active: true})
     .sort({createdAt: -1})
@@ -117,6 +117,7 @@ export const homepage = async (req, res) => {
   const preOrders = await Product
     .find({preOrder: true, active: true})
     .select(['name', 'alias', 'img', 'priceTo', 'priceFrom', 'dlc', 'dsId', 'inStock', 'preOrder'])
+    .sort({'createdAt': -1})
     .limit(10)
     .lean();
   

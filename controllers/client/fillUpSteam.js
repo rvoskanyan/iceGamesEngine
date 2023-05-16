@@ -4,8 +4,8 @@ import Review from "../../models/Review.js";
 
 export const fillUpSteamPage = async (req, res) => {
   const successFillUps = await FillUp.find({status: 'success'}).select(['amount']).lean();
-  const countFillUps = successFillUps.length + 900;
-  const amount = successFillUps.reduce((accum, fillUp) => accum + fillUp.amount, 600000);
+  const countFillUps = successFillUps.length + 700;
+  const amount = successFillUps.reduce((accum, fillUp) => accum + fillUp.amount, 500000);
   const countReviews = await Review.countDocuments({active: true, status: 'taken', target: 'FillUpSteam'});
   const reviews = await Review
     .find({status: 'taken', target: 'FillUpSteam', active: true})
