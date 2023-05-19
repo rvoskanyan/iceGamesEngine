@@ -39,8 +39,12 @@ export const updateStatuses = async (req, res) => {
       const stateData = await response.json();
   
       if (stateData.state !== 'pending') {
-        fillUp.status = stateData.state;
-        await fillUp.save();
+        try {
+          fillUp.status = stateData.state;
+          await fillUp.save();
+        } catch (e) {
+          console.log(e);
+        }
       }
     }
   
