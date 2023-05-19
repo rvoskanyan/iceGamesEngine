@@ -30,7 +30,7 @@ const fields = {
   status: {
     type: String,
     required: true,
-    enum: ['paymentAwaiting', 'success', 'pending', 'createOrderError', 'false'],
+    enum: ['paymentAwaiting', 'success', 'pending', 'createOrderError', 'false', 'error'],
   },
   codeOrderError: Number,
   email: String,
