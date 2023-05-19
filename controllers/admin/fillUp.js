@@ -25,7 +25,7 @@ export const fillUpAnalyticsPage = async (req, res) => {
 
 export const updateStatuses = async (req, res) => {
   try {
-    const pendingFillUps = await FillUp.find({status: 'pending'}).select(['orderId']);
+    const pendingFillUps = await FillUp.find({status: 'pending'}).select(['orderId', 'status']);
   
     for (const fillUp of pendingFillUps) {
       const response = await fetch(`https://steam.kupikod.com/api/v3/partner-order/${fillUp.orderId}`, {
