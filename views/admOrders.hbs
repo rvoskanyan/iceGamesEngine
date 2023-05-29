@@ -1,0 +1,35 @@
+<style>
+    .order {
+        width: max-content;
+        border: 1px solid #bdbdbd;
+        border-radius: 5px;
+        padding: 5px;
+        margin-left: 15px;
+        font-family: 'Montserrat', sans-serif;
+        margin-bottom: 15px;
+    }
+
+    .prop:not(:last-child) {
+        margin-bottom: 3px;
+    }
+
+    .name {
+        font-weight: 600;
+    }
+</style>
+{{#each orders}}
+    <div class="order">
+        <div class="prop">
+            <span class="name">Email:</span>
+            <span class="value">{{soldOrder.buyerEmail}}</span>
+        </div>
+        <div class="prop">
+            <span class="name">Товар:</span>
+            <span class="value">{{product.name}}</span>
+        </div>
+        <div class="prop">
+            <span class="name">Ключ:</span>
+            <span class="value">{{value}}</span>
+        </div>
+    </div>
+{{/each}}
