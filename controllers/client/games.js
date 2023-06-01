@@ -112,7 +112,7 @@ export const gamesPage = async (req, res, next) => {
         }
         case 'activationServices': {
           metaDescription = `Ключи для ${section.name} в магазине ICE GAMES. Мгновенная доставка ключей активации. Широкий выбор игр, сервисная поддержка. Страница ${page}`;
-          title = `Ключи для каталога игр ${section.name} со скидкой в магазине ICE GAMES — страница ${page}`;
+          title = `Ключи для ${section.name} со скидкой в магазине лицензионных ключей ICE GAMES — страница ${page}`;
           hTitle = `Купить ключи активации ${section.name}`;
           activationServices.push(sectionName);
           break;
