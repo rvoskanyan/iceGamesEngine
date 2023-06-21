@@ -120,6 +120,7 @@ export const addProduct = async (req, res) => {
   try {
     const {
       name,
+      kupiKodId,
       shortNames,
       sampleH1,
       sampleTitle,
@@ -171,6 +172,7 @@ export const addProduct = async (req, res) => {
     const creator = req.session.userId;
     const product = new Product({
       name: name.trim(),
+      kupiKodId: kupiKodId.trim(),
       sampleH1: sampleH1.trim(),
       sampleTitle: sampleTitle.trim(),
       sampleMetaDescription: sampleMetaDescription.trim(),
@@ -384,6 +386,8 @@ export const editProduct = async (req, res) => {
   try {
     const {
       name,
+      isSaleStock,
+      kupiKodId,
       sampleH1,
       sampleTitle,
       sampleMetaDescription,
@@ -433,6 +437,8 @@ export const editProduct = async (req, res) => {
   
     Object.assign(product, {
       name: name.trim(),
+      isSaleStock: isSaleStock === 'on' && product.inStock,
+      kupiKodId: kupiKodId.trim(),
       sampleH1: sampleH1.trim(),
       sampleTitle: sampleTitle.trim(),
       sampleMetaDescription: sampleMetaDescription.trim(),

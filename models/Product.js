@@ -144,7 +144,7 @@ const fields = {
   },
   inStock: {
     type: Boolean,
-    default: true,
+    default: false,
   },
   countKeys: {
     type: Number,
@@ -226,6 +226,16 @@ const fields = {
     type: Boolean,
     default: false,
   },
+  isSaleStock: {
+    type: Boolean,
+    default: false,
+  },
+  kupiKodInStock: {
+    type: Boolean,
+    default: false,
+  },
+  kupiKodPurchasePrice: Number,
+  kupiKodId: String,
   totalGradeParse: Number,
   ratingCountParse: Number,
   active: {

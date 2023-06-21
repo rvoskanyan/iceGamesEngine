@@ -1,17 +1,14 @@
-<!--
-<form action="{{webSiteAddress}}/admin/parsing/start" method="post">
-    <input type="submit"{{#if parsing}} disabled{{/if}} value="Запустить парсинг">
-    {{#if parsing}}
-        <p style="color: red">Парсинг запущен</p>
-    {{/if}}
-    <br>
-    <br>
-    <a href="/admin/parsing/tasks">Задачи</a>
-</form>-->
 <form action="{{webSiteAddress}}/admin/parsing/sync" method="post">
     <input type="submit"{{#if sync}} disabled{{/if}} value="Запустить синхронизацию цен и наличия">
     {{#if sync}}
         <p style="color: red">Синхронизация цен и наличия запущена</p>
+    {{/if}}
+</form>
+<br>
+<form action="{{webSiteAddress}}/admin/suppliers/syncKupiKod" method="post">
+    <input type="submit"{{#if syncKupiKod}} disabled{{/if}} value="Запустить синхронизацию с Купи-код">
+    {{#if syncKupiKod}}
+        <p style="color: red">Синхронизация с Купи-код запущена</p>
     {{/if}}
 </form>
 <br>

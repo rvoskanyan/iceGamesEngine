@@ -27,6 +27,7 @@ import analyticsRoute from './admin/analytics.js';
 import selectionsRoute from './admin/selections.js';
 import filUpRoute from './admin/fillUp.js';
 import ordersRoute from './admin/orders.js';
+import suppliersRoute from './admin/suppliers.js';
 
 const router = Router();
 
@@ -58,5 +59,6 @@ router.use('/analytics', analyticsRoute);
 router.use('/selections', selectionsRoute);
 router.use('/fill-up-analytics', filUpRoute);
 router.use('/orders', ordersRoute);
+router.use('/suppliers', suppliersRoute);
 
 export default router;

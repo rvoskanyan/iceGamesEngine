@@ -8,6 +8,7 @@ export const parsingPage = (req, res) => {
     parsing: process.env.PARSING,
     sync: process.env.SYNC,
     syncRating: req.app.get('syncRating'),
+    syncKupiKod: req.app.get('syncKupiKod'),
   })
 }
 

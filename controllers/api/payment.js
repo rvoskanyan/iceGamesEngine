@@ -5,6 +5,9 @@ import Tinkoff from "../../services/Tinkoff.js";
 import PaymentModule from "../../models/PaymentModule.js";
 import Product from "../../models/Product.js";
 import Order from "../../models/Order.js";
+import fetch from "node-fetch";
+import {startSyncKupiKod} from "../../services/parsing.js";
+import Key from "../../models/Key.js";
 
 let createCheckouts = {
     async tinkoff({method, amount, currency, isTwo, orderId, receipt}) {
@@ -100,6 +103,73 @@ export default {
                 yaClientId: yaClientId ? yaClientId : undefined,
                 userId: isAuth ? person._id : undefined,
             });
+            
+            let kupiKodProducts = await Product.find({_id: {$in: products}, kupiKodInStock: true, isSaleStock: false}).distinct('kupiKodId');
+            
+            if (kupiKodProducts.length) {
+                kupiKodProducts = kupiKodProducts.map(item => ({
+                    sku: item,
+                    qtt: 1,
+                }));
+    
+                try {
+                    const response = await fetch(`https://partner.kupikod.com/api/partner/orders/${order._id}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'authorization': 'Basic cGFydG5lcl9pY2VnYW1lOmFqY3o5X1NZVE5oWFdid0s=',
+                        },
+                        body: JSON.stringify(kupiKodProducts),
+                    });
+        
+                    if (response.statusCode !== 200) {
+                        throw new Error('Create kupi-kod order error');
+                    }
+        
+                    const responseGetOrder = await fetch(`https://partner.kupikod.com/api/partner/orders/${order._id}`, {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'authorization': 'Basic cGFydG5lcl9pY2VnYW1lOmFqY3o5X1NZVE5oWFdid0s=',
+                        },
+                    });
+        
+                    if (responseGetOrder.statusCode !== 200) {
+                        throw new Error('Create kupi-kod order error');
+                    }
+        
+                    await startSyncKupiKod(req);
+        
+                    const result = await responseGetOrder.json();
+        
+                    for (const {sku, txt} of result) {
+                        const product = await Product.findOne({kupiKodId: sku});
+            
+                        const keyObj = new Key({
+                            value: txt,
+                            purchasePrice: product.kupiKodPurchasePrice,
+                            product: product._id,
+                            expired: undefined,
+                            isActive: true,
+                        });
+            
+                        await keyObj.save();
+                    }
+                } catch (e) {
+                    console.log(e);
+        
+                    let kupiKodProducts = await Product.find({_id: {$in: products}, kupiKodInStock: true, isSaleStock: false});
+        
+                    for (const kupiKodProduct of kupiKodProducts) {
+                        kupiKodProduct.kupiKodInStock = false;
+            
+                        await kupiKodProduct.save();
+                    }
+        
+                    startSyncKupiKod(req);
+                    throw new Error('Create kupi-kod order error');
+                }
+            }
     
             products = products.map(item => mongoose.Types.ObjectId(item))
 

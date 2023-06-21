@@ -14,7 +14,7 @@ import path from "path";
 import {__dirname} from "../rootPathes.js";
 import {v4 as uuidv4} from "uuid";
 import Browser from "./Browser.js";
-import Key from "../models/Key.js";
+import {autoChangePrice} from "./mailer.js";
 
 let int;
 
@@ -725,4 +725,64 @@ export async function syncRating(products, req) {
   }
   
   req.app.set('syncRating', false);
+}
+
+let currentTimeSyncKupiKod = null;
+
+export async function startSyncKupiKod(req) {
+  if (currentTimeSyncKupiKod !== null) {
+    clearTimeout(currentTimeSyncKupiKod);
+    currentTimeSyncKupiKod = null;
+  }
+  
+  try {
+    req.app.set('syncKupiKod', true);
+  
+    const response = await fetch('https://partner.kupikod.com/api/partner/catalog', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'authorization': 'Basic cGFydG5lcl9pY2VnYW1lOmFqY3o5X1NZVE5oWFdid0s=',
+      },
+    });
+  
+    const result = await response.json();
+  
+    for (const {sku, price, stock} of result.catalog) {
+      const product = await Product.findOne({kupiKodId: sku});
+    
+      if (!product) {
+        continue;
+      }
+      
+      const inStock = parseInt(stock) > 0;
+      const minPrice = Math.floor(price + price / 100 * 21);
+    
+      product.kupiKodInStock = inStock;
+      product.kupiKodPurchasePrice = price;
+      
+      if (product.priceTo < minPrice && !product.isSaleStock) {
+        try {
+          autoChangePrice(product, minPrice, price);
+          await product.changePrice({priceTo: minPrice});
+        } catch (e) {
+          console.log(e);
+        }
+      }
+      
+      if (!product.inStock) {
+        product.changeInStock(inStock);
+      } else if (!inStock) {
+        product.changeInStock(product.countKeys > 0);
+      }
+      
+      await product.save();
+    }
+  } catch (e) {
+    console.log(e);
+  }
+  
+  req.app.set('syncKupiKod', false);
+  
+  currentTimeSyncKupiKod = setTimeout(() => startSyncKupiKod(req), 1000 * 60 * 29); //Каждые 29 минут
 }

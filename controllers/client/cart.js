@@ -1,4 +1,4 @@
-import Key from "../../models/Key.js";
+import Product from "../../models/Product.js";
 
 export const cartPage = async (req, res) => {
   try {
@@ -23,8 +23,13 @@ export const cartPage = async (req, res) => {
             }
           ]
         });
-      is_keys = await Key.find({product: {$in: person.cart}, isActive: true, isSold: false}).distinct('product');
-      is_keys = {is_keys: !!is_keys.length, products: is_keys}
+      
+      const stockProducts = await Product.find({_id: {$in: person.cart}, $or: [
+          {kupiKodInStock: true},
+          {countKeys: {$gt: 0}},
+      ]}).distinct('_id');
+      
+      is_keys = {is_keys: !!stockProducts.length, products: stockProducts}
       cart = result.cart;
       priceToTotal = cart.reduce((priceToTotal, item) => priceToTotal + item.priceTo, 0);
       priceFromTotal = cart.reduce((priceFromTotal, item) => {

@@ -73,6 +73,20 @@
     </label>
     <br>
     <br>
+    {{#if isEdit}}
+        <label>
+            Продавать со склада:
+            <input type="checkbox" name="isSaleStock"{{#if product.isSaleStock}}{{#if product.inStock}} checked{{/if}}{{/if}}{{#unless product.inStock}} disabled{{/unless}}>
+        </label>
+        <br>
+        <br>
+    {{/if}}
+    <label>
+        ID на KupiKod:
+        <input type="text" name="kupiKodId" value="{{product.kupiKodId}}">
+    </label>
+    <br>
+    <br>
     <label>
         Иные вариации имени, через пробел:
         <input type="text" name="shortNames" {{#iff person.role '!==' 'admin'}} readonly{{/iff}} value="{{product.shortNames}}">

@@ -52,6 +52,21 @@ export async function restoreMail(to, password) {
     })
 }
 
+export async function autoChangePrice(product, newPrice, purchasePrice) {
+    await transporter.sendMail({
+        from: `ICE GAMES <${fromMail}>`,
+        to: 'juliakunschikova@gmail.com, igorek040602@mail.ru, razm1998@yandex.ru',
+        subject: 'Автоматическое изменение цены',
+        html: `
+      <p>Внимание! Была автоматически изменена цена на товар ${product.name}: ${product.priceTo} -> ${newPrice}</p>
+      <p>Текущая цена закупа у Купи-Код: ${purchasePrice}</p>
+      <p>
+        <a href="${process.env.WEB_SITE_ADDRESS}admin/products/edit/${product._id}">Перейти к редактированию товара</a>
+      </p>
+    `,
+    })
+}
+
 export async function mailingBuyProduct({product, email, key = null}) {
     const websiteAddress = process.env.WEB_SITE_ADDRESS;
     

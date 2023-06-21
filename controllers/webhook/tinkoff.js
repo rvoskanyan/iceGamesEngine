@@ -43,6 +43,11 @@ export default async function (req, res) {
                 await key.save();
     
                 product.countKeys--;
+                
+                if (product.isSaleStock) {
+                    product.isSaleStock = product.countKeys > 0;
+                }
+                
                 await product.save();
                 await product.changeInStock(product.countKeys > 0);
                 

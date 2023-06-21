@@ -237,7 +237,10 @@ export const getProducts = async (req, res) => {
     }
     
     if (noCommission) {
-      filter.countKeys = {$gt: 0};
+      filter.$or = [
+        {countKeys: {$gt: 0}},
+        {kupiKodInStock: true},
+      ];
     }
     
     if (searchString.length) {
