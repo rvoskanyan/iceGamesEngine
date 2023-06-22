@@ -219,11 +219,23 @@ export const analyticsPage = async (req, res) => {
       });
     }
     
+    const finishedProducts = [];
+    const notInStockProducts = await Product.find({countKeys: {$eq: 0}, active: true}).lean();
+    
+    for (const {_id, name, priceTo, dsPrice} of notInStockProducts) {
+      const countKeys = await Key.countDocuments({product: _id});
+      
+      if (countKeys) {
+        finishedProducts.push({ _id, name, priceTo, dsPrice: dsPrice + dsPrice / 100 });
+      }
+    }
+    
     res.render('admAnalytics', {
       layout: 'admin',
       rows,
       totalCountKeys,
       totalInStockKeys,
+      finishedProducts,
       totalPVP: Math.floor(totalPVP),
       averagePVP: Math.floor(totalPVP / totalInStockKeys),
       totalSellingKeys,

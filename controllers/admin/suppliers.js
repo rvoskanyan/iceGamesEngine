@@ -11,12 +11,12 @@ export const suppliersPage = async (req, res) => {
       },
     });
   
-    const result = await response.json();
+    const { catalog, balance } = await response.json();
     
     res.render('admSuppliersPage', {
       layout: 'admin',
-      catalog: result.catalog,
-      balance: result.balance,
+      catalog,
+      balance,
     });
   } catch (e) {
     console.log(e);

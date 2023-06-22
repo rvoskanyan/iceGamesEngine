@@ -89,6 +89,25 @@
 </table>
 <br>
 <br>
+<h3>Закончившиеся товары</h3>
+<table cellpadding="0" cellspacing="0">
+    <tr>
+        <th>Товар</th>
+        <th>Текущая цена продажи</th>
+        <th>Цена конкурента + 1%</th>
+    </tr>
+    {{#each finishedProducts}}
+        <tr>
+            <td>
+                <a href="/admin/products/edit/{{_id}}">{{name}}</a>
+            </td>
+            <td>{{priceTo}} ₽</td>
+            <td>{{dsPrice}} ₽</td>
+        </tr>
+    {{/each}}
+</table>
+<br>
+<br>
 <form action="/admin/analytics">
     <input type="date" name="endDate" value="{{endDate}}">
     <input type="submit" value="Применить">
