@@ -1233,7 +1233,7 @@ if (cartNode) {
                 if (products.iceGame.length === productNodes.length) {
                     payBtnNode.disabled = true;
                     await get_checkout(false);
-                    return payBtnNode.disabled = true;
+                    return payBtnNode.disabled = false;
                 } else if (!products.iceGame.length && !!productNodes.length) {
                     return get_digiCheckout(products.digiSeller);
                 }

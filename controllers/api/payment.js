@@ -122,7 +122,7 @@ export default {
                         body: JSON.stringify(kupiKodProducts),
                     });
         
-                    if (response.statusCode !== 200) {
+                    if (!response.ok) {
                         throw new Error('Create kupi-kod order error');
                     }
         
@@ -134,7 +134,7 @@ export default {
                         },
                     });
         
-                    if (responseGetOrder.statusCode !== 200) {
+                    if (!responseGetOrder.ok) {
                         throw new Error('Create kupi-kod order error');
                     }
         
