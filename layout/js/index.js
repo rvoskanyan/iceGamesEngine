@@ -1187,17 +1187,20 @@ if (cartNode) {
             }
 
              async function openPayment(payment_button) {
-                    let keyStep = payment_button.dataset.step
-                    keyStep = keyStep || '1'
-                    switch (keyStep) {
-                        case '1':
-                            get_checkout(true)
-                            break
-                        case '2':
-                            get_digiCheckout(products.digiSeller, true)
-                            break
+                let keyStep = payment_button.dataset.step
+                keyStep = keyStep || '1'
+                switch (keyStep) {
+                    case '1': {
+                        payment_button.disabled = true;
+                        await get_checkout(true);
+                        payment_button.disabled = false;
+                        break;
                     }
+                    case '2':
+                        get_digiCheckout(products.digiSeller, true)
+                        break
                 }
+            }
 
             function change_step(steps, step_id, prices, product_els, payment_button) {
                 let keyStep = step_id === '1' ? 'iceGame' : 'digiSeller'
@@ -1228,7 +1231,9 @@ if (cartNode) {
                 let productNodes = cartListNode.querySelectorAll('.js-product')
 
                 if (products.iceGame.length === productNodes.length) {
-                    return await get_checkout(false);
+                    payBtnNode.disabled = true;
+                    await get_checkout(false);
+                    return payBtnNode.disabled = true;
                 } else if (!products.iceGame.length && !!productNodes.length) {
                     return get_digiCheckout(products.digiSeller);
                 }

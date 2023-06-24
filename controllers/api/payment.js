@@ -138,16 +138,14 @@ export default {
                         throw new Error('Create kupi-kod order error');
                     }
         
-                    await startSyncKupiKod(req);
-        
                     const result = await responseGetOrder.json();
         
-                    for (const {sku, txt} of result) {
-                        const product = await Product.findOne({kupiKodId: sku});
+                    for (const {sku, secret, price} of result) {
+                        const product = await Product.findOne({kupiKodId: sku}).lean();
             
                         const keyObj = new Key({
-                            value: txt,
-                            purchasePrice: product.kupiKodPurchasePrice,
+                            value: secret,
+                            purchasePrice: price,
                             product: product._id,
                             expired: undefined,
                             isActive: true,
