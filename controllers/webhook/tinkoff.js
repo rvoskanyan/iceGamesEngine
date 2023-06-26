@@ -1,4 +1,4 @@
-import {mailingBuyProduct} from "../../services/mailer.js";
+import {mailingBuyProduct, outStockProduct} from "../../services/mailer.js";
 import User from "../../models/User.js";
 import Order from "../../models/Order.js";
 import {achievementEvent} from "../../services/achievement.js";
@@ -56,6 +56,10 @@ export default async function (req, res) {
                     email: order.buyerEmail,
                     key: key.value,
                 });
+                
+                if (product.countKeys < 4) {
+                    outStockProduct(product).then();
+                }
             }
             
             if (order.yaClientId) {

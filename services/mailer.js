@@ -67,6 +67,21 @@ export async function autoChangePrice(product, newPrice, purchasePrice) {
     })
 }
 
+export async function outStockProduct(product) {
+    await transporter.sendMail({
+        from: `ICE GAMES <${fromMail}>`,
+        to: 'juliakunschikova@gmail.com, igorek040602@mail.ru, razm1998@yandex.ru',
+        subject: 'Заканчиваются ключи на складе',
+        html: `
+      <p>Внимание! Заканчиваются ключи к игре ${product.name}.</p>
+      <p>Оставшееся количество: ${product.countKeys}</p>
+      <p>
+        <a href="${process.env.WEB_SITE_ADDRESS}admin/products/edit/${product._id}">Перейти к редактированию товара</a>
+      </p>
+    `,
+    })
+}
+
 export async function mailingBuyProduct({product, email, key = null}) {
     const websiteAddress = process.env.WEB_SITE_ADDRESS;
     
