@@ -49,7 +49,7 @@ export default async function (req, res) {
                 }
                 
                 await product.save();
-                await product.changeInStock(product.countKeys > 0);
+                await product.changeInStock(product.countKeys > 0 || product.kupiKodInStock);
                 
                 await mailingBuyProduct({
                     product,

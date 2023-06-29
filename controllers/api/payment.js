@@ -141,7 +141,7 @@ export default {
                     const result = await responseGetOrder.json();
         
                     for (const {sku, secret, price} of result) {
-                        const product = await Product.findOne({kupiKodId: sku}).lean();
+                        const product = await Product.findOne({kupiKodId: sku});
             
                         const keyObj = new Key({
                             value: secret,
@@ -152,6 +152,9 @@ export default {
                         });
             
                         await keyObj.save();
+    
+                        product.countKeys++;
+                        await product.save();
                     }
                 } catch (e) {
                     console.log(e);
