@@ -82,6 +82,24 @@ export async function outStockProduct(product) {
     })
 }
 
+export async function mailingBuyTurkeyFillUpKey({ value, denomination, email }) {
+    const websiteAddress = process.env.WEB_SITE_ADDRESS;
+    
+    await transporter.sendMail({
+        from: `ICE GAMES <${fromMail}>`,
+        to: email,
+        subject: 'Код подарочной карты на пополнение Турецкого Steam аккаунта',
+        html: `
+            <p>Благодарим Вас за покупку на <a href="${websiteAddress}" style="text-decoration: underline">ICEGAMES.STORE</a></p>
+            <p>
+              Вы приобрели код подарочной карты на пополнение Турецкого Steam аккаунта с номиналом ${denomination}₺.<br>
+              Мы очень рады, что Вы выбрали нас!<br><br>
+              Ваш код: ${value}
+            </p>
+        `,
+    })
+}
+
 export async function mailingBuyProduct({product, email, key = null}) {
     const websiteAddress = process.env.WEB_SITE_ADDRESS;
     

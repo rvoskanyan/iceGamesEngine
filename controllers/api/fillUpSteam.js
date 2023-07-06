@@ -2,6 +2,9 @@ import fetch from "node-fetch";
 import crypto from "crypto";
 import FillUp from "../../models/FillUp.js";
 import Review from "../../models/Review.js";
+import TurkeyFillUp from "../../models/TurkeyFillUp.js";
+import TurkeyFillUpKey from "../../models/TurkeyFillUpKey.js";
+import {mailingBuyTurkeyFillUpKey} from "../../services/mailer.js";
 
 export const getPaymentLink = async (req, res) => {
   try {
@@ -254,5 +257,189 @@ export const addReview = async (req, res) => {
     res.json({
       err: true,
     });
+  }
+}
+
+export const createTurkeyFillUpOrder = async (req, res) => {
+  try {
+    const person = res.locals.person;
+    const isAuth = req.session.isAuth;
+    let email = person.email;
+    
+    if (!isAuth && !person.emailChecked) {
+      email = undefined;
+    }
+    
+    if (!email) {
+      return res.json({
+        error: true,
+        message: 'E-mail не указан',
+      });
+    }
+    
+    const variant = req.body.variant;
+    const ids = {
+      '20': {
+        value: 'STEAMGС20TRY',
+        price: 279,
+      },
+      '50': {
+        value: 'STEAMGС50TRY',
+        price: 549,
+      },
+      '100': {
+        value: 'STEAMGС100TRY',
+        price: 1049,
+      },
+      '200': {
+        value: 'STEAMGС200TRY',
+        price: 1999,
+      },
+      '250': {
+        value: 'STEAMGС250TRY',
+        price: 2199,
+      },
+      '300': {
+        value: 'STEAMGС300TRY',
+        price: 3299,
+      },
+    };
+    const id = ids[variant];
+    
+    if (!id) {
+      return res.json({
+        error: true,
+        message: 'Ошибка выбора номинала, попробуйте выбрать другой!',
+      });
+    }
+    
+    const turkeyFillUp = new TurkeyFillUp({ buyerEmail: email, denomination: parseInt(variant) });
+  
+    if (isAuth) {
+      turkeyFillUp.userId = person._id;
+    }
+    
+    await turkeyFillUp.save();
+  
+    const response = await fetch(`https://partner.kupikod.com/api/partner/orders/${ turkeyFillUp._id }`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'authorization': 'Basic cGFydG5lcl9pY2VnYW1lOmFqY3o5X1NZVE5oWFdid0s=',
+      },
+      body: JSON.stringify([{sku: id.value, qtt: 1}]),
+    });
+  
+    if (!response.ok) {
+      return res.json({
+        error: true,
+        message: `На данный момент купона в ${variant}₺ нет в наличии. Пожалуйста, выберите другой или попробуйте позже. Спасибо за понимание!`,
+      });
+    }
+    
+    const result = await response.json();
+    const { price, secret } = result[0];
+    
+    const turkeyFillUpKey = new TurkeyFillUpKey({
+      value: secret,
+      purchasePrice: price,
+      denomination: parseInt(variant),
+    });
+    
+    await turkeyFillUpKey.save();
+  
+    const initPay = await fetch('https://securepay.tinkoff.ru/v2/Init/', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        TerminalKey: '1670348277997',
+        Token: 'icegames',
+        Amount: id.price * 100,
+        NotificationURL: "https://icegames.store/api/fillUpSteam/turkey-notifications",
+        OrderId: turkeyFillUp._id,
+        SuccessURL: 'https://icegames.store?successPayment=true',
+        Receipt: {
+          Email: email,
+          Taxation: 'usn_income',
+          Items: [{
+            Name: `Подарочная карта с номиналом ${variant}₺ на пополнение турецкого Steam`,
+            Quantity: 1,
+            Amount: id.price * 100,
+            Price: id.price * 100,
+            Tax: 'none',
+          }],
+        },
+      })
+    })
+  
+    const initPayData = await initPay.json();
+  
+    if (!initPayData.Success) {
+      return res.json({
+        error: true,
+        message: 'Ошибка перехода к оплате. Пожалуйста, обратитесь в поддержку!',
+      });
+    }
+  
+    turkeyFillUp.paymentUrl = initPayData.PaymentURL;
+    turkeyFillUp.paymentId = initPayData.PaymentId;
+    
+    await turkeyFillUp.save();
+  
+    return res.json({
+      success: true,
+      link: initPayData.PaymentURL,
+    });
+  } catch (e) {
+    console.log(e);
+    
+    res.json({
+      error: true,
+      message: 'Неизвестная ошибка, попробуйте позже'
+    });
+  }
+}
+
+export const turkeyNotifications = async (req, res) => {
+  try {
+    const { OrderId, Success, Status, Amount } = req.body;
+    const turkeyFillUp = await TurkeyFillUp.findById(OrderId);
+    
+    res.send("OK");
+    
+    if (!turkeyFillUp) {
+      return res.status(404).json({err:true, messages:"Forbidden"}); //Сделать логирование и уведомление, что пришло уведомление по не существующему заказу
+    }
+    
+    if (Success && Status === 'CONFIRMED') {
+      if (turkeyFillUp.status === 'paid') {
+        return;
+      }
+      
+      const turkeyFillUpKey = await TurkeyFillUpKey.findOne({
+        isActive: true,
+        isSold: false,
+        denomination: turkeyFillUp.denomination,
+      });
+  
+      turkeyFillUp.status = 'paid';
+      
+      await turkeyFillUp.save();
+  
+      turkeyFillUpKey.turkeyFillUpId = turkeyFillUp._id;
+      turkeyFillUpKey.sellingPrice = Amount / 100;
+      turkeyFillUpKey.isSold = true;
+      
+      await turkeyFillUpKey.save();
+  
+      mailingBuyTurkeyFillUpKey({
+        value: turkeyFillUpKey.value,
+        denomination: turkeyFillUpKey.denomination,
+        email: turkeyFillUp.buyerEmail,
+      }).then();
+    }
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({err: true, message: e});
   }
 }

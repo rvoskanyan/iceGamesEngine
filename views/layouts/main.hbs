@@ -182,15 +182,17 @@
                     {{else}}
                         <a href="{{websiteAddress}}rating" title="Рейтинг пользователей ICE GAMES" class="item">Рейтинг</a>
                     {{/if}}
-                    {{#if isFillUpSteam}}
-                        <span title="Пополнить баланс аккаунта Steam" class="item">Рейтинг</span>
-                    {{else}}
-                        <a
-                            href="{{websiteAddress}}fill-up-steam"
-                            title="Пополнить баланс аккаунта Steam"
-                            class="item"
-                        >Пополнить Steam</a>
-                    {{/if}}
+                    <div class="downItem">
+                        Пополнить Steam
+                        <div class="navItems">
+                            <a href="{{websiteAddress}}fill-up-steam" title="Пополнить баланс аккаунта Steam" class="item">
+                                Российский аккаунт
+                            </a>
+                            <a href="{{websiteAddress}}fill-up-steam/turkey" title="Пополнить баланс Турецкого аккаунта Steam" class="item">
+                                Турецкий аккаунт
+                            </a>
+                        </div>
+                    </div>
                 </nav>
                 <div class="searchBlock">
                     <div class="searchResultsContainer js-searchResultsContainer">

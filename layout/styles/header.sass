@@ -208,13 +208,13 @@
       @include for-desktop-up
         flex-direction: initial
         align-items: center
-        column-gap: 20px
+        column-gap: 4px
         z-index: 1
 
       @include for-middle-desktop-up
-        column-gap: 30px
+        column-gap: 20px
 
-      & .item
+      .item, .downItem
         font-family: 'Montserrat'
         font-size: 18px
         font-style: normal
@@ -232,6 +232,7 @@
         @include for-desktop-up
           font-size: 16px
           font-weight: 400
+          padding: 8px
 
           &:hover
             color: #EB00FF
@@ -242,7 +243,69 @@
 
         @include for-middle-desktop-up
           font-size: 18px
+          padding: 10px
 
+      .downItem
+        position: relative
+        transition: .3s ease-in
+        transition-property: background
+        border-radius: 10px 10px 0 0
+
+        &:hover
+          cursor: default
+          text-decoration: none
+
+          @include for-desktop-up
+            background: rgba(0, 1, 20, 0.90)
+
+          > .navItems
+            opacity: 1
+            visibility: visible
+
+        .navItems
+          display: flex
+          flex-direction: column
+          position: absolute
+          border-radius: 10px
+          background: rgba(0, 1, 20, 0.90)
+          top: 100%
+          left: 0
+          right: 0
+          opacity: 0
+          visibility: hidden
+          transition: .3s ease-in
+          transition-property: visibility, opacity
+          padding: 10px 8px
+
+          @include for-desktop-up
+            border-radius: 0 0 10px 10px
+            padding: 5px 10px 10px 10px
+
+          .item
+            font-size: 14px
+            font-weight: 500
+            text-decoration: underline
+
+            @include for-desktop-up
+              font-size: 16px
+              font-weight: 500
+              text-decoration: initial
+              padding: 0
+
+              &:hover
+                text-decoration: underline
+
+            @include for-middle-desktop-up
+              font-size: 18px
+
+            &:not(:first-child)
+              margin-top: 3px
+
+              @include for-desktop-up
+                margin-top: 10px
+
+          @include for-middle-desktop-up
+            font-size: 18px
 
       & .openMenu
         display: none

@@ -1,0 +1,99 @@
+<main class="contentContainer withoutCover fillUpTurkeySteamPage js-buyTurkeyPage">
+    {{> breadcrumbs}}
+    <div class="formBlock">
+        <h1 class="title">Пополнить баланс турецкого STEAM</h1>
+        <p class="description">Специально для вас от сервиса ICE GAMES мы предоставляем услугу пополнения кошелька Steam в лирах. Теперь вы можете легко и быстро пополнить баланс турецкого аккаунта стим.</p>
+        <form action="{{websiteAddress}}api/fillUpSteam/turkey" class="paymentForm js-paymentForm">
+            <div class="variantsTitle">Выберите сумму для пополнения</div>
+            <div class="variants">
+                <label class="variant">
+                    <input class="input js-switch-card" type="radio" name="variant" value="20" checked>
+                    <div class="block">
+                        <div class="price js-price">156₽</div>
+                        <div class="count js-value">20₺</div>
+                    </div>
+                </label>
+                <label class="variant">
+                    <input class="input js-switch-card" type="radio" name="variant" value="50">
+                    <div class="block">
+                        <div class="price js-price">295₽</div>
+                        <div class="count js-value">50₺</div>
+                    </div>
+                </label>
+                <label class="variant">
+                    <input class="input js-switch-card" type="radio" name="variant" value="100">
+                    <div class="block">
+                        <div class="price js-price">579₽</div>
+                        <div class="count js-value">100₺</div>
+                    </div>
+                </label>
+                <label class="variant">
+                    <input class="input js-switch-card" type="radio" name="variant" value="200">
+                    <div class="block">
+                        <div class="price js-price">1149₽</div>
+                        <div class="count js-value">200₺</div>
+                    </div>
+                </label>
+                <label class="variant">
+                    <input class="input js-switch-card" type="radio" name="variant" value="250">
+                    <div class="block">
+                        <div class="price js-price">1449₽</div>
+                        <div class="count js-value">250₺</div>
+                    </div>
+                </label>
+                <label class="variant">
+                    <input class="input js-switch-card" type="radio" name="variant" value="300">
+                    <div class="block">
+                        <div class="price js-price">1699₽</div>
+                        <div class="count js-value">300₺</div>
+                    </div>
+                </label>
+            </div>
+            <div class="payment">
+                <div class="title">Оплата</div>
+                <div class="body">
+                    <div class="row">
+                        <div class="item">Сумма к оплате:</div>
+                        <div class="value js-selectedPrice">156₽</div>
+                    </div>
+                    <div class="row">
+                        <div class="item">Получаете лир:</div>
+                        <div class="value js-selectedValue">20₺</div>
+                    </div>
+                </div>
+                <button class="btn rounded uppercase bg-darkLilac js-paymentSubmit"{{#unless isAuth}} disabled{{/unless}} type="submit">Оплатить</button>
+                <div class="paymentErrorMessage js-paymentErrorMessage"></div>
+                {{#if isAuth}}
+                    <div class="description">Код подарочной карты будет отправлен на E-mail, указанный в профиле.</div>
+                {{else}}
+                    <div class="emailVerification js-emailVerifiedBuyTurkey" data-step="1">
+                        <label class="input-frame">
+                            <span class="label">Для отправки лир введите вашу почту</span>
+                            <input class="textField js-emailForTurkey" type="text" name="email" placeholder="info@icegames.store">
+                        </label>
+                        <label class="input-frame code js-verificationCodeFieldFrame">
+                            <span class="label">Код подтверждения</span>
+                            <input class="textField js-verificationCodeField" type="text" name="email" placeholder="Четырехзначный код">
+                        </label>
+                        <button class="btn round border js-submit" type="button">Отправить код</button>
+                        <div class="message js-message"></div>
+                        <div class="description">Внимание! Указывайте Ваш действующий E-mail, на него придет код подарочной карты, так же восстановить его при необходимости Вы сможете только через указанный E-mail</div>
+                    </div>
+                {{/if}}
+            </div>
+        </form>
+    </div>
+    <div class="infoBlock">
+        <p class="description">Подарочные карты Steam открывают доступ к самым лучшим и свежим играм в магазине Steam Store. Благодаря этой карте можно также пополнить свой игровой кошелек или же сделать отличный подарок другу или напарнику по команде. Погасите ключ напрямую и играйте в любимые игры уже сейчас.</p>
+        <h2 class="title">Как активировать подарочную карту Steam?</h2>
+        <p class="description">Для того, чтобы пополнить баланс турецкого кошелька Steam, следуйте этим простым шагам:</p>
+        <ol class="instruction">
+            <li class="item">Зайдите на страницу погашения кодов Steam;</li>
+            <li class="item">Войдите в свой аккаунт;</li>
+            <li class="item">Введите полученный код в соответствующую строку;</li>
+            <li class="item">Нажмите “Продолжить”;</li>
+            <li class="item">Готово! Баланс пополнен.</li>
+        </ol>
+        <p class="description important">ВАЖНО! Каждая учетная запись пользователя Steam связана с определенной валютой, которую вы можете увидеть в правом верхнем углу клиента Steam. В дальнейшем Вы можете столкнуться с ошибкой, если попытаетесь активировать код кошелька Steam, выпущенный в валюте, отличной от валюты одну из Ваших учетных записей Steam.</p>
+    </div>
+</main>

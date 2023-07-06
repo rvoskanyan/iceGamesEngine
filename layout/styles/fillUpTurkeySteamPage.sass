@@ -1,0 +1,281 @@
+@import "./breakPoints"
+
+.fillUpTurkeySteamPage
+  width: 100%
+
+  @include for-desktop-up
+    display: flex
+    justify-content: space-between
+
+  .description
+    margin: 0
+    color: #fff
+    font-size: 14px
+
+    @include for-middle-desktop-up
+      font-size: 16px
+
+  .formBlock
+    max-width: 435px
+
+    .title
+      color: #fff
+      font-size: 21px
+      font-family: 'Lemon Milk'
+      line-height: 1.2
+
+      @include for-desktop-up
+        font-size: 30px
+
+      @include for-middle-desktop-up
+        font-size: 36px
+
+    .description
+      margin-top: 5px
+      text-align: justify
+
+      @include for-desktop-up
+        margin-top: 10px
+
+      @include for-middle-desktop-up
+        margin-top: 15px
+
+    .paymentForm
+      margin-top: 15px
+
+      @include for-desktop-up
+        margin-top: 25px
+
+      @include for-middle-desktop-up
+        margin-top: 35px
+
+      .variantsTitle
+        color: #fff
+        font-size: 18px
+        font-family: 'Lemon Milk'
+        line-height: 1
+
+        @include for-desktop-up
+          font-size: 21px
+
+      .variants
+        display: flex
+        justify-content: center
+        flex-wrap: wrap
+        column-gap: 8px
+        row-gap: 8px
+        margin-top: 8px
+
+        @include for-desktop-up
+          justify-content: initial
+          column-gap: 10px
+          row-gap: 10px
+          margin-top: 10px
+
+        @include for-middle-desktop-up
+          column-gap: 15px
+          row-gap: 15px
+          margin-top: 15px
+
+        .variant
+
+          .input
+            display: none
+
+            &:checked
+              & ~ .block
+                border: 1px solid rgba(235, 0, 255, 0.6)
+
+                &:before
+                  background: rgba(255, 255, 255, 0.3)
+
+          .block
+            position: relative
+            display: flex
+            flex-direction: column
+            justify-content: center
+            align-items: center
+            width: 130px
+            height: 90px
+            background: rgba(255, 255, 255, 0.15)
+            border-radius: 10px
+            border: 1px solid rgba(255, 255, 255, 0.15)
+
+            @include for-middle-phone-up
+              width: 104px
+              height: 90px
+
+            @include for-desktop-up
+              width: 130px
+              height: 90px
+
+            @include for-middle-desktop-up
+              width: 135px
+              height: 100px
+              border-radius: 12px
+
+            &:before
+              content: ''
+              position: absolute
+              border: 2px solid rgba(255, 255, 255, 0.5)
+              border-radius: 100%
+              width: 8px
+              height: 8px
+              top: 8px
+              left: 8px
+              background: #01033C
+
+              @include for-middle-desktop-up
+                width: 10px
+                height: 10px
+                top: 10px
+                left: 10px
+
+            .price
+              font-family: Montserrat
+              color: #984BFB
+              font-size: 18px
+              font-weight: 800
+              line-height: 1
+
+              @include for-middle-desktop-up
+                font-size: 21px
+
+            .count
+              font-family: Montserrat
+              color: #C745CB
+              font-size: 21px
+              font-weight: 800
+              line-height: 1
+              margin-top: 8px
+
+              @include for-middle-desktop-up
+                font-size: 26px
+
+      .payment
+        margin-top: 15px
+        border: 1px solid #fff
+        border-radius: 12px
+        padding: 10px
+
+        @include for-desktop-up
+          padding: 15px
+          margin-top: 20px
+          border-radius: 15px
+
+        @include for-middle-desktop-up
+          margin-top: 30px
+          padding: 20px
+
+        .title
+          font-family: Montserrat
+          font-weight: 700
+          line-height: 1
+          font-size: 18px
+
+          @include for-desktop-up
+            font-size: 21px
+
+        .body
+          margin-top: 15px
+          color: #fff
+          border-bottom: 1px solid #fff
+          padding-bottom: 20px
+
+          @include for-desktop-up
+            margin-top: 20px
+
+          .row
+            display: flex
+            justify-content: space-between
+            line-height: 1
+            font-size: 14px
+
+            @include for-desktop-up
+              font-size: 16px
+
+            &:not(:first-child)
+              margin-top: 5px
+
+              @include for-desktop-up
+                margin-top: 8px
+
+            .value
+              font-weight: 700
+
+        .btn
+          margin-top: 15px
+          width: 100%
+
+          @include for-desktop-up
+            margin-top: 20px
+
+        .paymentErrorMessage
+          text-align: center
+          font-size: 14px
+          margin-top: 5px
+
+          &.error
+            color: #FA00FF
+
+        .emailVerification
+          margin-top: 10px
+
+          @include for-desktop-up
+            margin-top: 15px
+
+          .input-frame
+            &.code
+              display: none
+              margin-top: 10px
+
+            .textField
+              width: 100%
+
+          .message
+            color: #00BEFF
+            text-align: center
+            margin-top: 10px
+
+            &.error
+              color: #FA00FF
+
+          .description
+            text-align: left
+            font-size: 14px
+
+  .infoBlock
+    max-width: 600px
+    align-self: start
+    border: 1px solid #fff
+    padding: 10px
+    border-radius: 10px
+    margin-top: 25px
+
+    @include for-desktop-up
+      margin-top: initial
+      border-radius: 15px
+      padding: 20px
+
+    .title
+      margin: 20px 0 10px 0
+      text-transform: uppercase
+      color: #FFF
+      font-size: 21px
+      font-family: Montserrat
+      font-weight: 700
+      line-height: 1.2
+
+      @include for-middle-desktop-up
+        font-size: 24px
+        margin: 25px 0 15px 0
+
+    .instruction
+      color: #fff
+      margin: 15px 0 20px 20px
+
+      .item:not(:first-child)
+        margin-top: 8px
+
+    .important
+      font-size: 14px

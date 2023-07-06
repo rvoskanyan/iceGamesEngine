@@ -1,6 +1,7 @@
 import User from "../../models/User.js";
 import {generation_number} from "../../utils/functions.js";
 import {sendConfirmCode} from "../../services/mailer.js";
+import Guest from "../../models/Guest.js";
 
 export const getUsers = async (req, res) => {
     try {
@@ -36,19 +37,26 @@ export const get_code = async (req, res) => {
         }
         
         const code = generation_number().toString()
-        const {email} = req.body
+        const { email } = req.body
         const e_regx = /([-!#-'*+/-9=?A-Z^-~]+(\.[-!#-'*+/-9=?A-Z^-~]+)*|"([]!#-[^-~ \t]|(\\[\t -~]))+")@[0-9A-Za-z]([0-9A-Za-z-]{0,61}[0-9A-Za-z])?(\.[0-9A-Za-z]([0-9A-Za-z-]{0,61}[0-9A-Za-z])?)+/gm;
         const now = new Date()
         const expired = new Date(now.getTime() + 2 * 60000) // 2 minutes
+        let person = res.locals.person;
         
         if (!email || !e_regx.test(email)) {
             throw "Invalid email"
         }
+    
+        if (!person) {
+            person = new Guest();
+            res.cookie('guestId', person.id);
+        }
         
-        res.locals.person.code = code
-        res.locals.person.try_code = expired
+        person.code = code
+        person.try_code = expired
+        person.email = email
         
-        await res.locals.person.save()
+        await person.save()
         await sendConfirmCode(email, code)
         
         res.json({
@@ -68,13 +76,15 @@ export const confirm_email = async (req, res) => {
         }
         
         const code = parseInt(req.body.code);
+        const person = res.locals.person;
         
-        if (res.locals.person.code !== code) {
+        if (person.code !== code) {
             throw "Invalid code";
         }
         
-        res.locals.person.code = undefined
-        await res.locals.person.save()
+        person.code = undefined
+        person.emailChecked = true
+        await person.save()
         
         res.json({
             ok: true

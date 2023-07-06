@@ -126,3 +126,20 @@ export const checkStatus = async (req, res) => {
     res.redirect('/fill-up-steam');
   }
 }
+
+export const fillUpTurkeySteamPage = (req, res) => {
+  res.render('fillUpSteamTurkey', {
+    title: 'ICE GAMES — Пополнение баланса Steam турецкого аккаунта',
+    metaDescription: '⚡️Быстрое пополнение баланса турецкого кошелька Steam в 2023 году. ✔️Пополнение от 100 рублей. ✔️Оплата любым удобным способом: банковские карты, СПБ, Yandex Pay, Tinkoff Pay. ✔️Низкая комиссия. ✔️Зачисление в течение 2х минут. ⌚️Поддержка 24/7',
+    breadcrumbs: [
+      {
+        name: 'Пополнить Steam',
+        path: 'fill-up-steam',
+      },
+      {
+        name: 'Турецкий аккаунт',
+        current: true,
+      }
+    ],
+  });
+}

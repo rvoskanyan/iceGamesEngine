@@ -84,6 +84,7 @@ const successPaymentNode = document.querySelector('.js-successPayment');
 const mobileCartLinkNode = document.querySelector('.js-mobileCartLink');
 const fastSelect = document.querySelector('.js-fastSelect');
 const reloadCheckFillUpStatusNode = document.querySelector('.js-reloadCheckFillUpStatus');
+const buyTurkeyPage = document.querySelector('.js-buyTurkeyPage');
 const popupController = new PopupController([
     {
         id: 'loginFrom',
@@ -314,6 +315,106 @@ counterAnimationNodes.forEach(counterAnimationNode => {
   
   document.addEventListener('scroll', handler)
 })
+
+if (buyTurkeyPage) {
+    const emailVerifiedBuyTurkey = buyTurkeyPage.querySelector('.js-emailVerifiedBuyTurkey');
+    const paymentSubmit = buyTurkeyPage.querySelector('.js-paymentSubmit');
+    const switchCards = buyTurkeyPage.querySelectorAll('.js-switch-card');
+    const selectedPrice = buyTurkeyPage.querySelector('.js-selectedPrice');
+    const selectedValue = buyTurkeyPage.querySelector('.js-selectedValue');
+    const paymentForm = buyTurkeyPage.querySelector('.js-paymentForm');
+    const paymentErrorMessage = buyTurkeyPage.querySelector('.js-paymentErrorMessage');
+    
+    new AsyncForm({
+        mainNode: paymentForm,
+        resultMessageNode: paymentErrorMessage,
+        successHandler: (sendParams, results) => window.open(results.link, '_self'),
+    });
+    
+    switchCards.forEach(switchCard => {
+        switchCard.addEventListener('change', () => {
+            const price = switchCard.nextElementSibling.querySelector('.js-price');
+            const value = switchCard.nextElementSibling.querySelector('.js-value');
+    
+            selectedPrice.innerText = price.innerText;
+            selectedValue.innerText = value.innerText;
+        })
+    });
+    
+    if (emailVerifiedBuyTurkey) {
+        const submit = emailVerifiedBuyTurkey.querySelector('.js-submit');
+        const emailForTurkey = emailVerifiedBuyTurkey.querySelector('.js-emailForTurkey');
+        const verificationCodeField = emailVerifiedBuyTurkey.querySelector('.js-verificationCodeField');
+        const verificationCodeFieldFrame = emailVerifiedBuyTurkey.querySelector('.js-verificationCodeFieldFrame');
+        const message = emailVerifiedBuyTurkey.querySelector('.js-message');
+    
+        message.classList.add('error');
+    
+        submit.addEventListener('click', async () => {
+            const step = emailVerifiedBuyTurkey.dataset.step.toString();
+            
+            switch (step) {
+                case '1': {
+                    submit.innerText = 'Отправка кода...';
+    
+                    const responseCode = await postman.post("/api/users/get-code", {
+                        email: emailForTurkey.value,
+                    });
+    
+                    const result = await responseCode.json();
+    
+                    if (responseCode.status >= 400) {
+                        if (result.message.toLowerCase() === 'authorized') {
+                            document.location.reload()
+                        }
+    
+                        if (result.message.toLowerCase() === 'invalid email') {
+                            message.innerText = 'Некорректный E-mail'
+                        }
+    
+                        return submit.innerText = 'Отправить код';
+                    }
+    
+                    emailForTurkey.setAttribute("readonly", '');
+                    verificationCodeFieldFrame.style.display = 'block';
+                    verificationCodeField.setAttribute('required', '');
+                    submit.innerText = 'Подтвердить';
+                    emailVerifiedBuyTurkey.dataset.step = '2';
+                    message.innerText = '';
+    
+                    break;
+                }
+                case '2': {
+                    submit.innerText = 'Проверка кода...';
+                    
+                    const confirmResponse = await postman.post('/api/users/confirm-code', {
+                        email: emailForTurkey.value,
+                        code: verificationCodeField.value,
+                    });
+                    
+                    const confirmResult = await confirmResponse.json();
+                    
+                    if (confirmResponse.status >= 400) {
+                        if (confirmResult.message.toLowerCase() === 'invalid code') {
+                            message.innerText = 'Неверный код';
+                        }
+    
+                        return submit.innerText = 'Подтвердить';
+                    }
+    
+                    verificationCodeFieldFrame.remove();
+                    submit.remove();
+    
+                    message.classList.remove('error');
+                    message.innerText = 'E-mail подтвержден';
+                    paymentSubmit.removeAttribute('disabled');
+                    
+                    break;
+                }
+            }
+        })
+    }
+}
 
 loadMoreRatingNode && loadMoreRatingNode.addEventListener('click', async () => {
     const skip = parseInt(loadMoreRatingNode.dataset.skip);

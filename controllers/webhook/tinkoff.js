@@ -57,7 +57,7 @@ export default async function (req, res) {
                     key: key.value,
                 });
                 
-                if (product.countKeys < 4) {
+                if (product.countKeys < 4 && !product.kupiKodInStock) {
                     outStockProduct(product).then();
                 }
             }

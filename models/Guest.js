@@ -12,6 +12,11 @@ const fields = {
   try_code: {
     type: Date
   },
+  email: String,
+  emailChecked: {
+    type: Boolean,
+    default: false,
+  },
   yaClientIds: [String],
 };
 
