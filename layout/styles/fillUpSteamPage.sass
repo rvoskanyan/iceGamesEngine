@@ -6,6 +6,7 @@
   @include for-desktop-up
     display: flex
     justify-content: space-between
+    flex-wrap: wrap
 
   .modalContainer
     display: flex
@@ -447,3 +448,65 @@
         column-gap: 10px
         row-gap: 10px
         flex-wrap: wrap
+
+  .chips
+    color: #fff
+    margin-top: 30px
+
+    @include for-desktop-up
+      margin-top: 80px
+
+    .title
+      font-family: 'Lemon Milk'
+      font-weight: 100
+      font-size: 18px
+
+      @include for-desktop-up
+        font-size: 24px
+
+    .description
+      margin-top: 10px
+
+      @include for-big-phone-down
+        font-size: 14px
+
+    .items
+      margin-top: 30px
+
+      @include for-desktop-up
+        display: flex
+        column-gap: 40px
+
+      @include for-middle-desktop-up
+        column-gap: 80px
+
+      .item
+
+        @include for-big-phone-down
+          &:not(:first-child)
+            margin-top: 30px
+
+        .head
+          @include for-desktop-up
+            height: 135px
+
+          .img
+            max-height: 50px
+            min-height: 50px
+
+            @include for-desktop-up
+              max-height: 70px
+              min-height: 70px
+
+          .title
+            margin-top: 6px
+            font-size: 16px
+            font-family: Montserrat
+            font-weight: 600
+
+            @include for-desktop-up
+              font-size: 18px
+              margin-top: 10px
+
+        .description
+          text-align: justify

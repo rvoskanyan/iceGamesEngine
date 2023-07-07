@@ -1,8 +1,9 @@
 import Key from "../../models/Key.js";
+import TurkeyFillUpKey from "../../models/TurkeyFillUpKey.js";
 
 export const ordersPage = async (req, res) => {
   const orders = await Key
-    .find({isSold: true})
+    .find({ isSold: true })
     .select(['value', 'soldOrder', 'product'])
     .sort({updatedAt: -1})
     .limit(50)
@@ -18,8 +19,19 @@ export const ordersPage = async (req, res) => {
     ])
     .lean();
   
+  const turkeyFillUps = await TurkeyFillUpKey
+    .find({ isSold: true })
+    .sort({updatedAt: -1})
+    .limit(50)
+    .populate([{
+      path: 'turkeyFillUpId',
+      select: ['buyerEmail'],
+    }])
+    .lean();
+  
   res.render('admOrders', {
     layout: 'admin',
     orders,
+    turkeyFillUps,
   })
 }

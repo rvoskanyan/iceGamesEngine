@@ -1,4 +1,8 @@
 <style>
+    .columns {
+        display: flex;
+        column-gap: 50px;
+    }
     .order {
         width: max-content;
         border: 1px solid #bdbdbd;
@@ -17,19 +21,41 @@
         font-weight: 600;
     }
 </style>
-{{#each orders}}
-    <div class="order">
-        <div class="prop">
-            <span class="name">Email:</span>
-            <span class="value">{{soldOrder.buyerEmail}}</span>
-        </div>
-        <div class="prop">
-            <span class="name">Товар:</span>
-            <span class="value">{{product.name}}</span>
-        </div>
-        <div class="prop">
-            <span class="name">Ключ:</span>
-            <span class="value">{{value}}</span>
-        </div>
+<div class="columns">
+    <div class="column">
+        {{#each orders}}
+            <div class="order">
+                <div class="prop">
+                    <span class="name">Email:</span>
+                    <span class="value">{{soldOrder.buyerEmail}}</span>
+                </div>
+                <div class="prop">
+                    <span class="name">Товар:</span>
+                    <span class="value">{{product.name}}</span>
+                </div>
+                <div class="prop">
+                    <span class="name">Ключ:</span>
+                    <span class="value">{{value}}</span>
+                </div>
+            </div>
+        {{/each}}
     </div>
-{{/each}}
+    <div class="column">
+        {{#each turkeyFillUps}}
+            <div class="order">
+                <div class="prop">
+                    <span class="name">Email:</span>
+                    <span class="value">{{turkeyFillUpId.buyerEmail}}</span>
+                </div>
+                <div class="prop">
+                    <span class="name">Ключ:</span>
+                    <span class="value">{{value}}</span>
+                </div>
+                <div class="prop">
+                    <span class="name">Номинал:</span>
+                    <span class="value">{{denomination}}</span>
+                </div>
+            </div>
+        {{/each}}
+    </div>
+</div>
