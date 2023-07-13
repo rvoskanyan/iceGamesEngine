@@ -2368,6 +2368,8 @@ if (fillUpSteamFrom) {
     const amountNode = document.querySelector('.js-amount');
     const amountCommissionNode = document.querySelector('.js-amount-commission');
     const totalNode = document.querySelector('.js-total');
+    const rate = amountInputNode.dataset?.rate;
+    const currencySymbol = rate ? '₸' : '₽';
     let commission = 21.5;
     let amount = 0;
     let amountCommission = 0;
@@ -2397,9 +2399,9 @@ if (fillUpSteamFrom) {
         total = amountCommission + amount;
         
         commissionNode.innerText = `Комиссия сервиса (${commission}%)`;
-        amountNode.innerText = `${amount} ₽`;
-        amountCommissionNode.innerText = `${amountCommission} ₽`;
-        totalNode.innerText = `${total} ₽`;
+        amountNode.innerText = `${amount} ${currencySymbol}`;
+        amountCommissionNode.innerText = `${amountCommission} ${currencySymbol}`;
+        totalNode.innerText = `${rate ? Math.floor(total * rate) : total} ₽`;
     }
     
     const a = document.createElement("a");

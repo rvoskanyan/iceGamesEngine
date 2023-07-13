@@ -32,6 +32,11 @@ const fields = {
     required: true,
     enum: ['paymentAwaiting', 'success', 'pending', 'createOrderError', 'false', 'error'],
   },
+  isKazakhstan: {
+    type: Boolean,
+    default: false,
+  },
+  rate: Number,
   codeOrderError: Number,
   email: String,
   total: Number,
@@ -40,6 +45,7 @@ const fields = {
   paymentId: Number,
   sbpUrl: String,
   orderId: String,
+  yaClientId: String,
 }
 
 const options = {

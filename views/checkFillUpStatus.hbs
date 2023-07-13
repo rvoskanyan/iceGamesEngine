@@ -8,7 +8,7 @@
         </div>
         <div class="item">
             <div class="name">Сумма пополнения</div>
-            <div class="value">{{ fillUp.amount }} ₽</div>
+            <div class="value">{{ fillUp.amount }} {{#if fillUp.isKazakhstan}}₸{{else}}₽{{/if}}</div>
         </div>
         <div class="item">
             <div class="name">Статус заявки</div>

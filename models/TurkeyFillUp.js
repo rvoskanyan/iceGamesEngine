@@ -16,6 +16,7 @@ const fields = {
     default: 'awaiting',
     enum: ['paid', 'awaiting', 'canceled'],
   },
+  yaClientId: String,
 };
 
 const options = {

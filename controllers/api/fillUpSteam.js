@@ -5,6 +5,7 @@ import Review from "../../models/Review.js";
 import TurkeyFillUp from "../../models/TurkeyFillUp.js";
 import TurkeyFillUpKey from "../../models/TurkeyFillUpKey.js";
 import {mailingBuyTurkeyFillUpKey} from "../../services/mailer.js";
+import metrica from "../../services/metrica.js";
 
 export const getPaymentLink = async (req, res) => {
   try {
@@ -18,8 +19,13 @@ export const getPaymentLink = async (req, res) => {
       confirmIndicationCorrectData = '',
       paymentMethod = '',
       email = '',
+      yaClientId = undefined,
     } = req.body;
+    const isKazakhstan = !!(req.query && req.query.kazakhstan);
+    const minAmount = isKazakhstan ? 500 : 100;
+    const maxAmount = isKazakhstan ? 50000 : 10000;
     let amount = req.body.amount;
+    let rate;
     
     if (!steamLogin || !amount || !email) {
       return res.json({
@@ -44,16 +50,26 @@ export const getPaymentLink = async (req, res) => {
   
     amount = parseInt(amount);
     
-    if (amount < 100 || amount > 10000) {
+    if (amount < minAmount || amount > maxAmount) {
       return res.json({
         error: true,
-        message: 'Сумма пополнения должна быть не менее 100₽ и не более 10 000₽',
+        message: `Сумма пополнения должна быть не менее ${minAmount} и не более ${maxAmount}`,
       });
+    }
+  
+    if (isKazakhstan) {
+      const responseRate = await fetch('https://steam.kupikod.com/api/v3/partner-kzt', { headers: {
+          'Content-Type': 'application/json',
+          'token': 'icegame.store_q4L4Re1u1hIjQIgPBWqiDYZfzheIRmHEwAzX',
+        }});
+      const { rubKzt } = await responseRate.json();
+    
+      rate = (1 / parseFloat(rubKzt)).toFixed(2);
     }
     
     const commissionPercent = paymentMethod === 'sbp' ? 21.5 : 23.5;
     const commissionAmount = Math.floor(amount / 100 * commissionPercent);
-    const total = amount + commissionAmount;
+    const total = isKazakhstan ? Math.floor((amount + commissionAmount) * rate) : amount + commissionAmount;
     
     const fillUp = new FillUp({
       steamLogin,
@@ -62,6 +78,9 @@ export const getPaymentLink = async (req, res) => {
       commissionPercent,
       total,
       email,
+      rate,
+      isKazakhstan,
+      yaClientId,
       confirmIndicationCorrectData: true,
       type: 'steam',
       status: 'paymentAwaiting',
@@ -173,6 +192,7 @@ export const notifications = async (req, res) => {
         body: JSON.stringify({
           login: fillUp.steamLogin,
           value: fillUp.amount,
+          currency: fillUp.isKazakhstan ? 'kzt' : 'rub',
         }),
       });
       
@@ -189,6 +209,11 @@ export const notifications = async (req, res) => {
       fillUp.status = 'pending';
   
       await fillUp.save();
+      
+      if (fillUp.yaClientId) {
+        const target = fillUp.isKazakhstan ? 'payment_success_fillup_kz' : 'payment_success_fillup_ru';
+        metrica.offlineConversation(fillUp.yaClientId, target, Amount / 100, "RUB").then()
+      }
     }
   } catch (e) {
     console.log(e);
@@ -278,6 +303,7 @@ export const createTurkeyFillUpOrder = async (req, res) => {
     }
     
     const variant = req.body.variant;
+    const yaClientId = req.body.yaClientId;
     const ids = {
       '20': {
         value: 'STEAMGС20TRY',
@@ -313,7 +339,7 @@ export const createTurkeyFillUpOrder = async (req, res) => {
       });
     }
     
-    const turkeyFillUp = new TurkeyFillUp({ buyerEmail: email, denomination: parseInt(variant) });
+    const turkeyFillUp = new TurkeyFillUp({ buyerEmail: email, denomination: parseInt(variant), yaClientId });
   
     if (isAuth) {
       turkeyFillUp.userId = person._id;
@@ -437,6 +463,10 @@ export const turkeyNotifications = async (req, res) => {
         denomination: turkeyFillUpKey.denomination,
         email: turkeyFillUp.buyerEmail,
       }).then();
+  
+      if (turkeyFillUpKey.yaClientId) {
+        metrica.offlineConversation(turkeyFillUpKey.yaClientId, 'payment_success_fillup_turk', Amount / 100, "RUB").then()
+      }
     }
   } catch (e) {
     console.log(e);

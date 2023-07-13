@@ -93,6 +93,10 @@ export default class AsyncForm {
         this.sendParams[extraParam] = value;
       }
     })
+  
+    if (window.yaCounter69707947?.getClientID) {
+      this.sendParams.yaClientId = yaCounter69707947.getClientID()
+    }
     
     const response = await this.postman.post(this.mainNode.action, this.sendParams);
     const result = await response.json();

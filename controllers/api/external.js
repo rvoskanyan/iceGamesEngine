@@ -114,8 +114,18 @@ export const acceptAgreement = (req, res) => {
 
 export const getFeedCsv = async (req, res) => {
   try {
+    const isFromStock = !!(req.query && req.query.fromStock);
+    const filter = {active: true};
+    
+    if (isFromStock) {
+      filter.$or = [
+        {countKeys: {$gt: 0}},
+        {kupiKodInStock: true},
+      ];
+    }
+    
     const products = await Product
-      .find({active: true})
+      .find(filter)
       .select(['name', 'alias', 'img', 'description', 'priceTo', 'priceFrom'])
       .populate(['activationServiceId'])
       .lean();

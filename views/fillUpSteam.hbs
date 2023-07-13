@@ -13,34 +13,56 @@
     </div>
     {{> breadcrumbs}}
     <div class="mainContent">
-        <h1 class="title">Пополнение баланса Steam</h1>
+        <h1 class="title">
+            {{#if isKazakhstan}}
+                Пополнение баланса Казахстанского Steam аккаунта
+            {{else}}
+                Пополнение баланса Российского Steam аккаунта
+            {{/if}}
+        </h1>
         <p class="description">
             Специально для вас от сервиса ICE GAMES мы предоставляем услугу пополнения кошелька Steam в рублях.
             Теперь вы можете легко и быстро пополнить баланс стим.
         </p>
-        <p class="description warning">
-            Внимание! Пополнить баланс возможно только Российского Steam аккаунта, кроме республики Крым, Луганской и Донецкой областей.
-        </p>
-        <p class="description warning">
-            Узнать о том, как обойти ограничение Вы можете в
-            <a class="link" href="https://icegames.store/blog/kak-popolnit-koshyelyek-steam-iz-ryespubliki-krym-luganskoio-i-donyetskoio-oblastyeio" target="_blank">
-                нашей статье
-            </a>
-        </p>
-        <form class="form js-fillUpSteamFrom" action="{{websiteAddress}}api/fillUpSteam/getPaymentLink">
+        {{#if isKazakhstan}}
+            <p class="description warning">Внимание! Пополнить баланс возможно только Казахстанского Steam аккаунта.</p>
+        {{else}}
+            <p class="description warning">
+                Внимание! Пополнить баланс возможно только Российского Steam аккаунта, кроме республики Крым, Луганской и Донецкой областей.
+            </p>
+            <p class="description warning">
+                Узнать о том, как обойти ограничение Вы можете в
+                <a class="link" href="https://icegames.store/blog/kak-popolnit-koshyelyek-steam-iz-ryespubliki-krym-luganskoio-i-donyetskoio-oblastyeio" target="_blank">
+                    нашей статье
+                </a>
+            </p>
+        {{/if}}
+        <form class="form js-fillUpSteamFrom" action="{{websiteAddress}}api/fillUpSteam/getPaymentLink{{#if isKazakhstan}}?kazakhstan=true{{/if}}">
             <label class="input-frame js-inputFrame">
                 <input class="textField" type="text" name="steamLogin" placeholder="Логин Steam">
                 <button class="btn prompt js-howToGetLogin" type="button">Как узнать логин?</button>
             </label>
-            <label class="input-frame js-amount-input">
-                <input class="textField js-amountFillUp" type="text" name="amount" placeholder="Сумма пополнения (От 100₽ до 10 000₽)">
-                <div class="fastSelect js-fastSelect" data-bind-selector="amountFillUp">
-                    <button class="fastSelect-item btn js-fastSelectItem" type="button">100</button>
-                    <button class="fastSelect-item btn js-fastSelectItem" type="button">300</button>
-                    <button class="fastSelect-item btn js-fastSelectItem" type="button">600</button>
-                    <button class="fastSelect-item btn js-fastSelectItem" type="button">1000</button>
-                </div>
-            </label>
+            {{#if isKazakhstan}}
+                <label class="input-frame js-amount-input">
+                    <input class="textField js-amountFillUp" data-rate="{{ rate }}" type="text" name="amount" placeholder="Сумма пополнения (От 500₸ до 50 000₸)">
+                    <div class="fastSelect js-fastSelect" data-bind-selector="amountFillUp">
+                        <button class="fastSelect-item btn js-fastSelectItem" type="button">1000</button>
+                        <button class="fastSelect-item btn js-fastSelectItem" type="button">3000</button>
+                        <button class="fastSelect-item btn js-fastSelectItem" type="button">6000</button>
+                        <button class="fastSelect-item btn js-fastSelectItem" type="button">10000</button>
+                    </div>
+                </label>
+            {{else}}
+                <label class="input-frame js-amount-input">
+                    <input class="textField js-amountFillUp" type="text" name="amount" placeholder="Сумма пополнения (От 100₽ до 10 000₽)">
+                    <div class="fastSelect js-fastSelect" data-bind-selector="amountFillUp">
+                        <button class="fastSelect-item btn js-fastSelectItem" type="button">100</button>
+                        <button class="fastSelect-item btn js-fastSelectItem" type="button">300</button>
+                        <button class="fastSelect-item btn js-fastSelectItem" type="button">600</button>
+                        <button class="fastSelect-item btn js-fastSelectItem" type="button">1000</button>
+                    </div>
+                </label>
+            {{/if}}
             <label class="input-frame">
                 <input class="textField" type="email" name="email" placeholder="E-mail, на который будет отправлен чек">
             </label>
@@ -70,11 +92,15 @@
                 <div class="body">
                     <div class="item">
                         <div class="name">Сумма на Steam</div>
-                        <div class="value js-amount">0 ₽</div>
+                        <div class="value js-amount">0 ₸</div>
                     </div>
                     <div class="item">
                         <div class="name js-commission">Комиссия сервиса (21.5%)</div>
-                        <div class="value js-amount-commission">0 ₽</div>
+                        <div class="value js-amount-commission">0 ₸</div>
+                    </div>
+                    <div class="item">
+                        <div class="name js-commission">Курс за 1₸</div>
+                        <div class="value js-amount-commission">{{rate}} ₽</div>
                     </div>
                 </div>
                 <div class="total">
