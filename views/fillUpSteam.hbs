@@ -92,16 +92,18 @@
                 <div class="body">
                     <div class="item">
                         <div class="name">Сумма на Steam</div>
-                        <div class="value js-amount">0 ₸</div>
+                        <div class="value js-amount">0 {{#if isKazakhstan}}₸{{else}}₽{{/if}}</div>
                     </div>
                     <div class="item">
                         <div class="name js-commission">Комиссия сервиса (21.5%)</div>
-                        <div class="value js-amount-commission">0 ₸</div>
+                        <div class="value js-amount-commission">0 {{#if isKazakhstan}}₸{{else}}₽{{/if}}</div>
                     </div>
-                    <div class="item">
-                        <div class="name js-commission">Курс за 1₸</div>
-                        <div class="value js-amount-commission">{{rate}} ₽</div>
-                    </div>
+                    {{#if isKazakhstan}}
+                        <div class="item">
+                            <div class="name js-commission">Курс за 1₸</div>
+                            <div class="value js-amount-commission">{{rate}} ₽</div>
+                        </div>
+                    {{/if}}
                 </div>
                 <div class="total">
                     <div class="name">Итого</div>
