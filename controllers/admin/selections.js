@@ -40,20 +40,26 @@ export const addSelection = async (req, res) => {
       name = '',
       description = '',
     } = req.body;
-    const {img = undefined} = req.files;
+    const {
+      img = undefined,
+      coverImg = undefined,
+    } = req.files;
     
-    if (!img || !name.length || !description.length) {
+    if (!img || !coverImg || !name.length || !description.length) {
       throw new Error('All fields is required');
     }
     
     const imgName = `${ uuidv4() }.${ getExtendFile(img.name) }`;
+    const coverImgName = `${ uuidv4() }.${ getExtendFile(coverImg.name) }`;
   
     await img.mv(path.join(__dirname, '/uploadedFiles', imgName));
+    await coverImg.mv(path.join(__dirname, '/uploadedFiles', coverImgName));
     
     const selection = new Selection({
       name,
       description,
       img: imgName,
+      coverImg: coverImgName,
     });
   
     await selection.save();
@@ -100,7 +106,10 @@ export const editSelection = async (req, res) => {
     const selection = await Selection.findById(selectionId);
     
     if (req.files) {
-      const {img = null} = req.files;
+      const {
+        img = undefined,
+        coverImg = undefined,
+      } = req.files;
       
       if (img) {
         const imgName = `${ uuidv4() }.${ getExtendFile(img.name) }`;
@@ -108,6 +117,14 @@ export const editSelection = async (req, res) => {
         await img.mv(path.join(__dirname, '/uploadedFiles', imgName));
   
         selection.img = imgName;
+      }
+  
+      if (coverImg) {
+        const coverImgName = `${ uuidv4() }.${ getExtendFile(coverImg.name) }`;
+    
+        await coverImg.mv(path.join(__dirname, '/uploadedFiles', coverImgName));
+    
+        selection.coverImg = coverImgName;
       }
     }
   
@@ -150,18 +167,22 @@ export const addItemSelection = async (req, res) => {
   const selectionId = req.params.selectionId;
   
   try {
-    const {
-      productId = '',
+    let {
+      productIds = [],
       ourChoice = '',
     } = req.body;
     
-    if (!productId.length) {
+    if (!Array.isArray(productIds)) {
+      productIds = [productIds];
+    }
+    
+    if (!productIds.length) {
       throw new Error('Product is required');
     }
     
-    const product = await Product.findById(productId).select(['_id', 'active']).lean();
+    const products = await Product.find({_id: { $in: productIds }}).select(['_id', 'active']).lean();
     
-    if (!product || !product.active) {
+    if (!products.length) {
       throw new Error('Product not found or product not active');
     }
     
@@ -170,15 +191,15 @@ export const addItemSelection = async (req, res) => {
     if (!selection) {
       throw new Error('Selection not found');
     }
-    
-    if (selection.items.find(item => item.product.toString() === productId)) {
-      throw new Error('This product exists in selection');
-    }
   
-    selection.items.push({
-      product: productId,
-      ourChoice: ourChoice === 'on',
-    });
+  
+    selection.items = [
+      ...selection.items,
+      ...productIds.map(id => ({
+        product: id,
+        ourChoice: ourChoice === 'on',
+      }))
+    ]
     
     await selection.save();
     res.redirect(`/admin/selections/edit/${ selectionId }`);
@@ -239,12 +260,9 @@ export const editItemSelection = async (req, res) => {
   const itemId = req.params.itemId;
   
   try {
-    const {
-      productId = '',
-      ourChoice = '',
-    } = req.body;
+    const { ourChoice = '' } = req.body;
     
-    if (!selectionId.length || !itemId.length || !productId.length) {
+    if (!selectionId.length || !itemId.length) {
       throw new Error('Error data');
     }
     
@@ -260,15 +278,6 @@ export const editItemSelection = async (req, res) => {
       throw new Error('Editable element not found');
     }
     
-    if (selection.items[editableItemIndex].product.toString() !== productId) {
-      const product = await Product.findOne({_id: productId, active: true}).select(['_id']).lean();
-      
-      if (!product) {
-        throw new Error('New active product not found');
-      }
-    }
-  
-    selection.items[editableItemIndex].product = productId;
     selection.items[editableItemIndex].ourChoice = ourChoice === 'on';
     
     await selection.save();

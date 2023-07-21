@@ -26,6 +26,19 @@
     <br>
     <br>
     <label>
+        {{#unless isEdit}}*{{/unless}}Cover изображение:
+        <input type="file" name="coverImg">
+    </label>
+    <br>
+    <br>
+    {{#if selection.coverImg}}
+        <img src="{{websiteAddress}}{{selection.coverImg}}" alt="Картинка подборки">
+        <br>
+        <br>
+    {{/if}}
+    <br>
+    <br>
+    <label>
         {{#unless isEdit}}*{{/unless}}Картинка:
         <input type="file" name="img">
     </label>

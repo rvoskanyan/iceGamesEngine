@@ -15,6 +15,10 @@ const fields = {
     type: String,
     required: true,
   },
+  coverImg: {
+    type: String,
+    required: true,
+  },
   items: [{
     product: {
       type: Schema.Types.ObjectId,

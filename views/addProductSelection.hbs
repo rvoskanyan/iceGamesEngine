@@ -3,8 +3,8 @@
 <br>
 <form action="/admin/selections/{{ selection._id }}/{{#if isEdit}}editItem/{{ item._id }}{{else}}addItem{{/if}}" method="post">
     <label>
-        *Выберите товар:
-        <select name="productId">
+        {{#if isEdit}}Т{{else}}*Выберите т{{/if}}овар:
+        <select name="productIds" {{#if isEdit}}disabled{{else}}multiple{{/if}}>
             {{#each products}}
                 <option value="{{ _id }}"{{#if selected}} selected{{/if}}>{{ name }}</option>
             {{/each}}
