@@ -6,7 +6,18 @@
     <meta name="robots" content="noindex">
     <meta name="googlebot" content="noindex">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css"/>
     <title>{{title}}</title>
+    <style>
+        .choices {
+            max-width: 300px;
+        }
+
+        .choices__inner {
+            min-height: initial;
+            box-sizing: border-box;
+        }
+    </style>
 </head>
 <body>
 
@@ -44,5 +55,15 @@
 
 {{{body}}}
 
+<script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+<script>
+    const searchSelects = document.querySelectorAll('.js-search-select');
+
+    searchSelects.forEach(searchSelect => {
+        new Choices(searchSelect, {
+            itemSelectText: '',
+        });
+    })
+</script>
 </body>
 </html>
