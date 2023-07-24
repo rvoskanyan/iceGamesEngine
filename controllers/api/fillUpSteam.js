@@ -307,15 +307,15 @@ export const createTurkeyFillUpOrder = async (req, res) => {
     const ids = {
       '20': {
         value: 'STEAMGС20TRY',
-        price: 279,
+        price: 469,
       },
       '50': {
         value: 'STEAMGС50TRY',
-        price: 549,
+        price: 629,
       },
       '100': {
         value: 'STEAMGС100TRY',
-        price: 1049,
+        price: 1189,
       },
       '200': {
         value: 'STEAMGС200TRY',
