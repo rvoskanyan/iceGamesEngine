@@ -33,11 +33,11 @@ export const selectionPage = async (req, res) => {
     const selections = await Selection.find({alias: {$ne: req.params.alias}}).sort({createdAt: -1}).limit(4).lean();
     const selection = await Selection.findOne({alias: req.params.alias}).populate([{
       path: 'products',
-      select: ['name', 'alias', 'img', 'priceTo', 'priceFrom', 'dlc'],
+      select: ['name', 'alias', 'img', 'priceTo', 'priceFrom', 'dlc', 'inStock'],
     }]).lean();
     const articles = await Article
       .find({products: {$in: selection.products}})
-      .select(['alias', 'img', 'name', 'type', 'created', 'createdAt', 'introText', 'inStock'])
+      .select(['alias', 'img', 'name', 'type', 'created', 'createdAt', 'introText'])
       .limit(3);
     
     res.render('selection', {
