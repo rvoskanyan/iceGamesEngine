@@ -36,16 +36,6 @@ const fields = {
     type: Schema.Types.ObjectId,
     ref: 'Product',
   }],
-  items: [{
-    product: {
-      type: Schema.Types.ObjectId,
-      ref: 'Product',
-    },
-    ourChoice: {
-      type: Boolean,
-      default: false,
-    }
-  }],
 };
 
 const options = {

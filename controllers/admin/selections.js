@@ -9,16 +9,6 @@ import selections from "../../routes/admin/selections.js";
 export const getSelectionsPage = async (req, res) => {
   try {
     const selections = await Selection.find().sort({createdAt: -1});
-    
-    for (const selection of selections) {
-      if (selection.products.length) {
-        continue;
-      }
-      
-      selection.products = selection.items.map(item => item.product);
-      
-      await selection.save();
-    }
   
     res.render('listElements', {
       layout: 'admin',
