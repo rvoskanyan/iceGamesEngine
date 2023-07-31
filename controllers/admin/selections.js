@@ -75,7 +75,7 @@ export const addSelection = async (req, res) => {
       const currentOurChoice = await Selection.findOne({
         ourChoice: true,
         _id: {
-          $not: selection._id.toString(),
+          $ne: selection._id.toString(),
         }
       });
       
@@ -166,7 +166,7 @@ export const editSelection = async (req, res) => {
       const currentOurChoice = await Selection.findOne({
         ourChoice: true,
         _id: {
-          $not: selection._id.toString(),
+          $ne: selection._id.toString(),
         }
       });
     
