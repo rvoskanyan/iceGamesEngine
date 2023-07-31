@@ -12,6 +12,9 @@
         bottom: initial
         top: 50%
         transform: translateY(-50%)
+        max-width: 700px
+
+      @include for-middle-desktop-up
         max-width: 900px
 
       .title
@@ -67,6 +70,10 @@
           row-gap: 20px
           justify-content: space-between
           flex-wrap: wrap
+          min-width: 850px
+          max-width: 850px
+
+        @include for-middle-desktop-up
           min-width: 1050px
           max-width: 1050px
 
@@ -78,7 +85,9 @@
         display: flex
         justify-content: space-between
         align-items: center
-        column-gap: 50px
+        margin-top: 50px
+
+      @include for-middle-desktop-up
         margin-top: 80px
 
       .title
@@ -99,8 +108,12 @@
           column-gap: initial
           padding: initial
           justify-content: space-between
-          max-width: 1050px
-          min-width: 1050px
+          max-width: 850px
+          min-width: 850px
+
+          @include for-middle-desktop-up
+            max-width: 1050px
+            min-width: 1050px
 
         .article
           display: block
@@ -109,6 +122,10 @@
           text-decoration: none
 
           @include for-desktop-up
+            min-width: 270px
+            max-width: 270px
+
+          @include for-middle-desktop-up
             min-width: 330px
             max-width: 330px
 
@@ -133,6 +150,10 @@
             transition: transform .3s ease-in
 
             @include for-desktop-up
+              min-height: 170px
+              max-height: 170px
+
+            @include for-middle-desktop-up
               min-height: 200px
               max-height: 200px
 
