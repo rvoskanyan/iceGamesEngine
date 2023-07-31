@@ -7,7 +7,7 @@ export const selectionsPage = async (req, res) => {
     const selections = await Selection.find({ourChoice: false}).sort({createdAt: -1}).limit(4).lean();
     const ourChoice = await Selection.findOne({ourChoice: true}).select(['products']).populate([{
       path: 'products',
-      select: ['name', 'alias', 'img', 'priceTo', 'priceFrom', 'dlc'],
+      select: ['name', 'alias', 'img', 'priceTo', 'priceFrom', 'dlc', 'inStock'],
     }]).lean();
   
     res.render('selections', {
@@ -37,7 +37,7 @@ export const selectionPage = async (req, res) => {
     }]).lean();
     const articles = await Article
       .find({products: {$in: selection.products}})
-      .select(['alias', 'img', 'name', 'type', 'created', 'createdAt', 'introText'])
+      .select(['alias', 'img', 'name', 'type', 'created', 'createdAt', 'introText', 'inStock'])
       .limit(3);
     
     res.render('selection', {
