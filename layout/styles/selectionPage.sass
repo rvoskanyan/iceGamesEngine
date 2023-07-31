@@ -74,9 +74,12 @@
           max-width: 850px
 
         @include for-middle-desktop-up
+          min-width: 950px
+          max-width: 950px
+
+        @include for-big-desktop-up
           min-width: 1050px
           max-width: 1050px
-
 
     .articles
       margin-top: 30px
@@ -87,7 +90,7 @@
         align-items: center
         margin-top: 50px
 
-      @include for-middle-desktop-up
+      @include for-big-desktop-up
         margin-top: 80px
 
       .title
@@ -112,6 +115,10 @@
           min-width: 850px
 
           @include for-middle-desktop-up
+            max-width: 950px
+            min-width: 950px
+
+          @include for-big-desktop-up
             max-width: 1050px
             min-width: 1050px
 
@@ -126,6 +133,10 @@
             max-width: 270px
 
           @include for-middle-desktop-up
+            min-width: 300px
+            max-width: 300px
+
+          @include for-big-desktop-up
             min-width: 330px
             max-width: 330px
 
@@ -154,6 +165,10 @@
               max-height: 170px
 
             @include for-middle-desktop-up
+              min-height: 190px
+              max-height: 190px
+
+            @include for-big-desktop-up
               min-height: 200px
               max-height: 200px
 
