@@ -15,3 +15,105 @@
 
     .icon
       margin-right: 10px
+
+  .selectionsBlock
+    margin-top: 8px
+    display: flex
+    flex-wrap: wrap
+    column-gap: 5px
+    row-gap: 5px
+
+    @include for-desktop-up
+      column-gap: 20px
+      row-gap: 20px
+      margin-top: 20px
+
+    .selection
+      display: block
+      overflow: hidden
+      border-radius: 10px
+      position: relative
+      width: 100%
+      height: 130px
+
+      @include for-middle-phone-up
+        &:nth-child(4n + 1), &:nth-child(4n + 4)
+          flex-basis: 60%
+
+        &:nth-child(4n + 2), &:nth-child(4n + 3)
+          flex-basis: 38%
+
+
+      @include for-desktop-up
+        height: 280px
+
+        &:nth-child(4n + 1), &:nth-child(4n + 4)
+          flex-basis: initial
+          width: 700px
+
+        &:nth-child(4n + 2), &:nth-child(4n + 3)
+          flex-basis: initial
+          width: 516px
+
+      @include for-middle-desktop-up
+        height: 300px
+
+        &:nth-child(4n + 1), &:nth-child(4n + 4)
+          width: 800px
+
+        &:nth-child(4n + 2), &:nth-child(4n + 3)
+          width: 570px
+
+      @include for-big-desktop-up
+        height: 350px
+
+        &:nth-child(4n + 1), &:nth-child(4n + 4)
+          width: 880px
+
+        &:nth-child(4n + 2), &:nth-child(4n + 3)
+          width: 650px
+
+      &:before
+        content: ''
+        display: block
+        position: absolute
+        top: 0
+        left: 0
+        width: 100%
+        height: 100%
+        background: linear-gradient(180deg, rgba(1, 3, 58, 0.00) 0%, #01033A 100%)
+
+      .selectionImg
+        display: block
+        width: 100%
+        height: 100%
+        object-fit: cover
+
+      .selectionInfo
+        position: absolute
+        color: #FFF
+        bottom: 10px
+        left: 10px
+
+        @include for-desktop-up
+          bottom: 23px
+          left: 23px
+
+        @include for-big-desktop-up
+          bottom: 28px
+          left: 28px
+
+        .selectionName
+          font-family: 'Lemon Milk'
+          font-size: 18px
+          font-weight: 100
+
+          @include for-desktop-up
+            font-size: 32px
+
+        .selectionCountProducts
+          @include for-big-phone-down
+            font-size: 12px
+
+  .allSelections
+    margin: 30px auto 0 auto

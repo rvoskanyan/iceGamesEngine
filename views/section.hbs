@@ -1,0 +1,10 @@
+<main class="contentContainer withoutCover categoriesCatalogPage">
+    {{> breadcrumbs}}
+    <h1 class="title">{{selectionName}}</h1>
+    <div class="list">
+        {{#each products}}
+            {{> game}}
+        {{/each}}
+    </div>
+    <a class="inCatalog btn rounded bg-pink increase big" href="/games?sort={{sort}}">В каталог</a>
+</main>

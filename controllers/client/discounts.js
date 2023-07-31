@@ -29,7 +29,7 @@ export const discountsPage = async (req, res) => {
       });
     }
     
-    res.render('selection', {
+    res.render('section', {
       title: 'Скидки — ICE GAMES',
       metaDescription: 'Не упустите шанс купить лучшие игры со скидками. Раздел с самыми выгодными предложениями в магазине лицензионных ключей ICE GAMES.',
       ogPath: 'discounts',

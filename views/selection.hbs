@@ -1,10 +1,61 @@
-<main class="contentContainer withoutCover categoriesCatalogPage">
+<main class="selectionPage">
     {{> breadcrumbs}}
-    <h1 class="title">{{selectionName}}</h1>
-    <div class="list">
-        {{#each products}}
-            {{> game}}
-        {{/each}}
+    <div class="cover">
+        <img class="img" src="{{websiteAddress}}{{selection.coverImg}}" alt="Постер для подборки - {{selection.name}}"
+             title="Постер для записи в блоге - {{selection.name}}">
+        <div class="descriptionContent contentContainer">
+            <h1 class="title" itemprop="name">{{selection.name}}</h1>
+            <p class="description">
+                {{selection.description}}
+            </p>
+        </div>
     </div>
-    <a class="inCatalog btn rounded bg-pink increase big" href="/games?sort={{sort}}">В каталог</a>
+    <div class="contentContainer mainContent">
+        <div class="products">
+            <div class="title">Игры из подборки: {{selection.products.length}}</div>
+            <div class="items mobileScroll">
+                {{#each selection.products}}
+                    {{> game}}
+                {{/each}}
+            </div>
+        </div>
+        {{#if articles.length}}
+            <div class="articles">
+                <div class="title">Упоминания игр<br>из подборки в блоге</div>
+                {{#iff articles.length '>' 3}}
+
+                {{else}}
+                    <div class="items mobileScroll">
+                        {{#each articles}}
+                            <a href="{{@root.websiteAddress}}blog/{{alias}}" class="article">
+                                <img class="img" src="{{@root.websiteAddress}}{{img}}" alt="Изображение записи из блога {{name}}" title="Изображение записи из блога {{name}}">
+                                <div class="attributes">
+                                    <div class="btn small round border small bg-darkLilac">
+                                        {{#iff type '===' 'news'}}Новости{{else}}Статьи{{/iff}}
+                                    </div>
+                                    <div class="date">{{createdDate}}</div>
+                                </div>
+                                <div class="description">
+                                    <div class="title">{{name}}</div>
+                                    <div class="text">{{introText}}</div>
+                                </div>
+                            </a>
+                        {{/each}}
+                    </div>
+                {{/iff}}
+            </div>
+        {{/if}}
+        <div class="selections">
+            {{#each selections}}
+                <a href="{{@root.websiteAddress}}selections/{{alias}}" title="Перейти на страницу подборки {{name}}" class="selection">
+                    <img src="{{@root.websiteAddress}}{{img}}" class="selectionImg" alt="Изображение подборки товаров {{name}}" title="Изображение подборки товаров {{name}}">
+                    <div class="selectionInfo">
+                        <div class="selectionName">{{name}}</div>
+                        <div class="selectionCountProducts">Игр в подборке: {{products.length}}</div>
+                    </div>
+                </a>
+            {{/each}}
+        </div>
+        <button class="btn round border hover-bg-palePink loadMore js-loadMoreSelections">Загрузить еще</button>
+    </div>
 </main>

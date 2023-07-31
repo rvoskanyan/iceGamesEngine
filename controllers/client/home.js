@@ -8,6 +8,7 @@ import {achievementEvent} from "../../services/achievement.js";
 import Review from "../../models/Review.js";
 import Order from "../../models/Order.js";
 import ProductCategory from "../../models/Product_Category.js";
+import Selection from "../../models/Selection.js";
 
 export const homepage = async (req, res) => {
   const inviter = req.query.inviter;
@@ -45,6 +46,7 @@ export const homepage = async (req, res) => {
     .sort({createdAt: -1})
     .select(['name', 'alias', 'introText', 'type', 'createdAt', 'img'])
     .limit(9);
+  const selections = await Selection.find({inHome: true}).limit(4).lean();
   const checkEmailHash = req.query.confirmEmail;
   const catalog = [];
   const day = new Date().getDay();
@@ -263,5 +265,6 @@ export const homepage = async (req, res) => {
     countReviews,
     countSales,
     recommend,
+    selections,
   });
 }

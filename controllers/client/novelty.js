@@ -29,7 +29,7 @@ export const noveltyPage = async (req, res) => {
       });
     }
     
-    res.render('selection', {
+    res.render('section', {
       title: 'Новинки в каталоге ICE GAMES',
       metaDescription: 'Лучшие игровые новинки в магазине ICE GAMES! Здесь можно купить новые ключи для Steam и других платформ по выгодной цене.',
       ogPath: 'novelty',

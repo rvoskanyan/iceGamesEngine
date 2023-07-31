@@ -23,6 +23,7 @@ const whereLoginNode = document.querySelector('.js-whereLogin');
 const howToGetLoginNode = document.querySelector('.js-howToGetLogin');
 const inputFrameNodes = document.querySelectorAll('.js-inputFrame');
 const recProductSliderNode = document.querySelector('.js-recProductSlider');
+const ourChoiceSliderNode = document.querySelector('.js-ourChoiceSlider');
 const additionsProductSliderNode = document.querySelector('.js-additionsProductSlider');
 const articlesProductSliderNode = document.querySelector('.js-articlesGameSlider');
 const seriesSliderNode = document.querySelector('.js-seriesSlider');
@@ -2491,6 +2492,15 @@ if (additionsProductSliderNode) {
 if (recProductSliderNode) {
     new Slider({
         mainNode: recProductSliderNode,
+        switchingTime: 5000,
+        isTrack: true,
+        countSlidesScroll: 1,
+    });
+}
+
+if (ourChoiceSliderNode) {
+    new Slider({
+        mainNode: ourChoiceSliderNode,
         switchingTime: 5000,
         isTrack: true,
         countSlidesScroll: 1,

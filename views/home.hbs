@@ -161,6 +161,21 @@
                 <button class="btn next js-nextBtn"></button>
             </div>
         </div>
+        <div class="homeSection">
+            <h2 class="homeTitle">Подборки</h2>
+            <div class="selectionsBlock">
+                {{#each selections}}
+                    <a href="{{@root.websiteAddress}}selections/{{alias}}" title="Перейти на страницу подборки {{name}}" class="selection">
+                        <img src="{{@root.websiteAddress}}{{img}}" class="selectionImg" alt="Изображение подборки товаров {{name}}" title="Изображение подборки товаров {{name}}">
+                        <div class="selectionInfo">
+                            <div class="selectionName">{{name}}</div>
+                            <div class="selectionCountProducts">Игр в подборке: {{products.length}}</div>
+                        </div>
+                    </a>
+                {{/each}}
+            </div>
+            <a class="btn round border hover-bg-palePink allSelections" href="{{websiteAddress}}selections">Все подборки</a>
+        </div>
         {{> newsSlider
                 aricles=articles
         }}

@@ -1,5 +1,5 @@
-import {Router} from "express";
-import {aboutPage} from "./../../controllers/client/about.js";
+import { Router } from "express";
+import { aboutPage } from "./../../controllers/client/about.js";
 
 const router = Router();
 
