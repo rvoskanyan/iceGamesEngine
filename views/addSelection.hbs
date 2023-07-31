@@ -1,14 +1,13 @@
 {{#if isEdit}}
-    {{#if selection.items.length}}
+    {{#if selection.products.length}}
         <h3>Товары подборки</h3>
         <ul>
-            {{#each selection.items}}
+            {{#each selection.products}}
                 <li>
                     <form action="/admin/selections/{{ @root.selection._id }}/deleteItem/{{ _id }}" style="display: inline-block" method="post">
                         <input type="submit" value="X">
                     </form>
-                    <a href="/admin/selections/{{ @root.selection._id }}/editItem/{{ _id }}">{{ product.name }}</a>
-                    <input type="checkbox"{{#if ourChoice}} checked{{/if}} disabled>
+                    <a href="/admin/selections/{{ @root.selection._id }}/editItem/{{ _id }}">{{ name }}</a>
                 </li>
             {{/each}}
         </ul>
@@ -21,7 +20,13 @@
 <form action="/admin/selections/{{#if isEdit}}edit/{{selection._id}}{{else}}add{{/if}}" method="post" enctype="multipart/form-data">
     <label>
         *Название:
-        <input type="text" name="name"{{#if selection.name}} value="{{ selection.name }}{{/if}}">
+        <input type="text" name="name"{{#if selection.name}} value="{{ selection.name }}"{{/if}}>
+    </label>
+    <br>
+    <br>
+    <label>
+        *Alias:
+        <input type="text" name="alias"{{#if selection.alias}} value="{{ selection.alias }}"{{/if}}>
     </label>
     <br>
     <br>
@@ -53,6 +58,18 @@
         *Описание:
         <br>
         <textarea name="description" cols="50" rows="15">{{ selection.description }}</textarea>
+    </label>
+    <br>
+    <br>
+    <label>
+        На главную:
+        <input type="checkbox" name="inHome"{{#if selection.inHome}} checked{{/if}}>
+    </label>
+    <br>
+    <br>
+    <label>
+        Наш выбор:
+        <input type="checkbox" name="ourChoice"{{#if selection.ourChoice}} checked{{/if}}>
     </label>
     <br>
     <br>

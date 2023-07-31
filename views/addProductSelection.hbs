@@ -1,22 +1,16 @@
 <a href="/admin/selections/edit/{{ selection._id }}">Назад к подборке</a>
 <br>
 <br>
-<form action="/admin/selections/{{ selection._id }}/{{#if isEdit}}editItem/{{ item._id }}{{else}}addItem{{/if}}" method="post">
+<form action="/admin/selections/{{ selection._id }}/addItem" method="post">
     <label>
-        {{#if isEdit}}Т{{else}}*Выберите т{{/if}}овар:
-        <select name="productIds" {{#if isEdit}}disabled{{else}}multiple{{/if}}>
+        *Выберите товары:
+        <select name="productIds" multiple>
             {{#each products}}
-                <option value="{{ _id }}"{{#if selected}} selected{{/if}}>{{ name }}</option>
+                <option value="{{ _id }}">{{ name }}</option>
             {{/each}}
         </select>
     </label>
     <br>
     <br>
-    <label>
-        Наш выбор:
-        <input type="checkbox" name="ourChoice"{{#if item.ourChoice}} checked{{/if}}>
-    </label>
-    <br>
-    <br>
-    <input type="submit" name="add" value="{{#if isEdit}}Сохранить{{else}}Добавить{{/if}}">
+    <input type="submit" name="add" value="Добавить">
 </form>

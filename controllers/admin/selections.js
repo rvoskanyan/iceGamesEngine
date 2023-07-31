@@ -8,7 +8,17 @@ import selections from "../../routes/admin/selections.js";
 
 export const getSelectionsPage = async (req, res) => {
   try {
-    const selections = await Selection.find().select(['name']).sort({createdAt: -1}).lean();
+    const selections = await Selection.find().sort({createdAt: -1});
+    
+    for (const selection of selections) {
+      if (selection.products.length) {
+        continue;
+      }
+      
+      selection.products = selection.items.map(item => item.product);
+      
+      await selection.save();
+    }
   
     res.render('listElements', {
       layout: 'admin',
@@ -38,8 +48,12 @@ export const addSelection = async (req, res) => {
     
     const {
       name = '',
+      alias = '',
       description = '',
+      inHome,
+      ourChoice,
     } = req.body;
+    
     const {
       img = undefined,
       coverImg = undefined,
@@ -57,12 +71,31 @@ export const addSelection = async (req, res) => {
     
     const selection = new Selection({
       name,
+      alias,
       description,
       img: imgName,
       coverImg: coverImgName,
+      inHome: inHome === 'on',
+      ourChoice: ourChoice === 'on',
     });
   
     await selection.save();
+    
+    if (ourChoice === 'on') {
+      const currentOurChoice = await Selection.findOne({
+        ourChoice: true,
+        _id: {
+          $not: selection._id.toString(),
+        }
+      });
+      
+      if (currentOurChoice) {
+        currentOurChoice.ourChoice = false;
+        
+        await currentOurChoice.save();
+      }
+    }
+    
     res.redirect('/admin/selections');
   } catch (e) {
     console.log(e);
@@ -74,7 +107,7 @@ export const editSelectionPage = async (req, res) => {
   try {
     const selectionId = req.params.selectionId;
     const selection = await Selection.findById(selectionId).populate([{
-      path: 'items.product',
+      path: 'products',
       select: ['name'],
     }]).lean();
     
@@ -96,7 +129,10 @@ export const editSelection = async (req, res) => {
   try {
     const {
       name = '',
+      alias = '',
       description = '',
+      inHome,
+      ourChoice,
     } = req.body;
     
     if (!name.length || !description.length) {
@@ -129,9 +165,28 @@ export const editSelection = async (req, res) => {
     }
   
     selection.name = name;
+    selection.alias = alias;
     selection.description = description;
+    selection.inHome = inHome === 'on';
+    selection.ourChoice = ourChoice === 'on';
     
     await selection.save();
+  
+    if (ourChoice === 'on') {
+      const currentOurChoice = await Selection.findOne({
+        ourChoice: true,
+        _id: {
+          $not: selection._id.toString(),
+        }
+      });
+    
+      if (currentOurChoice) {
+        currentOurChoice.ourChoice = false;
+      
+        await currentOurChoice.save();
+      }
+    }
+    
     res.redirect('/admin/selections');
   } catch (e) {
     console.log(e);
@@ -143,12 +198,11 @@ export const addItemSelectionPage = async (req, res) => {
   const selectionId = req.params.selectionId;
   
   try {
-    const selection = await Selection.findById(selectionId).select(['items.product']).lean();
-    const selectionProductIds = selection.items.map(item => item.product);
+    const selection = await Selection.findById(selectionId).select(['products']).lean();
     const products = await Product
-      .find({_id: {$nin: selectionProductIds}, active: true})
-      .select(['name'])
-      .sort({priceTo: -1})
+      .find({ _id: { $nin: selection.products }, active: true })
+      .select([ 'name' ])
+      .sort({ priceTo: -1 })
       .lean();
     
     res.render('addProductSelection', {
@@ -169,7 +223,6 @@ export const addItemSelection = async (req, res) => {
   try {
     let {
       productIds = [],
-      ourChoice = '',
     } = req.body;
     
     if (!Array.isArray(productIds)) {
@@ -193,12 +246,9 @@ export const addItemSelection = async (req, res) => {
     }
   
   
-    selection.items = [
-      ...selection.items,
-      ...productIds.map(id => ({
-        product: id,
-        ourChoice: ourChoice === 'on',
-      }))
+    selection.products = [
+      ...selection.products,
+      ...products.map(product => product._id),
     ]
     
     await selection.save();
@@ -209,93 +259,14 @@ export const addItemSelection = async (req, res) => {
   }
 }
 
-export const editItemSelectionPage = async (req, res) => {
-  const selectionId = req.params.selectionId;
-  
-  try {
-    const itemId = req.params.itemId;
-    const selection = await Selection.findById(selectionId).select(['items']).lean();
-    
-    const editItem = selection.items.filter(item => item._id.toString() === itemId)[0];
-    const editItemProductId = editItem.product;
-    
-    if (!editItemProductId) {
-      throw new Error('Edit item nor found');
-    }
-    
-    const editItemProduct = await Product.findById(editItemProductId).select(['name']).lean();
-    
-    if (!editItemProduct) {
-      throw new Error('Product not found');
-    }
-    
-    const selectionProductIds = selection.items.map(item => item.product);
-    const products = await Product
-      .find({_id: {$nin: selectionProductIds}, active: true})
-      .select(['name'])
-      .sort({priceTo: -1})
-      .lean();
-    
-    products.unshift({
-      ...editItemProduct,
-      selected: true,
-    })
-  
-    res.render('addProductSelection', {
-      layout: 'admin',
-      title: 'Редактирование товара из подборки',
-      isEdit: true,
-      item: editItem,
-      products,
-      selection,
-    });
-  } catch (e) {
-    console.log(e);
-    res.redirect(`/admin/selections/edit/${ selectionId }`);
-  }
-}
-
-export const editItemSelection = async (req, res) => {
-  const selectionId = req.params.selectionId;
-  const itemId = req.params.itemId;
-  
-  try {
-    const { ourChoice = '' } = req.body;
-    
-    if (!selectionId.length || !itemId.length) {
-      throw new Error('Error data');
-    }
-    
-    const selection = await Selection.findById(selectionId).select(['items']);
-    
-    if (!selection) {
-      throw new Error('Selection not found');
-    }
-    
-    const editableItemIndex = selection.items.findIndex(item => item._id.toString() === itemId);
-    
-    if (editableItemIndex === -1) {
-      throw new Error('Editable element not found');
-    }
-    
-    selection.items[editableItemIndex].ourChoice = ourChoice === 'on';
-    
-    await selection.save();
-    res.redirect(`/admin/selections/edit/${ selectionId }`);
-  } catch (e) {
-    console.log(e);
-    res.redirect(`/admin/selections/${ selectionId }/editItem/${ itemId }`);
-  }
-}
-
 export const deleteItemSelection = async (req, res) => {
   const selectionId = req.params.selectionId;
   
   try {
-    const selection = await Selection.findById(selectionId).select(['items']);
+    const selection = await Selection.findById(selectionId).select(['products']);
     const itemId = req.params.itemId;
     
-    selection.items = selection.items.filter(item => item._id.toString() !== itemId);
+    selection.products = selection.products.filter(item => item._id.toString() !== itemId);
     await selection.save();
   } catch (e) {
     console.log(e);
