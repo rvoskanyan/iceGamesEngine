@@ -22,7 +22,7 @@ const fields = {
   },
   coverImg: {
     type: String,
-    required: true,
+    //required: true,
   },
   inHome: {
     type: Boolean,
