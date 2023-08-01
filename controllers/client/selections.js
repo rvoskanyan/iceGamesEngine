@@ -18,6 +18,7 @@ export const selectionsPage = async (req, res) => {
         current: true,
       }],
       ourChoice: ourChoice.products,
+      ourChoiceId: ourChoice._id,
       countSelections,
       selections,
     });

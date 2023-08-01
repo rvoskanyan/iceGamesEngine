@@ -55,6 +55,7 @@ const searchStringNode = document.querySelector('.js-searchString');
 const mobileSearchStringNode = document.querySelector('.js-mobileSearchString');
 const goSearchNode = document.querySelector('.js-goSearch');
 const goSearchMobileNode = document.querySelector('.js-goSearchMobile');
+const loadMoreSelectionsBtnNode = document.querySelector('.js-loadMoreSelections');
 const cartNode = document.querySelector('.js-cart');
 const collapseNodes = document.querySelectorAll('.js-collapse');
 const autoSizeInputNodes = document.querySelectorAll('.js-autoSizeInput');
@@ -416,6 +417,41 @@ if (buyTurkeyPage) {
         })
     }
 }
+
+loadMoreSelectionsBtnNode && loadMoreSelectionsBtnNode.addEventListener('click', async () => {
+    const skip = parseInt(loadMoreSelectionsBtnNode.dataset.skip || 4);
+    const delistSelection = loadMoreSelectionsBtnNode.dataset.delistSelection || '';
+    const selectionsNode = document.querySelector('.js-selections');
+    
+    if (!selectionsNode) {
+        return;
+    }
+    
+    const response = await postman.get(`${websiteAddress}api/selections?skip=${skip}&delistSelection=${delistSelection}`);
+    const result = await response.json();
+    
+    if (!result.success) {
+        return;
+    }
+    
+    result.selections.forEach((selection, index) => {
+        selectionsNode.innerHTML += `
+            <a href="${websiteAddress}selections/${selection.alias}" title="Перейти на страницу подборки ${selection.name}" class="selection">
+                <img src="${websiteAddress}${selection.img}" class="selectionImg" alt="Изображение подборки товаров ${selection.name}" title="Изображение подборки товаров ${selection.name}">
+                <div class="selectionInfo">
+                    <div class="selectionName">${selection.name}</div>
+                    <div class="selectionCountProducts">Игр в подборке: ${selection.products.length}</div>
+                </div>
+            </a>
+        `;
+    });
+    
+    if (result.isLast) {
+        return loadMoreSelectionsBtnNode.remove();
+    }
+    
+    loadMoreSelectionsBtnNode.dataset.skip = skip + 4;
+});
 
 loadMoreRatingNode && loadMoreRatingNode.addEventListener('click', async () => {
     const skip = parseInt(loadMoreRatingNode.dataset.skip);

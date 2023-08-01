@@ -45,7 +45,7 @@
                 {{/iff}}
             </div>
         {{/if}}
-        <div class="selections">
+        <div class="selections js-selections">
             {{#each selections}}
                 <a href="{{@root.websiteAddress}}selections/{{alias}}" title="Перейти на страницу подборки {{name}}" class="selection">
                     <img src="{{@root.websiteAddress}}{{img}}" class="selectionImg" alt="Изображение подборки товаров {{name}}" title="Изображение подборки товаров {{name}}">
@@ -56,6 +56,6 @@
                 </a>
             {{/each}}
         </div>
-        <button class="btn round border hover-bg-palePink loadMore js-loadMoreSelections">Загрузить еще</button>
+        <button class="btn round border hover-bg-palePink loadMore js-loadMoreSelections" data-delist-selection="{{selection._id}}">Загрузить еще</button>
     </div>
 </main>
