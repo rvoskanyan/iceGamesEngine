@@ -17,6 +17,11 @@
 </style>
 
 {{#iff person.role '===' 'admin'}}
+    {{#unless isClone}}
+        <form action="/admin/products/clone/{{ product.id }}" method="post">
+            <input type="submit" value="Создать клон">
+        </form>
+    {{/unless}}
     {{#if isEdit}}
         {{#unless product.active}}
             <a href="/admin/products/{{product.id}}/parse-by-steam-buy">Спарсить данные со стимбая</a>
@@ -437,6 +442,15 @@
                     {{name}}
                 </option>
             {{/each}}
+        </select>
+    </label>
+    <br>
+    <br>
+    <label>
+        Тип платформы*:
+        <select name="platformType"{{#iff person.role '!==' 'admin'}} disabled{{/iff}}>
+            <option value="pc"{{#iff product.platformType '===' 'pc'}} selected{{/iff}}>PC</option>
+            <option value="xbox"{{#iff product.platformType '===' 'xbox'}} selected{{/iff}}>XBOX</option>
         </select>
     </label>
     <br>

@@ -162,6 +162,7 @@ export const addProduct = async (req, res) => {
       publisher,
       activationService,
       platform,
+      platformType,
       top,
       active,
     } = req.body;
@@ -217,6 +218,7 @@ export const addProduct = async (req, res) => {
       publisherId: publisher,
       activationServiceId: activationService,
       platformId: platform,
+      platformType,
       top: top === 'on',
       active: active === 'on',
     });
@@ -346,22 +348,6 @@ export const pageEditProduct = async (req, res) => {
       isEdit: true,
       product,
       products,
-      /*gameImages: gameImages.map(item => item.dataValues),
-      gameElements: gameElements.map(item => {
-        const dataValues = item.dataValues;
-        
-        if (!dataValues.Entity) {
-          return dataValues;
-        }
-        
-        const gameData = dataValues.Entity.dataValues;
-        
-        return {
-          id: dataValues.id,
-          gameId: gameData.id,
-          name: gameData.name,
-        }
-      }),*/
       recProducts,
       categories,
       genres,
@@ -429,6 +415,7 @@ export const editProduct = async (req, res) => {
       publisher,
       activationService,
       platform,
+      platformType,
       top,
       active,
     } = req.body;
@@ -481,6 +468,7 @@ export const editProduct = async (req, res) => {
       publisherId: publisher ? publisher : product.publisherId,
       activationServiceId: activationService ? activationService : product.activationServiceId,
       platformId: platform ? platform : product.platformId,
+      platformType: platformType ? platformType : product.platformType,
       top: top === 'on',
       active: active === 'on',
     });
@@ -1160,5 +1148,61 @@ export const deleteSliderImg = async (req, res) => {
   } catch (e) {
     console.log(e);
     res.redirect(`/admin/products/edit/${productId}`);
+  }
+}
+
+export const cloneProduct = async (req, res) => {
+  const productId = req.params.productId;
+  
+  try {
+    const targetProduct = await Product.findById(productId).lean();
+    const creator = req.session.userId;
+    
+    const newProduct = new Product({
+      name: targetProduct.name + ' - clone',
+      sampleH1: targetProduct.sampleH1,
+      sampleTitle: targetProduct.sampleTitle,
+      sampleMetaDescription: targetProduct.sampleMetaDescription,
+      alias: targetProduct.alias + '-clone',
+      description: targetProduct.description,
+      additionalInfo: targetProduct.additionalInfo,
+      priceTo: targetProduct.priceTo,
+      priceFrom: targetProduct.priceFrom,
+      discount: targetProduct.discount,
+      img: targetProduct.img,
+      coverImg: targetProduct.coverImg,
+      coverVideo: targetProduct.coverVideo,
+      trailerLink: targetProduct.trailerLink,
+      dlc: targetProduct.dlc,
+      dlcForFree: targetProduct.dlcForFree,
+      dlcForName: targetProduct.dlcForName,
+      preOrder: targetProduct.preOrder,
+      releaseDate: targetProduct.releaseDate,
+      images: targetProduct.images,
+      elements: targetProduct.elements,
+      activationServiceId: targetProduct.activationServiceId,
+      publisherId: targetProduct.publisherId,
+      seriesId: targetProduct.seriesId,
+      editionId: targetProduct.editionId,
+      authorId: creator,
+      lastEditorId: creator,
+      platformId: targetProduct.platformId,
+      platformType: targetProduct.platformType,
+      languages: targetProduct.languages,
+      activationRegions: targetProduct.activationRegions,
+      categories: targetProduct.categories,
+      genres: targetProduct.genres,
+      extends: targetProduct.extends,
+      darkenCover: targetProduct.darkenCover,
+      totalGradeParse: targetProduct.totalGradeParse,
+      ratingCountParse: targetProduct.ratingCountParse,
+    });
+    
+    await newProduct.save();
+  
+    res.redirect(`/admin/products/edit/${ newProduct._id }`);
+  } catch (e) {
+    console.log(e);
+    res.redirect(`/admin/products`);
   }
 }

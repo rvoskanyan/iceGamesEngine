@@ -199,6 +199,12 @@ const fields = {
     ref: 'Platform',
     //required: true,
   },
+  platformType: {
+    type: String,
+    default: 'pc',
+    enum: ['pc', 'xbox'],
+    required: true,
+  },
   languages: String,
   recommends: [{
     type: Schema.Types.ObjectId,
