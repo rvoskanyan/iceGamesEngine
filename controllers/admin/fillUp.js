@@ -3,7 +3,7 @@ import FillUp from "../../models/FillUp.js";
 
 export const fillUpAnalyticsPage = async (req, res) => {
   try {
-    const response = await fetch('https://steam.kupikod.com/api/v3/partner-balance', {
+    const response = await fetch('https://steam-api.kupikod.com/api/v3/partner-balance', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -28,7 +28,7 @@ export const updateStatuses = async (req, res) => {
     const pendingFillUps = await FillUp.find({status: 'pending'}).select(['orderId', 'status']);
   
     for (const fillUp of pendingFillUps) {
-      const response = await fetch(`https://steam.kupikod.com/api/v3/partner-order/${fillUp.orderId}`, {
+      const response = await fetch(`https://steam-api.kupikod.com/api/v3/partner-order/${fillUp.orderId}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

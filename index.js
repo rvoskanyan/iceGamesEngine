@@ -22,7 +22,7 @@ import {getFormatDate} from "./utils/functions.js";
 
 dotenv.config();
 
-const MONGODB_URI = `mongodb://Rafik:Z3Akp3gR7aH1tet2@localhost:27017/igsDev?authSource=admin`;
+const MONGODB_URI = `mongodb://Rafik:Z3Akp3gR7aH1tet2@127.0.01:27017/igsDev?authSource=admin`;
 const app = express();
 const store = new (MongoStore(session))({
   collection: 'sessions',
