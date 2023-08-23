@@ -45,3 +45,39 @@ export const privacyPolicyPage = (req, res) => {
       ],
    });
 }
+
+export const licenseAgreementOfferPage = (req, res) => {
+   res.render('licenseAgreementOfferPage', {
+      title: 'ICE GAMES — Лицензионный договор-оферта',
+      metaDescription: 'Страница ознакомления с лицензионным договором-оферты при использовании сайта интернет-магазина ключей компьютерных игры - ICE GAMES',
+      ogPath: 'legal-info/license-agreement-offer',
+      breadcrumbs: [
+         {
+            name: 'Правовая информация',
+            path: 'legal-info',
+         },
+         {
+            name: 'Лицензионный договор-оферта',
+            current: true,
+         },
+      ],
+   });
+}
+
+export const serviceOfferAgreementPage = (req, res) => {
+   res.render('serviceOfferAgreement', {
+      title: 'ICE GAMES — Договор-оферта оказания услуг',
+      metaDescription: 'Страница ознакомления с договором-оферта оказания услуг при использовании сайта интернет-магазина ключей компьютерных игры - ICE GAMES',
+      ogPath: 'legal-info/service-offer-agreement',
+      breadcrumbs: [
+         {
+            name: 'Правовая информация',
+            path: 'legal-info',
+         },
+         {
+            name: 'Договор-оферта оказания услуг',
+            current: true,
+         },
+      ],
+   });
+}
