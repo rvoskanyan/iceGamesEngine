@@ -5,13 +5,6 @@ import Order from "../../models/Order.js";
 export const analyticsPage = async (req, res) => {
   try {
     const endDate = req.query.endDate;
-    const products = await Product.find({countKeys: {$gt: 0}}).select(['name', 'priceTo', 'dsPrice']).lean();
-    let totalCountKeys = 0;
-    let totalInStockKeys = 0;
-    let totalPVP = 0;
-    let totalSellingKeys = 0;
-    let totalFVP = 0;
-    let rows = [];
   
     const currentDateTime = endDate ? new Date(endDate) : new Date();
     const todayDate = new Date(currentDateTime.getFullYear(), currentDateTime.getMonth(), currentDateTime.getDate());
@@ -148,76 +141,104 @@ export const analyticsPage = async (req, res) => {
       }
     }
     
-    for (const product of products) {
-      const groups = await Key.aggregate([
-        {
-          $match: {
-            product: product._id,
-            purchasePrice: {$gt: 0},
-          }
-        },
-        {
-          $group: {
-            _id: '$purchasePrice',
-            count: { $count: { } },
-            keys: { $push: {
-              isActive: "$isActive",
-              isSold: "$isSold",
-              sellingPrice: "$sellingPrice",
-              purchasePrice: "$purchasePrice",
-            }},
-          }
-        },
-        {$sort: {_id: 1}},
-      ]);
-      
-      if (!groups.length) {
-        continue;
-      }
-  
-      groups.forEach(group => {
-        const purchasePrice = group._id;
-        const currentSallePrice = product.priceTo;
-        const pvpPerSale = Math.floor((currentSallePrice - currentSallePrice * 0.025 - purchasePrice) * 100) / 100;
-        let countInStock = 0;
-        let countSelling = 0;
-        let fvp = 0;
-  
-        group.keys.forEach(key => {
-          if (!key.isSold) {
-            return countInStock++
-          }
-  
-          countSelling++;
-          
-          if (!key.sellingPrice) {
-            key.sellingPrice = 0;
-          }
-  
-          fvp += Math.floor((key.sellingPrice - key.sellingPrice * 0.025 - key.purchasePrice) * 100) / 100;
-        });
-        
-        rows.push({
-          productId: product._id,
-          productName: product.name,
-          purchasePrice,
-          countKeys: group.count,
-          currentSallePrice,
-          dsPrice: product.dsPrice + product.dsPrice * 0.01,
-          pvpPerSale,
-          countInStock,
-          pvp: pvpPerSale * countInStock,
-          countSelling,
-          fvp,
-        });
-  
-        totalCountKeys += group.count;
-        totalInStockKeys += countInStock;
-        totalPVP += pvpPerSale * countInStock;
-        totalSellingKeys += countSelling;
-        totalFVP += fvp;
-      });
-    }
+    const stockData = await Key.aggregate([
+      { $match: { isActive: true } },
+      {
+        $lookup: {
+          from: 'products',
+          localField: 'product',
+          foreignField: '_id',
+          as: 'product',
+        }
+      },
+      { $unwind: '$product' },
+      {
+        $group: {
+          _id: {
+            productId: '$product._id',
+            purchasePrice: "$purchasePrice",
+          },
+          productName: { $first: "$product.name" },
+          currentSallePrice: { $first: "$product.priceTo" },
+          dsPrice: {
+            $first: {
+              $add: [
+                "$product.dsPrice",
+                { $multiply: ["$product.dsPrice", 0.01] }
+              ],
+            }
+          },
+          countKeys: { $count: { } },
+          countInStock: { $sum: { $cond: ["$isSold", 0, 1] } },
+          countSelling: { $sum: { $cond: ["$isSold", 1, 0] } },
+          pvpPerSale: {
+            $first: {
+              $floor: {
+                $subtract: [
+                  {
+                    $subtract: [
+                      "$product.priceTo",
+                      { $multiply: ["$product.priceTo", 0.025] }
+                    ],
+                  },
+                  "$purchasePrice",
+                ],
+              }
+            }
+          },
+          fvp: {
+            $sum: {
+              $cond: [
+                "$isSold",
+                {
+                  $floor: {
+                    $subtract: [
+                      {
+                        $subtract: [
+                          "$sellingPrice",
+                          { $multiply: ["$sellingPrice", 0.025] }
+                        ],
+                      },
+                      "$purchasePrice",
+                    ],
+                  }
+                },
+                0
+              ]
+            }
+          },
+        }
+      },
+      {
+        $project: {
+          _id: 0,
+          productId: '$_id.productId',
+          productName: 1,
+          purchasePrice: '$_id.purchasePrice',
+          countKeys: 1,
+          currentSallePrice: 1,
+          dsPrice: 1,
+          pvpPerSale: 1,
+          countInStock: 1,
+          pvp: { $multiply: ['$pvpPerSale', '$countInStock'] },
+          countSelling: 1,
+          fvp: 1,
+        }
+      },
+      {
+        $group: {
+          _id: 1,
+          rows: { $push: "$$ROOT" },
+          countItems: { $count: {} },
+          totalCountKeys: { $sum: "$countKeys" },
+          totalInStockKeys: { $sum: "$countInStock" },
+          totalPVP: { $sum: "$pvp" },
+          averagePVP: { $avg: "$pvp" },
+          totalSellingKeys: { $sum: "$countSelling" },
+          totalFVP: { $sum: "$fvp" },
+        }
+      },
+    ]);
     
     const finishedProducts = [];
     const notInStockProducts = await Product.find({countKeys: {$eq: 0}, active: true}).lean();
@@ -232,16 +253,10 @@ export const analyticsPage = async (req, res) => {
     
     res.render('admAnalytics', {
       layout: 'admin',
-      rows,
-      totalCountKeys,
-      totalInStockKeys,
-      finishedProducts,
-      totalPVP: Math.floor(totalPVP),
-      averagePVP: Math.floor(totalPVP / totalInStockKeys),
-      totalSellingKeys,
-      totalFVP: Math.floor(totalFVP),
-      countItems: products.length,
       total,
+      endDate,
+      finishedProducts,
+      stockData: stockData[0],
       currentCountSales: JSON.stringify(currentCountSales),
       currentCost: JSON.stringify(currentCost),
       currentFvp: JSON.stringify(currentFvp),
@@ -255,7 +270,6 @@ export const analyticsPage = async (req, res) => {
       previousCountOrders: JSON.stringify(previousCountOrders),
       previousAverageCheck: JSON.stringify(previousAverageCheck),
       labels: JSON.stringify(labels),
-      endDate,
     });
   } catch (e) {
     console.log(e);

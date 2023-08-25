@@ -58,7 +58,7 @@
         <th>Продано</th>
         <th>ФВП</th>
     </tr>
-    {{#each rows}}
+    {{#each stockData.rows}}
         <tr>
             <td>
                 <a href="/admin/products/edit/{{productId}}">{{productName}}</a>
@@ -75,16 +75,16 @@
         </tr>
     {{/each}}
     <tr>
-        <th style="text-align: end">Итого: {{ countItems }}</th>
+        <th style="text-align: end">Итого: {{ stockData.countItems }}</th>
         <th></th>
-        <th>{{ totalCountKeys }}</th>
+        <th>{{ stockData.totalCountKeys }}</th>
         <th></th>
         <th></th>
         <th></th>
-        <th>{{ totalInStockKeys }}</th>
-        <th>{{ totalPVP }}₽ / Ср.: {{ averagePVP }}₽</th>
-        <th>{{ totalSellingKeys }}</th>
-        <th>{{ totalFVP }}₽</th>
+        <th>{{ stockData.totalInStockKeys }}</th>
+        <th>{{ stockData.totalPVP }}₽ / Ср.: {{ stockData.averagePVP }}₽</th>
+        <th>{{ stockData.totalSellingKeys }}</th>
+        <th>{{ stockData.totalFVP }}₽</th>
     </tr>
 </table>
 <br>
