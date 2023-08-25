@@ -103,41 +103,71 @@ export const analyticsPage = async (req, res) => {
         const endDate = new Date(startDate);
         endDate.setDate(endDate.getDate() + 1);
         
-        const orders = await Order.find({isDBI: true, status: 'paid', createdAt: {
-            $gte: startDate,
-            $lt: endDate,
-        }}).lean();
-        const keys = [];
-        const countOrders = orders.length;
-        let cost = 0;
-        let fvp = 0;
-        let turnover = 0;
+        const data = await Order.aggregate([
+          {
+            $match: {
+              isDBI: true,
+              status: 'paid',
+              createdAt: {
+                $gte: startDate,
+                $lt: endDate,
+              }
+            }
+          },
+          {
+            $lookup: {
+              from: 'keys',
+              localField: '_id',
+              foreignField: 'soldOrder',
+              as: 'keys',
+            }
+          },
+          {
+            $project: {
+              countSales: { $size: '$keys' },
+              cost: { $sum: "$keys.purchasePrice" },
+              turnover: { $sum: "$keys.sellingPrice" },
+              averageCheck: { $avg: "$keys.sellingPrice" },
+              fvp: {
+                $reduce: {
+                  input: "$keys",
+                  initialValue: 0,
+                  in: {
+                    $add: [
+                      "$$value",
+                      {
+                        $floor: {
+                          $subtract: [
+                            {
+                              $subtract: [
+                                "$$this.sellingPrice",
+                                { $multiply: ["$$this.sellingPrice", 0.025] }
+                              ],
+                            },
+                            "$$this.purchasePrice",
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
+              },
+            },
+          },
+          {
+            $group: {
+              _id: 1,
+              countSales: { $sum: "$countSales" },
+              cost: { $sum: "$cost" },
+              fvp: { $sum: "$fvp" },
+              turnover: { $sum: "$turnover" },
+              averageCheck: { $avg: { $sum: "$turnover" } },
+              countOrders: { $count: {} },
+            }
+          }
+        ]);
   
-        for (const order of orders) {
-          const orderKeys = await Key.find({soldOrder: order._id}).lean();
-    
-          Array.prototype.push.apply(keys, orderKeys);
-        }
-  
-        keys.forEach(key => {
-          const {
-            purchasePrice,
-            sellingPrice,
-          } = key;
-    
-          cost += purchasePrice;
-          fvp += Math.floor((sellingPrice - sellingPrice * 0.025 - purchasePrice) * 100) / 100;
-          turnover += sellingPrice;
-        });
-  
-        return {
-          countSales: keys.length || 0,
-          cost: cost || 0,
-          fvp: fvp || 0,
-          turnover: turnover || 0,
-          countOrders: countOrders || 0,
-          averageCheck: (turnover / countOrders) || 0,
-        };
+        return data[0];
       }
     }
     
