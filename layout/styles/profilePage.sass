@@ -41,21 +41,21 @@
       display: flex
 
   & .newsSliderContainer
-    @include for-big-phone-down
+    @include for-phone-only
       margin-top: 30px
 
       & .newsSlider
         z-index: -1
 
   .nav
-    @include for-big-phone-down
+    @include for-phone-only
       position: relative
       max-width: max-content
       margin: 0 auto
       z-index: 2
 
     .mobileOpenProfileMenu
-      @include for-big-phone-down
+      @include for-phone-only
         display: flex
         column-gap: 5px
         border: 1px solid #fff
@@ -93,7 +93,7 @@
         display: none
 
     & .menu
-      @include for-big-phone-down
+      @include for-phone-only
         position: absolute
         background-color: rgba(255, 0, 245, 0.9)
         top: -10px
@@ -144,7 +144,7 @@
             flex-grow: initial
             border-radius: 100%
 
-        @include for-big-phone-down
+        @include for-phone-only
           &:before, &:after
             content: ''
             display: block
@@ -167,7 +167,7 @@
         &.active
           font-weight: 600
 
-        @include for-big-phone-down
+        @include for-phone-only
           opacity: initial
           font-weight: initial
 
@@ -603,7 +603,7 @@
             font-size: 14px
             margin-left: 50px
 
-            @include for-big-phone-down
+            @include for-phone-only
               text-decoration: underline
 
             @include for-big-phone-up

@@ -74,7 +74,7 @@
       transform: initial
       display: contents
 
-    @include for-big-phone-down
+    @include for-phone-only
       & .btn.rating
         font-family: 'Lemon Milk'
         border: none
@@ -220,7 +220,7 @@
         text-decoration: none
         transition: initial
 
-        @include for-big-phone-down
+        @include for-phone-only
           &:not(:last-child)
             margin-bottom: 8px
 
@@ -281,7 +281,7 @@
             font-weight: 500
             text-decoration: underline
 
-            @include for-big-phone-down
+            @include for-phone-only
               padding: 3px 0
 
             @include for-desktop-up
