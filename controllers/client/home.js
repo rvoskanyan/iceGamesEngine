@@ -194,6 +194,10 @@ export const homepage = async (req, res) => {
       }
     ]);
     
+    if (!products.length) {
+      continue;
+    }
+    
     catalog.push({
       category,
       products: products.map(item => {
@@ -212,7 +216,7 @@ export const homepage = async (req, res) => {
     });
   }
   
-  catalog.push({
+  noveltiesProduct.length && catalog.push({
     category: {name: 'Новинки'},
     products: noveltiesProduct.map(item => {
       const productId = item._id.toString();
@@ -229,7 +233,7 @@ export const homepage = async (req, res) => {
     }),
   })
   
-  catalog.push({
+  discounts.length && catalog.push({
     category: {name: 'Скидки'},
     products: discounts.map(item => {
       const productId = item._id.toString();
@@ -246,7 +250,7 @@ export const homepage = async (req, res) => {
     }),
   })
   
-  catalog.push({
+  preOrders.length && catalog.push({
     category: {name: 'Скоро'},
     products: preOrders.map(item => {
       const productId = item._id.toString();
