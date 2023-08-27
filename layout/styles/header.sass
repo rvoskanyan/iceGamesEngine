@@ -94,6 +94,7 @@
 
     @include for-desktop-up
       display: flex
+      margin: 0 0 0 20px
 
     @include for-big-desktop-up
       margin: 0 0 0 60px
@@ -203,11 +204,10 @@
       @include for-desktop-up
         flex-direction: initial
         align-items: center
-        column-gap: 4px
         z-index: 1
 
       @include for-middle-desktop-up
-        column-gap: 10px
+        column-gap: 8px
 
       .item, .downItem
         font-family: 'Montserrat'
@@ -333,7 +333,7 @@
         display: block
         position: relative
         flex-grow: 1
-        margin-left: 30px
+        margin-left: 15px
 
       @include for-middle-desktop-up
         margin-left: 40px
@@ -399,9 +399,12 @@
 
     @include for-desktop-up
       order: 1
-      margin: 0 60px 0 20px
-      padding: 5px
+      margin: 0 20px 0 20px
       height: 35px
+
+    @include for-middle-desktop-up
+      padding: 5px
+      margin: 0 60px 0 20px
 
     .marker
       background-color: #fff
@@ -413,7 +416,7 @@
       transition: .3s ease-in
       transition-property: left, width
 
-      @include for-desktop-up
+      @include for-middle-desktop-up
         top: 5px
         bottom: 5px
 
@@ -423,7 +426,7 @@
       border-radius: 100px
       height: 100%
 
-      @include for-desktop-up
+      @include for-middle-desktop-up
         padding: 0 20px
 
       &.active
