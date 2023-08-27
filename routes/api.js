@@ -10,6 +10,7 @@ import usersRoute from './api/users.js';
 import paymentRoute from "./api/payment.js";
 import fillUpSteamRoute from "./api/fillUpSteam.js";
 import selectionsRoute from "./api/selections.js";
+import systemRoute from "./api/system.js";
 
 const router = Router();
 
@@ -24,5 +25,6 @@ router.use('/users', usersRoute);
 router.use('/beta/payment', paymentRoute);
 router.use('/fillUpSteam', fillUpSteamRoute);
 router.use('/selections', selectionsRoute);
+router.use('/system', systemRoute);
 
 export default router;

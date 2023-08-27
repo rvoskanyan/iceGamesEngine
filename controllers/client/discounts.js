@@ -2,9 +2,10 @@ import Product from "./../../models/Product.js";
 
 export const discountsPage = async (req, res) => {
   try {
+    const platform = req.cookies.platform || 'pc';
     const person = res.locals.person;
-    let products = await Product.find()
-      .find({discount: {$gt: 60}, active: true})
+    let products = await Product
+      .find({ discount: {$gt: 60}, active: true, platformType: platform })
       .select(['name', 'alias', 'img', 'priceTo', 'priceFrom', 'dsId', 'dlc', 'inStock', 'preOrder'])
       .sort({'priceFrom': -1})
       .limit(14)

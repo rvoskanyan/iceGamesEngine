@@ -9,13 +9,25 @@ export const getSelections = async (req, res) => {
     } = req.query;
     
     const filter = { _id: { $ne: delistSelection } };
-    const selections = await Selection.find(filter).sort({createdAt: -1}).limit(+limit).skip(+skip).lean();
+    const selections = await Selection
+      .find(filter)
+      .sort({createdAt: -1})
+      .limit(+limit)
+      .skip(+skip)
+      .populate([{
+        path: 'products',
+        select: ['platformType'],
+      }])
+      .lean();
     const count = await Selection.countDocuments(filter);
     const isLast = +skip + +limit >= count;
     
     res.json({
       success: true,
-      selections,
+      selections: selections.map(selection => ({
+        ...selection,
+        products: selection.products.filter(product => product.platformType === platform),
+      })),
       isLast,
     });
   } catch (e) {

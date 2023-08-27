@@ -31,7 +31,8 @@ export const blogArticlePage = async (req, res) => {
   try {
     const article = await Article
       .findOne({alias: req.params.alias})
-      .populate('products', ['name', 'alias', 'priceTo', 'priceFrom', 'img', 'dsId', 'dlc', 'inStock', 'preOrder']);
+      .populate('products', ['name', 'alias', 'priceTo', 'priceFrom', 'img', 'dsId', 'dlc', 'inStock', 'preOrder', 'platformType']);
+    const platform = req.cookies.platform || 'pc';
     
     if (req.session.isAuth) {
       const user = res.locals.person;
@@ -51,6 +52,8 @@ export const blogArticlePage = async (req, res) => {
         await article.save();
       }
     }
+  
+    article.products = article.products.filter(product => product.platformType === platform);
   
     res.render('blogArticle', {
       title: `ICE GAMES Блог — ${article.name}`,

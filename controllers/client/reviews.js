@@ -31,7 +31,7 @@ export const reviewsPage = async (req, res) => {
       const favoritesProducts = person.favoritesProducts;
       const cart = person.cart;
   
-      const {viewedProducts} = await User
+      const { viewedProducts } = await User
         .findById(person._id)
         .select('viewedProducts')
         .slice('viewedProducts', 7)

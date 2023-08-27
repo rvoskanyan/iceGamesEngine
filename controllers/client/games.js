@@ -31,6 +31,7 @@ export const gamesPage = async (req, res, next) => {
     activationServices = Array.isArray(activationServices) ? activationServices : [activationServices];
     
     const sectionName = req.params.sectionName;
+    const platform = req.cookies.platform || 'pc';
   
     let section;
     let sectionType;
@@ -124,9 +125,14 @@ export const gamesPage = async (req, res, next) => {
     let allCategories = await Category.find().select(['name', 'alias']).lean();
     let allGenres = await Genre.find().select(['name', 'alias']).lean();
     let allActivationServices = await ActivationService.find().select(['name', 'alias']).lean();
+  
+    const filter = {
+      active: true,
+      platformType: platform,
+    }
     
-    const minPriceProduct = await Product.findOne({active: true}).sort({priceTo: 1}).select(['priceTo']).lean();
-    const maxPriceProduct = await Product.findOne({active: true}).sort({priceTo: -1}).select(['priceTo']).lean();
+    const minPriceProduct = await Product.findOne(filter).sort({priceTo: 1}).select(['priceTo']).lean();
+    const maxPriceProduct = await Product.findOne(filter).sort({priceTo: -1}).select(['priceTo']).lean();
     const limit = 20;
     const skip = (page - 1) * limit;
   
@@ -164,10 +170,6 @@ export const gamesPage = async (req, res, next) => {
     const activationServicesIds = activationServices.map(activationServiceAlias => {
       return allActivationServices.find(item => item.alias === activationServiceAlias)._id
     });
-  
-    const filter = {
-      active: true,
-    }
   
     const getWithoutSort = async (filter) => {
       let stageFilter = {
@@ -500,6 +502,7 @@ export const gamesPage = async (req, res, next) => {
 
 export const gamePage = async (req, res) => {
   try {
+    const platform = req.cookies.platform || 'pc';
     const {alias} = req.params;
     const product = await Product
       .findOne({alias})
@@ -526,6 +529,12 @@ export const gamePage = async (req, res) => {
           }
         }
       ]);
+    
+    if (platform !== product.platformType) {
+      res.cookie('platform', product.platformType);
+      return res.redirect(req.originalUrl);
+    }
+    
     const person = res.locals.person;
     const reviewsFilter = {
       targetId: product._id,
@@ -665,7 +674,18 @@ export const gamePage = async (req, res) => {
         .findById(person._id)
         .select('viewedProducts')
         .slice('viewedProducts', 7)
-        .populate('viewedProducts', ['alias', 'name', 'img', 'priceTo', 'priceFrom', 'dsId', 'dlc', 'inStock', 'preOrder'])
+        .populate('viewedProducts', [
+          'alias',
+          'name',
+          'img',
+          'priceTo',
+          'priceFrom',
+          'dsId',
+          'dlc',
+          'inStock',
+          'preOrder',
+          'platformType',
+        ])
         .lean();
   
       lastViewedProducts = viewedProductsResult.viewedProducts;
@@ -736,7 +756,7 @@ export const gamePage = async (req, res) => {
     if (product.seriesId) {
       recProductsFilter.seriesId = {$ne: product.seriesId}; //Отсеиваем товары, которые есть в серии текущей игры
       seriesProducts = await Product
-        .find({_id: {$ne: product._id}, seriesId: product.seriesId, active: true})
+        .find({_id: {$ne: product._id}, seriesId: product.seriesId, active: true, platformType: platform})
         .select(['name', 'alias', 'priceTo', 'priceFrom', 'img', 'inStock', 'preOrder'])
         .lean();
     } else if (product.bundleId) {
@@ -768,6 +788,7 @@ export const gamePage = async (req, res) => {
           priceTo: {
             $gte: product.priceTo,
           },
+          
         })
         .select(['name', 'alias', 'inStock', 'img', 'priceTo', 'priceFrom', 'preOrder'])
         .limit(8 - recProducts.length)
@@ -783,6 +804,7 @@ export const gamePage = async (req, res) => {
           priceTo: {
             $lt: product.priceTo,
           },
+          platformType: platform,
         })
         .select(['name', 'alias', 'inStock', 'img', 'priceTo', 'priceFrom'])
         .limit(8 - recProducts.length)

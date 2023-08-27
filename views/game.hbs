@@ -425,13 +425,15 @@
                         {{#if product.elements.length}}
                             <button class="btn round border big translucent js-tabBtn" data-target-id="3">Состав набора</button>
                         {{/if}}
-                        {{#if seriesProducts.length}}
-                            {{#unless product.recOs}}
-                                <button class="btn round border big translucent js-tabBtn" data-target-id="4">
-                                    Системные требования
-                                </button>
-                            {{/unless}}
-                        {{/if}}
+                        {{#unless platform}}
+                            {{#if seriesProducts.length}}
+                                {{#unless product.recOs}}
+                                    <button class="btn round border big translucent js-tabBtn" data-target-id="4">
+                                        Системные требования
+                                    </button>
+                                {{/unless}}
+                            {{/if}}
+                        {{/unless}}
                     </div>
                     <div class="items totalHeight infoBlock">
                         <div class="item description active js-tabBlock-1">
@@ -501,9 +503,57 @@
                                 {{/iff}}
                             </div>
                         {{/if}}
-                        {{#if seriesProducts.length}}
-                            {{#unless product.recOs}}
-                                <ul class="item js-tabBlock-4 fieldedList">
+                        {{#unless platform}}
+                            {{#if seriesProducts.length}}
+                                {{#unless product.recOs}}
+                                    <ul class="item js-tabBlock-4 fieldedList">
+                                        {{#if product.os}}
+                                            <li class="item">
+                                                <div class="name">ОС:</div>
+                                                <div class="value">
+                                                    {{product.os}}
+                                                </div>
+                                            </li>
+                                        {{/if}}
+                                        <li class="item">
+                                            <div class="name">Процессор:</div>
+                                            <div class="value">
+                                                {{product.cpu}}
+                                            </div>
+                                        </li>
+                                        <li class="item">
+                                            <div class="name">Видеокарта:</div>
+                                            <div class="value">
+                                                {{product.graphicsCard}}
+                                            </div>
+                                        </li>
+                                        <li class="item">
+                                            <div class="name">Оперативная память:</div>
+                                            <div class="value">
+                                                {{product.ram}}
+                                            </div>
+                                        </li>
+                                        <li class="item">
+                                            <div class="name">Место на диске:</div>
+                                            <div class="value">
+                                                {{product.diskMemory}}
+                                            </div>
+                                        </li>
+                                    </ul>
+                                {{/unless}}
+                            {{/if}}
+                        {{/unless}}
+                    </div>
+                </div>
+                {{#unless platform}}
+                    {{#if product.recOs}}
+                        <div class="generalInfo tabs js-gameInfoSystemParams">
+                            <div class="nav mobileInvisibleScroll">
+                                <button class="btn round border big translucent active js-tabBtn" data-target-id="1">Минимальные требования</button>
+                                <button class="btn round border big translucent js-tabBtn" data-target-id="2">Рекомендуемые требования</button>
+                            </div>
+                            <div class="items totalHeight infoBlock">
+                                <ul class="item js-tabBlock-1 fieldedList active">
                                     {{#if product.os}}
                                         <li class="item">
                                             <div class="name">ОС:</div>
@@ -537,88 +587,44 @@
                                         </div>
                                     </li>
                                 </ul>
-                            {{/unless}}
-                        {{/if}}
-                    </div>
-                </div>
-                {{#if product.recOs}}
-                    <div class="generalInfo tabs js-gameInfoSystemParams">
-                        <div class="nav mobileInvisibleScroll">
-                            <button class="btn round border big translucent active js-tabBtn" data-target-id="1">Минимальные требования</button>
-                            <button class="btn round border big translucent js-tabBtn" data-target-id="2">Рекомендуемые требования</button>
-                        </div>
-                        <div class="items totalHeight infoBlock">
-                            <ul class="item js-tabBlock-1 fieldedList active">
-                                {{#if product.os}}
+                                <ul class="item js-tabBlock-2 fieldedList">
+                                    {{#if product.os}}
+                                        <li class="item">
+                                            <div class="name">ОС:</div>
+                                            <div class="value">
+                                                {{product.recOs}}
+                                            </div>
+                                        </li>
+                                    {{/if}}
                                     <li class="item">
-                                        <div class="name">ОС:</div>
+                                        <div class="name">Процессор:</div>
                                         <div class="value">
-                                            {{product.os}}
+                                            {{product.recCpu}}
                                         </div>
                                     </li>
-                                {{/if}}
-                                <li class="item">
-                                    <div class="name">Процессор:</div>
-                                    <div class="value">
-                                        {{product.cpu}}
-                                    </div>
-                                </li>
-                                <li class="item">
-                                    <div class="name">Видеокарта:</div>
-                                    <div class="value">
-                                        {{product.graphicsCard}}
-                                    </div>
-                                </li>
-                                <li class="item">
-                                    <div class="name">Оперативная память:</div>
-                                    <div class="value">
-                                        {{product.ram}}
-                                    </div>
-                                </li>
-                                <li class="item">
-                                    <div class="name">Место на диске:</div>
-                                    <div class="value">
-                                        {{product.diskMemory}}
-                                    </div>
-                                </li>
-                            </ul>
-                            <ul class="item js-tabBlock-2 fieldedList">
-                                {{#if product.os}}
                                     <li class="item">
-                                        <div class="name">ОС:</div>
+                                        <div class="name">Видеокарта:</div>
                                         <div class="value">
-                                            {{product.recOs}}
+                                            {{product.recGraphicsCard}}
                                         </div>
                                     </li>
-                                {{/if}}
-                                <li class="item">
-                                    <div class="name">Процессор:</div>
-                                    <div class="value">
-                                        {{product.recCpu}}
-                                    </div>
-                                </li>
-                                <li class="item">
-                                    <div class="name">Видеокарта:</div>
-                                    <div class="value">
-                                        {{product.recGraphicsCard}}
-                                    </div>
-                                </li>
-                                <li class="item">
-                                    <div class="name">Оперативная память:</div>
-                                    <div class="value">
-                                        {{product.recRam}}
-                                    </div>
-                                </li>
-                                <li class="item">
-                                    <div class="name">Место на диске:</div>
-                                    <div class="value">
-                                        {{product.recDiskMemory}}
-                                    </div>
-                                </li>
-                            </ul>
+                                    <li class="item">
+                                        <div class="name">Оперативная память:</div>
+                                        <div class="value">
+                                            {{product.recRam}}
+                                        </div>
+                                    </li>
+                                    <li class="item">
+                                        <div class="name">Место на диске:</div>
+                                        <div class="value">
+                                            {{product.recDiskMemory}}
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
-                    </div>
-                {{/if}}
+                    {{/if}}
+                {{/unless}}
                 <div class="systemInfo">
                     {{#if seriesProducts.length}}
                         <div class="btn border round big title">Игры серии</div>
@@ -658,42 +664,44 @@
                             {{/if}}
                         </div>
                     {{else}}
-                        {{#unless product.recOs}}
-                            <div class="btn border round big title">Системные требования</div>
-                            <ul class="fieldedList infoBlock">
-                                {{#if product.os}}
+                        {{#unless platform}}
+                            {{#unless product.recOs}}
+                                <div class="btn border round big title">Системные требования</div>
+                                <ul class="fieldedList infoBlock">
+                                    {{#if product.os}}
+                                        <li class="item">
+                                            <div class="name">ОС:</div>
+                                            <div class="value">
+                                                {{product.os}}
+                                            </div>
+                                        </li>
+                                    {{/if}}
                                     <li class="item">
-                                        <div class="name">ОС:</div>
+                                        <div class="name">Процессор:</div>
                                         <div class="value">
-                                            {{product.os}}
+                                            {{product.cpu}}
                                         </div>
                                     </li>
-                                {{/if}}
-                                <li class="item">
-                                    <div class="name">Процессор:</div>
-                                    <div class="value">
-                                        {{product.cpu}}
-                                    </div>
-                                </li>
-                                <li class="item">
-                                    <div class="name">Видеокарта:</div>
-                                    <div class="value">
-                                        {{product.graphicsCard}}
-                                    </div>
-                                </li>
-                                <li class="item">
-                                    <div class="name">Оперативная память:</div>
-                                    <div class="value">
-                                        {{product.ram}}
-                                    </div>
-                                </li>
-                                <li class="item">
-                                    <div class="name">Место на диске:</div>
-                                    <div class="value">
-                                        {{product.diskMemory}}
-                                    </div>
-                                </li>
-                            </ul>
+                                    <li class="item">
+                                        <div class="name">Видеокарта:</div>
+                                        <div class="value">
+                                            {{product.graphicsCard}}
+                                        </div>
+                                    </li>
+                                    <li class="item">
+                                        <div class="name">Оперативная память:</div>
+                                        <div class="value">
+                                            {{product.ram}}
+                                        </div>
+                                    </li>
+                                    <li class="item">
+                                        <div class="name">Место на диске:</div>
+                                        <div class="value">
+                                            {{product.diskMemory}}
+                                        </div>
+                                    </li>
+                                </ul>
+                            {{/unless}}
                         {{/unless}}
                     {{/if}}
                 </div>

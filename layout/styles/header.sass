@@ -30,20 +30,15 @@
       font-weight: 600
       line-height: 1
       margin-left: 5px
+      display: none
 
       @include for-big-phone-up
-        margin-left: 10px
-
-      @include for-tablet-portrait-up
-        font-size: 26px
-
-      @include for-tablet-landscape-up
-        font-size: 30px
+        display: block
 
       @include for-desktop-up
         display: none
 
-  & .navigateMobileContainer
+  .navigateMobileContainer
     display: flex
     flex-direction: column
     row-gap: 30px
@@ -101,7 +96,7 @@
       display: flex
 
     @include for-big-desktop-up
-      margin: 0 100px
+      margin: 0 0 0 60px
 
     &.active
       & .containerMenu
@@ -212,7 +207,7 @@
         z-index: 1
 
       @include for-middle-desktop-up
-        column-gap: 20px
+        column-gap: 10px
 
       .item, .downItem
         font-family: 'Montserrat'
@@ -341,7 +336,7 @@
         margin-left: 30px
 
       @include for-middle-desktop-up
-        margin-left: 60px
+        margin-left: 40px
 
       & .searchResultsContainer
         background-color: rgba(0, 0, 0, 0.9)
@@ -391,6 +386,52 @@
       @include for-desktop-up
         display: none
 
+  .platformSwitch
+    display: flex
+    margin: 0 20px
+    height: 30px
+    align-items: center
+    border: 1px solid #FFF
+    border-radius: 100px
+    padding: 2px
+    position: relative
+    z-index: 2
+
+    @include for-desktop-up
+      order: 1
+      margin: 0 60px 0 20px
+      padding: 5px
+      height: 35px
+
+    .marker
+      background-color: #fff
+      position: absolute
+      border-radius: 100px
+      top: 2px
+      bottom: 2px
+      z-index: -1
+      transition: .3s ease-in
+      transition-property: left, width
+
+      @include for-desktop-up
+        top: 5px
+        bottom: 5px
+
+    .btn
+      font-weight: 400
+      padding: 0 12px
+      border-radius: 100px
+      height: 100%
+
+      @include for-desktop-up
+        padding: 0 20px
+
+      &.active
+        color: #000
+
+    @include for-desktop-up
+      height: 42px
+
   & .profile
     display: flex
     justify-content: space-between
@@ -403,7 +444,7 @@
       width: 100px
 
     @include for-desktop-up
-      order: initial
+      order: 2
 
     & .btn .icon
       transition: background-color .3s ease-in
@@ -505,3 +546,12 @@
     transform: translate(-1px, 4px) rotate(15deg)
   50%
     transform: translate(0, 0) rotate(0)
+
+.xbox .header
+  background: linear-gradient(#000 0%, rgba(1, 3, 60, 0.3) 75%, transparent 100%)
+
+  .navigateMobileContainer
+    background: rgba(0, 0, 0, 0.85)
+
+  .mobileQuickSearch
+    background: rgba(0, 0, 0, 0.85)

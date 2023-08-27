@@ -118,7 +118,7 @@
     </noscript>
     <!-- /Yandex.Metrika pixel -->
 </head>
-<body ontouchstart="">
+<body ontouchstart="" class="{{platform}}">
 <!-- Google Tag Manager (noscript) -->
 <noscript>
     <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TVW524P"
@@ -161,6 +161,11 @@
                 <div class="name">ICE GAMES<br>Store</div>
             </a>
         {{/if}}
+        <div class="platformSwitch js-platformSwitch">
+            <button class="item btn{{#unless platform}} active{{/unless}}">PC</button>
+            <button class="item btn{{#iff platform '===' 'xbox'}} active{{/iff}}">XBOX</button>
+            <div class="marker js-marker"></div>
+        </div>
         <div class="navigateMobileContainer js-navigateMobileContainer">
             <div class="navigation js-mainNavigation">
                 {{> menu}}

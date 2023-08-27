@@ -29,6 +29,8 @@ export const getProducts = async (req, res) => {
     
     searchString = searchString.trim();
   
+    const platform = req.cookies.platform || 'pc';
+  
     const allCategories = await Category.find().select(['name', 'alias']).lean();
     const allGenres = await Genre.find().select(['name', 'alias']).lean();
     const allActivationServices = await ActivationService.find().select(['name', 'alias']).lean();
@@ -58,6 +60,7 @@ export const getProducts = async (req, res) => {
     
     const filter = {
       active: true,
+      platformType: platform,
     }
     
     const getWithoutSort = async (filter) => {

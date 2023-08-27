@@ -16,6 +16,7 @@ import Payment from "./lib/payment.js";
 
 const postman = new Postman();
 
+const platformSwitchNode = document.querySelector('.js-platformSwitch');
 const profileMenuNode = document.querySelector('.js-profileMenu');
 const homeSliderNode = document.querySelector('.js-homeSlider');
 const fillUpPageModalNode = document.querySelector('.js-fillUpPageModal');
@@ -2514,6 +2515,46 @@ if (profileMenuNode) {
             moveIndicator(e.target)
         })
     })
+}
+
+if (platformSwitchNode) {
+    const markerNode = platformSwitchNode.querySelector('.js-marker');
+    const listBtnNodes = platformSwitchNode.querySelectorAll('.btn');
+    let activeBtnNode = platformSwitchNode.querySelector('.btn.active');
+    
+    activeBtnNode && moveIndicator(activeBtnNode);
+    
+    listBtnNodes.forEach(link => {
+        link.addEventListener('click', async (e) => {
+            const target = e.target;
+            
+            if (target === activeBtnNode) {
+                return;
+            }
+            
+            const response = await postman.get(`${websiteAddress}api/system/switchPlatform?platform=${target.innerText}`);
+            const result = await response.json();
+            
+            if (!result.success) {
+                return;
+            }
+    
+            moveIndicator(target);
+            target.classList.add('active');
+            activeBtnNode.classList.remove('active');
+    
+            activeBtnNode = target;
+            
+            setTimeout(() => {
+                location.href = `${websiteAddress}${document.location.pathname.substring(1)}`
+            }, 300);
+        })
+    })
+    
+    function moveIndicator(target) {
+        markerNode.style.left = target.offsetLeft + 'px';
+        markerNode.style.width = target.clientWidth + 'px';
+    }
 }
 
 if (additionsProductSliderNode) {

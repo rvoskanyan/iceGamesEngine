@@ -180,7 +180,12 @@
                 aricles=articles
         }}
         <div class="homeSection aboutUsHome">
-            <img src="{{webSiteAddress}}/img/aboutUs.png" class="img" alt="Представление сайта на различных устройствах">
+            {{#unless platform}}
+                <img src="{{webSiteAddress}}/img/aboutUs.png" class="img" alt="Представление сайта на различных устройствах">
+            {{/unless}}
+            {{#iff platform '===' 'xbox'}}
+                <img src="{{webSiteAddress}}/img/aboutUsXbox.png" class="img" alt="Представление сайта на различных устройствах">
+            {{/iff}}
             <div class="text">
                 <div class="content js-aboutUsContentHome">
                     <h1>ICE GAMES</h1>

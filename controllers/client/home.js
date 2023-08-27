@@ -4,7 +4,7 @@ import Genre from "../../models/Genre.js";
 import Article from "../../models/Article.js";
 import User from "../../models/User.js";
 import Partner from "../../models/Partner.js";
-import {achievementEvent} from "../../services/achievement.js";
+import { achievementEvent } from "../../services/achievement.js";
 import Review from "../../models/Review.js";
 import Order from "../../models/Order.js";
 import ProductCategory from "../../models/Product_Category.js";
@@ -26,11 +26,12 @@ export const homepage = async (req, res) => {
     return res.redirect('/');
   }
   
+  const platform = req.cookies.platform || 'pc';
   const person = res.locals.person;
   let favoritesProducts;
   let cart;
   let sliderProducts = await Product
-    .find({inHomeSlider: true, inStock: true})
+    .find({ inHomeSlider: true, inStock: true, platformType: platform })
     .limit(5)
     .select(['name', 'alias', 'description', 'priceTo', 'priceFrom', 'img', 'coverImg', 'coverVideo', 'discount', 'dsId'])
     .lean();
@@ -46,14 +47,27 @@ export const homepage = async (req, res) => {
     .sort({createdAt: -1})
     .select(['name', 'alias', 'introText', 'type', 'createdAt', 'img'])
     .limit(9);
-  const selections = await Selection.find({inHome: true}).limit(4).lean();
+  const selections = await Selection
+    .find({ inHome: true })
+    .limit(4)
+    .populate([{
+      path: 'products',
+      select: ['platformType'],
+    }])
+    .lean();
   const checkEmailHash = req.query.confirmEmail;
   const catalog = [];
   const day = new Date().getDay();
-  const countRecommend = await Product.countDocuments({active: true, top: true, inStock: true, priceTo: {$gt: 300}});
+  const countRecommend = await Product.countDocuments({
+    active: true,
+    top: true,
+    inStock: true,
+    priceTo: {$gt: 300},
+    platformType: platform,
+  });
   const skipRecommend = day * 5 + 5;
   let recommend = await Product
-    .find({active: true, top: true, inStock: true, priceTo: {$gt: 300}})
+    .find({ active: true, top: true, inStock: true, priceTo: {$gt: 300}, platformType: platform })
     .select(['name', 'alias', 'priceTo', 'priceFrom', 'img', 'dsId', 'inStock', 'preOrder'])
     .skip(countRecommend > skipRecommend ? skipRecommend : countRecommend > 5 ? countRecommend  - 5 : countRecommend)
     .limit(5)
@@ -110,21 +124,21 @@ export const homepage = async (req, res) => {
   }
   
   const noveltiesProduct = await Product
-    .find({preOrder: false, active: true})
+    .find({preOrder: false, active: true, platformType: platform})
     .select(['name', 'alias', 'img', 'priceTo', 'priceFrom', 'dlc', 'dsId', 'inStock', 'preOrder'])
     .sort({'releaseDate': -1})
     .limit(10)
     .lean();
   
   const preOrders = await Product
-    .find({preOrder: true, active: true})
+    .find({preOrder: true, active: true, platformType: platform})
     .select(['name', 'alias', 'img', 'priceTo', 'priceFrom', 'dlc', 'dsId', 'inStock', 'preOrder'])
     .sort({'createdAt': -1})
     .limit(10)
     .lean();
   
   const discounts = await Product
-    .find({discount: {$gt: 60}, active: true, inStock: true})
+    .find({discount: {$gt: 60}, active: true, inStock: true, platformType: platform})
     .select(['name', 'alias', 'img', 'priceTo', 'priceFrom', 'dlc', 'dsId', 'inStock', 'preOrder'])
     .sort({'priceFrom': -1})
     .limit(10)
@@ -152,6 +166,7 @@ export const homepage = async (req, res) => {
         $match: {
           'product.inStock': true,
           'product.active': true,
+          'product.platformType': platform,
         }
       },
       {
@@ -265,6 +280,9 @@ export const homepage = async (req, res) => {
     countReviews,
     countSales,
     recommend,
-    selections,
+    selections: selections.map(selection => ({
+      ...selection,
+      products: selection.products.filter(product => product.platformType === platform)
+    })),
   });
 }

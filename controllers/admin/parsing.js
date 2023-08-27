@@ -2,7 +2,23 @@ import {parseProduct, startParsingProducts, syncPriceAndInStock, syncRating} fro
 import ParsingTask from "../../models/ParsingTask.js";
 import Product from "../../models/Product.js";
 
-export const parsingPage = (req, res) => {
+export const parsingPage = async (req, res) => {
+  const products = await Product.find({ platformType: undefined, active: true });
+  
+  for (const product of products) {
+    product.platformType = 'pc';
+    
+    await product.save();
+  }
+  
+  const productsX = await Product.find({ platformType: 'xbox', active: false });
+  
+  for (const product of productsX) {
+    product.active = true;
+    
+    await product.save();
+  }
+  
   res.render('parsing', {
     layout: 'admin',
     parsing: process.env.PARSING,
