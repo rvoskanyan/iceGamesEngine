@@ -169,7 +169,7 @@ export const statisticPage = async (req, res) => {
 export const analyticsPage = async (req, res) => {
   try {
     const platformType = req.query.platform || 'pc';
-    const products = await Product.find({ countKeys: { $gt: 0 }, platformType, }).select(['name', 'priceTo', 'dsPrice']).lean();
+    const products = await Product.find({ countKeys: { $gt: 0 }, platformType }).select(['name', 'priceTo', 'dsPrice']).lean();
     let totalCountKeys = 0;
     let totalInStockKeys = 0;
     let totalPVP = 0;
