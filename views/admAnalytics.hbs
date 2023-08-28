@@ -48,33 +48,33 @@
         <th>Продано</th>
         <th>ФВП</th>
     </tr>
-    {{#each stockData.rows}}
+    {{#each rows}}
         <tr>
             <td>
                 <a href="/admin/products/edit/{{productId}}">{{productName}}</a>
             </td>
-            <td>{{purchasePrice}} ₽</td>
-            <td>{{countKeys}}</td>
-            <td>{{currentSallePrice}} ₽</td>
-            <td>{{dsPrice}} ₽</td>
-            <td>{{pvpPerSale}} ₽</td>
-            <td>{{countInStock}}</td>
-            <td>{{pvp}} ₽</td>
-            <td>{{countSelling}}</td>
-            <td>{{fvp}} ₽</td>
+            <td>{{ purchasePrice }} ₽</td>
+            <td>{{ countKeys }}</td>
+            <td>{{ currentSallePrice }} ₽</td>
+            <td>{{ dsPrice }} ₽</td>
+            <td>{{ pvpPerSale }} ₽</td>
+            <td>{{ countInStock }}</td>
+            <td>{{ pvp }} ₽</td>
+            <td>{{ countSelling }}</td>
+            <td>{{ fvp }} ₽</td>
         </tr>
     {{/each}}
     <tr>
-        <th style="text-align: end">Итого: {{ stockData.countItems }}</th>
+        <th style="text-align: end">Итого: {{ countItems }}</th>
         <th></th>
-        <th>{{ stockData.totalCountKeys }}</th>
+        <th>{{ totalCountKeys }}</th>
         <th></th>
         <th></th>
         <th></th>
-        <th>{{ stockData.totalInStockKeys }}</th>
-        <th>{{ stockData.totalPVP }}₽ / Ср.: {{ stockData.averagePVP }}₽</th>
-        <th>{{ stockData.totalSellingKeys }}</th>
-        <th>{{ stockData.totalFVP }}₽</th>
+        <th>{{ totalInStockKeys }}</th>
+        <th>{{ totalPVP }}₽ / Ср.: {{ averagePVP }}₽</th>
+        <th>{{ totalSellingKeys }}</th>
+        <th>{{ totalFVP }}₽</th>
     </tr>
 </table>
 <br>
