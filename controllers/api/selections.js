@@ -7,7 +7,8 @@ export const getSelections = async (req, res) => {
       skip = 0,
       delistSelection = '',
     } = req.query;
-    
+  
+    const platform = req.cookies.platform || 'pc';
     const filter = { _id: { $ne: delistSelection } };
     const selections = await Selection
       .find(filter)
