@@ -126,7 +126,7 @@ export const statisticPage = async (req, res) => {
           } = key;
           
           cost += purchasePrice;
-          fvp += Math.floor((sellingPrice - sellingPrice * 0.025 - purchasePrice) * 100) / 100;
+          fvp += Math.floor(sellingPrice - sellingPrice * 0.025 - purchasePrice);
           turnover += sellingPrice;
         });
         
@@ -207,7 +207,7 @@ export const analyticsPage = async (req, res) => {
       groups.forEach(group => {
         const purchasePrice = group._id;
         const currentSallePrice = product.priceTo;
-        const pvpPerSale = Math.floor((currentSallePrice - currentSallePrice * 0.025 - purchasePrice) * 100) / 100;
+        const pvpPerSale = Math.floor(currentSallePrice - currentSallePrice * 0.025 - purchasePrice);
         let countInStock = 0;
         let countSelling = 0;
         let fvp = 0;
@@ -223,7 +223,7 @@ export const analyticsPage = async (req, res) => {
             key.sellingPrice = 0;
           }
           
-          fvp += Math.floor((key.sellingPrice - key.sellingPrice * 0.025 - key.purchasePrice) * 100) / 100;
+          fvp += Math.floor(key.sellingPrice - key.sellingPrice * 0.025 - key.purchasePrice);
         });
         
         rows.push({
