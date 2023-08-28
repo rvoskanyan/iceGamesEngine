@@ -788,7 +788,7 @@ export const gamePage = async (req, res) => {
           priceTo: {
             $gte: product.priceTo,
           },
-          
+          platformType: platform,
         })
         .select(['name', 'alias', 'inStock', 'img', 'priceTo', 'priceFrom', 'preOrder'])
         .limit(8 - recProducts.length)
