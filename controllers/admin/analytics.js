@@ -2,10 +2,10 @@ import Product from "../../models/Product.js";
 import Key from "../../models/Key.js";
 import Order from "../../models/Order.js";
 
-export const analyticsPage = async (req, res) => {
+export const statisticPage = async (req, res) => {
   try {
     const endDate = req.query.endDate;
-  
+    
     const currentDateTime = endDate ? new Date(endDate) : new Date();
     const todayDate = new Date(currentDateTime.getFullYear(), currentDateTime.getMonth(), currentDateTime.getDate());
     const labels = [];
@@ -43,35 +43,35 @@ export const analyticsPage = async (req, res) => {
     for (let i = 30; i >= 0; i--) {
       const dateForCurrent = new Date(todayDate);
       const dateForPrevious = new Date(todayDate);
-  
+      
       dateForCurrent.setDate(dateForCurrent.getDate() - i);
       dateForPrevious.setDate(dateForPrevious.getDate() - i - 30);
-  
+      
       const label = dateForCurrent.getDate();
       const currentData = await getDataPerDay(dateForCurrent);
       const previousData = await getDataPerDay(dateForPrevious);
-  
+      
       currentCountSales.push(currentData.countSales);
       currentCost.push(currentData.cost);
       currentFvp.push(currentData.fvp);
       currentTurnover.push(currentData.turnover);
       currentCountOrders.push(currentData.countOrders);
       currentAverageCheck.push(currentData.averageCheck);
-  
+      
       previousCountSales.push(previousData.countSales);
       previousCost.push(previousData.cost);
       previousFvp.push(previousData.fvp);
       previousTurnover.push(previousData.turnover);
       previousCountOrders.push(previousData.countOrders);
       previousAverageCheck.push(previousData.averageCheck);
-  
+      
       total.month.current.countSales += currentData.countSales;
       total.month.current.cost += currentData.cost;
       total.month.current.fvp += currentData.fvp;
       total.month.current.turnover += currentData.turnover;
       total.month.current.countOrders += currentData.countOrders;
       total.month.current.averageCheck += currentData.averageCheck;
-  
+      
       total.month.prev.countSales += previousData.countSales;
       total.month.prev.cost += previousData.cost;
       total.month.prev.fvp += previousData.fvp;
@@ -98,195 +98,51 @@ export const analyticsPage = async (req, res) => {
       }
       
       labels.push(label < 10 ? `0${label}` : label.toString());
-  
+      
       async function getDataPerDay(startDate) {
         const endDate = new Date(startDate);
         endDate.setDate(endDate.getDate() + 1);
         
-        const data = await Order.aggregate([
-          {
-            $match: {
-              isDBI: true,
-              status: 'paid',
-              createdAt: {
-                $gte: startDate,
-                $lt: endDate,
-              }
-            }
-          },
-          {
-            $lookup: {
-              from: 'keys',
-              localField: '_id',
-              foreignField: 'soldOrder',
-              as: 'keys',
-            }
-          },
-          {
-            $project: {
-              countSales: { $size: '$keys' },
-              cost: { $sum: "$keys.purchasePrice" },
-              turnover: { $sum: "$keys.sellingPrice" },
-              averageCheck: { $avg: "$keys.sellingPrice" },
-              fvp: {
-                $reduce: {
-                  input: "$keys",
-                  initialValue: 0,
-                  in: {
-                    $add: [
-                      "$$value",
-                      {
-                        $floor: {
-                          $subtract: [
-                            {
-                              $subtract: [
-                                "$$this.sellingPrice",
-                                { $multiply: ["$$this.sellingPrice", 0.025] }
-                              ],
-                            },
-                            "$$this.purchasePrice",
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
-              },
-            },
-          },
-          {
-            $group: {
-              _id: 1,
-              countSales: { $sum: "$countSales" },
-              cost: { $sum: "$cost" },
-              fvp: { $sum: "$fvp" },
-              turnover: { $sum: "$turnover" },
-              averageCheck: { $avg: { $sum: "$turnover" } },
-              countOrders: { $count: {} },
-            }
-          }
-        ]);
-  
-        return data[0];
+        const orders = await Order.find({isDBI: true, status: 'paid', createdAt: {
+            $gte: startDate,
+            $lt: endDate,
+          }}).lean();
+        const keys = [];
+        const countOrders = orders.length;
+        let cost = 0;
+        let fvp = 0;
+        let turnover = 0;
+        
+        for (const order of orders) {
+          const orderKeys = await Key.find({soldOrder: order._id}).lean();
+          
+          Array.prototype.push.apply(keys, orderKeys);
+        }
+        
+        keys.forEach(key => {
+          const {
+            purchasePrice,
+            sellingPrice,
+          } = key;
+          
+          cost += purchasePrice;
+          fvp += Math.floor((sellingPrice - sellingPrice * 0.025 - purchasePrice) * 100) / 100;
+          turnover += sellingPrice;
+        });
+        
+        return {
+          countSales: keys.length || 0,
+          cost: cost || 0,
+          fvp: fvp || 0,
+          turnover: turnover || 0,
+          countOrders: countOrders || 0,
+          averageCheck: (turnover / countOrders) || 0,
+        };
       }
     }
     
-    const stockData = await Key.aggregate([
-      { $match: { isActive: true } },
-      {
-        $lookup: {
-          from: 'products',
-          localField: 'product',
-          foreignField: '_id',
-          as: 'product',
-        }
-      },
-      { $unwind: '$product' },
-      {
-        $group: {
-          _id: {
-            productId: '$product._id',
-            purchasePrice: "$purchasePrice",
-          },
-          productName: { $first: "$product.name" },
-          currentSallePrice: { $first: "$product.priceTo" },
-          dsPrice: {
-            $first: {
-              $add: [
-                "$product.dsPrice",
-                { $multiply: ["$product.dsPrice", 0.01] }
-              ],
-            }
-          },
-          countKeys: { $count: { } },
-          countInStock: { $sum: { $cond: ["$isSold", 0, 1] } },
-          countSelling: { $sum: { $cond: ["$isSold", 1, 0] } },
-          pvpPerSale: {
-            $first: {
-              $floor: {
-                $subtract: [
-                  {
-                    $subtract: [
-                      "$product.priceTo",
-                      { $multiply: ["$product.priceTo", 0.025] }
-                    ],
-                  },
-                  "$purchasePrice",
-                ],
-              }
-            }
-          },
-          fvp: {
-            $sum: {
-              $cond: [
-                "$isSold",
-                {
-                  $floor: {
-                    $subtract: [
-                      {
-                        $subtract: [
-                          "$sellingPrice",
-                          { $multiply: ["$sellingPrice", 0.025] }
-                        ],
-                      },
-                      "$purchasePrice",
-                    ],
-                  }
-                },
-                0
-              ]
-            }
-          },
-        }
-      },
-      {
-        $project: {
-          _id: 0,
-          productId: '$_id.productId',
-          productName: 1,
-          purchasePrice: '$_id.purchasePrice',
-          countKeys: 1,
-          currentSallePrice: 1,
-          dsPrice: 1,
-          pvpPerSale: 1,
-          countInStock: 1,
-          pvp: { $multiply: ['$pvpPerSale', '$countInStock'] },
-          countSelling: 1,
-          fvp: 1,
-        }
-      },
-      {
-        $group: {
-          _id: 1,
-          rows: { $push: "$$ROOT" },
-          countItems: { $count: {} },
-          totalCountKeys: { $sum: "$countKeys" },
-          totalInStockKeys: { $sum: "$countInStock" },
-          totalPVP: { $sum: "$pvp" },
-          averagePVP: { $avg: "$pvp" },
-          totalSellingKeys: { $sum: "$countSelling" },
-          totalFVP: { $sum: "$fvp" },
-        }
-      },
-    ]);
-    
-    const finishedProducts = [];
-    const notInStockProducts = await Product.find({countKeys: {$eq: 0}, active: true}).lean();
-    
-    for (const {_id, name, priceTo, dsPrice} of notInStockProducts) {
-      const countKeys = await Key.countDocuments({product: _id});
-      
-      if (countKeys) {
-        finishedProducts.push({ _id, name, priceTo, dsPrice: dsPrice + dsPrice / 100 });
-      }
-    }
-    
-    res.render('admAnalytics', {
+    res.render('admAnalyticsStatistic', {
       layout: 'admin',
-      total,
-      endDate,
-      finishedProducts,
-      stockData: stockData[0],
       currentCountSales: JSON.stringify(currentCountSales),
       currentCost: JSON.stringify(currentCost),
       currentFvp: JSON.stringify(currentFvp),
@@ -300,6 +156,120 @@ export const analyticsPage = async (req, res) => {
       previousCountOrders: JSON.stringify(previousCountOrders),
       previousAverageCheck: JSON.stringify(previousAverageCheck),
       labels: JSON.stringify(labels),
+      endDate,
+      total,
+    });
+  } catch (e) {
+    console.log(e);
+    
+    res.redirect('/admin');
+  }
+}
+
+export const analyticsPage = async (req, res) => {
+  try {
+    const platformType = req.query.platform || 'pc';
+    const products = await Product.find({ countKeys: { $gt: 0 }, platformType, }).select(['name', 'priceTo', 'dsPrice']).lean();
+    let totalCountKeys = 0;
+    let totalInStockKeys = 0;
+    let totalPVP = 0;
+    let totalSellingKeys = 0;
+    let totalFVP = 0;
+    let rows = [];
+    
+    for (const product of products) {
+      const groups = await Key.aggregate([
+        {
+          $match: {
+            product: product._id,
+            purchasePrice: {$gt: 0},
+          }
+        },
+        {
+          $group: {
+            _id: '$purchasePrice',
+            count: { $count: { } },
+            keys: { $push: {
+                isActive: "$isActive",
+                isSold: "$isSold",
+                sellingPrice: "$sellingPrice",
+                purchasePrice: "$purchasePrice",
+              }},
+          }
+        },
+        {$sort: {_id: 1}},
+      ]);
+      
+      if (!groups.length) {
+        continue;
+      }
+      
+      groups.forEach(group => {
+        const purchasePrice = group._id;
+        const currentSallePrice = product.priceTo;
+        const pvpPerSale = Math.floor((currentSallePrice - currentSallePrice * 0.025 - purchasePrice) * 100) / 100;
+        let countInStock = 0;
+        let countSelling = 0;
+        let fvp = 0;
+        
+        group.keys.forEach(key => {
+          if (!key.isSold) {
+            return countInStock++
+          }
+          
+          countSelling++;
+          
+          if (!key.sellingPrice) {
+            key.sellingPrice = 0;
+          }
+          
+          fvp += Math.floor((key.sellingPrice - key.sellingPrice * 0.025 - key.purchasePrice) * 100) / 100;
+        });
+        
+        rows.push({
+          productId: product._id,
+          productName: product.name,
+          purchasePrice,
+          countKeys: group.count,
+          currentSallePrice,
+          dsPrice: product.dsPrice + product.dsPrice * 0.01,
+          pvpPerSale,
+          countInStock,
+          pvp: pvpPerSale * countInStock,
+          countSelling,
+          fvp,
+        });
+        
+        totalCountKeys += group.count;
+        totalInStockKeys += countInStock;
+        totalPVP += pvpPerSale * countInStock;
+        totalSellingKeys += countSelling;
+        totalFVP += fvp;
+      });
+    }
+    
+    const finishedProducts = [];
+    const notInStockProducts = await Product.find({ countKeys: {$eq: 0 }, platformType, active: true}).lean();
+    
+    for (const {_id, name, priceTo, dsPrice} of notInStockProducts) {
+      const countKeys = await Key.countDocuments({ product: _id });
+      
+      if (countKeys) {
+        finishedProducts.push({ _id, name, priceTo, dsPrice: dsPrice + dsPrice / 100 });
+      }
+    }
+    
+    res.render('admAnalytics', {
+      layout: 'admin',
+      rows,
+      totalCountKeys,
+      totalInStockKeys,
+      finishedProducts,
+      totalPVP: Math.floor(totalPVP),
+      averagePVP: Math.floor(totalPVP / totalInStockKeys),
+      totalSellingKeys,
+      totalFVP: Math.floor(totalFVP),
+      countItems: products.length,
     });
   } catch (e) {
     console.log(e);
@@ -311,7 +281,7 @@ export const analyticsPage = async (req, res) => {
 export const userAnalyticsPage = async (req, res) => {
   try {
     const startPeriodDate = new Date();
-  
+    
     startPeriodDate.setDate(startPeriodDate.getDate() - 30);
     startPeriodDate.setHours(0);
     startPeriodDate.setMinutes(0);
@@ -319,19 +289,19 @@ export const userAnalyticsPage = async (req, res) => {
     
     let rows = await Order.aggregate([
       {$lookup: {
-        from: 'users',
-        localField: 'userId',
-        foreignField: '_id',
-        as: 'user',
-      }},
+          from: 'users',
+          localField: 'userId',
+          foreignField: '_id',
+          as: 'user',
+        }},
       {$replaceRoot: { newRoot: { $mergeObjects: [ { $arrayElemAt: [ "$user", 0 ] }, "$$ROOT" ] } }},
       {$match: {
-        status: 'paid',
-        $or: [
-          {bot: undefined},
-          {bot: false},
-        ],
-      }},
+          status: 'paid',
+          $or: [
+            {bot: undefined},
+            {bot: false},
+          ],
+        }},
       {
         $project: {
           orderSalesCount: { $size: "$items" },

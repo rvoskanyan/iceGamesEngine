@@ -1,0 +1,243 @@
+<style>
+    table tr {
+        vertical-align: center; text-align: center
+    }
+
+    table tr:hover {
+        background-color: #ededed;
+        cursor: pointer;
+    }
+
+    table tr th {
+        padding: 10px;
+        border-bottom: 2px solid #d7d7d7;
+    }
+
+    table tr th:not(:first-child) {
+        border-left: 1px solid #d7d7d7
+    }
+
+    table tr th:not(:last-child) {
+        border-right: 1px solid #d7d7d7
+    }
+
+    table tr td {
+        padding: 5px 10px;
+        border-bottom: 2px solid #d7d7d7;
+    }
+
+    table tr td:not(:first-child) {
+        border-left: 1px solid #d7d7d7
+    }
+
+    table tr td:not(:last-child) {
+        border-right: 1px solid #d7d7d7
+    }
+
+    .graphic {
+        max-width: 800px;
+        margin-top: 30px;
+    }
+
+    .total {
+        margin: 15px auto 0 auto;
+    }
+</style>
+
+<form action="/admin/analytics/statistic">
+    <input type="date" name="endDate" value="{{endDate}}">
+    <input type="submit" value="Применить">
+    <a href="/admin/analytics">Очистить</a>
+</form>
+
+<div class="graphic">
+    <canvas id="countSales"></canvas>
+    <table cellpadding="0" cellspacing="0" class="total">
+        <tr>
+            <th>Период</th>
+            <th>Предыдущий</th>
+            <th>Текущий</th>
+        </tr>
+        <tr>
+            <td>7 дней</td>
+            <td>{{total.week.prev.countSales}}</td>
+            <td>{{total.week.current.countSales}}</td>
+        </tr>
+        <tr>
+            <td>30 дней</td>
+            <td>{{total.month.prev.countSales}}</td>
+            <td>{{total.month.current.countSales}}</td>
+        </tr>
+    </table>
+</div>
+
+<div class="graphic">
+    <canvas id="cost"></canvas>
+    <table cellpadding="0" cellspacing="0" class="total">
+        <tr>
+            <th>Период</th>
+            <th>Предыдущий</th>
+            <th>Текущий</th>
+        </tr>
+        <tr>
+            <td>7 дней</td>
+            <td>{{total.week.prev.cost}}</td>
+            <td>{{total.week.current.cost}}</td>
+        </tr>
+        <tr>
+            <td>30 дней</td>
+            <td>{{total.month.prev.cost}}</td>
+            <td>{{total.month.current.cost}}</td>
+        </tr>
+    </table>
+</div>
+<div class="graphic">
+    <canvas id="fvp"></canvas>
+    <table cellpadding="0" cellspacing="0" class="total">
+        <tr>
+            <th>Период</th>
+            <th>Предыдущий</th>
+            <th>Текущий</th>
+        </tr>
+        <tr>
+            <td>7 дней</td>
+            <td>{{total.week.prev.fvp}}</td>
+            <td>{{total.week.current.fvp}}</td>
+        </tr>
+        <tr>
+            <td>30 дней</td>
+            <td>{{total.month.prev.fvp}}</td>
+            <td>{{total.month.current.fvp}}</td>
+        </tr>
+    </table>
+</div>
+<div class="graphic">
+    <canvas id="turnover"></canvas>
+    <table cellpadding="0" cellspacing="0" class="total">
+        <tr>
+            <th>Период</th>
+            <th>Предыдущий</th>
+            <th>Текущий</th>
+        </tr>
+        <tr>
+            <td>7 дней</td>
+            <td>{{total.week.prev.turnover}}</td>
+            <td>{{total.week.current.turnover}}</td>
+        </tr>
+        <tr>
+            <td>30 дней</td>
+            <td>{{total.month.prev.turnover}}</td>
+            <td>{{total.month.current.turnover}}</td>
+        </tr>
+    </table>
+</div>
+<div class="graphic">
+    <canvas id="countOrders"></canvas>
+    <table cellpadding="0" cellspacing="0" class="total">
+        <tr>
+            <th>Период</th>
+            <th>Предыдущий</th>
+            <th>Текущий</th>
+        </tr>
+        <tr>
+            <td>7 дней</td>
+            <td>{{total.week.prev.countOrders}}</td>
+            <td>{{total.week.current.countOrders}}</td>
+        </tr>
+        <tr>
+            <td>30 дней</td>
+            <td>{{total.month.prev.countOrders}}</td>
+            <td>{{total.month.current.countOrders}}</td>
+        </tr>
+    </table>
+</div>
+<div class="graphic">
+    <canvas id="averageCheck"></canvas>
+    <table cellpadding="0" cellspacing="0" class="total">
+        <tr>
+            <th>Период</th>
+            <th>Предыдущий</th>
+            <th>Текущий</th>
+        </tr>
+        <tr>
+            <td>7 дней</td>
+            <td>{{total.week.prev.countSales}}</td>
+            <td>{{total.week.current.countSales}}</td>
+        </tr>
+        <tr>
+            <td>30 дней</td>
+            <td>{{total.month.prev.countSales}}</td>
+            <td>{{total.month.current.countSales}}</td>
+        </tr>
+    </table>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const countSales = document.getElementById('countSales');
+    const cost = document.getElementById('cost');
+    const fvp = document.getElementById('fvp');
+    const turnover = document.getElementById('turnover');
+    const countOrders = document.getElementById('countOrders');
+    const averageCheck = document.getElementById('averageCheck');
+
+    const labels = JSON.parse('{"data": {{encodeString labels}} }').data;
+    const currentCountSales = JSON.parse('{"data": {{encodeString currentCountSales}} }').data;
+    const currentCost = JSON.parse('{"data": {{encodeString currentCost}} }').data;
+    const currentFvp = JSON.parse('{"data": {{encodeString currentFvp}} }').data;
+    const currentTurnover = JSON.parse('{"data": {{encodeString currentTurnover}} }').data;
+    const currentCountOrders = JSON.parse('{"data": {{encodeString currentCountOrders}} }').data;
+    const currentAverageCheck = JSON.parse('{"data": {{encodeString currentAverageCheck}} }').data;
+    const previousCountSales = JSON.parse('{"data": {{encodeString previousCountSales}} }').data;
+    const previousCost = JSON.parse('{"data": {{encodeString previousCost}} }').data;
+    const previousFvp = JSON.parse('{"data": {{encodeString previousFvp}} }').data;
+    const previousTurnover = JSON.parse('{"data": {{encodeString previousTurnover}} }').data;
+    const previousCountOrders = JSON.parse('{"data": {{encodeString previousCountOrders}} }').data;
+    const previousAverageCheck = JSON.parse('{"data": {{encodeString previousAverageCheck}} }').data;
+
+    new Chart(countSales, getConfig('Количество продаж', labels, currentCountSales, previousCountSales));
+    new Chart(cost, getConfig('Себестоимость', labels, currentCost, previousCost));
+    new Chart(fvp, getConfig('ФВП', labels, currentFvp, previousFvp));
+    new Chart(turnover, getConfig('Оборот', labels, currentTurnover, previousTurnover));
+    new Chart(countOrders, getConfig('Количество заказов', labels, currentCountOrders, previousCountOrders));
+    new Chart(averageCheck, getConfig('Средний чек', labels, currentAverageCheck, previousAverageCheck));
+
+    function getConfig(title, labels, currentData, previousData) {
+        return {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: 'За период в 30 дней',
+                        fill: false,
+                        backgroundColor: 'rgb(54, 162, 235)',
+                        borderColor: 'rgb(54, 162, 235)',
+                        data: currentData,
+                    },
+                    {
+                        label: 'За предыдущий период в 30 дней',
+                        fill: false,
+                        backgroundColor: 'rgb(75, 192, 192)',
+                        borderColor: 'rgb(75, 192, 192)',
+                        borderDash: [5, 5],
+                        data: previousData,
+                    },
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: title,
+                    },
+                },
+                interaction: {
+                    mode: 'index',
+                    intersect: false,
+                },
+            },
+        };
+    }
+</script>

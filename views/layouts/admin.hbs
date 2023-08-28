@@ -26,7 +26,9 @@
     <li><a href="/admin/suppliers">Товары поставщиков</a></li>
     {{#iff person.role '===' 'admin'}}
         <li><a href="/admin/products/compare">Сравнение цен</a></li>
-        <li><a href="/admin/analytics">Аналитика</a></li>
+        <li><a href="/admin/analytics">Аналитика по PC</a></li>
+        <li><a href="/admin/analytics?platform=xbox">Аналитика по XBOX</a></li>
+        <li><a href="/admin/analytics/statistic">Статистика</a></li>
         <li><a href="/admin/analytics/users">Аналитика по пользователям</a></li>
         <li><a href="/admin/fill-up-analytics">Аналитика по пополнениям</a></li>
         <li><a href="/admin/categories">Категории</a></li>
