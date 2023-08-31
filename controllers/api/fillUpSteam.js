@@ -9,10 +9,10 @@ import metrica from "../../services/metrica.js";
 
 export const getPaymentLink = async (req, res) => {
   try {
-    /*return res.json({
+    return res.json({
       error: true,
       message: 'Уважаемый клиент, в данным момент ведутся тех.работы, в связи с этим пополнение кошелька Steam временно не доступно. Приносим свои извинения за доставленные неудобства, надеемся на Ваше понимание!',
-    });*/
+    });
     
     const {
       steamLogin = '',
