@@ -179,8 +179,8 @@
 
       @include for-desktop-up
         margin-top: initial
-        position: sticky
-        top: 180px
+        //position: sticky
+        //top: 180px
         min-width: 400px
         max-width: 400px
 
@@ -191,23 +191,23 @@
       .switchSplit
         display: flex
         justify-content: space-between
-        border: 1px solid #fff
-        border-radius: 20px
-        padding: 13px 14px
         margin-bottom: 20px
         column-gap: 10px
 
         @include for-desktop-up
+          border: 1px solid #fff
+          border-radius: 20px
+          padding: 13px 14px
           padding: 20px 30px
 
         .btn
           padding: 12px
           border: 1px solid transparent
+          border-radius: 10px
 
           &.active
             background: #984BFB
             border: 1px solid #FFF
-            border-radius: 10px
 
       .check
         border: 1px solid #fff
@@ -282,11 +282,14 @@
         .introInfo
           color: #fff
           text-align: center
-          font-size: 21px
+          font-size: 16px
           font-weight: 700
           margin-top: 20px
           line-height: 1.5
           display: none
+
+          @include for-desktop-up
+            font-size: 21px
 
         .btn
           border-width: 1px
