@@ -2525,10 +2525,12 @@ if (switchSplitNode) {
     const introTextNode = document.querySelector('.js-introText');
     const widgetNode = document.querySelector('.js-widget');
     const confirmEmailFormNode = document.querySelector('.js-confirmEmailForm');
+    const helpTextNode = document.querySelector('.js-help-text');
     
     fullPaymentBtnNode.addEventListener('click', () => {
         payBtnNode && (payBtnNode.style.display = 'block');
         confirmEmailFormNode && (confirmEmailFormNode.style.display = 'block');
+        helpTextNode && (helpTextNode.style.display = 'block');
         introTextNode.style.display = 'none';
         widgetNode.style.display = 'none';
         splitPaymentBtnNode.classList.remove('active');
@@ -2538,6 +2540,7 @@ if (switchSplitNode) {
     splitPaymentBtnNode.addEventListener('click', () => {
         payBtnNode && (payBtnNode.style.display = 'none');
         confirmEmailFormNode && (confirmEmailFormNode.style.display = 'none');
+        helpTextNode && (helpTextNode.style.display = 'none');
         introTextNode.style.display = 'block';
         widgetNode.style.display = 'block';
         splitPaymentBtnNode.classList.add('active');
