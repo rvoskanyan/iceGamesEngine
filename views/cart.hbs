@@ -134,8 +134,8 @@
                     >
                         Оплатить
                     </button>
-                    {{#iff is_auth '===' false}}
-                        <form data-step="1" class="form-confirm_email">
+                    {{#unless is_auth}}
+                        <form data-step="1" class="form-confirm_email js-confirmEmailForm">
                             <label class="confirm_email">
                                 Для отправки ключа введите вашу почту
                                 <input required type="email" name="email" placeholder="info@icegames.store">
@@ -160,7 +160,7 @@
                                       stroke-linejoin="round"/>
                             </svg>
                         </p>
-                    {{/iff}}
+                    {{/unless}}
                 </div>
                 <form action="https://oplata.info/asp2/pay.asp" class="js-payForm" method="post" style="display: none">
                     <input type="hidden" name="cart_uid" class="js-dsCartId"/>
