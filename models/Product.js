@@ -244,6 +244,10 @@ const fields = {
   kupiKodId: String,
   totalGradeParse: Number,
   ratingCountParse: Number,
+  canSplit: {
+    type: Boolean,
+    default: true,
+  },
   active: {
     type: Boolean,
     default: false,

@@ -36,7 +36,12 @@
         <div class="info js-cartList">
             <div class="listGames">
                 {{#each cart.items}}
-                    <div class="game js-product" data-product-id="{{_id}}" data-ds-id="{{dsId}}">
+                    <div
+                        class="game js-product"
+                        data-product-id="{{_id}}"
+                        data-ds-id="{{dsId}}"
+                        {{#if canSplit}} data-can-split="1"{{/if}}
+                    >
                         <div class="content">
                             <button class="btn js-deleteFromCart">
                                 <span class="icon icon-close"></span>
@@ -44,6 +49,11 @@
                             <img class="img" src="{{@root.websiteAddress}}{{img}}" alt="{{name}}" title="{{name}}">
                             <div class="main">
                                 <div class="top">
+                                    {{#if canSplit}}
+                                        <div class="canSlit">
+                                            <img class="icon" src="{{@root.websiteAddress}}img/iconSplit.png" alt="Доступно в сплит" title="Доступно для оплаты по частям">
+                                        </div>
+                                    {{/if}}
                                     <div class="name">{{name}}</div>
                                     <div class="price">
                                         {{#iff discount '>' 0}}
@@ -88,71 +98,83 @@
                     </div>
                 {{/each}}
             </div>
-            <div class="check js-check">
-                <div class="title">Ваша корзина</div>
-                <div class="body">
-                    <div class="param">
-                        <div class="name">
-                            Товары (<span class="js-totalProducts">{{cart.items.length}}</span>)
+            <div class="rightSection">
+                {{#if canSplit}}
+                    <div class="switchSplit js-switchSplit">
+                        <button class="btn active js-fullPayment">Оплатить сразу</button>
+                        <button class="btn js-splitPayment">Оплатить частями</button>
+                    </div>
+                {{/if}}
+                <div class="check js-check">
+                    <div class="title">Ваша корзина</div>
+                    <div class="body">
+                        <div class="param">
+                            <div class="name">
+                                Товары (<span class="js-totalProducts">{{cart.items.length}}</span>)
+                            </div>
+                            <div class="value"><span class="js-totalFrom">{{cart.priceFromTotal}}</span> ₽</div>
                         </div>
-                        <div class="value"><span class="js-totalFrom">{{cart.priceFromTotal}}</span> ₽</div>
-                    </div>
-                    <div class="param">
-                        <div class="name">Скидка</div>
-                        <div class="value saving"><span class="js-saving">{{cart.saving}}</span> ₽</div>
-                    </div>
-                </div>
-                <div class="total">
-                    <div class="param">
-                        <div class="name">Общая стоимость</div>
-                        <div class="value"><span class="js-totalTo">{{cart.priceToTotal}}</span> ₽</div>
-                    </div>
-                </div>
-                <button data-is_keys="{{is_keys.is_keys}}" data-products="{{is_keys.products}}"
-                        class="btn round border bg-darkPurple uppercase js-payBtn hover-bg-violet {{#iff is_auth '==='
-                                                                                                         false}}no-active{{/iff}}">
-                    Оплатить
-                </button>
-                {{#iff is_auth '===' false}}
-                    <form data-step="1" class="form-confirm_email">
-                        <label class="confirm_email">
-                            Для отправки ключа введите вашу почту
-                            <input required type="email" name="email" placeholder="info@icegames.store">
-                        </label>
-                        <label class="confirm_code" hidden>
-                            Код подтверждения с почты
-                            <input type="text" autocomplete="off" step="0" pattern="[0-9]*" inputmode="numeric"
-                                   name="code" placeholder="Четырехзначный код">
-                        </label>
-                        <div class="wrap-button">
-                            <button class="btn border round" type="submit">Отправить код</button>
-                            <p class="error-message"></p>
+                        <div class="param">
+                            <div class="name">Скидка</div>
+                            <div class="value saving"><span class="js-saving">{{cart.saving}}</span> ₽</div>
                         </div>
-                    </form>
-                    <p class="help-text_auth">
+                    </div>
+                    <div class="total">
+                        <div class="param">
+                            <div class="name">Общая стоимость</div>
+                            <div class="value"><span class="js-totalTo">{{cart.priceToTotal}}</span> ₽</div>
+                        </div>
+                    </div>
+                    <div class="widget js-widget"></div>
+                    <div class="introInfo js-introText">Играй сейчас - плати потом! Старт уже завтра, не пропусти!</div>
+                    <button
+                        data-is_keys="{{is_keys.is_keys}}"
+                        data-products="{{is_keys.products}}"
+                        class="btn round border bg-darkPurple uppercase js-payBtn hover-bg-violet{{#unless is_auth}} no-active{{/unless}}"
+                    >
+                        Оплатить
+                    </button>
+                    {{#iff is_auth '===' false}}
+                        <form data-step="1" class="form-confirm_email">
+                            <label class="confirm_email">
+                                Для отправки ключа введите вашу почту
+                                <input required type="email" name="email" placeholder="info@icegames.store">
+                            </label>
+                            <label class="confirm_code" hidden>
+                                Код подтверждения с почты
+                                <input type="text" autocomplete="off" step="0" pattern="[0-9]*" inputmode="numeric"
+                                       name="code" placeholder="Четырехзначный код">
+                            </label>
+                            <div class="wrap-button">
+                                <button class="btn border round" type="submit">Отправить код</button>
+                                <p class="error-message"></p>
+                            </div>
+                        </form>
+                        <p class="help-text_auth">
                         <span>*указывайте ваш действующий адрес, на него придет код активации, так же восстановить код при
                             необходимости сможете только через указанный email</span>
-                        <svg width="29" height="28" viewBox="0 0 29 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M13.3203 5.70597C13.5851 4.42494 15.4149 4.42494 15.6797 5.70597C15.8791 6.67019 17.0882 7.00103 17.7507 6.27265L17.8347 6.18022C18.7012 5.2276 20.2502 6.15129 19.8239 7.36644C19.4998 8.29037 20.3756 9.18501 21.3062 8.88068L21.4272 8.84111C22.6385 8.445 23.5114 10.0067 22.5394 10.8309C21.7956 11.4615 22.1142 12.6728 23.0717 12.8574C24.3291 13.0997 24.3291 14.9003 23.0717 15.1426C22.1142 15.3272 21.7956 16.5385 22.5394 17.1691C23.5114 17.9933 22.6385 19.555 21.4272 19.1589L21.3062 19.1193C20.3756 18.815 19.4998 19.7096 19.8239 20.6336C20.2502 21.8487 18.7012 22.7724 17.8347 21.8198L17.7507 21.7274C17.0882 20.999 15.8791 21.3298 15.6797 22.294C15.4149 23.5751 13.5851 23.5751 13.3203 22.294C13.1209 21.3298 11.9118 20.999 11.2493 21.7274L11.1653 21.8198C10.2988 22.7724 8.74983 21.8487 9.17609 20.6336C9.50019 19.7096 8.62443 18.815 7.69379 19.1193L7.57276 19.1589C6.36145 19.555 5.48861 17.9933 6.46065 17.1691C7.20442 16.5385 6.88584 15.3272 5.92831 15.1426C4.67094 14.9003 4.67094 13.0997 5.92831 12.8574C6.88584 12.6728 7.20442 11.4615 6.46065 10.8309C5.48861 10.0067 6.36145 8.445 7.57276 8.84111L7.69379 8.88068C8.62442 9.18501 9.50019 8.29037 9.17609 7.36643C8.74983 6.15129 10.2988 5.2276 11.1653 6.18022L11.2493 6.27265C11.9118 7.00103 13.1209 6.67019 13.3203 5.70597Z"
-                                  fill="#00BEFF"/>
-                            <path d="M11 13.8462L14.15 16L18 12" stroke="white" stroke-width="2" stroke-linecap="round"
-                                  stroke-linejoin="round"/>
-                        </svg>
-                    </p>
-                {{/iff}}
+                            <svg width="29" height="28" viewBox="0 0 29 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M13.3203 5.70597C13.5851 4.42494 15.4149 4.42494 15.6797 5.70597C15.8791 6.67019 17.0882 7.00103 17.7507 6.27265L17.8347 6.18022C18.7012 5.2276 20.2502 6.15129 19.8239 7.36644C19.4998 8.29037 20.3756 9.18501 21.3062 8.88068L21.4272 8.84111C22.6385 8.445 23.5114 10.0067 22.5394 10.8309C21.7956 11.4615 22.1142 12.6728 23.0717 12.8574C24.3291 13.0997 24.3291 14.9003 23.0717 15.1426C22.1142 15.3272 21.7956 16.5385 22.5394 17.1691C23.5114 17.9933 22.6385 19.555 21.4272 19.1589L21.3062 19.1193C20.3756 18.815 19.4998 19.7096 19.8239 20.6336C20.2502 21.8487 18.7012 22.7724 17.8347 21.8198L17.7507 21.7274C17.0882 20.999 15.8791 21.3298 15.6797 22.294C15.4149 23.5751 13.5851 23.5751 13.3203 22.294C13.1209 21.3298 11.9118 20.999 11.2493 21.7274L11.1653 21.8198C10.2988 22.7724 8.74983 21.8487 9.17609 20.6336C9.50019 19.7096 8.62443 18.815 7.69379 19.1193L7.57276 19.1589C6.36145 19.555 5.48861 17.9933 6.46065 17.1691C7.20442 16.5385 6.88584 15.3272 5.92831 15.1426C4.67094 14.9003 4.67094 13.0997 5.92831 12.8574C6.88584 12.6728 7.20442 11.4615 6.46065 10.8309C5.48861 10.0067 6.36145 8.445 7.57276 8.84111L7.69379 8.88068C8.62442 9.18501 9.50019 8.29037 9.17609 7.36643C8.74983 6.15129 10.2988 5.2276 11.1653 6.18022L11.2493 6.27265C11.9118 7.00103 13.1209 6.67019 13.3203 5.70597Z"
+                                      fill="#00BEFF"/>
+                                <path d="M11 13.8462L14.15 16L18 12" stroke="white" stroke-width="2" stroke-linecap="round"
+                                      stroke-linejoin="round"/>
+                            </svg>
+                        </p>
+                    {{/iff}}
+                </div>
+                <form action="https://oplata.info/asp2/pay.asp" class="js-payForm" method="post" style="display: none">
+                    <input type="hidden" name="cart_uid" class="js-dsCartId"/>
+                    {{#if @root.person.email}}
+                        <input type="hidden" name="email" value="{{@root.person.email}}"/>
+                    {{else}}
+                        <input type="hidden" name="email" class="js-emailFormDs"/>
+                    {{/if}}
+                    <input type="hidden" name="failpage" value="{{@root.websiteAddress}}cart"/>
+                    <input type="hidden" name="agent" value="951647"/>
+                    <input type="hidden" name="typecurr" value="RUB"/>
+                    <input type="hidden" name="dsCartId" class="js-dsCartId"/>
+                </form>
             </div>
-            <form action="https://oplata.info/asp2/pay.asp" class="js-payForm" method="post" style="display: none">
-                <input type="hidden" name="cart_uid" class="js-dsCartId"/>
-                {{#if @root.person.email}}
-                    <input type="hidden" name="email" value="{{@root.person.email}}"/>
-                {{else}}
-                    <input type="hidden" name="email" class="js-emailFormDs"/>
-                {{/if}}
-                <input type="hidden" name="failpage" value="{{@root.websiteAddress}}cart"/>
-                <input type="hidden" name="agent" value="951647"/>
-                <input type="hidden" name="typecurr" value="RUB"/>
-                <input type="hidden" name="dsCartId" class="js-dsCartId"/>
-            </form>
         </div>
     {{else}}
         <div class="notFound">
@@ -167,3 +189,50 @@
         </div>
     {{/if}}
 </main>
+<script src="https://pay.yandex.ru/sdk/v1/pay.js" onload="onYaPayLoad()" async></script>
+<script>
+    function onYaPayLoad() {
+        const widgetNode = document.querySelector('.js-widget');
+        const totalPriceNode = document.querySelector('.js-totalTo');
+        const YaPay = window.YaPay;
+
+        // Данные платежа
+        const paymentData = {
+            // Для отладки нужно явно указать `SANDBOX` окружение,
+            // для продакшена параметр можно убрать или указать `PRODUCTION`
+            env: 'SANDBOX',
+            version: 4,
+            currencyCode: YaPay.CurrencyCode.Rub,
+            merchantId: 'bdd92d58-cf80-4ada-b0ed-394d4bc28af7',
+            totalAmount: totalPriceNode.innerText,
+            availablePaymentMethods: ['SPLIT'],
+        };
+
+        // Обработчик на клик по кнопке
+        // Функция должна возвращать промис которые резолвит ссылку на оплату полученную от бэкенда Yandex Pay
+        // Подробнее про создание заказа: https://pay.yandex.ru/ru/docs/custom/backend/yandex-pay-api/order/merchant_v1_orders-post
+        async function onPayButtonClick() {
+            // Создание заказа...
+            // и возврат URL на оплату вида 'https://pay.ya.ru/l/XXXXXX'
+        }
+
+        // Обработчик на ошибки при открытии формы оплаты
+        function onFormOpenError(reason) {
+            // Выводим информацию о недоступности оплаты в данный момент
+            // и предлагаем пользователю другой способ оплаты.
+            console.error(`Payment error — ${reason}`);
+        }
+
+        // Создаем платежную сессию
+        YaPay.createSession(paymentData, {
+            onPayButtonClick: onPayButtonClick,
+            onFormOpenError: onFormOpenError,
+        })
+        .then(function (paymentSession) {
+            paymentSession.mountWidget(widgetNode, { widgetType: YaPay.WidgetType.BnplPreview });
+        })
+        .catch(function (err) {
+            widgetNode.innerText = 'Что то не так'
+        });
+    }
+</script>

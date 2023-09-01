@@ -17,6 +17,7 @@ import Payment from "./lib/payment.js";
 const postman = new Postman();
 
 const platformSwitchNode = document.querySelector('.js-platformSwitch');
+const switchSplitNode = document.querySelector('.js-switchSplit');
 const profileMenuNode = document.querySelector('.js-profileMenu');
 const homeSliderNode = document.querySelector('.js-homeSlider');
 const fillUpPageModalNode = document.querySelector('.js-fillUpPageModal');
@@ -2514,6 +2515,30 @@ if (profileMenuNode) {
         link.addEventListener('mouseover', (e) => {
             moveIndicator(e.target)
         })
+    })
+}
+
+if (switchSplitNode) {
+    const fullPaymentBtnNode = document.querySelector('.js-fullPayment');
+    const splitPaymentBtnNode = document.querySelector('.js-splitPayment');
+    const payBtnNode = document.querySelector('.js-payBtn');
+    const introTextNode = document.querySelector('.js-introText');
+    const widgetNode = document.querySelector('.js-widget');
+    
+    fullPaymentBtnNode.addEventListener('click', () => {
+        payBtnNode.style.display = 'block';
+        introTextNode.style.display = 'none';
+        widgetNode.style.display = 'none';
+        splitPaymentBtnNode.classList.remove('active');
+        fullPaymentBtnNode.classList.add('active');
+    })
+    
+    splitPaymentBtnNode.addEventListener('click', () => {
+        payBtnNode.style.display = 'none';
+        introTextNode.style.display = 'block';
+        widgetNode.style.display = 'block';
+        splitPaymentBtnNode.classList.add('active');
+        fullPaymentBtnNode.classList.remove('active');
     })
 }
 

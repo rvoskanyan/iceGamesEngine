@@ -35,11 +35,23 @@
         @include for-big-phone-up
           margin-top: 33px
 
+        &.disabled .content:before
+          content: ''
+          display: block
+          position: absolute
+          top: 0
+          left: 0
+          right: 0
+          bottom: 0
+          background: rgba(1, 3, 60, 0.6)
+          z-index: 1
+
         & .content
           display: flex
           column-gap: 15px
           align-items: center
           margin-bottom: 15px
+          position: relative
 
           @include for-big-phone-up
             margin-bottom: 33px
@@ -65,13 +77,29 @@
             justify-content: space-between
             align-self: stretch
 
+            .canSlit
+              overflow: hidden
+              width: 75px
+              border-radius: 3px
+
+              @include for-desktop-up
+                width: 85px
+                border-radius: 5px
+
+              .icon
+                width: 100%
+                height: 100%
+                display: block
+
             & .name
               font-family: 'Lemon Milk'
               font-size: 18px
               color: #fff
+              margin-top: 3px
 
-              @include for-big-phone-up
+              @include for-desktop-up
                 font-size: 24px
+                margin-top: 5px
 
             & .price
               display: block
@@ -145,150 +173,190 @@
                 &:not(:last-child)
                   margin-bottom: 5px
 
-    & .check
-      border: 1px solid #fff
-      border-radius: 20px
+    .rightSection
       align-self: flex-start
-      padding: 13px 14px
       margin-top: 30px
-      color: #fff
 
       @include for-desktop-up
         margin-top: initial
         position: sticky
         top: 180px
-        padding: 20px 30px
         min-width: 400px
         max-width: 400px
 
-      @include for-middle-desktop-up
-        min-width: 460px
-        max-width: 460px
+        @include for-middle-desktop-up
+          min-width: 460px
+          max-width: 460px
 
-      .param
+      .switchSplit
         display: flex
         justify-content: space-between
-
-      .saving
-        color: #FA00FF
-
-      .title
-        font-family: 'Montserrat'
-        font-weight: 700
-        font-size: 14px
+        border: 1px solid #fff
+        border-radius: 20px
+        padding: 13px 14px
+        margin-bottom: 20px
+        column-gap: 10px
 
         @include for-desktop-up
-          font-size: 18px
+          padding: 20px 30px
 
-        @include for-middle-desktop-up
-          font-size: 24px
+        .btn
+          padding: 12px
+          border: 1px solid transparent
 
-      .body
-        display: flex
-        flex-direction: column
-        row-gap: 5px
-        font-size: 12px
-        margin-top: 10px
+          &.active
+            background: #984BFB
+            border: 1px solid #FFF
+            border-radius: 10px
 
-        @include for-desktop-up
-          font-size: 14px
-          margin-top: 18px
-          row-gap: 7px
-
-        @include for-middle-desktop-up
-          font-size: 16px
-          margin-top: 25px
-
-        .name
-          font-weight: 400
-
-        .value
-          font-weight: 700
-
-      .total
-        font-size: 14px
-        font-weight: 700
-        margin-top: 10px
-        padding-top: 10px
-        border-top: 1px solid rgba(255, 255, 255, 0.5)
+      .check
+        border: 1px solid #fff
+        border-radius: 20px
+        padding: 13px 14px
+        color: #fff
 
         @include for-desktop-up
-          font-size: 18px
-          margin-top: 18px
-          padding-top: 18px
+          padding: 20px 30px
 
-        @include for-middle-desktop-up
-          font-size: 24px
-          margin-top: 25px
-          padding-top: 25px
-
-      & .btn
-        border-width: 1px
-        white-space: initial
-        width: 100%
-        padding: 10px 0
-        margin-top: 10px
-
-        &.no-active
-          background: #E5E2F1
-          opacity: 0.4
-        @include for-desktop-up
-          margin-top: 18px
-
-        @include for-middle-desktop-up
-          margin-top: 25px
-          padding: 15px 0
-      .form-confirm_email
-        label
-          display: block
-          &:first-child
-            margin-top: 40px
-            margin-bottom: 22px
-          &.confirm_code
-            display: none
-        input
-          width: 100%
-          padding: 12px 0 12px 26px
-          margin-top: 12px
-          display: block
-          border: 1px solid #FA00FF
-          border-radius: 30px
-          color: #fff
-          background: transparent
-          &:focus
-            border: 1px solid #fff
-        .wrap-button
+        .param
           display: flex
-          flex-wrap: wrap
-          align-items: center
-          button
-            width: initial
-            padding: 12px 26px
-            font-weight: 400
-            font-size: 18px
-            line-height: 22px
-            margin-bottom: 12px
-            margin-right: 4px
-            &:active
-              background: #410074
-            &.error
-              border-color: #fa00ff
-          .error-message, .error
-              color: #FA00FF
-          .error-message
-            margin-bottom: 8px
-            margin-top: 4px
+          justify-content: space-between
 
-      .help-text_auth
-        span
-          margin-right: 4px
-        svg
+        .saving
+          color: #FA00FF
+
+        .title
+          font-family: 'Montserrat'
+          font-weight: 700
+          font-size: 14px
+
+          @include for-desktop-up
+            font-size: 18px
+
+          @include for-middle-desktop-up
+            font-size: 24px
+
+        .body
+          display: flex
+          flex-direction: column
+          row-gap: 5px
+          font-size: 12px
+          margin-top: 10px
+
+          @include for-desktop-up
+            font-size: 14px
+            margin-top: 18px
+            row-gap: 7px
+
+          @include for-middle-desktop-up
+            font-size: 16px
+            margin-top: 25px
+
+          .name
+            font-weight: 400
+
+          .value
+            font-weight: 700
+
+        .total
+          font-size: 14px
+          font-weight: 700
+          margin-top: 10px
+          padding-top: 10px
+          border-top: 1px solid rgba(255, 255, 255, 0.5)
+
+          @include for-desktop-up
+            font-size: 18px
+            margin-top: 18px
+            padding-top: 18px
+
+          @include for-middle-desktop-up
+            font-size: 24px
+            margin-top: 25px
+            padding-top: 25px
+
+        .widget
+          margin-top: 20px
           display: none
 
-        &.color-blue
-          color: #00BEFF
-          display: flex
-          align-items: center
+        .introInfo
+          color: #fff
+          text-align: center
+          font-size: 21px
+          font-weight: 700
+          margin-top: 20px
+          line-height: 1.5
+          display: none
+
+        .btn
+          border-width: 1px
+          white-space: initial
+          width: 100%
+          padding: 10px 0
+          margin-top: 10px
+
+          &.no-active
+            background: #E5E2F1
+            opacity: 0.4
+          @include for-desktop-up
+            margin-top: 18px
+
+          @include for-middle-desktop-up
+            margin-top: 25px
+            padding: 15px 0
+
+        .form-confirm_email
+          label
+            display: block
+            &:first-child
+              margin-top: 40px
+              margin-bottom: 22px
+            &.confirm_code
+              display: none
+          input
+            width: 100%
+            padding: 12px 0 12px 26px
+            margin-top: 12px
+            display: block
+            border: 1px solid #FA00FF
+            border-radius: 30px
+            color: #fff
+            background: transparent
+            &:focus
+              border: 1px solid #fff
+          .wrap-button
+            display: flex
+            flex-wrap: wrap
+            align-items: center
+            button
+              width: initial
+              padding: 12px 26px
+              font-weight: 400
+              font-size: 18px
+              line-height: 22px
+              margin-bottom: 12px
+              margin-right: 4px
+              &:active
+                background: #410074
+              &.error
+                border-color: #fa00ff
+            .error-message, .error
+                color: #FA00FF
+            .error-message
+              margin-bottom: 8px
+              margin-top: 4px
+
+        .help-text_auth
+          span
+            margin-right: 4px
+          svg
+            display: none
+
+          &.color-blue
+            color: #00BEFF
+            display: flex
+            align-items: center
+
   & .notFound
     display: flex
     flex-direction: column

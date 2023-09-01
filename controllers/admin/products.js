@@ -164,6 +164,7 @@ export const addProduct = async (req, res) => {
       platform,
       platformType,
       top,
+      canSplit,
       active,
     } = req.body;
     
@@ -220,6 +221,7 @@ export const addProduct = async (req, res) => {
       platformId: platform,
       platformType,
       top: top === 'on',
+      canSplit: canSplit === 'on',
       active: active === 'on',
     });
     
@@ -285,7 +287,7 @@ export const addProduct = async (req, res) => {
 }
 
 export const pageEditProduct = async (req, res) => {
-  const {productId} = req.params;
+  const { productId } = req.params;
   
   try {
     let product = await Product.findById(productId);
@@ -367,7 +369,7 @@ export const pageEditProduct = async (req, res) => {
 }
 
 export const editProduct = async (req, res) => {
-  const {productId} = req.params;
+  const { productId } = req.params;
   
   try {
     const {
@@ -417,6 +419,7 @@ export const editProduct = async (req, res) => {
       platform,
       platformType,
       top,
+      canSplit,
       active,
     } = req.body;
     const product = await Product.findById(productId);
@@ -470,6 +473,7 @@ export const editProduct = async (req, res) => {
       platformId: platform ? platform : product.platformId,
       platformType: platformType ? platformType : product.platformType,
       top: top === 'on',
+      canSplit: canSplit === 'on',
       active: active === 'on',
     });
     
