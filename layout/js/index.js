@@ -2552,15 +2552,22 @@ if (switchSplitNode) {
         fullPaymentBtnNode.classList.add('active');
     
         products.forEach(product => {
-            const priceFrom = parseFloat(product.querySelector('.js-priceFrom').innerText);
+            const priceFromNode = product.querySelector('.js-priceFrom');
             const priceTo = parseFloat(product.querySelector('.js-priceTo').innerText);
             
             if (!product.dataset.canSplit) {
                 product.classList.remove('disabled');
             }
+    
+            if (priceFromNode) {
+                const priceFrom = parseFloat(priceFromNode.innerText);
+    
+                total += priceFrom;
+                discount += priceFrom - priceTo;
+            } else {
+                total += priceTo;
+            }
             
-            total += priceFrom;
-            discount += priceFrom - priceTo;
             result += priceTo;
         });
     
