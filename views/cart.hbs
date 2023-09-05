@@ -100,10 +100,14 @@
             </div>
             <div class="rightSection">
                 {{#if canSplit}}
-                    <div class="switchSplit js-switchSplit mobileInvisibleScroll">
-                        <button class="btn active js-fullPayment">Оплатить сразу</button>
-                        <button class="btn js-splitPayment">Оплатить частями</button>
-                    </div>
+                    {{#if is_auth}}
+                        {{#iff person.role '===' 'admin'}}
+                            <div class="switchSplit js-switchSplit mobileInvisibleScroll">
+                                <button class="btn active js-fullPayment">Оплатить сразу</button>
+                                <button class="btn js-splitPayment">Оплатить частями</button>
+                            </div>
+                        {{/iff}}
+                    {{/if}}
                 {{/if}}
                 <div class="check js-check">
                     <div class="title">Ваша корзина</div>
@@ -118,6 +122,10 @@
                             <div class="name">Скидка</div>
                             <div class="value saving"><span class="js-saving">{{cart.saving}}</span> ₽</div>
                         </div>
+                        <div class="param splitCommission js-splitCommission">
+                            <div class="name">Комиссия за сплит</div>
+                            <div class="value">6%</div>
+                        </div>
                     </div>
                     <div class="total">
                         <div class="param">
@@ -126,11 +134,11 @@
                         </div>
                     </div>
                     <div class="widget js-widget"></div>
-                    <div class="introInfo js-introText">Играй сейчас - плати потом!<br>Старт уже завтра, не пропусти!</div>
+                    <button class="btn round border bg-darkPurple hover-bg-violet paySplit js-paySplit">Перейти к оформлению</button>
                     <button
                         data-is_keys="{{is_keys.is_keys}}"
                         data-products="{{is_keys.products}}"
-                        class="btn round border bg-darkPurple uppercase js-payBtn hover-bg-violet{{#unless is_auth}} no-active{{/unless}}"
+                        class="btn round border bg-darkPurple js-payBtn hover-bg-violet{{#unless is_auth}} no-active{{/unless}}"
                     >
                         Оплатить
                     </button>
@@ -188,7 +196,7 @@
 </main>
 <script src="https://pay.yandex.ru/sdk/v1/pay.js" onload="onYaPayLoad()" async></script>
 <script>
-    function onYaPayLoad() {
+    /*function onYaPayLoad() {
         const widgetNode = document.querySelector('.js-widget');
         const totalPriceNode = document.querySelector('.js-totalTo');
         const YaPay = window.YaPay;
@@ -204,14 +212,6 @@
             totalAmount: totalPriceNode.innerText,
             availablePaymentMethods: ['SPLIT'],
         };
-
-        // Обработчик на клик по кнопке
-        // Функция должна возвращать промис которые резолвит ссылку на оплату полученную от бэкенда Yandex Pay
-        // Подробнее про создание заказа: https://pay.yandex.ru/ru/docs/custom/backend/yandex-pay-api/order/merchant_v1_orders-post
-        async function onPayButtonClick() {
-            // Создание заказа...
-            // и возврат URL на оплату вида 'https://pay.ya.ru/l/XXXXXX'
-        }
 
         // Обработчик на ошибки при открытии формы оплаты
         function onFormOpenError(reason) {
@@ -231,5 +231,5 @@
         .catch(function (err) {
             widgetNode.innerText = 'Что то не так'
         });
-    }
+    }*/
 </script>

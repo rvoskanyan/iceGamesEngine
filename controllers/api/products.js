@@ -561,7 +561,7 @@ export const revise = async (req, res) => {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
-      body: JSON.stringify({ids: [product.dsId]}),
+      body: JSON.stringify({ ids: [ product.dsId ] }),
     });
     const resultProducts = await responseProducts.json();
     const dsProduct = resultProducts[0];

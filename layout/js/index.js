@@ -181,6 +181,12 @@ const windowHeight = document.documentElement.clientHeight;
 const windowWidth = document.documentElement.clientWidth;
 const topGap = document.querySelector('.js-header').getBoundingClientRect().height + 10;
 
+let yaClientId;
+
+if (window.yaCounter69707947?.getClientID) {
+    yaClientId = yaCounter69707947.getClientID()
+}
+
 mobileCartLinkNode && mobileCartLinkNode.addEventListener('transitionend', () => {
     mobileCartLinkNode.classList.remove('adding');
 })
@@ -1165,6 +1171,8 @@ if (cartNode) {
 
                     const priceTo = +productNode.querySelector('.js-priceTo').innerText;
                     const priceFrom = +productNode.querySelector('.js-priceFrom')?.innerText;
+                    let totalPriceToValue = +totalPriceToNode.innerText;
+                    let totalPriceFromValue = +totalPriceFromNode.innerText;
                     products.iceGame = products.iceGame.filter(ids=>productId!==ids)
                     products.digiSeller = products.digiSeller.filter(obj=>obj.productId!==productId)
 
@@ -1201,10 +1209,6 @@ if (cartNode) {
     
                 if (!payment) {
                     return console.error('Payment method not set')
-                }
-    
-                if (window.yaCounter69707947?.getClientID) {
-                    yaClientId = yaCounter69707947.getClientID()
                 }
 
                 if (formConfirm) {
@@ -2522,29 +2526,93 @@ if (switchSplitNode) {
     const fullPaymentBtnNode = document.querySelector('.js-fullPayment');
     const splitPaymentBtnNode = document.querySelector('.js-splitPayment');
     const payBtnNode = document.querySelector('.js-payBtn');
-    const introTextNode = document.querySelector('.js-introText');
+    const paySplitNode = document.querySelector('.js-paySplit');
     const widgetNode = document.querySelector('.js-widget');
     const confirmEmailFormNode = document.querySelector('.js-confirmEmailForm');
     const helpTextNode = document.querySelector('.js-help-text');
+    const totalProductsNode = document.querySelector('.js-totalProducts');
+    const totalFromNode = document.querySelector('.js-totalFrom');
+    const savingNode = document.querySelector('.js-saving');
+    const totalToNode = document.querySelector('.js-totalTo');
+    const splitCommission = document.querySelector('.js-splitCommission');
     
     fullPaymentBtnNode.addEventListener('click', () => {
+        const products = document.querySelectorAll('.js-product');
+        let total = 0;
+        let discount = 0;
+        let result = 0;
+        
         payBtnNode && (payBtnNode.style.display = 'block');
         confirmEmailFormNode && (confirmEmailFormNode.style.display = 'block');
         helpTextNode && (helpTextNode.style.display = 'block');
-        introTextNode.style.display = 'none';
+        paySplitNode.style.display = 'none';
         widgetNode.style.display = 'none';
+        splitCommission.style.display = 'none';
         splitPaymentBtnNode.classList.remove('active');
         fullPaymentBtnNode.classList.add('active');
+    
+        products.forEach(product => {
+            const priceFrom = parseFloat(product.querySelector('.js-priceFrom').innerText);
+            const priceTo = parseFloat(product.querySelector('.js-priceTo').innerText);
+            
+            if (!product.dataset.canSplit) {
+                product.classList.remove('disabled');
+            }
+            
+            total += priceFrom;
+            discount += priceFrom - priceTo;
+            result += priceTo;
+        });
+    
+        totalProductsNode.innerText = products.length;
+        totalFromNode.innerText = total;
+        savingNode.innerText = discount;
+        totalToNode.innerText = result;
     })
     
     splitPaymentBtnNode.addEventListener('click', () => {
+        const products = document.querySelectorAll('.js-product');
+        let countProducts = 0;
+        let total = 0;
+        let discount = 0;
+        let result = 0;
+        
         payBtnNode && (payBtnNode.style.display = 'none');
         confirmEmailFormNode && (confirmEmailFormNode.style.display = 'none');
         helpTextNode && (helpTextNode.style.display = 'none');
-        introTextNode.style.display = 'block';
+        paySplitNode.style.display = 'block';
         widgetNode.style.display = 'block';
+        splitCommission.style.display = 'flex';
         splitPaymentBtnNode.classList.add('active');
         fullPaymentBtnNode.classList.remove('active');
+    
+        products.forEach(product => {
+            if (!product.dataset.canSplit) {
+                return product.classList.add('disabled');
+            }
+    
+            const priceFrom = parseFloat(product.querySelector('.js-priceFrom').innerText);
+            const priceTo = parseFloat(product.querySelector('.js-priceTo').innerText);
+    
+            total += priceFrom;
+            discount += priceFrom - priceTo;
+            result += Math.floor(priceTo + priceTo / 100 * 6);
+            countProducts++;
+        })
+    
+        totalProductsNode.innerText = countProducts;
+        totalFromNode.innerText = total;
+        savingNode.innerText = discount;
+        totalToNode.innerText = result;
+    })
+    
+    paySplitNode.addEventListener('click', async () => {
+        const response = await postman.post(`${websiteAddress}api/order/split`, { yaClientId });
+        const result = await response.json();
+        
+        if (result.success) {
+            window.open(result.paymentUrl, '_self');
+        }
     })
 }
 

@@ -14,6 +14,10 @@ const fields = {
     type: Schema.Types.ObjectId,
     ref: 'PaymentMethod',
   },
+  isSplit: {
+    type: Boolean,
+    default: false,
+  },
   userId: {
     type: Schema.Types.ObjectId,
     ref: 'User',

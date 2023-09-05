@@ -50,7 +50,7 @@ export default {
             const isAuth = res.locals.isAuth;
             const receiptItems = [];
             let amount = 0;
-            let {products, isTwo, email, currency, yaClientId} = req.body;
+            let { products, isTwo, email, currency, yaClientId } = req.body;
             
             currency = currency || 'RUB';
             currency = currency.toUpperCase();
