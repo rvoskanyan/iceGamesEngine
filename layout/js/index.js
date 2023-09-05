@@ -2590,12 +2590,19 @@ if (switchSplitNode) {
             if (!product.dataset.canSplit) {
                 return product.classList.add('disabled');
             }
-    
-            const priceFrom = parseFloat(product.querySelector('.js-priceFrom').innerText);
+            
+            const priceFromNode = product.querySelector('.js-priceFrom');
             const priceTo = parseFloat(product.querySelector('.js-priceTo').innerText);
+            
+            if (priceFromNode) {
+                const priceFrom = parseFloat(priceFromNode.innerText);
     
-            total += priceFrom;
-            discount += priceFrom - priceTo;
+                total += priceFrom;
+                discount += priceFrom - priceTo;
+            } else {
+                total += priceTo;
+            }
+            
             result += Math.floor(priceTo + priceTo / 100 * 6);
             countProducts++;
         })
