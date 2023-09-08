@@ -106,11 +106,11 @@ export const createSplitOrder = async (req, res) => {
       }
     };
     
-    const responseYa = await fetch('https://pay.yandex.ru/api/merchant/v1/orders', {
+    const responseYa = await fetch('https://sandbox.pay.yandex.ru/api/merchant/v1/orders', {
       method: 'POST',
       headers: {
-        'Authorization': 'Api-Key bdd92d58cf804adab0ed394d4bc28af7.raWpRwV61YLwlGeV5y1_4UwEaUGz6_3n',
-        //'Authorization': 'Api-Key bdd92d58-cf80-4ada-b0ed-394d4bc28af7',
+        //'Authorization': 'Api-Key bdd92d58cf804adab0ed394d4bc28af7.raWpRwV61YLwlGeV5y1_4UwEaUGz6_3n',
+        'Authorization': 'Api-Key bdd92d58-cf80-4ada-b0ed-394d4bc28af7',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(paymentData),
