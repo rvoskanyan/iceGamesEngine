@@ -7,9 +7,10 @@ import User from "../../models/User.js";
 import { achievementEvent } from "../../services/achievement.js";
 
 export const yaSplitHandler = async (req, res) => {
-  console.log('yaSplitHandler');
-  
   try {
+  
+    console.log(req.body);
+    
     const { operation } = req.body;
     const order = await Order.findById(operation.orderId);
     
