@@ -17,6 +17,6 @@ router.get('/feed-csv', getFeedCsv);
 router.get('/feed-yml.xml', getFeedYML);
 router.get('/turbo-articles-rss-feed.xml', getTurboArticlesRssFeed);
 
-router.post('/yaSplit', yaSplitHandler);
+//router.post('/yaSplit', yaSplitHandler);
 
 export default router;

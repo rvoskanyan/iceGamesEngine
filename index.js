@@ -16,9 +16,10 @@ import constClientMiddleware from './middlewares/constClientData.js';
 import clientRoutes from './routes/client.js';
 import adminRoutes from './routes/admin.js';
 import apiRoutes from'./routes/api.js';
+import v1Routes from'./routes/v1.js';
 import {admin} from "./middlewares/routeProtection.js";
 import webhook from "./routes/webhook.js";
-import {getFormatDate} from "./utils/functions.js";
+import { getFormatDate } from "./utils/functions.js";
 
 dotenv.config();
 
@@ -135,7 +136,8 @@ app.use(fileUpload({}));
 app.use('/', constClientMiddleware, clientRoutes);
 app.use('/admin', admin, adminRoutes);
 app.use('/api', apiRoutes);
-app.use('/webhook', webhook)
+app.use('/webhook', webhook);
+app.use('/v1', v1Routes);
 
 app.use(function(req, res) {
   res.status(404);
