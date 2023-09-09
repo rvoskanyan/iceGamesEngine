@@ -6,9 +6,12 @@ import metrica from "../../services/metrica.js";
 import User from "../../models/User.js";
 import { achievementEvent } from "../../services/achievement.js";
 
+
+// /v1/webhook handler
 export const yaSplitHandler = async (req, res) => {
   try {
   
+    console.log('yaSplitHandler');
     console.log(req.body);
     
     const { operation } = req.body;
