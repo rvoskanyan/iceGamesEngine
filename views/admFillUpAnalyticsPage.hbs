@@ -2,3 +2,12 @@
 <form action="/admin/fill-up-analytics/update-statuses">
     <input type="submit" value="Обновить статусы">
 </form>
+<br>
+<form action="/admin/fill-up-analytics/setActive" method="post">
+    <label>
+        Пополнения работают:
+        <input type="checkbox" name="activeFillUp"{{#if activeFillUp}} checked{{/if}}>
+    </label>
+    <br>
+    <input type="submit" value="Сохранить">
+</form>

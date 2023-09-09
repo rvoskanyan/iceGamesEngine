@@ -12,10 +12,12 @@ export const fillUpAnalyticsPage = async (req, res) => {
     });
   
     const data = await response.json();
+    const activeFillUp = req.app.get('activeFillUp');
     
     res.render('admFillUpAnalyticsPage', {
       layout: 'admin',
       balance: data.balance,
+      activeFillUp: activeFillUp === undefined ? true : activeFillUp,
     });
   } catch (e) {
     console.log(e);
@@ -53,4 +55,10 @@ export const updateStatuses = async (req, res) => {
     console.log(e);
     res.redirect('/admin/fill-up-analytics');
   }
+}
+
+export const setActive = (req, res) => {
+  req.app.set('activeFillUp', req.body.activeFillUp === 'on');
+  
+  res.redirect('/admin');
 }
