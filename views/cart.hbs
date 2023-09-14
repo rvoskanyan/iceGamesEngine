@@ -33,6 +33,7 @@
     {{> breadcrumbs}}
     {{#if cart.items.length}}
         <h1 class="title js-cartTitle">Список покупок</h1>
+        <div class="infoCanSplit">Внимание! В корзине есть товары, доступные для оплаты в сплит (частями). Для покупки в сплит Вам необходимо авторизоваться.</div>
         <div class="info js-cartList">
             <div class="listGames">
                 {{#each cart.items}}
@@ -131,7 +132,9 @@
                         <div class="param">
                             <div class="name js-totalFullPay">Общая стоимость</div>
                             {{#if canSplit}}
-                                <div class="name js-splitPay">От 4-х платежей по</div>
+                                {{#if is_auth}}
+                                    <div class="name js-splitPay">От 4-х платежей по</div>
+                                {{/if}}
                             {{/if}}
                             <div class="value"><span class="js-totalTo">{{cart.priceToTotal}}</span> ₽</div>
                         </div>
