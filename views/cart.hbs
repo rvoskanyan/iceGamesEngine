@@ -129,7 +129,10 @@
                     </div>
                     <div class="total">
                         <div class="param">
-                            <div class="name">Общая стоимость</div>
+                            <div class="name js-totalFullPay">Общая стоимость</div>
+                            {{#if canSplit}}
+                                <div class="name js-splitPay">От 4-х платежей по</div>
+                            {{/if}}
                             <div class="value"><span class="js-totalTo">{{cart.priceToTotal}}</span> ₽</div>
                         </div>
                     </div>

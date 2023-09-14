@@ -2535,6 +2535,10 @@ if (switchSplitNode) {
     const savingNode = document.querySelector('.js-saving');
     const totalToNode = document.querySelector('.js-totalTo');
     const splitCommission = document.querySelector('.js-splitCommission');
+    const totalFullPayNode = document.querySelector('.js-totalFullPay');
+    const splitPayNode = document.querySelector('.js-splitPay');
+    
+    splitPayNode.style.display = 'none';
     
     fullPaymentBtnNode.addEventListener('click', () => {
         const products = document.querySelectorAll('.js-product');
@@ -2545,9 +2549,11 @@ if (switchSplitNode) {
         payBtnNode && (payBtnNode.style.display = 'block');
         confirmEmailFormNode && (confirmEmailFormNode.style.display = 'block');
         helpTextNode && (helpTextNode.style.display = 'block');
+        totalFullPayNode && (totalFullPayNode.style.display = 'block');
         paySplitNode.style.display = 'none';
         widgetNode.style.display = 'none';
         splitCommission.style.display = 'none';
+        splitPayNode.style.display = 'none';
         splitPaymentBtnNode.classList.remove('active');
         fullPaymentBtnNode.classList.add('active');
     
@@ -2587,8 +2593,10 @@ if (switchSplitNode) {
         payBtnNode && (payBtnNode.style.display = 'none');
         confirmEmailFormNode && (confirmEmailFormNode.style.display = 'none');
         helpTextNode && (helpTextNode.style.display = 'none');
+        totalFullPayNode && (totalFullPayNode.style.display = 'none');
         paySplitNode.style.display = 'block';
         widgetNode.style.display = 'block';
+        splitPayNode.style.display = 'block';
         splitCommission.style.display = 'flex';
         splitPaymentBtnNode.classList.add('active');
         fullPaymentBtnNode.classList.remove('active');
@@ -2610,7 +2618,7 @@ if (switchSplitNode) {
                 total += priceTo;
             }
             
-            result += Math.floor(priceTo + priceTo / 100 * 6);
+            result += Math.ceil((priceTo + priceTo / 100 * 6) / 4);
             countProducts++;
         })
     
