@@ -2618,7 +2618,7 @@ if (switchSplitNode) {
                 total += priceTo;
             }
             
-            result += Math.ceil((priceTo + priceTo / 100 * 6) / 4);
+            result += Math.ceil(Math.floor(priceTo + priceTo / 100 * 6) / 4);
             countProducts++;
         })
     
