@@ -10,11 +10,9 @@ import { achievementEvent } from "../../services/achievement.js";
 // /v1/webhook handler
 export const yaSplitHandler = async (req, res) => {
   try {
-    const authHeader = req.headers['Authorization']
-    const token = authHeader && authHeader.split(' ')[1]
     
     console.log('yaSplitHandler');
-    console.log(token);
+    console.log(req);
     
     const { operation } = req.body;
     const order = await Order.findById(operation.orderId);
