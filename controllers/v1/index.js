@@ -12,7 +12,7 @@ export const yaSplitHandler = async (req, res) => {
   try {
     
     console.log('yaSplitHandler');
-    console.log(req);
+    console.log(req.body);
     
     const { operation } = req.body;
     const order = await Order.findById(operation.orderId);
