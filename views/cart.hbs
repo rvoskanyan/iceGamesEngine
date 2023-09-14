@@ -102,12 +102,10 @@
             <div class="rightSection">
                 {{#if canSplit}}
                     {{#if is_auth}}
-                        {{#iff person.role '===' 'admin'}}
-                            <div class="switchSplit js-switchSplit mobileInvisibleScroll">
-                                <button class="btn active js-fullPayment">Оплатить сразу</button>
-                                <button class="btn js-splitPayment">Оплатить частями</button>
-                            </div>
-                        {{/iff}}
+                        <div class="switchSplit js-switchSplit mobileInvisibleScroll">
+                            <button class="btn active js-fullPayment">Оплатить сразу</button>
+                            <button class="btn js-splitPayment">Оплатить частями</button>
+                        </div>
                     {{/if}}
                 {{/if}}
                 <div class="check js-check">
