@@ -33,7 +33,9 @@
     {{> breadcrumbs}}
     {{#if cart.items.length}}
         <h1 class="title js-cartTitle">Список покупок</h1>
-        <div class="infoCanSplit">Внимание! В корзине есть товары, доступные для оплаты в сплит (частями). Для покупки в сплит Вам необходимо авторизоваться.</div>
+        {{#unless is_auth}}
+            <div class="infoCanSplit">Внимание! В корзине есть товары, доступные для оплаты в сплит (частями). Для покупки в сплит Вам необходимо авторизоваться.</div>
+        {{/unless}}
         <div class="info js-cartList">
             <div class="listGames">
                 {{#each cart.items}}
