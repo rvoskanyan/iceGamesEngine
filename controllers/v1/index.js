@@ -5,17 +5,16 @@ import {mailingBuyProduct, outStockProduct} from "../../services/mailer.js";
 import metrica from "../../services/metrica.js";
 import User from "../../models/User.js";
 import { achievementEvent } from "../../services/achievement.js";
+import jwt from 'jsonwebtoken';
 
 
 // /v1/webhook handler
 export const yaSplitHandler = async (req, res) => {
   try {
-    
-    console.log('yaSplitHandler');
-    console.log(Buffer.from(req.body).toString());
-    
-    const { operation } = req.body;
-    const order = await Order.findById(operation.orderId);
+    const token = Buffer.from(req.body).toString();
+    const data = jwt.decode(token, { json: true });
+    const orderData = data.order;
+    const order = await Order.findById(orderData.orderId);
     
     res.json({ "status": "success" });
     
@@ -27,7 +26,7 @@ export const yaSplitHandler = async (req, res) => {
       }); //Сделать логирование и уведомление, что пришло уведомление по не существующему заказу
     }
     
-    if (operation.status === 'SUCCESS') {
+    if (orderData.paymentStatus === 'CAPTURED') {
       if (order.status === 'paid') {
         return;
       }
