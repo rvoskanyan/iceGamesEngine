@@ -112,6 +112,15 @@
                 <div class="value animated js-counterAnimation">{{countReviews}}</div>
             </div>
         </div>
+        <div class="splitInfoBlock">
+            <img src="{{websiteAddress}}img/splitInfoBlockHomeBg.jpg" class="img" alt="Картинка для инфо-блока про сплит на главной">
+            <div class="content">
+                <img class="icon" src="{{@root.websiteAddress}}img/iconSplit.png" alt="Доступно в сплит" title="Доступно для оплаты по частям">
+                <div class="title">Играй сейчас - плати потом</div>
+                <div class="description">Дели сумму заказа на части и оплачивай постепенно</div>
+                <a href="{{websiteAddress}}split" class="btn border round bg-pink">Узнать подробнее</a>
+            </div>
+        </div>
         <div class="homeSection homeCatalog js-homeCatalogTabs">
             <div class="categories mobileInvisibleScroll">
                 {{#each catalog}}

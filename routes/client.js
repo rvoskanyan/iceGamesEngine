@@ -1,4 +1,4 @@
-import {Router} from 'express';
+import { Router } from 'express';
 import homeRoute from './client/home.js';
 import gamesRoute from './client/games.js';
 import formActionsRoute from './client/formsActions.js';
@@ -20,6 +20,7 @@ import splitCatalogRoute from './client/splitCatalog.js';
 import yaAuthRoute from "./client/yaAuth.js";
 import fillUpSteamRoute from './client/fillUpSteam.js';
 import selectionsRoute from './client/selections.js';
+import splitRoute from './client/split.js';
 
 const router = Router();
 
@@ -44,5 +45,6 @@ router.use('/legal-info', legalInfo);
 router.use('/', splitCatalogRoute);
 router.use('/fill-up-steam', fillUpSteamRoute);
 router.use('/selections', selectionsRoute);
+router.use('/split', splitRoute);
 
 export default router;
