@@ -209,6 +209,27 @@
         @include for-middle-desktop-up
           font-size: 16px
 
+      .splitInfo
+        display: flex
+        align-items: center
+        column-gap: 8px
+        margin-top: 15px
+        line-height: 1
+        text-decoration: underline
+        font-size: 14px
+
+        @include for-desktop-up
+          font-size: 16px
+          column-gap: 10px
+
+        .icon
+          width: 80px
+          border-radius: 3px
+
+          @include for-desktop-up
+            width: 100px
+            border-radius: 5px
+
       & .statuses
         display: flex
         margin-top: 15px

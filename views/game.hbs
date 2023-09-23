@@ -99,6 +99,12 @@
                 {{/iff}}
             </div>
             <div class="description" itemprop="description">{{shortDescription}}</div>
+            {{#if canSplit}}
+                <a href="{{@root.websiteAddress}}split" class="splitInfo link" title="Узнать подробнее про сплит">
+                    <img class="icon" src="{{@root.websiteAddress}}img/iconSplit.png" alt="YaSplit">
+                    Играй сейчас - плати потом
+                </a>
+            {{/if}}
             <div class="offerMacro" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
                 {{#if product.preOrder}}
                     <link itemprop="availability" href="http://schema.org/PreOrder">

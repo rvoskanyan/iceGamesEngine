@@ -33,9 +33,6 @@
     {{> breadcrumbs}}
     {{#if cart.items.length}}
         <h1 class="title js-cartTitle">Список покупок</h1>
-        {{#unless is_auth}}
-            <div class="infoCanSplit">Внимание! В корзине есть товары, доступные для оплаты в сплит (частями). Для покупки в сплит Вам необходимо авторизоваться.</div>
-        {{/unless}}
         <div class="info js-cartList">
             <div class="listGames">
                 {{#each cart.items}}
@@ -103,14 +100,24 @@
             </div>
             <div class="rightSection">
                 {{#if canSplit}}
-                    {{#if is_auth}}
-                        <div class="switchSplit js-switchSplit mobileInvisibleScroll">
-                            <button class="btn active js-fullPayment">Оплатить сразу</button>
-                            <button class="btn js-splitPayment">Оплатить частями</button>
-                        </div>
-                    {{/if}}
+                    <div class="switchSplit js-switchSplit mobileInvisibleScroll">
+                        <button class="btn active js-fullPayment">Оплатить сразу</button>
+                        <button class="btn js-splitPayment">Оплатить частями</button>
+                    </div>
                 {{/if}}
                 <div class="check js-check">
+                    {{#unless is_auth}}
+                        <div class="notAuthSplitBlock js-notAuthSplitBlock">
+                            <img class="icon" src="{{@root.websiteAddress}}img/iconSplit.png" alt="YaSplit">
+                            <div class="content">
+                                <img class="lock" src="{{@root.websiteAddress}}img/lock.svg" alt="Lock icon">
+                                <div class="description">
+                                    Для покупки в сплит (частями) необходимо авторизоваться на нашем сайте.
+                                </div>
+                                <button class="btn border rounded bg-pink js-toAuth">Авторизоваться</button>
+                            </div>
+                        </div>
+                    {{/unless}}
                     <div class="title">Ваша корзина</div>
                     <div class="body">
                         <div class="param">
@@ -132,15 +139,16 @@
                         <div class="param">
                             <div class="name js-totalFullPay">Общая стоимость</div>
                             {{#if canSplit}}
-                                {{#if is_auth}}
-                                    <div class="name js-splitPay">От 4-х платежей по</div>
-                                {{/if}}
+                                <div class="name js-splitPay">От 4-х платежей по</div>
                             {{/if}}
                             <div class="value"><span class="js-totalTo">{{cart.priceToTotal}}</span> ₽</div>
                         </div>
                     </div>
                     <div class="widget js-widget"></div>
-                    <button class="btn round border bg-darkPurple hover-bg-violet paySplit js-paySplit">Перейти к оформлению</button>
+                    <button
+                        class="btn round border bg-darkPurple hover-bg-violet paySplit js-paySplit"
+                        {{#unless is_auth}} disabled{{/unless}}
+                    >Перейти к оформлению</button>
                     <button
                         data-is_keys="{{is_keys.is_keys}}"
                         data-products="{{is_keys.products}}"
@@ -200,42 +208,3 @@
         </div>
     {{/if}}
 </main>
-<script src="https://pay.yandex.ru/sdk/v1/pay.js" onload="onYaPayLoad()" async></script>
-<script>
-    /*function onYaPayLoad() {
-        const widgetNode = document.querySelector('.js-widget');
-        const totalPriceNode = document.querySelector('.js-totalTo');
-        const YaPay = window.YaPay;
-
-        // Данные платежа
-        const paymentData = {
-            // Для отладки нужно явно указать `SANDBOX` окружение,
-            // для продакшена параметр можно убрать или указать `PRODUCTION`
-            env: 'SANDBOX',
-            version: 4,
-            currencyCode: YaPay.CurrencyCode.Rub,
-            merchantId: 'bdd92d58-cf80-4ada-b0ed-394d4bc28af7',
-            totalAmount: totalPriceNode.innerText,
-            availablePaymentMethods: ['SPLIT'],
-        };
-
-        // Обработчик на ошибки при открытии формы оплаты
-        function onFormOpenError(reason) {
-            // Выводим информацию о недоступности оплаты в данный момент
-            // и предлагаем пользователю другой способ оплаты.
-            console.error(`Payment error — ${reason}`);
-        }
-
-        // Создаем платежную сессию
-        YaPay.createSession(paymentData, {
-            onPayButtonClick: onPayButtonClick,
-            onFormOpenError: onFormOpenError,
-        })
-        .then(function (paymentSession) {
-            paymentSession.mountWidget(widgetNode, { widgetType: YaPay.WidgetType.BnplPreview });
-        })
-        .catch(function (err) {
-            widgetNode.innerText = 'Что то не так'
-        });
-    }*/
-</script>

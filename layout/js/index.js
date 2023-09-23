@@ -91,7 +91,7 @@ const reloadCheckFillUpStatusNode = document.querySelector('.js-reloadCheckFillU
 const buyTurkeyPage = document.querySelector('.js-buyTurkeyPage');
 const popupController = new PopupController([
     {
-        id: 'loginFrom',
+        id: 'loginForm',
         btnSelector: '.js-openLogin',
         closeBtnSelector: '.js-closeLoginForms',
         popupSelector: '.js-login',
@@ -2537,8 +2537,18 @@ if (switchSplitNode) {
     const splitCommission = document.querySelector('.js-splitCommission');
     const totalFullPayNode = document.querySelector('.js-totalFullPay');
     const splitPayNode = document.querySelector('.js-splitPay');
+    const notAuthSplitBlockNode = document.querySelector('.js-notAuthSplitBlock');
     
     splitPayNode.style.display = 'none';
+    
+    if (notAuthSplitBlockNode) {
+        const poAuthBtnNode = notAuthSplitBlockNode.querySelector('.js-toAuth');
+    
+        poAuthBtnNode.addEventListener('click', (e) => {
+            e.stopPropagation();
+            popupController.activateById('loginForm');
+        })
+    }
     
     fullPaymentBtnNode.addEventListener('click', () => {
         const products = document.querySelectorAll('.js-product');
@@ -2554,6 +2564,7 @@ if (switchSplitNode) {
         widgetNode.style.display = 'none';
         splitCommission.style.display = 'none';
         splitPayNode.style.display = 'none';
+        notAuthSplitBlockNode && (notAuthSplitBlockNode.style.display = 'none');
         splitPaymentBtnNode.classList.remove('active');
         fullPaymentBtnNode.classList.add('active');
     
@@ -2598,6 +2609,7 @@ if (switchSplitNode) {
         widgetNode.style.display = 'block';
         splitPayNode.style.display = 'block';
         splitCommission.style.display = 'flex';
+        notAuthSplitBlockNode && (notAuthSplitBlockNode.style.display = 'flex');
         splitPaymentBtnNode.classList.add('active');
         fullPaymentBtnNode.classList.remove('active');
     

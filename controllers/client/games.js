@@ -893,6 +893,7 @@ export const gamePage = async (req, res) => {
       additions,
       shortDescription,
       ogImage: product.img,
+      canSplit: product.canSplit && product.countKeys > 0,
       breadcrumbs: [
         {
           name: 'Каталог',
