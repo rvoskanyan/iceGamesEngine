@@ -81,3 +81,21 @@ export const serviceOfferAgreementPage = (req, res) => {
       ],
    });
 }
+
+export const publicOfferForUseYaSplitPage = (req, res) => {
+   res.render('publicOfferForUseYaSplitPage', {
+      title: 'ICE GAMES — Публичная оферта ИП Колпаков Игорь Сергеевич о покупке товаров с использованием сервиса Яндекс Сплит',
+      metaDescription: 'ICE GAMES — Страница ознакомления с публичной офертой ИП Колпаков Игорь Сергеевич о покупке товаров с использованием сервиса Яндекс Сплит',
+      ogPath: 'legal-info/public-offer-for-use-ya-split',
+      breadcrumbs: [
+         {
+            name: 'Правовая информация',
+            path: 'legal-info',
+         },
+         {
+            name: 'Публичная оферта ИП Колпаков Игорь Сергеевич о покупке товаров с использованием сервиса Яндекс Сплит',
+            current: true,
+         },
+      ],
+   });
+}
