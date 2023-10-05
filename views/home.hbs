@@ -49,7 +49,7 @@
                                     </div>
                                 </div>
                                 <div class="tableInfo__actions">
-                                    <a href="/games/{{alias}}" title="Перейти к странице товара" class="btn rounded bg-darkLilac">Подробнее</a>
+                                    <a href="{{ @root.websiteAddress }}{{#if @root.platform }}{{ @root.platform }}/{{/if}}games/{{alias}}" title="Перейти к странице товара" class="btn rounded bg-darkLilac">Подробнее</a>
                                     {{#if inCart}}
                                         <button
                                                 title="Перейти в корзину покупок"
@@ -146,7 +146,7 @@
                 {{/each}}
             </div>
             <a
-                    href="{{websiteAddress}}games?onlyStock=true"
+                    href="{{ websiteAddress }}{{#if platform}}{{ platform }}/{{/if}}games?onlyStock=true"
                     class="more btn border rounded increase bg-darkLilac"
                     title="Открыть каталог со всеми товарами"
             >
@@ -160,7 +160,7 @@
                 <div class="visibleArea js-visibleArea">
                     <div class="tape js-tape">
                         {{#each genres}}
-                            <a class="slide js-slide" href="{{@root.websiteAddress}}{{#if @root.platform}}{{@root.platform}}/{{/if}}games?genres={{alias}}" title="Открыть игры с жанром {{name}}">
+                            <a class="slide js-slide" href="{{@root.websiteAddress}}{{#if @root.platform}}{{ @root.platform }}/{{/if}}games?genres={{alias}}" title="Открыть игры с жанром {{name}}">
                                 <span class="blackout" style="background-color: {{bgColor}}"></span>
                                 <img class="img" src="{{@root.websiteAddress}}{{img}}" alt="Изображение жанра {{name}}" title="Изображение жанра {{name}}">
                                 <div class="name">{{name}}</div>
@@ -175,7 +175,7 @@
             <h2 class="homeTitle">Подборки</h2>
             <div class="selectionsBlock">
                 {{#each selections}}
-                    <a href="{{@root.websiteAddress}}{{#if @root.platform}}{{@root.platform}}/{{/if}}selections/{{alias}}" title="Перейти на страницу подборки {{name}}" class="selection">
+                    <a href="{{@root.websiteAddress}}{{#if @root.platform}}{{ @root.platform }}/{{/if}}selections/{{alias}}" title="Перейти на страницу подборки {{name}}" class="selection">
                         <img src="{{@root.websiteAddress}}{{img}}" class="selectionImg" alt="Изображение подборки товаров {{name}}" title="Изображение подборки товаров {{name}}">
                         <div class="selectionInfo">
                             <div class="selectionName">{{name}}</div>
@@ -184,7 +184,7 @@
                     </a>
                 {{/each}}
             </div>
-            <a class="btn round border hover-bg-palePink allSelections" href="{{websiteAddress}}{{#if @root.platform}}{{@root.platform}}/{{/if}}selections">Все подборки</a>
+            <a class="btn round border hover-bg-palePink allSelections" href="{{websiteAddress}}{{#if @root.platform}}{{ @root.platform }}/{{/if}}selections">Все подборки</a>
         </div>
         {{> newsSlider
                 aricles=articles
