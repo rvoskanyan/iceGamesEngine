@@ -18,7 +18,7 @@
                  itemscope
                  itemtype="https://schema.org/ListItem"
             >
-                <a class="btn link" href="{{@root.websiteAddress}}{{#if platform}}{{ platform }}/{{/if}}{{path}}" itemprop="item">
+                <a class="btn link" href="{{@root.websiteAddress}}{{#if @root.platform}}{{ @root.platform }}/{{/if}}{{path}}" itemprop="item">
                     <span itemprop="name">{{name}}</span>
                 </a>
                 <meta itemprop="position" content="{{inc (inc @index)}}">
