@@ -2,7 +2,7 @@ import Product from "./../../models/Product.js";
 
 export const noveltyPage = async (req, res) => {
   try {
-    const platform = req.cookies.platform || 'pc';
+    const platform = req.platform || 'pc';
     const person = res.locals.person;
     let products = await Product
       .find({active: true, platformType: platform})

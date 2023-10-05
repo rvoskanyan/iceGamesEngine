@@ -15,6 +15,7 @@ import Message from "./lib/message.js";
 import Payment from "./lib/payment.js";
 
 const postman = new Postman();
+const platform = document.body.dataset.platform || 'pc';
 
 const platformSwitchNode = document.querySelector('.js-platformSwitch');
 const switchSplitNode = document.querySelector('.js-switchSplit');
@@ -1589,7 +1590,8 @@ mobileSearchStringNode.addEventListener('keypress', (e) => {
 mobileSearchStringNode.addEventListener('input', async () => {
     const response = await postman.get(`${websiteAddress}api/products`, {
         searchString: mobileSearchStringNode.value,
-        limit: 7
+        limit: 7,
+        platform,
     });
     const result = await response.json();
     const searchResultNode = document.querySelector('.js-mobileSearchResult');
@@ -1644,7 +1646,8 @@ searchStringNode.addEventListener('input', async (e) => {
 
     const response = await postman.get(`${websiteAddress}api/products`, {
         searchString: searchStringNode.value,
-        limit: 7
+        limit: 7,
+        platform,
     });
     const result = await response.json();
     const searchResultNode = document.querySelector('.js-searchResult');
@@ -2200,7 +2203,7 @@ if (catalogNode) {
     document.removeEventListener('scroll', scrollHandler);
     
     const url = new URL(window.location.href);
-    const queryUrl = `${websiteAddress}api/products${url.search ? url.search : '?'}&limit=${countLoad}${sectionName ? `&${sectionType}=${sectionName}` : ''}`;
+    const queryUrl = `${websiteAddress}api/products${url.search ? url.search : '?'}&platform=${platform}&limit=${countLoad}${sectionName ? `&${sectionType}=${sectionName}` : ''}`;
     const response = await postman.get(queryUrl);
     const result = await response.json();
   
@@ -2268,7 +2271,7 @@ if (catalogNode) {
         loading = true;
 
     const url = new URL(window.location.href);
-    const queryUrl = `${websiteAddress}api/products${url.search ? url.search : '?'}&skip=${skip}&limit=${countLoad}${sectionName ? `&${sectionType}=${sectionName}` : ''}`;
+    const queryUrl = `${websiteAddress}api/products${url.search ? url.search : '?'}&platform=${platform}&skip=${skip}&limit=${countLoad}${sectionName ? `&${sectionType}=${sectionName}` : ''}`;
     const response = await postman.get(queryUrl);
     const result = await response.json();
     const pageNode = document.createElement('div');
@@ -2337,7 +2340,7 @@ if (catalogNode) {
             loading = true;
 
             setTimeout(async () => {
-                const response = await postman.get(`${websiteAddress}api/products${url.search ? url.search : '?'}&skip=${skip}&limit=${countLoad}`);
+                const response = await postman.get(`${websiteAddress}api/products${url.search ? url.search : '?'}&platform=${platform}&skip=${skip}&limit=${countLoad}`);
                 const result = await response.json();
 
                 loading = false;
@@ -2664,13 +2667,6 @@ if (platformSwitchNode) {
             if (target === activeBtnNode) {
                 return;
             }
-            
-            const response = await postman.get(`${websiteAddress}api/system/switchPlatform?platform=${target.innerText}`);
-            const result = await response.json();
-            
-            if (!result.success) {
-                return;
-            }
     
             moveIndicator(target);
             target.classList.add('active');
@@ -2679,7 +2675,7 @@ if (platformSwitchNode) {
             activeBtnNode = target;
             
             setTimeout(() => {
-                location.href = `${websiteAddress}${document.location.pathname.substring(1)}`
+                location.href = `${websiteAddress}${target.innerText.toLowerCase()}`;
             }, 300);
         })
     })

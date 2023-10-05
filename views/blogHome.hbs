@@ -15,7 +15,7 @@
     <div class="contentContainer">
         <div class="articles js-listArticles">
             {{#each articles}}
-                <a class="article{{#if rightImg}} right{{/if}}" href="{{websiteAddress}}/blog/{{alias}}" style="--bgColor: {{blockColor}}">
+                <a class="article{{#if rightImg}} right{{/if}}" href="{{@root.websiteAddress}}{{#if @root.platform}}{{@root.platform}}/{{/if}}blog/{{alias}}" style="--bgColor: {{blockColor}}">
                     <img class="img" src="{{@root.websiteAddress}}{{img}}" alt="Изображение записи в блоге - {{name}}">
                     <div class="info">
                         <div class="content">

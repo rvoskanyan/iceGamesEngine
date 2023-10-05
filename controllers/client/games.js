@@ -31,7 +31,7 @@ export const gamesPage = async (req, res, next) => {
     activationServices = Array.isArray(activationServices) ? activationServices : [activationServices];
     
     const sectionName = req.params.sectionName;
-    const platform = req.cookies.platform || 'pc';
+    const platform = req.platform || 'pc';
   
     let section;
     let sectionType;
@@ -502,8 +502,8 @@ export const gamesPage = async (req, res, next) => {
 
 export const gamePage = async (req, res) => {
   try {
-    const platform = req.cookies.platform || 'pc';
-    const {alias} = req.params;
+    const platform = req.platform || 'pc';
+    const { alias } = req.params;
     const product = await Product
       .findOne({alias})
       .populate([
@@ -531,8 +531,15 @@ export const gamePage = async (req, res) => {
       ]);
     
     if (platform !== product.platformType) {
-      res.cookie('platform', product.platformType);
-      return res.redirect(req.originalUrl);
+      let url = res.locals.websiteAddress;
+      
+      if (product.platformType !== 'pc') {
+        url += product.platformType;
+      }
+      
+      url += `/games/${product.alias}`;
+      
+      return res.redirect(url);
     }
     
     const person = res.locals.person;

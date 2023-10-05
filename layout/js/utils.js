@@ -1,4 +1,4 @@
-import {websiteAddress} from "./config.js";
+import { websiteAddress, platform } from "./config.js";
 
 export const urlEncodeFormData = (fd) => {
   let s = '';
@@ -150,7 +150,7 @@ export const getProductCardNode = (data) => {
     priceNode.append(fromPriceNode);
   }
   
-  productNode.setAttribute('href', `/games/${data.alias}`);
+  productNode.setAttribute('href', `${ platform ? '/' + platform : '' }/games/${ data.alias }`);
   productNode.setAttribute('title', 'Перейти к странице товара');
   productNode.setAttribute('class', `cardGame${data.size ? ` ${data.size}` : ''} js-cardGame`);
   productNode.setAttribute('data-id', `${data._id}`);

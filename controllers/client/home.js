@@ -11,6 +11,7 @@ import ProductCategory from "../../models/Product_Category.js";
 import Selection from "../../models/Selection.js";
 
 export const homepage = async (req, res) => {
+  const platform = req.platform || 'pc';
   const inviter = req.query.inviter;
   const successPayment = req.query.successPayment;
   
@@ -26,7 +27,6 @@ export const homepage = async (req, res) => {
     return res.redirect('/');
   }
   
-  const platform = req.cookies.platform || 'pc';
   const person = res.locals.person;
   let favoritesProducts;
   let cart;

@@ -27,7 +27,7 @@
                 {{else}}
                     <div class="items mobileScroll">
                         {{#each articles}}
-                            <a href="{{@root.websiteAddress}}blog/{{alias}}" class="article">
+                            <a href="{{@root.websiteAddress}}{{#if @root.platform}}{{@root.platform}}/{{/if}}blog/{{alias}}" class="article">
                                 <img class="img" src="{{@root.websiteAddress}}{{img}}" alt="Изображение записи из блога {{name}}" title="Изображение записи из блога {{name}}">
                                 <div class="attributes">
                                     <div class="btn small round border small bg-darkLilac">
@@ -47,7 +47,7 @@
         {{/if}}
         <div class="selections js-selections">
             {{#each selections}}
-                <a href="{{@root.websiteAddress}}selections/{{alias}}" title="Перейти на страницу подборки {{name}}" class="selection">
+                <a href="{{@root.websiteAddress}}{{#if @root.platform}}{{@root.platform}}/{{/if}}selections/{{alias}}" title="Перейти на страницу подборки {{name}}" class="selection">
                     <img src="{{@root.websiteAddress}}{{img}}" class="selectionImg" alt="Изображение подборки товаров {{name}}" title="Изображение подборки товаров {{name}}">
                     <div class="selectionInfo">
                         <div class="selectionName">{{name}}</div>

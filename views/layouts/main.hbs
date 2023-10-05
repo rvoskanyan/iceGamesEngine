@@ -118,7 +118,7 @@
     </noscript>
     <!-- /Yandex.Metrika pixel -->
 </head>
-<body ontouchstart="" class="{{platform}}">
+<body ontouchstart=""{{#if platform}} class="{{ platform }}" data-platform="{{ platform }}"{{/if}}>
 <!-- Google Tag Manager (noscript) -->
 <noscript>
     <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TVW524P"
@@ -152,7 +152,7 @@
                 <div class="name">ICE GAMES<br>Store</div>
             </div>
         {{else}}
-            <a class="logo" href="{{websiteAddress}}" title="Перейти на главную страницу">
+            <a class="logo" href="{{websiteAddress}}{{#if @root.platform}}{{@root.platform}}{{/if}}" title="Перейти на главную страницу">
                 <div class="imgContainer">
                     <img src="{{websiteAddress}}img/logo.svg" class="img" alt="Логотип ICE GAMES"
                          title="Логотип ICE GAMES">
@@ -378,27 +378,27 @@
                 {{#if isBlog}}
                     <span class="link">Блог</span>
                 {{else}}
-                    <a itemprop="url" href="{{websiteAddress}}blog" class="link">Блог</a>
+                    <a itemprop="url" href="{{ websiteAddress }}blog" class="link">Блог</a>
                 {{/if}}
             </p>
             <p itemprop="name">
                 {{#if isDiscounts}}
                     <span class="link">Скидки</span>
                 {{else}}
-                    <a itemprop="url" href="{{websiteAddress}}discounts" class="link">Скидки</a>
+                    <a itemprop="url" href="{{ websiteAddress }}{{#if platform}}{{ platform }}/{{/if}}discounts" class="link">Скидки</a>
                 {{/if}}
             </p>
             <p itemprop="name">
                 {{#if isNovelty}}
                     <span class="link">Новинки</span>
                 {{else}}
-                    <a itemprop="url" href="{{websiteAddress}}novelty" class="link">Новинки</a>
+                    <a itemprop="url" href="{{ websiteAddress }}{{#if platform}}{{ platform }}/{{/if}}novelty" class="link">Новинки</a>
                 {{/if}}
             </p>
             {{#if isPreorders}}
                 <!--<span class="link">Предзаказы</span>-->
             {{else}}
-                <!--<a href="{{websiteAddress}}preorders" class="link">Предзаказы</a>-->
+                <!--<a href="{{ websiteAddress }}{{#if platform}}{{ platform }}/{{/if}}preorders" class="link">Предзаказы</a>-->
             {{/if}}
         </div>
     </div>

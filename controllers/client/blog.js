@@ -29,10 +29,10 @@ export const blogHomePage = async (req, res) => {
 
 export const blogArticlePage = async (req, res) => {
   try {
+    const platform = req.platform || 'pc';
     const article = await Article
       .findOne({alias: req.params.alias})
       .populate('products', ['name', 'alias', 'priceTo', 'priceFrom', 'img', 'dsId', 'dlc', 'inStock', 'preOrder', 'platformType']);
-    const platform = req.cookies.platform || 'pc';
     
     if (req.session.isAuth) {
       const user = res.locals.person;

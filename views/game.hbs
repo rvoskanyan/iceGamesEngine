@@ -40,7 +40,7 @@
         {{#if product.coverVideo}}
             <video class="video js-coverVideo" loop muted></video>
         {{/if}}
-        <img class="img" src="{{websiteAddress}}{{product.coverImg}}" alt="{{product.name}}" title="{{product.name}}">
+        <img class="img" src="{{ websiteAddress }}{{ product.coverImg }}" alt="{{ product.name }}" title="{{ product.name }}">
         <div class="contentContainer offer">
             {{#iff bundleProducts.length '>' 1}}
                 <div class="packages mobileInvisibleScroll">
@@ -51,7 +51,7 @@
                             </div>
                         {{else}}
                             <div class="tooltip package">
-                                <a href="/games/{{alias}}" class="btn rounded translucent bg-paleBlue">
+                                <a href="{{ websiteAddress }}{{#if platform}}{{ platform }}/{{/if}}games/{{ alias }}" class="btn rounded translucent bg-paleBlue">
                                     {{editionId.name}}
                                 </a>
                                 {{#if elements.length}}
@@ -218,7 +218,7 @@
                                     игры
                                     {{#if product.dlcForId}}
                                         <a
-                                                href="{{websiteAddress}}games/{{product.dlcForId.alias}}"
+                                                href="{{ websiteAddress }}{{#if platform}}{{ platform }}/{{/if}}games/{{product.dlcForId.alias}}"
                                                 title="Перейти к product.dlcForId.name"
                                                 class="link underlined"
                                         >
@@ -370,7 +370,7 @@
                                 <div class="visibleArea js-visibleArea">
                                     <div class="tape js-tape">
                                         {{#each articles}}
-                                            <a href="{{@root.websiteAddress}}blog/{{alias}}" class="slide newsPreview js-slide{{#if @first}} active{{/if}}">
+                                            <a href="{{ @root.websiteAddress }}{{#if @root.platform}}{{ @root.platform }}/{{/if}}blog/{{alias}}" class="slide newsPreview js-slide{{#if @first}} active{{/if}}">
                                                 <img class="img" src="{{@root.websiteAddress}}{{img}}" alt="Изображение записи из блога {{name}}" title="Изображение записи из блога {{name}}">
                                                 <div class="attributes">
                                                     <div class="btn small round border small bg-darkLilac">
@@ -464,7 +464,7 @@
                                         {{#iff @index '<' 5}}
                                             {{#if productId}}
                                                 <li class="item product">
-                                                    <a href="/games/{{productId.alias}}" class="link underlined name" title="Перейти к игре {{productId.name}}">
+                                                    <a href="{{ @root.websiteAddress }}{{#if @root.platform}}{{ @root.platform }}/{{/if}}games/{{ productId.alias }}" class="link underlined name" title="Перейти к игре {{productId.name}}">
                                                         <img
                                                                 src="{{@root.websiteAddress}}{{productId.img}}"
                                                                 alt="Обложка к игре {{productId.name}}"
@@ -486,7 +486,7 @@
                                             {{/iff}}
                                             {{#if productId}}
                                                 <li class="item product">
-                                                    <a href="/games/{{productId.alias}}" class="link underlined name" title="Перейти к игре {{productId.name}}">
+                                                    <a href="{{ @root.websiteAddress }}{{#if @root.platform}}{{ @root.platform }}/{{/if}}games/{{ productId.alias }}" class="link underlined name" title="Перейти к игре {{productId.name}}">
                                                         <img
                                                                 src="{{@root.websiteAddress}}{{productId.img}}"
                                                                 alt="Обложка к игре {{productId.name}}"
@@ -806,7 +806,7 @@
                                     {{#each comments}}
                                         <div class="item comment">
                                             <div class="head">
-                                                <a class="btn link" href="{{@root.websiteAddress}}rating/{{author.login}}" title="Перейти в профиль пользователя {{author.login}}">{{author.login}}</a>
+                                                <a class="btn link" href="{{ @root.websiteAddress }}rating/{{ author.login }}" title="Перейти в профиль пользователя {{author.login}}">{{author.login}}</a>
                                                 <!--<div class="reactions">
                                                     <button class="btn active positive">
                                                         <span class="icon icon-thumbsUp"></span> 54

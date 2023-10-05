@@ -25,11 +25,10 @@ export const getProducts = async (req, res) => {
       activationServices = [],
       limit = 20,
       skip = 0,
+      platform = 'pc',
     } = req.query;
     
     searchString = searchString.trim();
-  
-    const platform = req.cookies.platform || 'pc';
   
     const allCategories = await Category.find().select(['name', 'alias']).lean();
     const allGenres = await Genre.find().select(['name', 'alias']).lean();

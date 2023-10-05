@@ -21,6 +21,7 @@ import yaAuthRoute from "./client/yaAuth.js";
 import fillUpSteamRoute from './client/fillUpSteam.js';
 import selectionsRoute from './client/selections.js';
 import splitRoute from './client/split.js';
+import { checkPlatform } from "../middlewares/checkPlatform.js";
 
 const router = Router();
 
@@ -46,5 +47,14 @@ router.use('/', splitCatalogRoute);
 router.use('/fill-up-steam', fillUpSteamRoute);
 router.use('/selections', selectionsRoute);
 router.use('/split', splitRoute);
+
+router.use('/:platform', checkPlatform, homeRoute);
+router.use('/:platform/games', checkPlatform, gamesRoute);
+router.use('/:platform/blog', checkPlatform, blogRoute);
+router.use('/:platform/discounts', checkPlatform, discountsRoute);
+router.use('/:platform/novelty', checkPlatform, noveltyRoute);
+router.use('/:platform/preorders', checkPlatform, preordersRoute);
+router.use('/:platform/reviews', checkPlatform, reviewsRoute);
+router.use('/:platform/selections', checkPlatform, selectionsRoute);
 
 export default router;

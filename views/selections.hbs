@@ -23,7 +23,7 @@
     </div>
     <div class="selections js-selections">
         {{#each selections}}
-            <a href="{{@root.websiteAddress}}selections/{{alias}}" title="Перейти на страницу подборки {{name}}" class="selection">
+            <a href="{{@root.websiteAddress}}{{#if @root.platform}}{{@root.platform}}/{{/if}}selections/{{alias}}" title="Перейти на страницу подборки {{name}}" class="selection">
                 <img src="{{@root.websiteAddress}}{{img}}" class="selectionImg" alt="Изображение подборки товаров {{name}}" title="Изображение подборки товаров {{name}}">
                 <div class="selectionInfo">
                     <div class="selectionName">{{name}}</div>

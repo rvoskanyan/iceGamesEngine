@@ -1,5 +1,5 @@
 <a
-    href="/games/{{alias}}"
+    href="{{@root.websiteAddress}}{{#if @root.platform}}{{@root.platform}}/{{/if}}games/{{alias}}"
     class="cardGame js-cardGame{{#if size}} {{size}}{{/if}}"
     data-id="{{_id}}"
     {{#if inCart}}data-in-cart="true"{{/if}}

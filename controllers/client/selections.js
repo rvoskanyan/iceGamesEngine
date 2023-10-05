@@ -3,7 +3,7 @@ import Article from "../../models/Article.js";
 
 export const selectionsPage = async (req, res) => {
   try {
-    const platform = req.cookies.platform || 'pc';
+    const platform = req.platform || 'pc';
     const countSelections = await Selection.countDocuments({ourChoice: false});
     const selections = await Selection
       .find({ourChoice: false})
@@ -42,7 +42,7 @@ export const selectionsPage = async (req, res) => {
 
 export const selectionPage = async (req, res) => {
   try {
-    const platform = req.cookies.platform || 'pc';
+    const platform = req.platform || 'pc';
     const countSelections = await Selection.countDocuments({ alias: { $ne: req.params.alias } });
     const selections = await Selection
       .find({ alias: { $ne: req.params.alias } })
