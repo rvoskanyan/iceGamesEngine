@@ -56,7 +56,7 @@ export default class Tinkoff {
       let {orderId, PaymentId, PaymentURL} = data
       return {PaymentURL, PaymentId, orderId}
     } else {
-      console.log(data)
+      //console.log(data)
     }
   }
 }

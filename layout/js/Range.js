@@ -46,7 +46,6 @@ export default class Range {
       pointNode.addEventListener('mousedown', this.downPointListener);
       pointNode.addEventListener('touchstart', this.downPointListener);
       pointNode.addEventListener('changeValue', (e) => {
-        console.log(e.target.innerText);
         this.pointObjects[index].value = +e.target.innerText;
         this.dispatchChange();
       })

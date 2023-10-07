@@ -43,7 +43,7 @@ export default {
                     res.redirect('/admin/payment/method')
                     return
                 }
-                console.log(methodModel)
+                
                 res.render('adminPaymentMethod', {
                     layout: 'admin',
                     title: 'Редактировать метод оплаты',

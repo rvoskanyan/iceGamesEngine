@@ -173,7 +173,6 @@ export const getPaymentLink = async (req, res) => {
 
 export const notifications = async (req, res) => {
   try {
-    console.log(req.body);
     const {OrderId, Success, Status, Amount} = req.body;
     const fillUp = await FillUp.findById(OrderId);
     

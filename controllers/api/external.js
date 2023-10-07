@@ -210,8 +210,6 @@ export const getTurboArticlesRssFeed = async (req, res) => {
 }
 
 export const yaSplitHandler = async (req, res) => {
-  console.log('yaSplitHandler');
-  
   try {
     const { operation } = req.body;
     const order = await Order.findById(operation.orderId);

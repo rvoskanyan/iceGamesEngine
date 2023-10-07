@@ -9,9 +9,6 @@ export const getComments = async (req, res) => {
       subjectId,
       ref,
     } = req.query;
-  
-  
-    console.log(skip);
     
     const comments = await Comment
       .find({ref, subjectId})

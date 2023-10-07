@@ -1252,9 +1252,6 @@ if (cartNode) {
                     });
 
                     const resultAddCartDs = await responseAddCartDs.json();
-    
-                    console.log(resultAddCartDs);
-                    debugger;
 
                     if (resultAddCartDs.cart_err === "Товар закончился или временно отключен.") {
                         const deleteFromCartBtn = productNode.querySelector('.js-deleteFromCart');

@@ -6,7 +6,7 @@ export const fillUpAnalyticsPage = async (req, res) => {
     const activeFillUp = req.app.get('activeFillUp');
     
     try {
-      const response = await fetch('http://steam-api.kupikod.com/api/v3/partner-balance', {
+      const response = await fetch('https://steam-api.kupikod.com/api/v3/partner-balance', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
