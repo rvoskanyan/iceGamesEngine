@@ -3,7 +3,7 @@ import FillUp from "../../models/FillUp.js";
 
 export const fillUpAnalyticsPage = async (req, res) => {
   try {
-    const response = await fetch('https://steam-api.kupikod.com/api/v3/partner-balance', {
+    const response = await fetch('http://steam-api.kupikod.com/api/v3/partner-balance', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
