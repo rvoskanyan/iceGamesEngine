@@ -3,24 +3,34 @@ import FillUp from "../../models/FillUp.js";
 
 export const fillUpAnalyticsPage = async (req, res) => {
   try {
-    const response = await fetch('http://steam-api.kupikod.com/api/v3/partner-balance', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'token': 'icegame.store_q4L4Re1u1hIjQIgPBWqiDYZfzheIRmHEwAzX',
-      },
-    });
-  
-    console.log(response);
-  
-    const data = await response.json();
     const activeFillUp = req.app.get('activeFillUp');
     
-    res.render('admFillUpAnalyticsPage', {
-      layout: 'admin',
-      balance: data.balance,
-      activeFillUp: activeFillUp === undefined ? true : activeFillUp,
-    });
+    try {
+      const response = await fetch('http://steam-api.kupikod.com/api/v3/partner-balance', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'token': 'icegame.store_q4L4Re1u1hIjQIgPBWqiDYZfzheIRmHEwAzX',
+        },
+      });
+  
+      console.log(response);
+  
+      const data = await response.json();
+  
+      res.render('admFillUpAnalyticsPage', {
+        layout: 'admin',
+        balance: data.balance,
+        activeFillUp: activeFillUp === undefined ? true : activeFillUp,
+      });
+    } catch (e) {
+      console.log(e);
+      res.render('admFillUpAnalyticsPage', {
+        layout: 'admin',
+        balance: 'Ошибка загрузки',
+        activeFillUp: activeFillUp === undefined ? true : activeFillUp,
+      });
+    }
   } catch (e) {
     console.log(e);
     res.redirect('/admin');
