@@ -118,6 +118,8 @@ export default {
                         headers: {
                             'Content-Type': 'application/json',
                             'authorization': 'Basic cGFydG5lcl9pY2VnYW1lOmFqY3o5X1NZVE5oWFdid0s=',
+                            'Host': 'partner.kupikod.com',
+                            'Origin': 'https://icegames.store',
                         },
                         body: JSON.stringify(kupiKodProducts),
                     });
@@ -131,6 +133,8 @@ export default {
                         headers: {
                             'Content-Type': 'application/json',
                             'authorization': 'Basic cGFydG5lcl9pY2VnYW1lOmFqY3o5X1NZVE5oWFdid0s=',
+                            'Host': 'partner.kupikod.com',
+                            'Origin': 'https://icegames.store',
                         },
                     });
         

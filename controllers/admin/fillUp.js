@@ -49,6 +49,8 @@ export const updateStatuses = async (req, res) => {
         headers: {
           'Content-Type': 'application/json',
           'token': 'icegame.store_q4L4Re1u1hIjQIgPBWqiDYZfzheIRmHEwAzX',
+          'Host': 'steam-api.kupikod.com',
+          'Origin': 'https://icegames.store',
         },
       });
   
