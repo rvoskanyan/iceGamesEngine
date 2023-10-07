@@ -749,7 +749,7 @@ export const gamePage = async (req, res) => {
         .lean();
   
       bundleProducts = bundleProducts.map(bundleProduct => {
-        if (bundleProduct._id.toString() === product._id) {
+        if (bundleProduct._id.toString() === product._id.toString()) {
           bundleProduct.isCurrent = true;
         }
 

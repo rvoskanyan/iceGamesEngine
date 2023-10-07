@@ -51,7 +51,7 @@
                             </div>
                         {{else}}
                             <div class="tooltip package">
-                                <a href="{{ websiteAddress }}{{#if platform}}{{ platform }}/{{/if}}games/{{ alias }}" class="btn rounded translucent bg-paleBlue">
+                                <a href="{{ @root.websiteAddress }}{{#if @root.platform}}{{ @root.platform }}/{{/if}}games/{{ alias }}" class="btn rounded translucent bg-paleBlue">
                                     {{editionId.name}}
                                 </a>
                                 {{#if elements.length}}
