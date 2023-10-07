@@ -17,7 +17,7 @@ export const fillUpAnalyticsPage = async (req, res) => {
   
       console.log(response);
   
-      const data = await response.json();
+      const data = await response.text();
   
       console.log(data);
   
