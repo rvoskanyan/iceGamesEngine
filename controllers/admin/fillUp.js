@@ -11,6 +11,7 @@ export const fillUpAnalyticsPage = async (req, res) => {
         headers: {
           'Content-Type': 'application/json',
           'Host': 'steam-api.kupikod.com',
+          'Origin': 'https://icegames.store',
           'token': 'icegame.store_q4L4Re1u1hIjQIgPBWqiDYZfzheIRmHEwAzX',
         },
       });
