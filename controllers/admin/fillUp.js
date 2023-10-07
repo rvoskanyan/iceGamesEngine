@@ -15,11 +15,9 @@ export const fillUpAnalyticsPage = async (req, res) => {
         },
       });
   
-      console.log(response);
+      console.log(response.status);
   
-      const data = await response.text();
-  
-      console.log(data);
+      const data = await response.json();
   
       res.render('admFillUpAnalyticsPage', {
         layout: 'admin',
