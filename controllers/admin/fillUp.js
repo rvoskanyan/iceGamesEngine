@@ -6,15 +6,13 @@ export const fillUpAnalyticsPage = async (req, res) => {
     const activeFillUp = req.app.get('activeFillUp');
     
     try {
-      const response = await fetch('https://steam-api.kupikod.com/api/v3/partner-balance', {
+      const response = await fetch('https://steam.kupikod.com/api/v3/partner-balance', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
           'token': 'icegame.store_q4L4Re1u1hIjQIgPBWqiDYZfzheIRmHEwAzX',
         },
       });
-  
-      console.log(response);
   
       const data = await response.json();
   
