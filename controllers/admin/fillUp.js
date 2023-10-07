@@ -11,6 +11,8 @@ export const fillUpAnalyticsPage = async (req, res) => {
       },
     });
   
+    console.log(response);
+  
     const data = await response.json();
     const activeFillUp = req.app.get('activeFillUp');
     
