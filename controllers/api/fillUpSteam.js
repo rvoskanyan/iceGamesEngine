@@ -175,6 +175,8 @@ export const notifications = async (req, res) => {
   try {
     const {OrderId, Success, Status, Amount} = req.body;
     const fillUp = await FillUp.findById(OrderId);
+  
+    console.log(req.body);
     
     res.send("OK");
     
