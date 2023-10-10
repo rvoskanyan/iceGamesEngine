@@ -138,7 +138,7 @@ app.use('/admin', admin, adminRoutes);
 app.use('/api', apiRoutes);
 app.use('/webhook', webhook);
 app.use('/v1', v1Routes);
-app.use('/', antiDdos, constClientMiddleware, clientRoutes);
+app.use('/', constClientMiddleware, clientRoutes);
 
 app.use(function(req, res) {
   res.status(404);
