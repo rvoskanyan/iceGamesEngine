@@ -20,6 +20,7 @@ import v1Routes from'./routes/v1.js';
 import {admin} from "./middlewares/routeProtection.js";
 import webhook from "./routes/webhook.js";
 import { getFormatDate } from "./utils/functions.js";
+import { antiDdos } from "./middlewares/antiDdos.js";
 
 dotenv.config();
 
@@ -137,7 +138,7 @@ app.use('/admin', admin, adminRoutes);
 app.use('/api', apiRoutes);
 app.use('/webhook', webhook);
 app.use('/v1', v1Routes);
-app.use('/', constClientMiddleware, clientRoutes);
+app.use('/', antiDdos, constClientMiddleware, clientRoutes);
 
 app.use(function(req, res) {
   res.status(404);
