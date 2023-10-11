@@ -16,6 +16,8 @@ export default async function (req, res) {
         if (!order) {
             return res.status(404).json({err:true, messages:"Forbidden"}); //Сделать логирование и уведомление, что пришло уведомление по не существующему заказу
         }
+    
+        console.log(req.body);
 
         if (Success && Status === 'CONFIRMED') {
             if (order.status === 'paid') {
