@@ -8,7 +8,6 @@ import Product from "../../models/Product.js";
 
 export default async function (req, res) {
     try {
-        console.log(req.body);
         const {OrderId, Success, Status, Amount} = req.body;
         const order = await Order.findById(OrderId);
     
