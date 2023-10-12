@@ -85,6 +85,7 @@ export const checkStatus = async (req, res) => {
       const stateData = await response.json();
       
       if (stateData.state !== 'pending') {
+        fillUp.codeOrderError = stateData.status;
         fillUp.status = stateData.state;
         await fillUp.save();
       }

@@ -65,8 +65,6 @@ export const getPaymentLink = async (req, res) => {
       const responseRate = await fetch('https://steam-api.kupikod.com/api/v3/partner-kzt', { headers: {
           'Content-Type': 'application/json',
           'token': 'icegame.store_q4L4Re1u1hIjQIgPBWqiDYZfzheIRmHEwAzX',
-          'Host': 'steam-api.kupikod.com',
-          'Origin': 'https://icegames.store',
         }});
       const { rubKzt } = await responseRate.json();
     
