@@ -1204,7 +1204,7 @@ if (cartNode) {
             else if (parseInt(stepId) < 1) stepId = '1'
 
             async function get_checkout(isTwo) {
-                const checkNode = document.querySelector('.js-check');
+                /*const checkNode = document.querySelector('.js-check');
                 const div = document.createElement('div');
                 
                 div.innerText = 'Уважаемый клиент, в данным момент ведутся тех.работы, в связи с этим оплата картой временно не доступа. Вы можете приобрести товар в сплит или попробовать позже. Приносим свои извинения за доставленные неудобства, надеемся на Ваше понимание!'
@@ -1214,7 +1214,7 @@ if (cartNode) {
                 div.style.textAlign = 'center';
                 div.style.marginTop = '10px';
                 
-                return;
+                return;*/
                 
                 const payment = await Payment.get_method()
                 let yaClientId;
