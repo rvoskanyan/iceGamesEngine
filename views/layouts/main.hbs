@@ -144,18 +144,16 @@
     <div class="contentContainer">
         {{#if isHome}}
             <div class="logo">
-                <div class="imgContainer">
-                    <img src="{{websiteAddress}}img/logo.svg" class="img" alt="Логотип ICE GAMES"
-                         title="Логотип ICE GAMES">
+                <div class="imgContainer" data-nosnippet>
+                    <img src="{{websiteAddress}}img/logo.svg" class="img" alt="Логотип ICE GAMES">
                     <span class="eye"></span>
                 </div>
                 <div class="name">ICE GAMES<br>Store</div>
             </div>
         {{else}}
             <a class="logo" href="{{websiteAddress}}{{#if @root.platform}}{{@root.platform}}{{/if}}" title="Перейти на главную страницу">
-                <div class="imgContainer">
-                    <img src="{{websiteAddress}}img/logo.svg" class="img" alt="Логотип ICE GAMES"
-                         title="Логотип ICE GAMES">
+                <div class="imgContainer" data-nosnippet>
+                    <img src="{{websiteAddress}}img/logo.svg" class="img" alt="Логотип ICE GAMES">
                     <span class="eye"></span>
                 </div>
                 <div class="name">ICE GAMES<br>Store</div>
