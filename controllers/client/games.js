@@ -122,9 +122,9 @@ export const gamesPage = async (req, res, next) => {
       }
     }
   
-    let allCategories = await Category.find().select(['name', 'alias']).lean();
-    let allGenres = await Genre.find().select(['name', 'alias']).lean();
-    let allActivationServices = await ActivationService.find().select(['name', 'alias']).lean();
+    let allCategories = res.locals.allCategories;
+    let allGenres = res.locals.allGenres;
+    let allActivationServices = res.locals.allActivationServices;
   
     const filter = {
       active: true,
