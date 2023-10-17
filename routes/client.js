@@ -22,6 +22,7 @@ import fillUpSteamRoute from './client/fillUpSteam.js';
 import selectionsRoute from './client/selections.js';
 import splitRoute from './client/split.js';
 import { checkPlatform } from "../middlewares/checkPlatform.js";
+import constClientMiddleware from "../middlewares/constClientData.js";
 
 const router = Router();
 
@@ -48,13 +49,13 @@ router.use('/fill-up-steam', fillUpSteamRoute);
 router.use('/selections', selectionsRoute);
 router.use('/split', splitRoute);
 
-router.use('/:platform', checkPlatform, homeRoute);
-router.use('/:platform/games', checkPlatform, gamesRoute);
-router.use('/:platform/blog', checkPlatform, blogRoute);
-router.use('/:platform/discounts', checkPlatform, discountsRoute);
-router.use('/:platform/novelty', checkPlatform, noveltyRoute);
-router.use('/:platform/preorders', checkPlatform, preordersRoute);
-router.use('/:platform/reviews', checkPlatform, reviewsRoute);
-router.use('/:platform/selections', checkPlatform, selectionsRoute);
+router.use('/:platform', checkPlatform, constClientMiddleware, homeRoute);
+router.use('/:platform/games', checkPlatform, constClientMiddleware, gamesRoute);
+router.use('/:platform/blog', checkPlatform, constClientMiddleware, blogRoute);
+router.use('/:platform/discounts', checkPlatform, constClientMiddleware, discountsRoute);
+router.use('/:platform/novelty', checkPlatform, constClientMiddleware, noveltyRoute);
+router.use('/:platform/preorders', checkPlatform, constClientMiddleware, preordersRoute);
+router.use('/:platform/reviews', checkPlatform, constClientMiddleware, reviewsRoute);
+router.use('/:platform/selections', checkPlatform, constClientMiddleware, selectionsRoute);
 
 export default router;
