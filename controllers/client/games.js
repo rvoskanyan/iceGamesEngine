@@ -35,9 +35,27 @@ export const gamesPage = async (req, res, next) => {
   
     let section;
     let sectionType;
-    let metaDescription = `Каталог лучших игр со скидками и удобным поиском. Топ продаж от магазина лицензионных ключей ICE GAMES. Страница ${page}`;
-    let title = `Каталог игр для ПК: купить ключи активации со скидкой в магазине ICE GAMES — страница ${page}`;
-    let hTitle = `Каталог игр`;
+    let metaDescription = '';
+    let title = '';
+    let hTitle = '';
+  
+    switch (platform) {
+      case 'pc': {
+        metaDescription = `Каталог лучших игр со скидками и удобным поиском. Топ продаж от магазина лицензионных ключей ICE GAMES. Страница ${page}`
+        title = `Каталог игр для ПК: купить ключи активации со скидкой в магазине ICE GAMES — страница ${page}`
+        hTitle = `Каталог игр`
+      
+        break;
+      }
+      case 'xbox': {
+        metaDescription = `Каталог лучших игр для XBOX со скидками и удобным поиском. Топ продаж от магазина лицензионных ключей ICE GAMES. Страница ${page}`;
+        title = `Каталог игр для XBOX: купить ключи активации со скидкой в магазине ICE GAMES — страница ${page}`;
+        hTitle = `Каталог игр для XBOX`;
+        
+        break;
+      }
+    }
+    
     let pageDescription = `
       <h2>Игры на ПК</h2>
       <p>
@@ -105,17 +123,47 @@ export const gamesPage = async (req, res, next) => {
   
       switch (sectionType) {
         case 'genres': {
-          metaDescription = `Каталог лучших игр в жанре ${section.name} со скидками и удобным поиском. Топ продаж от магазина лицензионных ключей ICE GAMES. Страница ${page}`;
-          title = `Каталог игр ICE GAMES в жанре ${section.name} — страница ${page}`;
-          hTitle = `Купить игры в жанре ${section.name} для PC`;
+          switch (platform) {
+            case 'pc': {
+              metaDescription = `Каталог лучших игр в жанре ${section.name} со скидками и удобным поиском. Топ продаж от магазина лицензионных ключей ICE GAMES. Страница ${page}`;
+              title = `Каталог игр ICE GAMES в жанре ${section.name} — страница ${page}`;
+              hTitle = `Купить игры в жанре ${section.name} для PC`;
+              
+              break;
+            }
+            case 'xbox': {
+              metaDescription = `Каталог лучших игр для XBOX в жанре ${section.name} со скидками и удобным поиском. Топ продаж от магазина лицензионных ключей ICE GAMES. Страница ${page}`;
+              title = `Каталог игр ICE GAMES в жанре ${section.name} для XBOX — страница ${page}`;
+              hTitle = `Купить игры в жанре ${section.name} для XBOX`;
+              
+              break;
+            }
+          }
+  
           genres.push(sectionName);
+          
           break;
         }
         case 'activationServices': {
-          metaDescription = `Ключи для ${section.name} в магазине ICE GAMES. Мгновенная доставка ключей активации. Широкий выбор игр, сервисная поддержка. Страница ${page}`;
-          title = `Ключи для ${section.name} со скидкой в магазине лицензионных ключей ICE GAMES — страница ${page}`;
-          hTitle = `Купить ключи активации ${section.name}`;
+          switch (platform) {
+            case 'pc': {
+              metaDescription = `Ключи для ${section.name} в магазине ICE GAMES. Мгновенная доставка ключей активации. Широкий выбор игр, сервисная поддержка. Страница ${page}`;;
+              title = `Ключи для ${section.name} со скидкой в магазине лицензионных ключей ICE GAMES — страница ${page}`;
+              hTitle = `Купить ключи активации ${section.name}`;
+      
+              break;
+            }
+            case 'xbox': {
+              metaDescription = `Ключи активации ${section.name} для XBOX в магазине ICE GAMES. Мгновенная доставка ключей активации. Широкий выбор игр, сервисная поддержка. Страница ${page}`;
+              title = `Ключи активации ${section.name} для XBOX со скидкой в магазине лицензионных ключей ICE GAMES — страница ${page}`;
+              hTitle = `Купить ключи активации ${section.name} для XBOX`;
+      
+              break;
+            }
+          }
+          
           activationServices.push(sectionName);
+          
           break;
         }
         default: return next();

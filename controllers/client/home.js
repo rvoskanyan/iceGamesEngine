@@ -15,6 +15,24 @@ export const homepage = async (req, res) => {
   const inviter = req.query.inviter;
   const successPayment = req.query.successPayment;
   
+  let title = '';
+  let metaDescription = '';
+  
+  switch (platform) {
+    case 'pc': {
+      title = 'Купить лицензионные ключи Steam в магазине компьютерных игр ICE GAMES';
+      metaDescription = 'ICE GAMES - магазин лицензионных ключей активации, предоставляющий удобную корзину с возможностью купить как один ключ так и несколько за одну транзакцию с моментальной доставкой и гарантией для таких сервисов, как Steam, Origin, Epic Games, GOG, Uplay, Battle.net и других, для более, чем 2000 наименований игр в 16 различных жанрах. Сервисная поддержка, увлекательные статьи и большое активное комьюнити гарантированны!';
+  
+      break;
+    }
+    case 'xbox': {
+      title = 'Купить лицензионные ключи XBOX в магазине видеоигр ICE GAMES';
+      metaDescription = 'ICE GAMES - магазин лицензионных ключей активации для XBOX, предоставляющий удобную корзину с возможностью купить как один ключ так и несколько за одну транзакцию с моментальной доставкой и гарантией. Более 2000 наименований игр в 16 различных жанрах. Сервисная поддержка, увлекательные статьи и большое активное комьюнити гарантированны!';
+    
+      break;
+    }
+  }
+  
   if (inviter) {
     if (!req.session.isAuth) {
       res.cookie('inviterId', inviter);
@@ -268,8 +286,8 @@ export const homepage = async (req, res) => {
   });
   
   res.render('home', {
-    title: 'Купить лицензионные ключи Steam в магазине компьютерных игр ICE GAMES',
-    metaDescription: 'ICE GAMES - магазин лицензионных ключей активации, предоставляющий удобную корзину с возможностью купить как один ключ так и несколько за одну транзакцию с моментальной доставкой и гарантией для таких сервисов, как Steam, Origin, Epic Games, GOG, Uplay, Battle.net и других, для более, чем 2000 наименований игр в 16 различных жанрах. Сервисная поддержка, увлекательные статьи и большое активное комьюнити гарантированны!',
+    title,
+    metaDescription,
     noIndex: !!checkEmailHash,
     noIndexGoogle: !!checkEmailHash,
     isHome: true,
