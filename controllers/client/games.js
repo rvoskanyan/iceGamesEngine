@@ -538,9 +538,9 @@ export const gamesPage = async (req, res, next) => {
       products,
       limit,
       page,
-      prevPage: page > 1 && `games${section ? `/${sectionName}` : ''}?page=${+page - 1}`,
-      nextPage: !isLast && `games${section ? `/${sectionName}` : ''}?page=${+page + 1}`,
-      canonical: `games${section ? `/${sectionName}` : ''}`,
+      prevPage: page > 1 && `${platform !== 'pc' && (`${platform}/`)}games${section ? `/${sectionName}` : ''}?page=${+page - 1}`,
+      nextPage: !isLast && `${platform !== 'pc' && (`${platform}/`)}games${section ? `/${sectionName}` : ''}?page=${+page + 1}`,
+      canonical: platform === 'pc' && (`games${section ? `/${sectionName}` : ''}`),
     });
   } catch (e) {
     console.log(e);
