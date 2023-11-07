@@ -1,28 +1,28 @@
 {{#iff ratingPosition '===' 1}}
     <div class="ratingPageBg firstPlaceProfile">
         <div class="coverImg">
-            <img class="img" src="{{websiteAddress}}img/firstPlaceProfile.jpg" alt="Rating">
+            <img class="img" src="{{websiteAddress}}img/firstPlaceProfile.jpg" loading="lazy" alt="Rating">
         </div>
     </div>
 {{/iff}}
 {{#iff ratingPosition '===' 2}}
     <div class="ratingPageBg secondPlaceDownProfile">
         <div class="coverImg">
-            <img class="img" src="{{websiteAddress}}img/secondPlaceProfile.jpg" alt="Rating">
+            <img class="img" src="{{websiteAddress}}img/secondPlaceProfile.jpg" loading="lazy" alt="Rating">
         </div>
     </div>
 {{/iff}}
 {{#iff ratingPosition '===' 3}}
     <div class="ratingPageBg secondPlaceDownProfile">
         <div class="coverImg">
-            <img class="img" src="{{websiteAddress}}img/thirdPlaceProfile.jpg" alt="Rating">
+            <img class="img" src="{{websiteAddress}}img/thirdPlaceProfile.jpg" loading="lazy" alt="Rating">
         </div>
     </div>
 {{/iff}}
 {{#iff ratingPosition '>' 3}}
     <div class="ratingPageBg secondPlaceDownProfile">
         <div class="coverImg">
-            <img class="img" src="{{websiteAddress}}img/otherPlaceProfile.jpg" alt="Постер для просмотра страниц пользователей с позицией 4 и ниже в рейтинге" title="Постер для просмотра страниц пользователей с позицией 4 и ниже в рейтинге">
+            <img class="img" src="{{websiteAddress}}img/otherPlaceProfile.jpg" loading="lazy" alt="Постер для просмотра страниц пользователей с позицией 4 и ниже в рейтинге" title="Постер для просмотра страниц пользователей с позицией 4 и ниже в рейтинге">
         </div>
     </div>
 {{/iff}}
@@ -74,14 +74,14 @@
                 <div class="tape js-tape">
                     {{#each user.achievements}}
                         <div class="achievement big slide js-slide">
-                            <img src="{{@root.websiteAddress}}{{icon}}" alt="Иконка достижения {{name}}" title="Иконка достижения {{name}}" class="achievementIcon">
+                            <img src="{{@root.websiteAddress}}{{icon}}" loading="lazy" alt="Иконка достижения {{name}}" title="Иконка достижения {{name}}" class="achievementIcon">
                             <div class="name">{{name}}</div>
                             <div class="description">{{description}}</div>
                         </div>
                     {{/each}}
                     {{#each restAchievements}}
                         <div class="achievement big slide js-slide">
-                            <img src="{{@root.websiteAddress}}{{icon}}" alt="Иконка достижения {{name}}" title="Иконка достижения {{name}}" class="achievementIcon">
+                            <img src="{{@root.websiteAddress}}{{icon}}" loading="lazy" alt="Иконка достижения {{name}}" title="Иконка достижения {{name}}" class="achievementIcon">
                             <div class="name">{{name}}</div>
                             <div class="description">{{description}}</div>
                             <div class="lock" title="Достижение еще не получено">

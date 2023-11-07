@@ -40,7 +40,7 @@
         {{#if product.coverVideo}}
             <video class="video js-coverVideo" loop muted></video>
         {{/if}}
-        <img class="img" src="{{ websiteAddress }}{{ product.coverImg }}" alt="{{ product.name }}" title="{{ product.name }}">
+        <img class="img" loading="lazy" src="{{ websiteAddress }}{{ product.coverImg }}" alt="{{ product.name }}" title="{{ product.name }}">
         <div class="contentContainer offer">
             {{#iff bundleProducts.length '>' 1}}
                 <div class="packages mobileInvisibleScroll">
@@ -75,7 +75,7 @@
             {{/iff}}
             <div class="head">
                 <div class="mobileImgContainer">
-                    <img class="mobileImg" src="{{websiteAddress}}{{product.img}}" alt="{{product.name}}" title="{{product.name}}" itemprop="image">
+                    <img class="mobileImg" loading="lazy" src="{{websiteAddress}}{{product.img}}" alt="{{product.name}}" title="{{product.name}}" itemprop="image">
                 </div>
                 <h1 class="name">{{h1}}</h1>
                 <meta itemprop="name" content="{{product.name}}">
@@ -101,7 +101,7 @@
             <div class="description" itemprop="description">{{shortDescription}}</div>
             {{#if canSplit}}
                 <a href="{{@root.websiteAddress}}split" class="splitInfo link" title="Узнать подробнее про сплит">
-                    <img class="icon" src="{{@root.websiteAddress}}img/iconSplit.png" alt="YaSplit">
+                    <img class="icon" src="{{@root.websiteAddress}}img/iconSplit.png" loading="lazy" alt="YaSplit">
                     Играй сейчас - плати потом
                 </a>
             {{/if}}
@@ -240,7 +240,7 @@
                     {{#each product.extends}}
                         <div class="tooltip">
                             <button class="btn extend">
-                                <img  class="extendIcon" src="{{@root.websiteAddress}}{{icon}}" alt="{{name}}" title="{{name}}">
+                                <img  class="extendIcon" src="{{@root.websiteAddress}}{{icon}}" loading="lazy" alt="{{name}}" title="{{name}}">
                             </button>
                             <div class="prompt pointer-triangle js-promptProduct">
                                 <div class="extendName">{{name}}</div>
@@ -264,12 +264,12 @@
                                 <button class="btn slide js-slide js-largeImg" title="Увеличить" itemscope itemtype="https://schema.org/ImageObject">
                                     <meta itemprop="name" content="Картинка игры {{@root.product.name}}">
                                     <meta itemprop="description" content="Картинка игры {{@root.product.name}} в интернет магазине ключей игр — ICE GAMES">
-                                    <img itemprop="contentUrl" class="img js-targetImg" src="{{@root.websiteAddress}}{{name}}" alt="Скриншот-{{@index}} из игры {{@root.product.name}}">
+                                    <img itemprop="contentUrl" class="img js-targetImg" src="{{@root.websiteAddress}}{{name}}" loading="lazy" alt="Скриншот-{{@index}} из игры {{@root.product.name}}">
                                 </button>
                             {{/each}}
                             {{#if product.trailerLink}}
                                 <button class="slide js-slide btn video js-playYouTubeVideo" title="Посмотреть трейлер игры" data-link="{{trailerId}}">
-                                    <img class="img" src="https://img.youtube.com/vi/{{trailerId}}/{{typeTrailerCover}}.jpg" alt="Трейлер игры {{game.name}}" title="Трейлер игр {{game.name}}">
+                                    <img class="img" src="https://img.youtube.com/vi/{{trailerId}}/{{typeTrailerCover}}.jpg" loading="lazy" alt="Трейлер игры {{game.name}}" title="Трейлер игр {{game.name}}">
                                 </button>
                             {{/if}}
                         </div>

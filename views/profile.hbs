@@ -69,7 +69,7 @@
                     <div class="list mobileScroll">
                         {{#each user.achievements}}
                             <div class="achievement">
-                                <img src="{{@root.websiteAddress}}{{icon}}" alt="Иконка достижения {{name}}" title="Иконка достижения {{name}}" class="achievementIcon">
+                                <img src="{{@root.websiteAddress}}{{icon}}" loading="lazy" alt="Иконка достижения {{name}}" title="Иконка достижения {{name}}" class="achievementIcon">
                                 <div class="name">{{name}}</div>
                                 <div class="description">{{description}}</div>
                             </div>
