@@ -46,7 +46,7 @@
                             <div class="orderBlock__compound js-compoundOrder-{{@index}}">
                                 {{#each items}}
                                     <div class="orderBlock__compoundItem">
-                                        <img src="{{@root.websiteAddress}}{{productId.img}}" alt="Картинка игры {{productId.name}}" class="compoundItem__img">
+                                        <img src="{{@root.websiteAddress}}{{productId.img}}" loading="lazy" alt="Картинка игры {{productId.name}}" class="compoundItem__img">
                                         <div class="compoundItem__info">
                                             <div class="compoundItem__mainInfo">
                                                 <a href="{{@root.websiteAddress}}games/{{productId.alias}}" class="compoundItem__name link">{{productId.name}}</a>

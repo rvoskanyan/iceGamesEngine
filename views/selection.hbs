@@ -1,7 +1,7 @@
 <main class="selectionPage">
     {{> breadcrumbs}}
     <div class="cover">
-        <img class="img" src="{{websiteAddress}}{{selection.coverImg}}" alt="Постер для подборки - {{selection.name}}"
+        <img class="img" src="{{websiteAddress}}{{selection.coverImg}}" loading="lazy" alt="Постер для подборки - {{selection.name}}"
              title="Постер для записи в блоге - {{selection.name}}">
         <div class="descriptionContent contentContainer">
             <h1 class="title" itemprop="name">{{selection.name}}</h1>
@@ -28,7 +28,7 @@
                     <div class="items mobileScroll">
                         {{#each articles}}
                             <a href="{{@root.websiteAddress}}{{#if @root.platform}}{{@root.platform}}/{{/if}}blog/{{alias}}" class="article">
-                                <img class="img" src="{{@root.websiteAddress}}{{img}}" alt="Изображение записи из блога {{name}}" title="Изображение записи из блога {{name}}">
+                                <img class="img" src="{{@root.websiteAddress}}{{img}}" loading="lazy" alt="Изображение записи из блога {{name}}" title="Изображение записи из блога {{name}}">
                                 <div class="attributes">
                                     <div class="btn small round border small bg-darkLilac">
                                         {{#iff type '===' 'news'}}Новости{{else}}Статьи{{/iff}}
@@ -48,7 +48,7 @@
         <div class="selections js-selections">
             {{#each selections}}
                 <a href="{{@root.websiteAddress}}{{#if @root.platform}}{{@root.platform}}/{{/if}}selections/{{alias}}" title="Перейти на страницу подборки {{name}}" class="selection">
-                    <img src="{{@root.websiteAddress}}{{img}}" class="selectionImg" alt="Изображение подборки товаров {{name}}" title="Изображение подборки товаров {{name}}">
+                    <img src="{{@root.websiteAddress}}{{img}}" class="selectionImg" loading="lazy" alt="Изображение подборки товаров {{name}}" title="Изображение подборки товаров {{name}}">
                     <div class="selectionInfo">
                         <div class="selectionName">{{name}}</div>
                         <div class="selectionCountProducts">Игр в подборке: {{products.length}}</div>

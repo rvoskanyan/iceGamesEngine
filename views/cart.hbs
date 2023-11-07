@@ -46,12 +46,12 @@
                             <button class="btn js-deleteFromCart">
                                 <span class="icon icon-close"></span>
                             </button>
-                            <img class="img" src="{{@root.websiteAddress}}{{img}}" alt="{{name}}" title="{{name}}">
+                            <img class="img" src="{{@root.websiteAddress}}{{img}}" loading="lazy" alt="{{name}}" title="{{name}}">
                             <div class="main">
                                 <div class="top">
                                     {{#if canSplit}}
                                         <div class="canSlit">
-                                            <img class="icon" src="{{@root.websiteAddress}}img/iconSplit.png" alt="Доступно в сплит" title="Доступно для оплаты по частям">
+                                            <img class="icon" src="{{@root.websiteAddress}}img/iconSplit.png" loading="lazy" alt="Доступно в сплит" title="Доступно для оплаты по частям">
                                         </div>
                                     {{/if}}
                                     <div class="name">{{name}}</div>
@@ -108,9 +108,9 @@
                 <div class="check js-check">
                     {{#unless is_auth}}
                         <div class="notAuthSplitBlock js-notAuthSplitBlock">
-                            <img class="icon" src="{{@root.websiteAddress}}img/iconSplit.png" alt="YaSplit">
+                            <img class="icon" src="{{@root.websiteAddress}}img/iconSplit.png" loading="lazy" alt="YaSplit">
                             <div class="content">
-                                <img class="lock" src="{{@root.websiteAddress}}img/lock.svg" alt="Lock icon">
+                                <img class="lock" src="{{@root.websiteAddress}}img/lock.svg" loading="lazy" alt="Lock icon">
                                 <div class="description">
                                     Для покупки в сплит (частями) необходимо авторизоваться на нашем сайте.
                                 </div>

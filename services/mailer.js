@@ -84,7 +84,7 @@ export async function outStockProduct(product) {
 
 export async function mailingBuyTurkeyFillUpKey({ value, denomination, email }) {
     const websiteAddress = process.env.WEB_SITE_ADDRESS;
-    
+
     await transporter.sendMail({
         from: `ICE GAMES <${fromMail}>`,
         to: email,
@@ -102,13 +102,13 @@ export async function mailingBuyTurkeyFillUpKey({ value, denomination, email }) 
 
 export async function mailingBuyProduct({product, email, key = null}) {
     const websiteAddress = process.env.WEB_SITE_ADDRESS;
-    
+
     if (!product.darkenCover) {
         product.darkenCover = `${uuidv4()}.jpg`;
-        
+
         await product.save();
     }
-    
+
     await sharp(path.join(__dirname, `/uploadedFiles/${product.coverImg}`))
         .resize(600, 345)
         .composite([
@@ -170,13 +170,13 @@ export async function mailingBuyProduct({product, email, key = null}) {
                   <table class="main" cellpadding="0" cellspacing="0" width="600" align="center" bgcolor="#02043D">
                       <tr>
                           <td>
-                              <img src="${websiteAddress}${product.darkenCover}" alt="Обложка">
+                              <img src="${websiteAddress}${product.darkenCover}" loading="lazy" alt="Обложка">
                           </td>
                       </tr>
                       <tr>
                           <td align="center">
                               <a href="${websiteAddress}">
-                                  <img src="${websiteAddress}img/fullLogo.png" alt="Логотип Ice Games">
+                                  <img src="${websiteAddress}img/fullLogo.png" loading="lazy" alt="Логотип Ice Games">
                               </a>
                           </td>
                       </tr>
@@ -195,7 +195,7 @@ export async function mailingBuyProduct({product, email, key = null}) {
                       </tr>
                       <tr>
                           <td align="center" style="padding-bottom: 50px">
-                              <img src="${websiteAddress}img/anchorLink.png" style="display: inline-block; width: 9px; height: 11px" alt="Иконка якоря ссылки">
+                              <img src="${websiteAddress}img/anchorLink.png" style="display: inline-block; width: 9px; height: 11px" loading="lazy" alt="Иконка якоря ссылки">
                               <a href="${websiteAddress}blog/kak-aktivirovat-klyuch-v-steam-origin-i-uplay" style="color: rgba(255,255,255,0.5); font-family: Montserrat, arial, sans-serif !important; font-size: 14px">Инструкция по активации ключа</a>
                           </td>
                       </tr>
@@ -221,32 +221,32 @@ export async function mailingBuyProduct({product, email, key = null}) {
                                               <tr>
                                                   <td align="center">
                                                       <a href="https://vk.com/ice.games">
-                                                          <img src="${websiteAddress}img/vkSocial.png" alt="Логотип VK" title="Перейти на страницу Ice Games в VK">
+                                                          <img src="${websiteAddress}img/vkSocial.png" alt="Логотип VK" loading="lazy" title="Перейти на страницу Ice Games в VK">
                                                       </a>
                                                   </td>
                                                   <td align="center">
                                                       <a href="https://t.me/icegames_store">
-                                                          <img src="${websiteAddress}img/telegramSocial.png" alt="Логотип Telegram" title="Перейти на страницу Ice Games в Telegram">
+                                                          <img src="${websiteAddress}img/telegramSocial.png" loading="lazy" alt="Логотип Telegram" title="Перейти на страницу Ice Games в Telegram">
                                                       </a>
                                                   </td>
                                                   <td align="center">
                                                       <a href="https://m.twitch.tv/surf1se/about">
-                                                          <img src="${websiteAddress}img/twitchSocial.png" alt="Логотип Twitch" title="Перейти на страницу Ice Games в Twitch">
+                                                          <img src="${websiteAddress}img/twitchSocial.png" loading="lazy" alt="Логотип Twitch" title="Перейти на страницу Ice Games в Twitch">
                                                       </a>
                                                   </td>
                                                   <td align="center">
                                                       <a href="https://www.youtube.com/channel/UCMARO--DvWrjVlbVflNtczA">
-                                                          <img src="${websiteAddress}img/youtubeSocial.png" alt="Логотип YouTube" title="Перейти на страницу Ice Games в YouTube">
+                                                          <img src="${websiteAddress}img/youtubeSocial.png" alt="Логотип YouTube" loading="lazy" title="Перейти на страницу Ice Games в YouTube">
                                                       </a>
                                                   </td>
                                                   <td align="center">
                                                       <a href="https://vt.tiktok.com/ZSRRFmTSm/">
-                                                          <img src="${websiteAddress}img/tiktokSocial.png" alt="Логотип TikTok" title="Перейти на страницу Ice Games в TikTok">
+                                                          <img src="${websiteAddress}img/tiktokSocial.png" alt="Логотип TikTok" loading="lazy" title="Перейти на страницу Ice Games в TikTok">
                                                       </a>
                                                   </td>
                                                   <td align="center">
                                                       <a href="https://instagram.com/icegames.store">
-                                                          <img src="${websiteAddress}img/instagramSocial.png" alt="Логотип Instagram" title="Перейти на страницу Ice Games в Instagram">
+                                                          <img src="${websiteAddress}img/instagramSocial.png" alt="Логотип Instagram" loading="lazy" title="Перейти на страницу Ice Games в Instagram">
                                                       </a>
                                                   </td>
                                               </tr>
@@ -336,13 +336,13 @@ export async function mailingInStockProduct(productId, emails) {
                   <table class="main" cellpadding="0" cellspacing="0" width="600" align="center" bgcolor="#02043D">
                       <tr>
                           <td>
-                              <img src="${websiteAddress}${product.darkenCover}" alt="Обложка">
+                              <img src="${websiteAddress}${product.darkenCover}" loading="lazy" alt="Обложка">
                           </td>
                       </tr>
                       <tr>
                           <td align="center">
                               <a href="${websiteAddress}">
-                                  <img src="${websiteAddress}img/fullLogo.png" alt="Логотип Ice Games">
+                                  <img src="${websiteAddress}img/fullLogo.png" loading="lazy" alt="Логотип Ice Games">
                               </a>
                           </td>
                       </tr>
@@ -379,32 +379,32 @@ export async function mailingInStockProduct(productId, emails) {
                                               <tr>
                                                   <td align="center">
                                                       <a href="https://vk.com/ice.games">
-                                                          <img src="${websiteAddress}img/vkSocial.png" alt="Логотип VK" title="Перейти на страницу Ice Games в VK">
+                                                          <img src="${websiteAddress}img/vkSocial.png" loading="lazy" alt="Логотип VK" title="Перейти на страницу Ice Games в VK">
                                                       </a>
                                                   </td>
                                                   <td align="center">
                                                       <a href="https://t.me/icegames_store">
-                                                          <img src="${websiteAddress}img/telegramSocial.png" alt="Логотип Telegram" title="Перейти на страницу Ice Games в Telegram">
+                                                          <img src="${websiteAddress}img/telegramSocial.png" loading="lazy" alt="Логотип Telegram" title="Перейти на страницу Ice Games в Telegram">
                                                       </a>
                                                   </td>
                                                   <td align="center">
                                                       <a href="https://m.twitch.tv/surf1se/about">
-                                                          <img src="${websiteAddress}img/twitchSocial.png" alt="Логотип Twitch" title="Перейти на страницу Ice Games в Twitch">
+                                                          <img src="${websiteAddress}img/twitchSocial.png" loading="lazy" alt="Логотип Twitch" title="Перейти на страницу Ice Games в Twitch">
                                                       </a>
                                                   </td>
                                                   <td align="center">
                                                       <a href="https://www.youtube.com/channel/UCMARO--DvWrjVlbVflNtczA">
-                                                          <img src="${websiteAddress}img/youtubeSocial.png" alt="Логотип YouTube" title="Перейти на страницу Ice Games в YouTube">
+                                                          <img src="${websiteAddress}img/youtubeSocial.png" alt="Логотип YouTube" loading="lazy" title="Перейти на страницу Ice Games в YouTube">
                                                       </a>
                                                   </td>
                                                   <td align="center">
                                                       <a href="https://vt.tiktok.com/ZSRRFmTSm/">
-                                                          <img src="${websiteAddress}img/tiktokSocial.png" alt="Логотип TikTok" title="Перейти на страницу Ice Games в TikTok">
+                                                          <img src="${websiteAddress}img/tiktokSocial.png" alt="Логотип TikTok" loading="lazy" title="Перейти на страницу Ice Games в TikTok">
                                                       </a>
                                                   </td>
                                                   <td align="center">
                                                       <a href="https://instagram.com/icegames.store">
-                                                          <img src="${websiteAddress}img/instagramSocial.png" alt="Логотип Instagram" title="Перейти на страницу Ice Games в Instagram">
+                                                          <img src="${websiteAddress}img/instagramSocial.png" loading="lazy" alt="Логотип Instagram" title="Перейти на страницу Ice Games в Instagram">
                                                       </a>
                                                   </td>
                                               </tr>

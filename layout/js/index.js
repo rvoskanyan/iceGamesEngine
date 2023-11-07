@@ -206,7 +206,7 @@ promptProductNodes.forEach(promptProductNode => {
 
 if (successPaymentNode) {
     const closeSuccessPaymentNode = successPaymentNode.querySelector('.js-closeSuccessPayment');
-    
+
     closeSuccessPaymentNode && closeSuccessPaymentNode.addEventListener('click', () => {
         successPaymentNode.remove();
     })
@@ -280,27 +280,27 @@ counterAnimationNodes.forEach(counterAnimationNode => {
   const animate = () => {
     const count = parseInt(counterAnimationNode.innerText);
     const step = count >= 50 ? Math.floor(count / 50) : 1;
-  
+
     counterAnimationNode.innerText = 0;
     counterAnimationNode.classList.add('active');
-    
+
     const int = setInterval(() => {
       const currentValue = parseInt(counterAnimationNode.innerText);
-      
+
       if (currentValue < count) {
         return counterAnimationNode.innerText = currentValue + step <= count ? currentValue + step : count;
       }
-      
+
       clearInterval(int);
     }, 50);
   }
   let handler;
   let active = false;
-  
+
   if (offsetTop < topGap) {
     handler = () => {
       const offsetTop = counterAnimationNode.getBoundingClientRect().top;
-      
+
       if (!active && offsetTop >= topGap) {
         document.removeEventListener('scroll', handler);
         animate();
@@ -309,7 +309,7 @@ counterAnimationNodes.forEach(counterAnimationNode => {
   } else if (offsetTop > windowHeight - height) {
     handler = () => {
       const offsetTop = counterAnimationNode.getBoundingClientRect().top;
-      
+
       if (!active && offsetTop <= windowHeight - height) {
         document.removeEventListener('scroll', handler);
         animate();
@@ -319,11 +319,11 @@ counterAnimationNodes.forEach(counterAnimationNode => {
     active = true;
     animate();
   }
-  
+
   if (active) {
     return;
   }
-  
+
   document.addEventListener('scroll', handler)
 })
 
@@ -335,91 +335,91 @@ if (buyTurkeyPage) {
     const selectedValue = buyTurkeyPage.querySelector('.js-selectedValue');
     const paymentForm = buyTurkeyPage.querySelector('.js-paymentForm');
     const paymentErrorMessage = buyTurkeyPage.querySelector('.js-paymentErrorMessage');
-    
+
     new AsyncForm({
         mainNode: paymentForm,
         resultMessageNode: paymentErrorMessage,
         successHandler: (sendParams, results) => window.open(results.link, '_self'),
     });
-    
+
     switchCards.forEach(switchCard => {
         switchCard.addEventListener('change', () => {
             const price = switchCard.nextElementSibling.querySelector('.js-price');
             const value = switchCard.nextElementSibling.querySelector('.js-value');
-    
+
             selectedPrice.innerText = price.innerText;
             selectedValue.innerText = value.innerText;
         })
     });
-    
+
     if (emailVerifiedBuyTurkey) {
         const submit = emailVerifiedBuyTurkey.querySelector('.js-submit');
         const emailForTurkey = emailVerifiedBuyTurkey.querySelector('.js-emailForTurkey');
         const verificationCodeField = emailVerifiedBuyTurkey.querySelector('.js-verificationCodeField');
         const verificationCodeFieldFrame = emailVerifiedBuyTurkey.querySelector('.js-verificationCodeFieldFrame');
         const message = emailVerifiedBuyTurkey.querySelector('.js-message');
-    
+
         message.classList.add('error');
-    
+
         submit.addEventListener('click', async () => {
             const step = emailVerifiedBuyTurkey.dataset.step.toString();
-            
+
             switch (step) {
                 case '1': {
                     submit.innerText = 'Отправка кода...';
-    
+
                     const responseCode = await postman.post("/api/users/get-code", {
                         email: emailForTurkey.value,
                     });
-    
+
                     const result = await responseCode.json();
-    
+
                     if (responseCode.status >= 400) {
                         if (result.message.toLowerCase() === 'authorized') {
                             document.location.reload()
                         }
-    
+
                         if (result.message.toLowerCase() === 'invalid email') {
                             message.innerText = 'Некорректный E-mail'
                         }
-    
+
                         return submit.innerText = 'Отправить код';
                     }
-    
+
                     emailForTurkey.setAttribute("readonly", '');
                     verificationCodeFieldFrame.style.display = 'block';
                     verificationCodeField.setAttribute('required', '');
                     submit.innerText = 'Подтвердить';
                     emailVerifiedBuyTurkey.dataset.step = '2';
                     message.innerText = '';
-    
+
                     break;
                 }
                 case '2': {
                     submit.innerText = 'Проверка кода...';
-                    
+
                     const confirmResponse = await postman.post('/api/users/confirm-code', {
                         email: emailForTurkey.value,
                         code: verificationCodeField.value,
                     });
-                    
+
                     const confirmResult = await confirmResponse.json();
-                    
+
                     if (confirmResponse.status >= 400) {
                         if (confirmResult.message.toLowerCase() === 'invalid code') {
                             message.innerText = 'Неверный код';
                         }
-    
+
                         return submit.innerText = 'Подтвердить';
                     }
-    
+
                     verificationCodeFieldFrame.remove();
                     submit.remove();
-    
+
                     message.classList.remove('error');
                     message.innerText = 'E-mail подтвержден';
                     paymentSubmit.removeAttribute('disabled');
-                    
+
                     break;
                 }
             }
@@ -431,22 +431,22 @@ loadMoreSelectionsBtnNode && loadMoreSelectionsBtnNode.addEventListener('click',
     const skip = parseInt(loadMoreSelectionsBtnNode.dataset.skip || 4);
     const delistSelection = loadMoreSelectionsBtnNode.dataset.delistSelection || '';
     const selectionsNode = document.querySelector('.js-selections');
-    
+
     if (!selectionsNode) {
         return;
     }
-    
+
     const response = await postman.get(`${websiteAddress}api/selections?skip=${skip}&delistSelection=${delistSelection}`);
     const result = await response.json();
-    
+
     if (!result.success) {
         return;
     }
-    
+
     result.selections.forEach((selection, index) => {
         selectionsNode.innerHTML += `
             <a href="${websiteAddress}selections/${selection.alias}" title="Перейти на страницу подборки ${selection.name}" class="selection">
-                <img src="${websiteAddress}${selection.img}" class="selectionImg" alt="Изображение подборки товаров ${selection.name}" title="Изображение подборки товаров ${selection.name}">
+                <img src="${websiteAddress}${selection.img}" class="selectionImg" loading="lazy" alt="Изображение подборки товаров ${selection.name}" title="Изображение подборки товаров ${selection.name}">
                 <div class="selectionInfo">
                     <div class="selectionName">${selection.name}</div>
                     <div class="selectionCountProducts">Игр в подборке: ${selection.products.length}</div>
@@ -454,11 +454,11 @@ loadMoreSelectionsBtnNode && loadMoreSelectionsBtnNode.addEventListener('click',
             </a>
         `;
     });
-    
+
     if (result.isLast) {
         return loadMoreSelectionsBtnNode.remove();
     }
-    
+
     loadMoreSelectionsBtnNode.dataset.skip = skip + 4;
 });
 
@@ -532,14 +532,14 @@ loadModeProductReviewsNode && loadModeProductReviewsNode.addEventListener('click
 
 loadMoreFillUpReviewsBtnNode && loadMoreFillUpReviewsBtnNode.addEventListener('click', async () => {
     const skip = parseInt(loadMoreFillUpReviewsBtnNode.dataset.skip);
-    
+
     const response = await postman.get(`${websiteAddress}api/reviews?skip=${skip}&target=FillUpSteam`);
     const result = await response.json();
-    
+
     if (result.email) {
         return;
     }
-    
+
     result.reviews.forEach(review => {
         listFillUpReviewsNode.innerHTML += `
       <div class="item review">
@@ -557,11 +557,11 @@ loadMoreFillUpReviewsBtnNode && loadMoreFillUpReviewsBtnNode.addEventListener('c
       </div>
     `;
     });
-    
+
     if (result.isLast) {
         return loadMoreFillUpReviewsBtnNode.remove();
     }
-    
+
     loadMoreFillUpReviewsBtnNode.dataset.skip = parseInt(loadMoreFillUpReviewsBtnNode.dataset.skip) + 5;
 })
 
@@ -621,19 +621,19 @@ if (largeImgNodes.length) {
 
 whereLoginNode && whereLoginNode.addEventListener('click', () => {
     document.body.classList.add('noScrolling');
-    
+
     fillUpPageModalNode.classList.add('active');
 })
 
 howToGetLoginNode && howToGetLoginNode.addEventListener('click', () => {
     document.body.classList.add('noScrolling');
-    
+
     fillUpPageModalNode.classList.add('active');
 })
 
 fillUpPageModalNode && fillUpPageModalNode.querySelector('.js-closeFillUpPageModal').addEventListener('click', () => {
     document.body.classList.remove('noScrolling');
-    
+
     fillUpPageModalNode.classList.remove('active');
 })
 
@@ -642,7 +642,7 @@ inputFrameNodes.forEach(inputFrameNode => {
         if (e.target.value === '') {
             return inputFrameNode.classList.remove('active');
         }
-    
+
         inputFrameNode.classList.add('active');
     })
 });
@@ -766,7 +766,7 @@ if (gamePageNode) {
         addToCartBtnNode.innerText = 'Добавлено';
         addToCartBtnNode.classList.add('js-active');
         addToCartBtnNode.setAttribute('title', 'Перейти в корзину покупок');
-    
+
         if (mobileCartLinkNode) {
             !mobileCartLinkNode.classList.contains('active') && mobileCartLinkNode.classList.add('active');
             mobileCartLinkNode.classList.add('adding');
@@ -909,10 +909,10 @@ if (fillUpAddReviewFromNode) {
         successHandler: (params) => {
             const userName = listFillUpReviewsNode.dataset.userName;
             const review = document.createElement('div');
-            
+
             review.classList.add('item review');
             fillUpAddReviewFromNode.remove();
-            
+
             review.innerHTML = `
                 <div class="head">
                     <a class="btn link userName" href="/profile/view/${userName}" title="Перейти на страницу пользователя ${userName}">${userName}</a>
@@ -928,7 +928,7 @@ if (fillUpAddReviewFromNode) {
                     ${params.text}
                 </div>
             `;
-    
+
             listFillUpReviewsNode.prepend(review);
         }
     })
@@ -1003,10 +1003,10 @@ if (cartNode) {
                 '<div class="payment-step" data-step="2">2</div>' +
                 '</div>' +
                 '<div class="popup_payment-product mobileScroll">';
-            
+
                 let [prd, ourPrice] = getProduct(products.iceGame)
                 content += prd
-            
+
                 content += '' +
                 '</div>' +
                 '<div class="popup_payment-price">' +
@@ -1021,7 +1021,7 @@ if (cartNode) {
         function getProduct(products) {
             let prd = ''
             let ourPrice = 0
-            
+
             for (let i of products) {
                 if (typeof i !== 'string') i = i.productId
                 let el = document.querySelector(`.js-product[data-product-id="${i}"]`)
@@ -1035,7 +1035,7 @@ if (cartNode) {
                 prd += `
                     <div class="cardGame">
                         <div class="head">
-                            <img class="img" src="${img}">
+                            <img class="img" src="${img}" loading="lazy">
                             <div class="name">${title}</div>
                         </div>
                         <div class="price">
@@ -1046,28 +1046,28 @@ if (cartNode) {
                     </div>
                 `;
             }
-            
+
             return [prd, ourPrice]
         }
 
         function createPopupPayment(openPayment) {
             let pop = popUpPayment()
             let payment_button = pop.querySelector(".popup_payment-pay")
-            
+
             pop.onclick = function () {
                 this.remove()
                 document.body.classList.remove('noScrolling')
             }
-            
+
             pop.firstElementChild.onclick = function (e) {
                 e.stopPropagation()
             }
-            
+
             payment_button.onclick = () => openPayment(payment_button)
-    
+
             document.body.append(pop)
             document.body.classList.add('noScrolling')
-            
+
             return pop
         }
 
@@ -1160,7 +1160,7 @@ if (cartNode) {
 
                         return cartNode.innerHTML += `
               <div class="notFound">
-                <img src="${websiteAddress}img/notFound.svg" class="img" alt="Иконка расстроенного смайла" title="Корзина пуста :(">
+                <img src="${websiteAddress}img/notFound.svg" class="img" loading="lazy" alt="Иконка расстроенного смайла" title="Корзина пуста :(">
                 <div class="text">
                     <span class="title">Корзина пуста</span>
                     <p class="description">Воспользуйтесь каталогом, чтобы найти все, что нужно!</p>
@@ -1206,20 +1206,20 @@ if (cartNode) {
             async function get_checkout(isTwo) {
                 /*const checkNode = document.querySelector('.js-check');
                 const div = document.createElement('div');
-                
+
                 div.innerText = 'Уважаемый клиент, в данным момент ведутся тех.работы, в связи с этим оплата картой временно не доступа. Вы можете приобрести товар в сплит или попробовать позже. Приносим свои извинения за доставленные неудобства, надеемся на Ваше понимание!'
-                
+
                 checkNode.append(div);
                 div.style.color = '#ff669a';
                 div.style.textAlign = 'center';
                 div.style.marginTop = '10px';
-                
+
                 return;*/
-                
+
                 const payment = await Payment.get_method()
                 let yaClientId;
                 let email;
-    
+
                 if (!payment) {
                     return console.error('Payment method not set')
                 }
@@ -1423,10 +1423,10 @@ function startBind() {
     const bindField = document.querySelector(`.js-${fastSelect.dataset.bindSelector}`);
     const itemsOnValues = {};
     let currentActive;
-    
+
     items.forEach(item => {
         const value = parseInt(item.innerText);
-    
+
         itemsOnValues[value] = item;
 
         item.addEventListener('click', () => {
@@ -1434,12 +1434,12 @@ function startBind() {
             bindField.dispatchEvent(new Event('input'))
         })
     });
-    
+
     bindField.addEventListener('input', () => {
         const item = itemsOnValues[bindField.value];
-    
+
         currentActive?.classList.remove('active');
-        
+
         if (item) {
             item.classList.add('active');
             currentActive = item;
@@ -1540,12 +1540,12 @@ document.addEventListener('click', async (e) => {
             if (result.error) {
                 return;
             }
-            
+
             addToCartBtnText.innerText = 'Добавлено';
             addToCartBtnIcon.classList.add('active');
             addToCartBtnNode.classList.add('js-active', 'active');
             addToCartBtnNode.setAttribute('title', 'Перейти в корзину покупок');
-            
+
             if (mobileCartLinkNode) {
                 !mobileCartLinkNode.classList.contains('active') && mobileCartLinkNode.classList.add('active');
                 mobileCartLinkNode.classList.add('adding');
@@ -1650,7 +1650,7 @@ searchStringNode.addEventListener('input', async (e) => {
     if (catalogNode) {
         return;
     }
-    
+
     popupController.activateById('searchResultsContainer');
 
     const response = await postman.get(`${websiteAddress}api/products`, {
@@ -1905,7 +1905,7 @@ if (homeSliderNode) {
             btn.innerText = 'Добавлено';
             btn.classList.add('js-active');
             btn.setAttribute('title', 'Перейти в корзину покупок');
-    
+
             if (mobileCartLinkNode) {
                 !mobileCartLinkNode.classList.contains('active') && mobileCartLinkNode.classList.add('active');
                 mobileCartLinkNode.classList.add('adding');
@@ -2008,7 +2008,7 @@ if (blogPageNode) {
         result.articles.forEach(article => {
             listArticlesNode.innerHTML += `
         <a class="article${article.rightImg ? ' right' : ''}" href="${websiteAddress}blog/${article.alias}" style="--bgColor: ${article.blockColor}">
-            <img class="img" src="${websiteAddress}${article.img}" alt="Изображение записи в блоге - ${article.name}">
+            <img class="img" src="${websiteAddress}${article.img}" loading="lazy" alt="Изображение записи в блоге - ${article.name}">
             <div class="info">
                 <div class="content">
                     <div class="title">${article.name}</div>
@@ -2043,22 +2043,22 @@ if (catalogNode) {
     loaded: true,
     num: startPage,
   }));
-  
+
   let currentPage = startPage;
   let sortActiveBtn = catalogNode.querySelector('.js-sort .js-variant-sort.active');
   let priceRangeObject;
   let loading = false;
-  
+
   if ('scrollRestoration' in history) {
     history.scrollRestoration = 'manual';
   }
-  
+
   if (startPage > 1) {
     for (let i = 1; i < startPage; i++) {
       const pageNode = document.createElement('div');
-  
+
       pageNode.classList.add('gameGrid', 'js-page');
-      
+
       for (let j = 1; j <= 20; j++) {
         pageNode.innerHTML += `
           <div class="cardGame cardGame-frame">
@@ -2073,7 +2073,7 @@ if (catalogNode) {
           </div>
         `;
       }
-  
+
       catalogListNode.prepend(pageNode);
       pageObjects.unshift({
         node: pageNode,
@@ -2081,22 +2081,22 @@ if (catalogNode) {
         num: startPage - i,
       })
     }
-    
+
     scrollToActive();
   } else {
     initialCatalogListeners();
   }
-  
+
   if (offsetTop + height + 100 < windowHeight) {
     loadMore().then();
   }
-  
+
   if (priceRangeNode) {
     const min = +priceRangeNode.dataset.min;
     const max = +priceRangeNode.dataset.max;
     const firstPointValue = +priceRangeNode.dataset.firstValue;
     const secondPointValue = +priceRangeNode.dataset.secondValue;
-  
+
     priceRangeObject = new Range({
       mainNode: priceRangeNode,
       min,
@@ -2113,44 +2113,44 @@ if (catalogNode) {
       ],
     });
   }
-  
+
   searchStringNode.addEventListener('input', () => {
     const url = new URL(window.location.href);
     const value = searchStringNode.value;
-    
+
     url.searchParams.set('searchString', value);
-    
+
     if (!value.length) {
       url.searchParams.delete('searchString');
     }
-    
+
     history.pushState(null, null, url);
     catalogNode.dispatchEvent(new Event('changeParams'));
   });
-  
+
   priceRangeObject.addChangeListener((values) => {
     const url = new URL(window.location.href);
     let min = values[0].value;
     let max = values[1].value
-    
+
     if (min > max) {
       max = min;
       min = values[1].value;
     }
-  
+
     url.searchParams.set('priceFrom', min);
     url.searchParams.set('priceTo', max);
-  
+
     history.pushState(null, null, url);
     catalogNode.dispatchEvent(new Event('changeParams'));
   });
-  
+
   sortBtnNodes.forEach(sortBtnNode => {
     const value = sortBtnNode.dataset.sort;
-    
+
     sortBtnNode.addEventListener('click', () => {
       const url = new URL(window.location.href);
-      
+
       if (sortActiveBtn !== sortBtnNode) {
         url.searchParams.set('sort', value);
         sortBtnNode.classList.add('active');
@@ -2161,48 +2161,48 @@ if (catalogNode) {
         sortBtnNode.classList.remove('active');
         url.searchParams.delete('sort');
       }
-  
+
       history.pushState(null, null, url);
       catalogNode.dispatchEvent(new Event('changeParams'));
     })
   });
-  
+
   checkbox.forEach(item => {
     const input = item.querySelector('.input');
     const inputName = input.name;
     const inputValue = input.value;
-    
+
     input.addEventListener('click', (e) => {
       const url = new URL(window.location.href);
-      
+
       if (input.checked) {
         url.searchParams.append(inputName, inputValue);
       } else {
         const entriesParams = [...url.searchParams.entries()];
-      
+
         for (item of entriesParams) {
           url.searchParams.delete(item[0]);
         }
-      
+
         for (item of entriesParams) {
           if (item[1] === inputValue && item[0] === inputName) {
             continue;
           }
-        
+
           url.searchParams.append(item[0], item[1]);
         }
       }
-    
+
       history.pushState(null, null, url);
       catalogNode.dispatchEvent(new Event('changeParams'));
     });
   })
-  
+
   catalogNode.addEventListener('changeParams', async () => {
     const topOffset = document.querySelector('.js-header').offsetHeight;
     const targetPosition = catalogListNode.getBoundingClientRect().top;
     const offsetPosition = window.pageYOffset + targetPosition - topOffset;
-    
+
     catalogListNode.innerHTML = '';
     currentPage = 1;
     window.scrollTo({
@@ -2210,25 +2210,25 @@ if (catalogNode) {
       behavior: 'smooth',
     });
     document.removeEventListener('scroll', scrollHandler);
-    
+
     const url = new URL(window.location.href);
     const queryUrl = `${websiteAddress}api/products${url.search ? url.search : '?'}&platform=${platform}&limit=${countLoad}${sectionName ? `&${sectionType}=${sectionName}` : ''}`;
     const response = await postman.get(queryUrl);
     const result = await response.json();
-  
+
     url.searchParams.set('page', currentPage);
     history.pushState(null, null, url);
-    
+
     if (result.error) {
       return;
     }
-  
+
     catalogListNode.classList.remove('notFound');
-    
+
     if (!result.products.length) {
       catalogListNode.classList.add ('notFound');
       return catalogListNode.innerHTML = `
-        <img class="img" src="${websiteAddress}img/notFound.svg">
+        <img class="img" src="${websiteAddress}img/notFound.svg" loading="lazy">
         <span class="text">Ничего не найдено...</span>
       `;
         }
@@ -2429,40 +2429,40 @@ if (fillUpSteamFrom) {
     let amount = 0;
     let amountCommission = 0;
     let total = 0;
-    
+
     switchCardNode.addEventListener('change', () => {
         if (switchCardNode.checked) {
             commission = 23.5
             changeParams();
         }
     });
-    
+
     switchSbpNode.addEventListener('change', () => {
         if (switchSbpNode.checked) {
             commission = 21.5;
             changeParams();
         }
     });
-    
+
     amountInputNode.addEventListener('input', (e) => {
         amount = +e.target.value;
         changeParams();
     });
-    
+
     function changeParams() {
         amountCommission = Math.floor(amount / 100 * commission);
         total = amountCommission + amount;
-        
+
         commissionNode.innerText = `Комиссия сервиса (${commission}%)`;
         amountNode.innerText = `${amount} ${currencySymbol}`;
         amountCommissionNode.innerText = `${amountCommission} ${currencySymbol}`;
         totalNode.innerText = `${rate ? Math.floor(total * rate) : total} ₽`;
     }
-    
+
     const a = document.createElement("a");
     document.body.appendChild(a);
     a.style = "display: none";
-    
+
     new AsyncForm({
         mainNode: fillUpSteamFrom,
         resultMessageNode: resultNode,
@@ -2470,11 +2470,11 @@ if (fillUpSteamFrom) {
             if (results.card) {
                 return window.open(results.link, '_self');
             }
-    
+
             a.href = results.link;
             a.setAttribute('target', '_blank');
             a.click();
-    
+
             window.open(`${websiteAddress}fill-up-steam/check-status?fillUpId=${results.fillUpId}`, '_self');
         }
     });
@@ -2550,24 +2550,24 @@ if (switchSplitNode) {
     const totalFullPayNode = document.querySelector('.js-totalFullPay');
     const splitPayNode = document.querySelector('.js-splitPay');
     const notAuthSplitBlockNode = document.querySelector('.js-notAuthSplitBlock');
-    
+
     splitPayNode.style.display = 'none';
-    
+
     if (notAuthSplitBlockNode) {
         const poAuthBtnNode = notAuthSplitBlockNode.querySelector('.js-toAuth');
-    
+
         poAuthBtnNode.addEventListener('click', (e) => {
             e.stopPropagation();
             popupController.activateById('loginForm');
         })
     }
-    
+
     fullPaymentBtnNode.addEventListener('click', () => {
         const products = document.querySelectorAll('.js-product');
         let total = 0;
         let discount = 0;
         let result = 0;
-        
+
         payBtnNode && (payBtnNode.style.display = 'block');
         confirmEmailFormNode && (confirmEmailFormNode.style.display = 'block');
         helpTextNode && (helpTextNode.style.display = 'block');
@@ -2579,40 +2579,40 @@ if (switchSplitNode) {
         notAuthSplitBlockNode && (notAuthSplitBlockNode.style.display = 'none');
         splitPaymentBtnNode.classList.remove('active');
         fullPaymentBtnNode.classList.add('active');
-    
+
         products.forEach(product => {
             const priceFromNode = product.querySelector('.js-priceFrom');
             const priceTo = parseFloat(product.querySelector('.js-priceTo').innerText);
-            
+
             if (!product.dataset.canSplit) {
                 product.classList.remove('disabled');
             }
-    
+
             if (priceFromNode) {
                 const priceFrom = parseFloat(priceFromNode.innerText);
-    
+
                 total += priceFrom;
                 discount += priceFrom - priceTo;
             } else {
                 total += priceTo;
             }
-            
+
             result += priceTo;
         });
-    
+
         totalProductsNode.innerText = products.length;
         totalFromNode.innerText = total;
         savingNode.innerText = discount;
         totalToNode.innerText = result;
     })
-    
+
     splitPaymentBtnNode.addEventListener('click', () => {
         const products = document.querySelectorAll('.js-product');
         let countProducts = 0;
         let total = 0;
         let discount = 0;
         let result = 0;
-        
+
         payBtnNode && (payBtnNode.style.display = 'none');
         confirmEmailFormNode && (confirmEmailFormNode.style.display = 'none');
         helpTextNode && (helpTextNode.style.display = 'none');
@@ -2624,38 +2624,38 @@ if (switchSplitNode) {
         notAuthSplitBlockNode && (notAuthSplitBlockNode.style.display = 'flex');
         splitPaymentBtnNode.classList.add('active');
         fullPaymentBtnNode.classList.remove('active');
-    
+
         products.forEach(product => {
             if (!product.dataset.canSplit) {
                 return product.classList.add('disabled');
             }
-            
+
             const priceFromNode = product.querySelector('.js-priceFrom');
             const priceTo = parseFloat(product.querySelector('.js-priceTo').innerText);
-            
+
             if (priceFromNode) {
                 const priceFrom = parseFloat(priceFromNode.innerText);
-    
+
                 total += priceFrom;
                 discount += priceFrom - priceTo;
             } else {
                 total += priceTo;
             }
-            
+
             result += Math.ceil(Math.floor(priceTo + priceTo / 100 * 6) / 4);
             countProducts++;
         })
-    
+
         totalProductsNode.innerText = countProducts;
         totalFromNode.innerText = total;
         savingNode.innerText = discount;
         totalToNode.innerText = result;
     })
-    
+
     paySplitNode.addEventListener('click', async () => {
         const response = await postman.post(`${websiteAddress}api/order/split`, { yaClientId });
         const result = await response.json();
-        
+
         if (result.success) {
             window.open(result.paymentUrl, '_self');
         }
@@ -2666,29 +2666,29 @@ if (platformSwitchNode) {
     const markerNode = platformSwitchNode.querySelector('.js-marker');
     const listBtnNodes = platformSwitchNode.querySelectorAll('.btn');
     let activeBtnNode = platformSwitchNode.querySelector('.btn.active');
-    
+
     activeBtnNode && moveIndicator(activeBtnNode);
-    
+
     listBtnNodes.forEach(link => {
         link.addEventListener('click', async (e) => {
             const target = e.target;
-            
+
             if (target === activeBtnNode) {
                 return;
             }
-    
+
             moveIndicator(target);
             target.classList.add('active');
             activeBtnNode.classList.remove('active');
-    
+
             activeBtnNode = target;
-            
+
             setTimeout(() => {
                 location.href = `${websiteAddress}${target.innerText.toLowerCase()}`;
             }, 300);
         })
     })
-    
+
     function moveIndicator(target) {
         markerNode.style.left = target.offsetLeft + 'px';
         markerNode.style.width = target.clientWidth + 'px';

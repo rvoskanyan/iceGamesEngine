@@ -194,7 +194,7 @@ export function getTurboArticlesRssFeedText(articles) {
                 <header>
                     <h1>${name}</h1>
                     <figure>
-                      <img src="${headerImg}">
+                      <img src="${headerImg}" loading="lazy">
                     </figure>
                     <div data-block="breadcrumblist">
                         <a href="https://icegames.store">Главная</a>
@@ -205,7 +205,7 @@ export function getTurboArticlesRssFeedText(articles) {
                     const srcImg = `${websiteAddress}${block.img}`;
                     
                     return `${!block.img ? '' : `
-                <img class="img" src="${srcImg}"`}
+                <img class="img" loading="lazy" src="${srcImg}"`}
                 <div>${block.text}</div>`;
                 }).join('')}
                 ${article.products && article.products.length ? `<h3>Игры из статьи</h3>
@@ -225,7 +225,7 @@ export function getTurboArticlesRssFeedText(articles) {
     }).join('')}
   </channel>
 </rss>`;
-    
+
     return turboArticlesRssFeedText;
 }
 
