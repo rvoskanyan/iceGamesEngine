@@ -1,0 +1,2 @@
+export const websiteAddress = 'https://icegames.store/';
+export const platform = document.body.dataset.platform;

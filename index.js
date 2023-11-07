@@ -9,7 +9,6 @@ import MongoStore from 'connect-mongodb-session';
 import mongoose from 'mongoose';
 import path from 'path';
 import fs from 'fs';
-import dotenv from 'dotenv';
 import {__dirname} from "./rootPathes.js";
 import varMiddleware from './middlewares/variables.js';
 import constClientMiddleware from './middlewares/constClientData.js';
@@ -21,14 +20,13 @@ import {admin} from "./middlewares/routeProtection.js";
 import webhook from "./routes/webhook.js";
 import { getFormatDate } from "./utils/functions.js";
 import { antiDdos } from "./middlewares/antiDdos.js";
+import {mongoDbUri} from "./config.js";
 
-dotenv.config();
 
-const MONGODB_URI = `mongodb://Rafik:Z3Akp3gR7aH1tet2@127.0.01:27017/igsDev?authSource=admin`;
 const app = express();
 const store = new (MongoStore(session))({
   collection: 'sessions',
-  uri: MONGODB_URI,
+  uri: mongoDbUri,
 });
 const hbs = exphbs.create({
   defaultLayout: 'main',
@@ -169,7 +167,7 @@ if (!fs.existsSync(uploadedFilesDir)) {
 
 const start = async () => {
   try {
-    await mongoose.connect(MONGODB_URI, {
+    await mongoose.connect(mongoDbUri, {
       useNewUrlParser: true,
     });
     //mongoose.set('debug', true);
