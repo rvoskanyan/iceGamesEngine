@@ -107,7 +107,7 @@
             <label for="icons">Иконка</label>
             <input type="file" name="icons" id="icons">
             {{#if is_edit}}
-                <img src="/{{paymentMethod.icons}}" alt="">
+                <img src="/{{paymentMethod.icons}}" loading="lazy" alt="">
             {{/if}}
         </div>
         <div class="field">

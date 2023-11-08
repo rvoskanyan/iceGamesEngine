@@ -24,7 +24,7 @@
     <div class="selections js-selections">
         {{#each selections}}
             <a href="{{@root.websiteAddress}}{{#if @root.platform}}{{@root.platform}}/{{/if}}selections/{{alias}}" title="Перейти на страницу подборки {{name}}" class="selection">
-                <img src="{{@root.websiteAddress}}{{img}}" class="selectionImg" alt="Изображение подборки товаров {{name}}" title="Изображение подборки товаров {{name}}">
+                <img src="{{@root.websiteAddress}}{{img}}" class="selectionImg" loading="lazy" alt="Изображение подборки товаров {{name}}" title="Изображение подборки товаров {{name}}">
                 <div class="selectionInfo">
                     <div class="selectionName">{{name}}</div>
                     <div class="selectionCountProducts">Игр в подборке: {{products.length}}</div>

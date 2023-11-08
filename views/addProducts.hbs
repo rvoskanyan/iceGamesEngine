@@ -59,7 +59,7 @@
             <div class="images">
                 {{#each product.images}}
                     <div class="img">
-                        <img src="{{@root.websiteAddress}}{{name}}">
+                        <img src="{{@root.websiteAddress}}{{name}}" loading="lazy">
                         <form action="/admin/products/{{@root.product._id}}/deleteSliderImg/{{_id}}" class="delete" method="post">
                             <input type="submit" value="X">
                         </form>
@@ -158,7 +158,7 @@
     <br>
     <br>
     {{#if product.img}}
-        <img src="{{websiteAddress}}{{product.img}}" style="max-width: 300px">
+        <img src="{{websiteAddress}}{{product.img}}" loading="lazy" style="max-width: 300px">
     {{/if}}
     <br>
     <br>
@@ -169,7 +169,7 @@
     <br>
     <br>
     {{#if product.coverImg}}
-        <img src="{{websiteAddress}}{{product.coverImg}}" style="max-width: 300px">
+        <img src="{{websiteAddress}}{{product.coverImg}}" loading="lazy" style="max-width: 300px">
     {{/if}}
     <br>
     <br>

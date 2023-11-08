@@ -7,11 +7,8 @@ Disallow: /reg
 Disallow: /auth
 Disallow: /cart
 Disallow: */admin
-Disallow: *&
 Allow: /games
-Disallow: /games*?
-Allow: /games*?page
-Disallow: /games*?page*&
+Allow: /games/*
 Allow: /api/external/feed-yml.xml
 Allow: /api/external/turbo-articles-rss-feed.xml
 Disallow: *?onlyStock
@@ -38,13 +35,12 @@ Disallow: *?clk=
 Disallow: *?yandex_ad
 Disallow: *?post_type=
 Disallow: *?ai=
-Disallow: *games?sort=
-<<<<<<< HEAD
-=======
-Disallow: *?__cf_chl_tk
->>>>>>> 2aff05e6f155c663ecc1fddbdae2ab0d5787bf31
+Di
 
-Clean-param: openstat&utm&from&gclid&yclid&tid&ymclid&amp&erid&successPayment
+sallow: *games?sort=
+Disallow: */check-status
+
+Clean-param: openstat&utm&from&gclid&yclid&tid&ymclid&amp&erid
 
 User-Agent: Googlebot
 Disallow: /profile
@@ -56,9 +52,7 @@ Disallow: /auth
 Disallow: /cart
 Disallow: */admin
 Allow: /games
-Disallow: /games*?
-Allow: /games*?page
-Disallow: /games*?page*&
+Allow: /games/*
 Disallow: *?search
 Disallow: *?sort
 Disallow: *?openstat
@@ -98,11 +92,7 @@ Disallow: *?yandex_ad
 Disallow: *?post_type=
 Disallow: *?ai=
 Disallow: *games?sort=
-Disallow: *?successPayment=
-<<<<<<< HEAD
-=======
-Disallow: *?__cf_chl_tk
->>>>>>> 2aff05e6f155c663ecc1fddbdae2ab0d5787bf31
+Disallow: */check-status
 
 Sitemap: https://icegames.store/sitemap.xml
 Sitemap: https://icegames.store/sitemaps/sitemap_images.xml
