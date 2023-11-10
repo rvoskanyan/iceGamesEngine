@@ -177,16 +177,21 @@ const popupController = new PopupController([
         ],
     },
 ]);
+const headerNode = document.querySelector('.js-header');
 
 const windowHeight = document.documentElement.clientHeight;
 const windowWidth = document.documentElement.clientWidth;
-const topGap = document.querySelector('.js-header').getBoundingClientRect().height + 10;
+const topGap = headerNode.getBoundingClientRect().height + 10;
 
 let yaClientId;
 
 if (window.yaCounter69707947?.getClientID) {
     yaClientId = yaCounter69707947.getClientID()
 }
+
+document.addEventListener('scroll', () => {
+    window.scrollY > 50 ? headerNode.classList.add('fixed') : headerNode.classList.remove('fixed')
+})
 
 mobileCartLinkNode && mobileCartLinkNode.addEventListener('transitionend', () => {
     mobileCartLinkNode.classList.remove('adding');

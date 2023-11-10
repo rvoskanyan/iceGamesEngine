@@ -1,6 +1,13 @@
 <div class="containerMenu">
     <nav class="menu js-menu">
         <ul class="col categoriesMenu mobileMenu">
+	        <li class="menu-title">
+		        {{#if isCatalog}}
+			        <span class="link">Каталог</span>
+		        {{else}}
+			        <a href="{{websiteAddress}}{{#if platform}}{{ platform }}/{{/if}}games" class="link" title="Все игры">Каталог</a>
+		        {{/if}}
+	        </li>
             {{#each allCategories}}
                 <li class="colLink">
                     <a href="{{websiteAddress}}{{#if @root.platform}}{{ @root.platform }}/{{/if}}games?categories={{alias}}" class="link" title="Открыть товары из категории {{name}}">{{name}}</a>
@@ -20,23 +27,5 @@
                 <a href="{{websiteAddress}}{{#if platform}}{{ platform }}/{{/if}}games?noCommission=true" class="link" title="Оплата без комиссии">Оплата без комиссии</a>
             </li>
         </ul>
-        <div class="mainMenu">
-            <ul class="col">
-                <li class="title">Жанры</li>
-                {{#each allGenres}}
-                    <li class="colLink">
-                        <a href="{{@root.websiteAddress}}{{#if @root.platform}}{{ @root.platform }}/{{/if}}games/{{alias}}" class="link" title="Открыть товары жанра {{name}}">{{name}}</a>
-                    </li>
-                {{/each}}
-            </ul>
-            <ul class="col">
-                <li class="title">Активация</li>
-                {{#each allActivationServices}}
-                    <li class="colLink">
-                        <a href="{{@root.websiteAddress}}{{#if @root.platform}}{{ @root.platform }}/{{/if}}games/{{alias}}" class="link" title="Открыть товары с активацией в {{name}}">{{name}}</a>
-                    </li>
-                {{/each}}
-            </ul>
-        </div>
     </nav>
 </div>

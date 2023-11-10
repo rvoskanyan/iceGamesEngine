@@ -172,8 +172,8 @@
                         title="Открыть каталог игр"
                         class="btn item openMenu js-toggleMainNavigation"
                     >
-                        <span class="icon icon-arrowBottom"></span>
                         Каталог
+	                    <span class="icon icon-arrowBottom"></span>
                     </button>
                     {{#if isReviews}}
                         <span title="Отзывы пользователей Ice Games" class="item">Отзывы</span>
@@ -228,33 +228,47 @@
                 </div>
             </div>
             <div class="profile">
-                {{#if isAuth}}
-                    {{#if isProfileHome}}
-                        <div class="btn">
-                            <span class="icon icon-profile"></span>
-                        </div>
-                    {{else}}
-                        <a href="{{websiteAddress}}profile" class="btn" title="Перейти в профиль">
-                            <span class="icon icon-profile"></span>
-                        </a>
-                    {{/if}}
-                {{else}}
-                    <button class="btn js-openLogin" title="Авторизация">
-                        <span class="icon icon-profile"></span>
-                    </button>
-                {{/if}}
-                {{#if isCart}}
-                    <div class="btn cart isCart{{#if person.cart.length}} full{{/if}}">
-                        <span class="icon icon-cart"></span>
-                        <span class="icon icon-fillDiamond"></span>
-                    </div>
-                {{else}}
-                    <a href="{{websiteAddress}}cart" class="btn cart{{#if person.cart.length}} full{{/if}}"
-                       title="Перейти в корзину с товарами">
-                        <span class="icon icon-cart"></span>
-                        <span class="icon icon-fillDiamond"></span>
-                    </a>
-                {{/if}}
+	            {{#if isAuth}}
+		            {{#if isProfileHome}}
+			            <div class="btn">
+				            <span class="icon icon-profile"></span>
+			            </div>
+		            {{else}}
+			            <a href="{{websiteAddress}}profile" class="btn" title="Перейти в профиль">
+				            <span class="icon icon-profile"></span>
+			            </a>
+		            {{/if}}
+		            {{#if isProfileFavorites}}
+			            <div class="btn favorite">
+				            <span class="icon icon-favorite"></span>
+			            </div>
+		            {{else}}
+			            <a href="{{websiteAddress}}profile/favorites" class="btn favorite"
+			               title="Перейти в избранное">
+				            <span class="icon icon-favorite"></span>
+			            </a>
+		            {{/if}}
+	            {{else}}
+		            <button class="btn js-openLogin" title="Авторизация">
+			            <span class="icon icon-profile"></span>
+		            </button>
+	            {{/if}}
+	            {{#if isCart}}
+		            <div class="btn cart isCart">
+			            <span class="icon icon-cart"></span>
+			            {{#if person.cart.length}}
+				            <span class="cart-count">{{person.cart.length}}</span>
+			            {{/if}}
+		            </div>
+	            {{else}}
+		            <a href="{{websiteAddress}}cart" class="btn cart"
+		               title="Перейти в корзину с товарами">
+			            <span class="icon icon-cart"></span>
+			            {{#if person.cart.length}}
+				            <span class="cart-count">{{person.cart.length}}</span>
+			            {{/if}}
+		            </a>
+	            {{/if}}
             </div>
         </div>
         <div class="mobileNavBtn">

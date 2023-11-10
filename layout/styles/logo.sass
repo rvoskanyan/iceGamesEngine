@@ -27,19 +27,23 @@
 
   & .imgContainer
     position: relative
-    max-width: 60px
-    min-width: 60px
+    max-width: 40px
+    min-width: 40px
 
     @include for-big-phone-up
       max-width: 85px
       min-width: 85px
 
+    @include for-middle-desktop-up
+      max-width: 103px
+      min-width: 103px
+
     &:before, &:after
       content: ''
       position: absolute
-      width: 15px
-      height: 4px
-      top: 2px
+      width: 11px
+      height: 3px
+      top: 1px
       background-color: #FA00FF
       transition: transform .3s ease-in
 
@@ -49,14 +53,14 @@
         height: 6px
 
     &:before
-      left: 13px
+      left: 8px
       transform: translateY(0) rotate(15deg)
 
       @include for-big-phone-up
         left: 18px
 
     &:after
-      right: 13px
+      right: 8px
       transform: translateY(0) rotate(-15deg)
 
       @include for-big-phone-up
@@ -66,9 +70,9 @@
       display: block
       position: absolute
       top: 3px
-      right: 14px
-      width: 10px
-      height: 13px
+      right: 10px
+      width: 6px
+      height: 8px
       background-color: #fff
       z-index: -1
       border-radius: 50px/65px
@@ -76,9 +80,9 @@
 
       @include for-big-phone-up
         top: 5px
-        right: 20px
-        width: 14px
-        height: 18px
+        right: 25px
+        width: 16px
+        height: 23px
 
     & .img
       width: 100%

@@ -7,11 +7,17 @@
   background: linear-gradient(#01033C 0%, rgba(1, 3, 60, 0.3) 75%, transparent 100%)
   left: 0
   right: 0
-  padding-top: 20px
+  padding: 15px 0
   z-index: $ZIndex-Header
+  transition: background 0.3s ease
+
+  &.fixed
+    background: rgba(0, 1, 26, 0.80)
+    backdrop-filter: blur(24px)
+
 
   @include for-big-phone-up
-    padding-top: 25px
+    padding: 20px 0
 
   & .contentContainer
     display: flex
@@ -21,7 +27,10 @@
   & .logo
     display: flex
     align-items: center
-    z-index: $ZIndex-HeaderLogo
+    z-index: 3
+
+    @include for-big-phone-up
+      z-index: $ZIndex-HeaderLogo
 
     & .name
       color: #fff
@@ -41,15 +50,15 @@
   .navigateMobileContainer
     display: flex
     flex-direction: column
-    row-gap: 30px
-    background: linear-gradient(180deg, #B800F9 0%, #49028A 29.19%, #000340 58.54%, #130270 82.24%, #3000BA 100%)
+    row-gap: 14px
+    background: rgba(0, 1, 26, 0.80)
+    backdrop-filter: blur(24px)
     position: absolute
     top: 0
     right: 0
     height: 100vh
-    padding: 25px 20px 30px 25px
-    width: 70%
-    max-width: 350px
+    padding: 16px 0
+    width: 100%
     visibility: hidden
     opacity: 0
     transform: translateX(100%)
@@ -58,9 +67,9 @@
     z-index: $ZIndex-NavigateMobileContainer
 
     @include for-big-phone-up
-      padding: 54px 64px 30px 64px
-      row-gap: 35px
-      width: initial
+      max-width: 350px
+      padding: 40px 20px
+      row-gap: 20px
 
     &.active
       transform: translateX(0%)
@@ -97,7 +106,13 @@
       margin: 0 0 0 20px
 
     @include for-big-desktop-up
-      margin: 0 0 0 60px
+      margin: 0 0 0 18px
+
+    @include for-phone-only
+      display: block
+      margin: 0
+      max-height: calc(100vh - 70px)
+      overflow-y: auto
 
     &.active
       & .containerMenu
@@ -106,13 +121,14 @@
         transform: translateY(0%)
 
     & .containerMenu
-      position: absolute
-      background-color: rgba(0, 0, 0, 0.9)
+      position: fixed
+      background: rgba(0, 1, 26, 0.80)
+      backdrop-filter: blur(24px)
       height: 100vh
       width: 100vw
-      top: -36px
-      left: -35px
-      padding: 110px 0 80px 40px
+      top: 0
+      left: 0
+      padding: 110px 0 80px
       transform: translateY(-100%)
       transition: .3s ease-in
       transition-property: opacity, visibility, transform
@@ -125,13 +141,34 @@
         visibility: hidden
 
       & .menu
-        display: contents
+        margin: 0 auto
+        width: 100%
+        max-width: 1356px
+        padding-left: 15px
+        padding-right: 15px
+
+        @include for-big-phone-up
+          padding-left: 0
+          padding-right: 0
 
         @include for-desktop-up
-          display: flex
-          column-gap: 100px
-          max-width: 1100px
+          padding-left: 60px
+          padding-right: 60px
+
+        @include for-middle-desktop-up
+          max-width: 1630px
+          padding-left: 120px
+          padding-right: 120px
+
+        @include for-big-desktop-up
+          max-width: 1920px
+          padding-left: 240px
+          padding-right: 240px
+
+        @include for-desktop-up
           height: 100%
+
+
 
         & .mainMenu
           display: none
@@ -154,10 +191,55 @@
             display: initial
 
           &.mobileMenu
-            display: block
+            display: grid
+            grid-template-columns: 1fr
+            gap: 17px
+            padding-top: 17px
+            padding-bottom: 17px
+            border-top: 1px solid rgba(255, 255, 255, 0.12)
+
+            @include for-desktop-up
+              grid-template-columns: 1fr 1fr
+              gap: 24px
+              padding-top: 78px
+              padding-bottom: 0
 
             & .colLink .link
+              display: flex
+              align-items: center
+              justify-content: space-between
+              width: 100%
               color: #fff
+              font-size: 16px
+              font-style: normal
+              font-weight: 400
+              line-height: 100%
+
+              &::after
+                content: ""
+                display: block
+                width: 20px
+                height: 20px
+                background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg opacity='0.4' clip-path='url(%23clip0_2_3001)'%3E%3Cpath d='M7.74155 13.2333L10.9749 9.99998L7.74155 6.76665C7.41655 6.44165 7.41655 5.91665 7.74155 5.59165C8.06655 5.26665 8.59155 5.26665 8.91655 5.59165L12.7416 9.41665C13.0666 9.74165 13.0666 10.2667 12.7416 10.5917L8.91655 14.4166C8.59155 14.7416 8.06655 14.7416 7.74155 14.4166C7.42489 14.0916 7.41655 13.5583 7.74155 13.2333Z' fill='white'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='clip0_2_3001'%3E%3Crect width='20' height='20' fill='white' transform='matrix(0 1 1 0 0 0)'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E%0A")
+                background-position: center
+                background-size: contain
+                background-repeat: no-repeat
+
+
+              @include for-desktop-up
+                display: inline-block
+                font-size: 32px
+                font-style: normal
+                font-weight: bold
+                line-height: 120%
+                text-transform: uppercase
+
+                &::after
+                  display: none
+
+              &:hover
+                color: #FF00F5
+                text-decoration: none
 
           & .title
             font-family: 'Lemon Milk'
@@ -167,12 +249,6 @@
             text-shadow: 0 0 60px #004C5C
 
           & .colLink
-            &:not(:last-child)
-              margin-bottom: 8px
-
-              @include for-big-phone-up
-                margin-bottom: 12px
-
             & .link
               font-family: Montserrat
               font-size: 18px
@@ -183,10 +259,18 @@
                 font-size: 20px
 
         & .categoriesMenu
-          @include for-desktop-up
-            margin-right: 30px
 
-          & .colLink
+      & .menu-title
+        color: #FFF
+        font-size: 20px
+        font-style: normal
+        font-weight: bold
+        line-height: normal
+        text-transform: uppercase
+
+        @include for-desktop-up
+          display: none
+      & .colLink
             &:last-child .link
               color: #fff
 
@@ -200,11 +284,16 @@
     & .links
       display: flex
       flex-direction: column
+      padding: 0 16px
+
+      @include for-big-phone-up
+        padding: 0
 
       @include for-desktop-up
         flex-direction: initial
         align-items: center
         z-index: 1
+        padding: 0
 
       @include for-middle-desktop-up
         column-gap: 8px
@@ -220,9 +309,14 @@
         text-decoration: none
         transition: initial
 
-        @include for-phone-only
-          &:not(:last-child)
-            margin-bottom: 8px
+        @include for-desktop-down
+          padding: 16px 0
+          border-top: 1px solid rgba(255, 255, 255, 0.12)
+          font-size: 20px
+          font-style: normal
+          font-weight: bold
+          line-height: normal
+          text-transform: uppercase
 
         @include for-desktop-up
           font-size: 16px
@@ -231,7 +325,6 @@
 
           &:hover
             color: #EB00FF
-            text-decoration: underline
 
           &.active
             color: #EB00FF
@@ -290,9 +383,6 @@
               text-decoration: initial
               padding: 0
 
-              &:hover
-                text-decoration: underline
-
             @include for-middle-desktop-up
               font-size: 18px
 
@@ -305,13 +395,44 @@
           @include for-middle-desktop-up
             font-size: 18px
 
+          @include for-phone-only
+            position: static
+            opacity: 1
+            visibility: visible
+            display: grid
+            grid-template-columns: 1fr
+            gap: 17px
+            padding: 18px 0 0
+            background: transparent
+
+            .item
+              display: flex
+              align-items: center
+              justify-content: space-between
+              width: 100%
+              padding: 0
+              border: 0
+              text-decoration: none
+              text-transform: none
+              font-size: 16px
+
+              &::after
+                content: ""
+                display: block
+                width: 20px
+                height: 20px
+                background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg opacity='0.4' clip-path='url(%23clip0_2_3001)'%3E%3Cpath d='M7.74155 13.2333L10.9749 9.99998L7.74155 6.76665C7.41655 6.44165 7.41655 5.91665 7.74155 5.59165C8.06655 5.26665 8.59155 5.26665 8.91655 5.59165L12.7416 9.41665C13.0666 9.74165 13.0666 10.2667 12.7416 10.5917L8.91655 14.4166C8.59155 14.7416 8.06655 14.7416 7.74155 14.4166C7.42489 14.0916 7.41655 13.5583 7.74155 13.2333Z' fill='white'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='clip0_2_3001'%3E%3Crect width='20' height='20' fill='white' transform='matrix(0 1 1 0 0 0)'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E%0A")
+                background-position: center
+                background-size: contain
+                background-repeat: no-repeat
+
       & .openMenu
         display: none
 
         @include for-desktop-up
           display: flex
           align-items: center
-          column-gap: 3px
+          column-gap: 8px
 
           &:hover .icon
             background-color: #EB00FF
@@ -381,7 +502,7 @@
       display: none
 
     & .openMobileMenu
-      margin-left: 12px
+      margin-left: 20px
 
       @include for-desktop-up
         display: none
@@ -389,29 +510,33 @@
   .platformSwitch
     display: flex
     margin: 0 20px
-    height: 30px
+    height: 32px
     align-items: center
-    border: 1px solid #FFF
-    border-radius: 100px
-    padding: 2px
+    column-gap: 10px
+    border-radius: 99px
+    background: rgba(255, 255, 255, 0.08)
+    padding: 8px
     position: relative
     z-index: 2
 
     @include for-desktop-up
       order: 1
       margin: 0 20px 0 20px
-      height: 35px
+      height: 48px
 
     @include for-middle-desktop-up
       padding: 5px
-      margin: 0 60px 0 20px
+      margin: 0 28px 0 28px
+
+    @include for-desktop-up
+      height: 48px
 
     .marker
-      background-color: #fff
+      background: #8D00FC
       position: absolute
       border-radius: 100px
-      top: 2px
-      bottom: 2px
+      top: 3px
+      bottom: 3px
       z-index: -1
       transition: .3s ease-in
       transition-property: left, width
@@ -421,33 +546,43 @@
         bottom: 5px
 
     .btn
-      font-weight: 400
-      padding: 0 12px
-      border-radius: 100px
-      height: 100%
+      display: flex
+      padding: 4.5px 12px
+      justify-content: center
+      align-items: center
+      border-radius: 99px
+      background: transparent
+      font-size: 12px
+      font-weight: 700
 
-      @include for-middle-desktop-up
-        padding: 0 20px
+      @include for-tablet-portrait-up
+        padding: 6px 24px
+        font-size: 16px
 
       &.active
-        color: #000
+        //background: #8D00FC
 
-    @include for-desktop-up
-      height: 42px
+
 
   & .profile
     display: flex
-    justify-content: space-between
     align-items: center
-    width: 75px
-    padding-right: 10px
+    width: auto
+    column-gap: 10px
+    margin-left: auto
+    padding-right: 90px
     order: -1
+    z-index: $ZIndex-HeaderLogo
 
     @include for-big-phone-up
       width: 100px
+      margin-left: 0
+      padding-right: 6px
 
     @include for-desktop-up
       order: 2
+      width: 100px
+      justify-content: space-between
 
     & .btn .icon
       transition: background-color .3s ease-in
@@ -457,6 +592,10 @@
 
     & .btn.cart
       position: relative
+      overflow: visible
+
+      @include for-desktop-up
+        order: -1
 
       &.full
         & .icon:hover
@@ -480,6 +619,30 @@
         top: 2px
         right: 2px
         opacity: 0
+
+      & .cart-count
+        position: absolute
+        top: -5px
+        right: -9px
+        display: flex
+        align-items: center
+        justify-content: center
+        min-width: 16px
+        height: 16px
+        padding: 0 4px
+        border-radius: 29px
+        background: #EB00FF
+        color: #FFF
+        text-align: center
+        font-size: 10px
+        font-style: normal
+        font-weight: 700
+        line-height: 120%
+
+    & .btn.favorite
+      @include for-desktop-up
+        display: none
+
 
   & .mobileQuickSearch
     position: absolute

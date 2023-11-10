@@ -1,11 +1,15 @@
 .burger
-  width: 30px
-  height: 35px
+  width: 18px
+  height: 20px
   position: relative
   display: flex
   justify-content: center
   align-items: center
   transition: 0.5s
+
+  @include for-big-phone-up
+    width: 30px
+    height: 35px
 
   &.active
     &:before
@@ -19,13 +23,23 @@
     content: ''
     position: absolute
     width: 100%
-    height: 3px
+    height: 1.5px
     background-color: #fff
     transition: inherit
 
+    @include for-big-phone-up
+      height: 3px
+
   &:before
-    transform: translateY(-10px)
-    box-shadow: 0 10px 0 #fff
+    transform: translateY(-6px)
+    box-shadow: 0 6px 0 #fff
+
+    @include for-big-phone-up
+      transform: translateY(-10px)
+      box-shadow: 0 10px 0 #fff
 
   &:after
-    transform: translateY(10px)
+    transform: translateY(6px)
+
+    @include for-big-phone-up
+      transform: translateY(10px)
