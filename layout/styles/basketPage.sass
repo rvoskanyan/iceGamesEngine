@@ -216,6 +216,7 @@
               @include for-big-phone-up
                 grid-template-columns: 1fr max-content max-content
                 column-gap: 24px
+
             & .middle
               flex-grow: 1
               color: rgba(255, 255, 255, 0.60)
@@ -245,8 +246,10 @@
 
           & .btn
             align-self: center
+
             .icon
               transition: 0.3s ease-in
+
             &:hover
               .icon
                 background-color: #FF00F5
@@ -267,32 +270,36 @@
           max-width: 460px
 
       .switchSplit
-        display: flex
-        margin-bottom: 20px
+        display: grid
+        grid-template-columns: 1fr 1fr
+        margin-bottom: 24px
+        padding: 8px
         column-gap: 10px
-
-        @include for-desktop-up
-          border: 1px solid #fff
-          border-radius: 20px
-          justify-content: space-between
-          padding: 20px 30px
+        border-radius: 99px
+        background: rgba(255, 255, 255, 0.08)
 
         .btn
+          width: auto
           padding: 12px
-          border: 1px solid transparent
-          border-radius: 10px
+          border: 0
+          border-radius: 99px
+          font-size: 14px
+          font-style: normal
+          font-weight: 700
+          line-height: normal
 
+          @include for-desktop-up
+            font-size: 16px
           &.active
-            background: #984BFB
-            border: 1px solid #FFF
+            background:  #8D00FC
 
       .check
-        border: 1px solid #fff
-        border-radius: 20px
-        padding: 13px 14px
+        padding: 16px 20px
         color: #fff
         position: relative
         overflow: hidden
+        border-radius: 16px
+        background: rgba(255, 255, 255, 0.08)
 
         @include for-desktop-up
           padding: 20px 30px
@@ -322,13 +329,13 @@
               top: 20px
 
           .content
-            display: flex
-            flex-direction: column
-            align-items: center
+            display: grid
+            grid-row-gap: 24px
             padding: 0 20px
 
             .lock
               width: 18px
+              margin: 0 auto
 
               @include for-desktop-up
                 width: 25px
@@ -350,8 +357,18 @@
           justify-content: space-between
 
         .saving
-          color: #FA00FF
+          color: #984BFB
 
+        .check-line
+          display: block
+          height: 1px
+          margin: 24px 0
+          background: rgba(255, 255, 255, 0.12)
+
+          @include for-phone-only
+            margin: 12px 0
+
+          border: 0
         .splitCommission
           display: none
           margin-top: 5px
@@ -368,8 +385,7 @@
             font-size: 24px
 
         .body
-          display: flex
-          flex-direction: column
+          display: grid
           row-gap: 5px
           font-size: 12px
           margin-top: 10px
@@ -380,8 +396,9 @@
             row-gap: 7px
 
           @include for-middle-desktop-up
-            font-size: 16px
-            margin-top: 25px
+            row-gap: 12px
+            font-size: 18px
+            margin-top: 24px
 
           .name
             font-weight: 400
@@ -390,21 +407,23 @@
             font-weight: 700
 
         .total
+          padding: 24px 0
           font-size: 14px
           font-weight: 700
           margin-top: 10px
-          padding-top: 10px
-          border-top: 1px solid rgba(255, 255, 255, 0.5)
+          border-top: 1px solid rgba(255, 255, 255, 0.12)
+          border-bottom: 1px solid rgba(255, 255, 255, 0.12)
+
+          @include for-phone-only
+            padding: 12px 0
 
           @include for-desktop-up
             font-size: 18px
             margin-top: 18px
-            padding-top: 18px
 
           @include for-middle-desktop-up
             font-size: 24px
             margin-top: 25px
-            padding-top: 25px
 
         .widget
           margin-top: 20px
@@ -422,62 +441,107 @@
           white-space: initial
           width: 100%
           padding: 10px 0
-          margin-top: 10px
 
           &.no-active
-            background: #E5E2F1
-            opacity: 0.4
-          @include for-desktop-up
-            margin-top: 18px
+            background: rgba(255, 255, 255, 0.08)
+            cursor: default
+            pointer-events: none
 
           @include for-middle-desktop-up
-            margin-top: 25px
             padding: 15px 0
 
         .form-confirm_email
+          display: grid
+          grid-row-gap: 24px
+
+          @include for-phone-only
+            grid-row-gap: 12px
+
           label
-            display: block
-            &:first-child
-              margin-top: 40px
-              margin-bottom: 22px
+            display: grid
+            grid-row-gap: 24px
+
+            @include for-phone-only
+              grid-row-gap: 12px
+
             &.confirm_code
               display: none
+
           input
             width: 100%
             padding: 12px 0 12px 26px
-            margin-top: 12px
             display: block
-            border: 1px solid #FA00FF
+            border: 1px solid #EB00FF
             border-radius: 30px
             color: #fff
             background: transparent
+
             &:focus
               border: 1px solid #fff
+              outline: none
+
           .wrap-button
-            display: flex
-            flex-wrap: wrap
-            align-items: center
+            display: grid
+            grid-row-gap: 10px
+
             button
-              width: initial
               padding: 12px 26px
               font-weight: 400
-              font-size: 18px
-              line-height: 22px
-              margin-bottom: 12px
-              margin-right: 4px
+              font-size: 16px
+              line-height: normal
+
+              @include for-phone-only
+                font-size: 14px
+
               &:active
                 background: #410074
-              &.error
-                border-color: #fa00ff
-            .error-message, .error
-                color: #FA00FF
+
             .error-message
-              margin-bottom: 8px
-              margin-top: 4px
+              color: #FA00FF
+
+          .confirm_code
+            display: grid
+            grid-row-gap: 24px
+
+        .confirm_text
+          display: flex
+          align-items: center
+          color: #FFF
+          text-shadow: 0 0 100px #938083
+          font-size: 14px
+          font-style: normal
+          font-weight: 600
+          line-height: 140%
+
+          @include for-desktop-up
+            font-size: 16px
+
+          @include for-phone-only
+            font-size: 12px
+
+          &::before
+            content: ""
+            display: block
+            width: 32px
+            height: 32px
+            flex-shrink: 0
+            margin-right: 12px
+            background-image: url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M16.3555 28C22.9829 28 28.3555 22.6274 28.3555 16C28.3555 9.37258 22.9829 4 16.3555 4C9.72805 4 4.35547 9.37258 4.35547 16C4.35547 22.6274 9.72805 28 16.3555 28Z' stroke='%23EB00FF' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M16.3555 10.6666V16M16.3555 21.3333H16.3688' stroke='%23EB00FF' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A")
+            background-position: center
+            background-repeat: no-repeat
+            background-size: contain
+
 
         .help-text_auth
-          span
-            margin-right: 4px
+          color: #FFF
+          font-size: 12px
+          font-style: normal
+          font-weight: 400
+          line-height: 140%
+
+          @include for-desktop-up
+            font-size: 14px
+
           svg
             display: none
 
@@ -485,6 +549,24 @@
             color: #00BEFF
             display: flex
             align-items: center
+
+        .bottom
+          display: grid
+          grid-row-gap: 24px
+
+          @include for-phone-only
+            grid-row-gap: 12px
+
+        .check-auth
+          display: grid
+          grid-row-gap: 24px
+          padding: 16px 24px
+          border-radius: 8px
+          background: rgba(255, 255, 255, 0.08)
+
+          @include for-phone-only
+            grid-row-gap: 12px
+            padding: 16px
 
   & .notFound
     display: flex
