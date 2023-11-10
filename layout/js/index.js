@@ -1093,6 +1093,7 @@ if (cartNode) {
                                 return;
                             }
                             email.setAttribute("readonly", '')
+                            email.style.display = 'none'
                             code.hidden = false
                             code.parentElement.style.display = 'initial'
                             code.setAttribute('required', '')
