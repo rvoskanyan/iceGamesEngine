@@ -8,11 +8,11 @@ export const cartPage = async (req, res) => {
     let cart = null;
     let is_keys = false;
     let canSplit = false;
-    
+
     if (!person) {
       return res.redirect('/');
     }
-  
+
     const result = await person.populate({
       path: 'cart',
       select: [
@@ -28,6 +28,7 @@ export const cartPage = async (req, res) => {
         'releaseDate',
         'canSplit',
         'countKeys',
+        'description'
       ],
       populate: [
         {
@@ -40,14 +41,14 @@ export const cartPage = async (req, res) => {
         }
       ]
     });
-  
+
     const stockProducts = await Product
       .find({
         _id: { $in: person.cart },
         $or: [{ kupiKodInStock: true }, { countKeys: { $gt: 0 } }]
       })
       .distinct('_id');
-  
+
     is_keys = { is_keys: Boolean(stockProducts.length), products: stockProducts }
     cart = result.cart;
     priceToTotal = cart.reduce((priceToTotal, item) => priceToTotal + item.priceTo, 0);
@@ -56,17 +57,20 @@ export const cartPage = async (req, res) => {
     }, 0);
     cart = cart.map(product => {
       const canCurrentSplit = product.canSplit && product.countKeys > 0;
-      
+
       if (canCurrentSplit) {
         canSplit = true;
       }
-      
+
+      const shortDescription = product.description.replace(/<h[2-6]>.+<\/h[2-6]>/ig, '').replace(/<[^>]+>/ig, '').replace(/\s{2,}/ig, ' ').trim().slice(0, 200).trim();
+
       return {
         ...product.toObject(),
         canSplit: canCurrentSplit,
+        shortDescription: shortDescription
       }
     });
-    
+
     res.render('cart', {
       title: 'ICE GAMES — корзина покупок',
       metaDescription: 'Корзина для покупок в ICE GAMES. Все Ваши игры со скидками хранятся здесь.',
@@ -87,7 +91,7 @@ export const cartPage = async (req, res) => {
         name: 'Корзина',
         current: true,
       }],
-      canSplit,
+      canSplit
     });
   } catch (e) {
     console.log(e);

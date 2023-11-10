@@ -2574,7 +2574,7 @@ if (switchSplitNode) {
         let result = 0;
 
         payBtnNode && (payBtnNode.style.display = 'block');
-        confirmEmailFormNode && (confirmEmailFormNode.style.display = 'block');
+        confirmEmailFormNode && (confirmEmailFormNode.style.display = 'grid');
         helpTextNode && (helpTextNode.style.display = 'block');
         totalFullPayNode && (totalFullPayNode.style.display = 'block');
         paySplitNode.style.display = 'none';

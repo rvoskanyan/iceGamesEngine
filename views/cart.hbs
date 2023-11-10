@@ -43,18 +43,17 @@
                         {{#if canSplit}} data-can-split="1"{{/if}}
                     >
                         <div class="content">
-                            <button class="btn js-deleteFromCart">
-                                <span class="icon icon-close"></span>
-                            </button>
                             <img class="img" src="{{@root.websiteAddress}}{{img}}" loading="lazy" alt="{{name}}" title="{{name}}">
                             <div class="main">
                                 <div class="top">
-                                    {{#if canSplit}}
-                                        <div class="canSlit">
-                                            <img class="icon" src="{{@root.websiteAddress}}img/iconSplit.png" loading="lazy" alt="Доступно в сплит" title="Доступно для оплаты по частям">
-                                        </div>
-                                    {{/if}}
-                                    <div class="name">{{name}}</div>
+	                                <div class="top-left">
+		                                {{#if canSplit}}
+			                                <div class="canSlit">
+				                                <img class="icon" src="{{@root.websiteAddress}}img/iconSplit.png" loading="lazy" alt="Доступно в сплит" title="Доступно для оплаты по частям">
+			                                </div>
+		                                {{/if}}
+		                                <div class="name">{{name}}</div>
+	                                </div>
                                     <div class="price">
                                         {{#iff discount '>' 0}}
                                             <div class="rowDiscount">
@@ -74,7 +73,12 @@
                                                 class="date">{{pointReleaseDate}}</span>
                                         </div>
                                     {{/if}}
+
+	                                <button class="btn js-deleteFromCart" type="button">
+		                                <span class="icon icon-delete"></span>
+	                                </button>
                                 </div>
+	                            <div class="middle">{{shortDescription}}</div>
                                 <div class="bottom">
                                     <div class="item">
                                         Сервис активации:
@@ -114,7 +118,7 @@
                                 <div class="description">
                                     Для покупки в сплит (частями) необходимо авторизоваться на нашем сайте.
                                 </div>
-                                <button class="btn border rounded bg-pink js-toAuth">Авторизоваться</button>
+                                <button class="btn round bg-middleViolet hover-bg-violet js-toAuth">Авторизоваться</button>
                             </div>
                         </div>
                     {{/unless}}
@@ -135,51 +139,58 @@
                             <div class="value">6%</div>
                         </div>
                     </div>
-                    <div class="total">
-                        <div class="param">
-                            <div class="name js-totalFullPay">Общая стоимость</div>
-                            {{#if canSplit}}
-                                <div class="name js-splitPay">От 4-х платежей по</div>
-                            {{/if}}
-                            <div class="value"><span class="js-totalTo">{{cart.priceToTotal}}</span> ₽</div>
-                        </div>
-                    </div>
-                    <div class="widget js-widget"></div>
-                    <button
-                        class="btn round border bg-darkPurple hover-bg-violet paySplit js-paySplit"
-                        {{#unless is_auth}} disabled{{/unless}}
-                    >Перейти к оформлению</button>
-                    <button
-                        data-is_keys="{{is_keys.is_keys}}"
-                        data-products="{{is_keys.products}}"
-                        class="btn round border bg-darkPurple js-payBtn hover-bg-violet{{#unless is_auth}} no-active{{/unless}}"
-                    >
-                        Оплатить
-                    </button>
                     {{#unless is_auth}}
-                        <form data-step="1" class="form-confirm_email js-confirmEmailForm">
-                            <label class="confirm_email">
-                                Для отправки ключа введите вашу почту
-                                <input required type="email" name="email" placeholder="info@icegames.store">
-                            </label>
-                            <label class="confirm_code" hidden>
-                                Код подтверждения с почты
-                                <input type="text" autocomplete="off" step="0" pattern="[0-9]*" inputmode="numeric"
-                                       name="code" placeholder="Четырехзначный код">
-                            </label>
-                            <div class="wrap-button">
-                                <button class="btn border round" type="submit">Отправить код</button>
-                                <p class="error-message"></p>
-                            </div>
-                        </form>
-                        <p class="help-text_auth js-help-text">
-                            <span>*указывайте ваш действующий адрес, на него придет код активации, так же восстановить код при необходимости сможете только через указанный email</span>
-                            <svg width="29" height="28" viewBox="0 0 29 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M13.3203 5.70597C13.5851 4.42494 15.4149 4.42494 15.6797 5.70597C15.8791 6.67019 17.0882 7.00103 17.7507 6.27265L17.8347 6.18022C18.7012 5.2276 20.2502 6.15129 19.8239 7.36644C19.4998 8.29037 20.3756 9.18501 21.3062 8.88068L21.4272 8.84111C22.6385 8.445 23.5114 10.0067 22.5394 10.8309C21.7956 11.4615 22.1142 12.6728 23.0717 12.8574C24.3291 13.0997 24.3291 14.9003 23.0717 15.1426C22.1142 15.3272 21.7956 16.5385 22.5394 17.1691C23.5114 17.9933 22.6385 19.555 21.4272 19.1589L21.3062 19.1193C20.3756 18.815 19.4998 19.7096 19.8239 20.6336C20.2502 21.8487 18.7012 22.7724 17.8347 21.8198L17.7507 21.7274C17.0882 20.999 15.8791 21.3298 15.6797 22.294C15.4149 23.5751 13.5851 23.5751 13.3203 22.294C13.1209 21.3298 11.9118 20.999 11.2493 21.7274L11.1653 21.8198C10.2988 22.7724 8.74983 21.8487 9.17609 20.6336C9.50019 19.7096 8.62443 18.815 7.69379 19.1193L7.57276 19.1589C6.36145 19.555 5.48861 17.9933 6.46065 17.1691C7.20442 16.5385 6.88584 15.3272 5.92831 15.1426C4.67094 14.9003 4.67094 13.0997 5.92831 12.8574C6.88584 12.6728 7.20442 11.4615 6.46065 10.8309C5.48861 10.0067 6.36145 8.445 7.57276 8.84111L7.69379 8.88068C8.62442 9.18501 9.50019 8.29037 9.17609 7.36643C8.74983 6.15129 10.2988 5.2276 11.1653 6.18022L11.2493 6.27265C11.9118 7.00103 13.1209 6.67019 13.3203 5.70597Z" fill="#00BEFF"/>
-                                <path d="M11 13.8462L14.15 16L18 12" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </p>
+	                    <hr class="check-line">
+	                    <div class="check-auth">
+		                    <form data-step="1" class="form-confirm_email js-confirmEmailForm">
+			                    <label class="confirm_email">
+				                    <span class="confirm_text">
+					                    Для отправки ключа необходимо ввести почту, на которую будет отправлен товар
+				                    </span>
+				                    <input required type="email" name="email" placeholder="info@icegames.store">
+			                    </label>
+			                    <label class="confirm_code" hidden>
+				                    Код подтверждения с почты
+				                    <input type="text" autocomplete="off" step="0" pattern="[0-9]*" inputmode="numeric"
+				                           name="code" placeholder="Четырехзначный код">
+			                    </label>
+			                    <div class="wrap-button">
+				                    <button class="btn round bg-middleViolet hover-bg-violet" type="submit">Отправить код</button>
+				                    <p class="error-message"></p>
+			                    </div>
+		                    </form>
+		                    <p class="help-text_auth js-help-text">
+			                    <span>*указывайте ваш действующий адрес, на него придет код активации, так же восстановить код при необходимости сможете только через указанный email</span>
+			                    <svg width="29" height="28" viewBox="0 0 29 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+				                    <path d="M13.3203 5.70597C13.5851 4.42494 15.4149 4.42494 15.6797 5.70597C15.8791 6.67019 17.0882 7.00103 17.7507 6.27265L17.8347 6.18022C18.7012 5.2276 20.2502 6.15129 19.8239 7.36644C19.4998 8.29037 20.3756 9.18501 21.3062 8.88068L21.4272 8.84111C22.6385 8.445 23.5114 10.0067 22.5394 10.8309C21.7956 11.4615 22.1142 12.6728 23.0717 12.8574C24.3291 13.0997 24.3291 14.9003 23.0717 15.1426C22.1142 15.3272 21.7956 16.5385 22.5394 17.1691C23.5114 17.9933 22.6385 19.555 21.4272 19.1589L21.3062 19.1193C20.3756 18.815 19.4998 19.7096 19.8239 20.6336C20.2502 21.8487 18.7012 22.7724 17.8347 21.8198L17.7507 21.7274C17.0882 20.999 15.8791 21.3298 15.6797 22.294C15.4149 23.5751 13.5851 23.5751 13.3203 22.294C13.1209 21.3298 11.9118 20.999 11.2493 21.7274L11.1653 21.8198C10.2988 22.7724 8.74983 21.8487 9.17609 20.6336C9.50019 19.7096 8.62443 18.815 7.69379 19.1193L7.57276 19.1589C6.36145 19.555 5.48861 17.9933 6.46065 17.1691C7.20442 16.5385 6.88584 15.3272 5.92831 15.1426C4.67094 14.9003 4.67094 13.0997 5.92831 12.8574C6.88584 12.6728 7.20442 11.4615 6.46065 10.8309C5.48861 10.0067 6.36145 8.445 7.57276 8.84111L7.69379 8.88068C8.62442 9.18501 9.50019 8.29037 9.17609 7.36643C8.74983 6.15129 10.2988 5.2276 11.1653 6.18022L11.2493 6.27265C11.9118 7.00103 13.1209 6.67019 13.3203 5.70597Z" fill="#00BEFF"/>
+				                    <path d="M11 13.8462L14.15 16L18 12" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+			                    </svg>
+		                    </p>
+	                    </div>
                     {{/unless}}
+	                <div class="bottom">
+		                <div class="total">
+			                <div class="param">
+				                <div class="name js-totalFullPay">Общая стоимость</div>
+				                {{#if canSplit}}
+					                <div class="name js-splitPay">От 4-х платежей по</div>
+				                {{/if}}
+				                <div class="value"><span class="js-totalTo">{{cart.priceToTotal}}</span> ₽</div>
+			                </div>
+		                </div>
+		                <div class="widget js-widget"></div>
+		                <button
+				                class="btn round bg-middleViolet hover-bg-violet paySplit js-paySplit"
+			                {{#unless is_auth}} disabled{{/unless}}
+		                >Перейти к оформлению</button>
+		                <button
+				                data-is_keys="{{is_keys.is_keys}}"
+				                data-products="{{is_keys.products}}"
+				                class="btn round bg-middleViolet js-payBtn hover-bg-violet{{#unless is_auth}} no-active{{/unless}}"
+		                >
+			                Оплатить
+		                </button>
+	                </div>
                 </div>
                 <form action="https://oplata.info/asp2/pay.asp" class="js-payForm" method="post" style="display: none">
                     <input type="hidden" name="cart_uid" class="js-dsCartId"/>
