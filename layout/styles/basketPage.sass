@@ -14,14 +14,24 @@
 
   .info
     margin-top: 30px
-    justify-content: space-between
+    column-gap: 40px
 
     @include for-big-phone-up
-      display: flex
+      display: grid
+      grid-template-columns: 1fr
+
+    @include for-tablet-landscape-up
+      grid-template-columns: 1fr 360px
+
+    @include for-middle-desktop-up
+      grid-template-columns: 1fr 460px
 
     & .listGames
       flex-grow: 1
       max-width: 800px
+
+      @include for-middle-desktop-up
+        max-width: 831px
 
       &:before, & .game:after
         content: ''
@@ -35,6 +45,9 @@
         @include for-big-phone-up
           margin-top: 33px
 
+        @include for-middle-desktop-up
+          margin-top: 48px
+
         &.disabled .content:before
           content: ''
           display: block
@@ -47,68 +60,90 @@
           z-index: 1
 
         & .content
-          display: flex
+          display: grid
+          grid-template-columns: max-content 1fr
           column-gap: 15px
-          align-items: center
+          //align-items: center
           margin-bottom: 15px
           position: relative
 
           @include for-big-phone-up
             margin-bottom: 33px
-            column-gap: 35px
+            column-gap: 24px
+
+          @include for-middle-desktop-up
+            margin-bottom: 48px
 
           & .img
             object-fit: cover
             width: 114px
             height: 177px
-            border: 2px solid #fff
-            box-shadow: 0 0 10px #0066FF
             border-radius: 17px
 
             @include for-big-phone-up
               border-radius: 22px
-              width: 156px
-              height: 242px
-              box-shadow: 0 0 20px #0066FF
+              width: 180px
+              height: 290px
+
+            @include for-middle-desktop-up
+              border-radius: 24px
+              width: 220px
+              height: 330px
+
 
           & .main
             display: flex
             flex-direction: column
             justify-content: space-between
             align-self: stretch
+            row-gap: 12px
+
+            @include for-big-phone-up
+              row-gap: 24px
 
             .canSlit
               overflow: hidden
               width: 75px
               border-radius: 3px
+              margin-bottom: 3px
 
               @include for-desktop-up
                 width: 85px
                 border-radius: 5px
+                margin-bottom: 5px
+
+              @include for-middle-desktop-up
+                width: 136px
+                margin-bottom: 8px
 
               .icon
                 width: 100%
                 height: 100%
                 display: block
+                background: transparent
 
             & .name
               font-family: 'Lemon Milk'
               font-size: 18px
               color: #fff
-              margin-top: 3px
 
               @include for-desktop-up
                 font-size: 24px
-                margin-top: 5px
+
+              @include for-middle-desktop-up
+                font-size: 32px
 
             & .price
               display: block
-              margin-top: 5px
               font-size: 20px
               line-height: 1
 
+              @include for-phone-only
+                order: 2
+                grid-column: 1/-1
+                row-gap: 10px
+
               @include for-big-phone-up
-                margin-top: 22px
                 font-size: 24px
 
               .rowDiscount
@@ -119,6 +154,9 @@
                 @include for-big-phone-up
                   margin-bottom: 5px
 
+                @include for-middle-desktop-up
+                  margin-bottom: 12px
+
               & .toPrice
                 font-size: 26px
 
@@ -127,12 +165,17 @@
 
                 @include for-big-phone-up
                   font-size: 32px
+                  justify-content: flex-end
 
                   &:after
                     font-size: 18px
 
+                    @include for-middle-desktop-up
+                      font-size: 20px
+
               & .fromPrice
                 font-size: 15px
+                justify-content: flex-end
 
                 &:after
                   font-size: 12px
@@ -140,8 +183,13 @@
                 @include for-big-phone-up
                   font-size: 17px
 
+                @include for-middle-desktop-up
+                  font-size: 20px
+
                   &:after
                     font-size: 14px
+                    @include for-middle-desktop-up
+                      font-size: 20px
 
               & .discount
                 background: #984BFB
@@ -159,6 +207,25 @@
               font-size: 12px
               padding: 6px 8px
 
+            & .top
+              display: grid
+              grid-template-columns: 1fr max-content
+              column-gap: 12px
+              row-gap: 10px
+
+              @include for-big-phone-up
+                grid-template-columns: 1fr max-content max-content
+                column-gap: 24px
+            & .middle
+              flex-grow: 1
+              color: rgba(255, 255, 255, 0.60)
+              font-size: 12px
+              font-style: normal
+              font-weight: 400
+              line-height: 140%
+              @include for-big-phone-up
+                font-size: 16px
+
             & .bottom
               font-family: 'Montserrat'
               color: #fff
@@ -170,8 +237,19 @@
                 @include for-big-phone-up
                   font-size: 14px
 
+                @include for-middle-desktop-up
+                  font-size: 16px
+
                 &:not(:last-child)
                   margin-bottom: 5px
+
+          & .btn
+            align-self: center
+            .icon
+              transition: 0.3s ease-in
+            &:hover
+              .icon
+                background-color: #FF00F5
 
     .rightSection
       align-self: flex-start

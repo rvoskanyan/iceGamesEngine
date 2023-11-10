@@ -43,18 +43,17 @@
                         {{#if canSplit}} data-can-split="1"{{/if}}
                     >
                         <div class="content">
-                            <button class="btn js-deleteFromCart">
-                                <span class="icon icon-close"></span>
-                            </button>
                             <img class="img" src="{{@root.websiteAddress}}{{img}}" loading="lazy" alt="{{name}}" title="{{name}}">
                             <div class="main">
                                 <div class="top">
-                                    {{#if canSplit}}
-                                        <div class="canSlit">
-                                            <img class="icon" src="{{@root.websiteAddress}}img/iconSplit.png" loading="lazy" alt="Доступно в сплит" title="Доступно для оплаты по частям">
-                                        </div>
-                                    {{/if}}
-                                    <div class="name">{{name}}</div>
+	                                <div class="top-left">
+		                                {{#if canSplit}}
+			                                <div class="canSlit">
+				                                <img class="icon" src="{{@root.websiteAddress}}img/iconSplit.png" loading="lazy" alt="Доступно в сплит" title="Доступно для оплаты по частям">
+			                                </div>
+		                                {{/if}}
+		                                <div class="name">{{name}}</div>
+	                                </div>
                                     <div class="price">
                                         {{#iff discount '>' 0}}
                                             <div class="rowDiscount">
@@ -74,7 +73,12 @@
                                                 class="date">{{pointReleaseDate}}</span>
                                         </div>
                                     {{/if}}
+
+	                                <button class="btn js-deleteFromCart" type="button">
+		                                <span class="icon icon-delete"></span>
+	                                </button>
                                 </div>
+	                            <div class="middle">{{shortDescription}}</div>
                                 <div class="bottom">
                                     <div class="item">
                                         Сервис активации:
