@@ -104,15 +104,9 @@
             .canSlit
               overflow: hidden
               width: 75px
-              border-radius: 3px
               margin-bottom: 3px
 
-              @include for-desktop-up
-                width: 85px
-                border-radius: 5px
-                margin-bottom: 5px
-
-              @include for-middle-desktop-up
+              @include for-tablet-landscape-up
                 width: 136px
                 margin-bottom: 8px
 
@@ -321,12 +315,12 @@
           .icon
             display: block
             position: absolute
-            border-radius: 5px
-            width: 80px
+            width: 100px
             top: 10px
+            border-radius: 99px
 
             @include for-desktop-up
-              width: 100px
+              width: 140px
               top: 20px
 
           .content

@@ -1124,14 +1124,17 @@ if (cartNode) {
                                 console.error(confirmCode)
                                 return
                             }
-                            formConfirm.nextElementSibling.firstElementChild.textContent = 'Почта подтверждена'
-                            formConfirm.nextElementSibling.classList.add("color-blue")
-                            formConfirm.nextElementSibling.lastElementChild.style.display = 'inline'
+                            email.style.display = 'block'
+                            btn.classList.add('no-active')
+                            // formConfirm.nextElementSibling.firstElementChild.textContent = 'Почта подтверждена'
+                            // formConfirm.nextElementSibling.classList.add("color-blue")
+                            // formConfirm.nextElementSibling.lastElementChild.style.display = 'inline'
                             code.parentElement.style.display = 'none'
-                            btn.parentElement.style.display = 'none'
+                            // btn.parentElement.style.display = 'none'
                             btn.nextElementSibling.textContent = ''
-                            btn.textContent = 'Подтверждено'
-                            email.parentElement.classList.add("confirmed-code")
+                            btn.textContent = 'Почта подтверждена'
+
+                            //email.parentElement.classList.add("confirmed-code")
                             demandConfirm = false
                             if (payBtnNode.classList.contains('no-active')) payBtnNode.classList.remove('no-active')
                             this.setAttribute("data-step", '3')
