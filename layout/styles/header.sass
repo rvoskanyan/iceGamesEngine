@@ -7,13 +7,27 @@
   background: linear-gradient(#01033C 0%, rgba(1, 3, 60, 0.3) 75%, transparent 100%)
   left: 0
   right: 0
-  padding: 15px 0
+  padding: 20px 0
   z-index: $ZIndex-Header
   transition: background 0.3s ease
 
-  &.fixed
+  &::after
+    content: ""
+    position: absolute
+    z-index: -1
+    top: 0
+    left: 0
+    width: 100%
+    height: 100%
     background: rgba(0, 1, 26, 0.80)
     backdrop-filter: blur(24px)
+    opacity: 0
+    transition: opacity 0.3s ease
+
+  &.fixed
+    background: transparent
+    &::after
+      opacity: 1
 
 
   @include for-big-phone-up
@@ -57,7 +71,7 @@
     top: 0
     right: 0
     height: 100vh
-    padding: 16px 0
+    padding: 30px 0
     width: 100%
     visibility: hidden
     opacity: 0
@@ -144,10 +158,12 @@
         margin: 0 auto
         width: 100%
         max-width: 1356px
+        padding-top: 10px
         padding-left: 15px
         padding-right: 15px
 
         @include for-big-phone-up
+          padding-top: 0
           padding-left: 0
           padding-right: 0
 
@@ -329,9 +345,6 @@
           &.active
             color: #EB00FF
 
-        @include for-middle-desktop-up
-          font-size: 18px
-          padding: 10px
 
       .downItem
         position: relative
@@ -515,7 +528,7 @@
     column-gap: 10px
     border-radius: 99px
     background: rgba(255, 255, 255, 0.08)
-    padding: 8px
+    padding: 8px 6px
     position: relative
     z-index: 2
 
@@ -542,8 +555,8 @@
       transition-property: left, width
 
       @include for-middle-desktop-up
-        top: 5px
-        bottom: 5px
+        top: 8px
+        bottom: 8px
 
     .btn
       display: flex
@@ -552,7 +565,7 @@
       align-items: center
       border-radius: 99px
       background: transparent
-      font-size: 12px
+      font-size: 14px
       font-weight: 700
 
       @include for-tablet-portrait-up
@@ -570,7 +583,7 @@
     width: auto
     column-gap: 10px
     margin-left: auto
-    padding-right: 90px
+    padding-right: 120px
     order: -1
     z-index: $ZIndex-HeaderLogo
 
