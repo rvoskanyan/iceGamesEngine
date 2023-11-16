@@ -1098,6 +1098,7 @@ if (cartNode) {
                                 return;
                             }
                             email.setAttribute("readonly", '')
+                            email.style.display = 'none'
                             code.hidden = false
                             code.parentElement.style.display = 'initial'
                             code.setAttribute('required', '')
@@ -1123,14 +1124,17 @@ if (cartNode) {
                                 console.error(confirmCode)
                                 return
                             }
-                            formConfirm.nextElementSibling.firstElementChild.textContent = 'Почта подтверждена'
-                            formConfirm.nextElementSibling.classList.add("color-blue")
-                            formConfirm.nextElementSibling.lastElementChild.style.display = 'inline'
+                            email.style.display = 'block'
+                            btn.classList.add('no-active')
+                            // formConfirm.nextElementSibling.firstElementChild.textContent = 'Почта подтверждена'
+                            // formConfirm.nextElementSibling.classList.add("color-blue")
+                            // formConfirm.nextElementSibling.lastElementChild.style.display = 'inline'
                             code.parentElement.style.display = 'none'
-                            btn.parentElement.style.display = 'none'
+                            // btn.parentElement.style.display = 'none'
                             btn.nextElementSibling.textContent = ''
-                            btn.textContent = 'Подтверждено'
-                            email.parentElement.classList.add("confirmed-code")
+                            btn.textContent = 'Почта подтверждена'
+
+                            //email.parentElement.classList.add("confirmed-code")
                             demandConfirm = false
                             if (payBtnNode.classList.contains('no-active')) payBtnNode.classList.remove('no-active')
                             this.setAttribute("data-step", '3')
@@ -2574,7 +2578,7 @@ if (switchSplitNode) {
         let result = 0;
 
         payBtnNode && (payBtnNode.style.display = 'block');
-        confirmEmailFormNode && (confirmEmailFormNode.style.display = 'block');
+        confirmEmailFormNode && (confirmEmailFormNode.style.display = 'grid');
         helpTextNode && (helpTextNode.style.display = 'block');
         totalFullPayNode && (totalFullPayNode.style.display = 'block');
         paySplitNode.style.display = 'none';

@@ -14,14 +14,24 @@
 
   .info
     margin-top: 30px
-    justify-content: space-between
+    column-gap: 40px
 
     @include for-big-phone-up
-      display: flex
+      display: grid
+      grid-template-columns: 1fr
+
+    @include for-tablet-landscape-up
+      grid-template-columns: 1fr 360px
+
+    @include for-middle-desktop-up
+      grid-template-columns: 1fr 460px
 
     & .listGames
       flex-grow: 1
       max-width: 800px
+
+      @include for-middle-desktop-up
+        max-width: 831px
 
       &:before, & .game:after
         content: ''
@@ -35,6 +45,9 @@
         @include for-big-phone-up
           margin-top: 33px
 
+        @include for-middle-desktop-up
+          margin-top: 48px
+
         &.disabled .content:before
           content: ''
           display: block
@@ -47,68 +60,87 @@
           z-index: 1
 
         & .content
-          display: flex
+          display: grid
+          grid-template-columns: max-content 1fr
           column-gap: 15px
-          align-items: center
+          //align-items: center
           margin-bottom: 15px
           position: relative
 
           @include for-big-phone-up
             margin-bottom: 33px
-            column-gap: 35px
+            column-gap: 24px
+
+          @include for-middle-desktop-up
+            margin-bottom: 48px
 
           & .img
             object-fit: cover
             width: 114px
             height: 177px
-            border: 2px solid #fff
-            box-shadow: 0 0 10px #0066FF
             border-radius: 17px
 
             @include for-big-phone-up
               border-radius: 22px
-              width: 156px
-              height: 242px
-              box-shadow: 0 0 20px #0066FF
+              width: 180px
+              height: 290px
+
+            @include for-middle-desktop-up
+              border-radius: 24px
+              width: 220px
+              height: 330px
+
 
           & .main
             display: flex
             flex-direction: column
             justify-content: space-between
             align-self: stretch
+            row-gap: 12px
+
+            @include for-big-phone-up
+              row-gap: 24px
 
             .canSlit
               overflow: hidden
               width: 75px
-              border-radius: 3px
+              margin-bottom: 3px
 
-              @include for-desktop-up
-                width: 85px
-                border-radius: 5px
+              @include for-tablet-landscape-up
+                width: 120px
+
+              @include for-middle-desktop-up
+                width: 136px
+                margin-bottom: 8px
 
               .icon
                 width: 100%
                 height: 100%
                 display: block
+                background: transparent
 
             & .name
               font-family: 'Lemon Milk'
               font-size: 18px
               color: #fff
-              margin-top: 3px
 
               @include for-desktop-up
                 font-size: 24px
-                margin-top: 5px
+
+              @include for-middle-desktop-up
+                font-size: 32px
 
             & .price
               display: block
-              margin-top: 5px
               font-size: 20px
               line-height: 1
 
+              @include for-phone-only
+                order: 2
+                grid-column: 1/-1
+                row-gap: 10px
+
               @include for-big-phone-up
-                margin-top: 22px
                 font-size: 24px
 
               .rowDiscount
@@ -119,6 +151,9 @@
                 @include for-big-phone-up
                   margin-bottom: 5px
 
+                @include for-middle-desktop-up
+                  margin-bottom: 12px
+
               & .toPrice
                 font-size: 26px
 
@@ -127,12 +162,17 @@
 
                 @include for-big-phone-up
                   font-size: 32px
+                  justify-content: flex-end
 
                   &:after
                     font-size: 18px
 
+                    @include for-middle-desktop-up
+                      font-size: 20px
+
               & .fromPrice
                 font-size: 15px
+                justify-content: flex-end
 
                 &:after
                   font-size: 12px
@@ -140,8 +180,13 @@
                 @include for-big-phone-up
                   font-size: 17px
 
+                @include for-middle-desktop-up
+                  font-size: 20px
+
                   &:after
                     font-size: 14px
+                    @include for-middle-desktop-up
+                      font-size: 20px
 
               & .discount
                 background: #984BFB
@@ -159,6 +204,26 @@
               font-size: 12px
               padding: 6px 8px
 
+            & .top
+              display: grid
+              grid-template-columns: 1fr max-content
+              column-gap: 12px
+              row-gap: 10px
+
+              @include for-big-phone-up
+                grid-template-columns: 1fr max-content max-content
+                column-gap: 24px
+
+            & .middle
+              flex-grow: 1
+              color: rgba(255, 255, 255, 0.60)
+              font-size: 12px
+              font-style: normal
+              font-weight: 400
+              line-height: 140%
+              @include for-big-phone-up
+                font-size: 16px
+
             & .bottom
               font-family: 'Montserrat'
               color: #fff
@@ -170,8 +235,22 @@
                 @include for-big-phone-up
                   font-size: 14px
 
+                @include for-middle-desktop-up
+                  font-size: 16px
+
                 &:not(:last-child)
                   margin-bottom: 5px
+
+          & .btn
+            align-self: flex-start
+            margin-top: 20px
+
+            .icon
+              transition: 0.3s ease-in
+
+            &:hover
+              .icon
+                background-color: #FF00F5
 
     .rightSection
       align-self: flex-start
@@ -189,32 +268,36 @@
           max-width: 460px
 
       .switchSplit
-        display: flex
-        margin-bottom: 20px
+        display: grid
+        grid-template-columns: 1fr 1fr
+        margin-bottom: 24px
+        padding: 8px
         column-gap: 10px
-
-        @include for-desktop-up
-          border: 1px solid #fff
-          border-radius: 20px
-          justify-content: space-between
-          padding: 20px 30px
+        border-radius: 99px
+        background: rgba(255, 255, 255, 0.08)
 
         .btn
+          width: auto
           padding: 12px
-          border: 1px solid transparent
-          border-radius: 10px
+          border: 0
+          border-radius: 99px
+          font-size: 14px
+          font-style: normal
+          font-weight: 700
+          line-height: normal
 
+          @include for-desktop-up
+            font-size: 16px
           &.active
-            background: #984BFB
-            border: 1px solid #FFF
+            background:  #8D00FC
 
       .check
-        border: 1px solid #fff
-        border-radius: 20px
-        padding: 13px 14px
+        padding: 16px 20px
         color: #fff
         position: relative
         overflow: hidden
+        border-radius: 16px
+        background: rgba(255, 255, 255, 0.08)
 
         @include for-desktop-up
           padding: 20px 30px
@@ -235,22 +318,22 @@
           .icon
             display: block
             position: absolute
-            border-radius: 5px
-            width: 80px
+            width: 100px
             top: 10px
+            border-radius: 99px
 
             @include for-desktop-up
-              width: 100px
+              width: 140px
               top: 20px
 
           .content
-            display: flex
-            flex-direction: column
-            align-items: center
+            display: grid
+            grid-row-gap: 24px
             padding: 0 20px
 
             .lock
               width: 18px
+              margin: 0 auto
 
               @include for-desktop-up
                 width: 25px
@@ -272,8 +355,18 @@
           justify-content: space-between
 
         .saving
-          color: #FA00FF
+          color: #984BFB
 
+        .check-line
+          display: block
+          height: 1px
+          margin: 24px 0
+          background: rgba(255, 255, 255, 0.12)
+
+          @include for-phone-only
+            margin: 12px 0
+
+          border: 0
         .splitCommission
           display: none
           margin-top: 5px
@@ -290,8 +383,7 @@
             font-size: 24px
 
         .body
-          display: flex
-          flex-direction: column
+          display: grid
           row-gap: 5px
           font-size: 12px
           margin-top: 10px
@@ -302,8 +394,9 @@
             row-gap: 7px
 
           @include for-middle-desktop-up
-            font-size: 16px
-            margin-top: 25px
+            row-gap: 12px
+            font-size: 18px
+            margin-top: 24px
 
           .name
             font-weight: 400
@@ -312,94 +405,136 @@
             font-weight: 700
 
         .total
+          padding: 24px 0
           font-size: 14px
           font-weight: 700
           margin-top: 10px
-          padding-top: 10px
-          border-top: 1px solid rgba(255, 255, 255, 0.5)
+          border-top: 1px solid rgba(255, 255, 255, 0.12)
+          border-bottom: 1px solid rgba(255, 255, 255, 0.12)
+
+          @include for-phone-only
+            padding: 12px 0
 
           @include for-desktop-up
             font-size: 18px
             margin-top: 18px
-            padding-top: 18px
 
           @include for-middle-desktop-up
             font-size: 24px
             margin-top: 25px
-            padding-top: 25px
 
         .widget
-          margin-top: 20px
           display: none
 
         .paySplit
-          margin-top: 10px
           display: none
-
-          @include for-desktop-up
-            margin-top: 20px
 
         .btn
           border-width: 1px
           white-space: initial
           width: 100%
           padding: 10px 0
-          margin-top: 10px
 
           &.no-active
-            background: #E5E2F1
-            opacity: 0.4
-          @include for-desktop-up
-            margin-top: 18px
+            background: rgba(255, 255, 255, 0.08)
+            cursor: default
+            pointer-events: none
 
           @include for-middle-desktop-up
-            margin-top: 25px
             padding: 15px 0
 
         .form-confirm_email
+          display: grid
+          grid-row-gap: 24px
+
+          @include for-phone-only
+            grid-row-gap: 12px
+
           label
-            display: block
-            &:first-child
-              margin-top: 40px
-              margin-bottom: 22px
+            display: grid
+            grid-row-gap: 24px
+
+            @include for-phone-only
+              grid-row-gap: 12px
+
             &.confirm_code
               display: none
+
           input
             width: 100%
             padding: 12px 0 12px 26px
-            margin-top: 12px
             display: block
-            border: 1px solid #FA00FF
+            border: 1px solid #EB00FF
             border-radius: 30px
             color: #fff
             background: transparent
+
             &:focus
               border: 1px solid #fff
+              outline: none
+
           .wrap-button
-            display: flex
-            flex-wrap: wrap
-            align-items: center
+            display: grid
+            grid-row-gap: 10px
+
             button
-              width: initial
               padding: 12px 26px
               font-weight: 400
-              font-size: 18px
-              line-height: 22px
-              margin-bottom: 12px
-              margin-right: 4px
+              font-size: 16px
+              line-height: normal
+
+              @include for-phone-only
+                font-size: 14px
+
               &:active
                 background: #410074
-              &.error
-                border-color: #fa00ff
-            .error-message, .error
-                color: #FA00FF
+
             .error-message
-              margin-bottom: 8px
-              margin-top: 4px
+              color: #FA00FF
+
+          .confirm_code
+            display: grid
+            grid-row-gap: 24px
+
+        .confirm_text
+          display: flex
+          align-items: center
+          color: #FFF
+          text-shadow: 0 0 100px #938083
+          font-size: 14px
+          font-style: normal
+          font-weight: 600
+          line-height: 140%
+
+          @include for-desktop-up
+            font-size: 16px
+
+          @include for-phone-only
+            font-size: 12px
+
+          &::before
+            content: ""
+            display: block
+            width: 32px
+            height: 32px
+            flex-shrink: 0
+            margin-right: 12px
+            background-image: url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M16.3555 28C22.9829 28 28.3555 22.6274 28.3555 16C28.3555 9.37258 22.9829 4 16.3555 4C9.72805 4 4.35547 9.37258 4.35547 16C4.35547 22.6274 9.72805 28 16.3555 28Z' stroke='%23EB00FF' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M16.3555 10.6666V16M16.3555 21.3333H16.3688' stroke='%23EB00FF' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A")
+            background-position: center
+            background-repeat: no-repeat
+            background-size: contain
+
 
         .help-text_auth
-          span
-            margin-right: 4px
+          color: #FFF
+          font-size: 12px
+          font-style: normal
+          font-weight: 400
+          line-height: 140%
+
+          @include for-desktop-up
+            font-size: 14px
+
           svg
             display: none
 
@@ -407,6 +542,24 @@
             color: #00BEFF
             display: flex
             align-items: center
+
+        .bottom
+          display: grid
+          grid-row-gap: 24px
+
+          @include for-phone-only
+            grid-row-gap: 12px
+
+        .check-auth
+          display: grid
+          grid-row-gap: 24px
+          padding: 16px 24px
+          border-radius: 8px
+          background: rgba(255, 255, 255, 0.08)
+
+          @include for-phone-only
+            grid-row-gap: 12px
+            padding: 16px
 
   & .notFound
     display: flex
