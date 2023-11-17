@@ -53,7 +53,7 @@ const hbs = exphbs.create({
     },
     iff: function (a, operator, b, opts) {
       let bool = false;
-      
+
       switch (operator) {
         case '===':
           bool = a === b;
@@ -76,11 +76,11 @@ const hbs = exphbs.create({
         default:
           throw `Unknown operator: ${operator}`;
       }
-      
+
       if (bool) {
         return opts.fn(this);
       }
-      
+
       return opts.inverse(this)
     },
     orIf: function () {
@@ -88,22 +88,22 @@ const hbs = exphbs.create({
       const args = Object.values(arguments);
       const values = args.slice(0, args.length - 1);
       let trust = false;
-      
+
       if (!values.length) {
         return opts.inverse(this)
       }
-      
+
       for (const value of values) {
         if (value) {
           trust = true;
           break;
         }
       }
-      
+
       if (trust) {
         return opts.fn(this);
       }
-    
+
       return opts.inverse(this)
     },
     sub: (lvalue, rvalue) => {
@@ -136,11 +136,28 @@ app.use('/admin', admin, adminRoutes);
 app.use('/api', apiRoutes);
 app.use('/webhook', webhook);
 app.use('/v1', v1Routes);
+
+app.get("/xbox/blog/:alias",function (request, response) {
+  response.redirect(`/blog/${request.params.alias}`)
+});
+
+app.use("/xbox/blog/",function (request, response) {
+  response.redirect("/blog/")
+});
+
+app.get("/xbox/selections/:alias",function (request, response) {
+  response.redirect(`/selections/${request.params.alias}`)
+});
+
+app.use("/xbox/selections/",function (request, response) {
+  response.redirect("/selections/")
+});
+
 app.use('/', constClientMiddleware, clientRoutes);
 
 app.use(function(req, res) {
   res.status(404);
-  
+
   if (req.accepts('html')) {
     return res.render('404', {
       title: 'ICE GAMES — Страница не найдена',
@@ -150,11 +167,11 @@ app.use(function(req, res) {
       }],
     });
   }
-  
+
   if (req.accepts('json')) {
     return res.json({error: 'Not found'});
   }
-  
+
   res.type('txt').send('Not found');
 });
 

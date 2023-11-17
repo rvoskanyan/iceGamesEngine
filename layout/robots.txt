@@ -39,10 +39,8 @@ Disallow: *?yandex_ad
 Disallow: *?post_type=
 Disallow: *?ai=
 Disallow: *games?sort=
-<<<<<<< HEAD
-=======
+
 Disallow: *?__cf_chl_tk
->>>>>>> 2aff05e6f155c663ecc1fddbdae2ab0d5787bf31
 
 Clean-param: openstat&utm&from&gclid&yclid&tid&ymclid&amp&erid&successPayment
 
@@ -99,10 +97,8 @@ Disallow: *?post_type=
 Disallow: *?ai=
 Disallow: *games?sort=
 Disallow: *?successPayment=
-<<<<<<< HEAD
-=======
+
 Disallow: *?__cf_chl_tk
->>>>>>> 2aff05e6f155c663ecc1fddbdae2ab0d5787bf31
 
 Sitemap: https://icegames.store/sitemap.xml
 Sitemap: https://icegames.store/sitemaps/sitemap_images.xml
