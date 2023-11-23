@@ -8,14 +8,13 @@
 
   .headTitle
     display: flex
-    flex-direction: column
-    justify-content: center
+    flex-direction: row
+    justify-content: flex-start
     align-items: center
-    row-gap: 10px
-    margin-bottom: 20px
+    column-gap: 8px
+    margin-bottom: 16px
 
     @include for-desktop-up
-      flex-direction: initial
       column-gap: 25px
       margin-bottom: 30px
 
@@ -54,7 +53,7 @@
       @include for-desktop-up
         min-width: 600px
         top: 0
-        right: 0
+        left: 0
         transform: initial
         border-radius: 20px
         padding: 25px 28px
@@ -125,21 +124,76 @@
       grid-template-columns: 315px auto
 
     & .openParams
-      margin: 0 auto 20px auto
+      display: flex
+      justify-content: space-between
+      margin-top: 16px
+      margin-bottom: 24px
+      width: 100%
+
+      & .icon
+        width: 20px
+        height: 20px
+        background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'%3E%3Cg clip-path='url(%23clip0_72_3764)'%3E%3Cpath d='M13.2331 7.74167L9.99974 10.975L6.76641 7.74167C6.44141 7.41667 5.91641 7.41667 5.59141 7.74167C5.26641 8.06667 5.26641 8.59167 5.59141 8.91667L9.41641 12.7417C9.74141 13.0667 10.2664 13.0667 10.5914 12.7417L14.4164 8.91667C14.7414 8.59167 14.7414 8.06667 14.4164 7.74167C14.0914 7.42501 13.5581 7.41667 13.2331 7.74167Z' fill='white'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='clip0_72_3764'%3E%3Crect width='20' height='20' fill='white'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E")
+        transition: .3s ease-in
+
+      &.active
+        & .icon
+          transform: rotate(180deg)
 
       @include for-big-phone-up
         display: none
 
     & .paramContainer
+      & .filterContent
+        @include for-phone-only
+          width: 100%
+          height: 100%
+          padding-left: 16px
+          padding-right: 16px
+          padding-bottom: 16px
+          overflow-y: auto
+
+      & .popupButtons
+        display: none
+
+        & .button
+          width: 100%
+          padding: 8px 24px
+          border-radius: 99px
+          border: 1px solid rgba(255, 255, 255, 0.12)
+          text-decoration: none
+          color: #FFF
+          text-align: center
+          font-size: 16px
+          font-weight: 600
+          line-height: normal
+
+          &.apply
+            background: #8D00FC
+
+        @include for-phone-only
+          display: flex
+          position: absolute
+          left: 0
+          bottom: 0
+          width: 100vw
+          padding: 16px
+          align-items: center
+          gap: 8px
+          background: rgba(255, 255, 255, 0.08)
+          backdrop-filter: blur(24px)
+
       @include for-phone-only
-        display: flex
+        display: grid
+        grid-template-rows: 1fr 70px
         flex-direction: column
-        background-color: rgba(1, 4, 61, 0.9)
+        background: #01033A
         position: fixed
         top: 0
         right: 0
-        height: 100vh
-        padding: 85px 0 20px 0
+        height: calc(100vh - 65px)
+        margin-top: 65px
+        padding-top: 24px
         width: 100%
         visibility: hidden
         opacity: 0
@@ -148,6 +202,9 @@
         transition-property: visibility, opacity, transform
         z-index: 2
         align-items: center
+
+        & .variants
+          width: 100%
 
       &.active
         visibility: initial
@@ -164,11 +221,10 @@
             display: flex
 
       & .title
-        font-family: 'Lemon Milk'
-        font-weight: 100
-        font-size: 18px
-        margin-top: 10px
-        color: #fff
+        color: #FFF
+        font-size: 24px
+        font-weight: 700
+        line-height: 120%
 
         @include for-big-phone-up
           margin-top: initial
@@ -178,10 +234,10 @@
 
       & .paramElements
         @include for-phone-only
-          margin-top: 40px
+          margin-top: 24px
           display: flex
           flex-direction: column
-          row-gap: 20px
+          row-gap: 12px
           overflow: auto
           padding-right: 10px
           max-height: 60%
@@ -190,58 +246,97 @@
           &.categories
             display: none
 
-    & .params
-      @include for-big-phone-up
-        display: contents
+      & .checkbox
+        & .label
+          color: #FFF
+          font-size: 16px
+          font-weight: 500
+          line-height: 120%
+        & .figure
+          width: 20px
+          height: 20px
+          min-height: unset
+          max-height: unset
+          min-width: unset
+          max-width: unset
+          border-radius: 0
+          box-shadow: none
+          background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'%3E%3Cg opacity='0.4' clip-path='url(%23clip0_44_640)'%3E%3Cpath d='M15 15.8333H5C4.54167 15.8333 4.16667 15.4583 4.16667 15V5C4.16667 4.54167 4.54167 4.16667 5 4.16667H15C15.4583 4.16667 15.8333 4.54167 15.8333 5V15C15.8333 15.4583 15.4583 15.8333 15 15.8333ZM15.8333 2.5H4.16667C3.25 2.5 2.5 3.25 2.5 4.16667V15.8333C2.5 16.75 3.25 17.5 4.16667 17.5H15.8333C16.75 17.5 17.5 16.75 17.5 15.8333V4.16667C17.5 3.25 16.75 2.5 15.8333 2.5Z' fill='white'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='clip0_44_640'%3E%3Crect width='20' height='20' fill='white'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E")
+          &:before
+            display: none
+        & .input:checked ~ .figure
+          background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'%3E%3Cg clip-path='url(%23clip0_44_637)'%3E%3Cpath d='M15.8333 2.5H4.16667C3.25 2.5 2.5 3.25 2.5 4.16667V15.8333C2.5 16.75 3.25 17.5 4.16667 17.5H15.8333C16.75 17.5 17.5 16.75 17.5 15.8333V4.16667C17.5 3.25 16.75 2.5 15.8333 2.5ZM8.925 13.575C8.6 13.9 8.075 13.9 7.75 13.575L4.75833 10.5833C4.43333 10.2583 4.43333 9.73333 4.75833 9.40833C5.08333 9.08333 5.60833 9.08333 5.93333 9.40833L8.33333 11.8083L14.0667 6.075C14.3917 5.75 14.9167 5.75 15.2417 6.075C15.5667 6.4 15.5667 6.925 15.2417 7.25L8.925 13.575Z' fill='%23EB00FF'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='clip0_44_637'%3E%3Crect width='20' height='20' fill='white'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E")
 
+    & .params
       & .categories
         align-items: center
 
       & .priceBlock .range
           margin-top: 25px
 
-      & .sortBlock .variants
-        display: flex
-        align-items: center
-        margin-top: 20px
-        column-gap: 20px
-
       & .variants
-        display: contents
-
-        @include for-big-phone-up
-          display: initial
-
-        @include for-desktop-up
-          align-self: start
-          //position: sticky
-          //top: 115px
+        margin-top: 24px
 
         & .block
           @include for-desktop-up
             & .elements
               display: flex
               flex-direction: column
-              row-gap: 8px
+              row-gap: 12px
 
-          @include for-middle-desktop-up
-            &.genres
-              & .elements
-                flex-direction: row
-                flex-wrap: wrap
-                align-items: center
+          & .elementsCollapsed
+            max-height: 148px
+            overflow: hidden
 
-                & .checkbox
-                  min-width: 50%
+          & .elementsExpanded
+            max-height: 308px
+            overflow: auto
+
 
           &:not(:last-child)
-            margin-bottom: 40px
+            margin-bottom: 24px
 
           & .title
-            margin-bottom: 10px
+            margin-bottom: 24px
 
           & .variants .checkbox:not(:first-child)
             margin-top: 8px
+
+          & .searchBlock
+            display: flex
+            padding: 14px 16px
+            align-items: center
+            gap: 16px
+            align-self: stretch
+            border-radius: 99px
+            background: rgba(255, 255, 255, 0.08)
+            margin-bottom: 24px
+
+            & .search
+              color: #FFF
+              font-size: 16px
+              font-weight: 400
+              line-height: 100%
+              flex-grow: 1
+              background: transparent
+              border: none
+              outline: none
+
+            & .searchIcon
+              width: 20px
+              height: 20px
+              background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'%3E%3Cg opacity='0.4'%3E%3Cpath d='M17.2787 16.2161L15.161 14.1059C16.309 12.6876 16.869 10.8829 16.7256 9.06382C16.5821 7.24478 15.7462 5.55013 14.39 4.32931C13.0339 3.10849 11.261 2.4546 9.43698 2.50245C7.61292 2.55031 5.87677 3.29627 4.58652 4.58652C3.29627 5.87677 2.55031 7.61292 2.50245 9.43698C2.4546 11.261 3.10849 13.0339 4.32931 14.39C5.55013 15.7462 7.24478 16.5821 9.06382 16.7256C10.8829 16.869 12.6876 16.309 14.1059 15.161L16.2161 17.2787C16.2856 17.3488 16.3684 17.4045 16.4596 17.4425C16.5508 17.4804 16.6486 17.5 16.7474 17.5C16.8461 17.5 16.944 17.4804 17.0351 17.4425C17.1263 17.4045 17.2091 17.3488 17.2787 17.2787C17.3488 17.2091 17.4045 17.1263 17.4425 17.0351C17.4804 16.944 17.5 16.8461 17.5 16.7474C17.5 16.6486 17.4804 16.5508 17.4425 16.4596C17.4045 16.3684 17.3488 16.2856 17.2787 16.2161ZM4.02626 9.63851C4.02626 8.52851 4.35542 7.44344 4.9721 6.52051C5.58878 5.59758 6.46529 4.87825 7.4908 4.45347C8.5163 4.02869 9.64474 3.91755 10.7334 4.1341C11.8221 4.35065 12.8221 4.88517 13.607 5.67005C14.3919 6.45494 14.9264 7.45495 15.1429 8.54362C15.3595 9.63229 15.2483 10.7607 14.8236 11.7862C14.3988 12.8117 13.6794 13.6882 12.7565 14.3049C11.8336 14.9216 10.7485 15.2508 9.63851 15.2508C8.15005 15.2508 6.72255 14.6595 5.67005 13.607C4.61755 12.5545 4.02626 11.127 4.02626 9.63851Z' fill='white'/%3E%3C/g%3E%3C/svg%3E")
+
+          & .interactionButton
+            color: #EB00FF
+            font-size: 16px
+            font-weight: 600
+            line-height: 120%
+            margin-top: 16px
+            background: none
+            border: none
+            cursor: pointer
+
 
     & .list
       flex-grow: 1
@@ -267,3 +362,56 @@
 
         & .text
           margin-top: 20px
+    & .priceBlockCheckboxes
+      display: flex
+      flex-direction: column
+      gap: 12px
+      margin-top: 24px
+
+    & .priceBlockControls
+      margin-top: 24px
+      display: flex
+      align-items: flex-start
+      gap: 8px
+
+      & .priceBlockControl
+        border-radius: 99px
+        background: rgba(255, 255, 255, 0.08)
+        border: none
+        padding: 16px
+        color: #FFF
+        font-size: 16px
+        font-weight: 400
+        line-height: 100%
+        width: 100%
+
+    & .sortBlock
+      display: flex
+      align-items: center
+      justify-content: flex-end
+      margin-bottom: 24px
+      column-gap: 16px
+
+      @include for-phone-only
+        flex-direction: column
+        row-gap: 16px
+        align-items: stretch
+
+      & .title
+        color: #FFF
+        font-size: 16px
+        font-weight: 500
+        line-height: 100%
+
+      & .sortSelect
+        padding: 14px 44px 16px 14px
+        border: none
+        border-radius: 8px
+        outline: none
+        color: #FFF
+        font-size: 16px
+        font-weight: 500
+        line-height: 100%
+        appearance: none
+        cursor: pointer
+        background: right 16px center no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'%3E%3Cg clip-path='url(%23clip0_44_757)'%3E%3Cpath d='M13.2331 7.7418L9.99974 10.9751L6.76641 7.7418C6.44141 7.4168 5.91641 7.4168 5.59141 7.7418C5.26641 8.0668 5.26641 8.5918 5.59141 8.9168L9.41641 12.7418C9.74141 13.0668 10.2664 13.0668 10.5914 12.7418L14.4164 8.9168C14.7414 8.5918 14.7414 8.0668 14.4164 7.7418C14.0914 7.42513 13.5581 7.4168 13.2331 7.7418Z' fill='white'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='clip0_44_757'%3E%3Crect width='20' height='20' fill='white'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E"), rgba(255, 255, 255, 0.08)

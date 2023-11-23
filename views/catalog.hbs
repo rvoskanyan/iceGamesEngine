@@ -14,122 +14,121 @@
     </div>
     <div class="main">
         <button class="btn openParams js-openParams">
-            <span class="icon icon-filterParams"></span>
+            <span class="title">Фильтры</span>
+            <span class="icon"></span>
         </button>
         <div class="paramContainer params js-filter js-filterMobile">
-            <button class="btn js-closeParams">
-                <span class="icon icon-back"></span>
-            </button>
-            <div class="title params">Параметры</div>
-            <div class="paramElements categories">
-                <button class="btn uppercase js-openPriceParams">Цена</button>
-                <button class="btn uppercase js-openSortParams">Сортировка</button>
-                <button class="btn uppercase js-openCategoriesParams">Категории</button>
-                <button class="btn uppercase js-openGenresParams">Жанры</button>
-                <button class="btn uppercase js-openActivationParams">Активация</button>
-            </div>
-            <div class="paramContainer priceBlock js-priceParams">
-                <button class="btn js-closePriceParams">
-                    <span class="icon icon-back"></span>
-                </button>
-                <div class="title">Цена:</div>
-                <div
-                    class="range js-range js-priceRange"
-                    data-min="{{minPrice}}" data-max="{{maxPrice}}" data-first-value="{{priceFrom}}" data-second-value="{{priceTo}}"
-                ></div>
-            </div>
-            <div class="paramContainer sortBlock js-sort js-sortParams">
-                <button class="btn js-closeSortParams">
-                    <span class="icon icon-back"></span>
-                </button>
-                <div class="title">Сортировать по:</div>
-                <div class="variants paramElements">
-                    <button class="btn small rounded bg-lilac translucent js-variant-sort sort{{#iff sort '===' 'date'}} active{{/iff}}" data-sort="date">Дате выхода</button>
-                    <button class="btn small rounded bg-lilac translucent js-variant-sort sort{{#iff sort '===' 'price'}} active{{/iff}}" data-sort="price">Цене</button>
-                    <button class="btn small rounded bg-lilac translucent js-variant-sort sort{{#iff sort '===' 'discount'}} active{{/iff}}" data-sort="discount">Скидке</button>
-                    {{> checkbox
-                            value='true'
-                            label='Только в наличии'
-                            name='onlyStock'
-                            checked=onlyStock
-                    }}
-                    {{> checkbox
-                            value='true'
-                            label='Оплата без комиссии'
-                            name='noCommission'
-                            checked=noCommission
-                    }}
-                </div>
-            </div>
-            <div class="variants">
-                <div class="paramContainer categoriesBlock block js-categoriesParams">
-                    <button class="btn js-closeCategoriesParams">
-                        <span class="icon icon-back"></span>
-                    </button>
-                    <div class="title">Категории:</div>
-                    <div class="elements paramElements">
-                        {{#each allCategories}}
-                            {{> checkbox
-                                    value=alias
-                                    label=name
-                                    checked=checked
-                                    name='categories'
-                            }}
-                        {{/each}}
+            <div class="filterContent">
+                <div class="priceBlock js-priceParams">
+                    <div class="title">Цена</div>
+                    <div class="priceBlockControls">
+                        <input class="priceBlockControl priceFrom" type="text" value="{{priceFrom}}" placeholder="От" data-min="{{minPrice}}">
+                        <input class="priceBlockControl priceTo" type="text" value="{{priceTo}}" placeholder="До" data-max="{{maxPrice}}">
+                    </div>
+
+                    <div class="priceBlockCheckboxes">
+                        {{> checkbox
+                                value='true'
+                                label='Только в наличии'
+                                name='onlyStock'
+                                checked=onlyStock
+                        }}
+                        {{> checkbox
+                                value='true'
+                                label='Оплата без комиссии'
+                                name='noCommission'
+                                checked=noCommission
+                        }}
                     </div>
                 </div>
-                <div class="paramContainer genresBlock block genres js-genresParams">
-                    <button class="btn js-closeGenresParams">
-                        <span class="icon icon-back"></span>
-                    </button>
-                    <div class="title">Жанры:</div>
-                    <div class="elements paramElements">
-                        {{#each allGenres}}
-                            {{> checkbox
-                                    value=alias
-                                    label=name
-                                    checked=checked
-                                    name='genres'
-                            }}
-                        {{/each}}
+                <div class="variants">
+                    <div class="categoriesBlock block js-categoriesParams">
+                        <div class="title">Категории</div>
+                        <div class="elements paramElements">
+                            {{#each allCategories}}
+                                {{> checkbox
+                                        value=alias
+                                        label=name
+                                        checked=checked
+                                        name='categories'
+                                }}
+                            {{/each}}
+                        </div>
+                    </div>
+                    <div class="genresBlock block genres js-genresParams">
+                        <div class="title">Жанры</div>
+                        <div class="searchBlock">
+                            <input class="search" placeholder="Поиск по названию">
+                            <div class="searchIcon"></div>
+                        </div>
+                        <div class="elements paramElements elementsCollapsed">
+                            {{#each allGenres}}
+                                {{> checkbox
+                                        value=alias
+                                        label=name
+                                        checked=checked
+                                        name='genres'
+                                }}
+                            {{/each}}
+                        </div>
+                        <button class="interactionButton showMore">Показать еще</button>
+                        <button class="interactionButton showLess" style="display: none">Скрыть</button>
+                    </div>
+                    <div class="activationBlock block js-activationParams">
+                        <div class="title">Активация</div>
+                        <div class="searchBlock">
+                            <input class="search" placeholder="Поиск по названию">
+                            <div class="searchIcon"></div>
+                        </div>
+                        <div class="elements paramElements elementsCollapsed">
+                            {{#each allActivationServices}}
+                                {{> checkbox
+                                        value=alias
+                                        label=name
+                                        checked=checked
+                                        disabled=disabled
+                                        name='activationServices'
+                                }}
+                            {{/each}}
+                        </div>
+                        <button class="interactionButton showMore">Показать еще</button>
+                        <button class="interactionButton showLess" style="display: none">Скрыть</button>
                     </div>
                 </div>
-                <div class="paramContainer activationBlock block js-activationParams">
-                    <button class="btn js-closeActivationParams">
-                        <span class="icon icon-back"></span>
-                    </button>
-                    <div class="title">Активация:</div>
-                    <div class="elements paramElements">
-                        {{#each allActivationServices}}
-                            {{> checkbox
-                                    value=alias
-                                    label=name
-                                    checked=checked
-                                    disabled=disabled
-                                    name='activationServices'
-                            }}
-                        {{/each}}
-                    </div>
-                </div>
+            </div>
+            <div class="popupButtons">
+                <button class="button closePopup apply js-closeParams">Применить</button>
+                <a href="/games" class="button">Сбросить</a>
             </div>
         </div>
-        <div class="list js-catalogList{{#unless products.length}} notFound{{/unless}}" data-current-page="{{page}}" data-load-limit="{{limit}}">
-            {{#if products.length}}
-                <div class="gameGrid js-page" data-page-num="{{page}}">
-                    {{#each products}}
-                        {{> game}}
-                    {{/each}}
-                </div>
-                {{#if prevPage}}
-                    <a class="paginationLink" href="{{@root.websiteAddress}}{{prevPage}}">Prev page</a>
+        <div>
+            <div class="sortBlock js-sort js-sortParams">
+                <div class="title">Сортировать по</div>
+                <select class="sortSelect">
+                    <option {{#iff sort '===' ''}}selected{{/iff}} value="--"></option>
+                    <option {{#iff sort '===' 'date'}}selected{{/iff}} value="date">Дате выхода</option>
+                    <option {{#iff sort '===' 'price'}}selected{{/iff}} value="price">Цене</option>
+                    <option {{#iff sort '===' 'discount'}}selected{{/iff}} value="discount">Скидке</option>
+                </select>
+            </div>
+            <div class="list js-catalogList{{#unless products.length}} notFound{{/unless}}" data-current-page="{{page}}" data-load-limit="{{limit}}">
+                {{#if products.length}}
+                    <div class="gameGrid js-page" data-page-num="{{page}}">
+                        {{#each products}}
+                            {{> game}}
+                        {{/each}}
+                    </div>
+                    {{#if prevPage}}
+                        <a class="paginationLink" href="{{@root.websiteAddress}}{{prevPage}}">Prev page</a>
+                    {{/if}}
+                    {{#if nextPage}}
+                        <a class="paginationLink" href="{{@root.websiteAddress}}{{nextPage}}">Next page</a>
+                    {{/if}}
+                {{else}}
+                    <img class="img" loading="lazy" src="http://localhost:5000/img/notFound.svg">
+                    <span class="text">Ничего не найдено...</span>
                 {{/if}}
-                {{#if nextPage}}
-                    <a class="paginationLink" href="{{@root.websiteAddress}}{{nextPage}}">Next page</a>
-                {{/if}}
-            {{else}}
-                <img class="img" loading="lazy" src="http://localhost:5000/img/notFound.svg">
-                <span class="text">Ничего не найдено...</span>
-            {{/if}}
+            </div>
         </div>
     </div>
 </main>

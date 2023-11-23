@@ -4,7 +4,7 @@ import Modal from "./Modal.js";
 import PopupController from "./PopupController.js";
 import AsyncForm from "./AsyncForm.js";
 import Prompt from "./Prompt.js";
-import {getProductCardNode, scrollTo, urlEncodeFormData} from "./utils.js";
+import {debounce, getProductCardNode, scrollTo, urlEncodeFormData} from "./utils.js";
 import Postman from "./Postman.js";
 import {websiteAddress} from "./config.js";
 
@@ -137,44 +137,44 @@ const popupController = new PopupController([
         btnSelector: '.js-openParams',
         closeBtnSelector: '.js-closeParams',
         popupSelector: '.js-filterMobile',
-        children: [
-            {
-                id: 'priceParamsCatalog',
-                btnSelector: '.js-openPriceParams',
-                closeBtnSelector: '.js-closePriceParams',
-                popupSelector: '.js-priceParams',
-            },
-            {
-                id: 'sortParamsCatalog',
-                btnSelector: '.js-openSortParams',
-                closeBtnSelector: '.js-closeSortParams',
-                popupSelector: '.js-sortParams',
-            },
-            {
-                id: 'categoriesParamsCatalog',
-                btnSelector: '.js-openCategoriesParams',
-                closeBtnSelector: '.js-closeCategoriesParams',
-                popupSelector: '.js-categoriesParams',
-            },
-            {
-                id: 'categoriesParamsCatalog',
-                btnSelector: '.js-openCategoriesParams',
-                closeBtnSelector: '.js-closeCategoriesParams',
-                popupSelector: '.js-categoriesParams',
-            },
-            {
-                id: 'genresParamsCatalog',
-                btnSelector: '.js-openGenresParams',
-                closeBtnSelector: '.js-closeGenresParams',
-                popupSelector: '.js-genresParams',
-            },
-            {
-                id: 'activationParamsCatalog',
-                btnSelector: '.js-openActivationParams',
-                closeBtnSelector: '.js-closeActivationParams',
-                popupSelector: '.js-activationParams',
-            },
-        ],
+    //     children: [
+    //         {
+    //             id: 'priceParamsCatalog',
+    //             btnSelector: '.js-openPriceParams',
+    //             closeBtnSelector: '.js-closePriceParams',
+    //             popupSelector: '.js-priceParams',
+    //         },
+    //         {
+    //             id: 'sortParamsCatalog',
+    //             btnSelector: '.js-openSortParams',
+    //             closeBtnSelector: '.js-closeSortParams',
+    //             popupSelector: '.js-sortParams',
+    //         },
+    //         {
+    //             id: 'categoriesParamsCatalog',
+    //             btnSelector: '.js-openCategoriesParams',
+    //             closeBtnSelector: '.js-closeCategoriesParams',
+    //             popupSelector: '.js-categoriesParams',
+    //         },
+    //         {
+    //             id: 'categoriesParamsCatalog',
+    //             btnSelector: '.js-openCategoriesParams',
+    //             closeBtnSelector: '.js-closeCategoriesParams',
+    //             popupSelector: '.js-categoriesParams',
+    //         },
+    //         {
+    //             id: 'genresParamsCatalog',
+    //             btnSelector: '.js-openGenresParams',
+    //             closeBtnSelector: '.js-closeGenresParams',
+    //             popupSelector: '.js-genresParams',
+    //         },
+    //         {
+    //             id: 'activationParamsCatalog',
+    //             btnSelector: '.js-openActivationParams',
+    //             closeBtnSelector: '.js-closeActivationParams',
+    //             popupSelector: '.js-activationParams',
+    //         },
+    //     ],
     },
 ]);
 const headerNode = document.querySelector('.js-header');
@@ -2035,13 +2035,16 @@ if (blogPageNode) {
 }
 
 if (catalogNode) {
-  const priceRangeNode = catalogNode.querySelector('.js-range');
+  const priceFromNode = catalogNode.querySelector('.priceBlockControls .priceFrom');
+  const priceToNode = catalogNode.querySelector('.priceBlockControls .priceTo');
+  const filterSearchNodes = catalogNode.querySelectorAll('.searchBlock .search');
+  const filterShowMoreNodes = catalogNode.querySelectorAll('.showMore');
+  const filterShowLessNodes = catalogNode.querySelectorAll('.showLess');
   const filterNode = catalogNode.querySelector('.js-filter');
-  const sortNode = catalogNode.querySelector('.js-sort');
+  const sortSelectNode = catalogNode.querySelector('.sortSelect');
   const catalogListNode = catalogNode.querySelector('.js-catalogList');
   const countLoad = catalogListNode.dataset.loadLimit;
   const checkbox = [...filterNode.querySelectorAll('.js-checkbox')];
-  const sortBtnNodes = sortNode.querySelectorAll('.js-variant-sort');
   const offsetTop = catalogListNode.getBoundingClientRect().top;
   const height = catalogListNode.getBoundingClientRect().height;
   const startPage = +catalogListNode.dataset.currentPage;
@@ -2054,7 +2057,6 @@ if (catalogNode) {
   }));
 
   let currentPage = startPage;
-  let sortActiveBtn = catalogNode.querySelector('.js-sort .js-variant-sort.active');
   let priceRangeObject;
   let loading = false;
 
@@ -2100,29 +2102,6 @@ if (catalogNode) {
     loadMore().then();
   }
 
-  if (priceRangeNode) {
-    const min = +priceRangeNode.dataset.min;
-    const max = +priceRangeNode.dataset.max;
-    const firstPointValue = +priceRangeNode.dataset.firstValue;
-    const secondPointValue = +priceRangeNode.dataset.secondValue;
-
-    priceRangeObject = new Range({
-      mainNode: priceRangeNode,
-      min,
-      max,
-      points: [
-        {
-          value: firstPointValue,
-          name: 'first',
-        },
-        {
-          value: secondPointValue,
-          name: 'second',
-        },
-      ],
-    });
-  }
-
   searchStringNode.addEventListener('input', () => {
     const url = new URL(window.location.href);
     const value = searchStringNode.value;
@@ -2137,14 +2116,62 @@ if (catalogNode) {
     catalogNode.dispatchEvent(new Event('changeParams'));
   });
 
-  priceRangeObject.addChangeListener((values) => {
+  function getValueWithMinMax(value) {
+      let result = value
+      const min = parseInt(priceFromNode.dataset.min)
+      const max = parseInt(priceToNode.dataset.max)
+      if (result < min) {
+          result = min
+      }
+      if (result > max) {
+          result = max
+      }
+
+      return result
+  }
+
+  priceFromNode.addEventListener(
+      'input',
+      debounce(() => {
+          let value = getValueWithMinMax(parseInt(priceFromNode.value))
+          if (isNaN(value)) {
+              value = parseInt(priceFromNode.dataset.max)
+          }
+          priceFromNode.value = value.toString()
+          let anotherValue = parseInt(priceToNode.value)
+          if (anotherValue < value) {
+              anotherValue = parseInt(priceToNode.dataset.max)
+              priceToNode.value = anotherValue.toString()
+          }
+          setPriceRange([value, anotherValue])
+      }, 500)
+  )
+
+  priceToNode.addEventListener(
+      'input',
+      debounce(() => {
+          let value = getValueWithMinMax(parseInt(priceToNode.value))
+          if (isNaN(value)) {
+              value = parseInt(priceToNode.dataset.max)
+          }
+          priceToNode.value = value.toString()
+          let anotherValue = parseInt(priceFromNode.value)
+          if (anotherValue > value) {
+              anotherValue = parseInt(priceFromNode.dataset.min)
+              priceFromNode.value = anotherValue.toString()
+          }
+          setPriceRange([anotherValue, value])
+      }, 500)
+  )
+
+  function setPriceRange(values) {
     const url = new URL(window.location.href);
-    let min = values[0].value;
-    let max = values[1].value
+    let min = values[0];
+    let max = values[1]
 
     if (min > max) {
       max = min;
-      min = values[1].value;
+      min = values[1];
     }
 
     url.searchParams.set('priceFrom', min);
@@ -2152,29 +2179,83 @@ if (catalogNode) {
 
     history.pushState(null, null, url);
     catalogNode.dispatchEvent(new Event('changeParams'));
-  });
+  }
 
-  sortBtnNodes.forEach(sortBtnNode => {
-    const value = sortBtnNode.dataset.sort;
+  filterSearchNodes.forEach(item => {
+      item.addEventListener('input', () => {
+          let container = item.closest('.block');
 
-    sortBtnNode.addEventListener('click', () => {
+          let visibleCheckboxes = 0
+          container.querySelectorAll('.checkbox').forEach(checkbox => {
+              if (checkbox.querySelector('.label').innerHTML.toLowerCase().includes(item.value.toLowerCase())) {
+                  visibleCheckboxes++
+                  checkbox.style.display = ''
+              }
+              else {
+                  checkbox.style.display = 'none'
+              }
+          })
+
+          const elements = container.querySelector('.elements')
+          if (elements.classList.contains('elementsCollapsed')) {
+              if (visibleCheckboxes <= 5) {
+                  container.querySelector('.showMore').style.display = 'none'
+              }
+              else {
+                  container.querySelector('.showMore').style.display = ''
+              }
+          }
+          if (elements.classList.contains('elementsExpanded')) {
+              if (visibleCheckboxes <= 5) {
+                  container.querySelector('.showLess').style.display = 'none'
+              }
+              else {
+                  container.querySelector('.showLess').style.display = ''
+              }
+          }
+      })
+  })
+
+  filterShowMoreNodes.forEach(item => {
+      item.addEventListener('click', () => {
+          const elements = item.closest('.block').querySelector('.elements')
+          elements.classList.remove('elementsCollapsed')
+          elements.classList.add('elementsExpanded')
+
+          item.style.display = 'none'
+
+          const showLessButton = item.closest('.block').querySelector('.showLess')
+          showLessButton.style.display = ''
+      })
+  })
+
+  filterShowLessNodes.forEach(item => {
+      item.addEventListener('click', () => {
+          const elements = item.closest('.block').querySelector('.elements')
+          elements.scrollTop = 0
+          elements.classList.remove('elementsExpanded')
+          elements.classList.add('elementsCollapsed')
+
+          item.style.display = 'none'
+
+          const showMoreButton = item.closest('.block').querySelector('.showMore')
+          showMoreButton.style.display = ''
+      })
+  })
+
+  sortSelectNode.addEventListener('input', () => {
       const url = new URL(window.location.href);
 
-      if (sortActiveBtn !== sortBtnNode) {
+      const value = sortSelectNode.value
+      if (value !== '--') {
         url.searchParams.set('sort', value);
-        sortBtnNode.classList.add('active');
-        sortActiveBtn && sortActiveBtn.classList.remove('active');
-        sortActiveBtn = sortBtnNode;
       } else {
-        sortActiveBtn = null;
-        sortBtnNode.classList.remove('active');
         url.searchParams.delete('sort');
       }
 
       history.pushState(null, null, url);
       catalogNode.dispatchEvent(new Event('changeParams'));
-    })
-  });
+    });
 
   checkbox.forEach(item => {
     const input = item.querySelector('.input');
