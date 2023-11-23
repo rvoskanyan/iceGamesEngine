@@ -137,44 +137,6 @@ const popupController = new PopupController([
         btnSelector: '.js-openParams',
         closeBtnSelector: '.js-closeParams',
         popupSelector: '.js-filterMobile',
-    //     children: [
-    //         {
-    //             id: 'priceParamsCatalog',
-    //             btnSelector: '.js-openPriceParams',
-    //             closeBtnSelector: '.js-closePriceParams',
-    //             popupSelector: '.js-priceParams',
-    //         },
-    //         {
-    //             id: 'sortParamsCatalog',
-    //             btnSelector: '.js-openSortParams',
-    //             closeBtnSelector: '.js-closeSortParams',
-    //             popupSelector: '.js-sortParams',
-    //         },
-    //         {
-    //             id: 'categoriesParamsCatalog',
-    //             btnSelector: '.js-openCategoriesParams',
-    //             closeBtnSelector: '.js-closeCategoriesParams',
-    //             popupSelector: '.js-categoriesParams',
-    //         },
-    //         {
-    //             id: 'categoriesParamsCatalog',
-    //             btnSelector: '.js-openCategoriesParams',
-    //             closeBtnSelector: '.js-closeCategoriesParams',
-    //             popupSelector: '.js-categoriesParams',
-    //         },
-    //         {
-    //             id: 'genresParamsCatalog',
-    //             btnSelector: '.js-openGenresParams',
-    //             closeBtnSelector: '.js-closeGenresParams',
-    //             popupSelector: '.js-genresParams',
-    //         },
-    //         {
-    //             id: 'activationParamsCatalog',
-    //             btnSelector: '.js-openActivationParams',
-    //             closeBtnSelector: '.js-closeActivationParams',
-    //             popupSelector: '.js-activationParams',
-    //         },
-    //     ],
     },
 ]);
 const headerNode = document.querySelector('.js-header');
