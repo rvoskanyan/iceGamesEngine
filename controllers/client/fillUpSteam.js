@@ -72,20 +72,24 @@ export const checkStatus = async (req, res) => {
     }
     
     if (fillUp.status === 'pending') {
-      const response = await fetch(`https://steam.kupikod.com/api/v3/partner-order/${fillUp.orderId}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'token': 'icegame.store_q4L4Re1u1hIjQIgPBWqiDYZfzheIRmHEwAzX',
-        },
-      });
-      
-      const stateData = await response.json();
-      
-      if (stateData.state !== 'pending') {
-        fillUp.codeOrderError = stateData.status;
-        fillUp.status = stateData.state;
-        await fillUp.save();
+      try {
+        const response = await fetch(`https://steam.kupikod.com/api/v3/partner-order/${fillUp.orderId}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'token': 'icegame.store_q4L4Re1u1hIjQIgPBWqiDYZfzheIRmHEwAzX',
+          },
+        });
+  
+        const stateData = await response.json();
+  
+        if (stateData.state !== 'pending') {
+          fillUp.codeOrderError = stateData.status;
+          fillUp.status = stateData.state;
+          await fillUp.save();
+        }
+      } catch (e) {
+        console.log(e);
       }
     }
     
