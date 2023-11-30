@@ -22,8 +22,8 @@
                 <div class="priceBlock js-priceParams">
                     <div class="title">Цена</div>
                     <div class="priceBlockControls">
-                        <input class="priceBlockControl priceFrom" type="text" value="{{priceFrom}}" placeholder="От" data-min="{{minPrice}}">
-                        <input class="priceBlockControl priceTo" type="text" value="{{priceTo}}" placeholder="До" data-max="{{maxPrice}}">
+                        <input class="priceBlockControl priceFrom" type="text" value="{{#iff priceFrom '>' minPrice}}{{ priceFrom }}{{/iff}}" placeholder="От" data-min="{{minPrice}}">
+                        <input class="priceBlockControl priceTo" type="text" value="{{#iff priceTo '<' maxPrice}}{{priceTo}}{{/iff}}" placeholder="До" data-max="{{maxPrice}}">
                     </div>
 
                     <div class="priceBlockCheckboxes">

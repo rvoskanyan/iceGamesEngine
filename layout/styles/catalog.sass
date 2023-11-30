@@ -50,7 +50,7 @@
       transition-property: visibility, opacity
       font-size: 14px
 
-      @include for-desktop-up
+      @include for-tablet-landscape-up
         min-width: 600px
         top: 0
         left: 0
@@ -192,6 +192,7 @@
         top: 0
         right: 0
         height: calc(100vh - 65px)
+        height: calc(100dvh - 65px)
         margin-top: 65px
         padding-top: 24px
         width: 100%
@@ -278,11 +279,10 @@
         margin-top: 24px
 
         & .block
-          @include for-desktop-up
-            & .elements
-              display: flex
-              flex-direction: column
-              row-gap: 12px
+          & .elements
+            display: flex
+            flex-direction: column
+            row-gap: 12px
 
           & .elementsCollapsed
             max-height: 148px
@@ -408,7 +408,7 @@
         border: none
         border-radius: 8px
         outline: none
-        color: #FFF
+        color: #000
         font-size: 16px
         font-weight: 500
         line-height: 100%

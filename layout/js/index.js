@@ -2095,12 +2095,18 @@ if (catalogNode) {
   priceFromNode.addEventListener(
       'input',
       debounce(() => {
-          let value = getValueWithMinMax(parseInt(priceFromNode.value))
-          if (isNaN(value)) {
-              value = parseInt(priceFromNode.dataset.max)
+          let value = 0
+          if (priceFromNode.value) {
+              value = getValueWithMinMax(parseInt(priceFromNode.value))
+              if (isNaN(value)) {
+                  value = parseInt(priceFromNode.dataset.min)
+              }
+              priceFromNode.value = value.toString()
           }
-          priceFromNode.value = value.toString()
-          let anotherValue = parseInt(priceToNode.value)
+          else {
+              value = parseInt(priceFromNode.dataset.min)
+          }
+          let anotherValue = parseInt(priceToNode.value ? priceToNode.value : priceToNode.dataset.max)
           if (anotherValue < value) {
               anotherValue = parseInt(priceToNode.dataset.max)
               priceToNode.value = anotherValue.toString()
@@ -2112,12 +2118,18 @@ if (catalogNode) {
   priceToNode.addEventListener(
       'input',
       debounce(() => {
-          let value = getValueWithMinMax(parseInt(priceToNode.value))
-          if (isNaN(value)) {
+          let value = 0
+          if (priceToNode.value) {
+              value = getValueWithMinMax(parseInt(priceToNode.value))
+              if (isNaN(value)) {
+                  value = parseInt(priceToNode.dataset.max)
+              }
+              priceToNode.value = value.toString()
+          }
+          else {
               value = parseInt(priceToNode.dataset.max)
           }
-          priceToNode.value = value.toString()
-          let anotherValue = parseInt(priceFromNode.value)
+          let anotherValue = parseInt(priceFromNode.value ? priceFromNode.value : priceFromNode.dataset.min)
           if (anotherValue > value) {
               anotherValue = parseInt(priceFromNode.dataset.min)
               priceFromNode.value = anotherValue.toString()
