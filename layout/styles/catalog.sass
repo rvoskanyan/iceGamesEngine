@@ -129,6 +129,7 @@
       margin-top: 16px
       margin-bottom: 24px
       width: 100%
+      font-size: 16px
 
       & .icon
         width: 20px
@@ -403,15 +404,50 @@
         font-weight: 500
         line-height: 100%
 
-      & .sortSelect
-        padding: 14px 44px 16px 14px
+      & div.sortSelect
+        padding: 14px 44px 14px 16px
+        height: unset
+        min-width: 170px
         border: none
         border-radius: 8px
         outline: none
-        color: #000
+        color: #fff
         font-size: 16px
         font-weight: 500
         line-height: 100%
         appearance: none
         cursor: pointer
         background: right 16px center no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'%3E%3Cg clip-path='url(%23clip0_44_757)'%3E%3Cpath d='M13.2331 7.7418L9.99974 10.9751L6.76641 7.7418C6.44141 7.4168 5.91641 7.4168 5.59141 7.7418C5.26641 8.0668 5.26641 8.5918 5.59141 8.9168L9.41641 12.7418C9.74141 13.0668 10.2664 13.0668 10.5914 12.7418L14.4164 8.9168C14.7414 8.5918 14.7414 8.0668 14.4164 7.7418C14.0914 7.42513 13.5581 7.4168 13.2331 7.7418Z' fill='white'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='clip0_44_757'%3E%3Crect width='20' height='20' fill='white'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E"), rgba(255, 255, 255, 0.08)
+
+        &:after
+          display: none
+
+        & .nice-select-dropdown
+          margin-top: 8px
+          width: 100%
+          border-radius: 8px
+          border: 1px solid rgba(255, 255, 255, 0.08)
+          background: #151749
+
+          & .list
+            gap: 0
+            max-height: unset
+
+          & .option
+            color: #FFF
+            font-size: 16px
+            font-weight: 500
+            line-height: 140%
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08)
+            margin: 0 16px
+            padding: 16px 0
+
+            &:last-child
+              border-bottom: none
+
+            &:hover
+              background-color: unset
+              color: #EB00FF
+
+            &.focus
+              background-color: unset

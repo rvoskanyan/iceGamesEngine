@@ -7,6 +7,7 @@ import Prompt from "./Prompt.js";
 import {debounce, getProductCardNode, scrollTo, urlEncodeFormData} from "./utils.js";
 import Postman from "./Postman.js";
 import {websiteAddress} from "./config.js";
+import NiceSelect from "nice-select2/dist/js/nice-select2.js";
 
 import './../styles/index.sass';
 import Range from "./Range.js";
@@ -2217,7 +2218,8 @@ if (catalogNode) {
       })
   })
 
-  sortSelectNode.addEventListener('input', () => {
+  NiceSelect.bind(sortSelectNode)
+  sortSelectNode.addEventListener('change', () => {
       const url = new URL(window.location.href);
 
       const value = sortSelectNode.value
