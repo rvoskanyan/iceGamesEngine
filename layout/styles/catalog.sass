@@ -453,3 +453,10 @@
 
             &.focus
               background-color: unset
+
+body.xbox
+  & .catalog
+    & .descriptionContainer
+      & .description
+        @include for-phone-only
+          transform: translateX(calc(25% - 24px))
