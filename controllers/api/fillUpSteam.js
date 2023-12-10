@@ -62,7 +62,7 @@ export const getPaymentLink = async (req, res) => {
     }
   
     if (isKazakhstan) {
-      const responseRate = await fetch('https://steam.kupikod.com/api/v3/partner-kzt', { headers: {
+      const responseRate = await fetch('https://steam-api.kupikod.com/api/v3/partner-kzt', { headers: {
           'Content-Type': 'application/json',
           'token': 'icegame.store_q4L4Re1u1hIjQIgPBWqiDYZfzheIRmHEwAzX',
         }});
