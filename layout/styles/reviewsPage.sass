@@ -2,20 +2,22 @@
 
 .reviewsPage
   & .reviewsList
-    & .review:not(:last-child)
-      margin-bottom: 10px
-
-      @include for-big-phone-up
-        margin-bottom: 15px
-
-  & .loadMore
-    margin: 30px auto 0 auto
-
+    display: grid
+    grid-template-columns: 1fr
+    gap: 30px
+    
     @include for-big-phone-up
-      margin: 45px auto 0 auto
+      grid-template-columns: repeat(2, minmax(540px, 760px))
+      gap: 30px 30px
 
-  & .lastViews
-    margin-top: 40px
+  // & .loadMore
+  //   margin: 30px auto 0 auto
 
-    @include for-big-phone-up
-      margin-top: 100px
+  //   @include for-big-phone-up
+  //     margin: 45px auto 0 auto
+
+  // & .lastViews
+  //   margin-top: 40px
+
+  //   @include for-big-phone-up
+  //     margin-top: 100px

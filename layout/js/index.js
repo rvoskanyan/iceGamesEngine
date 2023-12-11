@@ -546,18 +546,29 @@ loadMoreReviewsBtnNode && loadMoreReviewsBtnNode.addEventListener('click', async
     result.reviews.forEach(review => {
         reviewsListNode.innerHTML += `
       <div class="review">
+        // картинка
+        <div class="content">
+            <a class="btn link userName" href="${ websiteAddress }rating/${ review.user.login }" title="Перейти на страницу ${ review.user.login }">${ review.user.login }</a>
+            <div class="grade">
+                <span class="icon icon-star${review.eval >= 1 ? 'Fill' : ''}"></span>
+                <span class="icon icon-star${review.eval >= 2 ? 'Fill' : ''}"></span>
+                <span class="icon icon-star${review.eval >= 3 ? 'Fill' : ''}"></span>
+                <span class="icon icon-star${review.eval >= 4 ? 'Fill' : ''}"></span>
+                <span class="icon icon-star${review.eval >= 5 ? 'Fill' : ''}"></span>
+            </div>
+            <p class="text">${review.text}</p>
+        </div>
+        
+      
+      
+      
+      
           <div class="head">
               <a class="btn link userName" href="${ websiteAddress }rating/${ review.user.login }" title="Перейти на страницу ${ review.user.login }">${ review.user.login }</a>
               <div class="forGame">Отзыв на игру: <a class="link gameName" href="${ websiteAddress }games/${ review.targetId.alias }">${ review.targetId.name }</a></div>
           </div>
-          <div class="grade">
-              <span class="icon icon-star${review.eval >= 1 ? 'Fill' : ''}"></span>
-              <span class="icon icon-star${review.eval >= 2 ? 'Fill' : ''}"></span>
-              <span class="icon icon-star${review.eval >= 3 ? 'Fill' : ''}"></span>
-              <span class="icon icon-star${review.eval >= 4 ? 'Fill' : ''}"></span>
-              <span class="icon icon-star${review.eval >= 5 ? 'Fill' : ''}"></span>
-          </div>
-          <div class="text">${review.text}</div>
+          
+          
       </div>
     `;
     });

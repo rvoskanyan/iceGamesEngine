@@ -13,28 +13,50 @@
         <div class="reviewsList js-reviewsList">
             {{#each reviews}}
                 <div class="review" itemscope itemtype="https://schema.org/Review">
-                    <div class="head">
+                    {{!-- image --}}
+                    {{!-- TODO изменить src на  src="{{@root.websiteAddress}}{{targetId.img}}" --}}
+                    
+                    <a class='image' href="{{@root.websiteAddress}}{{#iff targetId.platformType '!==' 'pc'}}{{ targetId.platformType }}{{/iff}}games/{{targetId.alias}}">
+                        <figure class="overlay">
+                            <figcaption class='gameName'>
+                                <p>{{targetId.name}}</p>
+                            </figcaption>
+                            <img class="img" src="https://icegames.store/e9c26636-d339-489e-8940-43ab1a41bf8c.png" loading="lazy" alt="Картинка {{targetId.name}}" title="{{targetId.name}}">
+                        </figure>
+                    </a>
+                    <div class="content">
                         <a itemprop="author" class="btn link userName" href="{{@root.websiteAddress}}rating/{{user.login}}" title="Перейти на страницу {{user.login}}">{{user.login}}</a>
-                        <div class="forGame">Отзыв на игру: <a class="link gameName" href="{{@root.websiteAddress}}{{#iff targetId.platformType '!==' 'pc'}}{{ targetId.platformType }}/{{/iff}}games/{{targetId.alias}}">{{targetId.name}}</a></div>
+                        <div itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating" class="grade">
+                            <meta itemprop="worstRating" content="1">
+                            <meta itemprop="ratingValue" content="{{ eval }}">
+                            <span class="icon icon-star{{#iff eval '>=' 1}}Fill{{/iff}}"></span>
+                            <span class="icon icon-star{{#iff eval '>=' 2}}Fill{{/iff}}"></span>
+                            <span class="icon icon-star{{#iff eval '>=' 3}}Fill{{/iff}}"></span>
+                            <span class="icon icon-star{{#iff eval '>=' 4}}Fill{{/iff}}"></span>
+                            <span class="icon icon-star{{#iff eval '>=' 5}}Fill{{/iff}}"></span>
+                            <meta itemprop="bestRating" content="5">
+                        </div>
+                        <p itemprop="reviewBody" class="text">{{text}}</p>
+                        <div class="activation">
+                            <p>Сервис активации:
+                                <a href="{{@root.websiteAddress}}games?activationServices={{targetId.activationServiceId._id}}" class="link underlined">
+                                    {{targetId.activationServiceId.name}}
+                                </a>
+                            </p>
+                            <p>Регионы активации:
+                            {{#each targetId.activationRegions}}
+                                {{name}}{{#unless @last}}, {{/unless}}
+                            {{/each}}
+                            </p>
+                        </div>
                     </div>
-                    <div itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating" class="grade">
-                        <meta itemprop="worstRating" content="1">
-                        <meta itemprop="ratingValue" content="{{ eval }}">
-                        <span class="icon icon-star{{#iff eval '>=' 1}}Fill{{/iff}}"></span>
-                        <span class="icon icon-star{{#iff eval '>=' 2}}Fill{{/iff}}"></span>
-                        <span class="icon icon-star{{#iff eval '>=' 3}}Fill{{/iff}}"></span>
-                        <span class="icon icon-star{{#iff eval '>=' 4}}Fill{{/iff}}"></span>
-                        <span class="icon icon-star{{#iff eval '>=' 5}}Fill{{/iff}}"></span>
-                        <meta itemprop="bestRating" content="5">
-                    </div>
-                    <div itemprop="reviewBody" class="text">{{text}}</div>
                 </div>
             {{/each}}
         </div>
         {{#iff countReviews '>' 5}}
             <button class="btn link translucent loadMore js-loadMoreReviewsBtn" data-skip="5">Загрузить еще</button>
         {{/iff}}
-        {{#if lastViewedProducts.length}}
+        {{!-- {{#if lastViewedProducts.length}}
             <div class="lastViews">
                 <div class="title">Вы недавно смотрели</div>
                 <div class="games mobileScroll">
@@ -43,6 +65,6 @@
                     {{/each}}
                 </div>
             </div>
-        {{/if}}
+        {{/if}} --}}
     </div>
 </main>
