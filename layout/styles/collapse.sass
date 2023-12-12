@@ -1,16 +1,23 @@
 @import './breakPoints'
 
 .collapse
-  border-radius: 8px
-  background: #410074
+  background: #320065
+  border-radius: 21px
   color: #fff
-  padding: 16px
+  overflow: hidden
+  transition: .5s ease
+  transition-property: max-height
+  display: flex
+  flex-direction: column
+  padding: 10px 15px //paddingTop&Bottom
+  max-height: 20px + 16px //paddingTop&Bottom + maxHeightHead
 
   @include for-big-phone-up
     padding: 15px 25px //paddingTop&Bottom
+    max-height: 30px + 16px //paddingTop&Bottom + maxHeightHead
 
   & .head
-    line-height: 140%
+    line-height: 1
     font-weight: 300
     display: flex
     justify-content: space-between
@@ -18,14 +25,15 @@
     width: 100%
     max-width: 100%
     min-width: 100%
+    max-height: 16px //maxHeightHead
     min-height: 16px //maxHeightHead
     column-gap: 10px
-    overflow: visible
 
     & .title
-      font-size: 16px
-      font-weight: 600
-      text-align: left
+      font-size: 13px
+      overflow: hidden
+      white-space: nowrap
+      text-overflow: ellipsis
 
       @include for-big-phone-up
         font-size: 16px
@@ -49,7 +57,7 @@
         height: 2px
         background-color: #fff
         transform: rotate(40deg) translateY(50%)
-        transition: transform .5s ease
+        transition: transform .3s ease-in
 
         @include for-big-phone-up
           height: 3px
@@ -63,10 +71,13 @@
   & .content
     line-height: 1.5
     flex-grow: 1
+    margin-top: 10px
     overflow: hidden
-    font-size: 14px
-    max-height: 0
-    transition: max-height .3s ease-out
+    font-size: 13px
+
+    @include for-big-phone-up
+      margin-top: 20px
+      font-size: 16px
 
     .link
       color: #5488ff
@@ -76,14 +87,10 @@
 
   &.active
     max-height: 500px
-    
+
     & .head .control
-      &:before
-        transform: rotate(-45deg) translateY(0%)
-      &:after
-         transform: rotate(45deg) translateY(0%)
-         
+      &:before, &:after
+        transform: rotate(0deg) translateY(50%)
+
     & .content
       overflow: auto
-      transition: max-height .5s ease
-      max-height: 500px
