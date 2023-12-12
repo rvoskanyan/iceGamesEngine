@@ -2,100 +2,22 @@
 
 .supportPage
   & .titlePage
-    font-size: 16px
-    font-weight: 400
+    font-size: 20px
     color: #fff
     font-family: 'Lemon Milk'
-    text-align: start
+    text-align: center
 
     @include for-big-phone-up
-      font-size: 48px
-      
-  & .supportCards
-    display: flex
-    flex-direction: column
-    margin-top: 24px
-    margin-bottom: 32px
-    gap: 8px
-    
-    @include for-big-phone-up
-      flex-direction: row
-      margin-top: 32px
-      margin-bottom: 56px
-      gap: 32px
-        
-    & .text
-      color: #fff
-      line-height: 140%
-    
-    & h3
-      font-size: 16px
-      font-weight: 700
-     
-      text-transform: uppercase
-
-      @include for-big-phone-up
-        font-size: 48px
-      
-    & .card
-      display: flex
-      flex-direction: column
-      align-items: flex-start
-      width: 100%
-      min-height: 126px
-      padding: 16px
-      gap: 16px
-      border-radius: 12px
-      border: 2px solid #525379
-      background: #fa60ff0f
-      backdrop-filter: blur(12px)
-    
-      @include for-big-phone-up
-        padding: 24px
-        min-height: 240px
-         
-      & a 
-        font-size: 14px
-        color: #EB00FF
-        font-weight: 400
-        text-decoration: underline 
-      
-        @include for-big-phone-up
-          font-size: 32px
-      & p 
-        font-size: 14px
-        font-weight: 400 
-              
-        @include for-big-phone-up
-          font-size: 18px
+      font-size: 36px
 
   & .faq
-    margin-top: 24px
-    
-    @include for-big-phone-up
-      margin-top: 32px
-    
-    & .item:hover
-        background: #984BFB
+    margin-top: 30px
 
     & .item:not(:last-child)
       margin-bottom: 8px
 
       @include for-big-phone-up
         margin-bottom: 12px
-        
-    & .divider
-      border: none
-      margin-bottom: 16px
-      margin-top: 16px
-      
-    & .item.active
-      background: #32006552
-      
-      & .divider
-        background-color: #ffffff1f
-        color: #ffffff1f
-        height: 1px
 
   & .chatBlock
     background-color: #320065
