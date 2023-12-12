@@ -1,267 +1,436 @@
-<main class="supportPage article">
-    {{> breadcrumbs}}
-    <div class="cover">
-        <img class="img" src="{{websiteAddress}}img/supportCover.png" alt="Постер для страницы поддержки" loading="lazy" title="Постер для страницы игры">
-        <div class="textContent">
-            <h1 class="title">Поддержка</h1>
-        </div>
-        <button class="btn translucent js-scroller" data-target="faqContent">
-            <span class="icon icon-arrowBottom"></span>
-        </button>
+<main class='supportPage article'>
+  {{> breadcrumbs}}
+  <div class='cover'>
+    <img
+      class='img'
+      src='{{websiteAddress}}img/supportCover.png'
+      alt='Постер для страницы поддержки'
+      loading='lazy'
+      title='Постер для страницы игры'
+    />
+    <div class='textContent'>
+      <h1 class='title'>Поддержка</h1>
     </div>
-    <div class="contentContainer js-faqContent">
-        <div class="titlePage">Часто задаваемые вопросы</div>
-        <div class="faq">
-            <div class="item collapse js-collapse" itemscope itemtype="http://schema.org/Question">
-                <button class="btn head">
-                    <span class="title">1. <span itemprop="name">Где я могу получить техническую поддержку?</span></span>
-                    <span class="control"></span>
-                </button>
-                <div class="content" itemprop="suggestedAnswer" itemscope itemtype="http://schema.org/Answer">
-                    <span itemprop="text">
-                        <p>
-                            Мы всегда готовы Вам помочь через нашу группу
-                            <a class="link" rel="nofollow" target="_blank" href="https://vk.com/ice.games" title="Перейти на нашу страницу ВК">ВКонтакте</a>;
-                        </p>
-                        <p>
-                            А также электронную почту:
-                            <a class="link" rel="nofollow" target="_blank" href="mailto:icegames.store@mail" title="Открыть почтовый клиент">icegames.store@mail.ru</a>;
-                        </p>
-                        <p>
-                            И <a class="link" rel="nofollow" target="_blank" href="https://t.me/ICE_supportBot" title="Перейти в телеграм">телеграмм бот</a> — самый
-                            оперативный способ связи.
-                        </p>
-                    </span>
-                </div>
-            </div>
-            <div class="item collapse js-collapse" itemscope itemtype="http://schema.org/Question">
-                <button class="btn head">
-                    <span class="title">2. <span itemprop="name">Что вы продаёте? Можно ли приобрести аккаунты Стим?</span></span>
-                    <span class="control"></span>
-                </button>
-                <div class="content" itemprop="suggestedAnswer" itemscope itemtype="http://schema.org/Answer">
-                    <span itemprop="text">
-                        Мы <b>магазин лицензионных ключей Steam для PC</b>. Мы не продаём аккаунты людей Steam и в
-                        продаже они не появятся.
-                    </span>
-                </div>
-            </div>
-            <div class="item collapse js-collapse" itemscope itemtype="http://schema.org/Question">
-                <button class="btn head">
-                    <span class="title">3. <span itemprop="name">Как совершить покупку?</span></span>
-                    <span class="control"></span>
-                </button>
-                <div class="content" itemprop="suggestedAnswer" itemscope itemtype="http://schema.org/Answer">
-                    <span itemprop="text">
-                        Нажмите “Купить” на странице выбранной Вами игры. Далее Вам предложат выбрать способ оплаты и ввести
-                        электронную почту. После совершения необходимых действий, Вы моментально получите ключ на указанную
-                        Вами почту. Ключ можно будет активировать в сервисе активации, указанном на странице приобретенной
-                        игры. Подробнее об активации в нашей
-                        <a class="link" target="_blank" href="https://icegames.store/blog/kak-aktivirovat-klyuch-v-steam-origin-i-uplay" title="Перейти к статье об активации игры">статье</a>.
-                    </span>
-                </div>
-            </div>
-            <div class="item collapse js-collapse" itemscope itemtype="http://schema.org/Question">
-                <button class="btn head">
-                    <span class="title">4. <span itemprop="name">После покупки я получу рандомную игру?</span></span>
-                    <span class="control"></span>
-                </button>
-                <div class="content" itemprop="suggestedAnswer" itemscope itemtype="http://schema.org/Answer">
-                    <span itemprop="text">
-                        Нет! Любой товар — это именно тот товар, который указан на сайте. Рандома здесь никогда не было
-                        и не будет. Мы дорожим своей репутацией!
-                    </span>
-                </div>
-            </div>
-            <div class="item collapse js-collapse" itemscope itemtype="http://schema.org/Question">
-                <button class="btn head">
-                    <span class="title">5. <span itemprop="name">Сколько длятся скидки? Когда цена на игры снова повысится?</span></span>
-                    <span class="control"></span>
-                </button>
-                <div class="content" itemprop="suggestedAnswer" itemscope itemtype="http://schema.org/Answer">
-                    <span itemprop="text">
-                        Скидки в ICE GAMES длятся круглый год. Цена на определённую игру может незначительно меняться, в
-                        зависимости от вашего спроса.
-                    </span>
-                </div>
-            </div>
-            <div class="item collapse js-collapse" itemscope itemtype="http://schema.org/Question">
-                <button class="btn head">
-                    <span class="title">6. <span itemprop="name">Где промокоды на дополнительные скидки?</span></span>
-                    <span class="control"></span>
-                </button>
-                <div class="content" itemprop="suggestedAnswer" itemscope itemtype="http://schema.org/Answer">
-                    <span itemprop="text">
-                        <p>
-                            К сожалению, их нет. Наши цены самые низкие из возможных на данный момент. Вы можете лишь
-                            подождать снижения стоимости игры, цена на которую формируется из вашего спроса.
-                        </p>
-                        <p>
-                            Однако в нашей
-                            <a class="link" rel="nofollow" target="_blank" href="https://vk.com/ice.games" title="Перейти на нашу страницу ВК">
-                                группе Вконтакте
-                            </a> Вы можете получить не просто промокод, а целую игру бесплатно. Мы регулярно проводим
-                            розыгрыши ключей среди самых активных участников ;)
-                        </p>
-                    </span>
-                </div>
-            </div>
-            <div class="item collapse js-collapse" itemscope itemtype="http://schema.org/Question">
-                <button class="btn head">
-                    <span class="title">7. <span itemprop="name">Какие у вас гарантии?</span></span>
-                    <span class="control"></span>
-                </button>
-                <div class="content" itemprop="suggestedAnswer" itemscope itemtype="http://schema.org/Answer">
-                    <span itemprop="text">
-                        Такие ситуации случаются редко, но всё возможно: в случае бракованных, уже активированных или
-                        нерабочих ключей мы оперативно заменим ключ.
-                    </span>
-                </div>
-            </div>
-            <div class="item collapse js-collapse" itemscope itemtype="http://schema.org/Question">
-                <button class="btn head">
-                    <span class="title">8. <span itemprop="name">Почему у вас цены ниже, чем на официальной площадке?</span></span>
-                    <span class="control"></span>
-                </button>
-                <div class="content" itemprop="suggestedAnswer" itemscope itemtype="http://schema.org/Answer">
-                    <span itemprop="text">
-                        Мы закупаем ключи у официальных поставщиков оптом. Оптовые закупки всегда снижают стоимость товара.
-                    </span>
-                </div>
-            </div>
-            <div class="item collapse js-collapse" itemscope itemtype="http://schema.org/Question">
-                <button class="btn head">
-                    <span class="title">9. <span itemprop="name">Я не могу найти нужную мне игру, что делать?</span></span>
-                    <span class="control"></span>
-                </button>
-                <div class="content" itemprop="suggestedAnswer" itemscope itemtype="http://schema.org/Answer">
-                    <span itemprop="text">
-                        <ol>
-                            <li>Воспользуйтесь поиском в верхней части экрана.</li>
-                            <li>Проверьте написание название игры и убедитесь в отсутствии посторонних символов.</li>
-                        </ol>
-                        <p>
-                            Если Вы всё же не нашли интересующую вас игру, значит пока что её нет в наличии. В таком случае
-                            Вы можете написать нам в
-                            <a class="link" rel="nofollow" target="_blank" href="https://vk.com/ice.games" title="Перейти на нашу страницу ВК">
-                                группу Вконтакте.
-                            </a>
-                            По возможности мы добавим её в каталог!
-                        </p>
-                    </span>
-                </div>
-            </div>
-            <div class="item collapse js-collapse" itemscope itemtype="http://schema.org/Question">
-                <button class="btn head">
-                    <span class="title">10. <span itemprop="name">Я не получил ключ после покупки, что делать?</span></span>
-                    <span class="control"></span>
-                </button>
-                <div class="content" itemprop="suggestedAnswer" itemscope itemtype="http://schema.org/Answer">
-                    <span itemprop="text">
-                        После покупки ключ должен моментально прийти на электронную почту. (При условии, что Вы оформили
-                        <b>не предзаказ</b>). Если ключ не удалось найти, обратитесь в нашу поддержку на сайте. Мы
-                        обязательно поможем!
-                    </span>
-                </div>
-            </div>
-            <div class="item collapse js-collapse" itemscope itemtype="http://schema.org/Question">
-                <button class="btn head">
-                    <span class="title">11. <span itemprop="name">Ключ не действителен после активации. Что делать?</span></span>
-                    <span class="control"></span>
-                </button>
-                <div class="content" itemprop="suggestedAnswer" itemscope itemtype="http://schema.org/Answer">
-                    <span itemprop="text">
-                        <ol>
-                            <li>Еще раз внимательно прочтите инструкцию по активации на странице товара, который Вы приобрели.</li>
-                            <li>
-                                Проверьте, на верной ли платформе Вы пытаетесь активировать ключ. Ключ Steam нельзя
-                                активировать, например, в Origin и наоборот.
-                            </li>
-                            <li>Попробуйте ввести ключ вручную.</li>
-                            <li>Если не помогло, обязательно обратитесь в тех-поддержку на сайте.</li>
-                        </ol>
-                    </span>
-                </div>
-            </div>
-            <div class="item collapse js-collapse" itemscope itemtype="http://schema.org/Question">
-                <button class="btn head">
-                    <span class="title">12. <span itemprop="name">Я не могу активировать игру из-за регионального ограничения, что делать?</span></span>
-                    <span class="control"></span>
-                </button>
-                <div class="content" itemprop="suggestedAnswer" itemscope itemtype="http://schema.org/Answer">
-                    <span itemprop="text">
-                        <ol>
-                            <li>Вы можете попробовать обойти ограничение через VPN-сервисы.</li>
-                            <li>Можно попросить доверенное лицо активировать ключ за Вас.</li>
-                        </ol>
-                        <p>
-                            Однако лучше очень внимательно следить за <b>регионом активации</b> при совершении покупки, ведь
-                            вышеописанные методы не гарантируют 100% успеха. Таковы правила: игра может не запуститься за
-                            пределами определённой страны, и мы не сможем помочь Вам нарушить эти правила.
-                        </p>
-                    </span>
-                </div>
-            </div>
-            <div class="item collapse js-collapse" itemscope itemtype="http://schema.org/Question">
-                <button class="btn head">
-                    <span class="title">13. <span itemprop="name">Есть сайт с таким же названием, это вы?</span></span>
-                    <span class="control"></span>
-                </button>
-                <div class="content" itemprop="suggestedAnswer" itemscope itemtype="http://schema.org/Answer">
-                    <span itemprop="text">
-                        <p>
-                            Нет. Мы единственные и неповторимые, другие площадки с похожими названиями с нами никак не
-                            связаны ;)
-                        </p>
-                        <p>
-                            Наш единый домен — <a class="link" href="https://icegames.store/" title="Перейти на главную страницу" target="_blank">icegames.store</a>
-                        </p>
-                    </span>
-                </div>
-            </div>
-            <div class="item collapse js-collapse" itemscope itemtype="http://schema.org/Question">
-                <button class="btn head">
-                    <span class="title">
-                        <span itemprop="name">
-                            14. Я купил игру с активацией в Steam, а друг приобрёл игру в Uplay/Origin/и прочее. Мы
-                            сможем играть вместе?
-                        </span>
-                    </span>
-                    <span class="control"></span>
-                </button>
-                <div class="content" itemprop="suggestedAnswer" itemscope itemtype="http://schema.org/Answer">
-                    <span itemprop="text">Да, конечно, ведь платформы продают не саму игру, а именно доступ к ней.</span>
-                </div>
-            </div>
-            <div class="item collapse js-collapse" itemscope itemtype="http://schema.org/Question">
-                <button class="btn head">
-                    <span class="title">15. <span itemprop="name">Можно ли дарить купленный ключ?</span></span>
-                    <span class="control"></span>
-                </button>
-                <div class="content" itemprop="suggestedAnswer" itemscope itemtype="http://schema.org/Answer">
-                    <span itemprop="text">
-                        Да, после покупки Вы можете подарить купленный ключ кому захотите. Активировать его можно в любой
-                        момент времени, но только один раз.
-                    </span>
-                </div>
-            </div>
-            <div class="item collapse js-collapse" itemscope itemtype="http://schema.org/Question">
-                <button class="btn head">
-                    <span class="title">16. <span itemprop="name">Где я могу оставить отзыв о вашем магазине?</span></span>
-                    <span class="control"></span>
-                </button>
-                <div class="content" itemprop="suggestedAnswer" itemscope itemtype="http://schema.org/Answer">
-                    <span itemprop="text">
-                        Надеемся, мы смогли Вас порадовать! Оставить отзыв о нас можно на нашем сайте на странице приобретенной игры или
-                        <a class="link" target="_blank" rel="nofollow" href="https://vk.com/ice.games" title="Перейти на нашу страницу ВК">
-                            группе ВКонтакте.
-                        </a>
-                        Спасибо за обратную связь!
-                    </span>
-                </div>
-            </div>
+    <button class='btn translucent js-scroller' data-target='faqContent'>
+      <span class='icon icon-arrowBottom'></span>
+    </button>
+  </div>
+  <div class='contentContainer js-faqContent'>
+     <h2 class='titlePage'>Где я могу получить <br> техническую поддержку?</h2>
+     <section class='supportCards'>
+      {{!-- telegram --}}
+      <div class='card'>
+        <h3 class='text'>телеграм-бот</h3>
+        <a
+          class='link'
+          rel='nofollow'
+          target='_blank'
+          href='https://t.me/ICE_supportBot'
+          title='Перейти в телеграм'
+          >@ICE_supportBot</a>
+        <p class='text'>Время ответа - до 5 минут</p>
+      </div>
+      {{!-- VK --}}
+      <div class='card'>
+        <h3 class='text'>группа Вк</h3>
+        <a
+          class='link'
+          rel='nofollow'
+          target='_blank'
+          href='https://vk.com/ice.games'
+          title='Перейти на нашу страницу ВК'
+          >ICE GAMES</a>
+        <p class='text'>Время ответа - до 5 минут</p>
+      </div>
+      {{!-- mail --}}
+      <div class='card'>
+        <h3 class='text'>эл. почта</h3>
+        <a
+          class='link'
+          rel='nofollow'
+          target='_blank'
+          href='mailto:icegames.store@mail'
+          title='Открыть почтовый клиент'
+          >icegames.store@mail.ru</a>
+        <p class='text'>Время ответа - 1 рабочий день</p>
+      </div>
+     </section>
+    <h2 class='titlePage'>Часто задаваемые вопросы:</h2>
+    <div class='faq'>
+      <div class='item collapse js-collapse' itemscope itemtype='http://schema.org/Question'>
+        <button class='btn head'>
+          <span class='title'>
+            <span itemprop='name'>Что вы продаёте? Можно ли приобрести аккаунты Стим?</span>
+            </span>
+          <span class='control'></span>
+        </button>
+        <div
+          class='content'
+          itemprop='suggestedAnswer'
+          itemscope
+          itemtype='http://schema.org/Answer'
+        >
+          <hr class="divider">
+          <span itemprop='text'>
+            Мы
+            <b>магазин лицензионных ключей Steam для PC</b>. Мы не продаём аккаунты людей Steam и в
+            продаже они не появятся.
+          </span>
         </div>
-        <!--<div class="chatBlock">
+      </div>
+      <div class='item collapse js-collapse' itemscope itemtype='http://schema.org/Question'>
+        <button class='btn head'>
+          <span class='title'> 
+            <span itemprop='name'>Как совершить покупку?</span>
+            </span>
+          <span class='control'></span>
+        </button>
+        <div
+          class='content'
+          itemprop='suggestedAnswer'
+          itemscope
+          itemtype='http://schema.org/Answer'
+        >
+          <hr class="divider">
+          <span itemprop='text'>
+            Нажмите “Купить” на странице выбранной Вами игры. Далее Вам предложат выбрать способ
+            оплаты и ввести электронную почту. После совершения необходимых действий, Вы моментально
+            получите ключ на указанную Вами почту. Ключ можно будет активировать в сервисе
+            активации, указанном на странице приобретенной игры. Подробнее об активации в нашей
+            <a
+              class='link'
+              target='_blank'
+              href='https://icegames.store/blog/kak-aktivirovat-klyuch-v-steam-origin-i-uplay'
+              title='Перейти к статье об активации игры'
+            >статье</a>.
+          </span>
+        </div>
+      </div>
+      <div class='item collapse js-collapse' itemscope itemtype='http://schema.org/Question'>
+        <button class='btn head'>
+          <span class='title'>
+            <span itemprop='name'>После покупки я получу рандомную игру?</span></span>
+          <span class='control'></span>
+        </button>
+        <div
+          class='content'
+          itemprop='suggestedAnswer'
+          itemscope
+          itemtype='http://schema.org/Answer'
+        >
+          <hr class="divider">
+          <span itemprop='text'>
+            Нет! Любой товар — это именно тот товар, который указан на сайте. Рандома здесь никогда
+            не было и не будет. Мы дорожим своей репутацией!
+          </span>
+        </div>
+      </div>
+      <div class='item collapse js-collapse' itemscope itemtype='http://schema.org/Question'>
+        <button class='btn head'>
+          <span class='title'>
+            <span itemprop='name'>Сколько длятся скидки? Когда цена на игры снова повысится?</span></span>
+          <span class='control'></span>
+        </button>
+        <div
+          class='content'
+          itemprop='suggestedAnswer'
+          itemscope
+          itemtype='http://schema.org/Answer'
+        >
+          <hr class="divider">
+          <span itemprop='text'>
+            Скидки в ICE GAMES длятся круглый год. Цена на определённую игру может незначительно
+            меняться, в зависимости от вашего спроса.
+          </span>
+        </div>
+      </div>
+      <div class='item collapse js-collapse' itemscope itemtype='http://schema.org/Question'>
+        <button class='btn head'>
+          <span class='title'>
+            <span itemprop='name'>Где промокоды на дополнительные скидки?</span></span>
+          <span class='control'></span>
+        </button>
+        <div
+          class='content'
+          itemprop='suggestedAnswer'
+          itemscope
+          itemtype='http://schema.org/Answer'
+        >
+          <hr class="divider">
+          <span itemprop='text'>
+            <p>
+              К сожалению, их нет. Наши цены самые низкие из возможных на данный момент. Вы можете
+              лишь подождать снижения стоимости игры, цена на которую формируется из вашего спроса.
+            </p>
+            <p>
+              Однако в нашей
+              <a
+                class='link'
+                rel='nofollow'
+                target='_blank'
+                href='https://vk.com/ice.games'
+                title='Перейти на нашу страницу ВК'
+              >
+                группе Вконтакте
+              </a>
+              Вы можете получить не просто промокод, а целую игру бесплатно. Мы регулярно проводим
+              розыгрыши ключей среди самых активных участников ;)
+            </p>
+          </span>
+        </div>
+      </div>
+      <div class='item collapse js-collapse' itemscope itemtype='http://schema.org/Question'>
+        <button class='btn head'>
+          <span class='title'>
+            <span itemprop='name'>Какие у вас гарантии?</span>
+          </span>
+          <span class='control'></span>
+        </button>
+        <div
+          class='content'
+          itemprop='suggestedAnswer'
+          itemscope
+          itemtype='http://schema.org/Answer'
+        >
+          <hr class="divider">
+          <span itemprop='text'>
+            Такие ситуации случаются редко, но всё возможно: в случае бракованных, уже
+            активированных или нерабочих ключей мы оперативно заменим ключ.
+          </span>
+        </div>
+      </div>
+      <div class='item collapse js-collapse' itemscope itemtype='http://schema.org/Question'>
+        <button class='btn head'>
+          <span class='title'>
+            <span itemprop='name'>Почему у вас цены ниже, чем на официальной площадке?</span></span>
+          <span class='control'></span>
+        </button>
+        <div
+          class='content'
+          itemprop='suggestedAnswer'
+          itemscope
+          itemtype='http://schema.org/Answer'
+        >
+          <hr class="divider">
+          <span itemprop='text'>
+            Мы закупаем ключи у официальных поставщиков оптом. Оптовые закупки всегда снижают
+            стоимость товара.
+          </span>
+        </div>
+      </div>
+      <div class='item collapse js-collapse' itemscope itemtype='http://schema.org/Question'>
+        <button class='btn head'>
+          <span class='title'>
+            <span itemprop='name'>Я не могу найти нужную мне игру, что делать?</span></span>
+          <span class='control'></span>
+        </button>
+        <div
+          class='content'
+          itemprop='suggestedAnswer'
+          itemscope
+          itemtype='http://schema.org/Answer'
+        >
+          <hr class="divider">
+          <span itemprop='text'>
+            <ol>
+              <li>Воспользуйтесь поиском в верхней части экрана.</li>
+              <li>Проверьте написание название игры и убедитесь в отсутствии посторонних символов.</li>
+            </ol>
+            <p>
+              Если Вы всё же не нашли интересующую вас игру, значит пока что её нет в наличии. В
+              таком случае Вы можете написать нам в
+              <a
+                class='link'
+                rel='nofollow'
+                target='_blank'
+                href='https://vk.com/ice.games'
+                title='Перейти на нашу страницу ВК'
+              >
+                группу Вконтакте.
+              </a>
+              По возможности мы добавим её в каталог!
+            </p>
+          </span>
+        </div>
+      </div>
+      <div class='item collapse js-collapse' itemscope itemtype='http://schema.org/Question'>
+        <button class='btn head'>
+          <span class='title'>
+            <span itemprop='name'>Я не получил ключ после покупки, что делать?</span></span>
+          <span class='control'></span>
+        </button>
+        <div
+          class='content'
+          itemprop='suggestedAnswer'
+          itemscope
+          itemtype='http://schema.org/Answer'
+        >
+          <hr class="divider">
+          <span itemprop='text'>
+            После покупки ключ должен моментально прийти на электронную почту. (При условии, что Вы
+            оформили
+            <b>не предзаказ</b>). Если ключ не удалось найти, обратитесь в нашу поддержку на сайте.
+            Мы обязательно поможем!
+          </span>
+        </div>
+      </div>
+      <div class='item collapse js-collapse' itemscope itemtype='http://schema.org/Question'>
+        <button class='btn head'>
+          <span class='title'>
+            <span itemprop='name'>Ключ не действителен после активации. Что делать?</span></span>
+          <span class='control'></span>
+        </button>
+        <div
+          class='content'
+          itemprop='suggestedAnswer'
+          itemscope
+          itemtype='http://schema.org/Answer'
+        >
+          <hr class="divider">
+          <span itemprop='text'>
+            <ol>
+              <li>Еще раз внимательно прочтите инструкцию по активации на странице товара, который
+                Вы приобрели.</li>
+              <li>
+                Проверьте, на верной ли платформе Вы пытаетесь активировать ключ. Ключ Steam нельзя
+                активировать, например, в Origin и наоборот.
+              </li>
+              <li>Попробуйте ввести ключ вручную.</li>
+              <li>Если не помогло, обязательно обратитесь в тех-поддержку на сайте.</li>
+            </ol>
+          </span>
+        </div>
+      </div>
+      <div class='item collapse js-collapse' itemscope itemtype='http://schema.org/Question'>
+        <button class='btn head'>
+          <span class='title'>
+            <span itemprop='name'>Я не могу активировать игру из-за регионального ограничения, что
+              делать?</span></span>
+          <span class='control'></span>
+        </button>
+        <div
+          class='content'
+          itemprop='suggestedAnswer'
+          itemscope
+          itemtype='http://schema.org/Answer'
+        >
+          <hr class="divider">
+          <span itemprop='text'>
+            <ol>
+              <li>Вы можете попробовать обойти ограничение через VPN-сервисы.</li>
+              <li>Можно попросить доверенное лицо активировать ключ за Вас.</li>
+            </ol>
+            <p>
+              Однако лучше очень внимательно следить за
+              <b>регионом активации</b>
+              при совершении покупки, ведь вышеописанные методы не гарантируют 100% успеха. Таковы
+              правила: игра может не запуститься за пределами определённой страны, и мы не сможем
+              помочь Вам нарушить эти правила.
+            </p>
+          </span>
+        </div>
+      </div>
+      <div class='item collapse js-collapse' itemscope itemtype='http://schema.org/Question'>
+        <button class='btn head'>
+          <span class='title'>
+            <span itemprop='name'>Есть сайт с таким же названием, это вы?</span></span>
+          <span class='control'></span>
+        </button>
+        <div
+          class='content'
+          itemprop='suggestedAnswer'
+          itemscope
+          itemtype='http://schema.org/Answer'
+        >
+          <hr class="divider">
+          <span itemprop='text'>
+            <p>
+              Нет. Мы единственные и неповторимые, другие площадки с похожими названиями с нами
+              никак не связаны ;)
+            </p>
+            <p>
+              Наш единый домен —
+              <a
+                class='link'
+                href='https://icegames.store/'
+                title='Перейти на главную страницу'
+                target='_blank'
+              >icegames.store</a>
+            </p>
+          </span>
+        </div>
+      </div>
+      <div class='item collapse js-collapse' itemscope itemtype='http://schema.org/Question'>
+        <button class='btn head'>
+          <span class='title'>
+            <span itemprop='name'>
+              Я купил игру с активацией в Steam, а друг приобрёл игру в Uplay/Origin/и прочее.
+              Мы сможем играть вместе?
+            </span>
+          </span>
+          <span class='control'></span>
+        </button>
+        <div
+          class='content'
+          itemprop='suggestedAnswer'
+          itemscope
+          itemtype='http://schema.org/Answer'
+        >
+          <hr class="divider">
+          <span itemprop='text'>Да, конечно, ведь платформы продают не саму игру, а именно доступ к
+            ней.</span>
+        </div>
+      </div>
+      <div class='item collapse js-collapse' itemscope itemtype='http://schema.org/Question'>
+        <button class='btn head'>
+          <span class='title'>
+            <span itemprop='name'>Можно ли дарить купленный ключ?</span></span>
+          <span class='control'></span>
+        </button>
+        <div
+          class='content'
+          itemprop='suggestedAnswer'
+          itemscope
+          itemtype='http://schema.org/Answer'
+        >
+          <hr class="divider">
+          <span itemprop='text'>
+            Да, после покупки Вы можете подарить купленный ключ кому захотите. Активировать его
+            можно в любой момент времени, но только один раз.
+          </span>
+        </div>
+      </div>
+      <div class='item collapse js-collapse' itemscope itemtype='http://schema.org/Question'>
+        <button class='btn head'>
+          <span class='title'>
+            <span itemprop='name'>Где я могу оставить отзыв о вашем магазине?</span></span>
+          <span class='control'></span>
+        </button>
+        <div
+          class='content'
+          itemprop='suggestedAnswer'
+          itemscope
+          itemtype='http://schema.org/Answer'
+        >
+          <hr class="divider">
+          <span itemprop='text'>
+            Надеемся, мы смогли Вас порадовать! Оставить отзыв о нас можно на нашем сайте на
+            странице приобретенной игры или
+            <a
+              class='link'
+              target='_blank'
+              rel='nofollow'
+              href='https://vk.com/ice.games'
+              title='Перейти на нашу страницу ВК'
+            >
+              группе ВКонтакте.
+            </a>
+            Спасибо за обратную связь!
+          </span>
+        </div>
+      </div>
+    </div>
+    <!--<div class="chatBlock">
             <div class="titlePage">Чат с поддержкой</div>
             <div class="chat">
                 <div class="messages">
@@ -311,5 +480,5 @@
                 </div>
             </div>
         </div>-->
-    </div>
+  </div>
 </main>
