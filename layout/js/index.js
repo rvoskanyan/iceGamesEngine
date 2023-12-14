@@ -80,6 +80,7 @@ const loadModeProductReviewsNode = document.querySelector('.js-loadModeProductRe
 const listRatingNode = document.querySelector('.js-listRating');
 const restorePasswordFormNode = document.querySelector('.js-restorePasswordForm');
 const fillUpSteamFrom = document.querySelector('.js-fillUpSteamFrom');
+const fillUpGameFrom = document.querySelector('.js-fillUpGameFrom');
 const counterAnimationNodes = document.querySelectorAll('.js-counterAnimation');
 const openCompoundOrderNodes = document.querySelectorAll('.js-openCompoundOrder');
 const openAboutHomeModalNode = document.querySelector('.js-openAboutHomeModal');
@@ -599,11 +600,13 @@ howToGetLoginNode && howToGetLoginNode.addEventListener('click', () => {
     fillUpPageModalNode.classList.add('active');
 })
 
-fillUpPageModalNode && fillUpPageModalNode.querySelector('.js-closeFillUpPageModal').addEventListener('click', () => {
-    document.body.classList.remove('noScrolling');
-
-    fillUpPageModalNode.classList.remove('active');
-})
+fillUpPageModalNode && fillUpPageModalNode.querySelectorAll('.js-closeFillUpPageModal')
+  .forEach(closeFillUpModalNode => {
+      closeFillUpModalNode.addEventListener('click', () => {
+          document.body.classList.remove('noScrolling');
+          fillUpPageModalNode.classList.remove('active');
+      })
+  })
 
 inputFrameNodes.forEach(inputFrameNode => {
     inputFrameNode.addEventListener('input', (e) => {
@@ -2542,6 +2545,46 @@ if (fillUpSteamFrom) {
             a.click();
 
             window.open(`${websiteAddress}fill-up-steam/check-status?fillUpId=${results.fillUpId}`, '_self');
+        }
+    });
+}
+
+if (fillUpGameFrom) {
+    const amountSelectNode = fillUpGameFrom.querySelector('.amountSelect');
+    const resultNode = fillUpGameFrom.querySelector('.js-fillUpSubmitResult');
+    const totalNode = document.querySelector('.js-total');
+    let amount = 0;
+    let total = 0;
+
+    NiceSelect.bind(amountSelectNode)
+    amountSelectNode.addEventListener('change', (e) => {
+        amount = +e.target.value;
+        changeParams();
+    });
+
+
+    function changeParams() {
+        total = amount;
+        totalNode.innerText = `${total} ₽`;
+    }
+
+    const a = document.createElement("a");
+    document.body.appendChild(a);
+    a.style = "display: none";
+
+    new AsyncForm({
+        mainNode: fillUpGameFrom,
+        resultMessageNode: resultNode,
+        successHandler: (sendParams, results) => {
+            if (results.card) {
+                return window.open(results.link, '_self');
+            }
+
+            a.href = results.link;
+            a.setAttribute('target', '_blank');
+            a.click();
+
+            window.open(`${websiteAddress}fill-up-game/check-status?fillUpId=${results.fillUpId}`, '_self');
         }
     });
 }

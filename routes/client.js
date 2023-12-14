@@ -19,6 +19,7 @@ import legalInfo from './client/legalinfo.js';
 import splitCatalogRoute from './client/splitCatalog.js';
 import yaAuthRoute from "./client/yaAuth.js";
 import fillUpSteamRoute from './client/fillUpSteam.js';
+import fillUpGameRoute from "./client/fillUpGame.js";
 import selectionsRoute from './client/selections.js';
 import splitRoute from './client/split.js';
 import { checkPlatform } from "../middlewares/checkPlatform.js";
@@ -46,6 +47,7 @@ router.use('/sitemaps', sitemapsRoute);
 router.use('/legal-info', legalInfo);
 router.use('/', splitCatalogRoute);
 router.use('/fill-up-steam', fillUpSteamRoute);
+router.use('/fill-up-game', fillUpGameRoute);
 router.use('/selections', selectionsRoute);
 router.use('/split', splitRoute);
 

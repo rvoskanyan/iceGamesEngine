@@ -1,0 +1,317 @@
+<main class="contentContainer withoutCover fillUpGamePage">
+    <div class="modalContainer js-fillUpPageModal">
+        <div class="content modalContent">
+	        <div class="modalHead">
+		        <p class="title">Где взять UID в Genshin Impact?</p>
+		        <button class="modalClose js-closeFillUpPageModal" type="button" aria-label="закрыть"></button>
+	        </div>
+            <img class="img" loading="lazy" src="{{ websiteAddress }}img/whereUidGenshin.png" alt="Где взять UID в Genshin Impact">
+	        <div class="description">
+		        <p>После пополнения Genesis Crystal автоматически появятся в вашем аккаунте.Чтобы найти игровой UID:</p>
+		        <ul>
+			        <li>Зайдите в игру</li>
+			        <li>Откройте меню. UID можно найти под аватаром профиля.</li>
+			        <li>Также можно посмотреть UID в нижнем правом углу Genshin Impact.</li>
+		        </ul>
+	        </div>
+	        <div class="modalBtn">
+		        <button class="btn round bg-middleViolet hover-bg-violet js-closeFillUpPageModal" type="button">Понятно</button>
+	        </div>
+        </div>
+    </div>
+    {{> breadcrumbs}}
+    <div class="mainContent">
+        <h1 class="title">
+	        Пополнить баланс <br>Genshin Impact
+        </h1>
+        <p class="description">
+	        Специально для вас от&nbsp;сервиса ICE GAMES мы&nbsp;предоставляем услугу пополнения игр в&nbsp;рублях. Теперь вы&nbsp;можете легко и&nbsp;быстро пополнить баланс игр.
+        </p>
+
+        <form class="form js-fillUpGameFrom" action="{{websiteAddress}}api/fillUpGame/getPaymentLink">
+	        <div class="select-frame">
+		        <select class="amountSelect">
+			        <option value="99">60 Genesis Crystals Genshin Impact GP</option>
+			        <option value="489">300+30 Genesis Crystals Genshin Impact GP</option>
+			        <option value="1429">980+110 Genesis Crystals Genshin Impact GP</option>
+			        <option value="2999">1980+260 Genesis Crystals Genshin Impact GP</option>
+			        <option value="4699">3280+600 Genesis Crystals Genshin Impact GP</option>
+			        <option value="9299">6480+1600 Genesis Crystals Genshin Impact G</option>
+			        <option value="489">Blessing of the Welkin Moon Genshin Impact GP</option>
+		        </select>
+	        </div>
+
+            <label class="input-frame js-inputFrame">
+                <input class="textField" type="text" name="UID" placeholder="UID">
+                <button class="btn prompt js-howToGetLogin" type="button">Как узнать UID?</button>
+            </label>
+
+
+            <label class="input-frame">
+                <input class="textField" type="email" name="email" placeholder="E-mail, на который будет отправлен чек">
+            </label>
+            {{> checkbox
+                    value='true'
+                    label='Я подтверждаю, что UID верный'
+                    name='confirmIndicationCorrectData'
+            }}
+
+            <div class="check">
+                <div class="title">Оплата</div>
+                <div class="body">
+                    <div class="item">
+                        <div class="name">Название выбранного товара</div>
+                    </div>
+                </div>
+                <div class="total">
+                    <div class="name">К оплате</div>
+                    <div class="value js-total">0 ₽</div>
+                </div>
+                <input type="submit" value="ОПЛАТИТЬ" class="btn round bg-middleViolet hover-bg-violet js-payBtn">
+            </div>
+            <div class="js-fillUpSubmitResult fillUpSubmitResult"></div>
+        </form>
+    </div>
+    <div class="additional">
+        <div class="fillUpStatistics">
+            <div class="statisticInput">
+                <div class="label">успешных<br>пополнений</div>
+                <div class="value">{{ countFillUps }}</div>
+            </div>
+            <div class="statisticInput">
+                <div class="label">среднее<br>время зачисления</div>
+                <div class="value">1 мин {{ seconds }} сек</div>
+            </div>
+            <div class="statisticInput">
+                <div class="label">пополнений<br>на сумму</div>
+                <div class="value">{{ amount }}</div>
+            </div>
+            <div class="statisticInput">
+                <div class="label">работа<br>сервиса</div>
+                <div class="value">24/7</div>
+            </div>
+        </div>
+        <div class="fillUpTabInfo js-fillUpInfoTabs">
+            <div class="actionsBtn">
+                <button class="btn bg-violet rounded active js-tabBtn" data-target-id="instruction">Инструкция</button>
+                <button class="btn bg-violet rounded js-tabBtn" data-target-id="faq">FAQ</button>
+            </div>
+            <div class="blocks">
+                <div class="instructionBlock item active js-tabBlock-instruction" itemscope itemtype="https://schema.org/HowTo">
+                    <ol class="list">
+                        <li class="element" itemprop="step" itemscope itemtype="http://schema.org/HowToSection">
+                            <meta itemprop="position" content="1"/>
+                            <span itemprop="text">
+                                Введи свой UID в Genshin Impact. <span style="color: #EB00FF"><span class="link js-whereLogin">Как узнать UID?</span></span>
+                            </span>
+                        </li>
+                        <li class="element" itemprop="step" itemscope itemtype="http://schema.org/HowToSection">
+                            <meta itemprop="position" content="2"/>
+                            <span itemprop="text">Выберите количество кристаллов сотворения, которое желаете приобрести.</span>
+                        </li>
+                        <li class="element" itemprop="step" itemscope itemtype="http://schema.org/HowToSection">
+                            <meta itemprop="position" content="3"/>
+                            <span itemprop="text">
+                                Проверьте, что Вы указали правильный UID. Если Вы укажешь неправильный UID, то мы сможем пополнить неправильный аккаунт.
+                            </span>
+                        </li>
+                        <li class="element" itemprop="step" itemscope itemtype="http://schema.org/HowToSection">
+                            <meta itemprop="position" content="4"/>
+                            <span itemprop="text">Нажмите кнопку «Перейти к оплате».</span>
+                        </li>
+                        <li class="element" itemprop="step" itemscope itemtype="http://schema.org/HowToSection">
+                            <meta itemprop="position" content="5"/>
+                            <span itemprop="text">
+                                Вы перейдете на страницу, где необходимо выбрать метод оплаты.
+                            </span>
+                        </li>
+                        <li class="element" itemprop="step" itemscope itemtype="http://schema.org/HowToSection">
+                            <meta itemprop="position" content="6"/>
+                            <span itemprop="text">
+                                После успешной оплаты кристаллы, или благословение полной луны поступят на баланс вашего аккаунта Genshin Impact в течение 2-10 минут.
+                            </span>
+                        </li>
+                        <li class="element" itemprop="step" itemscope itemtype="http://schema.org/HowToSection">
+                            <meta itemprop="position" content="7"/>
+                            <span itemprop="text">
+                                При возникновении вопросов <a href="https://vk.com/ice.games" title="Перейти на страницу сообщества ICE GAMES в VK" rel="nofollow" target="_blank" class="link">свяжитесь с поддержкой</a>.
+                            </span>
+                        </li>
+                    </ol>
+                </div>
+                <div class="item js-tabBlock-faq" itemscope itemtype="https://schema.org/FAQPage">
+                    <div class="collapse js-collapse" itemscope itemtype="https://schema.org/Question">
+                        <button class="btn head">
+                            <span class="title" itemprop="name">Что такое UID в Genshin Impact?</span>
+                            <span class="control"></span>
+                        </button>
+                        <div class="content" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                            <p class="text" itemprop="text">
+	                            Это уникальный идентификатор аккаунта. Как его посмотреть? Зайдите в Меню Паймон и UID будет указан прямо под вашей аватаркой.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="collapse js-collapse" itemscope itemtype="https://schema.org/Question">
+                        <button class="btn head">
+                            <span class="title" itemprop="name">Как получить кристаллы сотворения Genshin Impact?</span>
+                            <span class="control"></span>
+                        </button>
+                        <div class="content" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+	                        <p class="text" itemprop="text">
+	                            Для этого вам достаточно указать идентификатор нужного аккаунта. Кстати, вы можете спокойно приобрести кристаллы не только для себя, но и для друга, достаточно узнать его UID.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="collapse js-collapse" itemscope itemtype="https://schema.org/Question">
+                        <button class="btn head">
+                            <span class="title" itemprop="name">Сколько можно получить кристаллов сотворения?</span>
+                            <span class="control"></span>
+                        </button>
+                        <div class="content" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+	                        <p class="text" itemprop="text">
+	                            Не менее 60 кристаллов. Максимального лимита нет!
+                            </p>
+                        </div>
+                    </div>
+                    <div class="collapse js-collapse" itemscope itemtype="https://schema.org/Question">
+                        <button class="btn head">
+                            <span class="title" itemprop="name">Как быстро кристаллы поступают на мой аккаунт в игре?</span>
+                            <span class="control"></span>
+                        </button>
+                        <div class="content" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+	                        <p class="text" itemprop="text">
+	                            Обычно доставка не занимает много времени, ведь весь процесс автоматизирован.
+	                            <br>
+	                            В исключительных случаях, из-за технических сбоев, возможна задержка перевода. При возникновении проблем свяжитесь с поддержкой.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="collapse js-collapse" itemscope itemtype="https://schema.org/Question">
+                        <button class="btn head">
+                            <span class="title" itemprop="name">Не пришли кристаллы?</span>
+                            <span class="control"></span>
+                        </button>
+                        <div class="content" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+	                        <p class="text" itemprop="text">
+                                Пожалуйста обратись в нашу службу поддержки.
+                            </p>
+                        </div>
+                    </div>
+	                <div class="collapse js-collapse" itemscope itemtype="https://schema.org/Question">
+		                <button class="btn head">
+			                <span class="title" itemprop="name">Кристаллов вдвое больше?</span>
+			                <span class="control"></span>
+		                </button>
+		                <div class="content" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+			                <p class="text" itemprop="text">
+                                Если это ваша первая покупка в Genshin Impact, то мы пришлем на указанный аккаунт в два раза больше гемов, чем должно быть. Предложение действует на каждый пакет гемов!
+                            </p>
+		                </div>
+	                </div>
+	                <div class="collapse js-collapse" itemscope itemtype="https://schema.org/Question">
+		                <button class="btn head">
+			                <span class="title" itemprop="name">Меня могут забанить в Genshin за донат?</span>
+			                <span class="control"></span>
+		                </button>
+		                <div class="content" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+			                <p class="text" itemprop="text">
+                                Нет. Ведь мы пользуемся услугами официальных партнеров Genshin Impact.
+                            </p>
+		                </div>
+	                </div>
+	                <div class="collapse js-collapse" itemscope itemtype="https://schema.org/Question">
+		                <button class="btn head">
+			                <span class="title" itemprop="name">Сколько лун можно вывести на аккаунт?</span>
+			                <span class="control"></span>
+		                </button>
+		                <div class="content" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+			                <p class="text" itemprop="text">
+                                На каждом аккаунте в Genshin не может быть больше 180-ти дней луны. Поэтому вы сможете вывести не более 6 лун.
+                            </p>
+		                </div>
+	                </div>
+	                <div class="collapse js-collapse" itemscope itemtype="https://schema.org/Question">
+		                <button class="btn head">
+			                <span class="title" itemprop="name">Что такое drop (дроп) в Genshin Impact?</span>
+			                <span class="control"></span>
+		                </button>
+		                <div class="content" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+			                <p class="text" itemprop="text">
+                                Это бонусы, которые вы получаете после убийства мобов и боссов. К сожалению, приобрести их отдельно не получится.
+                            </p>
+		                </div>
+	                </div>
+                </div>
+            </div>
+        </div>
+        <div class="fillUpReviews">
+            <div class="title">Отзывы</div>
+
+            {{#if canAddReview}}
+	            <form action="{{ websiteAddress }}api/fillUpGame/addReview" method="post" class="addReviewForm js-fillUpAddReviewFrom">
+		            <div class="starRating js-error-eval">
+			            <div class="label">Оцените работу сервиса</div>
+			            <div class="stars">
+				            <input class="input" type="radio" name="eval" value="5" id="star5">
+				            <label class="star" for="star5">
+					            <span class="icon icon-star"></span>
+				            </label>
+				            <input class="input" type="radio" name="eval" value="4" id="star4">
+				            <label class="star" for="star4">
+					            <span class="icon icon-star"></span>
+				            </label>
+				            <input class="input" type="radio" name="eval" value="3" id="star3">
+				            <label class="star" for="star3">
+					            <span class="icon icon-star"></span>
+				            </label>
+				            <input class="input" type="radio" name="eval" value="2" id="star2">
+				            <label class="star" for="star2">
+					            <span class="icon icon-star"></span>
+				            </label>
+				            <input class="input" type="radio" name="eval" value="1" id="star1">
+				            <label class="star" for="star1">
+					            <span class="icon icon-star"></span>
+				            </label>
+			            </div>
+		            </div>
+		            <div class="label">Напишите отзыв</div>
+		            <div class="senderField textReview js-error-text">
+			            <div class="autoSizeInput js-autoSizeInput" data-name="text">
+				            <span class="placeholder js-placeholder">До 1 000 символов</span>
+				            <div class="value js-value" contentEditable></div>
+			            </div>
+			            <button class="btn" type="submit">
+				            <span class="icon icon-send"></span>
+			            </button>
+		            </div>
+	            </form>
+            {{ else }}
+                {{#unless reviewExists}}
+                    <div class="description">
+	                    Чтобы оставить комментарий, необходимо авторизоваться или зарегистрироваться
+                    </div>
+                {{/unless}}
+            {{/if}}
+            <div class="reviewsList js-filUpReviewsList" data-user-name="{{ person.login }}">
+                {{#each reviews}}
+                    {{> review
+                            userLogin=user.login
+                    }}
+                {{/each}}
+            </div>
+
+            {{#iff countReviews '>' 5}}
+                <button class="loadMore js-loadMoreFillUpReviewsBtn" data-skip="5" type="button">Загрузить еще</button>
+            {{/iff}}
+
+            <div class="externalReviews">
+                <a href="https://vk.com/topic-198095537_46620037" target="_blank" rel="nofollow" class="reviewLink">
+                    <span class="icon icon-pinkExternalLink"></span> Отзывы в ВК
+                </a>
+                <a href="https://yandex.ru/maps/org/ice_games_store/7653444700/reviews/?ll=37.711258%2C55.779505&z=18" target="_blank" rel="nofollow" class="reviewLink">
+                    <span class="icon icon-pinkExternalLink"></span> Отзывы на Яндекс картах
+                </a>
+            </div>
+        </div>
+    </div>
+</main>

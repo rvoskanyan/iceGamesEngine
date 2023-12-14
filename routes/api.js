@@ -9,6 +9,7 @@ import reviewsRoute from './api/rewiews.js';
 import usersRoute from './api/users.js';
 import paymentRoute from "./api/payment.js";
 import fillUpSteamRoute from "./api/fillUpSteam.js";
+import fillUpGameRoute from "./api/fillUpGame.js";
 import selectionsRoute from "./api/selections.js";
 import systemRoute from "./api/system.js";
 
@@ -24,6 +25,7 @@ router.use('/reviews', reviewsRoute);
 router.use('/users', usersRoute);
 router.use('/beta/payment', paymentRoute);
 router.use('/fillUpSteam', fillUpSteamRoute);
+router.use('/fillUpGame', fillUpGameRoute);
 router.use('/selections', selectionsRoute);
 router.use('/system', systemRoute);
 
