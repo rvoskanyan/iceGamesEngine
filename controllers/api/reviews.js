@@ -3,7 +3,7 @@ import Review from "../../models/Review.js";
 export const getReviews = async (req, res) => {
   try {
     const {
-      limit = 6,
+      limit = 4,
       skip = 0,
       target = '',
       targetId = null,
