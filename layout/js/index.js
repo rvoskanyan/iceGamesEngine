@@ -1,19 +1,18 @@
-import Slider from "./Slider.js";
-import Tabs from "./Tabs.js";
+import NiceSelect from "nice-select2/dist/js/nice-select2.js";
+import AsyncForm from "./AsyncForm.js";
 import Modal from "./Modal.js";
 import PopupController from "./PopupController.js";
-import AsyncForm from "./AsyncForm.js";
-import Prompt from "./Prompt.js";
-import {debounce, getProductCardNode, scrollTo, urlEncodeFormData} from "./utils.js";
 import Postman from "./Postman.js";
-import {websiteAddress} from "./config.js";
-import NiceSelect from "nice-select2/dist/js/nice-select2.js";
+import Prompt from "./Prompt.js";
+import Slider from "./Slider.js";
+import Tabs from "./Tabs.js";
+import { websiteAddress } from "./config.js";
+import { debounce, getProductCardNode, scrollTo, urlEncodeFormData } from "./utils.js";
 
 import './../styles/index.sass';
-import Range from "./Range.js";
-import SocialSharing from "./lib/socialSharing.js";
 import Message from "./lib/message.js";
 import Payment from "./lib/payment.js";
+import SocialSharing from "./lib/socialSharing.js";
 
 const postman = new Postman();
 const platform = document.body.dataset.platform || 'pc';
@@ -75,6 +74,8 @@ const loadMoreFillUpReviewsBtnNode = document.querySelector('.js-loadMoreFillUpR
 const listFillUpReviewsNode = document.querySelector('.js-filUpReviewsList');
 const loadMoreReviewsBtnNode = document.querySelector('.js-loadMoreReviewsBtn');
 const reviewsListNode = document.querySelector('.js-reviewsList');
+const reviewsPage = document.querySelector('.js-reviewsPage');
+const readFullReviewBtnNodes = document.querySelectorAll('.js-readFullReview');
 const loadMoreRatingNode = document.querySelector('.js-loadMoreRating');
 const loadModeProductReviewsNode = document.querySelector('.js-loadModeProductReviews');
 const listRatingNode = document.querySelector('.js-listRating');
@@ -91,6 +92,8 @@ const mobileCartLinkNode = document.querySelector('.js-mobileCartLink');
 const fastSelect = document.querySelector('.js-fastSelect');
 const reloadCheckFillUpStatusNode = document.querySelector('.js-reloadCheckFillUpStatus');
 const buyTurkeyPage = document.querySelector('.js-buyTurkeyPage');
+
+
 const popupController = new PopupController([
     {
         id: 'loginForm',
@@ -213,6 +216,8 @@ openAboutHomeModalNode && openAboutHomeModalNode.addEventListener('click', () =>
         document.querySelector('body').classList.remove('noScrolling');
     })
 });
+
+
 
 openDescriptionSplitCatalogNode && openDescriptionSplitCatalogNode.addEventListener('click', () => {
     const descriptionSplitCatalogNode = document.querySelector('.js-descriptionSplitCatalog');
@@ -533,41 +538,7 @@ loadMoreFillUpReviewsBtnNode && loadMoreFillUpReviewsBtnNode.addEventListener('c
     loadMoreFillUpReviewsBtnNode.dataset.skip = parseInt(loadMoreFillUpReviewsBtnNode.dataset.skip) + 5;
 })
 
-loadMoreReviewsBtnNode && loadMoreReviewsBtnNode.addEventListener('click', async () => {
-    const skip = parseInt(loadMoreReviewsBtnNode.dataset.skip);
-
-    const response = await postman.get(`${websiteAddress}api/reviews?skip=${skip}&target=Product`);
-    const result = await response.json();
-
-    if (result.email) {
-        return;
-    }
-
-    result.reviews.forEach(review => {
-        reviewsListNode.innerHTML += `
-      <div class="review">
-          <div class="head">
-              <a class="btn link userName" href="${ websiteAddress }rating/${ review.user.login }" title="Перейти на страницу ${ review.user.login }">${ review.user.login }</a>
-              <div class="forGame">Отзыв на игру: <a class="link gameName" href="${ websiteAddress }games/${ review.targetId.alias }">${ review.targetId.name }</a></div>
-          </div>
-          <div class="grade">
-              <span class="icon icon-star${review.eval >= 1 ? 'Fill' : ''}"></span>
-              <span class="icon icon-star${review.eval >= 2 ? 'Fill' : ''}"></span>
-              <span class="icon icon-star${review.eval >= 3 ? 'Fill' : ''}"></span>
-              <span class="icon icon-star${review.eval >= 4 ? 'Fill' : ''}"></span>
-              <span class="icon icon-star${review.eval >= 5 ? 'Fill' : ''}"></span>
-          </div>
-          <div class="text">${review.text}</div>
-      </div>
-    `;
-    });
-
-    if (result.isLast) {
-        return loadMoreReviewsBtnNode.remove();
-    }
-
-    loadMoreReviewsBtnNode.dataset.skip = parseInt(loadMoreReviewsBtnNode.dataset.skip) + 5;
-});
+loadMoreReviewsBtnNode && loadMoreReviewsBtnNode.addEventListener('click', loadMoreReviews);
 
 if (largeImgNodes.length) {
     largeImgNodes.forEach((item, index) => {
@@ -2830,3 +2801,166 @@ new Promise(resolve => {
     socialShare.init()
     resolve()
 }).catch(a => console.warn(a))
+
+
+readFullReviewBtnNodes && setPopupReview(readFullReviewBtnNodes)
+
+function setPopupReview (nodeList) {
+    nodeList.forEach( node => node.addEventListener('click', () => openFullReview(node)))
+}
+
+function closeFullReview(evt) {
+    evt.preventDefault();
+    
+    const fullReviewNode = reviewsPage.querySelector('.js-fullReview');
+    
+    document.body.classList.remove('noScrolling')
+    
+    const reviewBtnNodes = reviewsPage.querySelectorAll('.js-readFullReview');
+    reviewBtnNodes.forEach(node => node.classList.remove("disabled"));
+    
+    fullReviewNode.remove();
+}
+
+async function loadMoreReviews (evt) {
+    evt.preventDefault();
+    const skip = parseInt(loadMoreReviewsBtnNode.dataset.skip);
+    
+    const response = await postman.get(`${websiteAddress}api/reviews?skip=${skip}&target=Product`);
+    const result = await response.json();
+    
+    if (result.email) {
+        return;
+    }
+       
+    result.reviews.forEach(rev => {
+        if( rev.text.length > 204 ) {
+          rev.text = rev.text.slice(0, 204).concat(" ...")
+        }     
+      });
+            
+    result.reviews.forEach(review => {
+        reviewsListNode.innerHTML += `
+      <div class="review">
+        <a class='image' href="${ websiteAddress }${ review.targetId.platformType !== "pc" ?review.targetId.platformType + review.targetId.platformType : "games/" + review.targetId.alias}">
+            <figure class="overlay">
+                <figcaption class='gameName'>
+                    <p>${ review.targetId.name }</p>
+                </figcaption>
+                <img class="img" src="${ websiteAddress }${review.targetId.img}" loading="lazy" alt="Картинка ${ review.targetId.name }" title="${ review.targetId.name }">
+            </figure>
+        </a>
+        <div class="content">
+            <a class="btn link userName" href="${ websiteAddress }rating/${ review.user.login }" title="Перейти на страницу ${ review.user.login }">${ review.user.login }</a>
+            <div class="grade">
+                <span class="icon icon-star${review.eval >= 1 ? 'Fill' : ''}"></span>
+                <span class="icon icon-star${review.eval >= 2 ? 'Fill' : ''}"></span>
+                <span class="icon icon-star${review.eval >= 3 ? 'Fill' : ''}"></span>
+                <span class="icon icon-star${review.eval >= 4 ? 'Fill' : ''}"></span>
+                <span class="icon icon-star${review.eval >= 5 ? 'Fill' : ''}"></span>
+            </div>
+            <p class="text">${review.text}
+                ${review.text.length > 204
+                ? 
+                `<span class="readFull js-readFullReview" data-id=${review._id} data-target=${review.target}>
+                    Читать полный отзыв
+                </span>`
+                : ""}
+            </p>
+            <div class="activation">
+                <p>Сервис активации:
+                    <a href="${websiteAddress}games?activationServices=${review.targetId.activationServiceId._id}" class="link underlined">
+                        ${review.targetId.activationServiceId.name}
+                    </a>
+                </p>
+                <p class="regions">Регионы активации:
+                    ${review.targetId.activationRegions.map(reg => ` ${reg.name}`)}
+                </p>
+            </div>
+        </div>
+      </div>`;
+    });
+    
+    const readFullReviewBtnNodes = document.querySelectorAll('.js-readFullReview');
+    setPopupReview(readFullReviewBtnNodes)
+
+    if (result.isLast) {
+        return loadMoreReviewsBtnNode.remove();
+    }
+
+    loadMoreReviewsBtnNode.dataset.skip = parseInt(loadMoreReviewsBtnNode.dataset.skip) + 6;
+}
+
+async function openFullReview (node) {
+    const id = node.dataset.id;
+    const target = node.dataset.target;
+         
+    const reviewBtnNodes = reviewsPage.querySelectorAll('.js-readFullReview');
+    reviewBtnNodes.forEach(node => node.classList.add("disabled"));
+
+    document.body.classList.add('noScrolling')
+    
+    const response = await postman.get(`${websiteAddress}api/reviews?id=${id}&target=${target}`);
+    const { reviews }  = await response.json();
+        
+    if(!reviews[0]) {
+        return
+    }
+        
+    const { text, user, targetId } = reviews[0];
+        
+    const portal = document.createElement('section');
+    portal.className = 'fullReview js-fullReview';
+    
+    reviewsPage.append(portal)
+        portal.innerHTML += `
+            <div class="overlay">
+                <div class="wrapper">
+                    <div class="container">
+                        <a class='image' href="${ websiteAddress }${ targetId.platformType !=="pc" ? targetId.platformType + targetId.platformType : "games/" +targetId.alias}">
+                            <figure class="overlayImage">
+                                 <figcaption class='gameName'>
+                                     <p>${ targetId.name }</p>
+                                 </figcaption>
+                                 <img class="img"src="${ websiteAddress }${targetId.img}" loading="lazy" alt="Картинка ${ targetId.name }" title="${ targetId.name }">
+                            </figure>
+                        </a>
+                        <div class="content">
+                            <p class="gameNameMobile">${ targetId.name }</p>
+                            <a class="btn link userName" href="${ websiteAddress }rating/${ user.login }" title="Перейти на страницу ${ user.login }">
+                                    ${ user.login }
+                            </a>
+                            <div class="grade">
+                                <span class="icon icon-star${reviews[0].eval >= 1 ? 'Fill' : ''}"></span>
+                                <span class="icon icon-star${reviews[0].eval >= 2 ? 'Fill' : ''}"></span>
+                                <span class="icon icon-star${reviews[0].eval >= 3 ? 'Fill' : ''}"></span>
+                                <span class="icon icon-star${reviews[0].eval >= 4 ? 'Fill' : ''}"></span>
+                                <span class="icon icon-star${reviews[0].eval >= 5 ? 'Fill' : ''}"></span>
+                            </div>
+                            <p class="text">
+                                ${text}
+                            </p>
+                            <div class="activation">
+                                <p>Сервис активации:
+                                    <a href="${websiteAddress}games?activationServices=${targetId.activationServiceId._id}" class="link underlined">
+                                        ${targetId.activationServiceId.name}
+                                    </a>
+                                </p>
+                                <p>Регионы активации:
+                                    ${targetId.activationRegions.map( reg => ` ${reg.name}` )}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btnClose js-closeFullReview">Закрыть</button>
+                </div> 
+            </div>
+            `;
+        
+        const closeFullReviewBtn = reviewsPage.querySelector('.js-closeFullReview');
+       
+        if(closeFullReview) {
+           closeFullReviewBtn.addEventListener('click', closeFullReview) 
+        } 
+}
+
