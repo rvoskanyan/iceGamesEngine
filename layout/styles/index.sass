@@ -16,6 +16,7 @@
 @import './senderField'
 @import './autoSizeInput'
 @import './review'
+@import './fullReview'
 @import './comment'
 @import './lastViews'
 @import './collapse'
@@ -106,10 +107,12 @@ body
   -ms-text-size-adjust: 100%
   -moz-text-size-adjust: 100%
   -webkit-text-size-adjust: 100%
+    
+  @include for-big-phone-up
+    padding: 0 calc(20px - (100vw - 100%)) 0 0
 
   &.noScrolling
     overflow: hidden
-    padding-right: 0
 
     & .header
       right: 0
@@ -205,7 +208,7 @@ img
     text-decoration: underline
 
 .homeSection
-  margin-top: 40px
+  margin-top: 24px
 
   @include for-big-phone-up
     margin-top: 100px

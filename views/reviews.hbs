@@ -1,4 +1,4 @@
-<main class="reviewsPage article">
+<main class="reviewsPage article js-reviewsPage">
     {{> breadcrumbs}}
     <div class="cover">
         <img class="img" src="{{websiteAddress}}img/reviewsCover.png" loading="lazy" alt="Постер для страницы отзывов" title="Постер для страницы отзывов">
@@ -13,15 +13,13 @@
         <div class="reviewsList js-reviewsList">
             {{#each reviews}}
                 <div class="review" itemscope itemtype="https://schema.org/Review">
-                    {{!-- image --}}
-                    {{!-- TODO изменить src на  src="{{@root.websiteAddress}}{{targetId.img}}" --}}
-                    
-                    <a class='image' href="{{@root.websiteAddress}}{{#iff targetId.platformType '!==' 'pc'}}{{ targetId.platformType }}{{/iff}}games/{{targetId.alias}}">
+                    {{!-- image --}}    
+                    <a class="image" href="{{@root.websiteAddress}}{{#iff targetId.platformType "!==" "pc"}}{{ targetId.platformType }}{{/iff}}games/{{targetId.alias}}">
                         <figure class="overlay">
                             <figcaption class='gameName'>
                                 <p>{{targetId.name}}</p>
                             </figcaption>
-                            <img class="img" src="https://icegames.store/e9c26636-d339-489e-8940-43ab1a41bf8c.png" loading="lazy" alt="Картинка {{targetId.name}}" title="{{targetId.name}}">
+                            <img class="img" src="{{@root.websiteAddress}}{{targetId.img}}" loading="lazy" alt="Картинка {{targetId.name}}" title="{{targetId.name}}">
                         </figure>
                     </a>
                     <div class="content">
@@ -36,7 +34,15 @@
                             <span class="icon icon-star{{#iff eval '>=' 5}}Fill{{/iff}}"></span>
                             <meta itemprop="bestRating" content="5">
                         </div>
-                        <p itemprop="reviewBody" class="text">{{text}}</p>
+                        <p itemprop="reviewBody" class="text">
+                            {{text}}
+                            {{#iff text.length '>' 204}}
+                                <span class="readFull js-readFullReview" data-id={{_id}} data-target={{target}}>
+                                    Читать полный отзыв
+                                </span>
+                            {{/iff}}
+                            
+                        </p>
                         <div class="activation">
                             <p>Сервис активации:
                                 <a href="{{@root.websiteAddress}}games?activationServices={{targetId.activationServiceId._id}}" class="link underlined">
@@ -53,8 +59,8 @@
                 </div>
             {{/each}}
         </div>
-        {{#iff countReviews '>' 5}}
-            <button class="btn link translucent loadMore js-loadMoreReviewsBtn" data-skip="5">Загрузить еще</button>
+        {{#iff countReviews '>' 6}}
+            <button class="btn loadMore js-loadMoreReviewsBtn" data-skip="6">Загрузить еще</button>
         {{/iff}}
         {{!-- {{#if lastViewedProducts.length}}
             <div class="lastViews">
@@ -67,4 +73,5 @@
             </div>
         {{/if}} --}}
     </div>
+    {{!-- {{> fullReview}} --}}
 </main>

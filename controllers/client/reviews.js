@@ -1,5 +1,5 @@
-import User from "../../models/User.js";
 import Review from "../../models/Review.js";
+import User from "../../models/User.js";
 
 export const reviewsPage = async (req, res) => {
   try {
@@ -35,7 +35,13 @@ export const reviewsPage = async (req, res) => {
         }
       ])
       .lean();
-  
+      
+      reviews.forEach(rev => {
+        if( rev.text.length > 204 ) {
+          rev.text = rev.text.slice(0, 204).concat(" ...")
+        }     
+      });
+        
     if (req.session.isAuth) {
       const person = res.locals.person;
       const favoritesProducts = person.favoritesProducts;

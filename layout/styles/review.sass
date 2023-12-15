@@ -6,14 +6,14 @@
   align-items: center
   gap: 16px
   border: 2px solid #525379
-  border-radius: 15px
+  border-radius: 12px
   background:#fa60ff0f
   padding: 16px
 
   @include for-big-phone-up
     flex-direction: row
+    align-items: flex-start
     gap: 40px
-    border-radius: 20px
     padding: 24px
     
   .image
@@ -59,17 +59,35 @@
     width: 100%
     height: 100%
     
+    .userName
+      font-weight: 700
+    
+    .readFull
+      color: #EB00FF
+      font-weight: 400
+      line-height: normal
+      text-decoration-line: underline
+      white-space: nowrap
+      cursor: pointer
+    
     .activation
       display: flex
       flex-direction: column
       gap: 8px 
       margin-top: auto
       font-size: 14px
+      font-weight: 400
       line-height: 140%
       color: #fff
-      
+            
       @include for-big-phone-up
-        font-size: 14px
+        font-size: 16px
+      
+      a
+        font-weight: 500
+        
+    .disabled
+      pointer-events: none
 
   & .grade
     display: flex
@@ -80,9 +98,11 @@
 
     & .icon
       background-color: #EB00FF
+      width: 32px
+      height: 32px
 
       &:not(:last-child)
-        margin-right: 3px
+        margin-right: 8px
 
   & .text
     color: #fff

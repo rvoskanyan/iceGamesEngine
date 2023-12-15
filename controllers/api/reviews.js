@@ -3,10 +3,11 @@ import Review from "../../models/Review.js";
 export const getReviews = async (req, res) => {
   try {
     const {
-      limit = 5,
+      limit = 6,
       skip = 0,
       target = '',
       targetId = null,
+      id = null
     } = req.query;
     
     if (!target.length) {
@@ -16,6 +17,7 @@ export const getReviews = async (req, res) => {
     const filter = {active: true, status: 'taken', target};
   
     targetId && (filter.targetId = targetId);
+    id && (filter._id = id)
   
     const countReviews = await Review.countDocuments(filter);
     const reviews = await Review
@@ -24,7 +26,19 @@ export const getReviews = async (req, res) => {
       .limit(limit)
       .select(['text', 'eval', 'target', 'targetId'])
       .populate([
-        'targetId',
+        {
+          path:'targetId',
+          populate: [
+            {
+              path: 'activationServiceId',
+              select: ['name']
+            },
+            {
+              path: 'activationRegions',
+              select: ['name']
+            }
+          ]
+        },
         {
           path: 'user',
           select: ['login'],
@@ -32,7 +46,7 @@ export const getReviews = async (req, res) => {
       ])
       .sort({createdAt: -1})
       .lean();
-    
+           
     res.json({
       success: true,
       isLast: +skip + +limit >= countReviews,
