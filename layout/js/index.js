@@ -2888,7 +2888,7 @@ async function loadMoreReviews (evt) {
         return loadMoreReviewsBtnNode.remove();
     }
 
-    loadMoreReviewsBtnNode.dataset.skip = parseInt(loadMoreReviewsBtnNode.dataset.skip) + 6;
+    loadMoreReviewsBtnNode.dataset.skip = parseInt(loadMoreReviewsBtnNode.dataset.skip) + 4;
 }
 
 async function openFullReview (node) {

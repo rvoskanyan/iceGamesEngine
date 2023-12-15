@@ -11,13 +11,13 @@ export const reviewsPage = async (req, res) => {
         status: 'taken',
         target: 'Product',
       })
-      .limit(6)
+      .limit(4)
       .sort({createdAt: -1})
       .select(['eval', 'text', 'target'])
       .populate([
         {
           path: 'targetId',
-          select: ['name', 'alias', 'activationServiceId', 'activationRegions'],
+          select: ['name', 'alias', 'img', 'activationServiceId', 'activationRegions'],
           populate: [
             {
               path: 'activationServiceId',
