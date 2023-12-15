@@ -844,3 +844,47 @@
 
         .description
           text-align: justify
+
+  .gamesSlider
+    width: 100%
+    margin-bottom: 32px
+
+    .visibleArea
+      width: 100%
+      overflow: hidden
+      position: relative
+
+      .tape
+        display: flex
+        transition: 1s ease
+        gap: 16px
+
+  .fillUpGameCard
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: flex-start
+    flex-shrink: 0
+    gap: 16px
+    width: 104px
+    padding: 12px
+    border-radius: 8px
+
+    &.disabled
+      opacity: 0.2
+
+    &.enabled
+      border: 1px solid #FA00FF
+
+    .image
+      display: block
+      width: 100%
+      border-radius: 8px
+
+    .title
+      color: #FFF
+      text-align: center
+      font-size: 14px
+      font-style: normal
+      font-weight: 500
+      line-height: 120%

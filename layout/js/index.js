@@ -81,6 +81,7 @@ const listRatingNode = document.querySelector('.js-listRating');
 const restorePasswordFormNode = document.querySelector('.js-restorePasswordForm');
 const fillUpSteamFrom = document.querySelector('.js-fillUpSteamFrom');
 const fillUpGameFrom = document.querySelector('.js-fillUpGameFrom');
+const gamesSliderNode = document.querySelector(('.js-gamesSlider'));
 const counterAnimationNodes = document.querySelectorAll('.js-counterAnimation');
 const openCompoundOrderNodes = document.querySelectorAll('.js-openCompoundOrder');
 const openAboutHomeModalNode = document.querySelector('.js-openAboutHomeModal');
@@ -2546,6 +2547,13 @@ if (fillUpSteamFrom) {
 
             window.open(`${websiteAddress}fill-up-steam/check-status?fillUpId=${results.fillUpId}`, '_self');
         }
+    });
+}
+
+if (gamesSliderNode) {
+    new Slider({
+        mainNode: gamesSliderNode,
+        countSlidesScroll: 1,
     });
 }
 

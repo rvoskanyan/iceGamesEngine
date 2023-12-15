@@ -20,6 +20,44 @@
         </div>
     </div>
     {{> breadcrumbs}}
+	<div class="gamesSlider js-gamesSlider">
+		<div class="visibleArea js-visibleArea">
+			<div class="tape js-tape">
+				<div class="slide js-slide fillUpGameCard disabled">
+					<img class="image" src="{{websiteAddress}}img/games/brawl-stars.png" alt="">
+					<span class="title">Brawl Stars</span>
+				</div>
+				<div class="slide js-slide fillUpGameCard enabled">
+					<img class="image" src="{{websiteAddress}}img/games/genshin.png" alt="">
+					<span class="title">Genshin Impact</span>
+				</div>
+				<div class="slide js-slide fillUpGameCard disabled">
+					<img class="image" src="{{websiteAddress}}img/games/hay-day.png" alt="">
+					<span class="title">Hay Day</span>
+				</div>
+				<div class="slide js-slide fillUpGameCard disabled">
+					<img class="image" src="{{websiteAddress}}img/games/clash-of-clans.png" alt="">
+					<span class="title">Clash of Clans</span>
+				</div>
+				<div class="slide js-slide fillUpGameCard disabled">
+					<img class="image" src="{{websiteAddress}}img/games/pubg.png" alt="">
+					<span class="title">PUBG: Mobile</span>
+				</div>
+				<div class="slide js-slide fillUpGameCard disabled">
+					<img class="image" src="{{websiteAddress}}img/games/new-state.png" alt="">
+					<span class="title">PUBG: New State</span>
+				</div>
+				<div class="slide js-slide fillUpGameCard disabled">
+					<img class="image" src="{{websiteAddress}}img/games/mobile-legends.png" alt="">
+					<span class="title">Mobile Legends</span>
+				</div>
+				<div class="slide js-slide fillUpGameCard disabled">
+					<img class="image" src="{{websiteAddress}}img/games/free-fire.png" alt="">
+					<span class="title">Free Fire</span>
+				</div>
+			</div>
+		</div>
+	</div>
     <div class="mainContent">
         <h1 class="title">
 	        Пополнить баланс <br>Genshin Impact
@@ -31,6 +69,7 @@
         <form class="form js-fillUpGameFrom" action="{{websiteAddress}}api/fillUpGame/getPaymentLink">
 	        <div class="select-frame">
 		        <select class="amountSelect">
+			        <option disabled selected>Выберите товар</option>
 			        <option value="99">60 Genesis Crystals Genshin Impact GP</option>
 			        <option value="489">300+30 Genesis Crystals Genshin Impact GP</option>
 			        <option value="1429">980+110 Genesis Crystals Genshin Impact GP</option>
