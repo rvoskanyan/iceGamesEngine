@@ -1200,6 +1200,10 @@ if (cartNode) {
                     email = formConfirm.elements.email.value
                 }
 
+                if (window.yaCounter69707947?.getClientID) {
+                     yaClientId = yaCounter69707947.getClientID()
+                }
+
                 const result = await payment.checkout(products.iceGame, isTwo, email, yaClientId);
 
                 if (result.err) {
