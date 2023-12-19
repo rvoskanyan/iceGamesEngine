@@ -28,6 +28,7 @@ import selectionsRoute from './admin/selections.js';
 import filUpRoute from './admin/fillUp.js';
 import ordersRoute from './admin/orders.js';
 import suppliersRoute from './admin/suppliers.js';
+import genshinRoute from "./admin/genshin.js";
 
 const router = Router();
 
@@ -60,5 +61,6 @@ router.use('/selections', selectionsRoute);
 router.use('/fill-up-analytics', filUpRoute);
 router.use('/orders', ordersRoute);
 router.use('/suppliers', suppliersRoute);
+router.use('/genshin', genshinRoute);
 
 export default router;
