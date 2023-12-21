@@ -2,20 +2,130 @@
 
 .reviewsPage
   & .reviewsList
-    & .review:not(:last-child)
-      margin-bottom: 10px
+    display: grid
+    grid-template-columns: 1fr
+    gap: 30px
 
+    @include for-big-phone-up
+      grid-template-columns: repeat(2, minmax(540px, 760px))
+      gap: 30px
+    
+    .review
+      display: flex
+      flex-direction: column
+      align-items: center
+      gap: 16px
+      border: 2px solid #525379
+      border-radius: 12px
+      background:#fa60ff0f
+      padding: 16px
+    
       @include for-big-phone-up
-        margin-bottom: 15px
+        flex-direction: row
+        align-items: flex-start
+        gap: 40px
+        padding: 24px
+      
+      .image
+        position: relative
+        width: 200px
+        height: 268px
+        flex-shrink: 0
+        border-radius: 12px
+        background: #13485A
+        text-decoration: none
+        
+        .img
+          position: absolute
+          width: 100%
+          height: 100%
+          border-radius: 12px
+          z-index: 0
+          
+        .gameName
+          position: absolute
+          bottom: 0
+          width: 100%
+          padding: 16.5px
+          color: #fff
+          font-size: 18px
+          z-index: 2
+          
+        .overlay:before
+          content: ''
+          z-index: 1
+          width: 100%
+          height: 50%
+          display: block
+          position: absolute
+          bottom: -1px
+          background: linear-gradient(180deg, rgba(70, 11, 110, 0.00) 0%, #02043D 83.87%)
+          border-radius: 0px 0px 12px 12px
+          
+    .content
+      display: flex
+      flex-direction: column
+      gap: 16px
+      width: 100%
+      height: 100%
+      
+      .userName
+        font-weight: 700
+
+      .readFull
+        color: #EB00FF
+        font-weight: 400
+        line-height: normal
+        text-decoration-line: underline
+        white-space: nowrap
+        cursor: pointer
+
+      .activation
+        display: flex
+        flex-direction: column
+        gap: 8px 
+        margin-top: auto
+        font-size: 14px
+        font-weight: 400
+        line-height: 140%
+        color: #fff
+        
+        @include for-big-phone-up
+          font-size: 16px
+
+        a
+          font-weight: 500
+
+    .disabled
+      pointer-events: none
+      
+  & .grade
+      .icon
+        background-color: #EB00FF
+        width: 32px
+        height: 32px
+        
+        &:not(:last-child)
+          margin-right: 8px
+          
+  & .text
+    color: #fff
+    font-size: 14px
+    margin-top: 0
+    
+    @include for-big-phone-up
+      font-size: 18px
 
   & .loadMore
-    margin: 30px auto 0 auto
+    width: 100%
+    margin-top: 30px
+    padding: 10px 30px 
+    font-size: 18px
+    font-weight: 400
+    color: #fff
+    border-radius: 20px
+    border: 1px solid #FFF
 
     @include for-big-phone-up
-      margin: 45px auto 0 auto
-
-  & .lastViews
-    margin-top: 40px
-
-    @include for-big-phone-up
-      margin-top: 100px
+      width: auto
+      margin:  30px auto 0 auto
