@@ -1,8 +1,10 @@
 import FillUp from "../../models/FillUp.js";
 import fetch from "node-fetch";
 import Review from "../../models/Review.js";
+import Genshin from "../../models/Genshin.js";
 
 export const fillUpGamePage = async (req, res) => {
+  const genshinProducts = await Genshin.find().select(['name', 'productID', 'price']).lean();
   const successFillUps = await FillUp.find({status: 'success'}).select(['amount']).lean();
   const countFillUps = successFillUps.length;
   const amount = successFillUps.reduce((accum, fillUp) => accum + fillUp.amount, 0);
@@ -58,6 +60,7 @@ export const fillUpGamePage = async (req, res) => {
     seconds,
     reviews,
     countReviews,
+    genshinProducts,
   });
 }
 

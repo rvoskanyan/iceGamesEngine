@@ -16,9 +16,6 @@ const fields = {
     type: Number,
     required: true
   },
-  products: {
-    type: Array
-  }
 };
 
 const options = {

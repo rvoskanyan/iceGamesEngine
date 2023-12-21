@@ -3,29 +3,7 @@ import fetch from "node-fetch";
 
 export const pageGenshinProducts = async (req, res) => {
   try {
-    const response = await fetch('https://genshin-pay.kupikod.com/api/products', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'User-Agent': 'insomnia/8.1.0',
-        'accept': 'application/json',
-        'token': 'cc00453a85e8911a715c961d6067e364',
-      }
-    });
-
-    if (!response.ok) {
-      console.log(response.status)
-    }
-
-    const data = await response.json();
-
-    Genshin.products = data.data;
-
-    // await Genshin.save();
-
-    console.log(data)
-
-    const genshin = await Genshin.find().select(['products']).lean();
+    const genshin = await Genshin.find().select(['name']).lean();
 
     res.render('listElements', {
       layout: 'admin',
@@ -41,15 +19,19 @@ export const pageGenshinProducts = async (req, res) => {
 }
 
 export const pageAddGenshinProduct = async (req, res) => {
-  res.render('addGenshinProduct', {layout: 'admin'});
+  res.render('addGenshinProduct', {
+    layout: 'admin',
+    remoteGenshinProducts: await getRemoteGenshinProducts(),
+  });
 }
 
 export const addGenshinProduct = async (req, res) => {
   try {
-    const {name, alias} = req.body;
-    const genshin = new Genshin({name, alias});
-
-    await genshin.save();
+    await Genshin.create({
+      name: req.body.name,
+      productID: req.body.product,
+      price: req.body.price,
+    });
 
     res.redirect('/admin/genshin');
   } catch (e) {
@@ -60,72 +42,64 @@ export const addGenshinProduct = async (req, res) => {
 
 export const pageEditGenshinProduct = async (req, res) => {
   try {
-    const {categoryId} = req.params;
-    const category = await Genshin.findById(categoryId);
-    const products = await ProductGenshin.find({category: categoryId}).populate({
-      path: 'product',
-      select: ['name'],
-    }).select(['product', 'order']).sort({order: 1, createdAt: -1}).lean();
+    const {productId} = req.params;
+    const product = await Genshin.findById(productId);
 
-    res.render('addGenshin', {
+    res.render('addGenshinProduct', {
       layout: 'admin',
       isEdit: true,
-      category,
-      products,
+      product,
+      remoteGenshinProducts: await getRemoteGenshinProducts(),
     });
   } catch (e) {
     console.log(e);
-    res.redirect('/admin/genshin/add');
+    res.redirect('/admin/genshin');
   }
 }
 
 export const editGenshinProduct = async (req, res) => {
-  const {categoryId} = req.params;
+  const {productId} = req.params;
 
   try {
-    const {name, alias} = req.body;
-    const category = await Category.findById(categoryId);
+    const product = await Genshin.findById(productId);
 
-    category.name = name;
-    category.alias = alias;
+    product.name = req.body.name;
+    product.productID = req.body.product;
+    product.price = req.body.price;
 
-    await category.save();
+    await product.save();
 
-    res.redirect('/admin/categories');
+    res.redirect('/admin/genshin');
   } catch (e) {
     console.log(e);
-    res.redirect(`/admin/categories/edit/${categoryId}`);
+    res.redirect(`/admin/genshin/edit/${productId}`);
   }
 }
 
-export const getGenshinProducts = async (req, res) => {
+export const deleteGenshinProduct = async (req, res) => {
+  const {productId} = req.params;
+
   try {
-
-    const response = await fetch('https://genshin-pay.kupikod.com/api/products', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'User-Agent': 'insomnia/8.1.0',
-        'accept': 'application/json',
-        'token': 'cc00453a85e8911a715c961d6067e364',
-      }
-    });
-
-    if (!response.ok) {
-      // fillUp.codeOrderError = response.status;
-      // fillUp.status = 'createOrderError';
-      //
-      // return await fillUp.save();
-    }
-
-    const data = await response.json();
-
-    Genshin.products = data.data;
-
-    await Genshin.save();
-
+    await Genshin.findByIdAndDelete(productId);
   } catch (e) {
     console.log(e);
-    res.status(500).json({err: true, message: e});
   }
+
+  res.redirect('/admin/genshin');
+}
+
+async function getRemoteGenshinProducts() {
+  const response = await fetch('https://genshin-pay.kupikod.com/api/products', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'User-Agent': 'insomnia/8.1.0',
+      'accept': 'application/json',
+      'token': 'cc00453a85e8911a715c961d6067e364',
+    }
+  });
+
+  const data = await response.json();
+
+  return data.data
 }

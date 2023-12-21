@@ -70,13 +70,9 @@
 	        <div class="select-frame">
 		        <select class="amountSelect">
 			        <option disabled selected>Выберите товар</option>
-			        <option value="99">60 Genesis Crystals Genshin Impact GP</option>
-			        <option value="489">300+30 Genesis Crystals Genshin Impact GP</option>
-			        <option value="1429">980+110 Genesis Crystals Genshin Impact GP</option>
-			        <option value="2999">1980+260 Genesis Crystals Genshin Impact GP</option>
-			        <option value="4699">3280+600 Genesis Crystals Genshin Impact GP</option>
-			        <option value="9299">6480+1600 Genesis Crystals Genshin Impact G</option>
-			        <option value="489">Blessing of the Welkin Moon Genshin Impact GP</option>
+                    {{#each genshinProducts}}
+                        <option data-product-id="{{productID}}" value="{{price}}">{{name}}</option>
+                    {{/each}}
 		        </select>
 	        </div>
 

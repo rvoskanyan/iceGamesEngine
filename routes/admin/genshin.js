@@ -1,6 +1,6 @@
 import {Router} from 'express';
 import {
-  addGenshinProduct, editGenshinProduct,
+  addGenshinProduct, deleteGenshinProduct, editGenshinProduct,
   pageAddGenshinProduct, pageEditGenshinProduct,
   pageGenshinProducts
 } from "../../controllers/admin/genshinProducts.js";
@@ -14,5 +14,7 @@ router.post('/add', addGenshinProduct);
 
 router.get('/edit/:productId', pageEditGenshinProduct);
 router.post('/edit/:productId', editGenshinProduct);
+
+router.post('/delete/:productId', deleteGenshinProduct);
 
 export default router;

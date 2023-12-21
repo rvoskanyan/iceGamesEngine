@@ -1,11 +1,10 @@
-<form method="post" action="/admin/genshin/{{#if isEdit}}edit/{{genshin._id}}{{else}}add{{/if}}">
+<form method="post" action="/admin/genshin/{{#if isEdit}}edit/{{product._id}}{{else}}add{{/if}}">
 	<label>
 		Продукт в Genshin:
-		<select name="product" required>
-			<option {{#unless genshin.productID}} selected{{/unless}}>Выберите продукт</option>
-			{{#each genshin.products}}
-				<option value="{{this.id}}" {{#if genshin.productID}} selected{{/if}}>{{this.name}}</option>
-				<li>{{@index}}: {{this}}</li>
+		<select name="product" required oninput="productChanged()">
+			<option {{#unless product.productID}} selected{{/unless}}>Выберите продукт</option>
+			{{#each remoteGenshinProducts}}
+				<option value="{{this.id}}" {{#iff @root.product.productID '===' this.id}} selected{{/iff}}>{{this.name}}</option>
 			{{/each}}
 		</select>
 	</label>
@@ -13,15 +12,27 @@
 	<br>
 	<label>
         Название продукта на странице пополнения:
-        <input type="text" name="name"{{#if genshin.name}} value="{{genshin.name}}"{{/if}} required>
+        <input type="text" name="name"{{#if product.name}} value="{{product.name}}"{{/if}} required>
     </label>
     <br>
     <br>
     <label>
         Стоимость
-        <input type="number" name="price"{{#if genshin.price}} value="{{genshin.price}}"{{/if}} required>
+        <input type="number" name="price"{{#if product.price}} value="{{product.price}}"{{/if}} required>
     </label>
     <br>
     <br>
     <input type="submit" name="add" value="{{#if isEdit}}Сохранить{{else}}Добавить{{/if}}">
 </form>
+
+{{#if isEdit}}
+    <form method="post" action="/admin/genshin/delete/{{product._id}}" style="margin-top: 20px">
+        <input type="submit" name="add" value="Удалить">
+    </form>
+{{/if}}
+
+<script>
+    function productChanged() {
+        document.querySelector('input[name=name]').value = document.querySelector('select[name=product]').selectedOptions[0].innerText
+    }
+</script>
