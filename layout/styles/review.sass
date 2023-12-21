@@ -1,93 +1,54 @@
 @import './breakPoints'
 
 .review
-  display: flex
-  flex-direction: column
-  align-items: center
-  gap: 16px
-  border: 2px solid #525379
-  border-radius: 12px
-  background:#fa60ff0f
-  padding: 16px
+  border: 1px solid #fff
+  border-radius: 15px
+  padding: 12px
 
   @include for-big-phone-up
-    flex-direction: row
-    align-items: flex-start
-    gap: 40px
-    padding: 24px
-    
-  .image
-    position: relative
-    width: 200px
-    height: 268px
-    flex-shrink: 0
-    border-radius: 12px
-    background: #13485A
-    text-decoration: none
-    
-    .img
-        position: absolute
-        width: 100%
-        height: 100%
-        border-radius: 12px
-        z-index: 0
-        
-    .gameName
-      position: absolute
-      bottom: 0
-      width: 100%
-      padding: 16.5px
-      color: #fff
-      font-size: 18px
-      z-index: 2
-        
-    .overlay:before
-      content: ''
-      z-index: 1
-      width: 100%
-      height: 50%
-      display: block
-      position: absolute
-      bottom: -1px
-      background: linear-gradient(180deg, rgba(70, 11, 110, 0.00) 0%, #02043D 83.87%)
-      border-radius: 0px 0px 12px 12px
-  
-  .content
+    border-radius: 20px
+    padding: 15px
+
+  & .head
     display: flex
-    flex-direction: column
-    gap: 16px
-    width: 100%
-    height: 100%
-    
-    .userName
-      font-weight: 700
-    
-    .readFull
-      color: #EB00FF
-      font-weight: 400
-      line-height: normal
-      text-decoration-line: underline
-      white-space: nowrap
-      cursor: pointer
-    
-    .activation
-      display: flex
-      flex-direction: column
-      gap: 8px 
-      margin-top: auto
-      font-size: 14px
-      font-weight: 400
-      line-height: 140%
+    column-gap: 10px
+    justify-content: space-between
+    align-items: center
+
+    .moderationInfo
+      color: #8d1b1b
+      font-weight: 600
+
+      .rejectedBlock
+        display: flex
+        column-gap: 8px
+
+        .rejectionReason
+          background-color: #fff
+          padding: 5px 10px
+          border-radius: 5px
+          margin-top: 5px
+          width: max-content
+          max-width: 200px
+
+          @include for-phone-only
+            left: initial
+            transform: initial
+            right: 0
+
+    & .forGame
       color: #fff
-            
+      font-size: 10px
+      white-space: nowrap
+      overflow: hidden
+      text-overflow: ellipsis
+
+      @include for-phone-only
+        .link
+          text-decoration: underline
+
       @include for-big-phone-up
-        font-size: 16px
-      
-      a
-        font-weight: 500
-        
-    .disabled
-      pointer-events: none
+        font-size: 14px
 
   & .grade
     display: flex
@@ -97,16 +58,15 @@
       margin-top: 8px
 
     & .icon
-      background-color: #EB00FF
-      width: 32px
-      height: 32px
+      background-color: #00D1FF
 
       &:not(:last-child)
-        margin-right: 8px
+        margin-right: 3px
 
   & .text
     color: #fff
-    font-size: 14px
+    margin-top: 15px
+    font-size: 13px
 
     @include for-big-phone-up
-      font-size: 18px
+      font-size: 16px

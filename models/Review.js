@@ -8,10 +8,6 @@ const fields = {
     ref: 'User',
     required: true,
   },
-  activationServiceId: {
-    type: Schema.Types.ObjectId,
-    ref: 'ActivationService',
-  },
   status: {
     type: String,
     default: 'moderation',
