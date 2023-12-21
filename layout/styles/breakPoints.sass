@@ -22,10 +22,14 @@
   @media (min-width: 900px)
     @content
 
+@mixin for-small-desktop-up
+  @media (min-width: 1280px)
+    @content
+
 @mixin for-desktop-up
   @media (min-width: 1366px)
     @content
-
+    
 @mixin for-desktop-down
   @media (max-width: 1365px)
     @content

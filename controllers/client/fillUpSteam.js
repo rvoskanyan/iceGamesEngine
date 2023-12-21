@@ -9,7 +9,7 @@ export const fillUpSteamPage = async (req, res) => {
   const countReviews = await Review.countDocuments({active: true, status: 'taken', target: 'FillUpSteam'});
   const reviews = await Review
     .find({status: 'taken', target: 'FillUpSteam', active: true})
-    .limit(5)
+    .limit(2)
     .sort({createdAt: -1})
     .populate({
       path: 'user',
@@ -157,7 +157,7 @@ export const fillUpKazakhstanSteamPage = async (req, res) => {
   const countReviews = await Review.countDocuments({active: true, status: 'taken', target: 'FillUpSteam'});
   const reviews = await Review
     .find({status: 'taken', target: 'FillUpSteam', active: true})
-    .limit(5)
+    .limit(2)
     .sort({createdAt: -1})
     .populate({
       path: 'user',

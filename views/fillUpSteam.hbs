@@ -24,27 +24,40 @@
             Специально для вас от сервиса ICE GAMES мы предоставляем услугу пополнения кошелька Steam в рублях.
             Теперь вы можете легко и быстро пополнить баланс стим.
         </p>
-        {{#if isKazakhstan}}
-            <p class="description warning">Внимание! Пополнить баланс возможно только Казахстанского Steam аккаунта.</p>
-        {{else}}
-            <p class="description warning">
-                Внимание! Пополнить баланс возможно только Российского Steam аккаунта, кроме республики Крым, Луганской и Донецкой областей.
-            </p>
-            <p class="description warning">
-                Узнать о том, как обойти ограничение Вы можете в
-                <a class="link" href="https://icegames.store/blog/kak-popolnit-koshyelyek-steam-iz-ryespubliki-krym-luganskoio-i-donyetskoio-oblastyeio" target="_blank">
-                    нашей статье
-                </a>
-            </p>
-        {{/if}}
+        
+        <div class="warnWrapper">
+            <div>
+                <span class="icon icon-alertCircle"></span>
+            </div>
+            {{#if isKazakhstan}}
+                <p class="description notice">Внимание! Пополнить баланс возможно только   Казахстанского Steam аккаунта.</p>
+            {{else}}
+                <p class="description notice">
+                    Внимание! Пополнить баланс возможно только Российского Steam аккаунта, кроме    республики Крым, Луганской и Донецкой областей.
+                    Узнать о том, как обойти ограничение Вы можете в
+                    <a class="link" href="https://icegames.store/blog/  kak-popolnit-koshyelyek-steam-iz-ryespubliki-krym-luganskoio-i-donyetskoio-obla   styeio" target="_blank">
+                        нашей статье
+                    </a>
+                </p>
+            {{/if}}
+        </div>
+        
         <form class="form js-fillUpSteamFrom" action="{{websiteAddress}}api/fillUpSteam/getPaymentLink{{#if isKazakhstan}}?kazakhstan=true{{/if}}">
             <label class="input-frame js-inputFrame">
                 <input class="textField" type="text" name="steamLogin" placeholder="Логин Steam">
-                <button class="btn prompt js-howToGetLogin" type="button">Как узнать логин?</button>
+                <button class="btn prompt withIcon js-howToGetLogin" type="button">
+                    Узнать логин
+                    <span class="icon icon-alertCircle"></span>
+                </button>
             </label>
             {{#if isKazakhstan}}
                 <label class="input-frame js-amount-input">
-                    <input class="textField js-amountFillUp" data-rate="{{ rate }}" type="text" name="amount" placeholder="Сумма пополнения (От 500₸ до 50 000₸)">
+                    <div class="inputPlaceholder">
+                        <input  class="textField input-frame js-amountFillUp" type="text" name="amount" >
+                        <div class="placeholder">
+                             Сумма пополнения&nbsp;<span>(От 500₸ до 50 000₸)</span>
+                        </div>
+                    </div>
                     <div class="fastSelect js-fastSelect" data-bind-selector="amountFillUp">
                         <button class="fastSelect-item btn js-fastSelectItem" type="button">1000</button>
                         <button class="fastSelect-item btn js-fastSelectItem" type="button">3000</button>
@@ -53,8 +66,13 @@
                     </div>
                 </label>
             {{else}}
-                <label class="input-frame js-amount-input">
-                    <input class="textField js-amountFillUp" type="text" name="amount" placeholder="Сумма пополнения (От 100₽ до 10 000₽)">
+                <span class="input-frame js-amount-input">
+                    <div class="inputPlaceholder">
+                        <input  class="textField input-frame js-amountFillUp" type="text" name="amount" required>
+                        <div class="placeholder">
+                             Сумма пополнения&nbsp;<span>(От 100₽ до 10 000₽)</span>
+                        </div>
+                    </div>
                     <div class="fastSelect js-fastSelect" data-bind-selector="amountFillUp">
                         <button class="fastSelect-item btn js-fastSelectItem" type="button">100</button>
                         <button class="fastSelect-item btn js-fastSelectItem" type="button">300</button>
@@ -64,9 +82,15 @@
                 </label>
             {{/if}}
             <label class="input-frame">
-                <input class="textField" type="email" name="email" placeholder="E-mail, на который будет отправлен чек">
+                <div class="inputPlaceholder">
+                        <input  class="textField" type="email" name="email" required>
+                        <div class="placeholder">
+                             E-mail<span>, на который будет отправлен чек</span>
+                        </div>
+                    </div>
             </label>
-            {{> checkbox
+            {{!-- TODO изменить чекбокс --}}
+            {{> checkboxDiamond
                     value='true'
                     label='Я подтверждаю, что мною указан именно логин Steam аккаунта, а не свой никнейм'
                     name='confirmIndicationCorrectData'
@@ -82,6 +106,7 @@
                 <label class="variant sbp">
                     <input class="input js-switch-sbp" type="radio" name="paymentMethod" value="sbp" checked>
                     <div class="block">
+                        <span class="tag">Выгодно</span>
                         <div class="name">Оплата через СБП</div>
                         <div class="description">Комиссия сервиса (21.5%)</div>
                     </div>
@@ -105,11 +130,12 @@
                         </div>
                     {{/if}}
                 </div>
+                <div class="divider"></div>
                 <div class="total">
                     <div class="name">Итого</div>
                     <div class="value js-total">0 ₽</div>
                 </div>
-                <input type="submit" value="Перейти к оплате" class="btn round border bg-darkPurple uppercase js-payBtn hover-bg-violet small">
+                <input type="submit" value="Перейти к оплате" class="btn js-payBtn hover-bg-violet">
             </div>
             <div class="js-fillUpSubmitResult fillUpSubmitResult"></div>
         </form>
@@ -121,11 +147,11 @@
                 <div class="value">{{ countFillUps }}</div>
             </div>
             <div class="statisticInput">
-                <div class="label">среднее<br>время зачисления</div>
+                <div class="label">среднее время<br>зачисления</div>
                 <div class="value">1 мин {{ seconds }} сек</div>
             </div>
             <div class="statisticInput">
-                <div class="label">пополнений<br>на сумму</div>
+                <div class="label">пополнено<br>примогемов</div>
                 <div class="value">{{ amount }}</div>
             </div>
             <div class="statisticInput">
@@ -140,47 +166,56 @@
             </div>
             <div class="blocks">
                 <div class="item active js-tabBlock-instruction" itemscope itemtype="https://schema.org/HowTo">
-                    <div class="instructionTitle" itemprop="name">Как успешно пополнить баланс Steam с ICE GAMES</div>
-                    <ol class="list">
-                        <li class="element" itemprop="step" itemscope itemtype="http://schema.org/HowToSection">
+                    <ul class="list">
+                        <li class="element divider" itemprop="step" itemscope itemtype="http://schema.org/HowToSection">
                             <meta itemprop="position" content="1"/>
+                            <span class='number'>
+                                <span>1</span>
+                            </span>
                             <span itemprop="text">
-                                Введите свой логин Steam. <span style="color: #EB00FF">Обратите внимание! Логин - это то, что Вы указываете при входе в Steam. Если Вы укажете неверный логин, то средства уйдут другому пользователю Steam. <span class="link js-whereLogin">Где найти логин?</span></span>
+                                Введи свой UID в Genshin Impact. 
+                                <span class="link js-whereLogin">(Как узнать UID?)</span>
                             </span>
                         </li>
-                        <li class="element" itemprop="step" itemscope itemtype="http://schema.org/HowToSection">
+                        <li class="element divider" itemprop="step" itemscope itemtype="http://schema.org/HowToSection">
                             <meta itemprop="position" content="2"/>
-                            <span itemprop="text">Введите сумму, на которую хотите пополнить аккаунт.</span>
+                            <span class='number'>2</span>
+                            <span itemprop="text">Выберите количество кристаллов сотворения, которое желаете приобрести</span>
                         </li>
-                        <li class="element" itemprop="step" itemscope itemtype="http://schema.org/HowToSection">
+                        <li class="element divider" itemprop="step" itemscope itemtype="http://schema.org/HowToSection">
                             <meta itemprop="position" content="3"/>
+                            <span class='number'>3</span>
                             <span itemprop="text">
-                                Проверьте, что указали именно логин, а не никнейм и подтвердите это галкой.
+                                Проверьте, что Вы указали правильный UID. Если Вы укажешь неправильный UID, то мы сможем пополнить неправильный аккаунт
                             </span>
                         </li>
-                        <li class="element" itemprop="step" itemscope itemtype="http://schema.org/HowToSection">
+                        <li class="element divider" itemprop="step" itemscope itemtype="http://schema.org/HowToSection">
                             <meta itemprop="position" content="4"/>
-                            <span itemprop="text">Нажмите кнопку «Оплатить».</span>
+                            <span class='number'>4</span>
+                            <span itemprop="text">Нажмите кнопку «Перейти к оплате»</span>
                         </li>
-                        <li class="element" itemprop="step" itemscope itemtype="http://schema.org/HowToSection">
+                        <li class="element divider" itemprop="step" itemscope itemtype="http://schema.org/HowToSection">
                             <meta itemprop="position" content="5"/>
+                            <span class='number'>5</span>
                             <span itemprop="text">
-                                Вы перейдете на страницу, где необходимо выбрать метод оплаты.
+                                Вы перейдете на страницу, где необходимо выбрать метод оплаты
                             </span>
                         </li>
-                        <li class="element" itemprop="step" itemscope itemtype="http://schema.org/HowToSection">
+                        <li class="element divider" itemprop="step" itemscope itemtype="http://schema.org/HowToSection">
                             <meta itemprop="position" content="6"/>
+                            <span class='number'>6</span>
                             <span itemprop="text">
-                                После успешной оплаты деньги поступят на баланс аккаунта в течение 2-15 минут.
+                                После успешной оплаты кристаллы, или благословение полной луны поступят на баланс вашего аккаунта Genshin Impact в течение 2-10 минут
                             </span>
                         </li>
                         <li class="element" itemprop="step" itemscope itemtype="http://schema.org/HowToSection">
                             <meta itemprop="position" content="7"/>
+                            <span class='number'>7</span>
                             <span itemprop="text">
-                                При возникновении вопросов <a href="https://vk.com/ice.games" title="Перейти на страницу сообщества ICE GAMES в VK" rel="nofollow" target="_blank" class="link">свяжитесь с поддержкой</a>.
+                                При возникновении вопросов <a href="https://vk.com/ice.games" title="Перейти на страницу сообщества ICE GAMES в VK" rel="nofollow" target="_blank" class="link">свяжитесь с поддержкой</a>
                             </span>
                         </li>
-                    </ol>
+                    </ul>
                 </div>
                 <div class="item js-tabBlock-faq" itemscope itemtype="https://schema.org/FAQPage">
                     <div class="collapse js-collapse" itemscope itemtype="https://schema.org/Question">
@@ -251,7 +286,7 @@
         </div>
         <div class="fillUpReviews">
             <div class="title">Отзывы</div>
-            {{#if canAddReview}}
+            {{!-- {{#if canAddReview}} --}}
                 <form action="{{ websiteAddress }}api/fillUpSteam/addReview" method="post" class="addReviewForm js-fillUpAddReviewFrom">
                     <div class="starRating js-error-eval">
                         <div class="label">Оцените работу сервиса</div>
@@ -277,25 +312,26 @@
                                 <span class="icon icon-star"></span>
                             </label>
                         </div>
+                        <div class="label">Напишите отзыв</div>
                     </div>
                     <div class="senderField textReview js-error-text">
                         <div class="autoSizeInput js-autoSizeInput" data-name="text">
-                            <span class="placeholder js-placeholder">Отзыв до 1000 символов</span>
+                            <span class="placeholder js-placeholder">До 1000 символов</span>
                             <div class="value js-value" contentEditable></div>
                         </div>
                         <button class="btn" type="submit">
-                            <span class="icon icon-send"></span>
+                            <span class="icon icon-sendReview"></span>
                         </button>
                     </div>
                 </form>
-            {{ else }}
-                {{#unless reviewExists}}
+            {{!-- {{ else }} --}}
+                {{!-- {{#unless reviewExists}}
                     <div class="description">
                         Для предотвращения накрутки добавление отзыва доступно только авторизованным пользователям после первого
                         пополнения баланса аккаунта Steam.
                     </div>
-                {{/unless}}
-            {{/if}}
+                {{/unless}} --}}
+            {{!-- {{/if}} --}}
             <div class="reviewsList js-filUpReviewsList" data-user-name="{{ person.login }}">
                 {{#each reviews}}
                     {{> review
@@ -304,10 +340,10 @@
                 {{/each}}
             </div>
             {{#iff countReviews '>' 5}}
-                <button class="btn link translucent loadMore js-loadMoreFillUpReviewsBtn" data-skip="5">Загрузить еще</button>
+                <button class="btn loadMore js-loadMoreFillUpReviewsBtn" data-skip="5">Загрузить еще</button>
             {{/iff}}
             <div class="externalReviews">
-                <a href="https://vk.com/topic-198095537_46620037" target="_blank" rel="nofollow" class="btn border round withIcon font-weight-average">
+                <a href="https://vk.com/topic-198095537_46620037" target="_blank" rel="nofollow" class="btn withIcon">
                     <span class="icon icon-pinkExternalLink"></span> Отзывы в ВК
                 </a>
                 <a href="https://yandex.ru/maps/org/ice_games_store/7653444700/reviews/?ll=37.711258%2C55.779505&z=18" target="_blank" rel="nofollow" class="btn border round withIcon font-weight-average">
