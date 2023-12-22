@@ -5,7 +5,7 @@
 		        <p class="title">Где взять UID в Genshin Impact?</p>
 		        <button class="modalClose js-closeFillUpPageModal" type="button" aria-label="закрыть"></button>
 	        </div>
-            <img class="img" loading="lazy" src="{{ websiteAddress }}img/whereUidGenshin.png" alt="Где взять UID в Genshin Impact">
+            <img class="img" loading="lazy" src="{{ websiteAddress }}img/genshin_impact.gif" alt="Где взять UID в Genshin Impact">
 	        <div class="description">
 		        <p>После пополнения Genesis Crystal автоматически появятся в вашем аккаунте.Чтобы найти игровой UID:</p>
 		        <ul>
@@ -59,6 +59,12 @@
 		</div>
 	</div>
     <div class="mainContent">
+		{{#if canAddReview}}
+			    <div class="doublePoints">
+				    <span>X2</span>
+				    При первом пополнении Genshin Impact, кол-во кристаллов будет удвоено!
+			    </div>
+		{{/if}}
         <h1 class="title">
 	        Пополнить баланс <br>Genshin Impact
         </h1>
@@ -137,7 +143,7 @@
                         <li class="element" itemprop="step" itemscope itemtype="http://schema.org/HowToSection">
                             <meta itemprop="position" content="1"/>
                             <span itemprop="text">
-                                Введи свой UID в Genshin Impact. <span style="color: #EB00FF"><span class="link js-whereLogin">Как узнать UID?</span></span>
+                                Введи свой UID в Genshin Impact. (<span style="color: #EB00FF"><span class="link js-whereLogin">Как узнать UID?</span></span>)
                             </span>
                         </li>
                         <li class="element" itemprop="step" itemscope itemtype="http://schema.org/HowToSection">

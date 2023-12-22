@@ -100,25 +100,21 @@
     cursor: pointer
 
   .mainContent
-    max-width: 500px
+    max-width: 575px
 
     @include for-middle-desktop-up
-      max-width: 575px
+      max-width: 708px
 
     & > .title
       font-family: "Lemon Milk"
       font-style: normal
       font-weight: 400
-      font-size: 18px
+      font-size: 24px
       color: #FFFFFF
-      text-align: center
-
-      @include for-desktop-up
-        font-size: 24px
-        text-align: initial
+      text-align: left
 
       @include for-middle-desktop-up
-        font-size: 28px
+        font-size: 48px
 
     .description
       font-family: 'Montserrat'
@@ -127,7 +123,7 @@
       font-size: 14px
       color: #FFFFFF
       margin-top: 5px
-      text-align: center
+      text-align: left
 
       .link
         font-size: 14px
@@ -138,13 +134,15 @@
           font-size: 16px
 
       @include for-desktop-up
-        font-size: 16px
+        margin-top: 24px
+        font-size: 18px
         text-align: initial
 
       &.warning
         color: #EB00FF
 
     .form
+      max-width: 464px
       margin-top: 40px
 
       .input-frame
@@ -158,6 +156,21 @@
           padding: 11px 24px
           border-radius: 99px
           border: 1px solid rgba(255, 255, 255, 0.20)
+
+        .prompt
+          display: flex
+          align-items: center
+
+          &::after
+            content: ""
+            display: block
+            width: 20px
+            height: 20px
+            margin-left: 8px
+            background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10.2222 17.5C14.3643 17.5 17.7222 14.1421 17.7222 10C17.7222 5.85786 14.3643 2.5 10.2222 2.5C6.08003 2.5 2.72217 5.85786 2.72217 10C2.72217 14.1421 6.08003 17.5 10.2222 17.5Z' stroke='white' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M10.2222 13.3333V10' stroke='white' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M10.2222 6.66675H10.2305' stroke='white' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A")
+            background-position: center
+            background-repeat: no-repeat
+            background-size: cover
 
       .fastSelect
         display: flex
@@ -294,6 +307,9 @@
           font-weight: 500
           line-height: 120%
 
+          @include for-down-middle-phone
+            font-size: 16px
+
         .body
           font-family: 'Montserrat'
           color: #fff
@@ -392,6 +408,12 @@
             &.focus
               background-color: unset
 
+            &.disabled
+              display: none
+
+        .current
+          color: rgba(255, 255, 255, 0.44)
+
 
       .checkbox
         background: transparent
@@ -412,6 +434,9 @@
           @include for-desktop-up
             width: 32px
             height: 32px
+
+          &::before
+            display: none
 
         .input:checked ~ .figure
           background-image: url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M32 10.738L16.0925 29.4674L0 10.738L6.65896 2.52002H25.711L32 10.738Z' fill='%238D00FC'/%3E%3C/svg%3E%0A")
@@ -530,6 +555,8 @@
 
             .content
               max-height: 0
+              overflow: hidden
+              transition: 0.3s ease-out
 
               .text
                 border-top: 1px solid rgba(255, 255, 255, 0.12)
@@ -581,6 +608,39 @@
         border-radius: 8px
         background: rgba(50, 0, 101, 0.32)
         color: #fff
+
+        ol
+          display: grid
+          row-gap: 16px
+          counter-reset: myCounter
+          padding: 0
+
+          li
+            display: flex
+            align-items: flex-start
+            gap: 16px
+            padding-bottom: 16px
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12)
+
+            &:last-child
+              border-bottom: 0
+
+          li:before
+            counter-increment: myCounter
+            content: counter(myCounter)
+            display: flex
+            align-items: center
+            width: 24px
+            height: 24px
+            justify-content: center
+            flex-shrink: 0
+            border-radius: 50%
+            background: #984BFB
+            font-size: 14px
+            font-style: normal
+            font-weight: 400
+            line-height: 100%
+            font-family: 'Lemon Milk'
 
     .fillUpReviews
       margin-top: 40px
@@ -680,6 +740,8 @@
             width: 20px
             height: 20px
             margin-left: 10px
+            mask-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M15.7461 3.01247C16.4376 2.8149 17.0769 3.4542 16.8793 4.14569L13.5463 15.8113C13.1892 17.0613 11.5194 17.2961 10.8313 16.193L8.50015 12.4558C8.2312 12.0246 7.86723 11.6606 7.43606 11.3917L3.69877 9.06048C2.5957 8.37243 2.83051 6.70264 4.08055 6.34549L15.7461 3.01247Z' stroke='white' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M8.49365 11.3982L11.4399 8.4519' stroke='white' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A")
+            -webkit-mask-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M15.7461 3.01247C16.4376 2.8149 17.0769 3.4542 16.8793 4.14569L13.5463 15.8113C13.1892 17.0613 11.5194 17.2961 10.8313 16.193L8.50015 12.4558C8.2312 12.0246 7.86723 11.6606 7.43606 11.3917L3.69877 9.06048C2.5957 8.37243 2.83051 6.70264 4.08055 6.34549L15.7461 3.01247Z' stroke='white' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M8.49365 11.3982L11.4399 8.4519' stroke='white' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A")
 
           .autoSizeInput
             margin: 0
@@ -782,6 +844,10 @@
         font-weight: 500
         line-height: 120%
         text-decoration: none
+
+        @include for-phone-only
+          width: 100%
+          justify-content: center
 
   .chips
     color: #fff
@@ -888,3 +954,34 @@
       font-style: normal
       font-weight: 500
       line-height: 120%
+
+  .doublePoints
+    display: flex
+    padding: 16px 24px
+    align-items: center
+    margin-bottom: 48px
+    gap: 12px
+    border-radius: 8px
+    border: 1px solid rgba(152, 75, 251, 0.24)
+    background: rgba(50, 0, 101, 0.32)
+    color: #FFF
+    text-shadow: 0 0 100px #938083
+    font-size: 14px
+    font-style: normal
+    font-weight: 400
+    line-height: 160%
+
+    span
+      display: flex
+      width: 32px
+      height: 32px
+      align-items: center
+      justify-content: center
+      flex-shrink: 0
+      border-radius: 50%
+      background-color: #EB00FF
+      font-family: 'Lemon Milk'
+      font-size: 18px
+      font-style: normal
+      font-weight: 400
+      line-height: 100%
