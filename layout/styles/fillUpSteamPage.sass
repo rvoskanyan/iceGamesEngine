@@ -149,6 +149,11 @@
       @include for-small-desktop-up
         margin-top: 48px
         
+      .icon-alertCircle
+        width: 24px
+        height: 24px
+        transform: rotate(180deg)
+        
       .notice
         font-size: 12px
     
@@ -187,6 +192,8 @@
           margin-bottom: 20px
         
         .withIcon
+          position: absolute
+          top: 22px
           font-size: 12px
           font-weight: 500
           padding: 2px 2px 2px 8px
@@ -196,12 +203,13 @@
           span
             margin-right: 0
             margin-left: 8px
+            background-color: #fff
           
         .inputPlaceholder
           position: relative
-          
-          input:valid + .placeholder
-            display: none
+          //  TODO разобраться
+          // input:valid + .placeholder
+          //   display: none
           
           .placeholder
             position: absolute
@@ -231,16 +239,45 @@
           
           &::placeholder
             font-size: 18px
+            
+          &.error
+            border: 1px solid red
+            
+            & ~ .errorText
+              display: block
+              
+      .checkboxDiamond .input.error
+        & + .wrapper
+          padding-bottom: 2px
+          border-bottom: 1px solid red
           
-          
+        & ~ .errorText
+          display: block
 
+        
+          // & ~ .errorText
+          //   display: block
+           
+        // .text
+          // display: none
+          // color: #FFF
+          // font-size: 14px
+          // line-height: 120%
+          // margin-top: 8px
+          
+          // background:url("./../img/alert_circle.svg") no-repeat left center 
+          // background-size: 16px 
+          // display:inline-block
+          // vertical-align:bottom
+          // padding-left: 24px
+          
       .fastSelect
         display: flex
         justify-content: space-between
         // border: 1px solid #FFFFFF
         border-radius: 99px
         background: rgba(255, 255, 255, 0.08)
-        margin-bottom: 24px
+        margin: 24px 0
         padding: 8px
 
         @include for-desktop-up
@@ -413,14 +450,31 @@
       .fillUpSubmitResult
         margin-top: 10px
         color: #00b048
-        text-align: center
+        // text-align: center
         font-size: 14px
-
+        
+        &.error:before
+          content: ''
+          display: block
+          background-position: center
+          background-size: contain
+          background-repeat: no-repeat
+          padding: 19px
+          background-image: url("./../img/alert_circle.svg")
+          margin-right: 16px
+        
         @include for-desktop-up
           font-size: 16px
 
         &.error
-          color: #ff669a
+          display: flex
+          margin-top: 31px
+          padding: 16px 24px
+          color: #FFF
+          line-height: 160%
+          border-radius: 8px
+          border: 1px solid rgba(152, 75, 251, 0.24)
+          background: rgba(50, 0, 101, 0.32)
 
   .additional
     margin-top: 48px
@@ -767,3 +821,15 @@
   //   width: 32px
   //   height: 32px
   //   margin-right: 6px
+  .errorText
+    display: none
+    color: #FFF
+    font-size: 14px
+    line-height: 120%
+    margin-top: 8px
+    
+    background:url("./../img/alert_circle.svg") no-repeat left center 
+    background-size: 16px 
+    display:inline-block
+    vertical-align:bottom
+    padding-left: 24px

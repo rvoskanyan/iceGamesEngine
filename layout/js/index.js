@@ -14,6 +14,7 @@ import Range from "./Range.js";
 import SocialSharing from "./lib/socialSharing.js";
 import Message from "./lib/message.js";
 import Payment from "./lib/payment.js";
+import AsyncFormSteam from './AsyncFormSteam.js';
 
 const postman = new Postman();
 const platform = document.body.dataset.platform || 'pc';
@@ -2501,7 +2502,7 @@ if (fillUpSteamFrom) {
     document.body.appendChild(a);
     a.style = "display: none";
 
-    new AsyncForm({
+    new AsyncFormSteam({
         mainNode: fillUpSteamFrom,
         resultMessageNode: resultNode,
         successHandler: (sendParams, results) => {

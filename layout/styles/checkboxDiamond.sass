@@ -2,9 +2,10 @@
 
 .checkboxDiamond
   display: flex
-  align-items: center
+  flex-direction: column
+  // align-items: center
   max-width: max-content
-  gap: 12px
+  // gap: 12px
   cursor: pointer
   
   svg
@@ -19,7 +20,7 @@
     display: none
 
     &:checked
-      & + span svg
+      & + .wrapper span svg
         fill: #8D00FC
         opacity: 1
         path
@@ -28,7 +29,11 @@
       & ~ .label
         // @include for-big-phone-up
           color: rgba(255, 255, 255, 0.8)
-
+  
+  & .wrapper
+      display: flex
+      align-items: center
+      gap: 12px
 
   // & .figure
   //   display: flex

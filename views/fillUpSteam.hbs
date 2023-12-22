@@ -43,35 +43,38 @@
         </div>
         
         <form class="form js-fillUpSteamFrom" action="{{websiteAddress}}api/fillUpSteam/getPaymentLink{{#if isKazakhstan}}?kazakhstan=true{{/if}}">
-            <label class="input-frame js-inputFrame">
+            <label class="input-frame js-inputFrame" id="verifiable" data-name="steamLogin">
                 <input class="textField" type="text" name="steamLogin" placeholder="Логин Steam">
                 <button class="btn prompt withIcon js-howToGetLogin" type="button">
                     Узнать логин
                     <span class="icon icon-alertCircle"></span>
                 </button>
+                <p class='errorText'>Поле обязательно должно быть заполнено</p>
             </label>
             {{#if isKazakhstan}}
-                <label class="input-frame js-amount-input">
+                {{!-- <label class="input-frame js-amount-input" id="verifiable" data-name="amount">
                     <div class="inputPlaceholder">
                         <input  class="textField input-frame js-amountFillUp" type="text" name="amount" >
                         <div class="placeholder">
                              Сумма пополнения&nbsp;<span>(От 500₸ до 50 000₸)</span>
                         </div>
                     </div>
+                    <p class='errorText'>Поле обязательно должно быть заполнено</p>
                     <div class="fastSelect js-fastSelect" data-bind-selector="amountFillUp">
                         <button class="fastSelect-item btn js-fastSelectItem" type="button">1000</button>
                         <button class="fastSelect-item btn js-fastSelectItem" type="button">3000</button>
                         <button class="fastSelect-item btn js-fastSelectItem" type="button">6000</button>
                         <button class="fastSelect-item btn js-fastSelectItem" type="button">10000</button>
                     </div>
-                </label>
+                </label> --}}
             {{else}}
-                <span class="input-frame js-amount-input">
+                <label class="input-frame js-amount-input" id="verifiable" data-name="amount">
                     <div class="inputPlaceholder">
-                        <input  class="textField input-frame js-amountFillUp" type="text" name="amount" required>
-                        <div class="placeholder">
+                        <input  class="textField js-amountFillUp" type="text" name="amount" placeholder="Сумма пополнения">
+                        {{!-- <div class="placeholder">
                              Сумма пополнения&nbsp;<span>(От 100₽ до 10 000₽)</span>
-                        </div>
+                        </div> --}}
+                        <p class='errorText'>Поле обязательно должно быть заполнено</p>
                     </div>
                     <div class="fastSelect js-fastSelect" data-bind-selector="amountFillUp">
                         <button class="fastSelect-item btn js-fastSelectItem" type="button">100</button>
@@ -81,29 +84,30 @@
                     </div>
                 </label>
             {{/if}}
-            <label class="input-frame">
-                <div class="inputPlaceholder">
-                        <input  class="textField" type="email" name="email" required>
-                        <div class="placeholder">
-                             E-mail<span>, на который будет отправлен чек</span>
-                        </div>
-                    </div>
+            <label class="input-frame" id="verifiable" data-name="email">
+                {{!-- <div class="inputPlaceholder"> --}}
+                    <input  class="textField" type="email" name="email" placeholder="E-mail">
+                    {{!-- <div class="placeholder">
+                        E-mail<span>, на который будет отправлен чек</span>
+                    </div> --}}
+                    <p class='errorText'>Поле обязательно должно быть заполнено</p>
+                {{!-- </div> --}}
             </label>
-            {{!-- TODO изменить чекбокс --}}
             {{> checkboxDiamond
+                    id='verifiable'
                     value='true'
                     label='Я подтверждаю, что мною указан именно логин Steam аккаунта, а не свой никнейм'
                     name='confirmIndicationCorrectData'
             }}
             <div class="paymentMethods">
-                <label class="variant">
+                <label class="variant" id="verifiable"  data-name="paymentMethod">
                     <input class="input js-switch-card" type="radio" name="paymentMethod" value="card">
                     <div class="block">
                         <div class="name">Оплата картой</div>
                         <div class="description">Комиссия сервиса (23.5%)</div>
                     </div>
                 </label>
-                <label class="variant sbp">
+                <label class="variant sbp" id="verifiable" data-name="paymentMethod">
                     <input class="input js-switch-sbp" type="radio" name="paymentMethod" value="sbp" checked>
                     <div class="block">
                         <span class="tag">Выгодно</span>
@@ -137,7 +141,8 @@
                 </div>
                 <input type="submit" value="Перейти к оплате" class="btn js-payBtn hover-bg-violet">
             </div>
-            <div class="js-fillUpSubmitResult fillUpSubmitResult"></div>
+            <div class="js-fillUpSubmitResult fillUpSubmitResult">
+            </div>
         </form>
     </div>
     <div class="additional">
