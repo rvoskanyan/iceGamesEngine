@@ -584,7 +584,7 @@ fillUpPageModalNode.querySelector('.js-closeFillUpPageModal').addEventListener('
 
     fillUpPageModalNode.classList.remove('active');
 })
-// TODO
+
 inputFrameNodes.forEach(inputFrameNode => {
     inputFrameNode.addEventListener('input', (e) => {
         if (e.target.value === '') {
@@ -1373,7 +1373,7 @@ if (cartNode) {
 }
 
 fastSelect && startBind();
-// TODO
+
 function startBind() {
     const items = fastSelect.querySelectorAll('.js-fastSelectItem');
     const bindField = document.querySelector(`.js-${fastSelect.dataset.bindSelector}`);

@@ -332,7 +332,7 @@
         </div>
         <div class="fillUpReviews">
             <div class="title">Отзывы</div>
-            {{!-- {{#if canAddReview}} --}}
+            {{#if canAddReview}}
                 <form action="{{ websiteAddress }}api/fillUpSteam/addReview" method="post" class="addReviewForm js-fillUpAddReviewFrom">
                     <div class="starRating js-error-eval">
                         <div class="label">Оцените работу сервиса</div>
@@ -370,15 +370,15 @@
                         </button>
                     </div>
                 </form>
-            {{!-- {{ else }} --}}
-                {{!-- {{#unless reviewExists}} --}}
+            {{ else }}
+                {{#unless reviewExists}}
                     <div class="description">
                         <p>
                             Для предотвращения накрутки добавление отзыва доступно только авторизованным пользователям после первого пополнения баланса аккаунта Steam.
                         </p>
                     </div>
-                {{!-- {{/unless}} --}}
-            {{!-- {{/if}} --}}
+                {{/unless}}
+            {{/if}}
             <div class="reviewsList js-filUpReviewsList" data-user-name="{{ person.login }}">
                 {{#each reviews}}
                     {{> review
