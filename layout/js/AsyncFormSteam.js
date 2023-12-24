@@ -4,7 +4,7 @@ export default class AsyncFormSteam {
   constructor(options) {
     this.mainNode = options.mainNode;
     this.fields = this.mainNode.querySelectorAll('input');
-    this.verifiableNodes = this.mainNode.querySelectorAll('#verifiable');
+    this.verifiableNodes = this.mainNode.querySelectorAll('.verifiable');
     this.autoSizeInputNodes = this.mainNode.querySelectorAll('.autoSizeInput');
     this.mainNode.addEventListener('submit', this.handleSubmit);
     this.messageNode = options.resultMessageNode;
@@ -110,16 +110,21 @@ export default class AsyncFormSteam {
       return;
     }
         
-    if (result.error) {      
-      this.verifiableNodes.forEach(node => node.querySelector('input').classList.remove('error'))
+    if (result.error) {     
+      this.verifiableNodes.forEach(node => node.classList.remove('error'))
+      this.messageNode.innerText = ''
+      
+      if(result.nodes[0].name === 'activeFillUp') {
+        this.messageNode.classList.add('error');
+        this.messageNode.innerText = result.nodes[0].message; 
+      }
       
       for(const item of result.nodes) {
          this.verifiableNodes.forEach(node => {
           if(item.name === node.dataset.name) {    
-            const input = node.querySelector('input')
-            const text = node.querySelector('p')   
+            const text = node.querySelector('.errorText')   
                    
-            input.classList.add('error')
+            node.classList.add('error')
             text.innerText = item.message
           }
         })

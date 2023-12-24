@@ -14,7 +14,7 @@ export const getPaymentLink = async (req, res) => {
     if (!activeFillUp && activeFillUp !== undefined) {
       return res.json({
         error: true,
-        message: 'Уважаемый клиент, в данным момент ведутся тех.работы, в связи с этим пополнение кошелька Steam временно не доступно. Приносим свои извинения за доставленные неудобства, надеемся на Ваше понимание!',
+        nodes:[{name: 'activeFillUp', message:'Уважаемый клиент, в данным момент ведутся тех.работы, в связи с этим пополнение кошелька Steam временно не доступно. Приносим свои извинения за доставленные неудобства, надеемся на Ваше понимание!'}]
       });
     }
     
@@ -47,35 +47,6 @@ export const getPaymentLink = async (req, res) => {
         error: true,
       });
     }
-    
-    
-    // if (!steamLogin || !amount || !email) {
-    //   const steamLoginNode = steamLogin ? null : 'steamLogin'
-    //   const amountNode = amount ? null : 'amount'
-    //   const emailNode = email ? null : 'email'
-      
-    //   let nodes = [steamLoginNode, amountNode, emailNode].filter(n => n)
-      
-    //   return res.json({
-    //     nodes: nodes,
-    //     error: true,
-    //     message: 'Поле обязательно должно быть заполнено',
-    //   });
-    // }
-    
-    // if (!confirmIndicationCorrectData) {
-    //   return res.json({
-    //     error: true,
-    //     message: 'Необходимо подтвердить, что Вы указали именно логин Steam',
-    //   });
-    // }
-    
-    // if (paymentMethod !== 'sbp' && paymentMethod !== 'card') {
-    //   return res.json({
-    //     error: true,
-    //     message: 'Некорректно выбран способ оплаты',
-    //   });
-    // }
   
     amount = parseInt(amount);
     

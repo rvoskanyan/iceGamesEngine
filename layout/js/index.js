@@ -568,12 +568,23 @@ howToGetLoginNode && howToGetLoginNode.addEventListener('click', () => {
     fillUpPageModalNode.classList.add('active');
 })
 
-fillUpPageModalNode && fillUpPageModalNode.querySelector('.js-closeFillUpPageModal').addEventListener('click', () => {
+if(fillUpPageModalNode) {
+    fillUpPageModalNode.querySelectorAll('.js-closeFillUpPageModal').forEach(node => node.addEventListener('click', () => {
+    document.body.classList.remove('noScrolling');
+
+    fillUpPageModalNode.classList.remove('active');
+}))
+    
+    
+    
+} 
+
+fillUpPageModalNode.querySelector('.js-closeFillUpPageModal').addEventListener('click', () => {
     document.body.classList.remove('noScrolling');
 
     fillUpPageModalNode.classList.remove('active');
 })
-
+// TODO
 inputFrameNodes.forEach(inputFrameNode => {
     inputFrameNode.addEventListener('input', (e) => {
         if (e.target.value === '') {
@@ -1362,10 +1373,11 @@ if (cartNode) {
 }
 
 fastSelect && startBind();
-
+// TODO
 function startBind() {
     const items = fastSelect.querySelectorAll('.js-fastSelectItem');
     const bindField = document.querySelector(`.js-${fastSelect.dataset.bindSelector}`);
+    const parentField = document.querySelector(`.js-amount-input`);
     const itemsOnValues = {};
     let currentActive;
 
@@ -1376,7 +1388,9 @@ function startBind() {
 
         item.addEventListener('click', () => {
             bindField.value = value;
-            bindField.dispatchEvent(new Event('input'))
+            const event = new Event("input");
+            bindField.dispatchEvent(event)
+            parentField.classList.add('active');
         })
     });
 
@@ -2482,6 +2496,8 @@ if (fillUpSteamFrom) {
             changeParams();
         }
     });
+    
+    
 
     amountInputNode.addEventListener('input', (e) => {
         amount = +e.target.value;
