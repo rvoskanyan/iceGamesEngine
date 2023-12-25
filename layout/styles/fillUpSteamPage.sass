@@ -34,8 +34,7 @@
       display: flex
       flex-direction: column
       gap: 24px
-      background-color: #01033A
-      border: 2px solid rgba(255, 255, 255, 0.2) 
+      background-color: #01033A 
       border-radius: 8px
       padding: 24px
       max-width: 464px
@@ -487,14 +486,8 @@
           border: none
           padding: 20px 24px
           background: #ffffff14
-          font-size: 16px
+          font-size: 24px
           line-height: 140%
-          height: 100%
-          
-          // #1280px  
-          @include for-small-desktop-up
-            font-size: 24px
-          
 
     .fillUpTabInfo
       margin-top: 48px
@@ -532,7 +525,6 @@
           padding: 16px
           background-color: red
           background: rgba(255, 255, 255, 0.08)
-          border-radius: 8px
           
           // #1280px 
           @include for-small-desktop-up
@@ -540,13 +532,6 @@
           
           .list
             list-style-type: none
-            
-            h3
-              color: #FFF
-              font-weight: 500
-              line-height: 140%
-              font-size: 16px
-              margin-bottom: 10px
 
             .element
               display: flex
@@ -770,6 +755,7 @@
         font-size: 48px
 
     .description
+      margin-top: 24px
       font-size: 14px
       font-weight: 400
       line-height: 140%
@@ -791,15 +777,14 @@
         justify-content: space-between
 
       .item
-        display: flex
-        flex-direction: column
-        gap: 8px
-        
         // #1280px  
         @include for-small-desktop-up
           max-width: 263px
 
         .head
+          @include for-desktop-up
+            height: 135px
+
           .img
             max-height: 92px
             min-height: 92px
@@ -815,6 +800,7 @@
             font-size: 16px
             font-weight: 500
             line-height: 140%
+            margin-top: 8px
   
   .checkbox
   
