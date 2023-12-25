@@ -9,7 +9,7 @@ export const fillUpSteamPage = async (req, res) => {
   const countReviews = await Review.countDocuments({active: true, status: 'taken', target: 'FillUpSteam'});
   const reviews = await Review
     .find({status: 'taken', target: 'FillUpSteam', active: true})
-    .limit(2)
+    .limit(5)
     .sort({createdAt: -1})
     .populate({
       path: 'user',
@@ -155,26 +155,21 @@ export const fillUpKazakhstanSteamPage = async (req, res) => {
   const countFillUps = successFillUps.length;
   const amount = successFillUps.reduce((accum, fillUp) => accum + fillUp.amount, 0);
   const countReviews = await Review.countDocuments({active: true, status: 'taken', target: 'FillUpSteam'});
-  
   const reviews = await Review
     .find({status: 'taken', target: 'FillUpSteam', active: true})
-    .limit(2)
+    .limit(5)
     .sort({createdAt: -1})
     .populate({
       path: 'user',
       select: ['login'],
     })
     .lean();
-    
   const responseRate = await fetch('https://steam-api.kupikod.com/api/v3/partner-kzt', { headers: {
     'Content-Type': 'application/json',
     'token': 'icegame.store_q4L4Re1u1hIjQIgPBWqiDYZfzheIRmHEwAzX',
   }});
-  
   const { rubKzt } = await responseRate.json();
-    
   let seconds = new Date().getHours() + new Date().getMinutes();
-
   let canAddReview = false;
   let reviewExists = false;
   

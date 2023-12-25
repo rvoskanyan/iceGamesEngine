@@ -2,13 +2,12 @@
 
 .fillUpSteamPage
   width: 100%
-  
-  // #1280px  
-  @include for-small-desktop-up
+
+  @include for-desktop-up
     display: flex
     justify-content: space-between
     flex-wrap: wrap
-  
+
   .modalContainer
     display: flex
     justify-content: center
@@ -30,15 +29,11 @@
       visibility: visible
 
     .content
-      position: relative
-      display: flex
-      flex-direction: column
-      gap: 24px
       background-color: #01033A
-      border: 2px solid rgba(255, 255, 255, 0.2) 
-      border-radius: 8px
-      padding: 24px
-      max-width: 464px
+      border: 1px solid #FFFFFF
+      border-radius: 18px
+      padding: 20px
+      max-width: 300px
 
       @include for-desktop-up
         max-width: initial
@@ -46,26 +41,30 @@
 
       .title
         font-family: 'Lemon Milk'
-        font-size: 24px
+        font-size: 18px
         line-height: 1
         color: #FFFFFF
+        text-align: center
         font-weight: 400
-        line-height: 140%
 
         @include for-desktop-up
           font-size: 32px
 
       .img
+        margin-top: 15px
         display: block
         width: 100%
 
         @include for-desktop-up
           max-width: initial
+          margin-top: 30px
 
       .link
         color: #984BFB
         text-decoration: underline
         display: block
+        text-align: center
+        margin-top: 10px
         font-size: 14px
 
         @include for-desktop-up
@@ -75,7 +74,7 @@
       .moreInfoLogin
         color: #fff
         font-size: 14px
-        line-height: 160%
+        margin-top: 10px
 
         @include for-desktop-up
           font-size: 16px
@@ -84,250 +83,115 @@
           color: #5488ff
 
       .btn
-        width: 100%
-        padding: 12px 24px
-        font-size: 16px
-        font-weight: 700
-        background: #8D00FC
-        border: 0
-      
-      .icon-close
-        position: absolute
-        top: 28px
-        right: 24px
-        width: 12px
-        height: 12px
-        cursor: pointer
+        margin: 10px auto 0 auto
+
+        @include for-desktop-up
+          margin: 20px auto 0 auto
 
   .mainContent
-    width: 100%
-    
-    // #1280px  
-    @include for-small-desktop-up
-      max-width: 586px
-    
-    // #1366px  
-    @include for-desktop-up
-      max-width: 619px
-      
-    // #1920px
-    @include for-big-desktop-up 
-      max-width: 708px
+    max-width: 500px
+
+    @include for-middle-desktop-up
+      max-width: 575px
 
     & > .title
-      margin-bottom: 24px
       font-family: "Lemon Milk"
       font-style: normal
-      line-height: 120%
       font-weight: 400
-      font-size: 24px
+      font-size: 18px
       color: #FFFFFF
-      
-      @include for-tablet-portrait-up
-        font-size: 48px
+      text-align: center
 
-    .warnWrapper
-      display: flex
-      align-items: center
-      gap: 16px
-      border-radius: 8px
-      border: 1px solid rgba(152, 75, 251, 0.24)
-      background: rgba(50, 0, 101, 0.32)
-      margin-top: 24px
-      padding: 16px 24px
-      
-      // #1280px  
-      @include for-small-desktop-up
-        margin-top: 48px
-      
-      // #1366px  
       @include for-desktop-up
-        max-width: 512px
-      
-      // #1920px  
-      @include for-big-desktop-up  
-        width: 464px
-        
-      .icon-alertCircle
-        width: 24px
-        height: 24px
-        
-        // #1280px  
-        @include for-small-desktop-up
-          width: 32px
-          height: 32px
-        
-      .notice
-        font-size: 12px
-        line-height: 160%
-        
-        // #1280px  
-        @include for-small-desktop-up
-          font-size: 14px
-    
+        font-size: 24px
+        text-align: initial
+
+      @include for-middle-desktop-up
+        font-size: 28px
+
     .description
       font-family: 'Montserrat'
       font-style: normal
       font-weight: 400
       font-size: 14px
-      line-height: 140%
       color: #FFFFFF
-      
-      // #1280px  
-      @include for-small-desktop-up
-        font-size: 18px
-      
+      margin-top: 5px
+      text-align: center
+
       .link
-        font-size: 12px
-        font-weight: 500
-        color: #EB00FF
+        font-size: 14px
+        color: #5488ff
         text-decoration: underline
 
         @include for-desktop-up
           font-size: 16px
 
+      @include for-desktop-up
+        font-size: 16px
+        text-align: initial
+
       &.warning
         color: #EB00FF
 
     .form
-      margin-top: 48px
-      
-      // #1366px  
-      @include for-desktop-up
-        max-width: 512px
-        
-      // #1920px 
-      @include for-middle-desktop-up
-        max-width: 464px
+      margin-top: 40px
 
       .input-frame
-        margin-bottom: 24px
+        margin-bottom: 15px
 
         @include for-desktop-up
           margin-bottom: 20px
-          
-        &.active .inputPlaceholder .placeholder
-          display: none
-        
-        &.error 
-          .textField
-            border: 1px solid #EB00FF
-          
-          .errorText
-            display: block
-        
-        
-        .withIcon
-          position: absolute
-          top: 22px
-          font-size: 12px
-          font-weight: 500
-          padding: 2px 2px 2px 8px
-          border-radius: 99px
-          background: rgba(255, 255, 255, 0.12)
-          margin-left: 8px
-          
-          .icon-infoCircle
-            margin-right: 0
-            margin-left: 8px
-            background-color: #fff
-            
-        .mobileUp
-          display: none
-             
-        @include for-middle-phone-up
-          .mobile
-            display: none
-          
-          .mobileUp
-            display: block
-              
-        .inputPlaceholder
-          position: relative
-          
-          .placeholder
-            position: absolute
-            pointer-events: none
-            top: 0
-            bottom: 0
-            left: 24px
-            display: flex
-            height: 24px
-            margin: auto
-            font-size: 18px
-            color: rgba(255, 255, 255, 0.5)
-            
-            span
-              display: none
-              // #1280px  
-              @include for-small-desktop-up
-                display: block
-                
+
         .textField
           width: 100%
-          padding: 10px 10px 10px 24px
-          border-radius: 99px
-          border: 1px solid rgba(255, 255, 255, 0.20)
-          font-size: 18px
-          line-height: 120%
-          
-          &::placeholder
-            font-size: 18px
-              
-      .checkboxDiamond
-        &.error 
-          .errorText
-            display: block
-        
-        // #1280px  
-        @include for-small-desktop-up
-          svg
-            width: 36px
-            height: 36px
-        
-          .checkboxLabel
-            font-size: 18px
-          
+
       .fastSelect
         display: flex
         justify-content: space-between
-        border-radius: 99px
-        background: rgba(255, 255, 255, 0.08)
-        margin: 24px 0
-        padding: 8px
+        border: 1px solid #FFFFFF
+        padding: 5px
+        border-radius: 100px
+        margin-top: 4px
+
+        @include for-desktop-up
+          padding: 6px
+          margin-top: 6px
 
         &-item
+          border: 1px solid transparent
           font-family: 'Montserrat'
-          font-weight: 700
-          font-size: 16px
+          font-weight: 400
+          font-size: 14px
           line-height: 1
-          padding: 6px 12px
-          border-radius: 99px
+          padding: 4px 12px
+          border-radius: 100px
 
           @include for-desktop-up
             padding: 4px 14px
             font-size: 16px
 
           &.active
-            background: #8D00FC
+            border: 1px solid #EB00FF
+            color: #EB00FF
 
       .paymentMethods
         display: flex
         flex-wrap: wrap
         justify-content: space-between
-        gap: 8px
-        margin-top: 68px
+        row-gap: 40px
+        margin-top: 20px
         column-gap: 20px
-      
-        // #1280px  
-        @include for-small-desktop-up
-          margin-top: 80px
-          flex-wrap: nowrap
-          
+
+        @include for-desktop-up
+          column-gap: 25px
+          margin-top: 50px
+
+        @include for-middle-desktop-up
+          column-gap: 30px
+
         .variant
           cursor: pointer
           flex-grow: 1
-          background: rgba(50, 0, 101, 0.32)
 
           .input
             display: none
@@ -337,499 +201,312 @@
 
           .block
             font-family: 'Montserrat'
-            border: 1px solid transparent
+            border: 1px solid #FFFFFF
             border-radius: 8px
-            padding: 16px
+            padding: 5px 8px
             color: #fff
             line-height: 1
-            height: 100%
+            text-align: center
 
-            .tag
-              display: inline-block
-              font-size: 14px
-              font-weight: 600
-              border-radius: 99px
-              background: #197C00
-              padding: 3.5px 12px
-              margin-bottom: 8px
-              
-              // #1280px  
-              @include for-small-desktop-up
-                position: absolute
-                top: -30px
-                left: 0 
-                margin-bottom: 0
+            @include for-desktop-up
+              padding: 8px 12px
 
             .name
-              font-weight: 700
-              font-size: 20px
-              line-height: 120%
-              
-              // #1280px  
-              @include for-small-desktop-up
-                width: 140px
+              font-weight: 500
+              font-size: 16px
+
+              @include for-desktop-up
+                font-size: 18px
+
+              @include for-middle-desktop-up
+                font-weight: 700
+                font-size: 21px
 
             .description
               font-weight: 400
-              font-size: 18px
-              line-height: 120%
-              margin-top: 8px
+              font-size: 14px
+              margin-top: 5px
+              text-align: center
+
+              @include for-desktop-up
+                font-size: 14px
+
+              @include for-middle-desktop-up
+                font-size: 16px
 
           &.sbp
             position: relative
 
+            &:before
+              font-family: 'Montserrat'
+              content: 'Выгодно'
+              display: block
+              position: absolute
+              top: -25px
+              left: 0
+              background: #197C00
+              border-radius: 8px
+              padding: 2px 5px
+              font-style: normal
+              font-weight: 400
+              font-size: 14px
+              line-height: 1
+              color: #FFFFFF
+
       .check
-        display: flex
-        flex-direction: column
-        gap: 24px
-        border-radius: 16px
-        background: rgba(255, 255, 255, 0.08)
-        padding: 24px
-        margin-top: 48px
+        border: 1px solid #FFFFFF
+        border-radius: 15px
+        padding: 15px
+        margin-top: 30px
 
         .title
           font-family: 'Montserrat'
-          color: #FFFFFF
-          font-size: 20px
           font-style: normal
           font-weight: 700
-          line-height: 120%
+          font-size: 21px
+          line-height: 1
+          color: #FFFFFF
 
         .body
           font-family: 'Montserrat'
           color: #fff
-          font-size: 18px
-          font-weight: 500
-          line-height: 120%
+          padding: 20px 0
+          border-bottom: 1px solid #fff
 
           .item
             display: flex
             justify-content: space-between
 
             &:not(:last-child)
-              margin-bottom: 24px
+              margin-bottom: 5px
 
             .value
               font-weight: 700
-              white-space: nowrap
-          
-        .divider
-          border-bottom: 1px solid rgba(255, 255, 255, 0.20)
-        
+              font-size: 18px
+
         .total
-          font-size: 20px
+          font-size: 21px
           font-weight: 700
           color: #fff
           display: flex
           justify-content: space-between
+          margin-top: 20px
 
           .value
             color: #EB00FF
 
         .btn
-          height: 48px
-          padding: 12px 24px
-          background-color: #8D00FC
-          font-size: 16px
-          font-weight: 700
+          margin-top: 15px
           width: 100%
-          border-radius: 99px
 
       .fillUpSubmitResult
         margin-top: 10px
         color: #00b048
+        text-align: center
         font-size: 14px
-        
-        &.error:before
-          content: ''
-          display: block
-          background-position: center
-          background-size: contain
-          background-repeat: no-repeat
-          padding: 19px
-          background-image: url("./../img/alert_circle.svg")
-          margin-right: 16px
-        
+
         @include for-desktop-up
           font-size: 16px
 
         &.error
-          display: flex
-          margin-top: 31px
-          padding: 16px 24px
-          color: #FFF
-          line-height: 160%
-          border-radius: 8px
-          border: 1px solid rgba(152, 75, 251, 0.24)
-          background: rgba(50, 0, 101, 0.32)
+          color: #ff669a
 
   .additional
-    margin-top: 48px
-    
-    @include for-small-desktop-up
-      max-width: 484px
+    margin-top: 50px
+
+    @include for-desktop-up
+      margin-top: initial
+      max-width: 550px
+
+    @include for-middle-desktop-up
+      max-width: 600px
 
     .fillUpStatistics
-      display: grid
-      grid-template-columns: repeat(2, 1fr)
-      grid-auto-rows: minmax(100px, auto)
-      gap: 32px 30px
+      display: flex
+      flex-wrap: wrap
+      justify-content: space-between
+      row-gap: 15px
+
+      @include for-desktop-up
+        row-gap: 25px
 
       .statisticInput
-        row-gap: 12px
-        
-        .label
-          font-size: 16px
-          font-weight: 400
-          line-height: 140%
-          
+        flex-basis: 48%
+
+        @include for-desktop-up
+          flex-basis: 45%
+
         .value
-          border: none
-          padding: 20px 24px
-          background: #ffffff14
-          font-size: 16px
-          line-height: 140%
-          height: 100%
-          
-          // #1280px  
-          @include for-small-desktop-up
-            font-size: 24px
-          
+          padding: 12px
 
     .fillUpTabInfo
-      margin-top: 48px
-      
+      margin-top: 30px
+
+      @include for-desktop-up
+        margin-top: 40px
+
       .actionsBtn
         display: flex
-        column-gap: 8px
+        column-gap: 15px
 
         .btn
           background-color: #410074
-          border-radius: 99px
-          padding: 16px
-          font-size: 16px
-          font-weight: 700
 
           &.active
-            background-color: #8D00FC
+            background-color: #984BFB
 
       .blocks
-        display: flex
-        flex-direction: column
-        justify-content: center
-        gap: 16px
-        margin-top: 24px  
-         
-        border-radius: 8px
-        
-        .tabBlock
-          display: none
-          
-          &.active
-            display: block
-        
-        .tabBlock-instruction
-          padding: 16px
-          background-color: red
-          background: rgba(255, 255, 255, 0.08)
-          border-radius: 8px
-          
-          // #1280px 
-          @include for-small-desktop-up
-            padding: 16px 24px
-          
-          .list
-            list-style-type: none
-            
-            h3
-              color: #FFF
-              font-weight: 500
-              line-height: 140%
-              font-size: 16px
-              margin-bottom: 10px
-
-            .element
-              display: flex
-              gap: 16px
-              color: #FFF
-              font-weight: 500
-              line-height: 140%
-              font-size: 16px
-
-              .link
-                color: #984BFB
-                text-decoration: underline
-                text-underline-offset: 4px
-                cursor: pointer
-              
-              .number
-                font-family: 'Lemon Milk'
-                display: flex
-                justify-content: center
-                align-items: center
-                font-size: 14px
-                font-weight: 400
-                line-height: 100%
-                min-width: 24px
-                height: 23px
-                background-color: #8D00FC
-                border-radius: 50%
-            
-            .divider
-              padding-bottom: 16px
-              margin-bottom: 16px 
-              border-bottom: 1px dashed #FFFFFF1F
-              
-        .tabBlock-faq
-          
-          .collapse
-            padding: 16px 24px
-            
-          .item
-            .head
-              line-height: 140%
-              
-            .content span
-              font-weight: 400
-              line-height: 160%
-              
-            .divider
-              border: none
-              margin-bottom: 16px
-              margin-top: 16px
-              
-            &:not(:last-child)
-              margin-bottom: 8px
-              
-              @include for-big-phone-up
-                margin-bottom: 12px
-              
-            &:hover
-              background: #984BFB
-              
-            &.active
-              background: #32006552
-              
-              .divider
-                background-color: #ffffff1f
-                color: #ffffff1f
-                height: 1px    
-          
-    .fillUpReviews
-      margin-top: 48px
-      border-radius: 16px
-      padding: 24px
-      color: #fff
-      background: rgba(255, 255, 255, 0.08)
-
-      .title
-        font-size: 20px
-        font-weight: 700
-        line-height: 120%
-
-      .description
-        border-radius: 8px
-        border: 1px solid #EB00FF
-        padding: 16px 24px
-        margin-top: 24px
-        font-size: 16px
-        font-weight: 600
-        line-height: 140%
-        
-        p
-          background:url("./../img/alert_circle.svg") no-repeat left center 
-          background-size: 32px 
-          display:inline-block
-          vertical-align:bottom
-          padding-left: 44px
-
-      .addReviewForm
-        margin-top: 24px
-        
-        .label
-          font-size: 18px
-          line-height: 120%
-          margin-bottom: 16px
-          
-        .stars 
-          margin-bottom: 24px
-          
-          .input:checked ~ .star .icon
-            background-color: #EB00FF
-          
-          .star:hover
-            & .icon, & ~ .star .icon
-             background-color: #EB00FF
-
-        .senderField
-          align-items: center
-          gap: 8px
-          padding: 11px 24px
-          border-radius: 99px
-          border: 1px solid rgba(255, 255, 255, 0.20)
-          
-          .btn
-            align-self: flex-end
-          
-          .autoSizeInput
-            margin: 0
-            min-height: 44px
-            
-            @include for-tablet-portrait-up
-              min-height: auto
-
-          .placeholder
-            white-space: pre-wrap
-            font-size: 18px
-            line-height: 120%
-            
-          .icon-sendReview
-            width: 28px
-            height: 28px
-
-      .reviewsList
-        margin-top: 24px
+        margin-top: 20px
+        border: 1px solid #FFFFFF
+        border-radius: 20px
+        color: #fff
+        padding: 20px
 
         .item
-          border: none
-          padding: 16px
-          border-radius: 12px
-          background: rgba(255, 255, 255, 0.08)
-          
-          &:not(:last-child)
-            margin-bottom: 16px
-          
-          .head a 
-            font-size: 18px
-            font-weight: 500
-            line-height: 120%
-            
-          
-          
-          .grade, .text
-            margin-top: 16px
-          
-          .text
-            font-size: 18px
-            font-weight: 400
-            line-height: 120%
-          
-          .grade
-            .icon
-              margin-right: 6px
-              background-color: #EB00FF
+          display: none
+
+          .instructionTitle
+            font-size: 14px
+            margin-bottom: 10px
+
+            @include for-desktop-up
+              font-size: 16px
+
+          &.active
+            display: block
+
+          .collapse
+            background-color: initial
+            padding: 0
+            border-radius: initial
+            max-height: 17px
+
+            &:not(:first-child)
+              margin-top: 15px
+
+            &.active
+              max-height: 500px
+
+            .title
+              color: #984BFB
+
+            .content
+              margin-top: 8px
+
+        .list
+          padding-left: 20px
+
+          .element
+            font-size: 14px
+
+            @include for-desktop-up
+              font-size: 16px
+
+            &:not(:last-child)
+              margin-bottom: 10px
+
+            .link
+              color: #984BFB
+              text-decoration: underline
+              cursor: pointer
+
+    .fillUpReviews
+      margin-top: 40px
+      border: 1px solid #FFFFFF
+      border-radius: 20px
+      padding: 20px
+      color: #fff
+
+      .title
+        font-size: 21px
+        font-weight: 600
+
+      .description
+        margin-top: 10px
+
+      .addReviewForm
+        margin-top: 20px
+
+        .senderField
+          margin-top: 10px
+
+      .reviewsList
+        margin-top: 30px
+
+        .item:not(:last-child)
+          margin-bottom: 8px
+
+          @include for-desktop-up
+            margin-bottom: 10px
 
       .loadMore
-        font-size: 18px
-        font-style: normal
-        font-weight: 500
-        line-height: 120%
-        margin: 24px auto 0 auto
+        margin: 10px auto 0 auto
 
       .externalReviews
-        margin-top: 24px
+        margin-top: 25px
         display: flex
-        flex-direction: column
-        gap: 8px
-        
-        // #1280px  
-        @include for-small-desktop-up
-          flex-direction: row
-        
-        .btn
-          width: 100%
-          padding: 7.5px 16px
-          border-radius: 99px
-          border: 1px solid rgba(255, 255, 255, 0.20)
-          font-size: 14px
-          font-weight: 500
-          line-height: 120%
-          
-          .icon-pinkExternalLink
-            width: 12px
-            height: 12px
-            margin-right: 8px
+        column-gap: 10px
+        row-gap: 10px
+        flex-wrap: wrap
 
   .chips
     color: #fff
-    margin-top: 56px
-    margin-bottom: 40px
+    margin-top: 30px
 
     @include for-desktop-up
       margin-top: 80px
 
     .title
       font-family: 'Lemon Milk'
-      font-size: 24px
-      font-weight: 400
-      line-height: 120%
-      
-      // #1280px  
-      @include for-small-desktop-up
-        font-size: 48px
+      font-weight: 100
+      font-size: 18px
+
+      @include for-desktop-up
+        font-size: 24px
 
     .description
-      font-size: 14px
-      font-weight: 400
-      line-height: 140%
-      
-      // #1280px  
-      @include for-small-desktop-up
-        font-size: 18px
+      margin-top: 10px
+
+      @include for-phone-only
+        font-size: 14px
 
     .items
-      margin-top: 48px
-      display: flex
-      flex-direction: column
-      gap: 32px
-      
-      // #1280px  
-      @include for-small-desktop-up
+      margin-top: 30px
+
+      @include for-desktop-up
         display: flex
-        flex-direction: row
-        justify-content: space-between
+        column-gap: 40px
+
+      @include for-middle-desktop-up
+        column-gap: 80px
 
       .item
-        display: flex
-        flex-direction: column
-        gap: 8px
-        
-        // #1280px  
-        @include for-small-desktop-up
-          max-width: 263px
+
+        @include for-phone-only
+          &:not(:first-child)
+            margin-top: 30px
 
         .head
+          @include for-desktop-up
+            height: 135px
+
           .img
-            max-height: 92px
-            min-height: 92px
+            max-height: 50px
+            min-height: 50px
+
+            @include for-desktop-up
+              max-height: 70px
+              min-height: 70px
 
           .title
-            margin-top: 12px
-            font-size: 20px
-            font-family: Montserrat
-            font-weight: 700
-            line-height: 120%
-        
-        .description
+            margin-top: 6px
             font-size: 16px
-            font-weight: 500
-            line-height: 140%
-  
-  .checkbox
-  
-    .label
-      font-weight: 400
-      line-height: 120%
-      
-  .errorText
-    display: none
-    color: #FFF
-    font-size: 14px
-    line-height: 120%
-    margin-top: 8px
-    
-    background:url("./../img/alert_circle.svg") no-repeat left center 
-    background-size: 16px 
-    display:inline-block
-    vertical-align:bottom
-    padding-left: 24px
+            font-family: Montserrat
+            font-weight: 600
+
+            @include for-desktop-up
+              font-size: 18px
+              margin-top: 10px
+
+        .description
+          text-align: justify

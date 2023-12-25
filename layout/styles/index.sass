@@ -56,7 +56,6 @@
 @import './btn'
 @import './link'
 @import './checkbox'
-@import './checkboxDiamond'
 @import './cardGame'
 @import './achievement'
 @import './articleBlock'
@@ -150,26 +149,19 @@ img
   padding-right: 16px
 
   @include for-big-phone-up
-    padding-left: 24px
-    padding-right: 24px
-    
-  @include for-small-desktop-up
-    padding-left: 42px
-    padding-right: 42px
-    
-  @include for-desktop-up
-    padding-left: 52px
-    padding-right: 52px
+    padding-left: 60px
+    padding-right: 60px
 
   @include for-middle-desktop-up
     max-width: 1630px
     padding-left: 120px
     padding-right: 120px
-    
+
   @include for-big-desktop-up
     max-width: 1920px
-    padding-left: 240px
-    padding-right: 240px
+    //TODO: 240px
+    padding-left: 180px
+    padding-right: 180px
 
   &.withoutCover
     padding-top: 135px
