@@ -58,7 +58,6 @@ export const homepage = async (req, res) => {
   const partners = await Partner.find().select(['name', 'img', 'link']).sort({createdAt: 1}).lean();
   const countReviews = await Review.countDocuments({active: true, status: 'taken'});
   const countProducts = await Product.countDocuments({active: true});
-  const countUsers = await User.countDocuments({active: true});
   const orders = await Order.find({status: 'paid'}).select(['items']).lean();
   const countSales = orders.reduce((countSales, order) => countSales + order.items.length, 5000);
   const articles = await Article
@@ -299,7 +298,6 @@ export const homepage = async (req, res) => {
     articles,
     checkedEmail,
     partners,
-    countUsers,
     countProducts,
     countReviews,
     countSales,
