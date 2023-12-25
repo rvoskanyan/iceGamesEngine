@@ -14,15 +14,15 @@ export const getPaymentLink = async (req, res) => {
     if (!activeFillUp && activeFillUp !== undefined) {
       return res.json({
         error: true,
-        message: 'Уважаемый клиент, в данным момент ведутся тех.работы, в связи с этим пополнение кошелька Steam временно не доступно. Приносим свои извинения за доставленные неудобства, надеемся на Ваше понимание!',
+        nodes:[{name: 'activeFillUp', message:'Уважаемый клиент, в данным момент ведутся тех.работы, в связи с этим пополнение кошелька Steam временно не доступно. Приносим свои извинения за доставленные неудобства, надеемся на Ваше понимание!'}]
       });
     }
     
     const {
-      steamLogin = '',
+      steamLogin = null,
       confirmIndicationCorrectData = '',
       paymentMethod = '',
-      email = '',
+      email = null,
       yaClientId = undefined,
     } = req.body;
     const isKazakhstan = !!(req.query && req.query.kazakhstan);
@@ -30,25 +30,21 @@ export const getPaymentLink = async (req, res) => {
     const maxAmount = isKazakhstan ? 50000 : 10000;
     let amount = req.body.amount;
     let rate;
+    const nodesWithError = []
+    const notFillUpMessage = 'Поле обязательно должно быть заполнено'
+    const notSteamLogin = 'Необходимо подтвердить, что Вы указали именно логин Steam'
+    const wrongPaymentMethodMessage = 'Некорректно выбран способ оплаты'
     
-    if (!steamLogin || !amount || !email) {
-      return res.json({
-        error: true,
-        message: 'Логин Steam, сумма для пополнения и email являются обязательными полями для заполнения',
-      });
-    }
+    if (!steamLogin) nodesWithError.push({name: 'steamLogin', message: notFillUpMessage})
+    if (!amount) nodesWithError.push({name: 'amount', message: notFillUpMessage})
+    if (!email) nodesWithError.push({name: 'email', message: notFillUpMessage})
+    if (!confirmIndicationCorrectData) nodesWithError.push({name: 'confirmIndicationCorrectData', message: notSteamLogin})
+    if (paymentMethod !== 'sbp' && paymentMethod !== 'card') nodesWithError.push({name: 'paymentMethod', message: wrongPaymentMethodMessage})
     
-    if (!confirmIndicationCorrectData) {
+    if (nodesWithError.length) {
       return res.json({
+        nodes:nodesWithError,
         error: true,
-        message: 'Необходимо подтвердить, что Вы указали именно логин Steam',
-      });
-    }
-    
-    if (paymentMethod !== 'sbp' && paymentMethod !== 'card') {
-      return res.json({
-        error: true,
-        message: 'Некорректно выбран способ оплаты',
       });
     }
   
