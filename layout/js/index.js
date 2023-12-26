@@ -1,20 +1,19 @@
-import Slider from "./Slider.js";
-import Tabs from "./Tabs.js";
+import NiceSelect from "nice-select2/dist/js/nice-select2.js";
+import AsyncForm from "./AsyncForm.js";
 import Modal from "./Modal.js";
 import PopupController from "./PopupController.js";
-import AsyncForm from "./AsyncForm.js";
-import Prompt from "./Prompt.js";
-import {debounce, getProductCardNode, scrollTo, urlEncodeFormData} from "./utils.js";
 import Postman from "./Postman.js";
-import {websiteAddress} from "./config.js";
-import NiceSelect from "nice-select2/dist/js/nice-select2.js";
+import Prompt from "./Prompt.js";
+import Slider from "./Slider.js";
+import Tabs from "./Tabs.js";
+import { websiteAddress } from "./config.js";
+import { debounce, getProductCardNode, scrollTo, urlEncodeFormData } from "./utils.js";
 
 import './../styles/index.sass';
-import Range from "./Range.js";
-import SocialSharing from "./lib/socialSharing.js";
+import AsyncFormSteam from './AsyncFormSteam.js';
 import Message from "./lib/message.js";
 import Payment from "./lib/payment.js";
-import AsyncFormSteam from './AsyncFormSteam.js';
+import SocialSharing from "./lib/socialSharing.js";
 
 const postman = new Postman();
 const platform = document.body.dataset.platform || 'pc';
@@ -568,14 +567,10 @@ howToGetLoginNode && howToGetLoginNode.addEventListener('click', () => {
     fillUpPageModalNode.classList.add('active');
 })
 
-fillUpPageModalNode && fillUpPageModalNode.querySelector('.js-closeFillUpPageModal').addEventListener('click', () => {
-        if(fillUpPageModalNode) {
-            fillUpPageModalNode.querySelectorAll('.js-closeFillUpPageModal').forEach(node => node.addEventListener('click', () => {
-            document.body.classList.remove('noScrolling');
-            fillUpPageModalNode.classList.remove('active');
-        }))
-    }
-})
+fillUpPageModalNode && fillUpPageModalNode.querySelectorAll('.js-closeFillUpPageModal').forEach(node => node.addEventListener('click', () => {
+    document.body.classList.remove('noScrolling');
+    fillUpPageModalNode.classList.remove('active');
+}))
 
 inputFrameNodes.forEach(inputFrameNode => {
     inputFrameNode.addEventListener('input', (e) => {
