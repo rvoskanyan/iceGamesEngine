@@ -3,6 +3,7 @@ import Tabs from "./Tabs.js";
 import Modal from "./Modal.js";
 import PopupController from "./PopupController.js";
 import AsyncForm from "./AsyncForm.js";
+import AsyncValidateForm from "./AsyncValidateForm.js";
 import Prompt from "./Prompt.js";
 import {debounce, getProductCardNode, scrollTo, urlEncodeFormData} from "./utils.js";
 import Postman from "./Postman.js";
@@ -2560,6 +2561,7 @@ if (gamesSliderNode) {
 if (fillUpGameFrom) {
     const amountSelectNode = fillUpGameFrom.querySelector('.amountSelect');
     const resultNode = fillUpGameFrom.querySelector('.js-fillUpSubmitResult');
+    const nameNode = fillUpGameFrom.querySelector('.js-product-name');
     const totalNode = document.querySelector('.js-total');
     let amount = 0;
     let total = 0;
@@ -2567,9 +2569,10 @@ if (fillUpGameFrom) {
     NiceSelect.bind(amountSelectNode)
     amountSelectNode.addEventListener('change', (e) => {
         amount = +e.target.value;
+        nameNode.textContent = amountSelectNode.options[amountSelectNode.selectedIndex].innerText;
+        amountSelectNode.nextElementSibling.classList.add('selected')
         changeParams();
     });
-
 
     function changeParams() {
         total = amount;
@@ -2580,7 +2583,7 @@ if (fillUpGameFrom) {
     document.body.appendChild(a);
     a.style = "display: none";
 
-    new AsyncForm({
+    new AsyncValidateForm({
         mainNode: fillUpGameFrom,
         resultMessageNode: resultNode,
         successHandler: (sendParams, results) => {
@@ -2593,7 +2596,7 @@ if (fillUpGameFrom) {
             a.click();
 
             window.open(`${websiteAddress}fill-up-game/check-status?fillUpId=${results.fillUpId}`, '_self');
-        }
+        },
     });
 }
 

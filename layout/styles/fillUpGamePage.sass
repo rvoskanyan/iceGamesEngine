@@ -148,6 +148,10 @@
       .input-frame
         margin-bottom: 16px
 
+        &.error
+          .textField
+            border: 1px solid #EB00FF
+
         @include for-desktop-up
           margin-bottom: 24px
 
@@ -160,6 +164,8 @@
         .prompt
           display: flex
           align-items: center
+          top: 6px
+          transform: none
 
           &::after
             content: ""
@@ -354,10 +360,36 @@
           font-size: 16px
 
         &.error
-          color: #ff669a
+          display: flex
+          align-items: center
+          margin-top: 24px
+          padding: 16px 24px
+          border-radius: 8px
+          border: 1px solid rgba(152, 75, 251, 0.24)
+          background: rgba(50, 0, 101, 0.32)
+          color: #FFF
+          font-size: 14px
+          font-style: normal
+          font-weight: 400
+          line-height: 160%
+          text-align: left
+
+          &::before
+            content: ""
+            width: 32px
+            height: 32px
+            margin-right: 16px
+            background-image: url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M16.3555 28C22.9829 28 28.3555 22.6274 28.3555 16C28.3555 9.37258 22.9829 4 16.3555 4C9.72805 4 4.35547 9.37258 4.35547 16C4.35547 22.6274 9.72805 28 16.3555 28Z' stroke='%23EB00FF' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M16.3555 10.6667V16.0001M16.3555 21.3334H16.3688' stroke='%23EB00FF' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A")
+            background-position: center
+            background-size: contain
+            background-repeat: no-repeat
 
       .select-frame
         margin-bottom: 24px
+
+        &.error
+          .amountSelect
+            border: 1px solid #EB00FF
 
       .amountSelect
         padding: 14px 44px 14px 16px
@@ -411,9 +443,10 @@
             &.disabled
               display: none
 
-        .current
-          color: rgba(255, 255, 255, 0.44)
 
+        &:not(.selected)
+          .current
+            color: rgba(255, 255, 255, 0.44)
 
       .checkbox
         background: transparent
@@ -447,6 +480,27 @@
           font-style: normal
           font-weight: 400
           line-height: 120%
+
+      .fieldError
+        display: flex
+        align-items: center
+        margin-top: 8px
+        color: #FFF
+        font-size: 14px
+        font-style: normal
+        font-weight: 400
+        line-height: 120%
+
+        &::before
+          content: ""
+          display: block
+          width: 16px
+          height: 16px
+          margin-right: 8px
+          background-image: url("data:image/svg+xml,%3Csvg width='16' height='17' viewBox='0 0 16 17' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8.17773 14.5C11.4914 14.5 14.1777 11.8137 14.1777 8.5C14.1777 5.18629 11.4914 2.5 8.17773 2.5C4.86403 2.5 2.17773 5.18629 2.17773 8.5C2.17773 11.8137 4.86403 14.5 8.17773 14.5Z' stroke='%23EB00FF' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M8.17773 5.83325V8.49992M8.17773 11.1666H8.1844' stroke='%23EB00FF' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A")
+          background-repeat: no-repeat
+          background-size: contain
+          background-position: center
 
   .additional
     margin-top: 50px
@@ -589,7 +643,7 @@
 
           .element
             color: #FFF
-            text-shadow: 0px 0px 100px #938083
+            text-shadow: 0 0 100px #938083
             font-size: 14px
             font-style: normal
             font-weight: 400

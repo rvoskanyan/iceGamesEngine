@@ -17,24 +17,20 @@ export const getPaymentLink = async (req, res) => {
 
     const {
       UID = '',
-      confirmIndicationCorrectData = '',
-      paymentMethod = '',
+      confirmUidCorrectData = '',
+      productId = '',
       email = '',
-      yaClientId = undefined,
     } = req.body;
-    const minAmount = 100;
-    const maxAmount =  10000;
     let amount = req.body.amount;
-    let rate;
 
-    if (!UID || !amount || !email) {
+    if (!UID || !productId || !email) {
       return res.json({
         error: true,
-        message: 'UID, сумма для пополнения и email являются обязательными полями для заполнения',
+        message: 'UID, продукт и email являются обязательными полями для заполнения',
       });
     }
 
-    if (!confirmIndicationCorrectData) {
+    if (!confirmUidCorrectData) {
       return res.json({
         error: true,
         message: 'Необходимо подтвердить, что Вы указали верный UID',
@@ -42,96 +38,42 @@ export const getPaymentLink = async (req, res) => {
     }
 
     amount = parseInt(amount);
-
-    if (amount < minAmount || amount > maxAmount) {
-      return res.json({
-        error: true,
-        message: `Сумма пополнения должна быть не менее ${minAmount} и не более ${maxAmount}`,
-      });
-    }
-
-    const commissionPercent = paymentMethod === 'sbp' ? 21.5 : 23.5;
-    const commissionAmount = Math.floor(amount / 100 * commissionPercent);
     const total = amount;
 
     const fillUp = new FillUp({
       UID,
-      amount,
-      paymentMethod,
-      commissionPercent,
       total,
       email,
-      rate,
-      yaClientId,
-      confirmIndicationCorrectData: true,
-      type: '',
+      confirmUidCorrectData: true,
+      productId,
       status: 'paymentAwaiting',
     });
 
     if (req.session.isAuth) {
       fillUp.user = res.locals.person._id;
-      fillUp.email = res.locals.person.email;
     }
 
-    let initPay = await fetch('https://securepay.tinkoff.ru/v2/Init/', {
+    let initPay = await fetch('https://genshin-pay.kupikod.com/api/orders', {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
+      headers: {
+        'Content-Type': 'application/json',
+        'token': 'cc00453a85e8911a715c961d6067e364',
+      },
       body: JSON.stringify({
-        TerminalKey: '1670348277997',
-        Token: 'icegames',
-        Amount: total * 100,
-        NotificationURL: "https://icegames.store/api/fillUpGame/notifications",
-        OrderId: fillUp._id,
-        SuccessURL: `https://icegames.store/fill-up-steam/check-status?fillUpId=${fillUp._id}`,
-        Receipt: {
-          Email: fillUp.email,
-          Taxation: 'usn_income',
-          Items: [{
-            Name: 'Пополнение баланса Steam',
-            Quantity: 1,
-            Amount: total * 100,
-            Price: total * 100,
-            Tax: 'none',
-          }],
-        },
+        product_id: fillUp.productId,
+        p_uuid: fillUp.user,
+        uid: fillUp.UID,
       })
     })
 
     const initPayData = await initPay.json();
 
-    if (!initPayData.Success) {
+    if (initPayData.status !== 'pending' && initPayData.status !== 'complete') {
       return res.json({
         error: true,
         message: 'Что-то пошло не так, попробуйте позже',
       });
     }
-
-    fillUp.paymentUrl = initPayData.PaymentURL;
-    fillUp.paymentId = initPayData.PaymentId;
-
-    const sign = crypto.createHash('sha256').update(`kj9rl5ywpz0by380${initPayData.PaymentId}1670348277997`).digest('hex');
-
-    let getQr = await fetch('https://securepay.tinkoff.ru/v2/GetQr', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        TerminalKey: '1670348277997',
-        Token: sign,
-        PaymentId: initPayData.PaymentId,
-      })
-    })
-
-    const getQrData = await getQr.json();
-
-    fillUp.sbpUrl = getQrData.Data;
-
-    await fillUp.save();
-
-    return res.json({
-      success: true,
-      fillUpId: fillUp._id,
-      link: getQrData.Data,
-    });
 
   } catch (e) {
     console.log(e);

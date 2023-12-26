@@ -47,8 +47,8 @@ export const fillUpGamePage = async (req, res) => {
   seconds = seconds >= 60 ? 17 : seconds;
 
   res.render('fillUpGame', {
-    title: 'ICE GAMES — Пополнение баланса игр',
-    metaDescription: '⚡️Быстрое пополнение баланса игр в 2023 году. ✔️Пополнение от 100 рублей. ✔️Оплата любым удобным способом: банковские карты, СПБ, Yandex Pay, Tinkoff Pay. ✔️Низкая комиссия. ✔️Зачисление в течение 2х минут. ⌚️Поддержка 24/7',
+    title: 'Пополнение Genshin Impact: купить примогемы, кристаллы, благословение полой луны',
+    metaDescription: 'Быстрый и удобный донат в Genshin Impact. На нашем сайте Вы можете купить примогемы, благословение полой луны. Моментальная доставка. Оплата по СБП.',
     breadcrumbs: [{
       name: 'Пополнение игр',
       current: true,
@@ -71,11 +71,11 @@ export const checkStatus = async (req, res) => {
     let status = '';
 
     if (!fillUp) {
-      res.redirect('/fill-up-steam');
+      res.redirect('/fill-up-game');
     }
 
     if (fillUp.status === 'pending') {
-      const response = await fetch(`https://steam.kupikod.com/api/v3/partner-order/${fillUp.orderId}`, {
+      const response = await fetch(`https://genshin-pay.kupikod.com/api/orders/${fillUp.orderId}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

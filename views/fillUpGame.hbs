@@ -66,49 +66,51 @@
 			    </div>
 		{{/if}}
         <h1 class="title">
-	        Пополнить баланс <br>Genshin Impact
+	        Донат в Genshin Impact
         </h1>
         <p class="description">
 	        Специально для вас от&nbsp;сервиса ICE GAMES мы&nbsp;предоставляем услугу пополнения игр в&nbsp;рублях. Теперь вы&nbsp;можете легко и&nbsp;быстро пополнить баланс игр.
         </p>
 
-        <form class="form js-fillUpGameFrom" action="{{websiteAddress}}api/fillUpGame/getPaymentLink">
-	        <div class="select-frame">
-		        <select class="amountSelect">
-			        <option disabled selected>Выберите товар</option>
+        <form class="form js-fillUpGameFrom" action="{{websiteAddress}}api/fillUpGame/getPaymentLink" novalidate="novalidate">
+	        <div class="select-frame js-error-productId">
+		        <select class="amountSelect" name="productId">
+			        <option disabled selected>Выберите товар*</option>
                     {{#each genshinProducts}}
                         <option data-product-id="{{productID}}" value="{{price}}">{{name}}</option>
                     {{/each}}
 		        </select>
 	        </div>
 
-            <label class="input-frame js-inputFrame">
-                <input class="textField" type="text" name="UID" placeholder="UID">
+            <label class="input-frame js-inputFrame js-error-UID">
+                <input class="textField js-uid" type="text" name="UID" placeholder="UID*">
                 <button class="btn prompt js-howToGetLogin" type="button">Как узнать UID?</button>
             </label>
 
-
-            <label class="input-frame">
-                <input class="textField" type="email" name="email" placeholder="E-mail, на который будет отправлен чек">
+            <label class="input-frame js-error-email">
+                <input class="textField" type="email" name="email" placeholder="E-mail, на который будет отправлен чек*">
             </label>
-            {{> checkbox
-                    value='true'
-                    label='Я подтверждаю, что UID верный'
-                    name='confirmIndicationCorrectData'
-            }}
+
+	        <div class="js-error-confirmUidCorrectData">
+		        {{> checkbox
+				        value='true'
+				        label='Я подтверждаю, что UID верный'
+				        name='confirmUidCorrectData'
+		        }}
+	        </div>
 
             <div class="check">
                 <div class="title">Оплата</div>
                 <div class="body">
                     <div class="item">
-                        <div class="name">Название выбранного товара</div>
+                        <div class="name js-product-name">-</div>
                     </div>
                 </div>
                 <div class="total">
                     <div class="name">К оплате</div>
                     <div class="value js-total">0 ₽</div>
                 </div>
-                <input type="submit" value="ОПЛАТИТЬ" class="btn round bg-middleViolet hover-bg-violet js-payBtn">
+	            <button type="submit" class="btn round bg-middleViolet hover-bg-violet js-payBtn">ОПЛАТИТЬ</button>
             </div>
             <div class="js-fillUpSubmitResult fillUpSubmitResult"></div>
         </form>
@@ -139,7 +141,7 @@
             </div>
             <div class="blocks">
                 <div class="instructionBlock item active js-tabBlock-instruction" itemscope itemtype="https://schema.org/HowTo">
-                    <ol class="list">
+                    <ol>
                         <li class="element" itemprop="step" itemscope itemtype="http://schema.org/HowToSection">
                             <meta itemprop="position" content="1"/>
                             <span itemprop="text">
