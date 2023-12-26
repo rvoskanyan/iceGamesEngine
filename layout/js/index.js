@@ -568,21 +568,13 @@ howToGetLoginNode && howToGetLoginNode.addEventListener('click', () => {
     fillUpPageModalNode.classList.add('active');
 })
 
-if(fillUpPageModalNode) {
-    fillUpPageModalNode.querySelectorAll('.js-closeFillUpPageModal').forEach(node => node.addEventListener('click', () => {
-    document.body.classList.remove('noScrolling');
-
-    fillUpPageModalNode.classList.remove('active');
-}))
-    
-    
-    
-} 
-
-fillUpPageModalNode.querySelector('.js-closeFillUpPageModal').addEventListener('click', () => {
-    document.body.classList.remove('noScrolling');
-
-    fillUpPageModalNode.classList.remove('active');
+fillUpPageModalNode && fillUpPageModalNode.querySelector('.js-closeFillUpPageModal').addEventListener('click', () => {
+        if(fillUpPageModalNode) {
+            fillUpPageModalNode.querySelectorAll('.js-closeFillUpPageModal').forEach(node => node.addEventListener('click', () => {
+            document.body.classList.remove('noScrolling');
+            fillUpPageModalNode.classList.remove('active');
+        }))
+    }
 })
 
 inputFrameNodes.forEach(inputFrameNode => {
