@@ -126,6 +126,8 @@ export default class AsyncValidateForm {
     const response = await this.postman.post(this.mainNode.action, this.sendParams);
     const result = await response.json();
 
+    console.log(result)
+
     if (result.validErrors) {
       this.validate(result.validErrors);
     }

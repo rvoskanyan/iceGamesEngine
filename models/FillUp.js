@@ -46,6 +46,12 @@ const fields = {
   sbpUrl: String,
   orderId: String,
   yaClientId: String,
+  UID: String,
+  productId: Number,
+  confirmUidCorrectData: {
+    type: Boolean,
+    default: false,
+  },
 }
 
 const options = {

@@ -57,6 +57,7 @@ export const getPaymentLink = async (req, res) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'accept': 'application/json',
         'token': 'cc00453a85e8911a715c961d6067e364',
       },
       body: JSON.stringify({
@@ -67,6 +68,13 @@ export const getPaymentLink = async (req, res) => {
     })
 
     const initPayData = await initPay.json();
+
+    if (initPayData.errors) {
+      return res.json({
+        error: true,
+        message: initPayData.message
+      });
+    }
 
     if (initPayData.status !== 'pending' && initPayData.status !== 'complete') {
       return res.json({
