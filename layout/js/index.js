@@ -14,6 +14,7 @@ import Range from "./Range.js";
 import SocialSharing from "./lib/socialSharing.js";
 import Message from "./lib/message.js";
 import Payment from "./lib/payment.js";
+import AsyncFormSteam from './AsyncFormSteam.js';
 
 const postman = new Postman();
 const platform = document.body.dataset.platform || 'pc';
@@ -568,9 +569,12 @@ howToGetLoginNode && howToGetLoginNode.addEventListener('click', () => {
 })
 
 fillUpPageModalNode && fillUpPageModalNode.querySelector('.js-closeFillUpPageModal').addEventListener('click', () => {
-    document.body.classList.remove('noScrolling');
-
-    fillUpPageModalNode.classList.remove('active');
+        if(fillUpPageModalNode) {
+            fillUpPageModalNode.querySelectorAll('.js-closeFillUpPageModal').forEach(node => node.addEventListener('click', () => {
+            document.body.classList.remove('noScrolling');
+            fillUpPageModalNode.classList.remove('active');
+        }))
+    }
 })
 
 inputFrameNodes.forEach(inputFrameNode => {
@@ -1365,6 +1369,7 @@ fastSelect && startBind();
 function startBind() {
     const items = fastSelect.querySelectorAll('.js-fastSelectItem');
     const bindField = document.querySelector(`.js-${fastSelect.dataset.bindSelector}`);
+    const parentField = document.querySelector(`.js-amount-input`);
     const itemsOnValues = {};
     let currentActive;
 
@@ -1375,7 +1380,9 @@ function startBind() {
 
         item.addEventListener('click', () => {
             bindField.value = value;
-            bindField.dispatchEvent(new Event('input'))
+            const event = new Event("input");
+            bindField.dispatchEvent(event)
+            parentField.classList.add('active');
         })
     });
 
@@ -2481,6 +2488,8 @@ if (fillUpSteamFrom) {
             changeParams();
         }
     });
+    
+    
 
     amountInputNode.addEventListener('input', (e) => {
         amount = +e.target.value;
@@ -2501,7 +2510,7 @@ if (fillUpSteamFrom) {
     document.body.appendChild(a);
     a.style = "display: none";
 
-    new AsyncForm({
+    new AsyncFormSteam({
         mainNode: fillUpSteamFrom,
         resultMessageNode: resultNode,
         successHandler: (sendParams, results) => {
