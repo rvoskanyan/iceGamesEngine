@@ -34,12 +34,14 @@ export const getPaymentLink = async (req, res) => {
     const notFillUpMessage = 'Поле обязательно должно быть заполнено'
     const notSteamLogin = 'Необходимо подтвердить, что Вы указали именно логин Steam'
     const wrongPaymentMethodMessage = 'Некорректно выбран способ оплаты'
+    const wrongAmount = `Сумма пополнения должна быть не менее ${minAmount} и не более ${maxAmount}`
     
     if (!steamLogin) nodesWithError.push({name: 'steamLogin', message: notFillUpMessage})
     if (!amount) nodesWithError.push({name: 'amount', message: notFillUpMessage})
     if (!email) nodesWithError.push({name: 'email', message: notFillUpMessage})
     if (!confirmIndicationCorrectData) nodesWithError.push({name: 'confirmIndicationCorrectData', message: notSteamLogin})
     if (paymentMethod !== 'sbp' && paymentMethod !== 'card') nodesWithError.push({name: 'paymentMethod', message: wrongPaymentMethodMessage})
+    if (amount < minAmount || amount > maxAmount) nodesWithError.push({name: 'amount', message: wrongAmount})
     
     if (nodesWithError.length) {
       return res.json({
@@ -50,13 +52,6 @@ export const getPaymentLink = async (req, res) => {
   
     amount = parseInt(amount);
     
-    if (amount < minAmount || amount > maxAmount) {
-      return res.json({
-        error: true,
-        message: `Сумма пополнения должна быть не менее ${minAmount} и не более ${maxAmount}`,
-      });
-    }
-  
     if (isKazakhstan) {
       const responseRate = await fetch('https://steam-api.kupikod.com/api/v3/partner-kzt', { headers: {
           'Content-Type': 'application/json',

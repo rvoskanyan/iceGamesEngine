@@ -43,7 +43,6 @@
                 </p>
             {{/if}}
         </div>
-        
         <form class="form js-fillUpSteamFrom" action="{{websiteAddress}}api/fillUpSteam/getPaymentLink{{#if isKazakhstan}}?kazakhstan=true{{/if}}">
             <label class="input-frame js-inputFrame verifiable" data-name="steamLogin">
                 <input class="textField" type="text" name="steamLogin" placeholder="Логин Steam">
@@ -57,7 +56,7 @@
             {{#if isKazakhstan}}
                 <label class="input-frame js-inputFrame js-amount-input verifiable" data-name="amount">
                     <div class="inputPlaceholder">
-                        <input  class="textField input-frame js-amountFillUp" type="text" name="amount" >
+                        <input  class="textField input-frame js-amountFillUp" data-rate="{{ rate }}" type="text" name="amount" >
                         <div class="placeholder">
                              Сумма пополнения&nbsp;<span>(От 500₸ до 50 000₸)</span>
                         </div>
