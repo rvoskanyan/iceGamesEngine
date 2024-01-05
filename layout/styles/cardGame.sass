@@ -4,70 +4,59 @@
 .cardGame
   display: flex
   flex-direction: column
-  min-width: 160px
-  max-width: 160px
-  height: 250px
-  border: 2px solid #fff
-  border-radius: 22px
+  min-width: 132px
+  max-width: 132px
   background-color: #02043D
+  border-radius: 12px
+  border: 2px solid #525379
   overflow: hidden
   position: relative
-  transition: transform .3s ease-in
+  transition: border .3s ease-in
   cursor: pointer
   text-decoration: none
+  
+  &:active, &:focus
+      border: 2px solid #FFF
+      
+  @include for-tablet-landscape-up
+    min-width: 145px
+    max-width: 145px
+  
+  @include for-small-desktop-up
+    min-width: 202px
+    max-width: 202px
+    
+    &:hover
+      border: 2px solid #FFF
+      
+    &:hover .actions
+      visibility: visible
+      opacity: 1
+      background-color: transparent
+        
+    &:hover .imageFilter
+      background: rgba(2, 4, 61, 0.80)
 
-  &.active
-    transform: scale(1.05, 1.05)
-    outline: none
-
-  @include for-big-phone-up
-    min-width: 117px
-    max-width: 117px
-    height: 158px
-
-  @include for-desktop-up
-    min-width: 154px
-    max-width: 154px
-    height: 243px
-
-    &:hover, &.active, &:focus-within
-      transform: scale(1.07, 1.07)
-      outline: none
-
-      & .actions
-        opacity: 1
-        visibility: visible
-
-        & .inCart, & .like
-          opacity: 1
-
-  @include for-middle-desktop-up
-    max-width: 171px
-    min-width: 171px
-    height: 270px
-
-  @include for-big-desktop-up
-    max-width: 197px
-    min-width: 197px
-    height: 311px
-
-  & .actions
+  .actions
     position: absolute
-    top: 7px
-    right: 7px
     overflow: hidden
     z-index: $ZIndex-CardGame-Actions
     transition: .3s ease-in
     transition-property: visibility, opacity, bottom
-    background-color: rgba(2, 4, 61, 0.6)
-    padding: 9px 7px
-    border: 1px solid #fff
-    border-radius: 12px
-
-    @include for-desktop-up
+    top: 0
+    right: 0
+    width: 100%
+    height: 100%
+    display: flex
+    flex-direction: column
+    justify-content: center
+    row-gap: 10px
+    align-items: center
+    border: none
+    
+    @include for-small-desktop-up
       width: 100%
       height: 100%
-      background-color: rgba(2, 4, 61, 0.6)
       padding: 20px
       visibility: hidden
       opacity: 0
@@ -75,95 +64,123 @@
       border-radius: initial
       right: initial
       top: initial
-
+      
+      &.noInStock
+        visibility: visible
+        opacity: 1
+      
     & .inCart
-      @include for-phone-only
-        padding: 0
-        border: initial
-        background: initial
-        border-radius: initial
-        width: initial
-
-      @include for-big-phone-up
-
-
-      @include for-desktop-up
-        position: absolute
+      position: absolute
+      bottom: 8px
+      width: 116px
+      padding: 6.5px 12px
+      border-radius: 99px
+      background: #8D00FC
+      border: none
+      color: #FFF
+      font-size: 12px
+      font-weight: 700
+      
+      @include for-small-desktop-up
+        // top: 140px
         top: 50%
-        left: 50%
-        transform: translate(-50%, -50%)
-        font-size: 16px
-
-      & .desktop
+        transform: translateY(-50%)
+        padding: 8.5px 24px
+        width: auto
+    
+      &.active
+        background: none
+        border: 1px solid #8D00FC
+        
+        .icon-check
+          display: block
+        
+                
+      & .icon-check
         display: none
-
-        @include for-big-phone-up
-          display: initial
-
-      & .mobile
-        @include for-big-phone-up
-          display: none
-
+        margin-left: 6px
+        
+        &.active
+          display: block
+        
     & .like
-      margin-bottom: 5px
-
-      @include for-big-phone-up
-        margin-top: initial
-
-      @include for-desktop-up
-        position: absolute
-        right: 20px
-        opacity: 0
-
-      & .desktop
-        display: none
-
-        @include for-big-phone-up
-          display: initial
-
-      & .mobile
-        @include for-big-phone-up
-          display: none
+      position: absolute
+      top: 8px
+      right: 7px
+      stroke: #C745CB
 
     &.noInStock
-      top: 0
-      right: 0
-      width: 100%
-      height: 100%
-      display: flex
-      flex-direction: column
-      justify-content: center
-      row-gap: 10px
-      align-items: center
-      border: none
 
       & .like
-        position: absolute
-        right: 10px
-        top: 10px
+        display: none
 
       & .noInStockMsg
-        font-family: 'Montserrat'
-        color: #fff
+        position: absolute
+        bottom: 48px
+        left: 7px
+        color: #FFF
+        font-size: 12px
+        font-style: normal
+        font-weight: 600
+        line-height: normal
+        
+        @include for-small-desktop-up
+          bottom: 15px
+          left: 15px          
+      
+      & .soonInStockMsg
+        position: absolute
+        width: 100%
         text-align: center
-        font-size: 18px
+        color: #FFF
+        font-size: 12px
+        font-style: normal
+        font-weight: 600
+        line-height: normal
+        
+      & .mobile
+        top: 54px
+         
+        @include for-small-desktop-up
+          display: none    
+      
+      & .desktop
+        display: none
+        
+        @include for-small-desktop-up    
+          display: block
+          top: 38%
+          transform: translateY(-50%)
+      
+      & .subscribeInStock
+        position: absolute
+        bottom: 8px
+        display: flex
+        width: 116px
+        padding: 6.5px 12px
+        border-radius: 99px
+        border: 1px solid #8D00FC
+        font-size: 12px
         font-weight: 700
-
+        
+        @include for-small-desktop-up
+          // top: 140px
+          top: 50%
+          transform: translateY(-50%)
+          padding: 8.5px 24px
+          width: auto
+          
+        & .icon-check
+          margin-left: 6px
+        
   & .head
     position: relative
-    height: 195px
+    height: 129px
     width: 100%
-    font-size: 16px
-
-    @include for-big-phone-up
-      height: 190px
-      font-size: 18px
-
-    @include for-middle-desktop-up
-      height: 215px
-
-    @include for-big-desktop-up
-      height: 250px
+    font-size: 12px
+    
+    @include for-small-desktop-up
+      height: 240px
 
     &:before, & .name
       position: absolute
@@ -174,96 +191,142 @@
       content: ''
       top: 35%
       background: linear-gradient(180deg, rgba(70, 11, 110, 0) 0%, #02043D 100%)
-
+          
     & .img
       object-fit: cover
       width: 100%
       height: 99%
-
-    & .name
-      color: #fff
-      font-weight: 600
-      padding: 0 12px
-      text-align: left
+    
+    & .imageFilter
+      position: absolute
+      top: 0
+      left: 0
+      right: 0
+      bottom: 0
+      transition: background .3s ease-in
+      
+    & .activate
+      background: rgba(2, 4, 61, 0.7)
+  
+  & .name
+    color: #fff
+    padding: 0 7px
+    text-align: left
+    color: #FFF
+    font-size: 12px
+    font-weight: 400
+    margin-bottom: auto
+    
+    @include for-small-desktop-up
+      font-size: 14px
+      padding-left: 16px
 
   & .dlc
     position: absolute
-    top: 7px
-    left: 7px
-    background: rgba(2, 4, 61, 0.6)
-    border: 1px solid #FFFFFF
-    border-radius: 7px
+    top: -1px
+    left: -1px
+    width: 40px
+    height: 25px
+    font-size: 12px
+    font-weight: 600
+    border-radius: 12px 0px 0px 0px
+    background: #525379
     z-index: $ZIndex-DLCOnCartProduct
-    padding: 3px 6px
+    padding: 5px
     color: #fff
-    font-weight: 700
-
-    @include for-big-phone-up
-      top: 9px
-      left: 9px
+    
+  & .new
+    position: absolute
+    top: -1px
+    left: -1px
+    width: 40px
+    height: 25px
+    font-size: 12px
+    font-weight: 600
+    border-radius: 12px 0px 0px 0px
+    background: #C745CB
+    z-index: $ZIndex-DLCOnCartProduct
+    padding: 5px
+    color: #fff
 
   & .price
-    justify-content: space-between
-    width: 100%
-    padding: 20px 12px 0 12px
+    align-items: center
+    gap: 4px
+    // width: 100%
+    padding: 0 7px
+    font-size: 12px
+    margin-top: 5px
+    margin-bottom: 48px
+    
+    @include for-small-desktop-up
+      margin-bottom: 12px
+      margin-left: 16px
+      padding: 0
+      font-size: 14px
+    
+    &.hidden
+      // display: none
+      visibility: hidden
+      margin-bottom: 7px
 
-    @include for-desktop-up
-      & .fromPrice .value:before
-        height: 2px
-
-    @include for-big-desktop-up
-      & .fromPrice .value:before
-        height: 3px
-
-  @include for-big-phone-up
-    &.big
-      max-width: 189px
-      min-width: 189px
-      height: 295px
-
-      @include for-desktop-up
-        max-width: 204px
-        min-width: 204px
-        height: 317px
-
-      @include for-middle-desktop-up
-        max-width: 220px
-        min-width: 220px
-        height: 340px
-
-      @include for-big-desktop-up
-        max-width: 233px
-        min-width: 233px
-        height: 368px
-
-      & .head
-        @include for-big-phone-up
-          height: 230px
-
-        @include for-desktop-up
-          height: 253px
-
-        @include for-middle-desktop-up
-          height: 272px
-
-        @include for-big-desktop-up
-          height: 296px
-
+    & .fromPrice
+        font-size: 10px
+        color: #383960
+        
+        @include for-small-desktop-up
+          font-size: 12px
+      
+        &:after
+          font-size: 10px
+          
+          @include for-small-desktop-up
+          font-size: 12px
+        
+        .value:before
+          background-color: #383960
+          height: 1px
+    
+    & .toPrice:after
+        font-size: 12px
+        
+        @include for-small-desktop-up
+          font-size: 14px
+        
+    & .discount
+      color: #FFF
+      text-align: center
+      font-size: 12px
+      font-weight: 600
+      padding: 2px
+      border-radius: 4px
+      background: #8D00FC
+      margin-left: auto
+      
+      @include for-small-desktop-up
+        margin-left: 42px
+      
+      &:before, &:after
+        margin: 0
+        
   &.small
     max-width: 135px
     min-width: 135px
-    height: 205px
-    border-radius: 16px
+    min-height: 220px
+    .head
+      height: 120px
 
     @include for-middle-phone-up
       max-width: 150px
       min-width: 150px
       height: 235px
 
-    @include for-desktop-up
+    @include for-small-desktop-up
       max-width: 150px
       min-width: 150px
       height: 230px
+      
+      .head
+        height: 240px
 
     @include for-middle-desktop-up
       max-width: 154px
@@ -274,79 +337,7 @@
       max-width: 171px
       min-width: 171px
       height: 270px
-
-    & .actions
-      @include for-desktop-up
-        & .like
-          top: 10px
-          right: 10px
-
-      &.noInStock
-        row-gap: 10px
-
-        & .like
-          position: absolute
-          right: 7px
-          top: 7px
-
-        & .noInStockMsg
-          font-family: 'Montserrat'
-          color: #fff
-          text-align: center
-          font-size: 15px
-          font-weight: 700
-
-      & .inCart
-        border-width: 1px
-        font-size: 14px
-
-        @include for-desktop-up
-          padding: 7px
-
-        @include for-middle-desktop-up
-          border-width: 3px
-          font-size: 16px
-          padding: 7px 10px
-
-        @include for-big-desktop-up
-          padding: 9px 12px
-
-    & .head
-      height: 160px
-      font-size: 14px
-
-      @include for-middle-phone-up
-        height: 190px
-
-      @include for-big-phone-up
-        height: 162px
-        font-size: 16px
-
-      @include for-desktop-up
-        height: 183px
-
-      @include for-middle-desktop-up
-        height: 195px
-
-      @include for-big-desktop-up
-        height: 217px
-
-      & .name
-        padding: 0 10px
-
-        @include for-big-phone-up
-          padding: 0 12px
-
-    & .price
-      font-size: 16px
-      padding: 12px 12px 0 12px
-
-      @include for-middle-desktop-up
-        padding: 18px 12px 0 12px
-
-      @include for-middle-desktop-up
-        padding: 20px 12px 0 12px
-
+ 
   &-frame
     background-color: #fff
     position: relative
@@ -365,9 +356,6 @@
       animation-iteration-count: infinite
       z-index: 1
 
-    .elem
-      border-radius: 8px
-
     .head
       padding: 8%
       background-color: #ccc
@@ -378,23 +366,7 @@
       .name
         background-color: #a1a1a1
         min-height: 10%
-        width: calc(100% - 16%)
         bottom: 7%
-
-    .price
-      .fromPrice
-        min-width: 40%
-
-      .toPrice
-        min-width: 30%
-
-      & .toPrice, & .fromPrice
-        background-color: #ccc
-        min-height: 20px
-
-        &:after
-          content: initial
-
 
 @keyframes gradient-animation
   from
@@ -404,12 +376,12 @@
 
 .xbox .cardGame
   background-color: #000
-
+  
+  &:hover .head .imageFilter
+    background:#000000cc
+  
+  .head .imageFilter.activate 
+      background: rgba(0, 0, 0, 0.80)
+        
   .head:before
-    background: linear-gradient(180deg, rgba(70, 11, 110, 0) 0%, #000 100%)
-
-  .dlc
-    background: rgba(1, 1, 1, 0.6)
-
-  .actions
-    background-color: rgba(1, 1, 1, 0.6)
+    background: linear-gradient(180deg, rgba(2, 4, 61, 0.00) 0%, #000 83.87%)

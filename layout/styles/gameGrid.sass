@@ -2,15 +2,9 @@
 
 .gameGrid
   display: grid
-  grid-template-columns: repeat(1, max-content)
-  justify-content: center
-  row-gap: 20px
+  grid-template-columns: repeat(auto-fit, minmax(132px, 1fr))
+  gap: 12px
 
-  @include for-middle-phone-up
-    grid-template-columns: repeat(2, max-content)
-    justify-content: space-around
-
-  @include for-big-phone-up
-    grid-template-columns: repeat(5, max-content)
-    row-gap: 50px
-    column-gap: 30px
+  @include for-small-desktop-up
+    grid-template-columns: repeat(auto-fit, minmax(202px, 1fr))
+    gap: 30px

@@ -1487,7 +1487,7 @@ document.addEventListener('click', async (e) => {
                 return;
             }
 
-            addToCartBtnText.innerText = 'Добавлено';
+            addToCartBtnText.innerText = 'В корзине';
             addToCartBtnIcon.classList.add('active');
             addToCartBtnNode.classList.add('js-active', 'active');
             addToCartBtnNode.setAttribute('title', 'Перейти в корзину покупок');
@@ -1566,6 +1566,7 @@ mobileSearchStringNode.addEventListener('input', async () => {
             ...product,
             isAuth: result.isAuth,
             size: 'small',
+            email: result.email
         }));
     });
 
@@ -1622,6 +1623,7 @@ searchStringNode.addEventListener('input', async (e) => {
             ...product,
             isAuth: result.isAuth,
             size: 'small',
+            email: result.email
         }));
     });
 
@@ -1847,8 +1849,7 @@ if (homeSliderNode) {
             if (result.error) {
                 return;
             }
-
-            btn.innerText = 'Добавлено';
+            
             btn.classList.add('js-active');
             btn.setAttribute('title', 'Перейти в корзину покупок');
 
@@ -2282,6 +2283,7 @@ if (catalogNode) {
             pageNode.append(getProductCardNode({
                 ...product,
                 isAuth: result.isAuth,
+                email: result.email
             }));
         });
 
@@ -2338,10 +2340,12 @@ if (catalogNode) {
             pageNode.append(getProductCardNode({
                 ...product,
                 isAuth: result.isAuth,
+                email: result.email
             }));
         });
 
         catalogListNode.append(pageNode);
+
         pageObjects.push({
             node: pageNode,
             loaded: true,
@@ -2404,6 +2408,7 @@ if (catalogNode) {
                     pageNode.append(getProductCardNode({
                         ...product,
                         isAuth: result.isAuth,
+                        email: result.email
                     }));
                 });
             }, 1000)

@@ -1,15 +1,14 @@
 import fetch from "node-fetch";
 
-import Product from '../../models/Product.js';
-import Category from '../../models/Category.js';
-import Genre from '../../models/Genre.js';
 import ActivationService from '../../models/ActivationService.js';
-import Order from '../../models/Order.js';
-import Comment from '../../models/Comment.js';
-import User from '../../models/User.js';
-import Review from "../../models/Review.js";
 import Article from "../../models/Article.js";
-import {getAlias, getChangeLayout, getGrams, toRoman} from "../../utils/functions.js";
+import Comment from '../../models/Comment.js';
+import Genre from '../../models/Genre.js';
+import Order from '../../models/Order.js';
+import Product from '../../models/Product.js';
+import Review from "../../models/Review.js";
+import User from '../../models/User.js';
+import { getAlias, getChangeLayout, getGrams, toRoman } from "../../utils/functions.js";
 
 export const gamesPage = async (req, res, next) => {
   try {
@@ -505,6 +504,18 @@ export const gamesPage = async (req, res, next) => {
       
         if (cart && cart.includes(productId)) {
           item.inCart = true;
+        }
+                
+        if (item.subscribesInStock.includes(person.email)) {
+          item.subscribed = true;
+        }
+        
+        // checking product for freshness
+        const currentDate = new Date();
+        currentDate.setDate(currentDate.getDate() - 180);
+        
+        if (new Date(item.releaseDate) > currentDate) {
+          item.isNew = true;
         }
       
         return item;
