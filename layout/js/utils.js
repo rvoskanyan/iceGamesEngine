@@ -1,4 +1,4 @@
-import { websiteAddress, platform } from "./config.js";
+import { platform } from "./config.js";
 
 export const urlEncodeFormData = (fd) => {
   let s = '';
@@ -42,10 +42,13 @@ export const getProductCardNode = (data) => {
   const actionsNode = document.createElement('div');
   const headNode = document.createElement('div');
   const headImgNode = document.createElement('img');
+  const imageFilterNode = document.createElement('div');
   const headNameNode = document.createElement('div');
   const priceNode = document.createElement('div');
   const toPriceNode = document.createElement('div');
   const toPriceValueNode = document.createElement('span');
+  const checkIconNode = document.createElement('span');
+  
   
   if (data.dlc) {
     const dlcInfoNode = document.createElement('div');
@@ -57,6 +60,21 @@ export const getProductCardNode = (data) => {
     productNode.append(dlcInfoNode);
   }
   
+  // checking product for freshness
+  const currentDate = new Date();  
+  currentDate.setDate(currentDate.getDate() - 180);
+
+  if (new Date(data.releaseDate) > currentDate) {
+    const newInfoNode = document.createElement('div');
+    
+    newInfoNode.setAttribute('class', 'new');
+    newInfoNode.setAttribute('title', 'Новинка');
+    newInfoNode.innerText = 'new';
+    
+    productNode.append(newInfoNode);
+  }
+  
+  // done
   if (data.isAuth) {
     const favoritesBtnNode = document.createElement('button');
     const favoritesIconBtnNode = document.createElement('span');
@@ -71,32 +89,43 @@ export const getProductCardNode = (data) => {
   }
   
   if (data.preOrder) {
-    const preOrderTextNode = document.createElement('div');
+    const preOrderMobileTextNode = document.createElement('div');
+    const preOrderDesktopTextNode = document.createElement('div');
     const subscribeBtnNode = document.createElement('button');
   
-    preOrderTextNode.setAttribute('class', 'noInStockMsg');
-    preOrderTextNode.innerHTML = 'Скоро<br>в наличии!';
+    preOrderMobileTextNode.setAttribute('class', 'soonInStockMsg mobile');
+    preOrderDesktopTextNode.setAttribute('class', 'soonInStockMsg desktop');
+    preOrderMobileTextNode.innerHTML = 'Скоро<br>в наличии!';
+    preOrderDesktopTextNode.innerHTML = 'Скоро в наличии!';
   
-    subscribeBtnNode.setAttribute('class', 'btn border rounded bg-darkPink hover-bg-pink small js-subscribeInStock');
+    subscribeBtnNode.setAttribute('class', 'btn subscribeInStock js-subscribeInStock');
     subscribeBtnNode.setAttribute('title', 'Подписаться на уведомление о поступлении товара');
     subscribeBtnNode.innerText = 'Уведомить';
-  
-    actionsNode.append(preOrderTextNode);
+    
+    if (data.subscribesInStock.includes(data.email)) {
+      checkIconNode.setAttribute('class', 'icon icon-check')
+      subscribeBtnNode.setAttribute('title', 'Когда товар появится в наличии, на Ваш E-mail придет уведомление');
+      subscribeBtnNode.append(checkIconNode);
+    }
+    
+    actionsNode.append(preOrderMobileTextNode);
+    actionsNode.append(preOrderDesktopTextNode);
     actionsNode.append(subscribeBtnNode);
+     
   } else if (data.inStock) {
     const addToCartBtnNode = document.createElement('button');
     const desktopTextNode = document.createElement('span');
-    const mobileIconNode = document.createElement('span');
+    const checkIconNode = document.createElement('span');
     
     desktopTextNode.setAttribute('class', 'desktop js-text');
-    desktopTextNode.innerText = data.inCart ? 'Добавлено' : 'В корзину';
+    desktopTextNode.innerText = data.inCart ? 'В корзине' : 'В корзину';
+
+    checkIconNode.setAttribute('class', 'icon icon-check js-icon')
   
-    mobileIconNode.setAttribute('class', `mobile icon-static icon-static-cartProduct${data.inCart ? ' active' : ''} js-icon`);
-  
-    addToCartBtnNode.setAttribute('class', `btn border rounded uppercase bg-darkPink hover-bg-pink inCart small js-addToCart${data.inCart ? ' active js-active' : ''}`);
+    addToCartBtnNode.setAttribute('class', `btn inCart js-addToCart${data.inCart ? ' active js-active' : ''}`);
     addToCartBtnNode.setAttribute('title', data.inCart ? 'Перейти в корзину покупок' : 'Добавить данный товар в корзину покупок');
     addToCartBtnNode.append(desktopTextNode);
-    addToCartBtnNode.append(mobileIconNode);
+    addToCartBtnNode.append(checkIconNode);
   
     actionsNode.append(addToCartBtnNode);
   } else {
@@ -104,11 +133,17 @@ export const getProductCardNode = (data) => {
     const subscribeBtnNode = document.createElement('button');
     
     notInStockTextNode.setAttribute('class', 'noInStockMsg');
-    notInStockTextNode.innerHTML = 'Игры нет<br>в наличии :(';
-  
-    subscribeBtnNode.setAttribute('class', 'btn border rounded bg-darkPink hover-bg-pink small js-subscribeInStock');
+    notInStockTextNode.innerHTML = 'Нет в наличии';
+
+    subscribeBtnNode.setAttribute('class', 'btn subscribeInStock js-subscribeInStock');
     subscribeBtnNode.setAttribute('title', 'Подписаться на уведомление о поступлении товара');
     subscribeBtnNode.innerText = 'Уведомить';
+    
+    if (data.subscribesInStock.includes(data.email)) {
+      checkIconNode.setAttribute('class', 'icon icon-check')
+      subscribeBtnNode.setAttribute('title', 'Когда товар появится в наличии, на Ваш E-mail придет уведомление');
+      subscribeBtnNode.append(checkIconNode);
+    }
   
     actionsNode.append(notInStockTextNode);
     actionsNode.append(subscribeBtnNode);
@@ -123,9 +158,11 @@ export const getProductCardNode = (data) => {
   
   headNameNode.setAttribute('class', 'name');
   headNameNode.innerText = data.name;
+  imageFilterNode.setAttribute('class', `imageFilter ${data.inStock ? '' : 'activate'}`)
   
   headNode.setAttribute('class', 'head');
   headNode.append(headImgNode);
+  headNode.append(imageFilterNode);
   headNode.append(headNameNode);
   
   toPriceValueNode.setAttribute('class', 'value');
@@ -134,8 +171,10 @@ export const getProductCardNode = (data) => {
   toPriceNode.setAttribute('class', 'toPrice');
   toPriceNode.append(toPriceValueNode);
   
-  priceNode.setAttribute('class', 'price');
+  priceNode.setAttribute('class', `price ${!data.inStock && !data.preOrder ? 'hidden' : ''}`);
   priceNode.append(toPriceNode);
+  
+  
   
   if (data.priceTo < data.priceFrom) {
     const fromPriceNode = document.createElement('div');
@@ -148,6 +187,12 @@ export const getProductCardNode = (data) => {
     fromPriceNode.append(fromPriceValueNode);
   
     priceNode.append(fromPriceNode);
+    
+    const discountNode = document.createElement('div');
+    discountNode.setAttribute('class', 'discount js-discount');
+    discountNode.innerText = data.discount;
+    
+    priceNode.append(discountNode);
   }
   
   productNode.setAttribute('href', `${ platform ? '/' + platform : '' }/games/${ data.alias }`);

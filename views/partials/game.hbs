@@ -11,38 +11,51 @@
                 <span class="icon-static icon-static-actionLike js-icon{{#if inFavorites}} active{{/if}}"></span>
             </button>
         {{/if}}
-        {{#if preOrder}}
-            <div class="noInStockMsg">Скоро<br>в наличии!</div>
-            <button
-                    class="btn border rounded bg-darkPink hover-bg-pink small js-subscribeInStock"
-                    title="Подписаться на уведомление о поступлении товара"
-            >Уведомить</button>
-        {{else}}
             {{#if inStock}}
                 <button
-                        class="btn border rounded uppercase bg-darkPink hover-bg-pink active-bg-darkBlue inCart small js-addToCart{{#if inCart}} active js-active{{/if}}"
-                        title="{{#if inCart}}Перейти в корзину покупок{{else}}Добавить данный товар в корзину покупок{{/if}}"
+                    class="btn inCart js-addToCart{{#if inCart}} active js-active{{/if}}"
+                    title="{{#if inCart}}Перейти в корзину покупок{{else}}Добавить данный товар в корзину покупок{{/if}}"
                 >
-                    <span class="desktop js-text">{{#if inCart}}Добавлено{{else}}В корзину{{/if}}</span>
-                    <span class="mobile icon-static icon-static-cartProduct{{#if inCart}} active{{/if}} js-icon"></span>
+                    <span class="desktop js-text">{{#if inCart}}В корзине{{else}}В корзину{{/if}}</span>
+                    <span class="icon icon-check js-icon"></span>
                 </button>
             {{else}}
-                <div class="noInStockMsg">Игры нет<br>в наличии :(</div>
+                {{#if preOrder}}
+                    <div class="soonInStockMsg mobile">Скоро<br>в наличии!</div>
+                    <div class="soonInStockMsg desktop">Скоро в наличии!</div>
+                {{/if}}
+                {{#unless preOrder}}
+                    <div class="noInStockMsg">Нет в наличии</div>
+                {{/unless}}
                 <button
-                        class="btn border rounded bg-darkPink hover-bg-pink small js-subscribeInStock"
-                        title="Подписаться на уведомление о поступлении товара"
-                >Уведомить</button>
+                    class="btn subscribeInStock js-subscribeInStock"
+                    title="{{#if subscribed}}Когда товар появится в наличии, на Ваш E-mail придет уведомление{{else}}Подписаться на уведомление о поступлении товара{{/if}}"
+                >
+                    Уведомить
+                    {{#if subscribed}}
+                        <span class="icon icon-check"></span>
+                    {{/if}}
+                </button>
             {{/if}}
-        {{/if}}
     </div>
     {{#if dlc}}
         <div class="dlc" title="Дополнение для игры">DLC</div>
     {{/if}}
+    {{#if isNew}}
+        <div class="new" title="Новинка">new</div>
+    {{/if}}
+    
     <div class="head">
         <img class="img" src="{{@root.websiteAddress}}{{img}}" loading="lazy" alt="Картинка {{name}}" title="{{name}}">
-        <div class="name">{{name}}</div>
+        <div class="imageFilter{{#unless inStock}} activate{{/unless}}"></div>
     </div>
-    <div class="price">
+    <div class="name">{{name}}</div>
+    <div class="price
+    {{#unless inStock}}
+        {{#unless preOrder}}
+            hidden
+        {{/unless}}
+    {{/unless}}">
         <div class="toPrice">
             <span class="value">{{priceTo}}</span>
         </div>
@@ -50,6 +63,9 @@
             <div class="fromPrice">
                 <span class="value">{{priceFrom}}</span>
             </div>
+            {{#if discount}}
+                <div class="discount js-discount">{{discount}}</div>
+            {{/if}}
         {{/iff}}
     </div>
 </a>
