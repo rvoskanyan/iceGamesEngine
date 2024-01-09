@@ -339,7 +339,7 @@ export const getProducts = async (req, res) => {
     res.json({
       message: 'success',
       isAuth: req.session.isAuth,
-      email: person.email,
+      email: person?.email,
       products,
       isLast,
     });
