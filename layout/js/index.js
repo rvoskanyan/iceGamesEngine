@@ -5,16 +5,17 @@ import PopupController from "./PopupController.js";
 import Postman from "./Postman.js";
 import Prompt from "./Prompt.js";
 import Slider from "./Slider.js";
+import SliderHome from "./SliderHome.js";
 import Tabs from "./Tabs.js";
 import { websiteAddress } from "./config.js";
 import { debounce, getProductCardNode, scrollTo, urlEncodeFormData } from "./utils.js";
+
 
 import './../styles/index.sass';
 import AsyncFormSteam from './AsyncFormSteam.js';
 import Message from "./lib/message.js";
 import Payment from "./lib/payment.js";
 import SocialSharing from "./lib/socialSharing.js";
-
 const postman = new Postman();
 const platform = document.body.dataset.platform || 'pc';
 
@@ -37,6 +38,7 @@ const homeMediaSliderNode = document.querySelector('.js-homeMediaSlider');
 const productsFromArticleSliderNode = document.querySelector('.js-productsFromArticleSlider');
 const homeCatalogTabsNode = document.querySelector('.js-homeCatalogTabs');
 const genresSliderNode = document.querySelector('.js-genresSlider');
+const selectionsSliderNode = document.querySelector('.js-selectionsSlider');
 const gameGallerySliderNode = document.querySelector('.js-gameGallerySlider');
 const gameInfoTabsNode = document.querySelector('.js-gameInfoTabs');
 const gameInfoSystemParamsNode = document.querySelector('.js-gameInfoSystemParams');
@@ -1866,7 +1868,6 @@ if (homeCatalogTabsNode) {
         mainNode: homeCatalogTabsNode,
     });
 }
-
 if (genresSliderNode) {
     new Slider({
         mainNode: genresSliderNode,
@@ -1876,6 +1877,14 @@ if (genresSliderNode) {
         infinity: true,
     });
 }
+
+// ########################################################
+
+if (selectionsSliderNode) {
+}
+
+// ########################################################
+
 
 if (gameGallerySliderNode) {
     new Slider({

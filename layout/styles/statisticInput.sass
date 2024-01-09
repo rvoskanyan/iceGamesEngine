@@ -4,32 +4,61 @@
   display: flex
   flex-direction: column
   align-items: center
-  row-gap: 10px
+  row-gap: 12px
   text-align: center
   min-width: 120px
   color: #fff
-
+  
+  
   @include for-desktop-up
     min-width: 230px
 
   .label
     font-family: 'Lemon Milk'
     width: 100%
-    font-size: 12px
+    font-size: 20px
+    font-weight: 400
+    line-height: 140%
 
     @include for-desktop-up
       font-size: 16px
 
     @include for-middle-desktop-up
       font-size: 18px
-
-  .value
-    font-family: 'Lemon Milk'
+      
+  .valueWrapper
+    display: flex
+    flex-direction: row-reverse
+    align-items: center
+    justify-content: center
+    gap: 12px
     width: 100%
-    font-size: 16px
-    border: 1px solid #fff
-    padding: 8px 10px
     border-radius: 12px
+    padding: 16px 32px
+    border-radius: 99px
+    background: rgba(50, 0, 101, 0.48)
+    
+    .value
+      position: relative
+      font-family: 'Lemon Milk'
+      // width: 100%
+      font-size: 20px
+      // border-radius: 12px
+      // padding: 16px 32px
+      // border-radius: 99px
+      // background: rgba(50, 0, 101, 0.48)
+      // &.active > .valueWrapper
+      //   opacity: 1
+      width: 40px
+      &.animated.active, &.animated.active + .icon-usersGroup
+        opacity: 1
+      // &.animated.active + .icon-usersGroup
+      //   opacity: 1
+      
+    .icon-usersGroup.animated,.value.animated
+      opacity: 0
+      transition: ease-in .5s
+      transition-property: opacity
 
     @include for-desktop-up
       border-radius: 20px
@@ -38,11 +67,12 @@
 
     @include for-middle-desktop-up
       font-size: 26px
+    
+      
 
-    &.animated
-      opacity: 0
-      transition: ease-in .5s
-      transition-property: opacity
-
-      &.active
-        opacity: 1
+  // &.animated
+  //   opacity: 0
+  //   transition: ease-in .5s
+  //   transition-property: opacity
+    
+  

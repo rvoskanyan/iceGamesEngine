@@ -1,0 +1,317 @@
+@import './breakPoints'
+
+.homeSelections
+	
+	.selectionsSlider
+		padding-top: 24px
+		margin-left: 16px
+		
+		.selection
+			position: relative
+			display: flex
+			flex-direction: column
+			align-items: center
+			gap: 24px
+			overflow: hidden
+			height: 215px
+			border-radius: 16px
+			background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255,0.00) 125.7%)
+			text-decoration: none
+			
+			.selectionImg
+				display: block
+				width: 207px
+				height: 125px
+				border-radius: 16px
+				margin-top: 16px
+			
+			.selectionInfo
+				display: flex
+				justify-content: center
+				align-items: center
+				
+				.selectionName
+					color: #FFF
+					text-align: center
+					font-family: 'Lemon Milk'
+					font-size: 18px
+	
+		
+	
+	
+// .selectionsSlider
+//   max-width: 1530px
+//   margin: 15px auto 0 auto
+//   position: relative
+
+//   @include for-desktop-up
+//     margin: 40px auto 0 auto
+
+//   .visibleArea
+//     width: 80%
+//     // ! try this
+//     // width: 100%
+//     // overflow: hidden
+//     position: relative
+
+//     @include for-desktop-up
+//       padding: 11px 0
+
+//     @include for-middle-desktop-up
+//       padding: 12px 0
+//       max-width: (440px + 12px * 2) * 3 //(slideWidth + slideMargin * 2) * countSlides
+
+//     @include for-big-desktop-up
+//       padding: 13px 0
+//       max-width: (480px + 15px * 2) * 3 //(slideWidth + slideMargin * 2) * countSlides
+
+//     &:before, &:after
+//       position: absolute
+//       display: block
+//       background: linear-gradient(90deg, #01033C 5%, transparent 100%)
+//       top: 0
+//       bottom: 0
+//       width: 525px
+//       z-index: 1
+
+//       @include for-desktop-up
+//         content: ''
+
+//     &:after
+//       right: -1px
+//       transform: rotate(180deg)
+
+//     .tape
+//       display: flex
+//       transition: 1s ease
+
+//       .slide
+//         position: relative
+//         display: block
+//          // ! try this
+//         min-width: 80%
+//         // min-width: 100%
+//         // min-width: 239px
+//         // max-width: 239px
+//         height: 200px
+//         overflow: hidden
+//         // border-radius: 20px
+//         // padding: 0 8px
+//         // opacity: 0
+//         // visibility: hidden
+//         transition: .3s ease-in
+//         transition-property: opacity, visibility, transform
+
+//         @include for-desktop-up
+//           border-radius: 30px
+//           min-width: 392px
+//           max-width: 392px
+//           height: 250px
+//           margin: 0 10px
+
+//         @include for-middle-desktop-up
+//           min-width: 440px
+//           max-width: 440px
+//           height: 280px
+//           margin: 0 12px
+
+//         @include for-big-desktop-up
+//           min-width: 480px
+//           max-width: 480px
+//           margin: 0 15px
+//           height: 300px
+
+
+//         &.active
+//           opacity: 1
+//           visibility: visible
+
+//         &:hover
+//           @include for-desktop-up
+//             transform: scale(1.08, 1.08)
+
+//         .blackout
+//           display: block
+//           position: absolute
+//           width: 100%
+//           height: 100%
+//           opacity: 0.3
+
+//         .img
+//           display: block
+//           object-fit: cover
+//           width: 100%
+//           height: 100%
+
+//         .name
+//           font-family: 'Lemon Milk'
+//           text-align: center
+//           color: #fff
+//           font-size: 20px
+//           position: absolute
+//           top: 50%
+//           left: 50%
+//           transform: translate(-50%, -50%)
+//           width: 100%
+
+//           @include for-big-phone-up
+//             font-size: 42px
+
+//   & .prev, & .next
+//     display: flex
+//     z-index: 2
+//     position: absolute
+//     width: 40px
+//     height: 40px
+//     border: 2px solid #fff
+//     border-radius: 100%
+//     top: 50%
+//     transform: translateY(-50%)
+
+//     &:before
+//       content: ''
+//       background-size: cover
+//       background-position: center
+//       background-image: url("./../img/slideControlArrow.svg")
+//       width: 15px
+//       height: 8px
+//       transition: transform .3s ease-in
+
+//     @include for-phone-only
+//       display: none
+
+//   .prev
+//     left: 0
+
+//     &:before
+//       transform: rotate(90deg) translateY(1px)
+
+//     &:hover:before
+//       transform: rotate(90deg) translateY(8px)
+
+//   .next
+//     right: 0
+
+//     &:before
+//       transform: rotate(-90deg) translateY(1px)
+
+//     &:hover:before
+//       transform: rotate(-90deg) translateY(8px)
+
+// .xbox .genresSlider .visibleArea
+//   &:before, &:after
+//     background: linear-gradient(90deg, #000 5%, transparent 100%)
+
+
+	
+	// 
+    
+    
+   
+      
+    // .selectionImg
+      // display: block
+      // width: 207px
+      // height: 125px
+      // object-fit: cover
+      // border-radius: 16px
+     
+    // button
+    // .allSelections
+      // width: 100%
+      // padding: 12px 24px
+      // border-radius: 99px
+      // background: #8D00FC
+      // margin: 37px auto 0 auto
+    
+    // .selectionsBlock
+    //   margin-top: 8px
+    //   display: flex
+    //   flex-wrap: wrap
+    //   column-gap: 5px
+    //   row-gap: 5px
+
+    // @include for-desktop-up
+    //   column-gap: 20px
+    //   row-gap: 20px
+    //   margin-top: 20px
+
+    
+
+    //   @include for-middle-phone-up
+    //     &:nth-child(4n + 1), &:nth-child(4n + 4)
+    //       flex-basis: 49%
+
+    //     &:nth-child(4n + 2), &:nth-child(4n + 3)
+    //       flex-basis: 49%
+
+
+    //   @include for-desktop-up
+    //     height: 280px
+
+    //     &:nth-child(4n + 1), &:nth-child(4n + 4)
+    //       flex-basis: initial
+    //       width: 700px
+
+    //     &:nth-child(4n + 2), &:nth-child(4n + 3)
+    //       flex-basis: initial
+    //       width: 516px
+
+    //   @include for-middle-desktop-up
+    //     height: 300px
+
+    //     &:nth-child(4n + 1), &:nth-child(4n + 4)
+    //       width: 800px
+
+    //     &:nth-child(4n + 2), &:nth-child(4n + 3)
+    //       width: 570px
+
+    //   @include for-big-desktop-up
+    //     height: 350px
+
+    //     &:nth-child(4n + 1), &:nth-child(4n + 4)
+    //       width: 880px
+
+    //     &:nth-child(4n + 2), &:nth-child(4n + 3)
+    //       width: 650px
+
+    //   &:before
+    //     content: ''
+    //     display: block
+    //     position: absolute
+    //     top: 0
+    //     left: 0
+    //     width: 100%
+    //     height: 100%
+    //     background: linear-gradient(180deg, rgba(1, 3, 58, 0.00) 0%, #01033A 100%)
+
+      
+
+    //   .selectionInfo
+    //     position: absolute
+    //     color: #FFF
+    //     bottom: 10px
+    //     left: 10px
+
+    //     @include for-desktop-up
+    //       bottom: 23px
+    //       left: 23px
+
+    //     @include for-big-desktop-up
+    //       bottom: 28px
+    //       left: 28px
+
+    //     .selectionName
+    //       font-family: 'Lemon Milk'
+    //       font-size: 18px
+    //       font-weight: 100
+
+    //       @include for-desktop-up
+    //         font-size: 32px
+
+    //     .selectionCountProducts
+    //       @include for-phone-only
+    //         font-size: 12px
+
+.xbox .selectionsBlock .selection:before
+  background: linear-gradient(180deg, rgba(1, 3, 58, 0.00) 0%, #000 100%)

@@ -46,7 +46,8 @@
     {{/if}}
     
     <div class="head">
-        <img class="img" src="{{@root.websiteAddress}}{{img}}" loading="lazy" alt="Картинка {{name}}" title="{{name}}">
+        {{!-- <img class="img" src="{{@root.websiteAddress}}{{img}}" loading="lazy" alt="Картинка {{name}}" title="{{name}}"> --}}
+        <img class="img" src="http://localhost:4000/img/be961cc8e23a4deabc357029f8c39fd3.jpeg" loading="lazy" alt="Картинка {{name}}" title="{{name}}">
         <div class="imageFilter{{#unless inStock}} activate{{/unless}}"></div>
     </div>
     <div class="name">{{name}}</div>

@@ -27,7 +27,7 @@ export default {
   module: {
     rules: [
       {
-        test: /\.sass$/,
+        test: /\.(sass|css)$/,
         use: [
           MiniCssExtractPlugin.loader,
           {

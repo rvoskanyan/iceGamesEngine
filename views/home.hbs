@@ -27,7 +27,10 @@
             {{#each sliderProducts}}
                 <div class="cover slide{{#if @first}} active{{/if}} js-slide" data-video-name="{{coverVideo}}">
                     <video class="video" muted></video>
-                    <img class="img" src="{{@root.websiteAddress}}{{coverImg}}" loading="lazy" alt="Постер игры {{name}}" title="Постер игры {{name}}">
+                    {{!-- TODO раскомментировать --}}
+                    {{!-- <img class="img" src="{{@root.websiteAddress}}{{coverImg}}" loading="lazy" alt="Постер игры {{name}}" title="Постер игры {{name}}"> --}}
+                    {{!--! TODO remove --}}
+                    <img class="img" src="http://localhost:4000/img/df9dd7ccf1fbf9a61e860ee9fd352d5e.png" loading="lazy" alt="Постер игры {{name}}" title="Постер игры {{name}}">
                     <div class="contentContainer tableInfo">
                         <div class="tableInfo__container">
                             <div class="tableInfo__info">
@@ -49,7 +52,7 @@
                                     </div>
                                 </div>
                                 <div class="tableInfo__actions">
-                                    <a href="{{ @root.websiteAddress }}{{#if @root.platform }}{{ @root.platform }}/{{/if}}games/{{alias}}" title="Перейти к странице товара" class="btn rounded bg-darkLilac">Подробнее</a>
+                                    <a href="{{ @root.websiteAddress }}{{#if @root.platform }}{{ @root.platform }}/{{/if}}games/{{alias}}" title="Перейти к странице товара" class="btn moreInfo">Подробнее</a>
                                     {{#if inCart}}
                                         <button
                                                 title="Перейти в корзину покупок"
@@ -58,7 +61,7 @@
                                     {{else}}
                                         <button
                                                 title="Добавить товар в корзину покупок"
-                                                class="btn rounded increase bg-pink js-addToCart"
+                                                class="btn homeBtn addToCart js-addToCart"
                                                 data-product-id="{{_id}}"
                                         >
                                             В корзину
@@ -78,84 +81,149 @@
                         <circle cx="24" cy="24" r="24"></circle>
                         <circle cx="24" cy="24" r="24"></circle>
                     </svg>
-                    <img src="{{@root.websiteAddress}}{{img}}" loading="lazy" class="center">
+                    {{!-- TODO раскомментировать --}}
+                    {{!-- <img src="{{@root.websiteAddress}}{{img}}" loading="lazy" class="center"> --}}
                 </button>
             {{/each}}
         </div>
     </div>
-    <div class="contentContainer homeContent">
-        <div class="homeSection">
-            <h3 class="homeSubTitle">Рекомендуем</h3>
-            <div class="homeRecommend mobileScroll">
-                {{#each recommend}}
-                    {{> game
-                            size='big'
-                    }}
-                {{/each}}
-            </div>
+     <div class="homeSection homeContent">
+        <h3 class="homeSubTitle">Популярное</h3>
+        <div class="homeRecommend mobileScroll">
+            {{#each recommend}}
+                {{> game
+                        size='big'
+                }}
+            {{/each}}
         </div>
+    </div>
+    <div class="contentContainer ">
         <div class="homeSection homeStatistics mobileInvisibleScroll">
             <div class="statisticInput">
                 <div class="label">комьюнити</div>
-                <div class="value animated js-counterAnimation">{{countUsers}}</div>
+                <div class="valueWrapper">
+                    <div class="value js-counterAnimation animated">{{countUsers}}</div>
+                    <div class='icon icon-usersGroup animated'></div>
+                </div>
             </div>
             <div class="statisticInput">
                 <div class="label">игр куплено</div>
-                <div class="value animated js-counterAnimation">{{countSales}}</div>
+                <div class="valueWrapper">
+                    <div class="value js-counterAnimation animated">{{countSales}}</div>
+                    <div class='icon icon-bagCheck animated'></div>
+                </div>
             </div>
             <div class="statisticInput">
                 <div class="label">игр на сайте</div>
-                <div class="value animated js-counterAnimation">{{countProducts}}</div>
+                <div class="valueWrapper">
+                    <div class="value js-counterAnimation animated">{{countProducts}}</div>
+                    <div class='icon icon-gamepadCharge animated'></div>
+                </div>
             </div>
             <div class="statisticInput">
                 <div class="label">отзывов</div>
-                <div class="value animated js-counterAnimation">{{countReviews}}</div>
+                <div class="valueWrapper">
+                    <div class="value js-counterAnimation animated">{{countReviews}}</div>
+                    <div class='icon icon-likeReviews animated'></div>
+                </div>
             </div>
         </div>
         <div class="splitInfoBlock">
-            <img src="{{websiteAddress}}img/splitInfoBlockHomeBg.jpg" class="img" loading="lazy" alt="Картинка для инфо-блока про сплит на главной">
+            <img src="{{websiteAddress}}img/splitInfoBlockHomeBgV2.jpg" class="img infoBlockImg" loading="lazy" alt="Картинка для инфо-блока про сплит на главной">
             <div class="content">
                 <img class="icon" src="{{@root.websiteAddress}}img/iconSplit.png" loading="lazy" alt="Доступно в сплит" title="Доступно для оплаты по частям">
                 <div class="title">Играй сейчас - плати потом</div>
                 <div class="description">Дели сумму заказа на части и оплачивай постепенно</div>
-                <a href="{{websiteAddress}}split" class="btn border round bg-pink">Узнать подробнее</a>
+                <a href="{{websiteAddress}}split" class="btn homeBtn">Узнать подробнее</a>
             </div>
             <div class="separate"></div>
+            <div class="bg"></div>
+            <img class="qr" src="{{websiteAddress}}img/qr-yandex-pay.png" alt="">
+            <p class="direction">Наведите камеру, <br>чтобы скачать приложение<br> "Яндекс Пэй"</p>
+        </div> 
+    </div>
+    <div class="homeSection homeCatalog js-homeCatalogTabs">
+        <div class="categories mobileInvisibleScroll">
+            {{#each catalog}}
+                {{#iff products.length '>' 0}}
+                    <button class="categoryBtn js-tabBtn{{#if @first}} active{{/if}}"data-target-id="{{@index}}">
+                        {{category.name}}
+                    </button>
+                {{/iff}}
+            {{/each}}
         </div>
-        <div class="homeSection homeCatalog js-homeCatalogTabs">
-            <div class="categories mobileInvisibleScroll">
-                {{#each catalog}}
-                    {{#iff products.length '>' 0}}
-                        <button class="btn round border big bg-darkLilac translucent js-tabBtn{{#if @first}} active{{/if}}" data-target-id="{{@index}}">
-                            {{category.name}}
-                        </button>
-                    {{/iff}}
-                {{/each}}
-            </div>
-            <div class="blocks">
-                {{#each catalog}}
-                    {{#iff products.length '>' 0}}
-                        <div class="item mobileScroll js-tabBlock-{{@index}}{{#if @first}} active{{/if}}">
-                            {{#each products}}
-                                {{> game
-                                    size='big'
-                                }}
-                            {{/each}}
+        <div class="blocks">
+            {{#each catalog}}
+                {{#iff products.length '>' 0}}
+                    <div class="item mobileScroll js-tabBlock-{{@index}}{{#if @first}} active{{/if}}">
+                        {{#each products}}
+                            {{> game
+                                size='big'
+                            }}
+                        {{/each}}
+                    </div>
+                {{/iff}}
+            {{/each}}
+        </div>
+        <a
+            href="{{ websiteAddress }}{{#if platform}}{{ platform }}/{{/if}}gamesonlyStock=true"
+            class="btn homeBtn"
+            title="Открыть каталог со всеми товарами"
+        >
+            В каталог
+        </a>
+    </div>
+    <div class="homeSection homeSelections ">
+        <h2 class="homeTitle">Подборки</h2>
+        <section class="section selectionsSlider selectionsBlock mobileScroll">
+            <div class="container slider-column">
+                    <div class="swiper swiper-slider-selections">
+                        <div class="swiper-wrapper">
+                            {{#each selections}}
+                             {{!-- src="{{@root.websiteAddress}}{{img}} --}}
+                            <a href="{{@root.websiteAddress}}{{#if @root.platform}}{{@root.platform }}/{{/if}}selections/{{alias}}"title="Перейти на  страницу подборки {{name}}"class="selection slide swiper-slide">
+                                <img  src="http://localhost:4000/img/ff9af04e-c390-426b-8eae-3b202ec73e12.jpeg" class="selectionImg" loading="lazy" alt="Изображениеподборки товаров {{name}}" title="Изображение подборкитоваров {{name}}">
+                                <div class="selectionInfo">
+                                    <div class="selectionName">{{name}}</div>
+                                    {{!-- <div class="selectionCountProducts">Игр в подборке:    {{products.length}}</div> --}}
+                                </div>
+                            </a>
+                        {{/each}}
                         </div>
-                    {{/iff}}
-                {{/each}}
+                        {{!-- <span class="swiper-pagination"></span>
+                        <span class="swiper-scrollbar"></span> --}}
+                        <span class="swiper-button-prev"></span>
+                        <span class="swiper-button-next"></span>
+                    </div>
             </div>
-            <a
-                    href="{{ websiteAddress }}{{#if platform}}{{ platform }}/{{/if}}games?onlyStock=true"
-                    class="more btn border rounded increase bg-darkLilac"
-                    title="Открыть каталог со всеми товарами"
-            >
-                В каталог
-            </a>
-        </div>
-        <div class="homeSection">
+        </section>
+        <a class="btn homeBtn" href="{{websiteAddress}}{{#if @root.platform}}{{@root.platform }}/{{/if}}selections">Все подборки</a>
+    </div> 
+    <div class="homeSection">
             <h2 class="homeTitle">Жанры</h2>
-            <div class="genresSlider js-genresSlider">
+            <section class="section genresSlider">
+                <div class="container slider-column">
+                    <div class="swiper swiper-slider-selections">
+                        <div class="swiper-wrapper">
+                            {{#each genres}}
+                            <a class="slide swiper-slide" href="{{@root.websiteAddress}}{{#if @root.platform}}{{ @root.platform }}/{{/if}}games?genres={{alias}}" title="Открыть игры с жанром {{name}}">
+                                {{!-- <span class="blackout" style="background-color: {{bgColor}}"></span> --}}
+                                <p class="name">{{name}}</p>
+                                <p class="name">{{gamesCount}}</p>
+                                {{!-- <img class="img" src="{{@root.websiteAddress}}{{img}}" loading="lazy" alt="Изображение жанра {{name}}" title="Изображение жанра {{name}}">
+                                <div class="name">{{name}}</div> --}}
+                            </a>
+                            {{/each}}  
+                        </div>
+                        {{!-- <span class="swiper-pagination"></span>
+                        <span class="swiper-scrollbar"></span> --}}
+                        <span class="swiper-button-prev"></span>
+                        <span class="swiper-button-next"></span>
+                    </div>
+                </div>
+            </section>
+            <a class="btn homeBtn" href="{{websiteAddress}}{{#if @root.platform}}{{@root.platform }}/{{/if}}selections">Все жанры</a>
+            {{!-- <div class="genresSlider js-genresSlider">
                 <button class="btn prev js-prevBtn"></button>
                 <div class="visibleArea js-visibleArea">
                     <div class="tape js-tape">
@@ -169,27 +237,13 @@
                     </div>
                 </div>
                 <button class="btn next js-nextBtn"></button>
-            </div>
-        </div>
-        <div class="homeSection">
-            <h2 class="homeTitle">Подборки</h2>
-            <div class="selectionsBlock">
-                {{#each selections}}
-                    <a href="{{@root.websiteAddress}}{{#if @root.platform}}{{ @root.platform }}/{{/if}}selections/{{alias}}" title="Перейти на страницу подборки {{name}}" class="selection">
-                        <img src="{{@root.websiteAddress}}{{img}}" class="selectionImg" loading="lazy" alt="Изображение подборки товаров {{name}}" title="Изображение подборки товаров {{name}}">
-                        <div class="selectionInfo">
-                            <div class="selectionName">{{name}}</div>
-                            <div class="selectionCountProducts">Игр в подборке: {{products.length}}</div>
-                        </div>
-                    </a>
-                {{/each}}
-            </div>
-            <a class="btn round border hover-bg-palePink allSelections" href="{{websiteAddress}}{{#if @root.platform}}{{ @root.platform }}/{{/if}}selections">Все подборки</a>
-        </div>
-        {{> newsSlider
+            </div> --}}
+    </div>
+       
+        {{!-- {{> newsSlider
                 aricles=articles
-        }}
-        <div class="homeSection aboutUsHome">
+        }} --}}
+        {{!-- <div class="homeSection aboutUsHome">
             {{#iff platform '===' 'xbox'}}
                 <img src="{{websiteAddress}}/img/aboutUsXbox.png" class="img" loading="lazy" alt="Представление сайта на различных устройствах">
                 <div class="text">
@@ -259,8 +313,8 @@
                     </button>
                 </div>
             {{/unless}}
-        </div>
-        <div class="homeSection">
+        </div> --}}
+        {{!-- <div class="homeSection">
             <h2 class="homeTitle">Медиа о нас</h2>
             <div class="homeMediaSlider js-homeMediaSlider">
                 <div class="tape js-tape">
@@ -271,6 +325,6 @@
                     {{/each}}
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
 </main>
