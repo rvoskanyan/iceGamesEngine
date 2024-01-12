@@ -1,15 +1,67 @@
 @import "./breakPoints"
 
 .homePage
-  .homeContent
-    margin-top: 225px
-
-    @include for-middle-phone-up
-      margin-top: 200px
-
+  .homeSection
+    padding-right: 16px
+    padding-left: 16px
+    
+    // #540px
+    @include for-tablet-portrait-up
+      padding-right: 24px
+      padding-left: 24px
+      
+    // #1280px
+    @include for-small-desktop-up
+      padding-right: 42px
+      padding-left: 42px
+    
+    // #1366px
     @include for-desktop-up
-      margin-top: 250px
-
+      padding-left: 52px
+      padding-right: 52px
+      
+    // #1920px
+    @include for-big-desktop-up
+      padding-left: 0px
+      padding-right: 0px  
+  
+  .homeContent
+    margin-top: 48px
+    margin-left: 16px
+    
+    // #540px
+    @include for-tablet-portrait-up
+      margin-left: 24px
+      
+    // #1280px
+    @include for-small-desktop-up
+      display: flex
+      flex-direction: column
+      margin-left: 43px
+      margin-right: 43px
+      margin-top: 72px
+      
+      &.homeSelections, &.homeNews
+        margin-top: 92px
+        
+      &.homeGenres
+        margin-top: 124px
+      
+    // #1920px
+    @include for-big-desktop-up
+      margin-top: 124px
+      margin-left: 0
+      margin-right: 0
+      
+      &.homeSelections, &.homeNews
+        margin-top: 124px
+      
+    .popularsTitle
+      margin: 0
+      
+    
+    
+    
   .aboutBtnHome
     margin: 0 auto
 
@@ -18,215 +70,300 @@
 
   .splitInfoBlock
     width: 100%
-    height: 320px
+    height: 534px
     position: relative
-    border: 1px solid #fff
-    border-radius: 12px
+    border-radius: 16px
     overflow: hidden
-    margin-top: 30px
-
-    @include for-desktop-up
-      height: 250px
-      margin-top: 50px
-      border-radius: 20px
-
-    @include for-middle-desktop-up
-      height: 300px
-
-    &:before
-      content: ''
-      display: block
+    margin-top: 48px
+    padding-top: 24px
+    padding-bottom: 24px
+    background: #000000bd
+    
+    // #375px
+    @include for-phone-up
+      padding-top: 16px
+      padding-bottom: 16px
+    
+    // #540px
+    @include for-tablet-portrait-up
+      height: 417px
+      padding-top: 24px
+      padding-bottom: 24px
+    
+    // #1280px
+    @include for-small-desktop-up
+      height: 291px
+      padding: 48px 32px
+      
+    // #1920px
+    @include for-big-desktop-up
+      margin-top: 124px
+  
+    .infoBlockImg    
       position: absolute
-      left: 0
-      top: 0
-      height: 100%
-      width: 100%
-      background: linear-gradient(180deg, rgba(1, 3, 60, 0.3) 0, #01033C 100%)
-      z-index: 1
-
-      @include for-desktop-up
-        background: linear-gradient(270deg, transparent 0, #01033C 100%)
-
-    &:after
-      content: ''
-      display: block
-      left: 58px
-      top: -70px
-
-      @include for-desktop-up
-        left: 25%
-
-    .separate
-      bottom: -65px
-      right: 85px
-
-      @include for-desktop-up
-        right: 25%
-
-    .separate, &:after
-      height: 100%
-      position: absolute
-      width: 10px
-      transform: rotate(45deg)
-      background-color: #fff
-
-      @include for-desktop-up
-        height: initial
-        top: -80px
-        bottom: -80px
-
-    .img
-      object-fit: cover
-      display: block
-      width: 100%
-      max-width: 100%
-      height: 100%
-
+      top: 50%
+      left: 50%
+      transform: translate(-46%, -52%)
+      z-index: -1
+      width: 1440px
+    
     .content
-      position: absolute
-      bottom: 20px
-      left: 10px
-      right: 50px
+      display: flex
+      flex-direction: column
+      align-items: center
       color: #fff
-      z-index: 1
-
-      @include for-desktop-up
-        bottom: initial
-        top: 30px
-        left: 30px
-
+      
+      // #1280px
+      @include for-small-desktop-up
+       align-items: start
+       
       .icon
-        width: 80px
+        width: 172px
         display: block
-        border-radius: 5px
+        border-radius: 99px
 
         @include for-desktop-up
           width: 100px
 
       .title
-        font-size: 21px
+        font-size: 24px
         font-family: 'Lemon Milk'
-        margin-top: 5px
-        line-height: 1.2
+        margin-top: 24px
+        line-height: 120%
+        text-align: center
+        margin-right: 16px
+        margin-left: 16px
 
-        @include for-desktop-up
-          font-size: 36px
+        // #1280px
+        @include for-small-desktop-up
+          font-size: 32px
+          margin-left: 0
 
       .description
-        font-size: 16px
-        margin-top: 5px
-        line-height: 1
+        font-size: 14px
+        margin-top: 8px
+        line-height: 140%
+        font-weight: 500
+        text-align: center
 
-        @include for-desktop-up
+        // #1280px
+        @include for-small-desktop-up
           font-size: 18px
 
-      .btn
-        margin-top: 20px
+      .homeBtn
+        width: 256px
+        margin-top: 24px
+        
+        // #375px
+        @include for-phone-up
+          width: 311px
+        
+        // #1280px
+        @include for-small-desktop-up
+          width: 208px
+          align-self: flex-start
+    
+    .bg
+      backdrop-filter: blur(6px)
+      position: absolute
+      right: -100px
+      top: 315px
+      width: 660px
+      height: 500px
+      transform: rotate(-12deg)
+      background-color: #8d00fc52
 
-        @include for-desktop-up
-          margin-top: 40px
+      // #540px
+      @include for-tablet-portrait-up
+        width: 1440px
+        transform: rotate(-6deg)
+        top: 300px
+        
+      // #1280px
+      @include for-small-desktop-up
+        width: 800px
+        height: 650px
+        transform: rotate(-52deg)
+        top: -98px
+        right: -265px
 
-  .selectionsBlock
-    margin-top: 8px
-    display: flex
-    flex-wrap: wrap
-    column-gap: 5px
-    row-gap: 5px
-
-    @include for-desktop-up
-      column-gap: 20px
-      row-gap: 20px
-      margin-top: 20px
-
-    .selection
-      display: block
-      overflow: hidden
-      border-radius: 10px
-      position: relative
+    .yaPayBlock
+      position: absolute
+      display: flex
+      flex-direction: column
+      justify-content: center
+      align-items: center
       width: 100%
-      height: 130px
-
-      @include for-middle-phone-up
-        &:nth-child(4n + 1), &:nth-child(4n + 4)
-          flex-basis: 49%
-
-        &:nth-child(4n + 2), &:nth-child(4n + 3)
-          flex-basis: 49%
-
-
-      @include for-desktop-up
-        height: 280px
-
-        &:nth-child(4n + 1), &:nth-child(4n + 4)
-          flex-basis: initial
-          width: 700px
-
-        &:nth-child(4n + 2), &:nth-child(4n + 3)
-          flex-basis: initial
-          width: 516px
-
-      @include for-middle-desktop-up
-        height: 300px
-
-        &:nth-child(4n + 1), &:nth-child(4n + 4)
-          width: 800px
-
-        &:nth-child(4n + 2), &:nth-child(4n + 3)
-          width: 570px
-
-      @include for-big-desktop-up
-        height: 350px
-
-        &:nth-child(4n + 1), &:nth-child(4n + 4)
-          width: 880px
-
-        &:nth-child(4n + 2), &:nth-child(4n + 3)
-          width: 650px
-
-      &:before
-        content: ''
-        display: block
-        position: absolute
-        top: 0
-        left: 0
-        width: 100%
-        height: 100%
-        background: linear-gradient(180deg, rgba(1, 3, 58, 0.00) 0%, #01033A 100%)
-
-      .selectionImg
-        display: block
-        width: 100%
-        height: 100%
-        object-fit: cover
-
-      .selectionInfo
-        position: absolute
+      gap: 24px
+      bottom: 15px
+      
+      // #540px
+      @include for-tablet-portrait-up
+        flex-direction: row
+        left: 84px
+        bottom: 24px
+        align-items: center
+        justify-content: start
+            
+      // #1280px
+      @include for-small-desktop-up
+        justify-content: end
+        left: -42px
+        bottom: 84px 
+        
+      .qr      
+        width: 96px
+        height: 96px
+      
+      .direction
         color: #FFF
-        bottom: 10px
-        left: 10px
-
-        @include for-desktop-up
-          bottom: 23px
-          left: 23px
-
-        @include for-big-desktop-up
-          bottom: 28px
-          left: 28px
-
-        .selectionName
-          font-family: 'Lemon Milk'
+        text-align: center
+        font-family: Montserrat
+        font-size: 14px
+        font-weight: 500
+        line-height: 140%
+        
+         // #540px
+        @include for-tablet-portrait-up
+          text-align: left
+          
+        // #1280px
+        @include for-small-desktop-up
           font-size: 18px
-          font-weight: 100
+          
+.mediaAboutUs
+  margin-top: 48px
+  
+  .homeTitle
+    text-align: center
+  
+// Swiper buttons styles  
+.swiper-button-prev, .swiper-button-next
+  display: none
+  width: 40px
+  height: 40px
+  z-index: 1
+  top: 50%
+  transform: translate(0, 50%)
+  
+  
+  &:after
+    display: flex
+    align-items: center
+    justify-content: center
+    font-size: 18px
+    font-weight: 800
+    width: 40px
+    height: 40px
+    border-radius: 50%
+    color: #fff
+    background: #8D00FC
+  
+  // #1280px
+  @include for-small-desktop-up
+    display: flex
+    
+.swiper-button-prev
+  left: -19px
 
-          @include for-desktop-up
-            font-size: 32px
+.swiper-button-next
+  right: -19px
+  
+  
+  
 
-        .selectionCountProducts
-          @include for-phone-only
-            font-size: 12px
 
-  .allSelections
-    margin: 30px auto 0 auto
+//  TODO полосы можно использовать для картинки
+    // &:before
+    //   content: ''
+    //   display: block
+    //   position: absolute
+    //   left: 0
+    //   top: 0
+    //   height: 100%
+    //   width: 100%
+    //   background: linear-gradient(180deg, rgba(1, 3, 60, 0.3) 0, #01033C 100%)
+    //   z-index: 1
 
-.xbox .selectionsBlock .selection:before
-  background: linear-gradient(180deg, rgba(1, 3, 58, 0.00) 0%, #000 100%)
+    //   @include for-desktop-up
+    //     background: linear-gradient(270deg, transparent 0, #01033C 100%)
+
+    // &:after
+    //   content: ''
+    //   display: block
+    //   left: 58px
+    //   top: -70px
+
+    //   @include for-desktop-up
+    //     left: 25%
+
+    // .separate
+    //   bottom: -65px
+    //   right: 85px
+
+    //   @include for-desktop-up
+    //     right: 25%
+
+    // .separate, &:after
+    //   height: 100%
+    //   position: absolute
+    //   width: 10px
+    //   transform: rotate(45deg)
+    //   background-color: #fff
+
+    //   @include for-desktop-up
+    //     height: initial
+    //     top: -80px
+    //     bottom: -80px
+
+    // .img
+    //   object-fit: cover
+    //   display: block
+    //   width: 100%
+    //   max-width: 100%
+    //   height: 100%
+
+    // .content
+    //   position: absolute
+    //   bottom: 20px
+    //   left: 10px
+    //   right: 50px
+    //   color: #fff
+    //   z-index: 1
+
+    //   @include for-desktop-up
+    //     bottom: initial
+    //     top: 30px
+    //     left: 30px
+
+    //   .icon
+    //     width: 80px
+    //     display: block
+    //     border-radius: 5px
+
+    //     @include for-desktop-up
+    //       width: 100px
+
+    //   .title
+    //     font-size: 21px
+    //     font-family: 'Lemon Milk'
+    //     margin-top: 5px
+    //     line-height: 1.2
+
+    //     @include for-desktop-up
+    //       font-size: 36px
+
+    //   .description
+    //     font-size: 16px
+    //     margin-top: 5px
+    //     line-height: 1
+
+    //     @include for-desktop-up
+    //       font-size: 18px
+
+    //   .btn
+    //     margin-top: 20px
+
+    //     @include for-desktop-up
+    //       margin-top: 40px
+  

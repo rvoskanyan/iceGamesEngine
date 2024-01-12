@@ -5,16 +5,15 @@ import PopupController from "./PopupController.js";
 import Postman from "./Postman.js";
 import Prompt from "./Prompt.js";
 import Slider from "./Slider.js";
+import { popularsSwiper, swiperSelections, swiperGenres, swiperNews } from "./SliderHome.js";
 import Tabs from "./Tabs.js";
 import { websiteAddress } from "./config.js";
 import { debounce, getProductCardNode, scrollTo, urlEncodeFormData } from "./utils.js";
-
 import './../styles/index.sass';
 import AsyncFormSteam from './AsyncFormSteam.js';
 import Message from "./lib/message.js";
 import Payment from "./lib/payment.js";
 import SocialSharing from "./lib/socialSharing.js";
-
 const postman = new Postman();
 const platform = document.body.dataset.platform || 'pc';
 
@@ -36,7 +35,6 @@ const achievementViewProfileSliderNode = document.querySelector('.js-achievement
 const homeMediaSliderNode = document.querySelector('.js-homeMediaSlider');
 const productsFromArticleSliderNode = document.querySelector('.js-productsFromArticleSlider');
 const homeCatalogTabsNode = document.querySelector('.js-homeCatalogTabs');
-const genresSliderNode = document.querySelector('.js-genresSlider');
 const gameGallerySliderNode = document.querySelector('.js-gameGallerySlider');
 const gameInfoTabsNode = document.querySelector('.js-gameInfoTabs');
 const gameInfoSystemParamsNode = document.querySelector('.js-gameInfoSystemParams');
@@ -1765,6 +1763,10 @@ if (gamePageNode) {
 }
 
 if (homeSliderNode) {
+    popularsSwiper()
+    swiperSelections()
+    swiperGenres()
+    swiperNews()
     const addToCartBtn = homeSliderNode.querySelectorAll('.js-addToCart');
     let playVideoTimeOutId;
 
@@ -1867,15 +1869,6 @@ if (homeCatalogTabsNode) {
     });
 }
 
-if (genresSliderNode) {
-    new Slider({
-        mainNode: genresSliderNode,
-        isTrack: true,
-        countSlidesScroll: 1,
-        switchingTime: 5000,
-        infinity: true,
-    });
-}
 
 if (gameGallerySliderNode) {
     new Slider({

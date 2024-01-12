@@ -1,0 +1,70 @@
+@import './breakPoints'
+
+.selectionsSwiper
+  position: relative
+  padding-top: 24px
+  
+  // #1280px
+  @include for-small-desktop-up
+    padding-top: 48px
+  
+  .slide
+    position: relative
+    display: flex
+    flex-direction: column
+    align-items: center
+    gap: 24px
+    overflow: hidden
+    height: 215px
+    text-decoration: none
+    border-radius: 16px
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255,0.00) 125.7%)
+    
+    &:hover .selectionInfo .selectionName
+      color: #8D00FC
+      transition: 0.2s ease-in
+  
+    
+    // #375px
+    @include for-phone-up
+      height: 244px
+      
+    // #540px
+    @include for-tablet-portrait-up
+      height: 268px
+    
+    .selectionImg
+      display: block
+      width: 207px
+      height: 125px
+      border-radius: 16px
+      margin-top: 16px
+      
+      // #375px
+      @include for-phone-up
+        height: 143px
+        margin-top: 25px
+        
+      // #540px
+      @include for-tablet-portrait-up
+        height: 166px
+        width: 277px
+    
+    .selectionInfo
+      display: flex
+      justify-content: center
+      align-items: center
+      
+      .selectionName
+        color: #FFF
+        text-align: center
+        font-family: 'Lemon Milk'
+        font-size: 18px
+        transition: color 0.2s ease-in
+      
+        // #375px
+        @include for-phone-up
+          font-size: 20px
+   
+  .homeBtn
+    margin-top: 48px

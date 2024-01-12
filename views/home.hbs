@@ -19,7 +19,7 @@
                     <img class="img" src="{{websiteAddress}}img/telegramSocial.svg" loading="lazy">
                 </a>
             </div>
-            <button class="btn rounded increase bg-pink js-closeSuccessPayment">Ок, спасибо!</button>
+            <button class="btn homeBtn js-closeSuccessPayment">Ок, спасибо!</button>
         </div>
     {{/if}}
     <div class="homeSlider js-homeSlider">
@@ -28,7 +28,7 @@
                 <div class="cover slide{{#if @first}} active{{/if}} js-slide" data-video-name="{{coverVideo}}">
                     <video class="video" muted></video>
                     <img class="img" src="{{@root.websiteAddress}}{{coverImg}}" loading="lazy" alt="Постер игры {{name}}" title="Постер игры {{name}}">
-                    <div class="contentContainer tableInfo">
+                    <div class="tableInfo homeSection">
                         <div class="tableInfo__container">
                             <div class="tableInfo__info">
                                 <h2 class="tableInfo__name">{{name}}</h2>
@@ -49,16 +49,16 @@
                                     </div>
                                 </div>
                                 <div class="tableInfo__actions">
-                                    <a href="{{ @root.websiteAddress }}{{#if @root.platform }}{{ @root.platform }}/{{/if}}games/{{alias}}" title="Перейти к странице товара" class="btn rounded bg-darkLilac">Подробнее</a>
+                                    <a href="{{ @root.websiteAddress }}{{#if @root.platform }}{{ @root.platform }}/{{/if}}games/{{alias}}" title="Перейти к странице товара" class="btn moreInfo">Подробнее</a>
                                     {{#if inCart}}
                                         <button
                                                 title="Перейти в корзину покупок"
-                                                class="btn rounded increase bg-pink js-addToCart js-active"
+                                                class="btn homeBtn js-addToCart js-active"
                                         >Добавлено</button>
                                     {{else}}
                                         <button
                                                 title="Добавить товар в корзину покупок"
-                                                class="btn rounded increase bg-pink js-addToCart"
+                                                class="btn homeBtn addToCart js-addToCart"
                                                 data-product-id="{{_id}}"
                                         >
                                             В корзину
@@ -71,7 +71,8 @@
                 </div>
             {{/each}}
         </div>
-        <div class="contentContainer navigate js-navigateItemsContainer">
+        <div class="wrapNav">
+            <div class="navigate js-navigateItemsContainer">
             {{#each sliderProducts}}
                 <button class="roundNavItem circleProgress {{#if @first}} active{{/if}} js-itemNavigate" style="--progressPercent: 0">
                     <svg>
@@ -81,114 +82,187 @@
                     <img src="{{@root.websiteAddress}}{{img}}" loading="lazy" class="center">
                 </button>
             {{/each}}
-        </div>
-    </div>
-    <div class="contentContainer homeContent">
-        <div class="homeSection">
-            <h3 class="homeSubTitle">Рекомендуем</h3>
-            <div class="homeRecommend mobileScroll">
-                {{#each recommend}}
-                    {{> game
-                            size='big'
-                    }}
-                {{/each}}
             </div>
         </div>
-        <div class="homeSection homeStatistics mobileInvisibleScroll">
+    </div>
+    <div class="homeWrapper">
+        <div class="homeContent">
+            <h3 class="homeTitle popularsTitle">Популярное</h3>
+            <section class="section popularSwiper">
+            <div class="container slider-column">
+                <div class="swiper swiper-slider-populars">
+                    <div class="swiper-wrapper">
+                        {{#each recommend}}
+                        <div class="slide swiper-slide">
+                             {{> game}}
+                        </div>
+                        {{/each}}   
+                    </div>
+                </div>
+                <span class="swiper-button-prev"></span>
+                <span class="swiper-button-next"></span>
+            </div>
+            </section>
+        </div>
+        <div class="homeSection">
+            <div class="homeStatistics mobileInvisibleScroll">
             <div class="statisticInput">
                 <div class="label">комьюнити</div>
-                <div class="value animated js-counterAnimation">{{countUsers}}</div>
+                <div class="valueWrapper">
+                    <div class="value js-counterAnimation animated">{{countUsers}}</div>
+                    <div class='icon icon-usersGroup animated'></div>
+                </div>
             </div>
             <div class="statisticInput">
                 <div class="label">игр куплено</div>
-                <div class="value animated js-counterAnimation">{{countSales}}</div>
+                <div class="valueWrapper">
+                    <div class="value js-counterAnimation animated">{{countSales}}</div>
+                    <div class='icon icon-bagCheck animated'></div>
+                </div>
             </div>
             <div class="statisticInput">
                 <div class="label">игр на сайте</div>
-                <div class="value animated js-counterAnimation">{{countProducts}}</div>
+                <div class="valueWrapper">
+                    <div class="value js-counterAnimation animated">{{countProducts}}</div>
+                    <div class='icon icon-gamepadCharge animated'></div>
+                </div>
             </div>
             <div class="statisticInput">
                 <div class="label">отзывов</div>
-                <div class="value animated js-counterAnimation">{{countReviews}}</div>
+                <div class="valueWrapper">
+                    <div class="value js-counterAnimation animated">{{countReviews}}</div>
+                    <div class='icon icon-likeReviews animated'></div>
+                </div>
             </div>
-        </div>
-        <div class="splitInfoBlock">
-            <img src="{{websiteAddress}}img/splitInfoBlockHomeBg.jpg" class="img" loading="lazy" alt="Картинка для инфо-блока про сплит на главной">
+            </div>
+            <div class="splitInfoBlock">
+            <img src="{{websiteAddress}}img/splitInfoBlockHomeBgV2.jpg" class="img infoBlockImg" loading="lazy" alt="Картинка для инфо-блока про сплит на главной">
             <div class="content">
                 <img class="icon" src="{{@root.websiteAddress}}img/iconSplit.png" loading="lazy" alt="Доступно в сплит" title="Доступно для оплаты по частям">
-                <div class="title">Играй сейчас - плати потом</div>
-                <div class="description">Дели сумму заказа на части и оплачивай постепенно</div>
-                <a href="{{websiteAddress}}split" class="btn border round bg-pink">Узнать подробнее</a>
+                <div class="title">Играйте сейчас - платите потом</div>
+                <div class="description">Делите заказы на части и оплачивайте постепенно</div>
+                <a href="{{websiteAddress}}split" class="btn homeBtn">Узнать подробнее</a>
             </div>
-            <div class="separate"></div>
+            <div class="bg"></div>
+            <div class='yaPayBlock'>
+                <img class="qr" src="{{websiteAddress}}img/qr-yandex-pay.png" alt="">
+                <p class="direction">Наведите камеру, <br>чтобы скачать приложение<br> "Яндекс Пэй"</p>
+            </div>
+            </div> 
         </div>
-        <div class="homeSection homeCatalog js-homeCatalogTabs">
-            <div class="categories mobileInvisibleScroll">
-                {{#each catalog}}
-                    {{#iff products.length '>' 0}}
-                        <button class="btn round border big bg-darkLilac translucent js-tabBtn{{#if @first}} active{{/if}}" data-target-id="{{@index}}">
-                            {{category.name}}
-                        </button>
-                    {{/iff}}
-                {{/each}}
-            </div>
-            <div class="blocks">
-                {{#each catalog}}
-                    {{#iff products.length '>' 0}}
-                        <div class="item mobileScroll js-tabBlock-{{@index}}{{#if @first}} active{{/if}}">
-                            {{#each products}}
-                                {{> game
-                                    size='big'
-                                }}
-                            {{/each}}
-                        </div>
-                    {{/iff}}
-                {{/each}}
+        <div class="flexColumn homeCatalog js-homeCatalogTabs">
+            <div class='homeContent'>
+                <div class="categories invisibleScroll">
+                    {{#each catalog}}
+                        {{#iff products.length '>' 0}}
+                            <button class="categoryBtn js-tabBtn{{#if @first}} active{{/if}} "data-target-id="{{@index}}">
+                                {{category.name}}
+                            </button>
+                        {{/iff}}
+                    {{/each}}
+                </div>
+                <div class="blocks">
+            {{#each catalog}}
+                {{#iff products.length '>' 0}}
+                    <div class="item hideScroll js-tabBlock-{{@index}}{{#if @first}} active{{/if}}">
+                        {{#each products}}
+                            {{> game
+                                size='big'
+                            }}
+                        {{/each}}
+                    </div>
+                {{/iff}}
+            {{/each}}
+                </div> 
             </div>
             <a
-                    href="{{ websiteAddress }}{{#if platform}}{{ platform }}/{{/if}}games?onlyStock=true"
-                    class="more btn border rounded increase bg-darkLilac"
-                    title="Открыть каталог со всеми товарами"
+                href="{{ websiteAddress }}{{#if platform}}{{ platform }}/{{/if}}    gamesonlyStock=true"
+                class="btn homeBtn"
+                title="Открыть каталог со всеми товарами"
             >
                 В каталог
             </a>
         </div>
-        <div class="homeSection">
-            <h2 class="homeTitle">Жанры</h2>
-            <div class="genresSlider js-genresSlider">
-                <button class="btn prev js-prevBtn"></button>
-                <div class="visibleArea js-visibleArea">
-                    <div class="tape js-tape">
-                        {{#each genres}}
-                            <a class="slide js-slide" href="{{@root.websiteAddress}}{{#if @root.platform}}{{ @root.platform }}/{{/if}}games?genres={{alias}}" title="Открыть игры с жанром {{name}}">
-                                <span class="blackout" style="background-color: {{bgColor}}"></span>
-                                <img class="img" src="{{@root.websiteAddress}}{{img}}" loading="lazy" alt="Изображение жанра {{name}}" title="Изображение жанра {{name}}">
-                                <div class="name">{{name}}</div>
-                            </a>
-                        {{/each}}
-                    </div>
-                </div>
-                <button class="btn next js-nextBtn"></button>
-            </div>
-        </div>
-        <div class="homeSection">
-            <h2 class="homeTitle">Подборки</h2>
-            <div class="selectionsBlock">
-                {{#each selections}}
-                    <a href="{{@root.websiteAddress}}{{#if @root.platform}}{{ @root.platform }}/{{/if}}selections/{{alias}}" title="Перейти на страницу подборки {{name}}" class="selection">
-                        <img src="{{@root.websiteAddress}}{{img}}" class="selectionImg" loading="lazy" alt="Изображение подборки товаров {{name}}" title="Изображение подборки товаров {{name}}">
-                        <div class="selectionInfo">
-                            <div class="selectionName">{{name}}</div>
-                            <div class="selectionCountProducts">Игр в подборке: {{products.length}}</div>
+        <div class="flexColumn homeSelections">
+            <div class='homeContent'>
+                <h2 class="homeTitle">Подборки</h2>
+                <section class="section selectionsSwiper selectionsBlock mobileScroll">
+                    <div class="container slider-column">
+                        <div class="swiper swiper-slider-selections">
+                            <div class="swiper-wrapper">
+                            {{#each selections}}
+                                <a href="{{@root.websiteAddress}}{{#if @root.platform}}{{@root.platform }}/{{/if}}selections/{{alias}}"title="Перейти на  страницу подборки {{name}}" class="slide swiper-slide">
+                                    <img  src="{{@root.websiteAddress}}{{img}}"  class="selectionImg" loading="lazy" alt="Изображениеподборки товаров {{name}}" title="Изображение подборкитоваров {{name}}">
+                                    <div class="selectionInfo">
+                                        <div class="selectionName">{{name}}</div>
+                                    {{!-- <div class="selectionCountProducts">Игр в подборке:    {{products.length}}</div> --}}
+                                    </div>
+                                </a>
+                            {{/each}}
                         </div>
-                    </a>
-                {{/each}}
+                    </div>
+                    <span class="swiper-button-prev"></span>
+                    <span class="swiper-button-next"></span>
+                </div>
+                </section>
             </div>
-            <a class="btn round border hover-bg-palePink allSelections" href="{{websiteAddress}}{{#if @root.platform}}{{ @root.platform }}/{{/if}}selections">Все подборки</a>
+            <a class="btn homeBtn" href="{{websiteAddress}}{{#if @root.platform}}{{@root.platform }}/{{/if}}selections">Все подборки</a>
         </div>
-        {{> newsSlider
-                aricles=articles
-        }}
+        <div class="flexColumn homeGenres">
+            <div class="homeContent">
+                <h2 class="homeTitle">Жанры</h2>
+                <section class="section genresSwiper">
+                <div class="container slider-column">
+                    <div class="swiper swiper-slider-genres">
+                        <div class="swiper-wrapper">
+                        {{#each genres}}
+                            <a class="slide swiper-slide" href="{{@root.websiteAddress}}{{#if @root.platform}}{{ @root.platform }}/{{/if}}games?genres={{alias}}" title="Открыть игры с жанром {{name}}">
+                                <p class="name">{{name}}</p>
+                                <p class="count">{{gamesCount}}</p>
+                            </a>
+                        {{/each}}  
+                        </div>
+                    </div>
+                    <span class="swiper-button-prev"></span>
+                    <span class="swiper-button-next"></span>
+                </div>
+                </section>
+            </div>
+            <a class="btn homeBtn" href="{{websiteAddress}}{{#if @root.platform}}{{@root.platform }}/{{/if}}selections">Все жанры</a>
+        </div>  
+        <div class="flexColumn homeNews">
+            <div class="homeContent">
+                <h2 class="homeTitle">Новости и статьи</h2>
+                <section class="section newsSwiper">
+                <div class="container slider-column">
+                    <div class="swiper swiper-slider-news">
+                        <div class="swiper-wrapper">
+                        {{#each articles}}
+                            <a href="{{@root.websiteAddress}}{{#if @root.platform}}{{@root.platform}}/{{/if}}blog/{{alias}}" class="slide newsPreview swiper-slide{{#iff @index '<' 3}} active{{/iff}}">
+                                <img class="img" src="{{@root.websiteAddress}}{{img}}" loading="lazy" alt="Изображение записи из блога {{name}}" title="Изображение записи из блога {{name}}">
+                                <div class="attributes">
+                                    <div class="newsBtn">
+                                        {{#iff type '===' 'news'}}Новости{{else}}Статьи{{/iff}}
+                                    </div>
+                                <div class="date">{{createdDate}}</div>
+                            </div>
+                            <div class="description">
+                                <div class="title">{{name}}</div>
+                                <div class="text">{{introText}}</div>
+                            </div>
+                            </a>
+                        {{/each}}  
+                        </div>
+                    </div>
+                <span class="swiper-button-prev"></span>
+                <span class="swiper-button-next"></span>
+                </div>
+                </section>
+            </div>
+            <a class="btn homeBtn" href="{{websiteAddress}}{{#if platform}}{{platform}}/{{/if}}blog">Все новости</a>
+        </div>
+        
+        
         <div class="homeSection aboutUsHome">
             {{#iff platform '===' 'xbox'}}
                 <img src="{{websiteAddress}}/img/aboutUsXbox.png" class="img" loading="lazy" alt="Представление сайта на различных устройствах">
@@ -214,53 +288,59 @@
                 </div>
             {{/iff}}
             {{#unless platform}}
-                <img src="{{websiteAddress}}/img/aboutUs.png" class="img" alt="Представление сайта на различных устройствах">
-                <div class="text">
-                    <div class="content js-aboutUsContentHome">
-                        <h1>ICE GAMES</h1>
-                        <p>
-                            С нами Вам точно не будет скучно! Каталог ICE GAMES насчитывает более 2 000 синглплеерных и онлайн -
-                            игр для всех игровых площадок, включая Steam, Epic Games Store, GOG, Origin, Ubisoft Connect,
-                            Battle.net. Здесь всегда доступны как свежие тайтлы, так и классика, проверенная годами и миллионами
-                            игроков со всего мира. Мы позаботились о том, чтобы подходящую компьютерную игру можно было найти за
-                            считаные минуты благодаря интуитивно понятному интерфейсу. Тайтлы можно сортировать по жанру, цене,
-                            площадке.
-                        </p>
-                        <p><strong>И есть еще много причин покупать игры для ПК у нас:</strong></p>
-                        <ul>
-                            <li>регулярные скидки и акции — недорогие игры вполне реальны;</li>
-                            <li>поддержка абсолютного большинства платежных систем;</li>
-                            <li>надежная и дружелюбная техническая поддержка, готовая ответить на любой вопрос;</li>
-                            <li>блог, в котором мы регулярно рассказываем об играх и игровой индустрии;</li>
-                            <li>уникальные подарки — неактивированный ключ можно отдать другу;</li>
-                            <li>мгновенная доставка ключа — начните играть прямо сейчас!</li>
-                        </ul>
-                        <p>
-                            Продаем только лицензионные игры — никакого key-ресейла и прочих сомнительных схем, чреватых потерей
-                            денег и блокировкой аккаунта в «Стиме». Сотрудничаем с разработчиками и издателями напрямую — это
-                            залог безопасности покупателей. В случае проблем с активацией бесплатно предоставим Вам новый ключ —
-                            правило действует как для дешевых, так и для самых дорогих игр.
-                        </p>
-                        <p>Присоединяйтесь к нашим сообществам в социальных сетях!</p>
-                        <p>
-                            Вас ждут обзоры новинок, стримы с игровыми анонсами, конкурсы и многое другое. Самый активный
-                            пользователь каждую неделю получает бесплатную игру.
-                        </p>
-                        <p>Как активировать ключ в «Стиме» или на другой площадке?</p>
-                        <p>
-                            Для покупки нужно указать электронную почту. Сразу после оплаты на нее придет код, который
-                            необходимо ввести в «Стиме» или другом сервисе. Помните: активация цифрового ключа возможна только на
-                            площадке, для которой он предназначался. Например, в магазине Steam нельзя получить игру для Epic
-                            Games или GOG. Чтобы воспользоваться большинством сервисов, понадобится скачать клиент.
-                        </p>
+                <h1 class="homeTitle">ice games top za svoi dengi</h1>
+                <div class="aboutUsPlatform">
+                    <img src="{{websiteAddress}}/img/aboutUs-v2.png" class="img" alt="Представление сайта на различных устройствах">
+                    <div class="text">
+                        <div class="content js-aboutUsContentHome">
+                            <p>
+                                С нами Вам точно не будет скучно! Каталог ICE GAMES насчитывает     более 2 000 синглплеерных и онлайн -
+                                игр для всех игровых площадок, включая Steam, Epic Games Store,     GOG, Origin, Ubisoft Connect,
+                                Battle.net. Здесь всегда доступны как свежие тайтлы, так и  классика, проверенная годами и миллионами
+                                игроков со всего мира. Мы позаботились о том, чтобы подходящую  компьютерную игру можно было найти за
+                                считаные минуты благодаря интуитивно понятному интерфейсу. Тайтлы   можно сортировать по жанру, цене,
+                                площадке.
+                            </p>
+                            <br>
+                            <p>И есть еще много причин покупать игры для ПК у нас:</p>
+                            <ul>
+                                <li>регулярные скидки и акции — недорогие игры вполне реальны;</li>
+                                <li>поддержка абсолютного большинства платежных систем;</li>
+                                <li>надежная и дружелюбная техническая поддержка, готовая ответить на любой вопрос;</li>
+                                <li>блог, в котором мы регулярно рассказываем об играх и игровой индустрии;</li>
+                                <li>уникальные подарки — неактивированный ключ можно отдать другу;</li>
+                                <li>мгновенная доставка ключа — начните играть прямо сейчас!</li>
+                            </ul>
+                            <br>
+                            <p>
+                                Продаем только лицензионные игры — никакого key-ресейла и прочих сомнительных схем,     чреватых потерей
+                                денег и блокировкой аккаунта в «Стиме». Сотрудничаем с разработчиками и издателями  напрямую — это
+                                залог безопасности покупателей. В случае проблем с активацией бесплатно предоставим Вам     новый ключ —
+                                правило действует как для дешевых, так и для самых дорогих игр.
+                            </p>
+                            <br>
+                            <p>Присоединяйтесь к нашим сообществам в социальных сетях!</p>
+                            <p>
+                                Вас ждут обзоры новинок, стримы с игровыми анонсами, конкурсы и многое другое. Самый    активный
+                                пользователь каждую неделю получает бесплатную игру.
+                            </p>
+                            <p>Как активировать ключ в «Стиме» или на другой площадке?</p>
+                            <p>
+                                Для покупки нужно указать электронную почту. Сразу после оплаты на нее придет код, который
+                                необходимо ввести в «Стиме» или другом сервисе. Помните: активация цифрового ключа  возможна только на
+                                площадке, для которой он предназначался. Например, в магазине Steam нельзя получить игру    для Epic
+                                Games или GOG. Чтобы воспользоваться большинством сервисов, понадобится скачать клиент.
+                            </p>
+                        </div>
+                        <button class="btn showAllBtn js-showAboutAsHome">
+                            Показать полностью
+                        </button>
                     </div>
-                    <button class="btn showAllBtn js-showAboutAsHome">
-                        Показать полностью
-                    </button>
                 </div>
             {{/unless}}
         </div>
-        <div class="homeSection">
+    </div>
+        <div class="homeSection mediaAboutUs">
             <h2 class="homeTitle">Медиа о нас</h2>
             <div class="homeMediaSlider js-homeMediaSlider">
                 <div class="tape js-tape">
@@ -271,6 +351,7 @@
                     {{/each}}
                 </div>
             </div>
+        </div>
         </div>
     </div>
 </main>

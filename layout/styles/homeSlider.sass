@@ -2,6 +2,8 @@
 @import './breakPoints'
 
 .homeSlider
+  position: relative
+
   & .tape
     display: grid
     width: 100%
@@ -17,27 +19,50 @@
       &.active
         visibility: visible
         opacity: 1
-
-  & .navigate
-    margin-top: -255px
-    display: flex
-
-    @include for-middle-phone-up
-      margin-top: -230px
-
-    @include for-big-phone-up
-      margin-top: -290px
-      column-gap: 10px
-      justify-content: end
-
-    .roundNavItem
-      background: none
-      border: none
-      margin: 0
-
-      &:hover
-        cursor: pointer
-        transform: scale(1.1, 1.1)
-
-      &.active
-        transform: scale(1.15, 1.15)
+  
+  & .wrapNav
+    max-width: 1440px
+    margin: 0 auto
+    position: relative
+    
+    & .navigate
+      position: absolute
+      right: 0
+      bottom: 480px
+      display: flex
+      justify-content: space-between
+      width: 100%
+      max-width: 500px
+      padding: 0 14px
+     
+      // #540px
+      @include for-tablet-portrait-up
+        padding: 0 24px
+        
+      // #1280px
+      @include for-small-desktop-up
+        bottom: 280px
+        justify-content: end
+        padding-right: 40px
+        gap: 24px
+      
+      // #1366px  
+      @include for-desktop-up
+        padding-right: 52px
+        
+      // #1920px
+      @include for-big-desktop-up
+        bottom: 280px
+        padding-right: 0
+        
+      .roundNavItem
+        background: none
+        border: none
+        margin: 0
+  
+        &:hover
+          cursor: pointer
+          transform: scale(1.1, 1.1)
+  
+        &.active
+          transform: scale(1.15, 1.15)

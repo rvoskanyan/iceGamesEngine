@@ -21,6 +21,11 @@ const fields = {
     type: String,
     //required: true,
   },
+  gamesCount: {
+    type: String | Number,
+    //required: true,
+  },
+  
   order: Number,
 };
 

@@ -1,14 +1,15 @@
-import Product from "../../models/Product.js";
+import Article from "../../models/Article.js";
 import Category from "../../models/Category.js";
 import Genre from "../../models/Genre.js";
-import Article from "../../models/Article.js";
-import User from "../../models/User.js";
-import Partner from "../../models/Partner.js";
-import { achievementEvent } from "../../services/achievement.js";
-import Review from "../../models/Review.js";
 import Order from "../../models/Order.js";
+import Partner from "../../models/Partner.js";
+import Product from "../../models/Product.js";
 import ProductCategory from "../../models/Product_Category.js";
+import Review from "../../models/Review.js";
 import Selection from "../../models/Selection.js";
+import User from "../../models/User.js";
+import { achievementEvent } from "../../services/achievement.js";
+import { getDiscount } from '../../utils/functions.js';
 
 export const homepage = async (req, res) => {
   const platform = req.platform || 'pc';
@@ -54,7 +55,15 @@ export const homepage = async (req, res) => {
     .select(['name', 'alias', 'description', 'priceTo', 'priceFrom', 'img', 'coverImg', 'coverVideo', 'discount', 'dsId'])
     .lean();
   const categories = await Category.find().select('name').lean();
-  const genres = await Genre.find().select(['name', 'img', 'bgColor', 'alias']).sort({order: 1}).lean();
+  
+  let genres = await Genre.find().select(['_id','name', 'img', 'bgColor', 'alias']).sort({order: 1}).lean();
+  
+  let results = genres.map(async(genre) => {
+    genre.gamesCount = await Product.find({ genres: genre._id}).count()
+    return genre
+  })
+  genres = await Promise.all(results)  
+  
   const partners = await Partner.find().select(['name', 'img', 'link']).sort({createdAt: 1}).lean();
   const countReviews = await Review.countDocuments({active: true, status: 'taken'});
   const countProducts = await Product.countDocuments({active: true});
@@ -74,7 +83,10 @@ export const homepage = async (req, res) => {
       select: ['platformType'],
     }])
     .lean();
+
+    
   const checkEmailHash = req.query.confirmEmail;
+
   const catalog = [];
   const day = new Date().getDay();
   const countRecommend = await Product.countDocuments({
@@ -87,7 +99,7 @@ export const homepage = async (req, res) => {
   const skipRecommend = day * 5 + 5;
   let recommend = await Product
     .find({ active: true, top: true, inStock: true, priceTo: {$gt: 300}, platformType: platform })
-    .select(['name', 'alias', 'priceTo', 'priceFrom', 'img', 'dsId', 'inStock', 'preOrder'])
+    .select(['name', 'alias', 'priceTo', 'priceFrom', 'img', 'dsId', 'inStock', 'preOrder', 'discount'])
     .skip(countRecommend > skipRecommend ? skipRecommend : countRecommend > 5 ? countRecommend  - 5 : countRecommend)
     .limit(5)
     .lean();
@@ -217,6 +229,8 @@ export const homepage = async (req, res) => {
       continue;
     }
     
+   
+    
     catalog.push({
       category,
       products: products.map(item => {
@@ -229,6 +243,8 @@ export const homepage = async (req, res) => {
         if (cart && cart.includes(productId)) {
           item.inCart = true;
         }
+        
+        item.discount = getDiscount(item.priceTo,item.priceFrom)
   
         return item;
       }),
@@ -247,7 +263,9 @@ export const homepage = async (req, res) => {
       if (cart && cart.includes(productId)) {
         item.inCart = true;
       }
-  
+      
+      item.discount = getDiscount(item.priceTo,item.priceFrom)
+        
       return item;
     }),
   })
@@ -264,6 +282,8 @@ export const homepage = async (req, res) => {
       if (cart && cart.includes(productId)) {
         item.inCart = true;
       }
+      
+      item.discount = getDiscount(item.priceTo,item.priceFrom)
   
       return item;
     }),
@@ -281,11 +301,13 @@ export const homepage = async (req, res) => {
       if (cart && cart.includes(productId)) {
         item.inCart = true;
       }
+      
+      item.discount = getDiscount(item.priceTo,item.priceFrom)
   
       return item;
     }),
   });
-  
+ 
   res.render('home', {
     title,
     metaDescription,

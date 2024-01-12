@@ -27,7 +27,6 @@
 @import './crown'
 @import './modalMessage'
 @import './subscribeModal'
-@import './homeRecommend'
 @import './orderBlock'
 @import './articlesGameSlider'
 @import './mobileCartLink'
@@ -37,14 +36,15 @@
 @import './selectionsPage'
 @import './selectionPage'
 @import './splitInfoPage'
-
 @import './login'
 @import './header'
 @import './searchBar'
 @import './cover'
 @import './homeStatistics'
 @import './homeCatalog'
-@import './genresSlider'
+@import './genresSwiper'
+@import './selectionsSwiper'
+@import './popularsSwiper'
 @import './newsSlider'
 @import './homeMedia'
 @import './footer'
@@ -54,6 +54,7 @@
 @import './logo'
 @import './input'
 @import './btn'
+@import './homeBtn'
 @import './link'
 @import './checkbox'
 @import './checkboxDiamond'
@@ -62,7 +63,6 @@
 @import './articleBlock'
 @import './prices'
 @import './discount'
-@import './newsPreview'
 @import './tabs'
 @import './homeSlider'
 @import './breadcrumbs'
@@ -177,6 +177,15 @@ img
     @include for-big-phone-up
       padding-top: 200px
 
+.homeWrapper
+  margin: 0 auto
+  max-width: 1440px
+
+.flexColumn
+  display: flex
+  flex-direction: column
+
+
 .acceptanceAgreement
   position: fixed
   background-color: #2E0A63
@@ -212,12 +221,6 @@ img
   .link
     color: #F804FF
     text-decoration: underline
-
-.homeSection
-  margin-top: 24px
-
-  @include for-big-phone-up
-    margin-top: 100px
 
 .responseMessage
   color: #00af56

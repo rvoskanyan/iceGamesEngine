@@ -1,10 +1,26 @@
 @import './breakPoints'
 
 .homeStatistics
-  display: flex
-  margin: 0 auto
-  column-gap: 20px
-
+  display: grid
+  grid-template-columns: 1fr
+  gap: 24px
+  margin-top: 37px
+  
+  // #540px
+  @include for-tablet-portrait-up
+    grid-template-columns: repeat(2, 1fr)
+  
+  // #1280px
+  @include for-small-desktop-up
+    grid-template-columns: repeat(4, 1fr)
+    margin-top: 72px
+    
+  // #1366px  
   @include for-desktop-up
-    column-gap: 50px
-    justify-content: center
+    margin-top: 92px
+  
+  // #1920px
+  @include for-big-desktop-up
+    margin-top: 124px
+
+  

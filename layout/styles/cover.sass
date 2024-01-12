@@ -2,7 +2,6 @@
 @import './zIndex'
 
 .cover
-  overflow: hidden
   position: relative
   display: grid
   grid-template-rows: minmax(200px, 100vh)
@@ -158,9 +157,36 @@
 
   .tableInfo
     position: absolute
-    bottom: 15px
+    bottom: 20px
     z-index: $ZIndex-Cover-TableInfo
     width: 100%
+    max-width: 1440px
+    padding-left: 16px
+    padding-right: 16px
+    
+    // #540px
+    @include for-tablet-portrait-up
+      padding-left: 24px
+      padding-right: 24px
+      bottom: 30px
+      
+    // #1280px
+    @include for-small-desktop-up
+      bottom: 50px
+      padding-left: 42px
+      padding-right: 42px
+    
+    // #1366px
+    @include for-desktop-up
+      padding-left: 52px
+      padding-right: 52px
+    
+    // #1920px
+    @include for-big-desktop-up
+      padding-left: 240px
+      padding-right: 240px
+    
+    
 
     @include for-desktop-up
       bottom: 50px
@@ -172,26 +198,32 @@
       justify-content: space-between
       color: #fff
       flex-direction: column
-
-      @include for-desktop-up
-        background: rgba(1, 0, 46, 0.3)
-        border: 1px solid #fff
-        backdrop-filter: blur(14px)
-        border-radius: 18px
+      padding: 16px
+      border-radius: 16px
+      border: 1px solid rgba(152, 75, 251, 0.24)
+      background: rgba(50, 0, 101, 0.32)
+      
+      // #1280px
+      @include for-small-desktop-up
         flex-direction: row
-        padding: 16px 20px
+        padding: 32px
 
     &__name
-      font-size: 18px
+      font-size: 24px
       font-weight: 400
       font-family: 'Lemon Milk'
+      line-height: 120%
+      text-align: center
+      
+      // #1280px
+      @include for-small-desktop-up
+        font-size: 32px
+        text-align: left
 
-      @include for-desktop-up
-        font-size: 26px
 
     &__desc
       max-width: 625px
-      margin-top: 8px
+      margin-top: 16px
       overflow: hidden
       text-overflow: ellipsis
       display: -webkit-box
@@ -199,44 +231,66 @@
       -webkit-box-orient: vertical
       -moz-box-orient: vertical
       box-orient: vertical
-      font-size: 12px
-      line-clamp: 3 // line-count
-      -webkit-line-clamp: 3 // line-count
-      line-height: 14px // line-height
-      max-height: calc(14px * 3) // line-height * line-count
-
+      font-size: 14px
+      text-align: center
+      line-clamp: 8 // line-count
+      -webkit-line-clamp: 8 // line-count
+      line-height: 140% // line-height
+      max-height: calc(19.6px * 8) // line-height * line-count
+      
+      // #375px
+      @include for-phone-up
+        line-clamp: 6 // line-count
+        -webkit-line-clamp: 6 // line-count
+        max-height: calc(19.6px * 6) // line-height * line-count
+        
+      // #540px
+      @include for-tablet-portrait-up
+        line-clamp: 4 // line-count
+        -webkit-line-clamp: 4 // line-count
+        max-height: calc(19.6px * 4) // line-height * line-count
+      
+      // #1280px
+      @include for-small-desktop-up
+        font-size: 18px
+        text-align: left
+        margin-top: 24px
+        max-width: 775px
+        line-clamp: 3
+        -webkit-line-clamp: 3
+        max-height: calc(25.2px * 3)
+      
+      // #1366px  
       @include for-desktop-up
-        margin-top: 12px
-        font-size: 16px
-        line-height: 18px // line-height
-        max-height: calc(18px * 3) // line-height * line-count
-
+        max-width: 841px
+      
+      // #1920px
+      @include for-big-desktop-up
+         max-width: 1019px
+  
     &__price
       display: flex
-      align-items: end
-      justify-content: space-between
-      margin-top: 10px
-
-      @include for-middle-phone-up
-        align-items: center
-
-      @include for-desktop-up
-        margin-top: initial
-        align-items: end
-        flex-direction: column
-        justify-content: initial
+      flex-direction: column
+      margin-top: 24px
+      
+      // #1280px
+      @include for-small-desktop-up
+        margin-top: 0
+        justify-content: center
 
     &__priceValues
       display: flex
       flex-direction: column
+      align-items: center
 
-      @include for-desktop-up
+      // #1280px
+      @include for-small-desktop-up
         align-items: end
 
       & .toPrice, & .fromPrice
         font-family: 'Montserrat'
-        font-weight: 800
-        line-height: 1
+        font-weight: 700
+        line-height: 120%
 
       & .rowDiscount
         display: flex
@@ -245,17 +299,15 @@
         & .fromPrice
           margin-right: 8px
           color: #984BFB
-          font-size: 14px
-
-          @include for-big-phone-up
-            font-size: 24px
-            margin-right: 10px
-
+          font-size: 16px
+          
+          & .value:before
+            width: 140%
+            box-shadow: none
+            transform: rotate(-16.783deg)
+          
           &:after
-            font-size: 12px
-
-            @include for-middle-desktop-up
-              font-size: 16px
+            font-size: 16px
 
         & .discount
           display: block
@@ -263,43 +315,51 @@
           font-weight: 700
           background-color: rgba(147, 73, 242, 0.8)
           border-radius: 20px
-          padding: 4px
+          padding: 4px 6px
           line-height: 1
-          font-size: 12px
-
-          @include for-big-phone-up
-            padding: 5px 8px
-            font-size: 14px
+          font-size: 14px
 
       & .toPrice
-        color: #C745CB
-        font-size: 25px
+        font-size: 24px
+        margin-top: 4px
 
         @include for-big-phone-up
           margin-top: 3px
           font-size: 40px
 
         &:after
-          font-size: 16px
-
-          @include for-middle-desktop-up
-            font-size: 26px
+          font-size: 24px
+        
+          // #1280px
+          @include for-small-desktop-up
+            font-size: 40px
 
     &__actions
       display: flex
-      flex-direction: column-reverse
-      align-items: end
-      row-gap: 8px
-
-      @include for-middle-phone-up
-        row-gap: initial
-        column-gap: 8px
+      flex-direction: column
+      align-items: center
+      width: 100%
+      margin-top: 24px
+      
+      // #1280px
+      @include for-small-desktop-up
         flex-direction: row
-
-      @include for-desktop-up
-        column-gap: 15px
-        margin-top: 15px
-        flex-direction: row
+        justify-content: center
+        gap: 8px
+      
+      .moreInfo
+        width: 100%
+        padding: 12px 24px
+        border-radius: 99px
+        border: 1px solid #8D00FC
+      
+      .homeBtn
+        width: 100%
+        margin-top: 8px
+        
+        // #1280px
+        @include for-small-desktop-up
+          margin-top: 0
 
 .xbox .cover
   &:before

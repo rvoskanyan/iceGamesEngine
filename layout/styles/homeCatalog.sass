@@ -1,24 +1,71 @@
 @import './breakPoints'
 
 .homeCatalog
+  margin-top: 48px
+
+  & .mobileInvisibleScroll
+    overflow: auto
+    -ms-overflow-style: none
+    scrollbar-width: none
+  
   & .categories
     display: flex
     max-width: max-content
     margin: 0 auto
+    gap: 32px
+    
+    & .categoryBtn
+      position: relative
+      font-size: 16px
+      font-weight: 500
+      font-family: 'Montserrat'
+      border: none
+      cursor: pointer
+      background: none
+      text-decoration: none
+      color: #fff
+      transition: .3s ease-in
+      white-space: nowrap
+      
+      &:before, &:after
+        content: ''
+        position: absolute
+        display: block
+        max-width: 24px
+        min-width: 24px
+        height: 1px
+        background-color: #8D00FC
+        opacity: 0
+        
+      &:before
+        top: 50%
+        left: 0
 
-    & .btn:not(:last-child)
-      margin-right: 10px
-
-      @include for-desktop-up
-        margin-right: 20px
+      &:after
+        top: 50%
+        right: 0
+      
+      &.active
+        padding: 0 36px
+        color: #8D00FC
+        transition: all .3s ease-in
+        
+        &:before,&:after
+          opacity: 1
+          transition: opacity .5s ease-in
+          
+      // #1280px
+      @include for-small-desktop-up
+        font-size: 20px   
 
   & .blocks
     display: grid
-    margin-top: 25px
+    margin-top: 24px
     max-width: 100%
-
-    @include for-desktop-up
-      margin-top: 50px
+    
+    // #1920px
+    @include for-big-desktop-up
+      margin-top: 48px
 
     & .item
       grid-column: 1/-1
@@ -29,10 +76,18 @@
       visibility: hidden
       display: flex
       max-width: 100%
-      column-gap: 20px
-      padding-bottom: 15px
-
-      @include for-big-phone-up
+      column-gap: 8px
+     
+      // #1280px
+      @include for-small-desktop-up
+        column-gap: 45px
+      
+      // #1366px
+      @include for-desktop-up
+        column-gap: 80px
+      
+      // #1920px
+      @include for-big-desktop-up
         display: grid
         grid-template-columns: repeat(5, max-content)
         justify-content: space-between
@@ -43,9 +98,3 @@
       &.active
         opacity: 1
         visibility: visible
-
-  & .more
-    margin: 30px auto 0 auto
-
-    @include for-desktop-up
-      margin: 60px auto 0 auto

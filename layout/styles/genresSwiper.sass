@@ -1,0 +1,49 @@
+@import './breakPoints'
+
+.genresSwiper
+  position: relative
+  padding-top: 24px
+  
+  // #1280px
+  @include for-small-desktop-up
+    margin-left: 0
+    padding-top: 48px
+  
+  .slide
+    border-radius: 12px
+    padding: 16px
+    background: rgba(255, 255, 255, 0.08)
+    text-decoration: none
+    display: flex
+    height: auto
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    transition: background 0.2s ease-in 
+    
+    &:hover
+      background: #8d00fc7a
+      transition: background 0.2s ease-in 
+    
+    // #1280px
+    @include for-small-desktop-up
+      padding: 32px
+    
+    .name
+      color: #FFF
+      text-align: center
+      font-family: 'Lemon Milk'
+      font-size: 16px
+      font-weight: 400
+      
+      // #1280px
+      @include for-small-desktop-up
+        font-size: 24px
+    
+    .count
+      margin-top: 4px
+      text-align: center
+      color: rgba(255, 255, 255, 0.60)
+      font-size: 18px
+      font-weight: 500
+      line-height: 140%
