@@ -101,7 +101,7 @@ export const homepage = async (req, res) => {
     .find({ active: true, top: true, inStock: true, priceTo: {$gt: 300}, platformType: platform })
     .select(['name', 'alias', 'priceTo', 'priceFrom', 'img', 'dsId', 'inStock', 'preOrder', 'discount'])
     .skip(countRecommend > skipRecommend ? skipRecommend : countRecommend > 5 ? countRecommend  - 5 : countRecommend)
-    .limit(5)
+    .limit(10)
     .lean();
   let checkedEmail = false;
   

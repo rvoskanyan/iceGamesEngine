@@ -39,7 +39,7 @@ export const popularsSwiper = () => new Swiper('.swiper-slider-populars', {
     },
      1920: {
       slidesPerView: 5,
-      spaceBetween: 85,
+      spaceBetween: 105,
     }
   }
 });
