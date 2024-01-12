@@ -2,12 +2,18 @@
 @import './zIndex'
 
 .homeBtn
-  width: 288px
+  display: flex
+  width: auto
   padding: 12px 24px
   border-radius: 99px
   background: #8D00FC
-  margin: 37px auto 0 auto
+  margin: 37px 16px 0 16px
+    
+  // #1280px
+  @include for-small-desktop-up
+    display: inline-block
+    margin: 0 auto
+    margin-top: 48px
+    
+
   
-  @include for-big-phone-up
-  
-  @include for-middle-desktop-up

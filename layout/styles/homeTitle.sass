@@ -5,11 +5,17 @@
   font-weight: 400
   color: #fff
   font-size: 20px
+  line-height: 120%
+  
+  // #375px
+  @include for-phone-up
+    font-size: 24px
 
-  @include for-big-phone-up
-    font-size: 50px
-    text-align: center
-
+  // #1280px
+  @include for-small-desktop-up
+    font-size: 48px
+    margin: 0 auto
+    
 .homeSubTitle
   color: #fff
   font-family: 'Lemon Milk'
@@ -17,5 +23,7 @@
   font-size: 24px
   line-height: 120%
 
-  @include for-desktop-up
-    font-size: 35px
+  // #1280px
+  @include for-small-desktop-up
+    font-size: 48px
+    margin: 0 auto

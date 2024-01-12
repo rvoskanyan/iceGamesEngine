@@ -1,6 +1,6 @@
 <a
     href="{{@root.websiteAddress}}{{#if @root.platform}}{{@root.platform}}/{{/if}}games/{{alias}}"
-    class="cardGame js-cardGame{{#if size}} {{size}}{{/if}}"
+    class="cardGame js-cardGame{{#if size}} {{size}}{{/if}} {{#if className}} {{className}}{{/if}}"
     data-id="{{_id}}"
     {{#if inCart}}data-in-cart="true"{{/if}}
     title="Перейти к странице товара"
@@ -46,8 +46,7 @@
     {{/if}}
     
     <div class="head">
-        {{!-- <img class="img" src="{{@root.websiteAddress}}{{img}}" loading="lazy" alt="Картинка {{name}}" title="{{name}}"> --}}
-        <img class="img" src="http://localhost:4000/img/be961cc8e23a4deabc357029f8c39fd3.jpeg" loading="lazy" alt="Картинка {{name}}" title="{{name}}">
+        <img class="img" src="{{@root.websiteAddress}}{{img}}" loading="lazy" alt="Картинка {{name}}" title="{{name}}">
         <div class="imageFilter{{#unless inStock}} activate{{/unless}}"></div>
     </div>
     <div class="name">{{name}}</div>

@@ -1,16 +1,67 @@
 @import "./breakPoints"
 
 .homePage
-  .homeContent
-    margin-top: 500px
-    margin-left: 16px
-
-    @include for-middle-phone-up
-      margin-top: 200px
-
+  .homeSection
+    padding-right: 16px
+    padding-left: 16px
+    
+    // #540px
+    @include for-tablet-portrait-up
+      padding-right: 24px
+      padding-left: 24px
+      
+    // #1280px
+    @include for-small-desktop-up
+      padding-right: 42px
+      padding-left: 42px
+    
+    // #1366px
     @include for-desktop-up
-      margin-top: 250px
-
+      padding-left: 52px
+      padding-right: 52px
+      
+    // #1920px
+    @include for-big-desktop-up
+      padding-left: 0px
+      padding-right: 0px  
+  
+  .homeContent
+    margin-top: 48px
+    margin-left: 16px
+    
+    // #540px
+    @include for-tablet-portrait-up
+      margin-left: 24px
+      
+    // #1280px
+    @include for-small-desktop-up
+      display: flex
+      flex-direction: column
+      margin-left: 43px
+      margin-right: 43px
+      margin-top: 72px
+      
+      &.homeSelections, &.homeNews
+        margin-top: 92px
+        
+      &.homeGenres
+        margin-top: 124px
+      
+    // #1920px
+    @include for-big-desktop-up
+      margin-top: 124px
+      margin-left: 0
+      margin-right: 0
+      
+      &.homeSelections, &.homeNews
+        margin-top: 124px
+      
+    .popularsTitle
+      margin: 0
+      
+    
+    
+    
   .aboutBtnHome
     margin: 0 auto
 
@@ -21,22 +72,32 @@
     width: 100%
     height: 534px
     position: relative
-    // border: 1px solid #fff
     border-radius: 16px
     overflow: hidden
     margin-top: 48px
-    padding: 16px 24px
+    padding-top: 24px
+    padding-bottom: 24px
     background: #000000bd
     
-    @include for-desktop-up
-      height: 250px
-      margin-top: 50px
-      border-radius: 20px
-
-    @include for-middle-desktop-up
-      height: 300px
-      
+    // #375px
+    @include for-phone-up
+      padding-top: 16px
+      padding-bottom: 16px
     
+    // #540px
+    @include for-tablet-portrait-up
+      height: 417px
+      padding-top: 24px
+      padding-bottom: 24px
+    
+    // #1280px
+    @include for-small-desktop-up
+      height: 291px
+      padding: 48px 32px
+      
+    // #1920px
+    @include for-big-desktop-up
+      margin-top: 124px
   
     .infoBlockImg    
       position: absolute
@@ -50,19 +111,12 @@
       display: flex
       flex-direction: column
       align-items: center
-      // gap: 24px
-      // position: absolute
-      // bottom: 20px
-      // left: 10px
-      // right: 50px
       color: #fff
-      // z-index: 1
-    
-      @include for-desktop-up
-        bottom: initial
-        top: 30px
-        left: 30px
-
+      
+      // #1280px
+      @include for-small-desktop-up
+       align-items: start
+       
       .icon
         width: 172px
         display: block
@@ -77,66 +131,143 @@
         margin-top: 24px
         line-height: 120%
         text-align: center
+        margin-right: 16px
+        margin-left: 16px
 
-        @include for-desktop-up
-          font-size: 36px
+        // #1280px
+        @include for-small-desktop-up
+          font-size: 32px
+          margin-left: 0
 
       .description
         font-size: 14px
         margin-top: 8px
         line-height: 140%
+        font-weight: 500
         text-align: center
 
-        @include for-desktop-up
+        // #1280px
+        @include for-small-desktop-up
           font-size: 18px
 
       .homeBtn
-        width: 100%
+        width: 256px
+        margin-top: 24px
+        
+        // #375px
+        @include for-phone-up
+          width: 311px
+        
+        // #1280px
+        @include for-small-desktop-up
+          width: 208px
+          align-self: flex-start
     
     .bg
       backdrop-filter: blur(6px)
       position: absolute
-      left: -38px
-      bottom: 0px
+      right: -100px
+      top: 315px
       width: 660px
-      height: 265px
+      height: 500px
       transform: rotate(-12deg)
-      
-      &:after
-        content: ''
-        position: absolute
-        left: 0
-        bottom: 0
-        width: 100%
-        height: 265px
-        background-size: 100%
-        background-position: center
-        background-image: url(./../img/backgroundBlur.svg)
-        overflow: hidden
-        background-repeat: no-repeat
-      
-    .qr
-      position: absolute
-      bottom: 108px
-      left: 50%
-      transform: translate(-50%, 0)
-    
-    .direction
-      position: absolute
-      bottom: 24px
-      left: 50%
-      transform: translate(-50%, 0)
-      width: 100%
-      color: #FFF
-      text-align: center
-      font-family: Montserrat
-      font-size: 14px
-      font-weight: 500
-      line-height: 140%
+      background-color: #8d00fc52
 
-.homeTitle
-  margin-left: 16px
+      // #540px
+      @include for-tablet-portrait-up
+        width: 1440px
+        transform: rotate(-6deg)
+        top: 300px
+        
+      // #1280px
+      @include for-small-desktop-up
+        width: 800px
+        height: 650px
+        transform: rotate(-52deg)
+        top: -98px
+        right: -265px
+
+    .yaPayBlock
+      position: absolute
+      display: flex
+      flex-direction: column
+      justify-content: center
+      align-items: center
+      width: 100%
+      gap: 24px
+      bottom: 15px
+      
+      // #540px
+      @include for-tablet-portrait-up
+        flex-direction: row
+        left: 84px
+        bottom: 24px
+        align-items: center
+        justify-content: start
+            
+      // #1280px
+      @include for-small-desktop-up
+        justify-content: end
+        left: -42px
+        bottom: 84px 
+        
+      .qr      
+        width: 96px
+        height: 96px
+      
+      .direction
+        color: #FFF
+        text-align: center
+        font-family: Montserrat
+        font-size: 14px
+        font-weight: 500
+        line-height: 140%
+        
+         // #540px
+        @include for-tablet-portrait-up
+          text-align: left
+          
+        // #1280px
+        @include for-small-desktop-up
+          font-size: 18px
+          
+.mediaAboutUs
+  margin-top: 48px
   
+  .homeTitle
+    text-align: center
+  
+// Swiper buttons styles  
+.swiper-button-prev, .swiper-button-next
+  display: none
+  width: 40px
+  height: 40px
+  z-index: 1
+  top: 50%
+  transform: translate(0, 50%)
+  
+  
+  &:after
+    display: flex
+    align-items: center
+    justify-content: center
+    font-size: 18px
+    font-weight: 800
+    width: 40px
+    height: 40px
+    border-radius: 50%
+    color: #fff
+    background: #8D00FC
+  
+  // #1280px
+  @include for-small-desktop-up
+    display: flex
+    
+.swiper-button-prev
+  left: -19px
+
+.swiper-button-next
+  right: -19px
   
   
   
@@ -235,3 +366,4 @@
 
     //     @include for-desktop-up
     //       margin-top: 40px
+  

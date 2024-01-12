@@ -1,5 +1,5 @@
 @mixin for-phone-only
-  @media (max-width: 430px)
+  @media (max-width: 800px)
     @content
 
 @mixin for-down-middle-phone
@@ -8,6 +8,10 @@
 
 @mixin for-middle-phone-up
   @media (min-width: 360px)
+    @content
+    
+@mixin for-phone-up
+  @media (min-width: 375px)
     @content
 
 @mixin for-big-phone-up

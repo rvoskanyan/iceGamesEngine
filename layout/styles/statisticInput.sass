@@ -38,23 +38,25 @@
     border-radius: 99px
     background: rgba(50, 0, 101, 0.48)
     
+    // #1280px
+    @include for-small-desktop-up
+      padding: 20px 32px
+    
+    
     .value
       position: relative
       font-family: 'Lemon Milk'
-      // width: 100%
       font-size: 20px
-      // border-radius: 12px
-      // padding: 16px 32px
-      // border-radius: 99px
-      // background: rgba(50, 0, 101, 0.48)
-      // &.active > .valueWrapper
-      //   opacity: 1
       width: 40px
+      
       &.animated.active, &.animated.active + .icon-usersGroup
         opacity: 1
-      // &.animated.active + .icon-usersGroup
-      //   opacity: 1
-      
+        
+      // #375px
+      @include for-phone-up
+        font-size: 24px
+        width: 51px
+    
     .icon-usersGroup.animated,.value.animated
       opacity: 0
       transition: ease-in .5s
@@ -67,12 +69,3 @@
 
     @include for-middle-desktop-up
       font-size: 26px
-    
-      
-
-  // &.animated
-  //   opacity: 0
-  //   transition: ease-in .5s
-  //   transition-property: opacity
-    
-  

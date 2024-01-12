@@ -1,35 +1,91 @@
 @import './breakPoints'
 
 .aboutUsHome
-  color: #c7c7c7
-
-  @include for-desktop-up
+  color: #fff
+  margin-top: 48px
+    
+  // #1920px
+  @include for-big-desktop-up
+    margin-top: 124px
+  
+  .homeTitle
+    display: none
+    
+    // #1920px
+    @include for-big-desktop-up
+      display: block
+      text-align: center
+  
+  .aboutUsPlatform
     display: flex
-    align-items: flex-start
-    column-gap: 30px
+    flex-direction: column
+    justify-content: center
+    align-items: center
+  
+    // #1280px
+    @include for-small-desktop-up
+      flex-direction: row
+      gap: 24px
+      
+    // #1920px
+    @include for-big-desktop-up
+      margin-top: 48px
 
   .img
     max-width: 100%
-
+        
+    // #540px
+    @include for-tablet-portrait-up
+      max-width: 325px
+    
+    // #1280px
+    @include for-small-desktop-up
+      max-width: 484px
+      
+    // #1366px
     @include for-desktop-up
-      max-width: 50%
+      max-width: 619px
 
+    // #1920px
+    @include for-big-desktop-up
+      max-width: 700px
+    
   .text
-    margin-top: 20px
+    margin-top: 32px
 
-    @include for-desktop-up
-      margin-top: initial
-
+    // #1280px
+    @include for-small-desktop-up
+      margin-top: 0
+      
     .content
       overflow: hidden
-      max-height: 375px
+      max-height: 316px
       font-size: 14px
-
+      font-weight: 400
+      line-height: 140%
+      
+      // #375px
+      @include for-phone-up
+        font-size: 18px
+        max-height: 425px
+        
+      // #540px
+      @include for-tablet-portrait-up
+        font-size: 14px
+        max-height: 180px
+      
+      // #1280px
+      @include for-small-desktop-up
+        font-size: 18px
+        max-height: 645px
+      
+      // #1366px
       @include for-desktop-up
-        font-size: 16px
-
-      @include for-middle-desktop-up
-        max-height: 430px
+        max-height: 725px
+      
+      // #1920px
+      @include for-big-desktop-up
+        max-width: 625px
 
       &.active
         max-height: initial
@@ -43,21 +99,22 @@
           margin-bottom: 20px
           font-size: 52px
 
-      p
-        margin-top: 10px
-
-        @include for-desktop-up
-          margin-top: 18px
-
-      ul
-        margin: 8px 0 0 18px
-
     .showAllBtn
-      margin-top: 15px
-      font-weight: 400
+      margin-top: 24px
+      font-weight: 500
+      line-height: 140%
 
-      @include for-desktop-up
-        margin-top: 30px
+      // #375px
+      @include for-phone-up
+        font-size: 18px
+        
+      // #540px
+      @include for-tablet-portrait-up
+        font-size: 14px
+        
+      // #1280px
+      @include for-small-desktop-up
+        font-size: 18px
 
       &:after
         content: ''
