@@ -9,7 +9,7 @@ import Review from "../../models/Review.js";
 import Selection from "../../models/Selection.js";
 import User from "../../models/User.js";
 import { achievementEvent } from "../../services/achievement.js";
-import { getDiscount } from '../../utils/functions.js';
+import { getDiscount, getNoun } from '../../utils/functions.js';
 
 export const homepage = async (req, res) => {
   const platform = req.platform || 'pc';
@@ -54,14 +54,24 @@ export const homepage = async (req, res) => {
     .limit(5)
     .select(['name', 'alias', 'description', 'priceTo', 'priceFrom', 'img', 'coverImg', 'coverVideo', 'discount', 'dsId'])
     .lean();
+  
+  sliderProducts.forEach(item => {
+    item.priceTo = item.priceTo.toString()[0] + ' ' + item.priceTo.toString().slice(1)
+    if (item.discount > 0) item.priceFrom = item.priceFrom.toString()[0] + ' ' + item.priceFrom.toString().slice(1)
+  })
+    
   const categories = await Category.find().select('name').lean();
   
   let genres = await Genre.find().select(['_id','name', 'img', 'bgColor', 'alias']).sort({order: 1}).lean();
   
   let results = genres.map(async(genre) => {
-    genre.gamesCount = await Product.find({ genres: genre._id}).count()
+    const count = await Product.find({ genres: genre._id}).count()
+    const noun = getNoun(count, 'игра', 'игры', 'игр')
+    genre.gamesCount = count + ' ' + noun
+    
     return genre
   })
+  
   genres = await Promise.all(results)  
   
   const partners = await Partner.find().select(['name', 'img', 'link']).sort({createdAt: 1}).lean();

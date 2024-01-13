@@ -37,6 +37,10 @@ export const popularsSwiper = () => new Swiper('.swiper-slider-populars', {
       slidesPerView: 5,
       spaceBetween: 65,
     },
+     1380: {
+      slidesPerView: 5,
+      spaceBetween: 80,
+    },
      1920: {
       slidesPerView: 5,
       spaceBetween: 105,
