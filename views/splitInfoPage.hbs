@@ -21,13 +21,25 @@
         <div class="howWorks block">
             <div class="title">Как это работает?</div>
             <div class="description">Выберите товар в магазине и оформите его с оплатой частями. Покупка сразу ваша, а деньги — потом</div>
-            <div class="scale mobileInvisibleScroll">
-                <div class="section">Сегодня - {{ one }}</div>
-                <div class="section">{{ two }}</div>
-                <div class="section">{{ three }}</div>
-                <div class="section">{{ four }}</div>
+            <div class="scale">
+                <div class='section'>
+                    <p class='text'>Списывается сразу</p>
+                    <p class='date'>Сегодня - {{ one }}</p>        
+                </div>
+                <div class='section'>
+                    <p class='text'>Второй платеж</p>
+                    <p class='date'>{{ two }}</p>        
+                </div>
+                <div class='section'>
+                    <p class='text'>Третий платеж</p>
+                    <p class='date'>{{ three }}</p>        
+                </div>
+                <div class='section'>
+                    <p class='text'>Финальный платеж</p>
+                    <p class='date'>{{ four }}</p>        
+                </div>
             </div>
-            <div class="description">Спишется сразу только первый платёж, а оставшиеся — по графику раз в 2 недели</div>
+            <div class="description desktop">Спишем сразу только первый платёж, а оставшиеся — по графику раз в 2 недели</div>
         </div>
         <div class="variants block">
             <div class="title">Выбирай любой</div>

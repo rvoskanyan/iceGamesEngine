@@ -2,16 +2,16 @@ import { getFormatDate } from "../../utils/functions.js";
 
 export const splitInfoPage = (req, res) => {
   const currentDate = new Date();
-  const one = getFormatDate(currentDate, '.', ['d', 'm', 'y']);
+  const one = getFormatDate(currentDate, ' ', ['d', 'm'], true);
   
   currentDate.setDate(currentDate.getDate() + 14);
-  const two = getFormatDate(currentDate, '.', ['d', 'm', 'y']);
+  const two = getFormatDate(currentDate, ' ', ['d', 'm'], true);
   
   currentDate.setDate(currentDate.getDate() + 14);
-  const three = getFormatDate(currentDate, '.', ['d', 'm', 'y']);
+  const three = getFormatDate(currentDate, ' ', ['d', 'm'], true);
   
   currentDate.setDate(currentDate.getDate() + 14);
-  const four = getFormatDate(currentDate, '.', ['d', 'm', 'y']);
+  const four = getFormatDate(currentDate, ' ', ['d', 'm'], true);
   
   res.render('splitInfoPage', {
     title: 'Что такое сплит — ICE GAMES',

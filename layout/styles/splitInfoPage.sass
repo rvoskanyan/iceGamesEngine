@@ -23,9 +23,7 @@
     .yaPayBlock
       position: absolute
       top: 452px
-      // bottom: 32px
       display: flex
-      // max-width: 288px
       justify-content: center
       align-items: center
       gap: 12px
@@ -137,6 +135,7 @@
       position: absolute
       transform: rotate(45deg)
       background-color: #01033C
+      
       // #1280px
       @include for-small-desktop-up
         width: 35px
@@ -160,59 +159,95 @@
       @include for-small-desktop-up
         left: 404px
         bottom: -131px
+   
 
-  .block
-    margin-top: 35px
-
-    @include for-desktop-up
-      margin-top: 80px
-
+  .howWorks
+    margin-top: 32px
+    
+    // #1280px
+    @include for-small-desktop-up
+      margin-top: 72px
+    
+    .title
+      font-family: 'Lemon Milk'
+      font-size: 24px
+      line-height: 120%
+      
+      // #1280px
+      @include for-small-desktop-up
+        font-size: 88px
+     
     .description
       font-family: 'Montserrat'
       font-size: 14px
+      line-height: 140%
+      text-transform: uppercase
+      margin-top: 16px
+      max-width: 1147px
 
-      @include for-desktop-up
-        font-size: 16px
-
-  .howWorks
+      // #1280px
+      @include for-small-desktop-up
+        font-size: 32px
+        
+    .desktop
+      display: none
+      
+      // #1280px
+      @include for-small-desktop-up
+        display: block
+        margin-bottom: 160px
+      
     .scale
       display: flex
-      justify-content: space-between
-      flex-grow: 1
-      column-gap: 5px
-      margin-top: 25px
-      margin-bottom: 10px
-
-      @include for-desktop-up
-        column-gap: 30px
-
+      flex-direction: column
+      gap: 24px
+      margin-top: 24px
+      
+      // #1280px
+      @include for-small-desktop-up
+        display: grid
+        grid-template-columns: repeat(4, 1fr)
+        gap: 48px
+        margin-top: 124px
+        margin-bottom: 206px
+      
       .section
-        flex-basis: 40%
-        font-size: 16px
-        font-weight: 700
-        max-width: 110px
-        min-width: 110px
-
-        @include for-desktop-up
-          font-size: 18px
-          flex-basis: 25%
-          max-width: initial
-          min-width: initial
-
-        &:before
-          content: ''
-          display: block
-          width: 100%
-          height: 12px
-          border-radius: 100px
-          background-color: rgba(250, 0, 255, 0.5)
-          margin-bottom: 5px
-
-          @include for-desktop-up
-            height: 30px
-
-        &:first-child:before
-          background-color: rgba(250, 0, 255, 1)
+        flex-grow: 1
+        
+        .text
+          color: rgba(255, 255, 255, 0.60)
+          font-size: 12px
+          font-weight: 500
+          line-height: 120%
+  
+          // #1280px
+          @include for-small-desktop-up
+            font-size: 20px
+  
+          &:after
+            content: ''
+            display: block
+            width: 100%
+            height: 8px
+            border-radius: 30px
+            background-color: rgba(250, 0, 255, 0.5)
+            margin: 12px 0
+  
+            // #1280px
+            @include for-small-desktop-up
+              height: 16px
+        
+        .date
+          font-size: 14px
+          font-weight: 500
+          line-height: 120%
+          
+          // #1280px
+          @include for-small-desktop-up
+            font-size: 28px
+        
+        &:first-child .text:after
+          background: #FA00FF 
 
   .variants
     .items
@@ -316,104 +351,3 @@
 
       @include for-desktop-up
         margin-top: 15px
-        
-        
-        
-          
-  
-
-
-//  TODO полосы можно использовать для картинки
-    // &:before
-    //   content: ''
-    //   display: block
-    //   position: absolute
-    //   left: 0
-    //   top: 0
-    //   height: 100%
-    //   width: 100%
-    //   background: linear-gradient(180deg, rgba(1, 3, 60, 0.3) 0, #01033C 100%)
-    //   z-index: 1
-
-    //   @include for-desktop-up
-    //     background: linear-gradient(270deg, transparent 0, #01033C 100%)
-
-    // &:after
-    //   content: ''
-    //   display: block
-    //   left: 58px
-    //   top: -70px
-
-    //   @include for-desktop-up
-    //     left: 25%
-
-    // .separate
-      // bottom: -65px
-      // right: 85px
-
-    //   @include for-desktop-up
-    //     right: 25%
-
-    // .separate, &:after
-    //   height: 100%
-    //   position: absolute
-    //   width: 10px
-    //   transform: rotate(45deg)
-    //   background-color: #fff
-
-    //   @include for-desktop-up
-    //     height: initial
-    //     top: -80px
-    //     bottom: -80px
-
-    // .img
-    //   object-fit: cover
-    //   display: block
-    //   width: 100%
-    //   max-width: 100%
-    //   height: 100%
-
-    // .content
-    //   position: absolute
-    //   bottom: 20px
-    //   left: 10px
-    //   right: 50px
-    //   color: #fff
-    //   z-index: 1
-
-    //   @include for-desktop-up
-    //     bottom: initial
-    //     top: 30px
-    //     left: 30px
-
-    //   .icon
-    //     width: 80px
-    //     display: block
-    //     border-radius: 5px
-
-    //     @include for-desktop-up
-    //       width: 100px
-
-    //   .title
-    //     font-size: 21px
-    //     font-family: 'Lemon Milk'
-    //     margin-top: 5px
-    //     line-height: 1.2
-
-    //     @include for-desktop-up
-    //       font-size: 36px
-
-    //   .description
-    //     font-size: 16px
-    //     margin-top: 5px
-    //     line-height: 1
-
-    //     @include for-desktop-up
-    //       font-size: 18px
-
-    //   .btn
-    //     margin-top: 20px
-
-    //     @include for-desktop-up
-    //       margin-top: 40px
-  
