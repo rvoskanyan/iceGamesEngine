@@ -5,7 +5,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
 
-export const popularsSwiper = () => new Swiper('.swiper-slider-populars', {
+export const swiperPopulars = () => new Swiper('.swiper-slider-populars', {
   slidesPerView: 2.24,
   spaceBetween: 8,
   loop: true,
@@ -15,6 +15,7 @@ export const popularsSwiper = () => new Swiper('.swiper-slider-populars', {
   autoplay: {
     delay: 3000,
     disableOnInteraction: false,
+    pauseOnMouseEnter: true
   },
   speed: 800,
   navigation: {
@@ -60,6 +61,8 @@ export const swiperSelections = () => new Swiper('.swiper-slider-selections', {
   autoplay: {
     delay: 3000,
     disableOnInteraction: false,
+    pauseOnMouseEnter: true
+
   },
   
   navigation: {
@@ -88,6 +91,8 @@ export const swiperGenres = () => new Swiper('.swiper-slider-genres', {
   autoplay: {
     delay: 3000,
     disableOnInteraction: false,
+    pauseOnMouseEnter: true
+
   },
   navigation: {
     nextEl: '.swiper-button-next',
@@ -118,6 +123,8 @@ export const swiperNews = () => new Swiper('.swiper-slider-news', {
   autoplay: {
     delay: 3000,
     disableOnInteraction: false,
+    pauseOnMouseEnter: true
+
   },
   navigation: {
     nextEl: '.swiper-button-next',

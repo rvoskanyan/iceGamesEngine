@@ -55,7 +55,22 @@
       font-size: 16px
       font-weight: 400
       line-height: 140%
-      transition: color 0.2s ease-in 
+      transition: color 0.2s ease-in
+      height: calc(22.4px * 2)
+      overflow: hidden
+      text-overflow: ellipsis
+      display: -webkit-box
+      display: -moz-box
+      -webkit-box-orient: vertical
+      -moz-box-orient: vertical
+      box-orient: vertical
+      line-clamp: 2 // line-count
+      -webkit-line-clamp: 2 // line-count
+      
+      // #1280px
+      @include for-small-desktop-up
+        font-size: 20px // line-count
+        height: calc(28px * 2) // line-height * line-count  
      
       
     .text
