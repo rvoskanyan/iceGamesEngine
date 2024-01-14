@@ -13,11 +13,7 @@
     {{/if}}
     
     <div class="head">
-        
-        {{!-- d81e3c7c-7179-455a-b31d-bb6201424351.jpeg --}}
-        {{!-- TODO изменить адрес картинки --}}
-        {{!-- {{img}} --}}
-        <img class="img" src="{{@root.websiteAddress}}/img/d81e3c7c-7179-455a-b31d-bb6201424351.jpeg" loading="lazy" alt="Картинка {{name}}" title="{{name}}">
+        <img class="img" src="{{@root.websiteAddress}}{{img}}" loading="lazy" alt="Картинка {{name}}" title="{{name}}">
         <div class="imageFilter{{#unless inStock}} activate{{/unless}}"></div>
     </div>
     <div class="name">{{name}}</div>

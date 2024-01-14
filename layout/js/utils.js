@@ -89,11 +89,7 @@ export const getProductCardNode = (data) => {
   }
   
   headImgNode.setAttribute('class', 'img');
-  //  TODO изменить адрес картинки 
-  // headImgNode.setAttribute('src', `${websiteAddress}${data.img}`);
-  
-  headImgNode.setAttribute('src', `${websiteAddress}/img/d81e3c7c-7179-455a-b31d-bb6201424351.jpeg`);
-  
+  headImgNode.setAttribute('src', `${websiteAddress}${data.img}`);
   
   headImgNode.setAttribute('alt', `Картинка ${data.name}`);
   headImgNode.setAttribute('title', data.name);

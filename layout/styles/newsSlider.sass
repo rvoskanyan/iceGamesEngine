@@ -1,102 +1,193 @@
 @import './breakPoints'
 
-.newsSwiper
-  position: relative
-  padding-top: 24px
-  
-  // #1280px
-  @include for-small-desktop-up
-    padding-top: 48px
-  
-  .newsPreview
-    text-decoration: none
-    height: auto
-    
-    &:hover .description .title
-      transition: color 0.2s ease-in 
-      color: #8D00FC
+.newsSlider
+  margin-top: 10px
 
-  .img
-    object-fit: cover
-    width: 100%
-    overflow: hidden
-    border-radius: 16px
-    transition: transform .3s ease-in
-    
-  .attributes
+  @include for-desktop-up
     display: flex
-    gap: 16px
-    align-items: center
-    margin-top: 24px
-    padding: 0 16px
-    
-    .newsBtn
-      color: #FFF
-      text-align: center
-      font-size: 14px
-      font-weight: 700
-      padding: 5px 8px
-      border-radius: 4px
-      background: rgba(255, 255, 255, 0.16)
-    
-    .date
-      color: rgba(255, 255, 255, 0.60)
-      font-size: 14px
-      font-weight: 500
-      line-height: 160%
+    justify-content: space-between
+
+  & .prev, & .next
+    display: flex
+    z-index:
+    width: 40px
+    height: 40px
+    border: 2px solid #fff
+    border-radius: 100%
+    margin-top: 84px
+
+    @include for-middle-desktop-up
+      margin-top: 95px
+
+    @include for-big-desktop-up
+      margin-top: 100px
+
+    &:before
+      content: ''
+      background-size: cover
+      background-position: center
+      background-image: url("./../img/slideControlArrow.svg")
+      width: 15px
+      height: 8px
+      transition: transform .3s ease-in
+
+    @include for-phone-only
+      display: none
+
+  .prev
+    &:before
+      transform: rotate(90deg) translateY(1px)
+
+    &:hover:before
+      transform: rotate(90deg) translateY(8px)
+
+  .next
+    &:before
+      transform: rotate(-90deg) translateY(1px)
+
+    &:hover:before
+      transform: rotate(-90deg) translateY(8px)
+
+  & + .all
+    margin: 35px auto 0 auto
+
+  & .visibleArea
+    flex-grow: 1
+    overflow: hidden
+    max-width: 100%
+
+    @include for-desktop-up
+      max-width: 375px * 3 //slideWidth * countSlides
+
+    @include for-middle-desktop-up
+      max-width: 432px * 3 //slideWidth * countSlides
+
+    @include for-big-desktop-up
+      max-width: 482px * 3 //slideWidth * countSlides
+
+    & .tape
+      display: flex
+      transition: 1s ease
+
+      & .slide
+        visibility: hidden
+        opacity: 0
+        transition: 1s ease
+        padding: 10px
+
+        @include for-big-phone-up
+          padding: 18px 25px 0 25px
+
+        &.active
+          visibility: visible
+          opacity: 1
       
-  .description
-    margin-top: 12px
-    padding: 0 16px
-    
-    .title
-      color: #FFF
-      font-family: 'Lemon Milk'
-      font-size: 16px
-      font-weight: 400
-      line-height: 140%
-      transition: color 0.2s ease-in
-      height: calc(22.4px * 2)
-      overflow: hidden
-      text-overflow: ellipsis
-      display: -webkit-box
-      display: -moz-box
-      -webkit-box-orient: vertical
-      -moz-box-orient: vertical
-      box-orient: vertical
-      line-clamp: 2 // line-count
-      -webkit-line-clamp: 2 // line-count
-      
-      // #1280px
-      @include for-small-desktop-up
-        font-size: 20px // line-count
-        height: calc(28px * 2) // line-height * line-count  
-     
-      
-    .text
-      margin-top: 8px
-      color: rgba(255, 255, 255, 0.60)
-      font-size: 14px
-      line-height: 140%
-      display: -moz-box
-      display: -webkit-box
-      line-clamp: 4 // line-count
-      -webkit-line-clamp: 4 // line-count
-      max-height: calc(19.6px * 4) // line-height * line-count  
-      box-orient: vertical
-      -webkit-box-orient: vertical
-      -moz-box-orient: vertical  
-      overflow: hidden
-      
-      // #540px
-      @include for-tablet-portrait-up
-        margin-top: 12px
+      & .newsPreview
+        display: block
+        min-width: 100%
+        max-width: 100%
+        text-decoration: none
+        border: 0.3px solid #fff
+        border-radius: 22px
         
-      // #1280px
-      @include for-small-desktop-up
-        line-clamp: 2 // line-count
-        -webkit-line-clamp: 2 // line-count
-        max-height: calc(19.6px * 2) // line-height * line-count  
-  
-  .swiper-button-prev, .swiper-button-next
-    top: 33%
+        @include for-big-phone-up
+          border: initial
+          border-radius: initial
+      
+        @include for-desktop-up
+          min-width: 375px
+          max-width: 375px
+
+        @include for-middle-desktop-up
+          min-width: 432px
+          max-width: 432px
+
+        @include for-big-desktop-up
+          min-width: 482px
+          max-width: 482px
+        
+        & .img
+            object-fit: cover
+            width: 100%
+            height: 160px
+            overflow: hidden
+            border-radius: 22px
+            transition: transform .3s ease-in
+            
+            @include for-big-phone-up
+              height: 172px
+              box-shadow: 0 0 10px rgba(219, 0, 255, 0.8)
+            
+            @include for-middle-desktop-up
+              height: 193px
+              
+            @include for-big-desktop-up
+              height: 207px
+              
+        & .attributes
+          display: flex
+          align-items: center
+          margin-top: 10px
+          
+          @include for-big-phone-up
+            margin-top: 20px
+            
+          @include for-middle-desktop-up
+            margin-top: 30px
+          
+          & .btn
+            font-size: 14px
+            min-height: 30px
+            padding: 0 10px
+            border-width: 1px
+            
+            @include for-big-phone-up
+              font-size: 16px
+              font-weight: 700 
+          
+          & .date
+            margin-left: 10px
+            font-size: 14px
+            font-weight: 600
+            color: rgba(255, 255, 255, 0.6)
+            
+            @include for-big-phone-up
+              margin-left: 15px
+              font-size: 16px
+          
+        & .description
+          margin-top: 10px
+            
+          @include for-big-phone-up
+            margin-top: 15px
+          
+          & .title
+            color: #fff
+            font-weight: 600
+            transition: color .3s ease-in
+            font-size: 14px
+            
+            @include for-big-phone-up
+              font-size: 16px
+             
+          & .text
+            margin-top: 10px
+            color: rgba(255, 255, 255, 0.60)
+            font-size: 14px
+            line-height: 18px
+            display: -moz-box
+            display: -webkit-box
+            line-clamp: 2 // line-count
+            -webkit-line-clamp: 2 // line-count
+            max-height: calc(18px * 3) // line-height * line-count  
+            box-orient: vertical
+            -webkit-box-orient: vertical
+            -moz-box-orient: vertical  
+            overflow: hidden
+            text-overflow: ellipsis
+            display: none
+            
+            @include for-big-phone-up
+              display: -webkit-box
+              display: -moz-box
+    

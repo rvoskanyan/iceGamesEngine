@@ -41,8 +41,21 @@
       display: flex
 
   & .newsSliderContainer
+    margin-top: 100px
+     
     @include for-phone-only
       margin-top: 30px
+      
+    & .homeTitle
+      text-align: center
+      
+    @include for-middle-desktop-up
+    
+    & .homeTitle
+      font-size: 50px
+
+      // @include for-big-desktop-up
+      
 
       & .newsSlider
         z-index: -1
