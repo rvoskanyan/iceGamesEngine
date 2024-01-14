@@ -5,6 +5,31 @@
     {{#if inCart}}data-in-cart="true"{{/if}}
     title="Перейти к странице товара"
 >
+    {{#if dlc}}
+        <div class="dlc" title="Дополнение для игры">DLC</div>
+    {{/if}}
+    {{#if isNew}}
+        <div class="new" title="Новинка">new</div>
+    {{/if}}
+    
+    <div class="head">
+        <img class="img" src="{{@root.websiteAddress}}{{img}}" loading="lazy" alt="Картинка {{name}}" title="{{name}}">
+        <div class="imageFilter{{#unless inStock}} activate{{/unless}}"></div>
+    </div>
+    <div class="name">{{name}}</div>
+    <div class="price {{#unless inStock}}{{#unless preOrder}}hidden {{/unless}}{{/unless}}">
+        <div class="toPrice">
+            <span class="value">{{priceTo}}</span>
+        </div>
+        {{#iff priceFrom '>' priceTo}}
+            <div class="fromPrice">
+                <span class="value">{{priceFrom}}</span>
+            </div>
+            {{#if discount}}
+                <div class="discount js-discount">{{discount}}</div>
+            {{/if}}
+        {{/iff}}
+    </div>
     <div class="actions{{#unless inStock}} noInStock{{/unless}}">
         {{#if @root.isAuth}}
             <button class="btn like js-favoritesBtn{{#if inFavorites}} js-active{{/if}}" title="{{#if inFavorites}}Удалить товар из избранного{{else}}Добавить товар в избранное{{/if}}">
@@ -37,35 +62,5 @@
                     {{/if}}
                 </button>
             {{/if}}
-    </div>
-    {{#if dlc}}
-        <div class="dlc" title="Дополнение для игры">DLC</div>
-    {{/if}}
-    {{#if isNew}}
-        <div class="new" title="Новинка">new</div>
-    {{/if}}
-    
-    <div class="head">
-        <img class="img" src="{{@root.websiteAddress}}{{img}}" loading="lazy" alt="Картинка {{name}}" title="{{name}}">
-        <div class="imageFilter{{#unless inStock}} activate{{/unless}}"></div>
-    </div>
-    <div class="name">{{name}}</div>
-    <div class="price
-    {{#unless inStock}}
-        {{#unless preOrder}}
-            hidden
-        {{/unless}}
-    {{/unless}}">
-        <div class="toPrice">
-            <span class="value">{{priceTo}}</span>
-        </div>
-        {{#iff priceTo '<' priceFrom}}
-            <div class="fromPrice">
-                <span class="value">{{priceFrom}}</span>
-            </div>
-            {{#if discount}}
-                <div class="discount js-discount">{{discount}}</div>
-            {{/if}}
-        {{/iff}}
     </div>
 </a>

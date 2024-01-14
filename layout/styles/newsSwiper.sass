@@ -1,0 +1,102 @@
+@import './breakPoints'
+
+.newsSwiper
+  position: relative
+  padding-top: 24px
+  
+  // #1280px
+  @include for-small-desktop-up
+    padding-top: 48px
+  
+  .newsPreview
+    text-decoration: none
+    height: auto
+    
+    &:hover .description .title
+      transition: color 0.2s ease-in 
+      color: #8D00FC
+
+  .img
+    object-fit: cover
+    width: 100%
+    overflow: hidden
+    border-radius: 16px
+    transition: transform .3s ease-in
+    
+  .attributes
+    display: flex
+    gap: 16px
+    align-items: center
+    margin-top: 24px
+    padding: 0 16px
+    
+    .newsBtn
+      color: #FFF
+      text-align: center
+      font-size: 14px
+      font-weight: 700
+      padding: 5px 8px
+      border-radius: 4px
+      background: rgba(255, 255, 255, 0.16)
+    
+    .date
+      color: rgba(255, 255, 255, 0.60)
+      font-size: 14px
+      font-weight: 500
+      line-height: 160%
+      
+  .description
+    margin-top: 12px
+    padding: 0 16px
+    
+    .title
+      color: #FFF
+      font-family: 'Lemon Milk'
+      font-size: 16px
+      font-weight: 400
+      line-height: 140%
+      transition: color 0.2s ease-in
+      height: calc(22.4px * 2)
+      overflow: hidden
+      text-overflow: ellipsis
+      display: -webkit-box
+      display: -moz-box
+      -webkit-box-orient: vertical
+      -moz-box-orient: vertical
+      box-orient: vertical
+      line-clamp: 2 // line-count
+      -webkit-line-clamp: 2 // line-count
+      
+      // #1280px
+      @include for-small-desktop-up
+        font-size: 20px // line-count
+        height: calc(28px * 2) // line-height * line-count  
+     
+      
+    .text
+      margin-top: 8px
+      color: rgba(255, 255, 255, 0.60)
+      font-size: 14px
+      line-height: 140%
+      display: -moz-box
+      display: -webkit-box
+      line-clamp: 4 // line-count
+      -webkit-line-clamp: 4 // line-count
+      max-height: calc(19.6px * 4) // line-height * line-count  
+      box-orient: vertical
+      -webkit-box-orient: vertical
+      -moz-box-orient: vertical  
+      overflow: hidden
+      
+      // #540px
+      @include for-tablet-portrait-up
+        margin-top: 12px
+        
+      // #1280px
+      @include for-small-desktop-up
+        line-clamp: 2 // line-count
+        -webkit-line-clamp: 2 // line-count
+        max-height: calc(19.6px * 2) // line-height * line-count  
+  
+  .swiper-button-prev, .swiper-button-next
+    top: 33%

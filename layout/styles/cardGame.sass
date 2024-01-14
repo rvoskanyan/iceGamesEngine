@@ -29,51 +29,28 @@
     &:hover
       border: 2px solid #FFF
       
-    &:hover .actions
-      visibility: visible
-      opacity: 1
-      background-color: transparent
-        
+    &:hover .actions 
+      .inCart, .like
+        visibility: visible
+        opacity: 1
+
     &:hover .imageFilter
       background: rgba(2, 4, 61, 0.80)
 
   .actions
-    position: absolute
-    overflow: hidden
-    z-index: $ZIndex-CardGame-Actions
-    transition: .3s ease-in
-    transition-property: visibility, opacity, bottom
-    top: 0
-    right: 0
-    width: 100%
-    height: 100%
-    display: flex
-    flex-direction: column
-    justify-content: center
-    row-gap: 10px
-    align-items: center
-    border: none
+    padding: 8px 0
     
     @include for-small-desktop-up
-      width: 100%
-      height: 100%
-      padding: 20px
-      visibility: hidden
-      opacity: 0
-      border: initial
-      border-radius: initial
-      right: initial
-      top: initial
+      padding: 0
       
       &.noInStock
         visibility: visible
         opacity: 1
       
     & .inCart
-      position: absolute
-      bottom: 8px
       width: 116px
       padding: 6.5px 12px
+      margin: 0 auto
       border-radius: 99px
       background: #8D00FC
       border: none
@@ -82,11 +59,13 @@
       font-weight: 700
       
       @include for-small-desktop-up
-        // top: 140px
+        position: absolute
+        visibility: hidden
+        opacity: 0
         top: 50%
-        transform: translateY(-50%)
+        left: 50%
+        transform: translate(-50%, -50%)
         padding: 8.5px 24px
-        width: auto
     
       &.active
         background: none
@@ -108,25 +87,31 @@
       top: 8px
       right: 7px
       stroke: #C745CB
-
+      
+      @include for-small-desktop-up
+        top: 16px
+        right: 16px
+        visibility: hidden
+        opacity: 0
+        
     &.noInStock
 
       & .like
         display: none
 
       & .noInStockMsg
-        position: absolute
-        bottom: 48px
-        left: 7px
         color: #FFF
         font-size: 12px
         font-style: normal
         font-weight: 600
         line-height: normal
+        padding-bottom: 8px
+        margin-left: 8px
         
         @include for-small-desktop-up
-          bottom: 15px
-          left: 15px          
+          padding-bottom: 15px
+          margin-left: 15px
+          margin-top: 7px        
       
       & .soonInStockMsg
         position: absolute
@@ -140,6 +125,8 @@
         
       & .mobile
         top: 54px
+        left: 50%
+        transform: translate(-50%, 0)
          
         @include for-small-desktop-up
           display: none    
@@ -149,26 +136,26 @@
         
         @include for-small-desktop-up    
           display: block
-          top: 38%
-          transform: translateY(-50%)
+          top: 105px
+          left: 50%
+          transform: translateX(-50%)
       
       & .subscribeInStock
-        position: absolute
-        bottom: 8px
         display: flex
         width: 116px
         padding: 6.5px 12px
+        margin: 0 auto
         border-radius: 99px
         border: 1px solid #8D00FC
         font-size: 12px
         font-weight: 700
         
         @include for-small-desktop-up
-          // top: 140px
+          position: absolute
           top: 50%
-          transform: translateY(-50%)
+          left: 50%
+          transform: translate(-50%, -50%)
           padding: 8.5px 24px
-          width: auto
           
         & .icon-check
           margin-left: 6px
@@ -193,7 +180,6 @@
       background: linear-gradient(180deg, rgba(70, 11, 110, 0) 0%, #02043D 100%)
           
     & .img
-      // object-fit: cover
       object-fit: fill
       width: 100%
       height: 99%
@@ -204,7 +190,7 @@
       left: 0
       right: 0
       bottom: 0
-      transition: background .3s ease-in
+      transition: background .2s ease-in
       
     & .activate
       background: rgba(2, 4, 61, 0.7)
@@ -217,6 +203,18 @@
     font-size: 12px
     font-weight: 400
     margin-bottom: auto
+    
+    overflow: hidden
+    text-overflow: ellipsis
+    box-orient: vertical
+    -webkit-box-orient: vertical
+    -moz-box-orient: vertical
+    display: -webkit-box
+    display: -moz-box
+    -webkit-line-clamp: 4 // line-count
+    line-clamp: 4 // line-count
+    max-height: 12px * 4 //lineHeight * countRows
+    min-height: 12px * 4 //lineHeight * countRows
     
     @include for-small-desktop-up
       font-size: 14px
@@ -249,31 +247,32 @@
     z-index: $ZIndex-DLCOnCartProduct
     padding: 5px
     color: #fff
+    
+    // #1280px
+    @include for-small-desktop-up
+      text-transform: uppercase
 
   & .price
-    align-items: center
-    gap: 4px
-    // width: 100%
-    padding: 0 7px
+    margin: 0 8px
     font-size: 12px
-    margin-top: 5px
-    margin-bottom: 48px
+    margin-top: 7px
     
     @include for-small-desktop-up
-      margin-bottom: 12px
+      margin-bottom: 16px
       margin-left: 16px
-      padding: 0
-      font-size: 14px
     
     &.hidden
+      display: none
       visibility: hidden
 
     & .fromPrice
         font-size: 10px
         color: #383960
+        margin-left: 4px
         
         @include for-small-desktop-up
           font-size: 12px
+          margin-left: 9px
       
         &:after
           font-size: 10px
@@ -282,8 +281,10 @@
           font-size: 12px
         
         .value:before
+          transform: rotate(-12deg)
           background-color: #383960
           height: 1px
+          width: 42px
     
     & .toPrice:after
         font-size: 12px

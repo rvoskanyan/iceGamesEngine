@@ -5,7 +5,7 @@ import PopupController from "./PopupController.js";
 import Postman from "./Postman.js";
 import Prompt from "./Prompt.js";
 import Slider from "./Slider.js";
-import { popularsSwiper, swiperSelections, swiperGenres, swiperNews } from "./SliderHome.js";
+import { swiperPopulars, swiperSelections, swiperGenres, swiperNews } from "./SliderHome.js";
 import Tabs from "./Tabs.js";
 import { websiteAddress } from "./config.js";
 import { debounce, getProductCardNode, scrollTo, urlEncodeFormData } from "./utils.js";
@@ -1763,7 +1763,7 @@ if (gamePageNode) {
 }
 
 if (homeSliderNode) {
-    popularsSwiper()
+    swiperPopulars()
     swiperSelections()
     swiperGenres()
     swiperNews()

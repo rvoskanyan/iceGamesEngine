@@ -122,9 +122,6 @@
         display: block
         border-radius: 99px
 
-        @include for-desktop-up
-          width: 100px
-
       .title
         font-size: 24px
         font-family: 'Lemon Milk'
@@ -152,7 +149,7 @@
 
       .homeBtn
         width: 256px
-        margin-top: 24px
+        margin: 24px 0 0 0
         
         // #375px
         @include for-phone-up
@@ -164,14 +161,15 @@
           align-self: flex-start
     
     .bg
-      backdrop-filter: blur(6px)
+      backdrop-filter: blur(8px)
       position: absolute
       right: -100px
       top: 315px
       width: 660px
       height: 500px
       transform: rotate(-12deg)
-      background-color: #8d00fc52
+      // background-color: #8d00fc52
+      background-color: #8d00fc78
 
       // #540px
       @include for-tablet-portrait-up

@@ -43,7 +43,7 @@ export const getProductCardNode = (data) => {
   const headNode = document.createElement('div');
   const headImgNode = document.createElement('img');
   const imageFilterNode = document.createElement('div');
-  const headNameNode = document.createElement('div');
+  const nameNode = document.createElement('div');
   const priceNode = document.createElement('div');
   const toPriceNode = document.createElement('div');
   const toPriceValueNode = document.createElement('span');
@@ -87,6 +87,22 @@ export const getProductCardNode = (data) => {
   
     actionsNode.append(favoritesBtnNode);
   }
+  
+  headImgNode.setAttribute('class', 'img');
+  headImgNode.setAttribute('src', `${websiteAddress}${data.img}`);
+  
+  headImgNode.setAttribute('alt', `Картинка ${data.name}`);
+  headImgNode.setAttribute('title', data.name);
+
+  imageFilterNode.setAttribute('class', `imageFilter ${data.inStock ? '' : 'activate'}`)
+  
+  nameNode.setAttribute('class', 'name');
+  nameNode.innerText = data.name;
+  
+  headNode.setAttribute('class', 'head');
+  headNode.append(headImgNode);
+  headNode.append(imageFilterNode);
+  // headNode.append(headNameNode);
   
   if (data.preOrder) {
     const preOrderMobileTextNode = document.createElement('div');
@@ -151,19 +167,7 @@ export const getProductCardNode = (data) => {
   
   actionsNode.setAttribute('class', `actions${!data.inStock ? ' noInStock' : ''}`);
   
-  headImgNode.setAttribute('class', 'img');
-  headImgNode.setAttribute('src', `${websiteAddress}${data.img}`);
-  headImgNode.setAttribute('alt', `Картинка ${data.name}`);
-  headImgNode.setAttribute('title', data.name);
   
-  headNameNode.setAttribute('class', 'name');
-  headNameNode.innerText = data.name;
-  imageFilterNode.setAttribute('class', `imageFilter ${data.inStock ? '' : 'activate'}`)
-  
-  headNode.setAttribute('class', 'head');
-  headNode.append(headImgNode);
-  headNode.append(imageFilterNode);
-  headNode.append(headNameNode);
   
   toPriceValueNode.setAttribute('class', 'value');
   toPriceValueNode.innerText = data.priceTo;
@@ -199,9 +203,11 @@ export const getProductCardNode = (data) => {
   productNode.setAttribute('title', 'Перейти к странице товара');
   productNode.setAttribute('class', `cardGame${data.size ? ` ${data.size}` : ''} js-cardGame`);
   productNode.setAttribute('data-id', `${data._id}`);
-  productNode.append(actionsNode);
+ 
   productNode.append(headNode);
+  productNode.append(nameNode);
   productNode.append(priceNode);
+  productNode.append(actionsNode);
   
   return productNode;
 }
