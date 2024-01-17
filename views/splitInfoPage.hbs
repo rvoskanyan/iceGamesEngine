@@ -17,8 +17,8 @@
             <p class="direction">Наведите камеру, чтобы<br> скачать приложение<br> "Яндекс Пэй"</p>
         </div>
     </div>
-    <div class="info contentContainer">
-        <div class="howWorks block">
+    <div class="info">
+        <div class="howWorks block contentContainer">
             <div class="title">Как это работает?</div>
             <div class="description">Выберите товар в магазине и оформите его с оплатой частями. Покупка сразу ваша, а деньги — потом</div>
             <div class="scale">
@@ -41,8 +41,8 @@
             </div>
             <div class="description desktop">Спишем сразу только первый платёж, а оставшиеся — по графику раз в 2 недели</div>
         </div>
-        <div class="variants block">
-            <div class="title">Выбирай любой</div>
+        <div class="variants block contentContainer">
+            <div class="title">Выбирайте любой</div>
             <div class="items">
                 <div class="item">
                     <div class="textInfo">
@@ -60,21 +60,206 @@
                 </div>
             </div>
         </div>
+        <div class="howPay block contentContainer">
+            <div class="title">Как платить?</div>
+            <ul class="items">
+                <li class="item">
+                    <div class="circle">
+                        <span class="icon icon-calendar"></span>
+                    </div>
+                    <div class="text">
+                        <div class="title">По графику</div>
+                        <div class="description">Следите в <a class="link" href="{{#if person}}/profile{{else}}/split{{/if}}">личном кабинете</a></div>
+                    </div>
+                </li>
+                <li class="item">
+                    <div class="circle">
+                        <span class="icon icon-pay"></span>
+                    </div>
+                    <div class="text">
+                        <div class="title">Любой картой</div>
+                        <div class="description">Можно поменять в процессе</div>
+                    </div>
+                </li>
+                <li class="item">
+                    <div class="circle">
+                        <span class="icon icon-bell"></span>
+                    </div>
+                    <div class="text">
+                        <div class="title">Списываем автоматически</div>
+                        <div class="description">Напомним о платежах заранее</div>
+                    </div>
+                </li>
+                <li class="item">
+                    <div class="circle">
+                        <span class="icon icon-checkPay"></span>
+                    </div>
+                    <div class="text">
+                        <div class="title">Можно досрочно</div>
+                        <div class="description">Если Вам так удобнее</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
         <div class="example block">
-            <div class="title">Всё увидишь сразу</div>
+            <div class="title">Всё увидите сразу</div>
             <div class="description">На странице оплаты увидите значок сплита и выберите срок. Всё - можно сразу оформлять заказ.</div>
             <div class="visual">
                 <img src="{{websiteAddress}}img/widgetSplit.jpg" class="widgetSplit" loading="lazy" alt="Пример сплита на маке">
                 <div class="mac">
-                    <img src="{{websiteAddress}}img/exampleSplitMac.png" class="img" loading="lazy" alt="Пример сплита на маке">
+                    {{!-- <img src="{{websiteAddress}}img/macbook-pro.png" class="img" loading="lazy" alt="Пример сплита на маке"> --}}
                 </div>
             </div>
+            <a href='/games?noCommission=true' class='btn exampleBtn' >КАТАЛОГ ИГР СО СПЛИТОМ</a>
         </div>
-        <div class="faq">
-            <div class="title">Ответы на вопросы</div>
-            <div class="item collapse js-collapse" itemscope itemtype="http://schema.org/Question">
+        <div class="instructions">
+            <div class="title contentContainer">Инструкция</div>
+            <div class="image">
+                <img src="{{websiteAddress}}img/splitInstructionImage.png" class="img mobile" loading="lazy" alt="Пример сплита на маке">
+                <img src="{{websiteAddress}}/img/splitInstructionImageDesktop.png" class='img desktop' alt="">
+            </div>
+            <div class='contentContainer content'>
+                <img src="{{websiteAddress}}/img/yaSplit.png" class='yaSplit mobile' alt="">
+                <img src="{{websiteAddress}}/img/yaSplitDesktop.png" class='yaSplit desktop' alt="">
+                <div class="info">
+                    <p class='one'>Иконка “Яндекс сплит, на странице товара, говорит о том, что игра доступна к покупке частями.</p>
+                    <p class='two'>Чтобы купить игру через “яндекс сплит”, добавьте ее в корзину и выбирете соответствующий способ оплаты</p>
+                </div>
+                <div class="payBlock">
+                    <div class="imgBtn">
+                        <span>Оплатить сразу</span>
+                        <span class="partialPayment">Оплатить частями</span>
+                    </div>
+                    <div class="imgCart">
+                        <p class='head'>Ваша корзина</p>
+                        <div class='goods flexRow'>
+                            <p>Товары (1)</p>
+                            <p class='sum'>1 499 ₽</p>
+                        </div>
+                        <div class='rebate flexRow'>
+                            <p>Скидка</p>
+                            <p class='sum'>-500 ₽</p>
+                        </div>
+                        <div class='fee flexRow'>
+                            <p>Комиссия за оплату сплитом</p>
+                            <p class='sum'>6%</p>
+                        </div>
+                        <span class='divider'></span>
+                        <div class='partPay flexRow'>
+                            <p>От 4-х платежей по</p>
+                            <p class='sum'>265 ₽</p>
+                        </div>
+                        <span class='btn'>ПЕРЕЙТИ К ОФОРМЛЕНИЮ</span>
+                    </div>
+                </div>
+                <div class="info">
+                    <p class='three'>Дальше остается перейти к оформлению. Вас переведет на страницу оплаты</p>
+                    <p class='four'>на странице оформления вы можете выбрать удобные условия оплаты и время платежей.</p>
+                </div>
+                <img src="{{websiteAddress}}img/ya-pay.png" class='yaPayImage'  alt="">
+                <div class="info">
+                    <p class='five withBorder'>После нажатия “оплатить” ключ моментально придет на вашу почту, которую вы указывали при регистрации</p>
+                </div>
+                <div class="authInfoBlock">
+                    <div class="content">
+                        <div class="imgBtn">
+                            <span>Оплатить сразу</span>
+                            <span class="partialPayment">Оплатить частями</span>
+                        </div>
+                        <div class="infoBlock">
+                            <img src="{{websiteAddress}}/img/yaSplit.png" class='yaIcon' alt="">
+                            <div class="footerBlock">
+                                <span class="icon icon-padlock"></span>
+                                <p>Для покупки в сплит (частями) Вам необходимо авторизоваться.</p>
+                                <span class='btn'>Авторизоваться</span>
+                            </div>
+                        </div>                       
+                    </div>
+                        <div class="innerText">
+                            <p>Внимание! Чтобы воспользоваться сплитом, нужно авторизоваться на нашем сайте. Это можно сделать сейчас:</p>
+                            <button class="authLink js-authBtn" title="Авторизация">
+			                    авторизоваться
+		                    </button>
+                            <p>или прямо в корзине перед покупкой игры</p>
+                            
+                        </div>
+                </div>
+            </div>  
+        </div>
+        <div class="faq contentContainer">
+            <div class="title">Есть вопрос? <br> Ответ может быть здесь</div>
+            <ul class='itemList'>
+                <li class="item collapse js-collapse" itemscope itemtype="http://schema.org/Question">
+                    <button class="btn head">
+                        <span class="title">1. <span itemprop="name">А как узнать свой доступный лимит?</span></span>
+                        <span class="control"></span>
+                    </button>
+                    <div class="content" itemprop="suggestedAnswer" itemscope itemtype="http:// schema.org/Answer">
+                        <span itemprop="text">
+                            <p>
+                                <a href="https://split.yandex.ru/standalone/account" title="Перейти в личный кабинет Яндекс Пэй" rel="nofollow" target="_blank" class="link">В личном кабинете</a> , а ещё удобнее —  <a href="https://split.yandex.ru/standalone/account" title="Перейти в личный кабинет Яндекс Пэй" rel="nofollow" target="_blank" class="link">в приложении Яндекс Пэй</a>
+                            </p>
+                        </span>
+                    </div>
+                </li>
+                <li class="item collapse js-collapse" itemscope itemtype="http://schema.org/   Question">
                 <button class="btn head">
-                    <span class="title">1. <span itemprop="name">Как работает Сплит?</span></span>
+                    <span class="title">2. <span itemprop="name">Сплит — это кредит?</span></span>
+                    <span class="control"></span>
+                </button>
+                <div class="content" itemprop="suggestedAnswer" itemscope itemtype="http://schema.org/Answer">
+                    <span itemprop="text">
+                        <p>
+                            Нет, Сплит — не кредит и не рассрочка. Поэтому данные о нем не передаются в бюро кредитных историй. Мы просто делим платёж на части, без сложностей и скрытых условий. Чтобы купить в Сплит, не нужно заполнять длинные анкеты или готовить документы — достаточно номера телефона.
+                        </p>
+                    </span>
+                </div>
+                </li>
+                <li class="item collapse js-collapse" itemscope itemtype="http://schema.org/   Question">
+                    <button class="btn head">
+                        <span class="title">3. 
+                            <span itemprop="name">Где следить за платежами</span>
+                        </span>
+                        <span class="control"></span>
+                    </button>
+                <div class="content" itemprop="suggestedAnswer" itemscope itemtype="http://schema.org/Answer">
+                    <span itemprop="text">
+                        <p>
+                            Следить за графиком платежей можно 
+                            <a href="https://split.yandex.ru/standalone/account" title="Перейти в личный кабинет Яндекс Пэй" rel="nofollow" target="_blank" class="link">В личном кабинете</a> сплита.
+                        </p>
+                    </span>
+                </div>
+                </li>
+                <li class="item collapse js-collapse" itemscope itemtype="http://schema.org/   Question">
+                <button class="btn head">
+                    <span class="title">4. <span itemprop="name">Как оплатить досрочно?</span></span>
+                    <span class="control"></span>
+                </button>
+                <div class="content" itemprop="suggestedAnswer" itemscope itemtype="http://schema.org/Answer">
+                    <span itemprop="text">
+                        <p>
+                            <a href="https://split.yandex.ru/standalone/account" title="Перейти в личный кабинет Яндекс Пэй" rel="nofollow" target="_blank" class="link">В личном кабинете</a> Сплита откройте нужный заказ, в открывшемся окне выберите банковскую карту из списка и подтвердите оплату. Если платеж не был последним, следующий спишется с карты, с которой оплачена предыдущая часть.
+                        </p>
+                    </span>
+                </div>
+                </li>
+                <li class="item collapse js-collapse" itemscope itemtype="http://schema.org/   Question">
+                <button class="btn head">
+                    <span class="title">5. <span itemprop="name">Как Внести пропущенный платеж?</span></span>
+                    <span class="control"></span>
+                </button>
+                <div class="content" itemprop="suggestedAnswer" itemscope itemtype="http://schema.org/Answer">
+                    <span itemprop="text">
+                        <p>
+                            Если регулярный платеж не прошел, сервис будет пытаться списать средства раз в сутки. Вы можете пополнить карту и внести платеж самостоятельно в <a href="https://split.yandex.ru/standalone/account" title="Перейти в личный кабинет Яндекс Пэй" rel="nofollow" target="_blank" class="link">личном кабинете</a> Сплита. Если на карте есть нужная сумма, но оплатить Сплит не получается, обратитесь в <a href="https://yandex.ru/support2/split/ru/feedback" title="Перейти в личный кабинет Яндекс Пэй" rel="nofollow" target="_blank" class="link">службу поддержки</a> .
+                        </p>
+                    </span>
+                </div>
+                </li>
+                <li class="item collapse js-collapse" itemscope itemtype="http://schema.org/   Question">
+                <button class="btn head">
+                    <span class="title">6. <span itemprop="name">Как работает Сплит?</span></span>
                     <span class="control"></span>
                 </button>
                 <div class="content" itemprop="suggestedAnswer" itemscope itemtype="http://schema.org/Answer">
@@ -82,10 +267,10 @@
                         <p>Он делит сумму вашего заказа на 4 или 6 частей — как вы захотите. Первую списываем с карты сразу, оставшиеся — по графику. Дату каждого платежа вы видите уже при оформлении, поэтому списания не станут неожиданностью</p>
                     </span>
                 </div>
-            </div>
-            <div class="item collapse js-collapse" itemscope itemtype="http://schema.org/Question">
+                </li>
+                <li class="item collapse js-collapse" itemscope itemtype="http://schema.org/   Question">
                 <button class="btn head">
-                    <span class="title">2. <span itemprop="name">Почему Сплит может быть недоступен?</span></span>
+                    <span class="title">7. <span itemprop="name">Почему Сплит может быть недоступен?</span></span>
                     <span class="control"></span>
                 </button>
                 <div class="content" itemprop="suggestedAnswer" itemscope itemtype="http://schema.org/Answer">
@@ -93,10 +278,10 @@
                         <p>Возможно, вы решили оплатить заказ наличными, а Сплит работает только при оплате картой</p>
                     </span>
                 </div>
-            </div>
-            <div class="item collapse js-collapse" itemscope itemtype="http://schema.org/Question">
+                </li>
+                <li class="item collapse js-collapse" itemscope itemtype="http://schema.org/   Question">
                 <button class="btn head">
-                    <span class="title">3. <span itemprop="name">Какие документы нужны?</span></span>
+                    <span class="title">8. <span itemprop="name">Какие документы нужны?</span></span>
                     <span class="control"></span>
                 </button>
                 <div class="content" itemprop="suggestedAnswer" itemscope itemtype="http://schema.org/Answer">
@@ -104,10 +289,10 @@
                         <p>Никаких. Достаточно номера телефона или аккаунта в Яндекс</p>
                     </span>
                 </div>
-            </div>
-            <div class="item collapse js-collapse" itemscope itemtype="http://schema.org/Question">
+                </li>
+                <li class="item collapse js-collapse" itemscope itemtype="http://schema.org/   Question">
                 <button class="btn head">
-                    <span class="title">4. <span itemprop="name">Что если я передумаю?</span></span>
+                    <span class="title">9. <span itemprop="name">Что если я передумаю?</span></span>
                     <span class="control"></span>
                 </button>
                 <div class="content" itemprop="suggestedAnswer" itemscope itemtype="http://schema.org/Answer">
@@ -115,10 +300,10 @@
                         <p>Вернуть сплит-заказ можно так же, как и обычный. Все деньги мы отправим обратно на карту, которой вы оплачивали</p>
                     </span>
                 </div>
-            </div>
-            <div class="item collapse js-collapse" itemscope itemtype="http://schema.org/Question">
+                </li>
+                <li class="item collapse js-collapse" itemscope itemtype="http://schema.org/   Question">
                 <button class="btn head">
-                    <span class="title">5. <span itemprop="name">Это безопасно?</span></span>
+                    <span class="title">10. <span itemprop="name">Это безопасно?</span></span>
                     <span class="control"></span>
                 </button>
                 <div class="content" itemprop="suggestedAnswer" itemscope itemtype="http://schema.org/Answer">
@@ -126,7 +311,8 @@
                         <p>Абсолютно. Мы не оформляем на вас кредит и не скрываем дополнительные условия «под звёздочкой». Мы просто делим платеж на части</p>
                     </span>
                 </div>
-            </div>
+                </li>
+            </ul>
         </div>
     </div>
 </main>

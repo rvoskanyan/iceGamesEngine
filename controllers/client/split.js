@@ -13,6 +13,8 @@ export const splitInfoPage = (req, res) => {
   currentDate.setDate(currentDate.getDate() + 14);
   const four = getFormatDate(currentDate, ' ', ['d', 'm'], true);
   
+  const person = res.locals.person
+  
   res.render('splitInfoPage', {
     title: 'Что такое сплит — ICE GAMES',
     metaDescription: 'Что такое сплит в магазине компьютерных игр ICE GAMES. Ознакомьтесь с условиями оплаты и получения.',
@@ -25,5 +27,6 @@ export const splitInfoPage = (req, res) => {
     two,
     three,
     four,
+    person
   });
 }

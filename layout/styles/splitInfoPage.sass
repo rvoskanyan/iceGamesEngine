@@ -22,6 +22,7 @@
             
     .yaPayBlock
       position: absolute
+      z-index: 1
       top: 452px
       display: flex
       justify-content: center
@@ -43,6 +44,12 @@
         
       // #1280px
       @include for-small-desktop-up
+        top: 594px
+        transform: translateX(144px)
+        padding: 16px
+        
+      // #1920px 
+      @include for-big-desktop-up
         top: 684px
         transform: translateX(240px)
         padding: 16px
@@ -86,15 +93,23 @@
         
       // #1280px
       @include for-small-desktop-up
+        top: 230px
+        font-size: 88px
+        margin-left: 144px
+        
+      // #1920px 
+      @include for-big-desktop-up
         top: 294px
         font-size: 88px
         margin-left: 240px
+        
+      
       
       .title
-        font-family: 'Lemon Milk'
-        font-size: 24px
-        font-weight: 400
-        line-height: 120%
+        // font-family: 'Lemon Milk'
+        // font-size: 24px
+        // font-weight: 400
+        // line-height: 120%
         text-align: left
         
         // #375px
@@ -169,13 +184,13 @@
       margin-top: 72px
     
     .title
-      font-family: 'Lemon Milk'
-      font-size: 24px
-      line-height: 120%
+      // font-family: 'Lemon Milk'
+      // font-size: 24px
+      // line-height: 120%
       
-      // #1280px
-      @include for-small-desktop-up
-        font-size: 88px
+      // // #1280px
+      // @include for-small-desktop-up
+      //   font-size: 88px
      
     .description
       font-family: 'Montserrat'
@@ -236,6 +251,7 @@
             // #1280px
             @include for-small-desktop-up
               height: 16px
+              margin: 16px 0
         
         .date
           font-size: 14px
@@ -250,28 +266,34 @@
           background: #FA00FF 
 
   .variants
+    margin-top: 48px
+    
     .items
       display: flex
       flex-direction: column
-      margin-top: 10px
-      row-gap: 10px
-
-      @include for-desktop-up
-        flex-direction: initial
-        column-gap: 30px
-        margin-top: 20px
-        max-height: 350px
-        height: initial
+      margin-top: 24px
+      gap: 16px
+      
+      // #1280px
+      @include for-small-desktop-up
+        flex-direction: row
+        gap: 24px
+        margin-top: 72px
 
       .item
         flex-basis: 50%
         overflow: hidden
-        border-radius: 20px
+        border-radius: 12px
         border: 1px solid #fff
         position: relative
         max-height: 150px
         min-height: 150px
-
+        
+        // #1280px
+        @include for-small-desktop-up
+          max-height: 448px
+          min-height: 448px
+          
         @include for-desktop-up
           max-height: 350px
           min-height: 350px
@@ -284,45 +306,172 @@
           left: 0
           width: 100%
           height: 100%
-          background-color: rgba(0, 0, 0, 0.5)
+          // background-color: rgba(0, 0, 0, 0.5)
+          background: linear-gradient(0deg, rgba(1, 3, 58, 0.60) 0%, rgba(1, 3, 58, 0.60) 100%)
 
         .textInfo
           position: absolute
-          bottom: 10px
-          left: 10px
+          top: 0px
+          left: 0px
+          display: flex
+          flex-direction: column
+          padding: 16px
+          gap: 16px
+          
+          .title
+            font-size: 20px
+          
+          .description
+            font-size: 14px
+            line-height: 140%
+            
+          // #1280px
+          @include for-small-desktop-up
+            .title
+              font-size: 50px
+            
+            .description
+              font-size: 32px
+            
 
           @include for-desktop-up
-            bottom: 30px
-            left: 30px
+            bottom: 0px
+            left: 0px
 
         .img
           width: 100%
           display: block
           object-fit: cover
-          height: 100%
+          height: 155px
+          
+          @include for-tablet-portrait-up
+            height: 100%
+
+  .howPay
+    margin-top: 48px
+    
+    .items
+      display: grid
+      grid-template-columns: 1fr
+      gap: 24px
+      margin-top: 24px
+      list-style-type:  none
+      
+      .item
+        display: flex
+        gap: 16px
+        align-items: center
+        
+        .circle
+          position: relative
+          background-color: #FA00FF
+          border-radius: 50%
+          max-width: 48px
+          max-height: 48px
+          min-width: 48px
+          min-height: 48px
+
+          .icon
+            position: absolute
+            top: 50%
+            left: 50%
+            transform: translate(-50%, -50%)
+            opacity: 0.9
+        
+        .text
+          
+          .description
+            font-size: 14px
+            line-height: 140%
+            margin-top: 4px
+          
+          .link
+            text-decoration-line: underline
+            font-weight: 600
+
+          .title
+            font-size: 16px
 
   .example
+    margin-top: 48px
+    padding-left: 16px
+    max-width: 1920px
+    margin-left: auto
+    margin-right: auto
+    
+    // #1280px
+    @include for-small-desktop-up
+      padding-left: 42px
+    
+    // #1920px 
+    @include for-big-desktop-up
+      padding-left: 240px
+    
+    .description
+      font-size: 14px
+      line-height: 140%
+      text-transform: uppercase
+      margin-top: 16px
+    
     .visual
+      position: relative
       display: flex
       justify-content: space-between
       align-items: center
-      margin-top: 20px
+      margin-top: 24px
+      // height: 195px
 
       .widgetSplit
+        position: absolute
+        top: 16px
+        left: -3px
+        z-index: 1
         display: block
         border-radius: 15px
-        width: 100%
-
+        // width: 100%
+        width: 140px
+        
+        // #540px
+        @include for-tablet-portrait-up
+          width: 198px
+        
+        // #1280px
+        @include for-small-desktop-up
+          width: 398px
+          
+        // #1366px  
         @include for-desktop-up
-          width: 300px
+          width: 405px
+        
+        // #1920px 
+        @include for-big-desktop-up
+          width: 500px
 
       .mac
-        height: 600px
         position: relative
-        display: none
-
+        width: 100%
+        height: 195px
+        overflow: hidden
+    
+        // #375px
+        @include for-phone-up
+          // height: 295px
+          
+        // #540px
+        @include for-tablet-portrait-up
+          height: 265px
+        
+        // #1280px
+        @include for-small-desktop-up
+          height: 505px
+          
+        // #1366px  
         @include for-desktop-up
-          display: block
+          height: 625px
+        
+        // #1920px 
+        @include for-big-desktop-up
+          height: 860px
 
         &:before
           content: ''
@@ -332,22 +481,427 @@
           left: 0
           width: 100%
           height: 100%
-          background: linear-gradient(90deg, rgba(1, 3, 60, 0.7) 70%, #01033C 100%)
+         
+          background: rgba(1, 3, 60, 0.7) 70%
+          
+        &:after
+          content: ''
+          display: block
+          background-size: contain
+          background-position-x: right          
+          background-repeat: no-repeat
+          background-image: url(./../img/macbook-pro.png)
+          width: 100%
+          height: 100%
+          padding-left: 73px
+           
+          // #375px
+          @include for-phone-up
+            padding-left: 27px
+            
+          // #540px
+          @include for-tablet-portrait-up
+            padding-left: 0
 
         .img
           display: block
-          object-fit: cover
+          // object-fit: fill
+          // position: absolute
+          // object-fit: contain
+          // object-position: 10% 10%
+          
           width: 100%
+          // height: 195px
+          margin-left: auto
           height: 100%
-
+          
+    
+    .exampleBtn
+      width: 100%
+      max-width: 288px
+      text-align: center
+      font-size: 14px
+      font-weight: 400
+      border-radius: 99px
+      border: 1px solid #FFF
+      background: #02043D
+      display: flex
+      padding: 13px 24px
+      margin-top: 32px
+  
+  .instructions
+    position: relative
+    margin-top: 48px
+    max-width: 1920px
+    margin-left: auto
+    margin-right: auto
+    
+    // #1920px 
+    @include for-big-desktop-up
+      padding-left: 240px
+    
+    .image
+      position: relative
+      width: 100%
+      margin-top: 24px
+      border-radius: 8px
+      margin-left: 16px
+      border-radius: 8px
+      overflow: hidden
+              
+      // #1280px
+      @include for-small-desktop-up
+        padding-left: 42px
+    
+      &:before
+        content: ''
+        display: block
+        position: absolute
+        top: 0
+        left: 0
+        width: 100%
+        height: 100%
+        background: linear-gradient(270deg, #01033A 6.53%, rgba(1, 3, 58, 0) 68.01%)
+        
+        @include for-small-desktop-up
+          background: linear-gradient(270deg, #01033A 44.53%, rgba(1, 3, 58, 0.00) 90.01%)
+      
+      img
+        height: 228px
+        border-radius: 8px
+      
+        // #540px
+        @include for-tablet-portrait-up
+          height: 420px
+          
+        // #1280px
+        @include for-small-desktop-up
+          height: 640px
+    
+    .content
+      display: flex
+      flex-direction: column
+      gap: 24px
+      margin-top: 24px
+          
+      .yaSplit
+        width: 140px
+        border-radius: 4px
+        
+        // #1280px
+        @include for-small-desktop-up
+          position: absolute
+          top: 138px
+          right: 0
+          // width: 769px
+          // height: 108px
+          border-radius: 16px
+          
+        // #1920px 
+        @include for-big-desktop-up
+          top: 420px
+          right: 110px
+          width: 769px
+      
+      .info
+        position: relative
+        display: flex
+        flex-direction: column
+        gap: 24px
+        font-size: 14px
+        line-height: 140%
+        text-transform: uppercase
+        
+        .withBorder
+          padding: 12px
+          border-radius: 8px
+          border: 1px solid #EB00FF
+          
+          @include for-big-desktop-up
+            border: none
+        
+        .one, .two, .three, .four, .five
+        
+          @include for-big-desktop-up
+            position: absolute
+            display: block
+            font-size: 32px
+            max-width: 708px
+            line-height: 140%
+        
+        .one
+          top: -211px
+          right: 110px
+          max-width: 769px
+          
+        .two
+          top: 25px
+          right: 170px
+          
+        .three
+          top: -133px
+          right: 170px
+        
+        .four
+          top: 240px
+          right: 0
+          
+        .five
+          top: -180px
+          right: 0
+          
+      .payBlock
+      
+        // #1920px 
+        @include for-big-desktop-up
+          width: 462px
+      
+        
+        .imgCart
+          display: flex
+          margin-top: 8px
+          // width: 288px;
+          padding: 16px
+          flex-direction: column
+          // justify-content: center
+          // align-items: center
+          gap: 16px
+          border-radius: 12px
+          border: 0.599px solid #FFF
+          
+          .head
+            font-size: 14.369px
+            font-weight: 700
+          
+          .goods
+            font-size: 12px
+            
+            span
+              margin-left: auto
+            
+          .rebate
+            font-size: 10.777px
+            
+            .sum
+              color: #FA00FF
+          
+          .fee
+            font-size: 12px
+            
+          .divider
+            border: 1px solid #ffffff1f
+            
+          .partPay
+            font-size: 14px
+            font-weight: 700
+          
+          .sum
+            font-weight: 700
+          
+          .btn
+            width: 100%
+            font-size: 12px
+            font-weight: 700
+            padding: 8.5px 16px
+            border-radius: 99px
+            background: #8D00FC
+        
+          // #1920px 
+          @include for-big-desktop-up
+            // font-size: 16px
+            // font-weight: 700
+            gap: 27px
+            padding: 24px
+            border: none
+            border-radius: 16px
+            background: rgba(255, 255, 255, 0.08)
+            
+            .head, .partPay
+              font-size: 24px
+              
+            .goods, .rebate, .fee 
+              font-size: 18px
+            
+            .btn
+              font-size: 16px
+              padding: 12px 24px
+            
+            
+              
+        
+    .yaPayImage
+      border-radius: 8px
+        
+      // #1920px 
+      @include for-big-desktop-up
+        width: 464px
+        border-radius: 24px
+        margin-top: 223px
+        
+  .authInfoBlock
+    display: none
+    justify-content: space-between
+    margin-top: 202px
+    padding: 48px
+    border-radius: 24px
+    border: 1px solid #EB00FF
+    
+    // #1280px
+    @include for-small-desktop-up
+      display: flex
+    
+    .content
+      width: 462px
+      
+      .imgBtn
+      
+      .infoBlock
+        display: flex
+        flex-direction: column
+        justify-content: center
+        align-items: center
+        gap: 126px
+        padding: 25px 32px
+        border-radius: 16px
+        background: rgba(255, 255, 255, 0.08)
+        backdrop-filter: blur(8.5px)
+        
+        .yaIcon
+          width: 140px
+          height: 28px
+          border-radius: 6px
+        
+        .footerBlock
+          display: flex
+          flex-direction: column
+          align-items: center
+          gap: 18px
+          
+          .btn
+            width: 100%
+            padding: 12px 24px
+            border-radius: 99px
+            background: #8D00FC
+            
+          
+          p
+            font-size: 18px
+            text-align: center
+      
+    .innerText
+      display: flex
+      flex-direction: column
+      max-width: 660px
+      margin-top: 61px
+      gap: 18px
+      text-transform: uppercase
+      font-size: 32px
+      line-height: 140%
+      
+      .authLink
+        display: flex
+        width: min-content
+        color:#EB00FF
+        font-size: 32px
+        line-height: 140%
+        text-transform: uppercase
+        text-decoration: underline
+        border: none
+        background: none
+      
+      p
+        display: block      
+    
   .faq
     margin-top: 30px
+    margin-bottom: 40px
 
     @include for-desktop-up
-      margin-top: 50px
+      // margin-top: 50px
+    .itemList
+      display: flex
+      flex-direction: column
+      gap: 8px
+      margin-top: 24px
+      list-style-type: none
+      
+      .collapse
+        padding: 12px 16px
+        
+        .title
+          font-family: Montserrat
+          font-size: 14px
+          font-weight: 500
+          line-height: 140%
+        
+        .link
+          text-decoration: underline
 
-    .item
-      margin-top: 8px
+    // .item
+    //   margin-top: 8px
 
-      @include for-desktop-up
-        margin-top: 15px
+    //   @include for-desktop-up
+    //     margin-top: 15px
+        
+  .title
+    font-family: 'Lemon Milk'
+    font-size: 24px
+    font-weight: 400
+    line-height: 120%
+    
+    // #1280px
+    @include for-small-desktop-up
+      font-size: 88px
+      
+  .contentContainer
+    max-width: 1440px
+    
+    // #1920px 
+    @include for-big-desktop-up
+      padding-left: 0
+      padding-right: 0
+  
+  .desktop
+    display: none
+  
+  .imgBtn
+    display: flex
+    justify-content: space-between
+    padding: 6px
+    border-radius: 32.331px
+    border: 0.599px solid #FFF
+    font-size: 10.777px    
+    
+    span
+      padding: 7px 15px
+    
+    .partialPayment
+      border-radius: 23.949px
+      border: 0.599px solid #FFF
+      background: #8D00FC
+      
+      // #1920px 
+      @include for-big-desktop-up
+        border: none
+          
+    // #1920px 
+    @include for-big-desktop-up
+      font-size: 16px
+      font-weight: 700
+      padding: 8px
+      border-radius: 99px
+      border: none
+      background: rgba(255, 255, 255, 0.08)
+      
+      span
+        padding: 12px 24px
+    
+         
+    
+  // #1280px
+  @include for-small-desktop-up
+    .mobile
+      display: none
+          
+    .desktop
+      display: block

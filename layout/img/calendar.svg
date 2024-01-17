@@ -1,0 +1,10 @@
+<!-- <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle id="Ellipse 71" opacity="0.9" cx="24" cy="24" r="24" fill="#FA00FF"/>
+</svg> -->
+<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="none">
+<path d="M3.5 9.33317C3.5 6.75584 5.58934 4.6665 8.16667 4.6665H19.8333C22.4107 4.6665 24.5 6.75584 24.5 9.33317V19.8332C24.5 22.4105 22.4107 24.4998 19.8333 24.4998H8.16667C5.58934 24.4998 3.5 22.4105 3.5 19.8332V9.33317Z" stroke="white" stroke-width="2"/>
+<path d="M9.33337 3.5V7" stroke="white" stroke-width="2" stroke-linecap="round"/>
+<path d="M19.8333 11.6665H8.16663" stroke="white" stroke-width="2" stroke-linecap="round"/>
+<path d="M19.8333 19.8335L18.6666 19.8335" stroke="white" stroke-width="2" stroke-linecap="round"/>
+<path d="M18.6666 3.5V7" stroke="white" stroke-width="2" stroke-linecap="round"/>
+</svg>

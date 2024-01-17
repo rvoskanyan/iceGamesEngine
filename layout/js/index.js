@@ -14,6 +14,7 @@ import AsyncFormSteam from './AsyncFormSteam.js';
 import Message from "./lib/message.js";
 import Payment from "./lib/payment.js";
 import SocialSharing from "./lib/socialSharing.js";
+import { timeout } from 'cron';
 const postman = new Postman();
 const platform = document.body.dataset.platform || 'pc';
 
@@ -91,6 +92,9 @@ const mobileCartLinkNode = document.querySelector('.js-mobileCartLink');
 const fastSelect = document.querySelector('.js-fastSelect');
 const reloadCheckFillUpStatusNode = document.querySelector('.js-reloadCheckFillUpStatus');
 const buyTurkeyPage = document.querySelector('.js-buyTurkeyPage');
+const authBtnNode = document.querySelector('.js-authBtn')
+
+
 const popupController = new PopupController([
     {
         id: 'loginForm',
@@ -171,6 +175,15 @@ promptProductNodes.forEach(promptProductNode => {
         promptProductNode.classList.remove('right')
     }
 })
+
+ 
+if(authBtnNode) {
+    authBtnNode.addEventListener('click', () => { 
+        setTimeout(() => {
+            document.querySelector('.js-openLogin').dispatchEvent(new Event("click"))
+        }, 0);
+    })
+}
 
 if (successPaymentNode) {
     const closeSuccessPaymentNode = successPaymentNode.querySelector('.js-closeSuccessPayment');
